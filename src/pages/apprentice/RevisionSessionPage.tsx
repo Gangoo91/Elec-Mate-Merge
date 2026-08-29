@@ -390,7 +390,9 @@ export default function RevisionSessionPage() {
                     </div>
                   )}
                   {q.explanation && (
-                    <div className={cn('rounded-xl border border-elec-yellow/35 p-4', CARD_SURFACE)}>
+                    <div
+                      className={cn('rounded-xl border border-elec-yellow/35 p-4', CARD_SURFACE)}
+                    >
                       <p className="mb-1.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-elec-yellow">
                         Why
                       </p>

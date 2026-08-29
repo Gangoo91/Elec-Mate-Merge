@@ -2403,7 +2403,7 @@ export const module6QuestionBank: Question[] = [
     options: [
       'Against BS 7671 limits',
       'Not compared',
-      'Personal judgment',
+      'Personal judgement',
       'Client requirements',
     ],
     correctAnswer: 0,
@@ -3145,7 +3145,7 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_6_2_03',
     question: 'Where can acceptance criteria for test results be found?',
     options: [
-      'Personal judgment',
+      'Personal judgement',
       'Manufacturer data',
       'BS 7671',
       'Local regulations',

@@ -1,8 +1,8 @@
-import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { useNavigate } from 'react-router-dom';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
-import { PageFrame, PageHero } from '@/components/college/primitives';
 import {
   TLDR,
   ConceptBlock,
@@ -295,417 +295,411 @@ const BS7671Module3Section5 = () => {
   });
 
   return (
-    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
-      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
-        <PageFrame>
+    <HubPage>
+      <HubMasthead
+        section="Module 3 · Section 5 · Updated for A4:2026"
+        title="Earthing arrangements and protective measures selection"
+        backTo="../bs7671-module-3"
+      />
+      <HubBody>
+        <div className="max-w-3xl text-[13px] leading-relaxed text-white">
+          {
+            'Chapter 54 in practice. Main Earthing Terminal, CPC sizing by Table 54.7 vs adiabatic, main protective bonding under Reg 544.1.1 + the PME overlay in 544.1.2, earthing-conductor minimums per Table 54.1, electrode design for TT, and how supplementary equipotential bonding (Reg 415.2.1) ties it all together when ADS alone cannot deliver.'
+          }
+        </div>
+
+        <div className="flex flex-wrap items-center gap-2">
+          {
+            <>
+              <RegBadge>411.3.1.1</RegBadge>
+              <RegBadge>542.1.1</RegBadge>
+              <RegBadge>543.1.1</RegBadge>
+              <RegBadge>544.1.1</RegBadge>
+              <AmendmentBadge regs={['544.1.1']} />
+            </>
+          }
+        </div>
+
+        <TLDR
+          points={[
+            'The Main Earthing Terminal (Reg 542.4.1) is the single equipotential reference for the installation — every CPC, the earthing conductor, every main protective bonding conductor and any functional earth land here.',
+            'CPCs are sized either by selection (Table 54.7) or by calculation (Reg 543.1.3 adiabatic). Main bonding follows Reg 544.1.1 on TN-S; on TN-C-S the higher PME minimums in Reg 544.1.2 / Table 54.8 apply.',
+            'Earthing-conductor minimums come from Reg 542.3.1 / Table 54.1, then lifted by the PME overlay (Reg 544.1.2) where the system is TN-C-S. TT installations need an electrode — usually multi-rod — sized for Ra × IΔn ≤ 50 V (Reg 411.5.3).',
+            'Supplementary equipotential bonding (Reg 415.2.1 / 544.2) is the fall-back where ADS cannot be guaranteed to deliver disconnection time alone, or where Reg 701.415.2 conditions for omission are not all met.',
+          ]}
+        />
+
+        <LearningOutcomes
+          outcomes={[
+            'Identify the Main Earthing Terminal and list every conductor that should land on it (Reg 542.4.1, 411.3.1.2).',
+            'Size a CPC two ways — Table 54.7 selection and the adiabatic equation in Reg 543.1.3 — and explain when each is mandatory.',
+            'Apply Table 54.8 (Reg 544.1.2) PME bonding minimums against the supply-neutral cross-sectional area and contrast with the TN-S rule in Reg 544.1.1.',
+            'Size an earthing conductor by Reg 542.3.1 / Table 54.1 and lift the value where the system is TN-C-S per the PME overlay.',
+            'Choose an earth electrode arrangement for a TT installation that satisfies Reg 411.5.3 (Ra × IΔn ≤ 50 V) and Reg 542.2.4 seasonal stability.',
+            'Apply Reg 415.2.1 supplementary equipotential bonding and recognise the three-condition omission test for bathrooms in Reg 701.415.2.',
+            'Use the GN8 22 kΩ test to decide whether a metal part is an extraneous-conductive-part requiring main protective bonding.',
+          ]}
+          initialVisibleCount={3}
+        />
+
+        <ContentEyebrow>The Main Earthing Terminal — the spine of Chapter 54</ContentEyebrow>
+
+        <ConceptBlock
+          title="What the MET actually is, and why it sits where it sits"
+          plainEnglish="The MET is a single accessible bar — usually brass — where every conductor that has any earth function in the whole installation lands. It is the equipotential reference point: every CPC, the earthing conductor, every main protective bonding conductor and any functional earth all meet here."
+          onSite="On a domestic install you will see the MET as the brass bar inside or beside the consumer unit, with the green/yellow earthing conductor going one way (to the cut-out tail or the earth electrode), the main bonding going to the gas / water meter, and the consumer-unit earth bar bridge taking every CPC. If those lands are scattered across multiple terminals you do not have an MET — you have a fault."
+        >
+          <p>
+            Reg 542.4.1 requires every installation to have an MET. The MET completes the
+            equipotential bonding scheme of Reg 411.3.1.2: with every earth function on a single
+            point, a fault that drives the MET potential up drives every CPC-connected exposed metal
+            part and every bonded extraneous-conductive-part up TOGETHER — the touch voltage between
+            them stays low. Take the MET away (or split the lands across isolated bars) and the
+            assumption fails — you can be standing on one earth and touching another, with the fault
+            voltage between them.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...inlineChecks[0]} />
+
+        <RegsCallout
+          source="BS 7671:2018+A4:2026 · Reg 411.3.1.1 — Protective earthing"
+          clause="Exposed-conductive-parts shall be connected to a protective conductor under the specific conditions for each type of system earthing as specified in Regulations 411.4 to 411.6. Simultaneously accessible exposed-conductive-parts shall be connected to the same earthing system individually, in groups or collectively. A circuit protective conductor shall be run to and terminated at each point in wiring and at each accessory except a lampholder having no exposed-conductive-parts and suspended from such a point."
+          meaning="A CPC at every point and every accessory is the legal default. The lampholder exception is narrow — a pendant with no exposed metal. Replace the pendant with a metal-bodied luminaire or downlight and the CPC must be present and connected. 'Simultaneously accessible' parts must share an earthing system: never bond Class I exposed metal to two different earths within touch reach."
+          cite="BS 7671:2018+A4:2026, Reg 411.3.1.1"
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>Sizing the CPC — Table 54.7 vs the adiabatic equation</ContentEyebrow>
+
+        <ConceptBlock
+          title="Two routes — which is mandatory when?"
+          plainEnglish="Reg 543.1.1 lets you size a CPC two ways: pick a value from Table 54.7 (a quick lookup based on the line conductor CSA) OR run the adiabatic equation S = √(I²t) / k from Reg 543.1.3. The adiabatic gives a more efficient answer; the table gives a safe upper bound for typical UK protection."
+          onSite="Use Table 54.7 by default for ordinary T&E circuits — it is what cable manufacturers design 6 mm² (with 2.5 mm² CPC) and 10 mm² (with 4 mm² CPC) sheath compositions around. Run the adiabatic when the upstream protective device let-through is unusually high (e.g. fault current > 10 kA, big fuses, motor starters), when the cable construction is unusual (singles in conduit with separate bare CPC), or when you need to justify a smaller CPC on cost or thermal grounds."
+        >
+          <p>
+            Table 54.7 abstract: line up to and including 16 mm² → CPC equal to the line, EXCEPT a 6
+            mm² line takes a 2.5 mm² CPC and a 10 mm² line takes a 4 mm² CPC where the same material
+            is used and the CPC is incorporated in the cable sheath. Above 16 mm² and up to 35 mm² →
+            CPC is 16 mm². Above 35 mm² → CPC is half the line CSA. The adiabatic equation, by
+            contrast, computes the smallest CPC that survives the fault thermally: S(min) = √(I²t) /
+            k, where I²t is the let-through energy of the upstream device for the prospective fault
+            current at the fault point, and k comes from Tables 54.2 / 54.3 / 54.4 (k = 143 for
+            XLPE/copper with 90 °C insulation, k = 115 for PVC/copper at 70 °C in T&E, k = 76 for
+            copper conductor in steel conduit).
+          </p>
+        </ConceptBlock>
+
+        <RegsCallout
+          source="BS 7671:2018+A4:2026 · Reg 543.1.1 — Cross-sectional area"
+          clause="The cross-sectional area of every protective conductor, other than a protective bonding conductor, shall be either calculated in accordance with Regulation 543.1.3 or selected in accordance with Regulation 543.1.4 [Table 54.7]. In both cases, the requirements of Regulation 543.1.2 [minimum size for mechanical and corrosion-protection considerations] shall be taken into account. The cross-sectional area, where calculated, shall be not less than the value determined by the formula or, where applicable, by reference to BS EN 60909-0."
+          meaning="Either route is permitted; Reg 543.1.2 imposes a floor regardless. For typical UK domestic and small-commercial installs, Table 54.7 (Reg 543.1.4) is the default. The adiabatic (Reg 543.1.3) is required where the table answer is implausible — high prospective fault current, unusual cable construction, separately-run CPC."
+          cite="BS 7671:2018+A4:2026, Reg 543.1.1"
+        />
+
+        <InlineCheck {...inlineChecks[1]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>Main protective bonding — Reg 544.1.1 and the PME overlay</ContentEyebrow>
+
+        <ConceptBlock
+          title="TN-S vs TN-C-S — completely different bonding minimums"
+          plainEnglish="On TN-S the supply provides a separate PE conductor and the bonding is sized against the earthing conductor (Reg 544.1.1, half its CSA, 6 mm² floor, 25 mm² ceiling). On TN-C-S (PME) the supply provides a combined PEN that can carry fault current; the bonding is sized against the supply NEUTRAL (Reg 544.1.2 / Table 54.8) with a 10 mm² floor."
+          onSite="Domestic UK supplies are overwhelmingly TN-C-S (PME) in 2026. The supply neutral at the cut-out is typically 25 mm² for a 100 A single-phase service — bonding to gas and water = 10 mm² minimum. A modern 200 A three-phase service might have a 95 mm² neutral — bonding minimum jumps to 25 mm². Always check the tail size at the cut-out and apply Table 54.8."
+        >
+          <p>
+            Reg 544.1.1 (general TN-S rule): the main protective bonding conductor cross-sectional
+            area is at least half the cross-sectional area required for the earthing conductor of
+            the installation, subject to a minimum of 6 mm² (or 16 mm² aluminium). The maximum
+            required by this regulation is 25 mm² copper (or 35 mm² aluminium) — beyond that, no
+            further increase is required even for very large supplies. Reg 544.1.2 then overlays
+            Table 54.8 on TN-C-S, lifting the minimum to 10 mm² where the supply neutral is up to 35
+            mm², 16 mm² where 35–50 mm², 25 mm² where 50–95 mm², 35 mm² where 95–150 mm² and 50 mm²
+            where above 150 mm².
+          </p>
+        </ConceptBlock>
+
+        <RegsCallout
+          source="BS 7671:2018+A4:2026 · Reg 544.1.1 — Main protective bonding conductors"
+          clause="A main protective bonding conductor shall comply with Section 543, except that its cross-sectional area shall be not less than half that required for the earthing conductor of the installation, subject to a minimum of 6 mm² (or 16 mm² for aluminium). The cross-sectional area need not exceed 25 mm² for copper, or its equivalent in conductance for other metals."
+          meaning="On TN-S the rule is half-the-earthing-conductor with 6 mm² floor and 25 mm² ceiling. On TN-C-S add the Reg 544.1.2 / Table 54.8 minimums, which are higher because the PEN can carry fault current. Always apply both rules and use the larger value."
+          cite="BS 7671:2018+A4:2026, Reg 544.1.1"
+        />
+
+        <InlineCheck {...inlineChecks[2]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>
+          Earthing conductor — sizing, materials, mechanical protection
+        </ContentEyebrow>
+
+        <ConceptBlock
+          title="Reg 542.3.1, Table 54.1 and the PME lift"
+          plainEnglish="The earthing conductor connects the MET to the means of earthing. Reg 542.3.1 sizes it via Reg 543.1.1 (so either Table 54.7 selection or the adiabatic), plus a Table 54.1 minimum where the conductor is buried, plus the PME overlay where the system is TN-C-S."
+          onSite="Above ground and inside the consumer-unit cupboard, an earthing conductor on a 100 A domestic TN-C-S supply is typically 16 mm² copper green/yellow (PME-overlay applies). Where buried, Table 54.1 imposes mechanical / corrosion protection minimums: 2.5 mm² protected against both, 6 mm² protected against corrosion only, 16 mm² unprotected against either. Almost always you bury the conductor inside conduit or duct — that gives you mechanical protection — and Table 54.1 then drops to the lower numbers."
+        >
+          <p>
+            The full sizing process: (1) Compute the adiabatic minimum for the upstream protective
+            device let-through (Reg 543.1.3). (2) Look up Table 54.1 minimum based on whether the
+            conductor is buried, mechanically protected and corrosion protected. (3) Where the
+            system is TN-C-S, lift the value to the Table 54.8 floor sized against the supply
+            neutral CSA (Reg 544.1.2). The earthing conductor must equal or exceed all three. In
+            practice the PME overlay almost always wins on UK domestic, giving you a clean rule of
+            thumb: 100 A single-phase TN-C-S → 16 mm² copper earthing conductor; 200 A three-phase
+            TN-C-S with 95 mm² neutral → 25 mm² copper; check the cut-out.
+          </p>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="Material and termination — copper vs aluminium vs hot-dip galvanised steel"
+          plainEnglish="Copper is the default for UK earthing conductors and bonding. Aluminium is permitted at larger sizes — 16 mm² aluminium minimum for main bonding (Reg 544.1.1) — but is rare domestically. Hot-dip galvanised steel structural members are permitted as natural earth electrodes (Reg 542.2.1) but not as the dedicated earthing conductor."
+          onSite="Termination matters as much as size. Reg 526.3 requires every joint to be accessible for inspection and testing — the earthing-conductor connection at the MET, at the means of earthing, and any in-line splice all have to be inspectable, mechanically sound, electrically continuous and corrosion-protected. A buried earth-rod connection is usually finished with a labelled inspection chamber so future testers can lift the lid, measure Ra, and check the conductor."
+        >
+          <p>
+            Where dissimilar metals must be joined (copper bonding to a galvanised steel structural
+            member, or copper to an aluminium tail), use a bimetallic connector or a lug system
+            designed for the pair — direct copper-to-aluminium contact corrodes galvanically and the
+            joint resistance climbs over time. Reg 526.2 requires every connection to be
+            electrically continuous and mechanically sound for the life of the installation; a
+            corroded earth-rod clamp inside an unsealed inspection chamber is the single most common
+            cause of TT-supply Ra drift in EICRs.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...inlineChecks[6]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>Earth electrodes for TT — types, layout, seasonal stability</ContentEyebrow>
+
+        <ConceptBlock
+          title="Permitted electrode types — Reg 542.2.1"
+          plainEnglish="A TT installation has no PE from the supply, so you must build your own earth. Reg 542.2.1 lists what counts: driven rods, pipes, buried tape or wire, plates, foundation-earth electrodes (Ufer / rebar), structural metalwork of buildings, lead sheaths of cables, welded metal reinforcement of concrete embedded in the ground."
+          onSite="UK practice for TT is overwhelmingly multiple driven copper-clad steel rods. A single 1.2 m rod typically gives 80–200 Ω in average UK soil, often too high to satisfy Reg 411.5.3 once you do Ra × IΔn ≤ 50 V with a 100 mA RCD upstream. Two or more rods spaced at least their length apart and connected with insulated bonding cable can drop Ra to 30–60 Ω in the same soil. Soil that dries out in summer can double Ra — Reg 542.2.4 wants you to design for the worst-case season."
+        >
+          <p>
+            Earth electrode resistance Ra is the sum of (a) the contact resistance between the
+            electrode and the soil, (b) the resistance of the soil itself, and (c) the resistance of
+            the soil shell extending out to the point where adjacent equipotential surfaces no
+            longer matter (the "resistance area"). Driving a single rod into clay gives a relatively
+            low Ra; dry sand or chalk can be 10× higher. Multi-rod arrays work because their
+            resistance areas don't overlap — provided the spacing is ≥ rod depth. In awkward soils
+            (rocky ground, made-up land, urban sites without soft earth) buried tape, plates, or
+            foundation-earth electrodes (Ufer) using the rebar of a freshly-cast concrete pad are
+            the practical answers.
+          </p>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="Verifying TT — Ra × IΔn ≤ 50 V and seasonal re-test"
+          plainEnglish="On TT the protective measure of ADS depends on an upstream RCD and a low-enough Ra to keep the touch voltage during a fault below 50 V. The formula is Reg 411.5.3: Ra × IΔn ≤ 50 V. With a 30 mA RCD that means Ra ≤ 1666 Ω; with a 100 mA RCD, Ra ≤ 500 Ω; with a 300 mA RCD, Ra ≤ 166 Ω."
+          onSite="Measure Ra with a dedicated earth-electrode tester (3-point fall-of-potential or stakeless / clamp-on for verification). Record Ra on the EIC. Reg 542.2.4 requires Ra to be sufficiently low and stable — re-measure annually where the design margin is small (Ra near the limit, agricultural or seasonal sites). RCD operation must also be verified at IΔn (operating time ≤ 300 ms general, ≤ 200 ms in Section 411.3.2) and 5 IΔn (≤ 40 ms) at every test."
+        >
+          <p>
+            Reg 411.5.4 (TT with OPD only) is the low-Ra alternative: where the earth-loop impedance
+            is low enough that a fuse or MCB clears the fault within the disconnection time without
+            an RCD. In practice this requires Ra well under 1 Ω, which a small array of rods rarely
+            achieves. Almost every UK TT install uses Reg 411.5.3 (RCD-led ADS). Reg 411.6.3 (IT) is
+            the rare third route, for continuity-critical sites.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...inlineChecks[3]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>
+          Identifying extraneous-conductive-parts — the GN8 22 kΩ test
+        </ContentEyebrow>
+
+        <ConceptBlock
+          title="What counts as extraneous, and the test that decides"
+          plainEnglish="An extraneous-conductive-part is a metal item, NOT part of the electrical installation, that can introduce a potential — usually earth potential — into the equipotential zone. Water pipes, gas pipes, central heating and structural steel are the obvious candidates."
+          onSite="The GN8 (IET Guidance Note 8 — Earthing & Bonding) test: with the part disconnected from any existing bond, measure its insulation resistance to the MET (or true earth) at 500 V. ≥ 22 kΩ means the part cannot introduce a dangerous potential — it is NOT extraneous, no main bonding needed. Below 22 kΩ — bond it to the MET per Reg 411.3.1.2 + Reg 544.1.1. The threshold is derived from a 50 V touch limit and a 2.27 mA body-current limit: 50 / 0.00227 ≈ 22 kΩ."
+        >
+          <p>
+            The classic case is the post-2002 plastic incomer: many UK properties had their gas and
+            water mains replaced with MDPE (yellow gas / blue water plastic). Internal copper
+            pipework downstream of the meter is often no longer extraneous because the path to true
+            earth is now insulated. ALWAYS run the 22 kΩ test before deciding to omit bonding —
+            visual inspection alone is unreliable, and other parallel paths (heating system to
+            outdoor radiators, copper waste pipes to outside) can re-establish the earth path even
+            where the main is plastic.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...inlineChecks[5]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>Supplementary equipotential bonding — Reg 415.2.1</ContentEyebrow>
+
+        <ConceptBlock
+          title="When ADS isn't enough — supplementary bonding fills the gap"
+          plainEnglish="Where ADS via OPD or RCD cannot be guaranteed to deliver disconnection within the required time AT EVERY POINT in a location — typically because Zs is high, or the location is high-risk (bath, shower, swimming pool, agricultural) — supplementary equipotential bonding ties together the exposed-conductive-parts and extraneous-conductive-parts within reach of each other so the touch voltage during a fault stays below 50 V."
+          onSite="Sized per Reg 544.2: 2.5 mm² copper protected against mechanical damage, 4 mm² unprotected. Where it connects two exposed-conductive-parts, its CSA must be at least that of the smaller CPC of the two circuits. Where it connects an exposed to an extraneous, its CSA must be at least half that of the CPC of the circuit. Verify R ≤ 50 V / Ia (Reg 415.2.2) — measure resistance between the bonded parts; the limit drops as the upstream OPD/RCD operating current rises."
+        >
+          <p>
+            Reg 415.2.1 requires supplementary bonding to connect together simultaneously accessible
+            exposed-conductive-parts and extraneous-conductive-parts so that the effectiveness of
+            ADS is supplemented. The conductor must be electrically continuous and protected against
+            damage. Reg 415.2.2 sets the verification: R between bonded parts must satisfy R ≤ 50 V
+            / Ia, where Ia is the OPD operating current at the relevant disconnection time (or the
+            rated residual operating current of the RCD). In practice on a domestic 30 mA RCD: 50 /
+            0.03 = 1666 Ω, which any properly bonded joint is comfortably below.
+          </p>
+        </ConceptBlock>
+
+        <RegsCallout
+          source="BS 7671:2018+A4:2026 · Reg 415.2.1 — Supplementary equipotential bonding"
+          clause="Where the conditions for automatic disconnection cannot be met, locally additional supplementary equipotential bonding shall be provided. Where doubt exists regarding the effectiveness of supplementary equipotential bonding, it shall be confirmed that the resistance R between simultaneously accessible exposed-conductive-parts and extraneous-conductive-parts fulfils the following condition: R ≤ 50 V / Ia in AC systems, R ≤ 120 V / Ia in DC systems, where Ia is the operating current in amperes (A) of the protective device."
+          meaning="Supplementary bonding is the explicit fall-back when ADS via OPD/RCD cannot guarantee disconnection. The verification formula gives you a measurable test: lower upstream Ia (faster RCD) means a more permissive R limit. Always verify by measurement, not by assumption."
+          cite="BS 7671:2018+A4:2026, Reg 415.2.1"
+        />
+
+        <ConceptBlock
+          title="The bathroom rule — Reg 701.415.2 omission test"
+          plainEnglish="A modern UK bathroom CAN omit supplementary bonding under Reg 701.415.2, but ONLY if all three conditions are met: every circuit in the location meets its disconnection time, every circuit has 30 mA RCD additional protection, AND all extraneous-conductive-parts of the location are effectively connected to the MET by main protective bonding. Miss any one — supplementary bonding goes back in."
+          onSite="The cert (EIC schedule of inspection) should record explicitly which route has been taken: 'supplementary bonding installed within location' OR 'supplementary bonding omitted under Reg 701.415.2 — three conditions verified'. An EICR finding 'no supplementary bonding observed' on a bathroom is only a code-able observation if the three conditions are NOT met. Test plumbing continuity, confirm RCD operation, confirm main bonding to gas / water at the MET — then the cert decision is defensible."
+        >
+          <p>
+            Other Section 7 special locations have their own supplementary-bonding regimes that do
+            NOT carry the same omission test. Swimming pools (Reg 702), saunas (Reg 703),
+            agricultural premises (Reg 705) and medical locations (Reg 710) each impose
+            location-specific bonding requirements that override the bathroom-style omission —
+            always read the relevant Section 7 clause first before deciding to omit.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...inlineChecks[4]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>Choosing OPD-led ADS vs RCD-led ADS</ContentEyebrow>
+
+        <ConceptBlock
+          title="The two routes to ADS, and which one applies on which system"
+          plainEnglish="ADS = automatic disconnection of supply. The disconnection can be delivered by an overcurrent protective device (OPD — fuse or MCB) reading the fault current, OR by an RCD reading the residual current. Each route has a different verification rule."
+          onSite="On TN-S and TN-C-S, OPD-led ADS is straightforward where Zs is low: Reg 411.4.4 wants Zs ≤ U₀ × Cmin / Ia, verified by Zs measurement at the furthest point. On TT, OPD-led ADS (Reg 411.5.4) requires very low Ra and is rare; RCD-led ADS (Reg 411.5.3) is the norm — Ra × IΔn ≤ 50 V plus disconnection time per Reg 411.3.2. On final circuits ≤ 32 A in domestic premises, A4:2026 mandates 30 mA RCD additional protection on sockets (Reg 411.3.3), luminaires (Reg 411.3.4) and the special locations of Section 7 — so the 'RCD layer' is universal regardless of which ADS route you nominate."
+        >
+          <p>
+            The decision is rarely binary in 2026 — most modern UK boards use 30 mA RCBOs (RCD + MCB
+            combined) on every circuit, giving you OPD-led AND RCD-led ADS in parallel. The Zs value
+            still has to be verified for the OPD route to be defensible (in case a future RCD
+            failure removes the residual-current route), but the RCD provides the primary
+            disconnection in practice. The exception is a TT supply with a single upstream 100 mA
+            time-delayed RCD on the consumer side and 30 mA RCBOs downstream — there the upstream
+            RCD provides discrimination, and verification has to address both layers.
+          </p>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <ContentEyebrow>Where it goes wrong</ContentEyebrow>
+
+        <CommonMistake
+          title="Under-sizing main bonding on a PME supply"
+          whatHappens="Installer fits 6 mm² main bonding to gas and water on a domestic TN-C-S property with a 25 mm² supply neutral. The cert records 'main bonding installed' — sounds compliant. EICR a few years later codes C2 (potentially dangerous) under-sized PME bonding."
+          doInstead="On TN-C-S always apply Reg 544.1.2 / Table 54.8: 25 mm² supply neutral → 10 mm² minimum bonding. Check the supply-neutral CSA at the cut-out before specifying bonding. If you cannot see the cut-out tail, ask the DNO or use 16 mm² as a conservative default for an unknown PME service — over-sizing bonding does no harm, under-sizing it leaves the property dangerous under a PEN fault."
+        />
+
+        <CommonMistake
+          title="Confusing the CPC with the earthing conductor — wrong sizing rule applied"
+          whatHappens="Designer sizes the conductor from the consumer-unit MET to the cut-out earthing terminal using Table 54.7 (CPC sizing) — gets 16 mm² for a 25 mm² line. The result is an earthing conductor that meets the CPC rule but fails the Reg 544.1.2 PME overlay (which requires 10 mm² minimum, or more depending on supply neutral)."
+          doInstead="Use the right rule. CPC = circuit conductor inside the installation, sized by Reg 543.1.1 (Table 54.7 OR adiabatic). Earthing conductor = MET to means of earthing, sized by Reg 542.3.1 (Table 54.1) PLUS the PME overlay (Reg 544.1.2). The two regulations can give different answers — apply the rule that matches the conductor's job."
+        />
+
+        <CommonMistake
+          title="Bonding everything in sight — over-bonding plastic incomers"
+          whatHappens="Installer treats every metal pipe in a property as extraneous and runs main bonding to internal copper pipework downstream of an MDPE incomer. The bond is unnecessary AND harms diagnostics — a future fault on the bonded pipe may now have a non-trivial earth path that the test regime didn't anticipate."
+          doInstead="Run the GN8 22 kΩ test before bonding. ≥ 22 kΩ to the MET → not extraneous, no bond. Below 22 kΩ → bond per Reg 544.1.1 / 544.1.2. Document the test result on the cert. The point of bonding is to handle parts that DO introduce earth potential — bonding parts that don't introduces complexity for no safety gain, and on long copper runs can create circulating currents."
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>Scenarios — applying it on the day</ContentEyebrow>
+
+        <Scenario
+          title="Consumer-unit retrofit on a 1990s TT property"
+          situation="Customer wants their 17th edition split-load CU replaced with a modern 18th edition + A4 metal-bodied unit. The property is on a TT supply (no DNO PE) with a single 1.2 m driven rod giving Ra = 145 Ω. Existing CU has a 100 mA general-type RCD on the main switch and Type AC 30 mA RCDs on socket banks. Earthing conductor is 6 mm² copper from MET to a chamber outside."
+          whatToDo="Step 1 — verify Ra and the formula. 100 mA RCD: Ra × IΔn ≤ 50 V → 145 × 0.1 = 14.5 V (passes). 30 mA RCBO on each circuit: 145 × 0.03 = 4.35 V (passes). Step 2 — check earthing conductor size. Reg 542.3.1 / Table 54.1 with the conductor protected (in conduit, accessible chamber): 6 mm² is acceptable for TT (the PME overlay does not apply on TT). Step 3 — design the new CU with 30 mA Type A RCBOs on every circuit (Type A handles pulsating DC from modern LED drivers and electronics — Type AC is no longer fit for purpose). Step 4 — re-measure Ra after the works to confirm seasonal stability and record on the EIC. Step 5 — confirm main bonding to gas and water (if metallic, run the GN8 test) at 6 mm² minimum (TT does not require PME overlay, but 10 mm² is good practice on any modern install)."
+          whyItMatters="On TT, Ra is the linchpin of ADS. A retrofit that fits Type A RCBOs everywhere AND verifies Ra at completion gives you a defensible cert against current edition. Skipping the Ra re-measure leaves the cert exposed: if soil dries out in summer and Ra rises above the formula limit, ADS is no longer demonstrable and the property is non-compliant the moment the season changes. Reg 542.2.4 wants you to design for stability — record the Ra at install, advise the customer of the annual re-test schedule, and put it on the EICR retest interval."
+        />
+
+        <Scenario
+          title="Supplementary bonding decision in a 1980s domestic bathroom"
+          situation="EICR on a 1980s TN-C-S domestic property. The bathroom has a metal heated towel rail (CPC connected, exposed-conductive-part), an electric shower (CPC connected), copper pipework to a shower mixer and to the bath taps. No supplementary bonding visible — installer is being asked whether it is required under A4:2026. Existing supply: 100 A TN-C-S, 25 mm² neutral, 16 mm² earthing conductor, 10 mm² bonding to gas and water at the MET (sound). Bathroom circuits: lighting on a 6 A Type B MCB (NO RCD), shower on a 32 A Type B RCBO 30 mA, towel rail on a 16 A Type B RCBO 30 mA."
+          whatToDo="Apply Reg 701.415.2 three-condition test. Condition (a): every circuit in the location meets its disconnection time? Verify Zs at the furthest point of the lighting circuit, shower, towel rail and confirm ≤ Zs(max) for each device. Condition (b): every circuit has 30 mA RCD additional protection? FAILS — the lighting circuit is on an MCB without RCD. Under A4 Reg 411.3.4 the lighting circuit must have 30 mA RCD anyway (domestic luminaire rule); add an RCBO. Condition (c): all extraneous-conductive-parts effectively connected to the MET? Run the GN8 22 kΩ test on the bathroom copper pipework. If ≥ 22 kΩ (likely on a property with plastic incomers), the pipework is NOT extraneous and condition (c) is satisfied by default. If < 22 kΩ, confirm main bonding at the MET is sound. Outcome: once the lighting RCBO is added (Reg 411.3.4 fix) and the GN8 test passes, all three conditions are met and supplementary bonding can be omitted under Reg 701.415.2 — record explicitly on the EIC."
+          whyItMatters="A4:2026 makes Reg 411.3.4 unconditional within domestic premises — every lighting circuit in a dwelling needs 30 mA RCD or RCBO. Once that's done, the supplementary-bonding decision in the bathroom often resolves itself because condition (b) is satisfied for free. Recording the omission decision on the cert (with the three conditions ticked off) is the defensible approach — silent omission leaves the next inspector second-guessing the design."
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>Designer's quick reference — Chapter 54 in one screen</ContentEyebrow>
+
+        <ConceptBlock
+          title="Five rules to size every earth-related conductor on a UK domestic install"
+          plainEnglish="Walk it from the cut-out inwards. (1) Earthing conductor: Reg 542.3.1 / Table 54.1 + PME overlay. (2) MET: Reg 542.4.1, single bar, every earth conductor lands here. (3) Main bonding: Reg 544.1.1 (TN-S) or 544.1.2 / Table 54.8 (PME). (4) CPCs: Reg 543.1.1, Table 54.7 default, adiabatic where unusual. (5) Supplementary bonding: Reg 415.2.1 / 544.2 — 2.5 mm² protected, 4 mm² unprotected, R ≤ 50 V / Ia."
+          onSite="Default rule of thumb for a 100 A single-phase TN-C-S domestic UK property in 2026: earthing conductor 16 mm² Cu; main bonding to gas + water 10 mm² Cu; CPCs by Table 54.7 (so 1.0 mm² T&E line → 1.0 mm² CPC, 6 mm² T&E line → 2.5 mm² CPC, etc.); supplementary bonding only where Reg 701.415.2 conditions are NOT all met. Larger services (200 A three-phase) lift the bonding and earthing-conductor minimums per the supply-neutral CSA — always check the cut-out tail."
+        >
+          <p>
+            The five rules cover every earth-related conductor. The thing that catches new designers
+            out is treating bonding and CPCs as a single rule — they are not. The earthing conductor
+            on TN-C-S is dominated by the PME overlay (which the table-route CPC sizing does not
+            see). Main bonding is similarly PME-driven. CPCs ride on the line conductor of their
+            circuit. Supplementary bonding fills the gap where ADS cannot be demonstrated alone —
+            and is mostly omitted in modern UK domestic where the three Reg 701.415.2 conditions are
+            met.
+          </p>
+        </ConceptBlock>
+
+        <FAQ items={faqItems} />
+
+        <KeyTakeaways
+          points={[
+            'The MET (Reg 542.4.1) is the single equipotential reference — every CPC, the earthing conductor, every main protective bonding conductor and any functional earth lands here.',
+            'CPCs are sized by Reg 543.1.1 — Table 54.7 selection by default, the adiabatic equation (Reg 543.1.3) where the table answer is implausible. Standard 6 mm² T&E carries a 2.5 mm² CPC; 10 mm² T&E carries a 4 mm² CPC.',
+            'Main protective bonding under Reg 544.1.1 is half-the-earthing-conductor-CSA on TN-S. On TN-C-S the higher minimums of Reg 544.1.2 / Table 54.8 apply — 10 mm² floor where supply neutral ≤ 35 mm², 16 mm² where 35–50, 25 mm² where 50–95.',
+            'Earthing conductors come from Reg 542.3.1 / Table 54.1 — 2.5 mm² protected against both, 6 mm² protected against corrosion only, 16 mm² unprotected against either — then lifted by the PME overlay (Reg 544.1.2) on TN-C-S.',
+            'TT installations need an electrode (usually multi-rod) that satisfies Ra × IΔn ≤ 50 V (Reg 411.5.3) plus Reg 542.2.4 seasonal stability. RCD-led ADS is the practical norm; OPD-led ADS (Reg 411.5.4) is rare.',
+            'Supplementary equipotential bonding (Reg 415.2.1 / 544.2) fills the gap where ADS cannot be demonstrated alone. In domestic bathrooms it can be omitted under Reg 701.415.2 ONLY if all three conditions hold — record the decision on the cert.',
+            'Use the GN8 22 kΩ test to decide whether a metal part is extraneous-conductive — measurement, not visual inspection, settles the bonding decision.',
+          ]}
+        />
+
+        <Quiz questions={quizQuestions} />
+
+        <div className="grid grid-cols-2 gap-3 pt-2">
           <button
             type="button"
-            onClick={() => navigate('../bs7671-module-3')}
-            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            onClick={() => navigate('/electrician/upskilling/bs7671-module-3')}
+            className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
           >
-            <ArrowLeft className="h-4 w-4" /> Module 3
+            <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+              <ChevronLeft className="h-3 w-3" /> Module 3
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-white truncate">
+              Module overview
+            </div>
           </button>
-
-          <PageHero
-            eyebrow="Module 3 · Section 5 · Updated for A4:2026"
-            title="Earthing arrangements and protective measures selection"
-            description="Chapter 54 in practice. Main Earthing Terminal, CPC sizing by Table 54.7 vs adiabatic, main protective bonding under Reg 544.1.1 + the PME overlay in 544.1.2, earthing-conductor minimums per Table 54.1, electrode design for TT, and how supplementary equipotential bonding (Reg 415.2.1) ties it all together when ADS alone cannot deliver."
-            actions={
-              <>
-                <RegBadge>411.3.1.1</RegBadge>
-                <RegBadge>542.1.1</RegBadge>
-                <RegBadge>543.1.1</RegBadge>
-                <RegBadge>544.1.1</RegBadge>
-                <AmendmentBadge regs={['544.1.1']} />
-              </>
-            }
-            tone="yellow"
-          />
-
-          <TLDR
-            points={[
-              'The Main Earthing Terminal (Reg 542.4.1) is the single equipotential reference for the installation — every CPC, the earthing conductor, every main protective bonding conductor and any functional earth land here.',
-              'CPCs are sized either by selection (Table 54.7) or by calculation (Reg 543.1.3 adiabatic). Main bonding follows Reg 544.1.1 on TN-S; on TN-C-S the higher PME minimums in Reg 544.1.2 / Table 54.8 apply.',
-              'Earthing-conductor minimums come from Reg 542.3.1 / Table 54.1, then lifted by the PME overlay (Reg 544.1.2) where the system is TN-C-S. TT installations need an electrode — usually multi-rod — sized for Ra × IΔn ≤ 50 V (Reg 411.5.3).',
-              'Supplementary equipotential bonding (Reg 415.2.1 / 544.2) is the fall-back where ADS cannot be guaranteed to deliver disconnection time alone, or where Reg 701.415.2 conditions for omission are not all met.',
-            ]}
-          />
-
-          <LearningOutcomes
-            outcomes={[
-              'Identify the Main Earthing Terminal and list every conductor that should land on it (Reg 542.4.1, 411.3.1.2).',
-              'Size a CPC two ways — Table 54.7 selection and the adiabatic equation in Reg 543.1.3 — and explain when each is mandatory.',
-              'Apply Table 54.8 (Reg 544.1.2) PME bonding minimums against the supply-neutral cross-sectional area and contrast with the TN-S rule in Reg 544.1.1.',
-              'Size an earthing conductor by Reg 542.3.1 / Table 54.1 and lift the value where the system is TN-C-S per the PME overlay.',
-              'Choose an earth electrode arrangement for a TT installation that satisfies Reg 411.5.3 (Ra × IΔn ≤ 50 V) and Reg 542.2.4 seasonal stability.',
-              'Apply Reg 415.2.1 supplementary equipotential bonding and recognise the three-condition omission test for bathrooms in Reg 701.415.2.',
-              'Use the GN8 22 kΩ test to decide whether a metal part is an extraneous-conductive-part requiring main protective bonding.',
-            ]}
-            initialVisibleCount={3}
-          />
-
-          <ContentEyebrow>The Main Earthing Terminal — the spine of Chapter 54</ContentEyebrow>
-
-          <ConceptBlock
-            title="What the MET actually is, and why it sits where it sits"
-            plainEnglish="The MET is a single accessible bar — usually brass — where every conductor that has any earth function in the whole installation lands. It is the equipotential reference point: every CPC, the earthing conductor, every main protective bonding conductor and any functional earth all meet here."
-            onSite="On a domestic install you will see the MET as the brass bar inside or beside the consumer unit, with the green/yellow earthing conductor going one way (to the cut-out tail or the earth electrode), the main bonding going to the gas / water meter, and the consumer-unit earth bar bridge taking every CPC. If those lands are scattered across multiple terminals you do not have an MET — you have a fault."
+          <button
+            type="button"
+            onClick={() => navigate('/electrician/upskilling/bs7671-module-4')}
+            className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
           >
-            <p>
-              Reg 542.4.1 requires every installation to have an MET. The MET completes the
-              equipotential bonding scheme of Reg 411.3.1.2: with every earth function on a single
-              point, a fault that drives the MET potential up drives every CPC-connected exposed
-              metal part and every bonded extraneous-conductive-part up TOGETHER — the touch voltage
-              between them stays low. Take the MET away (or split the lands across isolated bars)
-              and the assumption fails — you can be standing on one earth and touching another, with
-              the fault voltage between them.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...inlineChecks[0]} />
-
-          <RegsCallout
-            source="BS 7671:2018+A4:2026 · Reg 411.3.1.1 — Protective earthing"
-            clause="Exposed-conductive-parts shall be connected to a protective conductor under the specific conditions for each type of system earthing as specified in Regulations 411.4 to 411.6. Simultaneously accessible exposed-conductive-parts shall be connected to the same earthing system individually, in groups or collectively. A circuit protective conductor shall be run to and terminated at each point in wiring and at each accessory except a lampholder having no exposed-conductive-parts and suspended from such a point."
-            meaning="A CPC at every point and every accessory is the legal default. The lampholder exception is narrow — a pendant with no exposed metal. Replace the pendant with a metal-bodied luminaire or downlight and the CPC must be present and connected. 'Simultaneously accessible' parts must share an earthing system: never bond Class I exposed metal to two different earths within touch reach."
-            cite="BS 7671:2018+A4:2026, Reg 411.3.1.1"
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>Sizing the CPC — Table 54.7 vs the adiabatic equation</ContentEyebrow>
-
-          <ConceptBlock
-            title="Two routes — which is mandatory when?"
-            plainEnglish="Reg 543.1.1 lets you size a CPC two ways: pick a value from Table 54.7 (a quick lookup based on the line conductor CSA) OR run the adiabatic equation S = √(I²t) / k from Reg 543.1.3. The adiabatic gives a more efficient answer; the table gives a safe upper bound for typical UK protection."
-            onSite="Use Table 54.7 by default for ordinary T&E circuits — it is what cable manufacturers design 6 mm² (with 2.5 mm² CPC) and 10 mm² (with 4 mm² CPC) sheath compositions around. Run the adiabatic when the upstream protective device let-through is unusually high (e.g. fault current > 10 kA, big fuses, motor starters), when the cable construction is unusual (singles in conduit with separate bare CPC), or when you need to justify a smaller CPC on cost or thermal grounds."
-          >
-            <p>
-              Table 54.7 abstract: line up to and including 16 mm² → CPC equal to the line, EXCEPT a
-              6 mm² line takes a 2.5 mm² CPC and a 10 mm² line takes a 4 mm² CPC where the same
-              material is used and the CPC is incorporated in the cable sheath. Above 16 mm² and up
-              to 35 mm² → CPC is 16 mm². Above 35 mm² → CPC is half the line CSA. The adiabatic
-              equation, by contrast, computes the smallest CPC that survives the fault thermally:
-              S(min) = √(I²t) / k, where I²t is the let-through energy of the upstream device for
-              the prospective fault current at the fault point, and k comes from Tables 54.2 / 54.3
-              / 54.4 (k = 143 for XLPE/copper with 90 °C insulation, k = 115 for PVC/copper at 70 °C
-              in T&E, k = 76 for copper conductor in steel conduit).
-            </p>
-          </ConceptBlock>
-
-          <RegsCallout
-            source="BS 7671:2018+A4:2026 · Reg 543.1.1 — Cross-sectional area"
-            clause="The cross-sectional area of every protective conductor, other than a protective bonding conductor, shall be either calculated in accordance with Regulation 543.1.3 or selected in accordance with Regulation 543.1.4 [Table 54.7]. In both cases, the requirements of Regulation 543.1.2 [minimum size for mechanical and corrosion-protection considerations] shall be taken into account. The cross-sectional area, where calculated, shall be not less than the value determined by the formula or, where applicable, by reference to BS EN 60909-0."
-            meaning="Either route is permitted; Reg 543.1.2 imposes a floor regardless. For typical UK domestic and small-commercial installs, Table 54.7 (Reg 543.1.4) is the default. The adiabatic (Reg 543.1.3) is required where the table answer is implausible — high prospective fault current, unusual cable construction, separately-run CPC."
-            cite="BS 7671:2018+A4:2026, Reg 543.1.1"
-          />
-
-          <InlineCheck {...inlineChecks[1]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>Main protective bonding — Reg 544.1.1 and the PME overlay</ContentEyebrow>
-
-          <ConceptBlock
-            title="TN-S vs TN-C-S — completely different bonding minimums"
-            plainEnglish="On TN-S the supply provides a separate PE conductor and the bonding is sized against the earthing conductor (Reg 544.1.1, half its CSA, 6 mm² floor, 25 mm² ceiling). On TN-C-S (PME) the supply provides a combined PEN that can carry fault current; the bonding is sized against the supply NEUTRAL (Reg 544.1.2 / Table 54.8) with a 10 mm² floor."
-            onSite="Domestic UK supplies are overwhelmingly TN-C-S (PME) in 2026. The supply neutral at the cut-out is typically 25 mm² for a 100 A single-phase service — bonding to gas and water = 10 mm² minimum. A modern 200 A three-phase service might have a 95 mm² neutral — bonding minimum jumps to 25 mm². Always check the tail size at the cut-out and apply Table 54.8."
-          >
-            <p>
-              Reg 544.1.1 (general TN-S rule): the main protective bonding conductor cross-sectional
-              area is at least half the cross-sectional area required for the earthing conductor of
-              the installation, subject to a minimum of 6 mm² (or 16 mm² aluminium). The maximum
-              required by this regulation is 25 mm² copper (or 35 mm² aluminium) — beyond that, no
-              further increase is required even for very large supplies. Reg 544.1.2 then overlays
-              Table 54.8 on TN-C-S, lifting the minimum to 10 mm² where the supply neutral is up to
-              35 mm², 16 mm² where 35–50 mm², 25 mm² where 50–95 mm², 35 mm² where 95–150 mm² and 50
-              mm² where above 150 mm².
-            </p>
-          </ConceptBlock>
-
-          <RegsCallout
-            source="BS 7671:2018+A4:2026 · Reg 544.1.1 — Main protective bonding conductors"
-            clause="A main protective bonding conductor shall comply with Section 543, except that its cross-sectional area shall be not less than half that required for the earthing conductor of the installation, subject to a minimum of 6 mm² (or 16 mm² for aluminium). The cross-sectional area need not exceed 25 mm² for copper, or its equivalent in conductance for other metals."
-            meaning="On TN-S the rule is half-the-earthing-conductor with 6 mm² floor and 25 mm² ceiling. On TN-C-S add the Reg 544.1.2 / Table 54.8 minimums, which are higher because the PEN can carry fault current. Always apply both rules and use the larger value."
-            cite="BS 7671:2018+A4:2026, Reg 544.1.1"
-          />
-
-          <InlineCheck {...inlineChecks[2]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>
-            Earthing conductor — sizing, materials, mechanical protection
-          </ContentEyebrow>
-
-          <ConceptBlock
-            title="Reg 542.3.1, Table 54.1 and the PME lift"
-            plainEnglish="The earthing conductor connects the MET to the means of earthing. Reg 542.3.1 sizes it via Reg 543.1.1 (so either Table 54.7 selection or the adiabatic), plus a Table 54.1 minimum where the conductor is buried, plus the PME overlay where the system is TN-C-S."
-            onSite="Above ground and inside the consumer-unit cupboard, an earthing conductor on a 100 A domestic TN-C-S supply is typically 16 mm² copper green/yellow (PME-overlay applies). Where buried, Table 54.1 imposes mechanical / corrosion protection minimums: 2.5 mm² protected against both, 6 mm² protected against corrosion only, 16 mm² unprotected against either. Almost always you bury the conductor inside conduit or duct — that gives you mechanical protection — and Table 54.1 then drops to the lower numbers."
-          >
-            <p>
-              The full sizing process: (1) Compute the adiabatic minimum for the upstream protective
-              device let-through (Reg 543.1.3). (2) Look up Table 54.1 minimum based on whether the
-              conductor is buried, mechanically protected and corrosion protected. (3) Where the
-              system is TN-C-S, lift the value to the Table 54.8 floor sized against the supply
-              neutral CSA (Reg 544.1.2). The earthing conductor must equal or exceed all three. In
-              practice the PME overlay almost always wins on UK domestic, giving you a clean rule of
-              thumb: 100 A single-phase TN-C-S → 16 mm² copper earthing conductor; 200 A three-phase
-              TN-C-S with 95 mm² neutral → 25 mm² copper; check the cut-out.
-            </p>
-          </ConceptBlock>
-
-          <ConceptBlock
-            title="Material and termination — copper vs aluminium vs hot-dip galvanised steel"
-            plainEnglish="Copper is the default for UK earthing conductors and bonding. Aluminium is permitted at larger sizes — 16 mm² aluminium minimum for main bonding (Reg 544.1.1) — but is rare domestically. Hot-dip galvanised steel structural members are permitted as natural earth electrodes (Reg 542.2.1) but not as the dedicated earthing conductor."
-            onSite="Termination matters as much as size. Reg 526.3 requires every joint to be accessible for inspection and testing — the earthing-conductor connection at the MET, at the means of earthing, and any in-line splice all have to be inspectable, mechanically sound, electrically continuous and corrosion-protected. A buried earth-rod connection is usually finished with a labelled inspection chamber so future testers can lift the lid, measure Ra, and check the conductor."
-          >
-            <p>
-              Where dissimilar metals must be joined (copper bonding to a galvanised steel
-              structural member, or copper to an aluminium tail), use a bimetallic connector or a
-              lug system designed for the pair — direct copper-to-aluminium contact corrodes
-              galvanically and the joint resistance climbs over time. Reg 526.2 requires every
-              connection to be electrically continuous and mechanically sound for the life of the
-              installation; a corroded earth-rod clamp inside an unsealed inspection chamber is the
-              single most common cause of TT-supply Ra drift in EICRs.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...inlineChecks[6]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>
-            Earth electrodes for TT — types, layout, seasonal stability
-          </ContentEyebrow>
-
-          <ConceptBlock
-            title="Permitted electrode types — Reg 542.2.1"
-            plainEnglish="A TT installation has no PE from the supply, so you must build your own earth. Reg 542.2.1 lists what counts: driven rods, pipes, buried tape or wire, plates, foundation-earth electrodes (Ufer / rebar), structural metalwork of buildings, lead sheaths of cables, welded metal reinforcement of concrete embedded in the ground."
-            onSite="UK practice for TT is overwhelmingly multiple driven copper-clad steel rods. A single 1.2 m rod typically gives 80–200 Ω in average UK soil, often too high to satisfy Reg 411.5.3 once you do Ra × IΔn ≤ 50 V with a 100 mA RCD upstream. Two or more rods spaced at least their length apart and connected with insulated bonding cable can drop Ra to 30–60 Ω in the same soil. Soil that dries out in summer can double Ra — Reg 542.2.4 wants you to design for the worst-case season."
-          >
-            <p>
-              Earth electrode resistance Ra is the sum of (a) the contact resistance between the
-              electrode and the soil, (b) the resistance of the soil itself, and (c) the resistance
-              of the soil shell extending out to the point where adjacent equipotential surfaces no
-              longer matter (the "resistance area"). Driving a single rod into clay gives a
-              relatively low Ra; dry sand or chalk can be 10× higher. Multi-rod arrays work because
-              their resistance areas don't overlap — provided the spacing is ≥ rod depth. In awkward
-              soils (rocky ground, made-up land, urban sites without soft earth) buried tape,
-              plates, or foundation-earth electrodes (Ufer) using the rebar of a freshly-cast
-              concrete pad are the practical answers.
-            </p>
-          </ConceptBlock>
-
-          <ConceptBlock
-            title="Verifying TT — Ra × IΔn ≤ 50 V and seasonal re-test"
-            plainEnglish="On TT the protective measure of ADS depends on an upstream RCD and a low-enough Ra to keep the touch voltage during a fault below 50 V. The formula is Reg 411.5.3: Ra × IΔn ≤ 50 V. With a 30 mA RCD that means Ra ≤ 1666 Ω; with a 100 mA RCD, Ra ≤ 500 Ω; with a 300 mA RCD, Ra ≤ 166 Ω."
-            onSite="Measure Ra with a dedicated earth-electrode tester (3-point fall-of-potential or stakeless / clamp-on for verification). Record Ra on the EIC. Reg 542.2.4 requires Ra to be sufficiently low and stable — re-measure annually where the design margin is small (Ra near the limit, agricultural or seasonal sites). RCD operation must also be verified at IΔn (operating time ≤ 300 ms general, ≤ 200 ms in Section 411.3.2) and 5 IΔn (≤ 40 ms) at every test."
-          >
-            <p>
-              Reg 411.5.4 (TT with OPD only) is the low-Ra alternative: where the earth-loop
-              impedance is low enough that a fuse or MCB clears the fault within the disconnection
-              time without an RCD. In practice this requires Ra well under 1 Ω, which a small array
-              of rods rarely achieves. Almost every UK TT install uses Reg 411.5.3 (RCD-led ADS).
-              Reg 411.6.3 (IT) is the rare third route, for continuity-critical sites.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...inlineChecks[3]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>
-            Identifying extraneous-conductive-parts — the GN8 22 kΩ test
-          </ContentEyebrow>
-
-          <ConceptBlock
-            title="What counts as extraneous, and the test that decides"
-            plainEnglish="An extraneous-conductive-part is a metal item, NOT part of the electrical installation, that can introduce a potential — usually earth potential — into the equipotential zone. Water pipes, gas pipes, central heating and structural steel are the obvious candidates."
-            onSite="The GN8 (IET Guidance Note 8 — Earthing & Bonding) test: with the part disconnected from any existing bond, measure its insulation resistance to the MET (or true earth) at 500 V. ≥ 22 kΩ means the part cannot introduce a dangerous potential — it is NOT extraneous, no main bonding needed. Below 22 kΩ — bond it to the MET per Reg 411.3.1.2 + Reg 544.1.1. The threshold is derived from a 50 V touch limit and a 2.27 mA body-current limit: 50 / 0.00227 ≈ 22 kΩ."
-          >
-            <p>
-              The classic case is the post-2002 plastic incomer: many UK properties had their gas
-              and water mains replaced with MDPE (yellow gas / blue water plastic). Internal copper
-              pipework downstream of the meter is often no longer extraneous because the path to
-              true earth is now insulated. ALWAYS run the 22 kΩ test before deciding to omit bonding
-              — visual inspection alone is unreliable, and other parallel paths (heating system to
-              outdoor radiators, copper waste pipes to outside) can re-establish the earth path even
-              where the main is plastic.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...inlineChecks[5]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>Supplementary equipotential bonding — Reg 415.2.1</ContentEyebrow>
-
-          <ConceptBlock
-            title="When ADS isn't enough — supplementary bonding fills the gap"
-            plainEnglish="Where ADS via OPD or RCD cannot be guaranteed to deliver disconnection within the required time AT EVERY POINT in a location — typically because Zs is high, or the location is high-risk (bath, shower, swimming pool, agricultural) — supplementary equipotential bonding ties together the exposed-conductive-parts and extraneous-conductive-parts within reach of each other so the touch voltage during a fault stays below 50 V."
-            onSite="Sized per Reg 544.2: 2.5 mm² copper protected against mechanical damage, 4 mm² unprotected. Where it connects two exposed-conductive-parts, its CSA must be at least that of the smaller CPC of the two circuits. Where it connects an exposed to an extraneous, its CSA must be at least half that of the CPC of the circuit. Verify R ≤ 50 V / Ia (Reg 415.2.2) — measure resistance between the bonded parts; the limit drops as the upstream OPD/RCD operating current rises."
-          >
-            <p>
-              Reg 415.2.1 requires supplementary bonding to connect together simultaneously
-              accessible exposed-conductive-parts and extraneous-conductive-parts so that the
-              effectiveness of ADS is supplemented. The conductor must be electrically continuous
-              and protected against damage. Reg 415.2.2 sets the verification: R between bonded
-              parts must satisfy R ≤ 50 V / Ia, where Ia is the OPD operating current at the
-              relevant disconnection time (or the rated residual operating current of the RCD). In
-              practice on a domestic 30 mA RCD: 50 / 0.03 = 1666 Ω, which any properly bonded joint
-              is comfortably below.
-            </p>
-          </ConceptBlock>
-
-          <RegsCallout
-            source="BS 7671:2018+A4:2026 · Reg 415.2.1 — Supplementary equipotential bonding"
-            clause="Where the conditions for automatic disconnection cannot be met, locally additional supplementary equipotential bonding shall be provided. Where doubt exists regarding the effectiveness of supplementary equipotential bonding, it shall be confirmed that the resistance R between simultaneously accessible exposed-conductive-parts and extraneous-conductive-parts fulfils the following condition: R ≤ 50 V / Ia in AC systems, R ≤ 120 V / Ia in DC systems, where Ia is the operating current in amperes (A) of the protective device."
-            meaning="Supplementary bonding is the explicit fall-back when ADS via OPD/RCD cannot guarantee disconnection. The verification formula gives you a measurable test: lower upstream Ia (faster RCD) means a more permissive R limit. Always verify by measurement, not by assumption."
-            cite="BS 7671:2018+A4:2026, Reg 415.2.1"
-          />
-
-          <ConceptBlock
-            title="The bathroom rule — Reg 701.415.2 omission test"
-            plainEnglish="A modern UK bathroom CAN omit supplementary bonding under Reg 701.415.2, but ONLY if all three conditions are met: every circuit in the location meets its disconnection time, every circuit has 30 mA RCD additional protection, AND all extraneous-conductive-parts of the location are effectively connected to the MET by main protective bonding. Miss any one — supplementary bonding goes back in."
-            onSite="The cert (EIC schedule of inspection) should record explicitly which route has been taken: 'supplementary bonding installed within location' OR 'supplementary bonding omitted under Reg 701.415.2 — three conditions verified'. An EICR finding 'no supplementary bonding observed' on a bathroom is only a code-able observation if the three conditions are NOT met. Test plumbing continuity, confirm RCD operation, confirm main bonding to gas / water at the MET — then the cert decision is defensible."
-          >
-            <p>
-              Other Section 7 special locations have their own supplementary-bonding regimes that do
-              NOT carry the same omission test. Swimming pools (Reg 702), saunas (Reg 703),
-              agricultural premises (Reg 705) and medical locations (Reg 710) each impose
-              location-specific bonding requirements that override the bathroom-style omission —
-              always read the relevant Section 7 clause first before deciding to omit.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...inlineChecks[4]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>Choosing OPD-led ADS vs RCD-led ADS</ContentEyebrow>
-
-          <ConceptBlock
-            title="The two routes to ADS, and which one applies on which system"
-            plainEnglish="ADS = automatic disconnection of supply. The disconnection can be delivered by an overcurrent protective device (OPD — fuse or MCB) reading the fault current, OR by an RCD reading the residual current. Each route has a different verification rule."
-            onSite="On TN-S and TN-C-S, OPD-led ADS is straightforward where Zs is low: Reg 411.4.4 wants Zs ≤ U₀ × Cmin / Ia, verified by Zs measurement at the furthest point. On TT, OPD-led ADS (Reg 411.5.4) requires very low Ra and is rare; RCD-led ADS (Reg 411.5.3) is the norm — Ra × IΔn ≤ 50 V plus disconnection time per Reg 411.3.2. On final circuits ≤ 32 A in domestic premises, A4:2026 mandates 30 mA RCD additional protection on sockets (Reg 411.3.3), luminaires (Reg 411.3.4) and the special locations of Section 7 — so the 'RCD layer' is universal regardless of which ADS route you nominate."
-          >
-            <p>
-              The decision is rarely binary in 2026 — most modern UK boards use 30 mA RCBOs (RCD +
-              MCB combined) on every circuit, giving you OPD-led AND RCD-led ADS in parallel. The Zs
-              value still has to be verified for the OPD route to be defensible (in case a future
-              RCD failure removes the residual-current route), but the RCD provides the primary
-              disconnection in practice. The exception is a TT supply with a single upstream 100 mA
-              time-delayed RCD on the consumer side and 30 mA RCBOs downstream — there the upstream
-              RCD provides discrimination, and verification has to address both layers.
-            </p>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <ContentEyebrow>Where it goes wrong</ContentEyebrow>
-
-          <CommonMistake
-            title="Under-sizing main bonding on a PME supply"
-            whatHappens="Installer fits 6 mm² main bonding to gas and water on a domestic TN-C-S property with a 25 mm² supply neutral. The cert records 'main bonding installed' — sounds compliant. EICR a few years later codes C2 (potentially dangerous) under-sized PME bonding."
-            doInstead="On TN-C-S always apply Reg 544.1.2 / Table 54.8: 25 mm² supply neutral → 10 mm² minimum bonding. Check the supply-neutral CSA at the cut-out before specifying bonding. If you cannot see the cut-out tail, ask the DNO or use 16 mm² as a conservative default for an unknown PME service — over-sizing bonding does no harm, under-sizing it leaves the property dangerous under a PEN fault."
-          />
-
-          <CommonMistake
-            title="Confusing the CPC with the earthing conductor — wrong sizing rule applied"
-            whatHappens="Designer sizes the conductor from the consumer-unit MET to the cut-out earthing terminal using Table 54.7 (CPC sizing) — gets 16 mm² for a 25 mm² line. The result is an earthing conductor that meets the CPC rule but fails the Reg 544.1.2 PME overlay (which requires 10 mm² minimum, or more depending on supply neutral)."
-            doInstead="Use the right rule. CPC = circuit conductor inside the installation, sized by Reg 543.1.1 (Table 54.7 OR adiabatic). Earthing conductor = MET to means of earthing, sized by Reg 542.3.1 (Table 54.1) PLUS the PME overlay (Reg 544.1.2). The two regulations can give different answers — apply the rule that matches the conductor's job."
-          />
-
-          <CommonMistake
-            title="Bonding everything in sight — over-bonding plastic incomers"
-            whatHappens="Installer treats every metal pipe in a property as extraneous and runs main bonding to internal copper pipework downstream of an MDPE incomer. The bond is unnecessary AND harms diagnostics — a future fault on the bonded pipe may now have a non-trivial earth path that the test regime didn't anticipate."
-            doInstead="Run the GN8 22 kΩ test before bonding. ≥ 22 kΩ to the MET → not extraneous, no bond. Below 22 kΩ → bond per Reg 544.1.1 / 544.1.2. Document the test result on the cert. The point of bonding is to handle parts that DO introduce earth potential — bonding parts that don't introduces complexity for no safety gain, and on long copper runs can create circulating currents."
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>Scenarios — applying it on the day</ContentEyebrow>
-
-          <Scenario
-            title="Consumer-unit retrofit on a 1990s TT property"
-            situation="Customer wants their 17th edition split-load CU replaced with a modern 18th edition + A4 metal-bodied unit. The property is on a TT supply (no DNO PE) with a single 1.2 m driven rod giving Ra = 145 Ω. Existing CU has a 100 mA general-type RCD on the main switch and Type AC 30 mA RCDs on socket banks. Earthing conductor is 6 mm² copper from MET to a chamber outside."
-            whatToDo="Step 1 — verify Ra and the formula. 100 mA RCD: Ra × IΔn ≤ 50 V → 145 × 0.1 = 14.5 V (passes). 30 mA RCBO on each circuit: 145 × 0.03 = 4.35 V (passes). Step 2 — check earthing conductor size. Reg 542.3.1 / Table 54.1 with the conductor protected (in conduit, accessible chamber): 6 mm² is acceptable for TT (the PME overlay does not apply on TT). Step 3 — design the new CU with 30 mA Type A RCBOs on every circuit (Type A handles pulsating DC from modern LED drivers and electronics — Type AC is no longer fit for purpose). Step 4 — re-measure Ra after the works to confirm seasonal stability and record on the EIC. Step 5 — confirm main bonding to gas and water (if metallic, run the GN8 test) at 6 mm² minimum (TT does not require PME overlay, but 10 mm² is good practice on any modern install)."
-            whyItMatters="On TT, Ra is the linchpin of ADS. A retrofit that fits Type A RCBOs everywhere AND verifies Ra at completion gives you a defensible cert against current edition. Skipping the Ra re-measure leaves the cert exposed: if soil dries out in summer and Ra rises above the formula limit, ADS is no longer demonstrable and the property is non-compliant the moment the season changes. Reg 542.2.4 wants you to design for stability — record the Ra at install, advise the customer of the annual re-test schedule, and put it on the EICR retest interval."
-          />
-
-          <Scenario
-            title="Supplementary bonding decision in a 1980s domestic bathroom"
-            situation="EICR on a 1980s TN-C-S domestic property. The bathroom has a metal heated towel rail (CPC connected, exposed-conductive-part), an electric shower (CPC connected), copper pipework to a shower mixer and to the bath taps. No supplementary bonding visible — installer is being asked whether it is required under A4:2026. Existing supply: 100 A TN-C-S, 25 mm² neutral, 16 mm² earthing conductor, 10 mm² bonding to gas and water at the MET (sound). Bathroom circuits: lighting on a 6 A Type B MCB (NO RCD), shower on a 32 A Type B RCBO 30 mA, towel rail on a 16 A Type B RCBO 30 mA."
-            whatToDo="Apply Reg 701.415.2 three-condition test. Condition (a): every circuit in the location meets its disconnection time? Verify Zs at the furthest point of the lighting circuit, shower, towel rail and confirm ≤ Zs(max) for each device. Condition (b): every circuit has 30 mA RCD additional protection? FAILS — the lighting circuit is on an MCB without RCD. Under A4 Reg 411.3.4 the lighting circuit must have 30 mA RCD anyway (domestic luminaire rule); add an RCBO. Condition (c): all extraneous-conductive-parts effectively connected to the MET? Run the GN8 22 kΩ test on the bathroom copper pipework. If ≥ 22 kΩ (likely on a property with plastic incomers), the pipework is NOT extraneous and condition (c) is satisfied by default. If < 22 kΩ, confirm main bonding at the MET is sound. Outcome: once the lighting RCBO is added (Reg 411.3.4 fix) and the GN8 test passes, all three conditions are met and supplementary bonding can be omitted under Reg 701.415.2 — record explicitly on the EIC."
-            whyItMatters="A4:2026 makes Reg 411.3.4 unconditional within domestic premises — every lighting circuit in a dwelling needs 30 mA RCD or RCBO. Once that's done, the supplementary-bonding decision in the bathroom often resolves itself because condition (b) is satisfied for free. Recording the omission decision on the cert (with the three conditions ticked off) is the defensible approach — silent omission leaves the next inspector second-guessing the design."
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>Designer's quick reference — Chapter 54 in one screen</ContentEyebrow>
-
-          <ConceptBlock
-            title="Five rules to size every earth-related conductor on a UK domestic install"
-            plainEnglish="Walk it from the cut-out inwards. (1) Earthing conductor: Reg 542.3.1 / Table 54.1 + PME overlay. (2) MET: Reg 542.4.1, single bar, every earth conductor lands here. (3) Main bonding: Reg 544.1.1 (TN-S) or 544.1.2 / Table 54.8 (PME). (4) CPCs: Reg 543.1.1, Table 54.7 default, adiabatic where unusual. (5) Supplementary bonding: Reg 415.2.1 / 544.2 — 2.5 mm² protected, 4 mm² unprotected, R ≤ 50 V / Ia."
-            onSite="Default rule of thumb for a 100 A single-phase TN-C-S domestic UK property in 2026: earthing conductor 16 mm² Cu; main bonding to gas + water 10 mm² Cu; CPCs by Table 54.7 (so 1.0 mm² T&E line → 1.0 mm² CPC, 6 mm² T&E line → 2.5 mm² CPC, etc.); supplementary bonding only where Reg 701.415.2 conditions are NOT all met. Larger services (200 A three-phase) lift the bonding and earthing-conductor minimums per the supply-neutral CSA — always check the cut-out tail."
-          >
-            <p>
-              The five rules cover every earth-related conductor. The thing that catches new
-              designers out is treating bonding and CPCs as a single rule — they are not. The
-              earthing conductor on TN-C-S is dominated by the PME overlay (which the table-route
-              CPC sizing does not see). Main bonding is similarly PME-driven. CPCs ride on the line
-              conductor of their circuit. Supplementary bonding fills the gap where ADS cannot be
-              demonstrated alone — and is mostly omitted in modern UK domestic where the three Reg
-              701.415.2 conditions are met.
-            </p>
-          </ConceptBlock>
-
-          <FAQ items={faqItems} />
-
-          <KeyTakeaways
-            points={[
-              'The MET (Reg 542.4.1) is the single equipotential reference — every CPC, the earthing conductor, every main protective bonding conductor and any functional earth lands here.',
-              'CPCs are sized by Reg 543.1.1 — Table 54.7 selection by default, the adiabatic equation (Reg 543.1.3) where the table answer is implausible. Standard 6 mm² T&E carries a 2.5 mm² CPC; 10 mm² T&E carries a 4 mm² CPC.',
-              'Main protective bonding under Reg 544.1.1 is half-the-earthing-conductor-CSA on TN-S. On TN-C-S the higher minimums of Reg 544.1.2 / Table 54.8 apply — 10 mm² floor where supply neutral ≤ 35 mm², 16 mm² where 35–50, 25 mm² where 50–95.',
-              'Earthing conductors come from Reg 542.3.1 / Table 54.1 — 2.5 mm² protected against both, 6 mm² protected against corrosion only, 16 mm² unprotected against either — then lifted by the PME overlay (Reg 544.1.2) on TN-C-S.',
-              'TT installations need an electrode (usually multi-rod) that satisfies Ra × IΔn ≤ 50 V (Reg 411.5.3) plus Reg 542.2.4 seasonal stability. RCD-led ADS is the practical norm; OPD-led ADS (Reg 411.5.4) is rare.',
-              'Supplementary equipotential bonding (Reg 415.2.1 / 544.2) fills the gap where ADS cannot be demonstrated alone. In domestic bathrooms it can be omitted under Reg 701.415.2 ONLY if all three conditions hold — record the decision on the cert.',
-              'Use the GN8 22 kΩ test to decide whether a metal part is extraneous-conductive — measurement, not visual inspection, settles the bonding decision.',
-            ]}
-          />
-
-          <Quiz questions={quizQuestions} />
-
-          <div className="grid grid-cols-2 gap-3 pt-2">
-            <button
-              type="button"
-              onClick={() => navigate('/electrician/upskilling/bs7671-module-3')}
-              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
-                <ChevronLeft className="h-3 w-3" /> Module 3
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-white truncate">
-                Module overview
-              </div>
-            </button>
-            <button
-              type="button"
-              onClick={() => navigate('/electrician/upskilling/bs7671-module-4')}
-              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
-                Next module <ChevronRight className="h-3 w-3" />
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-black truncate">
-                Module 4 — Protection for Safety
-              </div>
-            </button>
-          </div>
-        </PageFrame>
-      </div>
-    </div>
+            <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+              Next module <ChevronRight className="h-3 w-3" />
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-black truncate">
+              Module 4 — Protection for Safety
+            </div>
+          </button>
+        </div>
+      </HubBody>
+    </HubPage>
   );
 };
 

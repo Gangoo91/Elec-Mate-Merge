@@ -78,11 +78,23 @@ export const CARD_BASE = cn(
  * is where they legitimately differ; the light is not, so it lives here and
  * both import it. One number to change if it ever needs tuning.
  */
+/**
+ * Brightened 2026-08-29. The inset top highlight went 0.10 → 0.16 and the drop
+ * shadow eased off, because at the old values a long reading page read as a
+ * column of near-black slabs — fine for a dense dashboard, tiring for someone
+ * reading 900 lines of teaching content.
+ */
 export const SURFACE_DEPTH =
-  'shadow-[inset_0_1px_0_0_rgba(255,255,255,0.10),0_2px_8px_-3px_rgba(0,0,0,0.75)]';
+  'shadow-[inset_0_1px_0_0_rgba(255,255,255,0.16),0_2px_10px_-4px_rgba(0,0,0,0.65)]';
 
+/**
+ * The lit surface. Brightened 2026-08-29 — roughly a third more light at each
+ * stop (0.14/0.075/0.045 → 0.19/0.105/0.065). Still a diagonal ramp, so a card
+ * reads as lit from the top-left rather than printed flat; just less like
+ * reading off a slate.
+ */
 export const CARD_SURFACE = cn(
-  'bg-gradient-to-br from-white/[0.14] via-white/[0.075] to-white/[0.045]',
+  'bg-gradient-to-br from-white/[0.19] via-white/[0.105] to-white/[0.065]',
   SURFACE_DEPTH
 );
 

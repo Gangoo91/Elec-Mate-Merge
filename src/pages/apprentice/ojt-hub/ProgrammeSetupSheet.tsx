@@ -98,8 +98,7 @@ export function ProgrammeSetupSheet({
       ? (new Date(endDate).getTime() - new Date(startDate).getTime()) / WEEK_MS
       : 0;
   const oldModel = !!startDate && startDate < NEW_MODEL_CUTOFF;
-  const oldModelTotal =
-    oldModel && weeks > 0 ? Math.round(OLD_MODEL_WEEKLY_HOURS * weeks) : 0;
+  const oldModelTotal = oldModel && weeks > 0 ? Math.round(OLD_MODEL_WEEKLY_HOURS * weeks) : 0;
 
   const belowFloor = totalHours > 0 && totalHours < OTJ_HOURS_FLOOR;
   const canSave = preview !== null && !belowFloor;
@@ -131,9 +130,8 @@ export function ProgrammeSetupSheet({
               </h2>
             </SheetTitle>
             <SheetDescription className="text-left text-[13px] text-white/70 leading-snug">
-              Off-the-job training is a fixed number of hours set for your
-              apprenticeship standard. Pick yours and add your dates — we'll work
-              out the pace you need to stay on track.
+              Off-the-job training is a fixed number of hours set for your apprenticeship standard.
+              Pick yours and add your dates — we'll work out the pace you need to stay on track.
             </SheetDescription>
           </SheetHeader>
 
@@ -155,8 +153,8 @@ export function ProgrammeSetupSheet({
               </Select>
               {standardCode && standardCode !== CUSTOM && (
                 <p className="text-[11px] text-white/45 leading-snug">
-                  DfE off-the-job minimum for this standard. Your provider may set
-                  a higher figure — use "Other" to match it.
+                  DfE off-the-job minimum for this standard. Your provider may set a higher figure —
+                  use "Other" to match it.
                 </p>
               )}
             </div>
@@ -207,7 +205,11 @@ export function ProgrammeSetupSheet({
                   <span className="text-white"> 6 hours per week</span> rule — not the fixed
                   per-standard hours.
                   {oldModelTotal > 0 && (
-                    <> That's about <span className="text-elec-yellow">{oldModelTotal}h</span> across your programme.</>
+                    <>
+                      {' '}
+                      That's about <span className="text-elec-yellow">{oldModelTotal}h</span> across
+                      your programme.
+                    </>
                   )}
                 </p>
                 {oldModelTotal > 0 && (
@@ -227,8 +229,8 @@ export function ProgrammeSetupSheet({
 
             {belowFloor && (
               <p className="text-[12px] text-red-300 leading-snug">
-                Off-the-job delivery can't be evidenced below the {OTJ_HOURS_FLOOR}-hour
-                statutory floor — check your figure.
+                Off-the-job delivery can't be evidenced below the {OTJ_HOURS_FLOOR}-hour statutory
+                floor — check your figure.
               </p>
             )}
 
@@ -240,16 +242,12 @@ export function ProgrammeSetupSheet({
                   <span className="text-[26px] font-semibold text-elec-yellow tabular-nums leading-none">
                     {preview.total}h
                   </span>
-                  <span className="text-[12px] text-white/45">
-                    over {preview.weeks} weeks
-                  </span>
+                  <span className="text-[12px] text-white/45">over {preview.weeks} weeks</span>
                 </div>
                 <p className="text-[12px] text-white/70 leading-snug">
                   That's about{' '}
-                  <span className="text-elec-yellow">
-                    {preview.weeklyTarget}h/week
-                  </span>{' '}
-                  to clear your hours by gateway.
+                  <span className="text-elec-yellow">{preview.weeklyTarget}h/week</span> to clear
+                  your hours by gateway.
                 </p>
               </div>
             )}

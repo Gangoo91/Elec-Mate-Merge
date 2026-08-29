@@ -16,11 +16,11 @@
  */
 
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
-import { PageFrame, PageHero } from '@/components/college/primitives';
 import {
   TLDR,
   ConceptBlock,
@@ -46,10 +46,10 @@ const checks = [
     question:
       'A customer asks "do I need MCS to install a heat pump?". What\'s the precise answer?',
     options: [
-      "Yes, MCS certification is a legal requirement for installing any heat pump. The Building Regulations make MCS sign-off mandatory for all renewable heating installations, and installing a heat pump without MCS is a criminal offence under Part L. There is no lawful route to install one outside the MCS scheme.",
-      "Only if the heat pump is above a certain output. Units below 12 kW are exempt from MCS, but anything larger must be MCS-certified by law. The threshold is set by the Microgeneration Certification Scheme and applies regardless of whether the customer wants a grant.",
-      "No, but you need Gas Safe registration instead. Because a heat pump replaces a gas boiler it falls under the Gas Safety (Installation and Use) Regulations, so the installer must be Gas Safe registered rather than MCS-certified. MCS only applies to solar PV.",
-      "No, MCS is not legally required to install a heat pump — it is the funding gateway, not a legal install requirement. Part L compliance is the legal floor; MCS unlocks the Boiler Upgrade Scheme grant and most manufacturer warranties.",
+      'Yes, MCS certification is a legal requirement for installing any heat pump. The Building Regulations make MCS sign-off mandatory for all renewable heating installations, and installing a heat pump without MCS is a criminal offence under Part L. There is no lawful route to install one outside the MCS scheme.',
+      'Only if the heat pump is above a certain output. Units below 12 kW are exempt from MCS, but anything larger must be MCS-certified by law. The threshold is set by the Microgeneration Certification Scheme and applies regardless of whether the customer wants a grant.',
+      'No, but you need Gas Safe registration instead. Because a heat pump replaces a gas boiler it falls under the Gas Safety (Installation and Use) Regulations, so the installer must be Gas Safe registered rather than MCS-certified. MCS only applies to solar PV.',
+      'No, MCS is not legally required to install a heat pump — it is the funding gateway, not a legal install requirement. Part L compliance is the legal floor; MCS unlocks the Boiler Upgrade Scheme grant and most manufacturer warranties.',
     ],
     correctIndex: 3,
     explanation:
@@ -57,12 +57,11 @@ const checks = [
   },
   {
     id: 'l3-m2-s4-sub1-future-homes',
-    question:
-      'What is the Future Homes Standard and when does it take effect?',
+    question: 'What is the Future Homes Standard and when does it take effect?',
     options: [
       "The Future Homes Standard is a voluntary best-practice kitemark that builders can choose to display on new homes to show they exceed the minimum Building Regulations. It carries no legal force and sets no carbon target; it simply allows a developer to market a home as 'future-ready' if they fit a heat pump.",
-      "The Future Homes Standard is an EU directive carried over after Brexit that sets energy-performance targets for existing dwellings at point of sale. It requires any home being sold to reach EPC band C before completion, with heat pumps the usual route, and is enforced by the conveyancing solicitor.",
-      "The Future Homes Standard is a grant scheme run by Ofgem that replaces the Boiler Upgrade Scheme from 2025, paying developers a fixed subsidy per low-carbon new-build home. It has no effect on Part L or the Building Regulations themselves and applies only to social housing.",
+      'The Future Homes Standard is an EU directive carried over after Brexit that sets energy-performance targets for existing dwellings at point of sale. It requires any home being sold to reach EPC band C before completion, with heat pumps the usual route, and is enforced by the conveyancing solicitor.',
+      'The Future Homes Standard is a grant scheme run by Ofgem that replaces the Boiler Upgrade Scheme from 2025, paying developers a fixed subsidy per low-carbon new-build home. It has no effect on Part L or the Building Regulations themselves and applies only to social housing.',
       "The Future Homes Standard is the Government's policy framework for new-build dwellings, expected to take effect on a phased basis from 2025. It tightens Part L of the Building Regulations to require new-build homes to produce 75-80% lower CO₂ emissions than the previous standard.",
     ],
     correctIndex: 3,
@@ -72,12 +71,12 @@ const checks = [
   {
     id: 'l3-m2-s4-sub1-bus-grant',
     question:
-      'A customer wants the £7,500 Boiler Upgrade Scheme grant for an ASHP. What\'s the L3 electrician\'s role in securing it?',
+      "A customer wants the £7,500 Boiler Upgrade Scheme grant for an ASHP. What's the L3 electrician's role in securing it?",
     options: [
       "Indirectly — you do the electrical work to the certified installer's design and support the MCS pack, but you don't sign the grant off yourself. The MCS-certified installer is the named accountable person who applies for the grant on the customer's behalf.",
       "You apply for the grant yourself on the customer's behalf through the Ofgem portal once you have completed the electrical work. The BUS grant is claimed by whoever carries out the install, so as the L3 electrician on site the application paperwork is your responsibility regardless of who holds MCS certification.",
-      "Your role is to issue the customer with the EPC needed to claim the grant. Because the BUS requires a valid EPC with no outstanding insulation recommendations, the L3 electrician carries out the EPC assessment as part of the install and lodges it before the grant can be released.",
-      "There is no electrician role — the BUS is a purely financial arrangement between the customer and Ofgem. The customer claims the £7,500 directly as a rebate after the heat pump is running, and the electrical install has no bearing on eligibility provided the system works.",
+      'Your role is to issue the customer with the EPC needed to claim the grant. Because the BUS requires a valid EPC with no outstanding insulation recommendations, the L3 electrician carries out the EPC assessment as part of the install and lodges it before the grant can be released.',
+      'There is no electrician role — the BUS is a purely financial arrangement between the customer and Ofgem. The customer claims the £7,500 directly as a rebate after the heat pump is running, and the electrical install has no bearing on eligibility provided the system works.',
     ],
     correctIndex: 0,
     explanation:
@@ -91,10 +90,10 @@ const quizQuestions = [
     question:
       'What does Part L of the Building Regulations cover and how does it relate to environmental technology systems?',
     options: [
-      "Part L (Conservation of Fuel and Power) is the section of the Building Regulations governing the energy efficiency of buildings, demonstrated via the SAP calculation for dwellings or SBEM for non-domestic. Environmental technology systems such as PV, heat pumps and MVHR contribute to Part L compliance.",
-      "Part L (Electrical Safety in Dwellings) governs the safety of fixed wiring in homes — it is the part that makes new circuits and consumer-unit changes notifiable to Building Control. Environmental tech relates to Part L because adding a PV or EV circuit triggers the notification and inspection-and-testing requirements.",
-      "Part L (Fire Safety) covers means of escape, fire detection and compartmentation. Environmental tech relates to Part L because battery storage and PV inverters introduce fire risks that must be assessed, and the part sets the clearances and detection requirements for those installations.",
-      "Part L (Drainage and Waste Disposal) covers foul and surface-water drainage. Environmental tech relates to Part L mainly through ground-source heat pump trenches and rainwater-harvesting systems, which must satisfy the drainage provisions before they can be commissioned.",
+      'Part L (Conservation of Fuel and Power) is the section of the Building Regulations governing the energy efficiency of buildings, demonstrated via the SAP calculation for dwellings or SBEM for non-domestic. Environmental technology systems such as PV, heat pumps and MVHR contribute to Part L compliance.',
+      'Part L (Electrical Safety in Dwellings) governs the safety of fixed wiring in homes — it is the part that makes new circuits and consumer-unit changes notifiable to Building Control. Environmental tech relates to Part L because adding a PV or EV circuit triggers the notification and inspection-and-testing requirements.',
+      'Part L (Fire Safety) covers means of escape, fire detection and compartmentation. Environmental tech relates to Part L because battery storage and PV inverters introduce fire risks that must be assessed, and the part sets the clearances and detection requirements for those installations.',
+      'Part L (Drainage and Waste Disposal) covers foul and surface-water drainage. Environmental tech relates to Part L mainly through ground-source heat pump trenches and rainwater-harvesting systems, which must satisfy the drainage provisions before they can be commissioned.',
     ],
     correctAnswer: 0,
     explanation:
@@ -102,13 +101,12 @@ const quizQuestions = [
   },
   {
     id: 2,
-    question:
-      'What is the SAP and why does it matter for an environmental technology install?',
+    question: 'What is the SAP and why does it matter for an environmental technology install?',
     options: [
-      "The SAP (Self-Assessment Pathway) is the route by which an installer self-certifies that an environmental tech install meets Building Regulations without involving Building Control. The installer completes a SAP declaration at handover, which the customer keeps as proof of compliance in place of a competent-person certificate.",
-      "The SAP (System Approval Permit) is the DNO authorisation required before connecting a heat pump or PV array to the grid. It confirms the local network can absorb the additional load or generation, and the install cannot be energised until the SAP is granted under the G98/G99 process.",
-      "The Standard Assessment Procedure (SAP) is the methodology for calculating the energy performance of dwellings under Part L. It produces a SAP rating and a regulated CO₂ emissions figure that must beat the Target Emission Rate, with environmental tech feeding into the calculation.",
-      "The SAP (Site Assessment Protocol) is the MCS site survey that determines whether a property is suitable for a heat pump. It checks roof orientation, available wall space and the existing emitter sizes; the SAP score it produces tells the customer whether the install will qualify for the Boiler Upgrade Scheme grant.",
+      'The SAP (Self-Assessment Pathway) is the route by which an installer self-certifies that an environmental tech install meets Building Regulations without involving Building Control. The installer completes a SAP declaration at handover, which the customer keeps as proof of compliance in place of a competent-person certificate.',
+      'The SAP (System Approval Permit) is the DNO authorisation required before connecting a heat pump or PV array to the grid. It confirms the local network can absorb the additional load or generation, and the install cannot be energised until the SAP is granted under the G98/G99 process.',
+      'The Standard Assessment Procedure (SAP) is the methodology for calculating the energy performance of dwellings under Part L. It produces a SAP rating and a regulated CO₂ emissions figure that must beat the Target Emission Rate, with environmental tech feeding into the calculation.',
+      'The SAP (Site Assessment Protocol) is the MCS site survey that determines whether a property is suitable for a heat pump. It checks roof orientation, available wall space and the existing emitter sizes; the SAP score it produces tells the customer whether the install will qualify for the Boiler Upgrade Scheme grant.',
     ],
     correctAnswer: 2,
     explanation:
@@ -116,13 +114,12 @@ const quizQuestions = [
   },
   {
     id: 3,
-    question:
-      'What is the MCS Code of Practice and what does it require of installers?',
+    question: 'What is the MCS Code of Practice and what does it require of installers?',
     options: [
-      "The MCS Code of Practice is purely a technical wiring standard that replaces BS 7671 for renewable installations. Where an install includes PV or a heat pump, the electrician follows the MCS Code instead of the Wiring Regulations, and a standard EIC is not required because the MCS commissioning sheet covers compliance.",
-      "The MCS Code of Practice is a voluntary marketing charter that lets installers display the MCS logo in their advertising. It places no real obligations on the installer beyond paying the annual fee, and certification cannot be withdrawn for poor work — only for non-payment of membership.",
-      "The MCS Code of Practice is the building-control notification procedure for renewable installs. It sets out how the installer notifies the local authority of a new PV or heat pump circuit and the timescales for issuing the compliance certificate; it has nothing to do with consumer protection or sales conduct.",
-      "The MCS Code of Practice is the over-arching code all MCS-certified installers must comply with — covering consumer protection, installation quality, commissioning records, handover documentation, complaints and after-sales support. Certification can be withdrawn for breaches.",
+      'The MCS Code of Practice is purely a technical wiring standard that replaces BS 7671 for renewable installations. Where an install includes PV or a heat pump, the electrician follows the MCS Code instead of the Wiring Regulations, and a standard EIC is not required because the MCS commissioning sheet covers compliance.',
+      'The MCS Code of Practice is a voluntary marketing charter that lets installers display the MCS logo in their advertising. It places no real obligations on the installer beyond paying the annual fee, and certification cannot be withdrawn for poor work — only for non-payment of membership.',
+      'The MCS Code of Practice is the building-control notification procedure for renewable installs. It sets out how the installer notifies the local authority of a new PV or heat pump circuit and the timescales for issuing the compliance certificate; it has nothing to do with consumer protection or sales conduct.',
+      'The MCS Code of Practice is the over-arching code all MCS-certified installers must comply with — covering consumer protection, installation quality, commissioning records, handover documentation, complaints and after-sales support. Certification can be withdrawn for breaches.',
     ],
     correctAnswer: 3,
     explanation:
@@ -131,26 +128,25 @@ const quizQuestions = [
   {
     id: 4,
     question:
-      'What\'s the difference between a notifiable and non-notifiable electrical installation under Building Regs Part P?',
+      "What's the difference between a notifiable and non-notifiable electrical installation under Building Regs Part P?",
     options: [
-      "Part P (Electrical Safety in Dwellings) requires certain electrical work in dwellings — new circuits, consumer unit changes, work in special locations — to be notified to Building Control, via a competent-person scheme or directly. Most environmental tech installs are notifiable because they add a new circuit; like-for-like replacement on an existing circuit is not.",
-      "Notifiable work is any work carried out by a sole trader, while non-notifiable work is any work carried out by a registered firm. Whether Part P applies depends on the employment status of the electrician, not on the nature of the work, so a registered company never has to notify.",
-      "Notifiable work is anything costing more than £500, while smaller jobs are non-notifiable. Part P uses a financial threshold rather than a technical one, so adding a PV inverter circuit is only notifiable if the total install cost exceeds that figure.",
-      "Notifiable work means work that requires an EICR before it can start; non-notifiable work can proceed without one. Part P is essentially about whether a condition report is needed first, and most environmental tech installs are non-notifiable because the property already has a valid EICR.",
+      'Part P (Electrical Safety in Dwellings) requires certain electrical work in dwellings — new circuits, consumer unit changes, work in special locations — to be notified to Building Control, via a competent-person scheme or directly. Most environmental tech installs are notifiable because they add a new circuit; like-for-like replacement on an existing circuit is not.',
+      'Notifiable work is any work carried out by a sole trader, while non-notifiable work is any work carried out by a registered firm. Whether Part P applies depends on the employment status of the electrician, not on the nature of the work, so a registered company never has to notify.',
+      'Notifiable work is anything costing more than £500, while smaller jobs are non-notifiable. Part P uses a financial threshold rather than a technical one, so adding a PV inverter circuit is only notifiable if the total install cost exceeds that figure.',
+      'Notifiable work means work that requires an EICR before it can start; non-notifiable work can proceed without one. Part P is essentially about whether a condition report is needed first, and most environmental tech installs are non-notifiable because the property already has a valid EICR.',
     ],
     correctAnswer: 0,
     explanation:
-      "Part P is the safety regulator for domestic electrical work. Adding any environmental tech circuit (PV, EV, heat pump, battery storage) is notifiable — your firm registers the work via the competent-person scheme and the customer receives a Building Regs compliance certificate. Skipping notification leaves the customer unable to demonstrate Part P compliance to a future buyer / surveyor / insurer.",
+      'Part P is the safety regulator for domestic electrical work. Adding any environmental tech circuit (PV, EV, heat pump, battery storage) is notifiable — your firm registers the work via the competent-person scheme and the customer receives a Building Regs compliance certificate. Skipping notification leaves the customer unable to demonstrate Part P compliance to a future buyer / surveyor / insurer.',
   },
   {
     id: 5,
-    question:
-      'What is the Boiler Upgrade Scheme (BUS) and what does it pay for?',
+    question: 'What is the Boiler Upgrade Scheme (BUS) and what does it pay for?',
     options: [
       "The BUS is a low-interest government loan toward low-carbon heating, repaid through the customer's electricity bill over ten years. It is administered by the customer's energy supplier rather than Ofgem, and because it is a loan rather than a grant the full cost is eventually recovered from the householder.",
-      "The BUS is the current main UK government grant for low-carbon heating retrofits — up to £7,500 toward an ASHP or GSHP, and lower amounts toward biomass boilers in eligible properties. It is administered by Ofgem and paid to the MCS-certified installer, who passes it on as a price reduction.",
-      "The BUS pays a tariff for every kWh of heat the heat pump delivers, metered over seven years, rather than an upfront grant. It is the direct successor to the Renewable Heat Incentive and works the same way — the more heat the system produces, the more the customer is paid by Ofgem.",
-      "The BUS is a VAT relief scheme rather than a grant. It zero-rates the cost of a heat pump and its installation so the customer saves the 20% VAT, but no cash payment is made and MCS certification is not required to benefit from it.",
+      'The BUS is the current main UK government grant for low-carbon heating retrofits — up to £7,500 toward an ASHP or GSHP, and lower amounts toward biomass boilers in eligible properties. It is administered by Ofgem and paid to the MCS-certified installer, who passes it on as a price reduction.',
+      'The BUS pays a tariff for every kWh of heat the heat pump delivers, metered over seven years, rather than an upfront grant. It is the direct successor to the Renewable Heat Incentive and works the same way — the more heat the system produces, the more the customer is paid by Ofgem.',
+      'The BUS is a VAT relief scheme rather than a grant. It zero-rates the cost of a heat pump and its installation so the customer saves the 20% VAT, but no cash payment is made and MCS certification is not required to benefit from it.',
     ],
     correctAnswer: 1,
     explanation:
@@ -161,10 +157,10 @@ const quizQuestions = [
     question:
       'What is the Smart Export Guarantee (SEG) and how does it apply to a domestic PV installation?',
     options: [
-      "SEG is a fixed government tariff that guarantees every domestic PV owner the same export rate — currently around 15p/kWh — paid directly by Ofgem rather than by the supplier. The rate is set centrally and does not vary between suppliers, so the customer has no need to shop around once the system is commissioned.",
-      "SEG is a one-off grant toward the cost of a PV battery, paid so that customers store rather than export their surplus generation. It is claimed at the same time as the Boiler Upgrade Scheme grant and does not involve any ongoing export payments to the customer.",
-      "SEG is a regulated payment scheme requiring electricity suppliers to pay domestic generators for electricity exported to the grid. Tariffs vary by supplier; to qualify, the install must be MCS-certified and the meter must be able to record export.",
-      "SEG is the DNO connection agreement that permits a domestic PV system to export to the grid at all. Without a SEG agreement the inverter must be set to zero-export, so its main purpose is to authorise the export connection rather than to pay the customer for the electricity exported.",
+      'SEG is a fixed government tariff that guarantees every domestic PV owner the same export rate — currently around 15p/kWh — paid directly by Ofgem rather than by the supplier. The rate is set centrally and does not vary between suppliers, so the customer has no need to shop around once the system is commissioned.',
+      'SEG is a one-off grant toward the cost of a PV battery, paid so that customers store rather than export their surplus generation. It is claimed at the same time as the Boiler Upgrade Scheme grant and does not involve any ongoing export payments to the customer.',
+      'SEG is a regulated payment scheme requiring electricity suppliers to pay domestic generators for electricity exported to the grid. Tariffs vary by supplier; to qualify, the install must be MCS-certified and the meter must be able to record export.',
+      'SEG is the DNO connection agreement that permits a domestic PV system to export to the grid at all. Without a SEG agreement the inverter must be set to zero-export, so its main purpose is to authorise the export connection rather than to pay the customer for the electricity exported.',
     ],
     correctAnswer: 2,
     explanation:
@@ -172,13 +168,12 @@ const quizQuestions = [
   },
   {
     id: 7,
-    question:
-      'Where does the Code for Sustainable Homes sit in the regulatory framework?',
+    question: 'Where does the Code for Sustainable Homes sit in the regulatory framework?',
     options: [
-      "The Code for Sustainable Homes is the current mandatory standard that has replaced Part L for all new-build dwellings since 2015. Every new home must now achieve at least Code Level 4, and the SAP assessment is scored against the Code rather than against the Building Regulations.",
-      "The Code for Sustainable Homes is a BS 7671 supplement covering the electrical aspects of low-carbon homes — PV wiring, EV provision and battery storage. It sits alongside the Wiring Regulations and an electrician must certify compliance with the Code on the EIC for any new dwelling.",
-      "The Code for Sustainable Homes is an MCS scheme document setting out the installer competence requirements for renewable technologies in new homes. It is the qualification framework that an installer must satisfy before being allowed to sign off PV or heat pump installs on new-build sites.",
-      "The Code for Sustainable Homes was a non-mandatory sustainability rating system (1 to 6 stars) for new-build dwellings, used in England between 2007 and 2015. It was withdrawn for new applications in 2015 and replaced by enhanced Part L; it is no longer the current standard.",
+      'The Code for Sustainable Homes is the current mandatory standard that has replaced Part L for all new-build dwellings since 2015. Every new home must now achieve at least Code Level 4, and the SAP assessment is scored against the Code rather than against the Building Regulations.',
+      'The Code for Sustainable Homes is a BS 7671 supplement covering the electrical aspects of low-carbon homes — PV wiring, EV provision and battery storage. It sits alongside the Wiring Regulations and an electrician must certify compliance with the Code on the EIC for any new dwelling.',
+      'The Code for Sustainable Homes is an MCS scheme document setting out the installer competence requirements for renewable technologies in new homes. It is the qualification framework that an installer must satisfy before being allowed to sign off PV or heat pump installs on new-build sites.',
+      'The Code for Sustainable Homes was a non-mandatory sustainability rating system (1 to 6 stars) for new-build dwellings, used in England between 2007 and 2015. It was withdrawn for new applications in 2015 and replaced by enhanced Part L; it is no longer the current standard.',
     ],
     correctAnswer: 3,
     explanation:
@@ -187,12 +182,12 @@ const quizQuestions = [
   {
     id: 8,
     question:
-      'What\'s the role of Local Authority Building Control in an environmental technology install?',
+      "What's the role of Local Authority Building Control in an environmental technology install?",
     options: [
       "Building Control is the local-authority enforcement of the Building Regulations. For most environmental tech installs the route is via a competent-person scheme that self-certifies the work, so Building Control is notified but doesn't visit; for installs outside such schemes, or major works, it may inspect on-site. The customer receives a Building Regs compliance certificate.",
-      "Local Authority Building Control must physically inspect and sign off every environmental tech install before it can be energised, regardless of whether the firm is in a competent-person scheme. The scheme route was abolished for renewables, so an inspector now attends every PV, EV and heat pump job.",
-      "Local Authority Building Control sets the export tariff and issues the MCS certificate for renewable installs. It is the body the customer signs up with for the Smart Export Guarantee, and it administers the Boiler Upgrade Scheme grant on behalf of Ofgem.",
-      "Local Authority Building Control has no role in environmental tech at all — these installs are governed solely by BS 7671 and the DNO connection process. Building Control deals only with structural and fire matters, so an electrician never notifies it for a PV or heat pump circuit.",
+      'Local Authority Building Control must physically inspect and sign off every environmental tech install before it can be energised, regardless of whether the firm is in a competent-person scheme. The scheme route was abolished for renewables, so an inspector now attends every PV, EV and heat pump job.',
+      'Local Authority Building Control sets the export tariff and issues the MCS certificate for renewable installs. It is the body the customer signs up with for the Smart Export Guarantee, and it administers the Boiler Upgrade Scheme grant on behalf of Ofgem.',
+      'Local Authority Building Control has no role in environmental tech at all — these installs are governed solely by BS 7671 and the DNO connection process. Building Control deals only with structural and fire matters, so an electrician never notifies it for a PV or heat pump circuit.',
     ],
     correctAnswer: 0,
     explanation:
@@ -204,10 +199,10 @@ const faqs = [
   {
     question: "If MCS isn't legally required, why is everyone obsessed with it?",
     answer:
-      "Because MCS is the gateway to most of the financial incentives. The Boiler Upgrade Scheme grant requires MCS-certified installation. The Smart Export Guarantee requires MCS-certified installation for the customer to claim export payments. Most manufacturer warranties require MCS-certified installation. The Renewable Heat Incentive (closed 2022) and the Feed-in Tariff (closed 2019) historically required MCS too. So while you can technically install non-MCS, the customer almost always loses money by doing so. In practice MCS-certified install is the default, and non-MCS is the exception.",
+      'Because MCS is the gateway to most of the financial incentives. The Boiler Upgrade Scheme grant requires MCS-certified installation. The Smart Export Guarantee requires MCS-certified installation for the customer to claim export payments. Most manufacturer warranties require MCS-certified installation. The Renewable Heat Incentive (closed 2022) and the Feed-in Tariff (closed 2019) historically required MCS too. So while you can technically install non-MCS, the customer almost always loses money by doing so. In practice MCS-certified install is the default, and non-MCS is the exception.',
   },
   {
-    question: "Which environmental tech installs are notifiable under Part P?",
+    question: 'Which environmental tech installs are notifiable under Part P?',
     answer:
       "Almost all of them in domestic property. PV: yes (new circuits). EV charging: yes. Heat pump: yes (new dedicated circuit). Battery storage: yes. MVHR: typically yes (new dedicated circuit). Biomass boiler: usually yes (new dedicated circuit for the controls and pump). Wind / hydro: yes. The general rule for Part P notifiability: any new circuit, consumer unit work, or work in a special location (bathroom etc.) is notifiable. Most environmental tech adds a new circuit, so most environmental tech is notifiable. The competent-person scheme handles the notification for the installer's firm.",
   },
@@ -222,12 +217,13 @@ const faqs = [
       "Yes for major work. Adding PV, a heat pump or insulating the property changes the SAP rating; the EPC should be re-issued to reflect the new performance. The certified installer normally arranges this as part of the handover pack. Mortgage lenders, insurers and future buyers refer to the EPC; an out-of-date EPC understates the property's actual performance. EPCs are valid for 10 years from issue.",
   },
   {
-    question: "What happens if I install non-MCS — is there a legal consequence?",
+    question: 'What happens if I install non-MCS — is there a legal consequence?',
     answer:
       "No legal consequence to the install itself (assuming Part P, BS 7671 and Building Regs are satisfied). The consequence is to the customer: no BUS grant, no SEG export payments, manufacturer warranty likely void. As the L3 electrician you can install non-MCS and the install can be safe and compliant — but you owe the customer an honest conversation about what they're giving up. Most customers, when informed, opt for the MCS-certified route.",
   },
   {
-    question: "How does the regulatory framework differ between England, Scotland, Wales and Northern Ireland?",
+    question:
+      'How does the regulatory framework differ between England, Scotland, Wales and Northern Ireland?',
     answer:
       "Building Regulations are devolved — England, Scotland, Wales and Northern Ireland each have their own. The structure is similar but the detailed targets differ. Scotland's equivalent of Part L is Section 6 of the Scottish Technical Standards. Wales has its own version of Part L within its Building Regulations. Northern Ireland has Part F. MCS is UK-wide. BS 7671 is UK-wide (and Channel Islands / Isle of Man). ENA G98/G99 is UK-wide. Future Homes Standard is England's scheme; the devolved nations have their own equivalents on similar timescales. As the L3 electrician working across borders, check the local Building Regulations equivalent.",
   },
@@ -238,589 +234,553 @@ export default function Sub1() {
   useSEO({ title: TITLE, description: DESCRIPTION });
 
   return (
-    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
-      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
-        <PageFrame>
+    <HubPage>
+      <HubMasthead
+        section="Module 2 · Section 4 · Subsection 1"
+        title="Building Regulations Part L + MCS framework"
+        backTo="/study-centre/apprentice/level3-module2-section4"
+      />
+      <HubBody>
+        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
+          The regulatory framework for environmental technology systems — Building Regs Part L
+          (energy), Future Homes Standard, MCS Code and Installation Standards, Boiler Upgrade
+          Scheme, Smart Export Guarantee. Where each rule sits and what it actually requires.
+        </p>
+
+        <TLDR
+          points={[
+            'Building Regulations Part L (Conservation of Fuel and Power) is the legal framework for energy efficiency in buildings. Compliance demonstrated via SAP (dwellings) or SBEM (non-domestic). Environmental tech is increasingly the standard route to compliance.',
+            'Future Homes Standard tightens Part L for new-build from 2025 — effectively rules out fossil-fuel boilers in new-build, normalises heat pump + PV + MVHR + smart controls.',
+            "MCS is not legally required to install — it's the funding gateway (Boiler Upgrade Scheme grant for heat pumps, Smart Export Guarantee for PV export). Manufacturer warranties also typically require MCS.",
+            "Building Regs Part P makes most environmental tech installs notifiable. The competent-person scheme route (NICEIC, NAPIT) handles notification on the installer's behalf.",
+          ]}
+        />
+
+        <LearningOutcomes
+          outcomes={[
+            'Identify Part L of the Building Regulations as the energy-efficiency framework for buildings, and state how environmental technology systems contribute to Part L compliance via the SAP / SBEM calculation.',
+            'Recognise the Future Homes Standard as the upcoming tightening of Part L for new-build dwellings.',
+            'Distinguish MCS (funding gateway and quality scheme) from the legal regulatory framework (Building Regs, BS 7671). Identify the Boiler Upgrade Scheme and Smart Export Guarantee as the current main MCS-gated incentives.',
+            'Identify Building Regulations Part P as the safety regulator for domestic electrical work and recognise that most environmental tech installs are notifiable under Part P.',
+            'Identify the technology-specific MCS Installation Standards (MIS 3001-3012) and their respective scopes.',
+            'Recognise the role of Local Authority Building Control and the competent-person scheme route to Part P / Part L sign-off.',
+          ]}
+          initialVisibleCount={3}
+        />
+
+        <ContentEyebrow>Building Regulations Part L — the legal floor</ContentEyebrow>
+
+        <ConceptBlock
+          title="Part L is the energy-efficiency regulator for buildings"
+          plainEnglish="Part L of the Building Regulations (Conservation of Fuel and Power) sets minimum energy-performance standards for new and refurbished buildings in England (with equivalents in the devolved nations). Compliance is demonstrated through a calculation methodology — SAP for dwellings, SBEM for non-domestic. Successive Part L revisions have tightened the targets, pushing more environmental tech into the standard build specification."
+          onSite="On a new-build site or major refurbishment you'll see the Part L compliance pack — heat-loss calc, SAP score, SAP recommendations, contribution from environmental tech (PV credits, heat pump SCOP, MVHR efficiency). The MCS-certified designer typically produces the environmental tech contribution; the SAP assessor compiles the overall compliance pack."
+        >
+          <p>How environmental tech contributes to Part L compliance:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>PV</strong> — generation credits in the SAP calculation reduce the regulated
+              CO₂ emission rate, helping the dwelling beat the Target Emission Rate (TER).
+            </li>
+            <li>
+              <strong>Heat pumps</strong> — lower regulated CO₂ per kWh of heat than fossil-fuel
+              boilers, particularly as the grid carbon intensity falls.
+            </li>
+            <li>
+              <strong>MVHR</strong> — reduces ventilation heat losses in airtight buildings,
+              contributing to the fabric energy efficiency score.
+            </li>
+            <li>
+              <strong>Smart controls</strong> — load-shedding / demand-response capability gives a
+              (modest) SAP credit.
+            </li>
+            <li>
+              <strong>Fabric measures</strong> — insulation, glazing, airtightness — the largest
+              single SAP contribution in most dwellings, and the foundation that makes other
+              measures effective.
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <RegsCallout
+          source="Building Regulations 2010, Approved Document L (Conservation of Fuel and Power)"
+          clause={
+            <>
+              Approved Document L sets out the methodology for demonstrating Part L compliance and
+              the minimum standards for fabric, services and on-site generation. For dwellings, SAP
+              is the assessment methodology and the dwelling must meet a Target Emission Rate (TER)
+              and a Target Fabric Energy Efficiency (TFEE) calculated for the specific design.
+            </>
+          }
+          meaning={
+            <>
+              Approved Document L is the live document for Part L compliance — different editions
+              apply for different commencement dates, so the install pack needs to use the right
+              version. The Future Homes Standard editions (expected phased in from 2025) tighten the
+              targets significantly. As the L3 electrician you don&apos;t run the SAP yourself, but
+              you should recognise that the installer&apos;s design pack feeds into a regulated
+              compliance calculation.
+            </>
+          }
+          cite="Source: Building Regulations 2010, Approved Document L (paraphrased from the published Approved Document available via gov.uk)."
+        />
+
+        <InlineCheck
+          id={checks[1].id}
+          question={checks[1].question}
+          options={checks[1].options}
+          correctIndex={checks[1].correctIndex}
+          explanation={checks[1].explanation}
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>MCS — the funding gateway and quality scheme</ContentEyebrow>
+
+        <ConceptBlock
+          title="MCS is not a regulator — it's a funding gateway"
+          plainEnglish="The Microgeneration Certification Scheme (MCS) is a non-statutory competence and quality scheme administered by MCS Service Co. Installers join the scheme, pay annual membership, and submit installs for sign-off against the relevant Installation Standard (MIS). Customers who use MCS-certified installers can access funding incentives — currently the Boiler Upgrade Scheme grant for heat pumps and the Smart Export Guarantee for PV export. Most manufacturer warranties also require MCS-certified installation."
+          onSite="The MCS-certified installer is the named accountable person on the install pack. As an apprentice on the install you carry out the work to the certified installer's design and contribute to the install record, but you don't sign off the MCS pack yourself unless you're personally MCS-certified for the technology in question."
+        >
+          <p>The MCS Installation Standards by technology:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>MIS 3001</strong> — Solar thermal hot water systems
+            </li>
+            <li>
+              <strong>MIS 3002</strong> — Solar PV systems
+            </li>
+            <li>
+              <strong>MIS 3003</strong> — Small wind turbine systems
+            </li>
+            <li>
+              <strong>MIS 3004</strong> — Biomass boilers
+            </li>
+            <li>
+              <strong>MIS 3005</strong> — Heat pumps (ASHP, GSHP, water-source)
+            </li>
+            <li>
+              <strong>MIS 3006</strong> — Biomass stoves
+            </li>
+            <li>
+              <strong>MIS 3007</strong> — EV chargepoints (selected aspects; not the primary EV
+              regulator)
+            </li>
+            <li>
+              <strong>MIS 3008</strong> — Small hydro systems
+            </li>
+            <li>
+              <strong>MIS 3012</strong> — Battery storage systems
+            </li>
+          </ul>
+          <p>
+            All MCS Installation Standards reference BS 7671 explicitly for the electrical detail.
+            MCS doesn&apos;t replace BS 7671; it adds installer-quality and consumer-protection
+            requirements on top.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck
+          id={checks[0].id}
+          question={checks[0].question}
+          options={checks[0].options}
+          correctIndex={checks[0].correctIndex}
+          explanation={checks[0].explanation}
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>The Boiler Upgrade Scheme</ContentEyebrow>
+
+        <ConceptBlock
+          title="The current main grant for heat-pump retrofit"
+          plainEnglish="The Boiler Upgrade Scheme (BUS) is the UK government's grant for low-carbon heating retrofits. Currently up to £7,500 toward an ASHP install, £7,500 toward a GSHP install, and £5,000 toward a biomass boiler in eligible properties. Administered by Ofgem, paid to the MCS-certified installer who passes it through as a price reduction to the customer. Replaced the Renewable Heat Incentive (RHI) which closed in 2022."
+          onSite="The grant requires: the customer's property to be an existing dwelling (not new-build) with a valid EPC and no outstanding insulation recommendations on the EPC; the installer to be MCS-certified for the relevant technology; the install to be signed off against the relevant MIS standard. The certified installer applies for the grant on the customer's behalf via the Ofgem portal. As an apprentice on a BUS-funded install your work supports the MCS install pack but you don't apply for the grant."
+        >
+          <p>The customer-facing logic:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              BUS is what makes heat-pump retrofit financially competitive with fossil- fuel
+              replacement for many UK households.
+            </li>
+            <li>
+              Without MCS the customer can&apos;t access BUS — and the £7,500 difference usually
+              swings the install economics.
+            </li>
+            <li>
+              The grant is currently confirmed through the late 2020s (with periodic budget
+              renewals).
+            </li>
+            <li>
+              Eligibility requires no outstanding insulation recommendations on the EPC — which
+              means fabric upgrades may be needed before the grant can be claimed. The MCS-certified
+              installer guides the customer through this.
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <InlineCheck
+          id={checks[2].id}
+          question={checks[2].question}
+          options={checks[2].options}
+          correctIndex={checks[2].correctIndex}
+          explanation={checks[2].explanation}
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>The Smart Export Guarantee</ContentEyebrow>
+
+        <ConceptBlock
+          title="Payment for exported PV / wind / hydro generation"
+          plainEnglish="The Smart Export Guarantee (SEG) requires electricity suppliers above a customer threshold to offer a tariff for electricity exported to the grid by domestic generators. Replaced the Feed-in Tariff (FiT) which closed to new entrants in 2019. SEG tariffs vary by supplier (5-15p/kWh in 2026); customers shop around. To qualify the install must be MCS-certified and the meter must be capable of recording export."
+          onSite="As the L3 electrician on a PV install, the SEG eligibility check is part of the customer handover. The meter must be smart-meter-capable of separate import and export registers. The MCS sign-off paperwork is the gateway to the customer signing up with their chosen supplier. SEG is the financial argument for sizing PV slightly above immediate consumption — the surplus is paid for, not lost."
+        >
+          <p>Practical SEG considerations:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              Tariff rates vary widely between suppliers — the customer should shop around. Some
+              suppliers offer enhanced rates for customers who also import from them (bundled
+              offers).
+            </li>
+            <li>
+              The customer signs up for SEG with their chosen supplier; it isn&apos;t automatic. The
+              MCS install pack provides the supporting documentation.
+            </li>
+            <li>
+              Smart meter required — older import-only meters can&apos;t measure export. The DNO /
+              supplier arranges meter replacement if required.
+            </li>
+            <li>
+              Some installs use a battery primarily to maximise self-consumption (avoiding the
+              modest SEG tariff in favour of the higher avoided-import savings). Tariff vs
+              avoided-import is the financial calculation.
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <ContentEyebrow>Building Regs Part P and notifiable work</ContentEyebrow>
+
+        <ConceptBlock
+          title="Most environmental tech installs are notifiable under Part P"
+          plainEnglish="Building Regulations Part P (Electrical Safety in Dwellings) requires certain types of electrical work in dwellings to be notified to Building Control — either directly or via a registered competent-person scheme (NICEIC, NAPIT, ELECSA, Stroma, etc.). Most environmental tech installs add new circuits and therefore trigger Part P notification. The competent-person scheme route handles notification on the installer's behalf."
+          onSite="As the L3 electrician on the install you work to the certified-installer's design and complete the BS 7671 inspection and testing. The notification is handled by the firm's competent-person scheme registration. The customer receives a Building Regs compliance certificate from the scheme — typically posted within 30 days of the install."
+        >
+          <p>Notifiable work that environmental tech typically triggers:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>New circuits</strong> — PV inverter circuit, EV charging circuit, heat-pump
+              dedicated radial, MVHR supply, biomass controls supply, battery storage circuit. All
+              notifiable.
+            </li>
+            <li>
+              <strong>Consumer unit work</strong> — relocating, extending or replacing the consumer
+              unit. Notifiable.
+            </li>
+            <li>
+              <strong>Special locations</strong> — work in bathrooms (Part 7 special locations) is
+              notifiable.
+            </li>
+            <li>
+              <strong>Non-notifiable</strong> — like-for-like socket replacement on an existing
+              circuit, replacing a fitting (no circuit change). Mostly housekeeping work.
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <ContentEyebrow>SAP and SBEM — the calculation methodologies</ContentEyebrow>
+
+        <ConceptBlock
+          title="SAP for dwellings, SBEM for non-domestic — the engines behind Part L"
+          plainEnglish="SAP (Standard Assessment Procedure) is the government’s methodology for calculating the energy and carbon performance of dwellings. SBEM (Simplified Building Energy Model) does the same job for non-domestic buildings. Both produce a score against a benchmark; both produce an EPC rating (A-G) for the customer. Both are run by an accredited assessor — not by the L3 electrician — but the inputs come from the design pack including the environmental technology contribution."
+          onSite="The L3 apprentice does not run a SAP calc but should recognise the inputs the install contributes. Heat pump SCOP, PV kWp and orientation, MVHR efficiency, smart controls capability, fabric U-values, air permeability all feed in. The output is the dwelling’s Dwelling Emission Rate (DER, kgCO2 per m2 per year) and Target Emission Rate (TER, set by Part L per the design specification). DER must beat TER for compliance. The Future Homes Standard reduces TER significantly, effectively requiring environmental tech to hit it."
+        >
+          <p>SAP / SBEM key concepts:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>DER (Dwelling Emission Rate)</strong> — calculated CO2 emissions per m2 per
+              year for the actual design.
+            </li>
+            <li>
+              <strong>TER (Target Emission Rate)</strong> — the maximum allowable, set by Part L for
+              the type and design.
+            </li>
+            <li>
+              <strong>FEE (Fabric Energy Efficiency)</strong> — fabric heat-loss metric independent
+              of services. Future Homes Standard introduces a minimum FEE to stop fabric being
+              undersized in favour of services.
+            </li>
+            <li>
+              <strong>Primary energy</strong> — kWh of source energy per kWh delivered. Future Homes
+              Standard adds a primary-energy ceiling alongside the carbon target.
+            </li>
+            <li>
+              <strong>EPC rating</strong> — A-G banding presented to the customer. Built from SAP
+              score; required at sale or rent of any dwelling.
+            </li>
+            <li>
+              <strong>Installer&apos;s contribution</strong> — the design pack including heat pump
+              SCOP, PV array spec and orientation, MVHR efficiency, smart controls capability all
+              feed in.
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <ContentEyebrow>Devolved-nation regulatory differences</ContentEyebrow>
+
+        <ConceptBlock
+          title="Building Regs differ across the four UK nations — recognise the framework where you are"
+          plainEnglish="Building Regulations are devolved. England has Approved Documents L and P. Wales has its own Approved Documents L and P, similar but not identical. Scotland has Building Standards (Section 6 covers energy, Section 4 covers electrical safety) administered by Local Authority Building Standards. Northern Ireland has Technical Booklets (F covers energy, P covers electrical safety, equivalent to England’s Part P). The MCS scheme is UK-wide; the Boiler Upgrade Scheme is Great Britain only (Northern Ireland has separate funding via the Northern Ireland Sustainable Energy Programme)."
+          onSite="The L3 apprentice working across the four nations should recognise the framework name and where the rule sits, even if the technical content is broadly similar. The MCS-certified designer applies the local rules; the apprentice executes the install. Documentation differs — in Scotland the Building Standards completion certificate replaces the Building Regs Part P compliance certificate; in Wales the regs are Welsh-language as well as English. Smart Export Guarantee applies UK-wide. Renewables Obligation applies to commercial-scale generation."
+        >
+          <p>The four-nation regulatory map:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>England</strong> — Approved Document L (energy), Approved Document P
+              (electrical safety in dwellings). Boiler Upgrade Scheme. Smart Export Guarantee.
+            </li>
+            <li>
+              <strong>Wales</strong> — Welsh equivalents of Approved Documents L and P. Boiler
+              Upgrade Scheme. Smart Export Guarantee.
+            </li>
+            <li>
+              <strong>Scotland</strong> — Building Standards Section 6 (energy), Section 4
+              (electrical safety). Local Authority Building Standards completion certificate. Home
+              Energy Scotland funding alongside Boiler Upgrade Scheme.
+            </li>
+            <li>
+              <strong>Northern Ireland</strong> — Technical Booklets F (energy) and P (electrical
+              safety). Northern Ireland Sustainable Energy Programme instead of Boiler Upgrade
+              Scheme. Smart Export Guarantee.
+            </li>
+            <li>
+              <strong>UK-wide</strong> — MCS scheme, BS 7671, ENA G98 / G99, F-Gas Regulations, OZEV
+              Smart Charge Points Regulations 2021.
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <ContentEyebrow>Future Homes Standard and the heat-pump market trajectory</ContentEyebrow>
+
+        <ConceptBlock
+          title="FHS plus Clean Heat Market Mechanism are pushing the trajectory toward 600,000 heat pumps a year by 2028"
+          plainEnglish="The Future Homes Standard tightens Part L for new-build dwellings to a level effectively requiring heat pumps and PV as standard. The Clean Heat Market Mechanism (CHMM) places obligations on boiler manufacturers to sell a rising proportion of heat pumps each year, backed by financial penalties for missing the target. Together these measures aim to grow UK domestic heat pump installations from ~60,000 in 2023 to ~600,000 per year by 2028."
+          onSite="For the L3 apprentice this is the single biggest career-relevant trend. The volume of environmental tech work is going to grow significantly across the rest of the 2020s. The apprentice who treats Unit 301 as serious foundation, layers the MCS standalone qualifications (2399 PV, 2919 ASHP, 3012 BESS, 2921 EV) on top, and develops competence in integrated installs is going to be in high demand. The apprentice who treats it as a tick-box overview unit will have to catch up later. The market trajectory is clear; the regulatory direction is clear; the apprentice’s career planning should reflect that."
+        >
+          <p>The headline policy and market drivers shaping 2026-2030:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Future Homes Standard</strong> — phased in from 2025 for new-build.
+              Effectively requires heat pumps + PV + low-carbon services. Eliminates fossil-fuel
+              boilers from new-build.
+            </li>
+            <li>
+              <strong>Clean Heat Market Mechanism</strong> — boiler manufacturers obligated to sell
+              rising proportion of heat pumps. Backed by financial penalties. Aims to drive market
+              scale.
+            </li>
+            <li>
+              <strong>Boiler Upgrade Scheme</strong> — currently £7,500 grant toward heat pump
+              retrofit. Confirmed through 2028. Drives retrofit volume.
+            </li>
+            <li>
+              <strong>Phase-out of new fossil-fuel boiler installations</strong> — target of 2035
+              for off-gas-grid, with broader trajectory toward phasing out gas boilers in subsequent
+              years.
+            </li>
+            <li>
+              <strong>EV mandate</strong> — Zero Emission Vehicle mandate requires rising proportion
+              of new car sales to be electric. Drives EV charging install volume.
+            </li>
+            <li>
+              <strong>Network reinforcement</strong> — DNOs investing in network capacity to absorb
+              the heat pump and EV load. Periodic free supply upgrades for low-carbon installs in
+              some areas.
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <ContentEyebrow>Where it goes wrong</ContentEyebrow>
+
+        <CommonMistake
+          title="Telling the customer 'MCS is just paperwork — let's skip it'"
+          whatHappens={
+            <>
+              Apprentice or unscrupulous installer tells the customer MCS &quot;isn&apos;t really
+              needed&quot; and offers a cheaper non-MCS install. Customer accepts. Install
+              completes; customer applies for BUS grant — refused because the installer isn&apos;t
+              MCS-certified. Customer applies for SEG — supplier refuses because the install lacks
+              MCS sign-off. Customer&apos;s manufacturer warranty is voided. The £1,000-2,000 the
+              customer thought they&apos;d saved by going non-MCS is dwarfed by the £7,500 BUS grant
+              they&apos;ve just lost.
+            </>
+          }
+          doInstead={
+            <>
+              Be honest with the customer about what MCS gives them and what it doesn&apos;t. MCS is
+              not a legal requirement to install, but it is the gateway to the grants and incentives
+              that make the install financially viable for most customers. A non-MCS install is
+              technically possible but the customer almost always loses money on the deal. The right
+              framing is &quot;MCS- certified install for the financial benefits + the manufacturer
+              warranty; non-MCS only in unusual cases where the customer specifically declines
+              grants and warranties&quot;.
+            </>
+          }
+        />
+
+        <CommonMistake
+          title="Confusing Part L (energy) with Part P (electrical safety)"
+          whatHappens={
+            <>
+              Apprentice tells the customer &quot;Part P covers energy efficiency&quot;. Customer is
+              confused because the EPC says nothing about Part P. The two regulations cover entirely
+              different things and the apprentice has conflated them.
+            </>
+          }
+          doInstead={
+            <>
+              Memorise the split: Part L is energy efficiency (SAP / SBEM, fabric standards,
+              services efficiency, on-site generation credits). Part P is electrical safety in
+              dwellings (notifiable work, competent-person scheme, Building Regs compliance
+              certificate). Both apply to most environmental tech installs but they regulate
+              different things. The customer&apos;s EPC reflects Part L; the Building Regs
+              compliance certificate reflects Part P.
+            </>
+          }
+        />
+
+        <Scenario
+          title="Heat-pump retrofit — what the customer needs to know about the regulatory pack"
+          situation={
+            <>
+              You&apos;re working on a BUS-funded ASHP retrofit. The MCS-certified installer has
+              handled the design, the MCS application, the BUS grant application and the Building
+              Regs Part L compliance pack. You&apos;ve completed the electrical first-fix and the
+              F-Gas engineer is in tomorrow for the refrigerant work. The customer asks &quot;so
+              what do I actually get at the end of all this paperwork?&quot;.
+            </>
+          }
+          whatToDo={
+            <>
+              Run the customer through the handover pack they&apos;ll receive: (1) MCS install
+              certificate — the formal sign-off that triggers the BUS grant and supports the
+              manufacturer warranty; (2) BUS grant payment confirmation — deducted from the install
+              invoice as a price reduction; (3) Building Regs Part P compliance certificate — from
+              the firm&apos;s competent-person scheme, posted within 30 days; (4) updated EPC
+              reflecting the new heat pump (typically arranged by the installer); (5) electrical
+              installation certificate (EIC) for the new circuit; (6) heat-pump commissioning
+              records, SCOP estimate, manufacturer&apos;s instructions, customer operating guide.
+              Keep the pack safe — needed for future house sale, mortgage, insurance.
+            </>
+          }
+          whyItMatters={
+            <>
+              The handover pack is what the customer actually keeps. The work you and the F-Gas
+              engineer and the certified installer have done all converges into that pack. A future
+              buyer / surveyor / insurer will ask to see it. Without it the customer can&apos;t
+              prove the install was done to standard. Walking the customer through the pack at
+              handover is the moment the trust in the install is built.
+            </>
+          }
+        />
+
+        <RegsCallout
+          source="BS 7671:2018+A4:2026 — Section 712 (PV) extensive revision"
+          clause={
+            <>
+              Section 712 &apos;Solar photovoltaic (PV) power supply systems&apos; has been
+              extensively revised and expanded in BS 7671:2018+A4:2026. The technical content of
+              this section has been extensively revised and expanded and now contains updated
+              requirements specific to PV systems.
+            </>
+          }
+          meaning={
+            <>
+              Building Regs Part L drives the demand for PV through the SAP target rate; BS 7671
+              Section 712 governs the electrical installation of the PV that satisfies that demand.
+              They sit alongside one another — Part L for energy / SAP credit, Section 712 for safe
+              installation. A4:2026 reset the Section 712 wording.
+            </>
+          }
+          cite="Source: BS 7671:2018+A4:2026 Section 712."
+        />
+
+        <RegsCallout
+          source="BS 7671:2018+A4:2026 — Section 722 (EV charging) significant changes"
+          clause={
+            <>
+              Section 722 of Part 7 of BS 7671:2018+A4:2026 covers electric vehicle charging
+              installations. The published text indicates that this section contains significant
+              changes to the Regulation(s) applicable to EV charging installations; installers and
+              certifiers shall consult Section 722 for the updated requirements and obligations.
+            </>
+          }
+          meaning={
+            <>
+              The OZEV Smart Charge Points Regulations 2021 govern what may be sold; BS 7671 Section
+              722 governs what may be installed and how. A4:2026 brought significant changes to PME
+              / TN-C-S handling that the L3 electrician needs to be aware of even if the
+              MCS-certified installer makes the final design call.
+            </>
+          }
+          cite="Source: BS 7671:2018+A4:2026 Section 722."
+        />
+
+        <SectionRule />
+
+        <FAQ items={faqs} />
+
+        <SectionRule />
+
+        <KeyTakeaways
+          points={[
+            'Building Regulations Part L (Conservation of Fuel and Power) is the legal energy-efficiency framework. Compliance via SAP / SBEM. Environmental tech contributes to compliance.',
+            'Future Homes Standard tightens Part L for new-build from 2025 — effectively rules out fossil-fuel boilers in new-build, normalises heat pump + PV + MVHR.',
+            "MCS is not legally required to install — it's the funding gateway. Boiler Upgrade Scheme grant (£7,500 ASHP / GSHP) and Smart Export Guarantee both require MCS sign-off.",
+            'MCS Installation Standards (MIS 3001-3012) cover each technology family. All reference BS 7671 explicitly for the electrical detail.',
+            'Building Regs Part P (Electrical Safety in Dwellings) makes most environmental tech installs notifiable. Competent-person scheme route (NICEIC, NAPIT) handles notification.',
+            'Part L (energy) and Part P (electrical safety) are different regulations. Both apply to most environmental tech installs but regulate different things.',
+            'The SAP calculation is the methodology behind Part L compliance for dwellings. PV, heat pumps, MVHR, smart controls and fabric all feed into the SAP score.',
+            "The customer's handover pack — MCS certificate, BUS confirmation, Part P compliance certificate, updated EPC, EIC, commissioning records — is what they keep. Future house sale / mortgage / insurance depends on it.",
+          ]}
+        />
+
+        <Quiz title="Building Regs + MCS framework — knowledge check" questions={quizQuestions} />
+
+        <div className="grid grid-cols-2 gap-3 pt-2">
           <button
-            onClick={() => navigate('/study-centre/apprentice/level3-module2-section4')}
-            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            onClick={() => navigate('/study-centre/apprentice/level3-module2-section3-3')}
+            className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
           >
-            <ArrowLeft className="h-4 w-4" /> Section 4
+            <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+              <ChevronLeft className="h-3 w-3" /> Previous
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-white truncate">
+              3.3 MVHR, wind, micro-CHP overview
+            </div>
           </button>
-
-          <PageHero
-            eyebrow="Module 2 · Section 4 · Subsection 1"
-            title="Building Regulations Part L + MCS framework"
-            description="The regulatory framework for environmental technology systems — Building Regs Part L (energy), Future Homes Standard, MCS Code and Installation Standards, Boiler Upgrade Scheme, Smart Export Guarantee. Where each rule sits and what it actually requires."
-            tone="emerald"
-          />
-
-          <TLDR
-            points={[
-              "Building Regulations Part L (Conservation of Fuel and Power) is the legal framework for energy efficiency in buildings. Compliance demonstrated via SAP (dwellings) or SBEM (non-domestic). Environmental tech is increasingly the standard route to compliance.",
-              "Future Homes Standard tightens Part L for new-build from 2025 — effectively rules out fossil-fuel boilers in new-build, normalises heat pump + PV + MVHR + smart controls.",
-              "MCS is not legally required to install — it's the funding gateway (Boiler Upgrade Scheme grant for heat pumps, Smart Export Guarantee for PV export). Manufacturer warranties also typically require MCS.",
-              "Building Regs Part P makes most environmental tech installs notifiable. The competent-person scheme route (NICEIC, NAPIT) handles notification on the installer's behalf.",
-            ]}
-          />
-
-          <LearningOutcomes
-            outcomes={[
-              "Identify Part L of the Building Regulations as the energy-efficiency framework for buildings, and state how environmental technology systems contribute to Part L compliance via the SAP / SBEM calculation.",
-              "Recognise the Future Homes Standard as the upcoming tightening of Part L for new-build dwellings.",
-              "Distinguish MCS (funding gateway and quality scheme) from the legal regulatory framework (Building Regs, BS 7671). Identify the Boiler Upgrade Scheme and Smart Export Guarantee as the current main MCS-gated incentives.",
-              "Identify Building Regulations Part P as the safety regulator for domestic electrical work and recognise that most environmental tech installs are notifiable under Part P.",
-              "Identify the technology-specific MCS Installation Standards (MIS 3001-3012) and their respective scopes.",
-              "Recognise the role of Local Authority Building Control and the competent-person scheme route to Part P / Part L sign-off.",
-            ]}
-            initialVisibleCount={3}
-          />
-
-          <ContentEyebrow>Building Regulations Part L — the legal floor</ContentEyebrow>
-
-          <ConceptBlock
-            title="Part L is the energy-efficiency regulator for buildings"
-            plainEnglish="Part L of the Building Regulations (Conservation of Fuel and Power) sets minimum energy-performance standards for new and refurbished buildings in England (with equivalents in the devolved nations). Compliance is demonstrated through a calculation methodology — SAP for dwellings, SBEM for non-domestic. Successive Part L revisions have tightened the targets, pushing more environmental tech into the standard build specification."
-            onSite="On a new-build site or major refurbishment you'll see the Part L compliance pack — heat-loss calc, SAP score, SAP recommendations, contribution from environmental tech (PV credits, heat pump SCOP, MVHR efficiency). The MCS-certified designer typically produces the environmental tech contribution; the SAP assessor compiles the overall compliance pack."
+          <button
+            onClick={() => navigate('/study-centre/apprentice/level3-module2-section4-2')}
+            className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
           >
-            <p>
-              How environmental tech contributes to Part L compliance:
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>PV</strong> — generation credits in the SAP calculation reduce the
-                regulated CO₂ emission rate, helping the dwelling beat the Target Emission
-                Rate (TER).
-              </li>
-              <li>
-                <strong>Heat pumps</strong> — lower regulated CO₂ per kWh of heat than
-                fossil-fuel boilers, particularly as the grid carbon intensity falls.
-              </li>
-              <li>
-                <strong>MVHR</strong> — reduces ventilation heat losses in airtight
-                buildings, contributing to the fabric energy efficiency score.
-              </li>
-              <li>
-                <strong>Smart controls</strong> — load-shedding / demand-response capability
-                gives a (modest) SAP credit.
-              </li>
-              <li>
-                <strong>Fabric measures</strong> — insulation, glazing, airtightness — the
-                largest single SAP contribution in most dwellings, and the foundation that
-                makes other measures effective.
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <RegsCallout
-            source="Building Regulations 2010, Approved Document L (Conservation of Fuel and Power)"
-            clause={
-              <>
-                Approved Document L sets out the methodology for demonstrating Part L
-                compliance and the minimum standards for fabric, services and on-site
-                generation. For dwellings, SAP is the assessment methodology and the dwelling
-                must meet a Target Emission Rate (TER) and a Target Fabric Energy Efficiency
-                (TFEE) calculated for the specific design.
-              </>
-            }
-            meaning={
-              <>
-                Approved Document L is the live document for Part L compliance — different
-                editions apply for different commencement dates, so the install pack needs
-                to use the right version. The Future Homes Standard editions (expected
-                phased in from 2025) tighten the targets significantly. As the L3 electrician
-                you don&apos;t run the SAP yourself, but you should recognise that the
-                installer&apos;s design pack feeds into a regulated compliance calculation.
-              </>
-            }
-            cite="Source: Building Regulations 2010, Approved Document L (paraphrased from the published Approved Document available via gov.uk)."
-          />
-
-          <InlineCheck
-            id={checks[1].id}
-            question={checks[1].question}
-            options={checks[1].options}
-            correctIndex={checks[1].correctIndex}
-            explanation={checks[1].explanation}
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>MCS — the funding gateway and quality scheme</ContentEyebrow>
-
-          <ConceptBlock
-            title="MCS is not a regulator — it's a funding gateway"
-            plainEnglish="The Microgeneration Certification Scheme (MCS) is a non-statutory competence and quality scheme administered by MCS Service Co. Installers join the scheme, pay annual membership, and submit installs for sign-off against the relevant Installation Standard (MIS). Customers who use MCS-certified installers can access funding incentives — currently the Boiler Upgrade Scheme grant for heat pumps and the Smart Export Guarantee for PV export. Most manufacturer warranties also require MCS-certified installation."
-            onSite="The MCS-certified installer is the named accountable person on the install pack. As an apprentice on the install you carry out the work to the certified installer's design and contribute to the install record, but you don't sign off the MCS pack yourself unless you're personally MCS-certified for the technology in question."
-          >
-            <p>
-              The MCS Installation Standards by technology:
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>MIS 3001</strong> — Solar thermal hot water systems
-              </li>
-              <li>
-                <strong>MIS 3002</strong> — Solar PV systems
-              </li>
-              <li>
-                <strong>MIS 3003</strong> — Small wind turbine systems
-              </li>
-              <li>
-                <strong>MIS 3004</strong> — Biomass boilers
-              </li>
-              <li>
-                <strong>MIS 3005</strong> — Heat pumps (ASHP, GSHP, water-source)
-              </li>
-              <li>
-                <strong>MIS 3006</strong> — Biomass stoves
-              </li>
-              <li>
-                <strong>MIS 3007</strong> — EV chargepoints (selected aspects; not the
-                primary EV regulator)
-              </li>
-              <li>
-                <strong>MIS 3008</strong> — Small hydro systems
-              </li>
-              <li>
-                <strong>MIS 3012</strong> — Battery storage systems
-              </li>
-            </ul>
-            <p>
-              All MCS Installation Standards reference BS 7671 explicitly for the electrical
-              detail. MCS doesn&apos;t replace BS 7671; it adds installer-quality and
-              consumer-protection requirements on top.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck
-            id={checks[0].id}
-            question={checks[0].question}
-            options={checks[0].options}
-            correctIndex={checks[0].correctIndex}
-            explanation={checks[0].explanation}
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>The Boiler Upgrade Scheme</ContentEyebrow>
-
-          <ConceptBlock
-            title="The current main grant for heat-pump retrofit"
-            plainEnglish="The Boiler Upgrade Scheme (BUS) is the UK government's grant for low-carbon heating retrofits. Currently up to £7,500 toward an ASHP install, £7,500 toward a GSHP install, and £5,000 toward a biomass boiler in eligible properties. Administered by Ofgem, paid to the MCS-certified installer who passes it through as a price reduction to the customer. Replaced the Renewable Heat Incentive (RHI) which closed in 2022."
-            onSite="The grant requires: the customer's property to be an existing dwelling (not new-build) with a valid EPC and no outstanding insulation recommendations on the EPC; the installer to be MCS-certified for the relevant technology; the install to be signed off against the relevant MIS standard. The certified installer applies for the grant on the customer's behalf via the Ofgem portal. As an apprentice on a BUS-funded install your work supports the MCS install pack but you don't apply for the grant."
-          >
-            <p>
-              The customer-facing logic:
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                BUS is what makes heat-pump retrofit financially competitive with fossil-
-                fuel replacement for many UK households.
-              </li>
-              <li>
-                Without MCS the customer can&apos;t access BUS — and the £7,500 difference
-                usually swings the install economics.
-              </li>
-              <li>
-                The grant is currently confirmed through the late 2020s (with periodic
-                budget renewals).
-              </li>
-              <li>
-                Eligibility requires no outstanding insulation recommendations on the EPC —
-                which means fabric upgrades may be needed before the grant can be claimed.
-                The MCS-certified installer guides the customer through this.
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <InlineCheck
-            id={checks[2].id}
-            question={checks[2].question}
-            options={checks[2].options}
-            correctIndex={checks[2].correctIndex}
-            explanation={checks[2].explanation}
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>The Smart Export Guarantee</ContentEyebrow>
-
-          <ConceptBlock
-            title="Payment for exported PV / wind / hydro generation"
-            plainEnglish="The Smart Export Guarantee (SEG) requires electricity suppliers above a customer threshold to offer a tariff for electricity exported to the grid by domestic generators. Replaced the Feed-in Tariff (FiT) which closed to new entrants in 2019. SEG tariffs vary by supplier (5-15p/kWh in 2026); customers shop around. To qualify the install must be MCS-certified and the meter must be capable of recording export."
-            onSite="As the L3 electrician on a PV install, the SEG eligibility check is part of the customer handover. The meter must be smart-meter-capable of separate import and export registers. The MCS sign-off paperwork is the gateway to the customer signing up with their chosen supplier. SEG is the financial argument for sizing PV slightly above immediate consumption — the surplus is paid for, not lost."
-          >
-            <p>
-              Practical SEG considerations:
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                Tariff rates vary widely between suppliers — the customer should shop
-                around. Some suppliers offer enhanced rates for customers who also import
-                from them (bundled offers).
-              </li>
-              <li>
-                The customer signs up for SEG with their chosen supplier; it isn&apos;t
-                automatic. The MCS install pack provides the supporting documentation.
-              </li>
-              <li>
-                Smart meter required — older import-only meters can&apos;t measure export.
-                The DNO / supplier arranges meter replacement if required.
-              </li>
-              <li>
-                Some installs use a battery primarily to maximise self-consumption (avoiding
-                the modest SEG tariff in favour of the higher avoided-import savings).
-                Tariff vs avoided-import is the financial calculation.
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <ContentEyebrow>Building Regs Part P and notifiable work</ContentEyebrow>
-
-          <ConceptBlock
-            title="Most environmental tech installs are notifiable under Part P"
-            plainEnglish="Building Regulations Part P (Electrical Safety in Dwellings) requires certain types of electrical work in dwellings to be notified to Building Control — either directly or via a registered competent-person scheme (NICEIC, NAPIT, ELECSA, Stroma, etc.). Most environmental tech installs add new circuits and therefore trigger Part P notification. The competent-person scheme route handles notification on the installer's behalf."
-            onSite="As the L3 electrician on the install you work to the certified-installer's design and complete the BS 7671 inspection and testing. The notification is handled by the firm's competent-person scheme registration. The customer receives a Building Regs compliance certificate from the scheme — typically posted within 30 days of the install."
-          >
-            <p>
-              Notifiable work that environmental tech typically triggers:
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>New circuits</strong> — PV inverter circuit, EV charging circuit,
-                heat-pump dedicated radial, MVHR supply, biomass controls supply, battery
-                storage circuit. All notifiable.
-              </li>
-              <li>
-                <strong>Consumer unit work</strong> — relocating, extending or replacing the
-                consumer unit. Notifiable.
-              </li>
-              <li>
-                <strong>Special locations</strong> — work in bathrooms (Part 7 special
-                locations) is notifiable.
-              </li>
-              <li>
-                <strong>Non-notifiable</strong> — like-for-like socket replacement on an
-                existing circuit, replacing a fitting (no circuit change). Mostly
-                housekeeping work.
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <ContentEyebrow>SAP and SBEM — the calculation methodologies</ContentEyebrow>
-
-          <ConceptBlock
-            title="SAP for dwellings, SBEM for non-domestic — the engines behind Part L"
-            plainEnglish="SAP (Standard Assessment Procedure) is the government’s methodology for calculating the energy and carbon performance of dwellings. SBEM (Simplified Building Energy Model) does the same job for non-domestic buildings. Both produce a score against a benchmark; both produce an EPC rating (A-G) for the customer. Both are run by an accredited assessor — not by the L3 electrician — but the inputs come from the design pack including the environmental technology contribution."
-            onSite="The L3 apprentice does not run a SAP calc but should recognise the inputs the install contributes. Heat pump SCOP, PV kWp and orientation, MVHR efficiency, smart controls capability, fabric U-values, air permeability all feed in. The output is the dwelling’s Dwelling Emission Rate (DER, kgCO2 per m2 per year) and Target Emission Rate (TER, set by Part L per the design specification). DER must beat TER for compliance. The Future Homes Standard reduces TER significantly, effectively requiring environmental tech to hit it."
-          >
-            <p>
-              SAP / SBEM key concepts:
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>DER (Dwelling Emission Rate)</strong> — calculated CO2
-                emissions per m2 per year for the actual design.
-              </li>
-              <li>
-                <strong>TER (Target Emission Rate)</strong> — the maximum allowable,
-                set by Part L for the type and design.
-              </li>
-              <li>
-                <strong>FEE (Fabric Energy Efficiency)</strong> — fabric heat-loss
-                metric independent of services. Future Homes Standard introduces a
-                minimum FEE to stop fabric being undersized in favour of services.
-              </li>
-              <li>
-                <strong>Primary energy</strong> — kWh of source energy per kWh
-                delivered. Future Homes Standard adds a primary-energy ceiling
-                alongside the carbon target.
-              </li>
-              <li>
-                <strong>EPC rating</strong> — A-G banding presented to the customer.
-                Built from SAP score; required at sale or rent of any dwelling.
-              </li>
-              <li>
-                <strong>Installer&apos;s contribution</strong> — the design pack
-                including heat pump SCOP, PV array spec and orientation, MVHR
-                efficiency, smart controls capability all feed in.
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <ContentEyebrow>Devolved-nation regulatory differences</ContentEyebrow>
-
-          <ConceptBlock
-            title="Building Regs differ across the four UK nations — recognise the framework where you are"
-            plainEnglish="Building Regulations are devolved. England has Approved Documents L and P. Wales has its own Approved Documents L and P, similar but not identical. Scotland has Building Standards (Section 6 covers energy, Section 4 covers electrical safety) administered by Local Authority Building Standards. Northern Ireland has Technical Booklets (F covers energy, P covers electrical safety, equivalent to England’s Part P). The MCS scheme is UK-wide; the Boiler Upgrade Scheme is Great Britain only (Northern Ireland has separate funding via the Northern Ireland Sustainable Energy Programme)."
-            onSite="The L3 apprentice working across the four nations should recognise the framework name and where the rule sits, even if the technical content is broadly similar. The MCS-certified designer applies the local rules; the apprentice executes the install. Documentation differs — in Scotland the Building Standards completion certificate replaces the Building Regs Part P compliance certificate; in Wales the regs are Welsh-language as well as English. Smart Export Guarantee applies UK-wide. Renewables Obligation applies to commercial-scale generation."
-          >
-            <p>
-              The four-nation regulatory map:
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>England</strong> — Approved Document L (energy), Approved
-                Document P (electrical safety in dwellings). Boiler Upgrade Scheme.
-                Smart Export Guarantee.
-              </li>
-              <li>
-                <strong>Wales</strong> — Welsh equivalents of Approved Documents L and
-                P. Boiler Upgrade Scheme. Smart Export Guarantee.
-              </li>
-              <li>
-                <strong>Scotland</strong> — Building Standards Section 6 (energy),
-                Section 4 (electrical safety). Local Authority Building Standards
-                completion certificate. Home Energy Scotland funding alongside Boiler
-                Upgrade Scheme.
-              </li>
-              <li>
-                <strong>Northern Ireland</strong> — Technical Booklets F (energy) and
-                P (electrical safety). Northern Ireland Sustainable Energy Programme
-                instead of Boiler Upgrade Scheme. Smart Export Guarantee.
-              </li>
-              <li>
-                <strong>UK-wide</strong> — MCS scheme, BS 7671, ENA G98 / G99,
-                F-Gas Regulations, OZEV Smart Charge Points Regulations 2021.
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <ContentEyebrow>Future Homes Standard and the heat-pump market trajectory</ContentEyebrow>
-
-          <ConceptBlock
-            title="FHS plus Clean Heat Market Mechanism are pushing the trajectory toward 600,000 heat pumps a year by 2028"
-            plainEnglish="The Future Homes Standard tightens Part L for new-build dwellings to a level effectively requiring heat pumps and PV as standard. The Clean Heat Market Mechanism (CHMM) places obligations on boiler manufacturers to sell a rising proportion of heat pumps each year, backed by financial penalties for missing the target. Together these measures aim to grow UK domestic heat pump installations from ~60,000 in 2023 to ~600,000 per year by 2028."
-            onSite="For the L3 apprentice this is the single biggest career-relevant trend. The volume of environmental tech work is going to grow significantly across the rest of the 2020s. The apprentice who treats Unit 301 as serious foundation, layers the MCS standalone qualifications (2399 PV, 2919 ASHP, 3012 BESS, 2921 EV) on top, and develops competence in integrated installs is going to be in high demand. The apprentice who treats it as a tick-box overview unit will have to catch up later. The market trajectory is clear; the regulatory direction is clear; the apprentice’s career planning should reflect that."
-          >
-            <p>
-              The headline policy and market drivers shaping 2026-2030:
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Future Homes Standard</strong> — phased in from 2025 for
-                new-build. Effectively requires heat pumps + PV + low-carbon
-                services. Eliminates fossil-fuel boilers from new-build.
-              </li>
-              <li>
-                <strong>Clean Heat Market Mechanism</strong> — boiler manufacturers
-                obligated to sell rising proportion of heat pumps. Backed by financial
-                penalties. Aims to drive market scale.
-              </li>
-              <li>
-                <strong>Boiler Upgrade Scheme</strong> — currently £7,500 grant
-                toward heat pump retrofit. Confirmed through 2028. Drives
-                retrofit volume.
-              </li>
-              <li>
-                <strong>Phase-out of new fossil-fuel boiler installations</strong> —
-                target of 2035 for off-gas-grid, with broader trajectory toward
-                phasing out gas boilers in subsequent years.
-              </li>
-              <li>
-                <strong>EV mandate</strong> — Zero Emission Vehicle mandate requires
-                rising proportion of new car sales to be electric. Drives EV charging
-                install volume.
-              </li>
-              <li>
-                <strong>Network reinforcement</strong> — DNOs investing in network
-                capacity to absorb the heat pump and EV load. Periodic free supply
-                upgrades for low-carbon installs in some areas.
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <ContentEyebrow>Where it goes wrong</ContentEyebrow>
-
-          <CommonMistake
-            title="Telling the customer 'MCS is just paperwork — let's skip it'"
-            whatHappens={
-              <>
-                Apprentice or unscrupulous installer tells the customer MCS &quot;isn&apos;t
-                really needed&quot; and offers a cheaper non-MCS install. Customer accepts.
-                Install completes; customer applies for BUS grant — refused because the
-                installer isn&apos;t MCS-certified. Customer applies for SEG — supplier
-                refuses because the install lacks MCS sign-off. Customer&apos;s
-                manufacturer warranty is voided. The £1,000-2,000 the customer thought
-                they&apos;d saved by going non-MCS is dwarfed by the £7,500 BUS grant
-                they&apos;ve just lost.
-              </>
-            }
-            doInstead={
-              <>
-                Be honest with the customer about what MCS gives them and what it doesn&apos;t.
-                MCS is not a legal requirement to install, but it is the gateway to the
-                grants and incentives that make the install financially viable for most
-                customers. A non-MCS install is technically possible but the customer
-                almost always loses money on the deal. The right framing is &quot;MCS-
-                certified install for the financial benefits + the manufacturer warranty;
-                non-MCS only in unusual cases where the customer specifically declines
-                grants and warranties&quot;.
-              </>
-            }
-          />
-
-          <CommonMistake
-            title="Confusing Part L (energy) with Part P (electrical safety)"
-            whatHappens={
-              <>
-                Apprentice tells the customer &quot;Part P covers energy efficiency&quot;.
-                Customer is confused because the EPC says nothing about Part P. The two
-                regulations cover entirely different things and the apprentice has
-                conflated them.
-              </>
-            }
-            doInstead={
-              <>
-                Memorise the split: Part L is energy efficiency (SAP / SBEM, fabric
-                standards, services efficiency, on-site generation credits). Part P is
-                electrical safety in dwellings (notifiable work, competent-person scheme,
-                Building Regs compliance certificate). Both apply to most environmental tech
-                installs but they regulate different things. The customer&apos;s EPC
-                reflects Part L; the Building Regs compliance certificate reflects Part P.
-              </>
-            }
-          />
-
-          <Scenario
-            title="Heat-pump retrofit — what the customer needs to know about the regulatory pack"
-            situation={
-              <>
-                You&apos;re working on a BUS-funded ASHP retrofit. The MCS-certified
-                installer has handled the design, the MCS application, the BUS grant
-                application and the Building Regs Part L compliance pack. You&apos;ve
-                completed the electrical first-fix and the F-Gas engineer is in tomorrow
-                for the refrigerant work. The customer asks &quot;so what do I actually
-                get at the end of all this paperwork?&quot;.
-              </>
-            }
-            whatToDo={
-              <>
-                Run the customer through the handover pack they&apos;ll receive: (1) MCS
-                install certificate — the formal sign-off that triggers the BUS grant and
-                supports the manufacturer warranty; (2) BUS grant payment confirmation —
-                deducted from the install invoice as a price reduction; (3) Building Regs
-                Part P compliance certificate — from the firm&apos;s competent-person
-                scheme, posted within 30 days; (4) updated EPC reflecting the new heat
-                pump (typically arranged by the installer); (5) electrical installation
-                certificate (EIC) for the new circuit; (6) heat-pump commissioning records,
-                SCOP estimate, manufacturer&apos;s instructions, customer operating guide.
-                Keep the pack safe — needed for future house sale, mortgage, insurance.
-              </>
-            }
-            whyItMatters={
-              <>
-                The handover pack is what the customer actually keeps. The work you and the
-                F-Gas engineer and the certified installer have done all converges into
-                that pack. A future buyer / surveyor / insurer will ask to see it.
-                Without it the customer can&apos;t prove the install was done to standard.
-                Walking the customer through the pack at handover is the moment the trust
-                in the install is built.
-              </>
-            }
-          />
-
-          <RegsCallout
-            source="BS 7671:2018+A4:2026 — Section 712 (PV) extensive revision"
-            clause={
-              <>
-                Section 712 &apos;Solar photovoltaic (PV) power supply systems&apos; has been
-                extensively revised and expanded in BS 7671:2018+A4:2026. The technical content
-                of this section has been extensively revised and expanded and now contains
-                updated requirements specific to PV systems.
-              </>
-            }
-            meaning={
-              <>
-                Building Regs Part L drives the demand for PV through the SAP target rate; BS
-                7671 Section 712 governs the electrical installation of the PV that satisfies
-                that demand. They sit alongside one another — Part L for energy / SAP credit,
-                Section 712 for safe installation. A4:2026 reset the Section 712 wording.
-              </>
-            }
-            cite="Source: BS 7671:2018+A4:2026 Section 712."
-          />
-
-          <RegsCallout
-            source="BS 7671:2018+A4:2026 — Section 722 (EV charging) significant changes"
-            clause={
-              <>
-                Section 722 of Part 7 of BS 7671:2018+A4:2026 covers electric vehicle charging
-                installations. The published text indicates that this section contains
-                significant changes to the Regulation(s) applicable to EV charging
-                installations; installers and certifiers shall consult Section 722 for the
-                updated requirements and obligations.
-              </>
-            }
-            meaning={
-              <>
-                The OZEV Smart Charge Points Regulations 2021 govern what may be sold; BS 7671
-                Section 722 governs what may be installed and how. A4:2026 brought significant
-                changes to PME / TN-C-S handling that the L3 electrician needs to be aware of
-                even if the MCS-certified installer makes the final design call.
-              </>
-            }
-            cite="Source: BS 7671:2018+A4:2026 Section 722."
-          />
-
-          <SectionRule />
-
-          <FAQ items={faqs} />
-
-          <SectionRule />
-
-          <KeyTakeaways
-            points={[
-              "Building Regulations Part L (Conservation of Fuel and Power) is the legal energy-efficiency framework. Compliance via SAP / SBEM. Environmental tech contributes to compliance.",
-              "Future Homes Standard tightens Part L for new-build from 2025 — effectively rules out fossil-fuel boilers in new-build, normalises heat pump + PV + MVHR.",
-              "MCS is not legally required to install — it's the funding gateway. Boiler Upgrade Scheme grant (£7,500 ASHP / GSHP) and Smart Export Guarantee both require MCS sign-off.",
-              "MCS Installation Standards (MIS 3001-3012) cover each technology family. All reference BS 7671 explicitly for the electrical detail.",
-              "Building Regs Part P (Electrical Safety in Dwellings) makes most environmental tech installs notifiable. Competent-person scheme route (NICEIC, NAPIT) handles notification.",
-              "Part L (energy) and Part P (electrical safety) are different regulations. Both apply to most environmental tech installs but regulate different things.",
-              "The SAP calculation is the methodology behind Part L compliance for dwellings. PV, heat pumps, MVHR, smart controls and fabric all feed into the SAP score.",
-              "The customer's handover pack — MCS certificate, BUS confirmation, Part P compliance certificate, updated EPC, EIC, commissioning records — is what they keep. Future house sale / mortgage / insurance depends on it.",
-            ]}
-          />
-
-          <Quiz title="Building Regs + MCS framework — knowledge check" questions={quizQuestions} />
-
-          <div className="grid grid-cols-2 gap-3 pt-2">
-            <button
-              onClick={() => navigate('/study-centre/apprentice/level3-module2-section3-3')}
-              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
-                <ChevronLeft className="h-3 w-3" /> Previous
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-white truncate">
-                3.3 MVHR, wind, micro-CHP overview
-              </div>
-            </button>
-            <button
-              onClick={() => navigate('/study-centre/apprentice/level3-module2-section4-2')}
-              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
-                Next subsection <ChevronRight className="h-3 w-3" />
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-black truncate">
-                4.2 BS 7671 712/722/753 + G98/G99
-              </div>
-            </button>
-          </div>
-        </PageFrame>
-      </div>
-    </div>
+            <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+              Next subsection <ChevronRight className="h-3 w-3" />
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-black truncate">
+              4.2 BS 7671 712/722/753 + G98/G99
+            </div>
+          </button>
+        </div>
+      </HubBody>
+    </HubPage>
   );
 }

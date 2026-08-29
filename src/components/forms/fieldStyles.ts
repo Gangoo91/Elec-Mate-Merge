@@ -36,6 +36,35 @@ export const labelCn = 'text-[12px] font-medium text-white mb-1 block';
 export const cardCn =
   '-mx-4 rounded-none border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5 space-y-4';
 
+/**
+ * The two-up field grid.
+ *
+ * 🔴 TWO COLUMNS ON A PHONE TOO — lifted from the EICR
+ * (`eicr/EarthingBondingSection.tsx`), which is the reference for this layout.
+ *
+ * The forms previously used `grid-cols-1 sm:grid-cols-2`, which stacks every
+ * field on a phone. That is the wrong call for this app: paired fields are
+ * almost always short (a rating and an arrangement, a temperature and its
+ * reference), and stacking them doubles the scroll on the one device the whole
+ * product is built around. Reading a 2×2 block of four short values is also far
+ * faster than scanning four full-width rows.
+ *
+ * The gutter is deliberately tighter on a phone (`gap-x-3`) and opens up from
+ * `sm:` — at 12px the two columns still read as separate fields without
+ * stealing width from the inputs themselves.
+ */
+export const grid2Cn = 'grid grid-cols-2 gap-x-3 gap-y-4 sm:gap-x-6';
+
+/**
+ * A field inside `grid2Cn` that needs the whole row on a phone but pairs up
+ * from `sm:`. For long free text — an instrument name, a qualification, a load
+ * description — where half a phone width truncates the value as it is typed.
+ */
+export const fieldWideCn = 'col-span-2 sm:col-span-1';
+
+/** A field inside `grid2Cn` that needs the whole row at every size. */
+export const fieldFullCn = 'col-span-2';
+
 export const checkboxCn =
   'h-5 w-5 border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black';
 

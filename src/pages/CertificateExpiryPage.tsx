@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { supabase } from '@/integrations/supabase/client';
 import { reportCloud } from '@/utils/reportCloud';
@@ -23,6 +23,12 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Switch } from '@/components/ui/switch';
+import { useAutomation, AUTOMATION_KEYS } from '@/hooks/useUserAutomations';
+import {
+  MaintenanceContractsSection,
+  type ContractPrefill,
+} from '@/components/electrician/MaintenanceContractsSection';
 import { cn } from '@/lib/utils';
 
 type TimeFilter = 'all' | 'overdue' | '30days' | '60days' | '90days';
@@ -45,6 +51,49 @@ const filterOptions: { value: TimeFilter; label: string }[] = [
   { value: '90days', label: '90 days' },
 ];
 
+/**
+ * "Email my customers their renewals" — the switch behind the renewal cron.
+ *
+ * Off for everyone until flipped; the daily job sends nothing for users
+ * without an `auto` row. The copy says exactly what turning it on does,
+ * because this is the one place the app emails a customer without the
+ * electrician pressing send each time — nobody should discover that later.
+ */
+function RenewalEmailsToggle() {
+  const { mode, isLoading, setMode, saving } = useAutomation(
+    AUTOMATION_KEYS.clientRenewalEmails
+  );
+  const on = mode === 'auto';
+
+  return (
+    <div
+      className={cn(
+        'rounded-2xl border p-4 sm:p-5 transition-colors',
+        'bg-gradient-to-b from-white/[0.07] to-white/[0.03]',
+        on ? 'border-elec-yellow/50' : 'border-white/[0.12]'
+      )}
+    >
+      <label className="flex cursor-pointer items-center justify-between gap-4">
+        <span className="min-w-0">
+          <span className="block text-[14px] font-semibold text-white">
+            Email customers their renewal reminders
+          </span>
+          <span className="mt-1 block text-[12.5px] leading-snug text-white">
+            When a certificate comes due, the customer gets a reminder in your name at 30, 14 and
+            7 days — with a button to book you for the renewal. Sent automatically each morning;
+            replies come to you.
+          </span>
+        </span>
+        <Switch
+          checked={on}
+          disabled={isLoading || saving}
+          onCheckedChange={(v) => setMode(v ? 'auto' : 'off')}
+        />
+      </label>
+    </div>
+  );
+}
+
 export default function CertificateExpiryPage() {
   const navigate = useNavigate();
   const { reminders, isLoading, markAsContacted, markAsBooked, deleteReminder } =
@@ -53,6 +102,44 @@ export default function CertificateExpiryPage() {
   const { toast } = useToast();
   const [timeFilter, setTimeFilter] = useState<TimeFilter>('all');
   const [selectedReminder, setSelectedReminder] = useState<ExpiryReminder | null>(null);
+  const [contractPrefill, setContractPrefill] = useState<ContractPrefill | null>(null);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  /*
+   * Cross-page entry point — quotes/invoices link here with
+   * ?contract=1&customer=…&job=…&amount=… to open the contract sheet
+   * pre-filled ("make this recurring"). Params are consumed once.
+   */
+  useEffect(() => {
+    if (searchParams.get('contract') !== '1') return;
+    setContractPrefill({
+      customerName: searchParams.get('customer') || undefined,
+      customerId: searchParams.get('customerId') || undefined,
+      jobType: searchParams.get('job') || undefined,
+      amount: Number(searchParams.get('amount')) || null,
+    });
+    setSearchParams({}, { replace: true });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  /*
+   * Best-effort service + cadence from a cert reference. EIC becomes an EICR
+   * (the periodic that follows an install), and the cadence follows the
+   * trade: EICRs run on years (rental = 5), fire alarm servicing six-monthly
+   * (BS 5839), PAT and emergency lighting annually.
+   */
+  const contractFromCert = (
+    certificateNumber: string | null
+  ): { jobType: string; frequency: 'five_yearly' | 'six_monthly' | 'annually' } => {
+    const prefix = String(certificateNumber || '').split('-')[0].toUpperCase();
+    if (prefix === 'EICR' || prefix === 'EIC') return { jobType: 'EICR', frequency: 'five_yearly' };
+    if (prefix.startsWith('PAT')) return { jobType: 'PAT testing', frequency: 'annually' };
+    if (prefix.startsWith('FA') || prefix.startsWith('FIRE'))
+      return { jobType: 'Fire alarm service', frequency: 'six_monthly' };
+    if (prefix.startsWith('EML') || prefix.startsWith('EL'))
+      return { jobType: 'Emergency lighting test', frequency: 'annually' };
+    return { jobType: '', frequency: 'annually' };
+  };
   const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null);
   const [isCreating, setIsCreating] = useState(false);
   // Source cert behind the open reminder — fetched once when the sheet opens.
@@ -256,10 +343,10 @@ export default function CertificateExpiryPage() {
         </button>
         <div className="flex items-baseline gap-3 flex-wrap">
           <h1 className="text-2xl sm:text-[28px] font-bold tracking-tight text-white">
-            Expiring Certificates
+            Renewals &amp; Contracts
           </h1>
           <span className="text-[13px] text-white/50">
-            Your re-inspection pipeline — every renewal is repeat work
+            Your repeat-work pipeline — every renewal is a customer kept
           </span>
         </div>
       </div>
@@ -309,6 +396,20 @@ export default function CertificateExpiryPage() {
               </button>
             );
           })}
+        </motion.div>
+
+        {/* The automation switch, on the page it automates. The person looking
+            at their renewal pipeline is exactly the person deciding whether
+            customers should be chased automatically — burying this in a
+            settings screen would mean nobody finds it. */}
+        <motion.div variants={itemVariants}>
+          <RenewalEmailsToggle />
+        </motion.div>
+
+        {/* The other half of the renewals machine — repeat work the
+            electrician defines rather than a certificate implying (ELE-430). */}
+        <motion.div variants={itemVariants}>
+          <MaintenanceContractsSection prefill={contractPrefill} />
         </motion.div>
 
         {/* Filter pills */}
@@ -524,6 +625,26 @@ export default function CertificateExpiryPage() {
                     className="w-full h-11 text-sm font-semibold touch-manipulation active:scale-[0.98] bg-elec-yellow text-black hover:bg-elec-yellow/90"
                   >
                     {isCreating ? 'Creating renewal…' : 'Start renewal EICR'}
+                  </Button>
+
+                  {/* The recurring-revenue move: a customer whose cert is due
+                      is exactly the customer to put on a plan — one tap
+                      pre-fills the contract sheet below. */}
+                  <Button
+                    variant="outline"
+                    onClick={() => {
+                      const suggestion = contractFromCert(selectedReminder.certificate_number);
+                      setContractPrefill({
+                        customerName: selectedReminder.client_name || undefined,
+                        customerId: selectedReminder.customer_id || undefined,
+                        jobType: suggestion.jobType,
+                        frequency: suggestion.frequency,
+                      });
+                      setSelectedReminder(null);
+                    }}
+                    className="w-full h-11 text-[13px] font-medium touch-manipulation active:scale-[0.98] border-elec-yellow/40 text-elec-yellow hover:bg-elec-yellow/10"
+                  >
+                    Put on a maintenance contract
                   </Button>
 
                   {/* Secondary: open the original cert, or contact the client */}

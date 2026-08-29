@@ -1879,9 +1879,9 @@ export const emergencyLightingQuestionBank: StandardMockQuestion[] = [
   {
     id: 109,
     question: 'What is the recommended mounting height for emergency luminaires in corridors?',
-    options: ['1 meter', '2-3 meters', '5 meters', 'At floor level'],
+    options: ['1 metre', '2-3 metres', '5 metres', 'At floor level'],
     correctAnswer: 1,
-    explanation: 'Mounting at 2-3 meters provides optimal coverage and uniformity.',
+    explanation: 'Mounting at 2-3 metres provides optimal coverage and uniformity.',
     section: 'Module 3',
     difficulty: 'advanced',
     topic: 'Design Principles',

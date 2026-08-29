@@ -14,11 +14,11 @@
  */
 
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
-import { PageFrame, PageHero } from '@/components/college/primitives';
 import {
   TLDR,
   ConceptBlock,
@@ -40,26 +40,25 @@ const DESCRIPTION =
 const checks = [
   {
     id: 'mod7-s4-sub2-iet',
-    question: "What is the IET and what does it offer electrical practitioners?",
+    question: 'What is the IET and what does it offer electrical practitioners?',
     options: [
-      "Institution of Engineering and Technology — the UK professional body for engineering and technology; publishes BS 7671, runs CPD, and offers Engineering Council registration (EngTech, IEng, CEng).",
-      "Institute of Electrical Trades — a UK trade union negotiating pay and conditions for electricians through collective bargaining; it publishes no standards and offers no professional registration.",
-      "International Electrical Testing body — a scheme that licenses electricians to inspect and test via the 2391 qualification; it has no role in publishing BS 7671 or in professional membership.",
-      "Independent Electrotechnical Tribunal — a government regulator that investigates electrical accidents and maintains a register of barred individuals; it provides no member resources or CPD.",
+      'Institution of Engineering and Technology — the UK professional body for engineering and technology; publishes BS 7671, runs CPD, and offers Engineering Council registration (EngTech, IEng, CEng).',
+      'Institute of Electrical Trades — a UK trade union negotiating pay and conditions for electricians through collective bargaining; it publishes no standards and offers no professional registration.',
+      'International Electrical Testing body — a scheme that licenses electricians to inspect and test via the 2391 qualification; it has no role in publishing BS 7671 or in professional membership.',
+      'Independent Electrotechnical Tribunal — a government regulator that investigates electrical accidents and maintains a register of barred individuals; it provides no member resources or CPD.',
     ],
     correctIndex: 0,
     explanation:
-      "The IET is the dominant professional body for UK electrical engineering. Membership opens access to BS 7671 (the IET publishes it), Wiring Matters magazine, IET Online (massive technical document archive), member events, CPD content via IET Academy, and the EngTech/IEng/CEng professional registration pathway. For electrical practitioners IET membership is broadly equivalent to what BMA membership is for doctors or RICS membership is for surveyors.",
+      'The IET is the dominant professional body for UK electrical engineering. Membership opens access to BS 7671 (the IET publishes it), Wiring Matters magazine, IET Online (massive technical document archive), member events, CPD content via IET Academy, and the EngTech/IEng/CEng professional registration pathway. For electrical practitioners IET membership is broadly equivalent to what BMA membership is for doctors or RICS membership is for surveyors.',
   },
   {
     id: 'mod7-s4-sub2-tiers',
-    question:
-      "What are the current IET membership tiers in order?",
+    question: 'What are the current IET membership tiers in order?',
     options: [
-      "Bronze, Silver, Gold and Platinum — the IET grades members by the number of CPD hours logged each year, with Platinum reserved for those completing 100+ hours. Tier is recalculated annually and can go down as well as up.",
-      "Apprentice, Journeyman, Master and Grand Master — a craft-guild ladder where members advance by years of service and a practical test at each stage. The Grand Master tier is held by only a handful of members nationally.",
-      "Trainee, Qualified, Registered and Chartered — a four-step ladder tied directly to JIB grading, so an IET tier automatically matches the JIB grade.",
-      "Student/Apprentice, Affiliate, Technician Member (TMIET), Member (MIET), Fellow (FIET) — entry through to senior achievement.",
+      'Bronze, Silver, Gold and Platinum — the IET grades members by the number of CPD hours logged each year, with Platinum reserved for those completing 100+ hours. Tier is recalculated annually and can go down as well as up.',
+      'Apprentice, Journeyman, Master and Grand Master — a craft-guild ladder where members advance by years of service and a practical test at each stage. The Grand Master tier is held by only a handful of members nationally.',
+      'Trainee, Qualified, Registered and Chartered — a four-step ladder tied directly to JIB grading, so an IET tier automatically matches the JIB grade.',
+      'Student/Apprentice, Affiliate, Technician Member (TMIET), Member (MIET), Fellow (FIET) — entry through to senior achievement.',
     ],
     correctIndex: 3,
     explanation:
@@ -67,67 +66,66 @@ const checks = [
   },
   {
     id: 'mod7-s4-sub2-engtech',
-    question:
-      "Can a vocational-route electrician become EngTech-registered through the IET?",
+    question: 'Can a vocational-route electrician become EngTech-registered through the IET?',
     options: [
-      "No — EngTech registration requires a BEng or equivalent degree, so it is closed to anyone who came through an apprenticeship. Vocational electricians must instead progress straight to IEng once they hold an HNC.",
-      "No — EngTech is awarded automatically to every JIB Approved Electrician at the point they pass AM2, so there is no application to make through the IET; the grade is simply granted by the JIB.",
-      "Yes — IET actively promotes EngTech for vocational practitioners: JIB Approved Electrician + 2391-52 + evidence portfolio + professional review is the typical route.",
-      "No — EngTech can only be obtained through the Engineering Council directly, not through any professional body. The IET can offer membership but has no power to confer Engineering Council registration of any kind.",
+      'No — EngTech registration requires a BEng or equivalent degree, so it is closed to anyone who came through an apprenticeship. Vocational electricians must instead progress straight to IEng once they hold an HNC.',
+      'No — EngTech is awarded automatically to every JIB Approved Electrician at the point they pass AM2, so there is no application to make through the IET; the grade is simply granted by the JIB.',
+      'Yes — IET actively promotes EngTech for vocational practitioners: JIB Approved Electrician + 2391-52 + evidence portfolio + professional review is the typical route.',
+      'No — EngTech can only be obtained through the Engineering Council directly, not through any professional body. The IET can offer membership but has no power to confer Engineering Council registration of any kind.',
     ],
     correctIndex: 2,
     explanation:
-      "EngTech accessibility is a deliberate IET strategy — the institution wants to broaden professional registration beyond traditional graduate routes. Vocational practitioners with Level 3 + experience + competence evidence are exactly the target candidates. The application is achievable as a single-evening job once the portfolio is organised against UK-SPEC. Worth doing — registered EngTech is a meaningful credential for salary signal and professional standing.",
+      'EngTech accessibility is a deliberate IET strategy — the institution wants to broaden professional registration beyond traditional graduate routes. Vocational practitioners with Level 3 + experience + competence evidence are exactly the target candidates. The application is achievable as a single-evening job once the portfolio is organised against UK-SPEC. Worth doing — registered EngTech is a meaningful credential for salary signal and professional standing.',
   },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-    question: "How much does IET MIET membership typically cost per year?",
+    question: 'How much does IET MIET membership typically cost per year?',
     options: [
-      "Around £10-20/year — IET membership is heavily subsidised for all working electricians and costs little more than a magazine subscription. The low fee is why almost every UK electrician is a member.",
-      "Around £150-200/year for full MIET membership, with discounts for graduates, apprentices, retirees and overseas members, and tax-deductible under HMRC List 3.",
+      'Around £10-20/year — IET membership is heavily subsidised for all working electricians and costs little more than a magazine subscription. The low fee is why almost every UK electrician is a member.',
+      'Around £150-200/year for full MIET membership, with discounts for graduates, apprentices, retirees and overseas members, and tax-deductible under HMRC List 3.',
       "Around £900-1,200/year — comparable to a Chartered Accountant's institute fee, reflecting the high status of MIET. The fee is a one-off lifetime payment rather than annual.",
-      "There is no annual fee — MIET membership is paid for in a single examination fee at the point of application, after which it is held for life with no further cost.",
+      'There is no annual fee — MIET membership is paid for in a single examination fee at the point of application, after which it is held for life with no further cost.',
     ],
     correctAnswer: 1,
     explanation:
-      "MIET subscription is comparable to other UK professional bodies (RICS, IMechE, etc.). The annual cost includes substantial member benefits — IET Online alone (access to thousands of standards, journals, conference papers) is worth more than the subscription if you use it. Tax-deductible status reduces effective cost. Most career-focused electrical engineers and senior practitioners hold MIET.",
+      'MIET subscription is comparable to other UK professional bodies (RICS, IMechE, etc.). The annual cost includes substantial member benefits — IET Online alone (access to thousands of standards, journals, conference papers) is worth more than the subscription if you use it. Tax-deductible status reduces effective cost. Most career-focused electrical engineers and senior practitioners hold MIET.',
   },
   {
     id: 2,
     question: "What's the IET Academy?",
     options: [
       "IET Academy is the IET's apprentice training college — a chain of physical campuses where electrical apprentices complete the classroom portion of their NVQ. It is the IET's alternative to FE colleges and JTL.",
-      "IET Academy is the body that runs the AM2 practical assessment on behalf of the IET. Apprentices attend an Academy centre to sit the end-point assessment for their installation qualification.",
+      'IET Academy is the body that runs the AM2 practical assessment on behalf of the IET. Apprentices attend an Academy centre to sit the end-point assessment for their installation qualification.',
       "IET Academy is the IET's online learning platform — bite-sized technical courses, BS 7671 update training, design and engineering CPD content. Member access typically included with MIET subscription; some content open to non-members. Strong CPD resource alongside scheme-specific (NICEIC, NAPIT) and provider-specific (Elec-Mate) CPD platforms.",
       "IET Academy is the IET's awarding body that issues the 2382 and 2391 qualifications. It sets and marks the regs exams and is the IET's competitor to City & Guilds.",
     ],
     correctAnswer: 2,
     explanation:
-      "IET Academy is a meaningful CPD resource. Course content covers BS 7671 amendments, specialist topics (PV, EV, power quality), design and engineering (motor control, PLCs, HV), and professional skills. Many CPS schemes accept IET Academy completion as CPD evidence. For MIET members the content is largely included; non-members can buy individual courses.",
+      'IET Academy is a meaningful CPD resource. Course content covers BS 7671 amendments, specialist topics (PV, EV, power quality), design and engineering (motor control, PLCs, HV), and professional skills. Many CPS schemes accept IET Academy completion as CPD evidence. For MIET members the content is largely included; non-members can buy individual courses.',
   },
   {
     id: 3,
-    question: "What does FIET (Fellow) require beyond MIET?",
+    question: 'What does FIET (Fellow) require beyond MIET?',
     options: [
-      "Simply a higher annual subscription — any MIET member can become a Fellow by paying the increased FIET fee. There is no additional competence or experience requirement; it is purely a matter of choosing to pay more for the higher post-nominal.",
-      "An additional written examination set by the IET, covering advanced power systems and engineering management. MIET members upgrade to FIET by passing this single exam, regardless of their career history.",
-      "A fixed length of unbroken IET membership — 20 years as a continuous MIET automatically converts to FIET. The upgrade is based on time served as a member rather than on any assessment of achievement.",
-      "Significant career achievement and contribution — typically 10+ years senior experience, leadership and contribution to the profession (publications, mentoring, committee work), usually alongside CEng.",
+      'Simply a higher annual subscription — any MIET member can become a Fellow by paying the increased FIET fee. There is no additional competence or experience requirement; it is purely a matter of choosing to pay more for the higher post-nominal.',
+      'An additional written examination set by the IET, covering advanced power systems and engineering management. MIET members upgrade to FIET by passing this single exam, regardless of their career history.',
+      'A fixed length of unbroken IET membership — 20 years as a continuous MIET automatically converts to FIET. The upgrade is based on time served as a member rather than on any assessment of achievement.',
+      'Significant career achievement and contribution — typically 10+ years senior experience, leadership and contribution to the profession (publications, mentoring, committee work), usually alongside CEng.',
     ],
     correctAnswer: 3,
     explanation:
-      "FIET is the senior membership tier — requires demonstrable career achievement and contribution beyond standard professional practice. Typical FIET candidates are senior engineers in significant roles (technical directors, senior consultants, principal engineers) with track record of contribution to the wider profession (publications, conference presentations, committee work, mentoring). FIET is a meaningful credential for senior consultancy or leadership roles.",
+      'FIET is the senior membership tier — requires demonstrable career achievement and contribution beyond standard professional practice. Typical FIET candidates are senior engineers in significant roles (technical directors, senior consultants, principal engineers) with track record of contribution to the wider profession (publications, conference presentations, committee work, mentoring). FIET is a meaningful credential for senior consultancy or leadership roles.',
   },
   {
     id: 4,
-    question: "Are IET fees tax-deductible?",
+    question: 'Are IET fees tax-deductible?',
     options: [
       "Yes — IET subscriptions are deductible against income tax under HMRC's List 3, cutting the cost by your marginal rate (a £200 sub costs a 40% taxpayer £120 net).",
-      "No — HMRC treats professional body subscriptions as a personal expense; only mandatory qualifications such as the 18th Edition are allowable.",
-      "Only for limited companies — a sole trader cannot claim it, but a Ltd company can put it through as a business cost.",
+      'No — HMRC treats professional body subscriptions as a personal expense; only mandatory qualifications such as the 18th Edition are allowable.',
+      'Only for limited companies — a sole trader cannot claim it, but a Ltd company can put it through as a business cost.',
       "Only the first year's joining fee is deductible — HMRC treats subsequent annual renewals as a non-allowable personal choice.",
     ],
     correctAnswer: 0,
@@ -138,10 +136,10 @@ const quizQuestions = [
     id: 5,
     question: "What's an IET regional ambassador?",
     options: [
-      "A paid IET employee who travels between FE colleges selling membership to apprentices on commission, in a sales rather than support role.",
-      "A local IET volunteer (typically MIET or above) who supports members, advises on professional registration applications, and runs regional activities.",
-      "A senior IET officer who represents the institution at government and overseas events in a diplomatic, ceremonial role rather than dealing with members.",
-      "An assessor appointed by the IET to conduct EngTech and CEng review interviews, deciding pass or fail rather than advising applicants beforehand.",
+      'A paid IET employee who travels between FE colleges selling membership to apprentices on commission, in a sales rather than support role.',
+      'A local IET volunteer (typically MIET or above) who supports members, advises on professional registration applications, and runs regional activities.',
+      'A senior IET officer who represents the institution at government and overseas events in a diplomatic, ceremonial role rather than dealing with members.',
+      'An assessor appointed by the IET to conduct EngTech and CEng review interviews, deciding pass or fail rather than advising applicants beforehand.',
     ],
     correctAnswer: 1,
     explanation:
@@ -149,12 +147,12 @@ const quizQuestions = [
   },
   {
     id: 6,
-    question: "How does professional registration relate to JIB grading?",
+    question: 'How does professional registration relate to JIB grading?',
     options: [
-      "Same thing, two names — a JIB Approved Electrician is automatically EngTech-registered, and the terms are interchangeable.",
-      "JIB grading sits above Engineering Council registration — a JIB Technician outranks a CEng, with registration only relevant overseas.",
+      'Same thing, two names — a JIB Approved Electrician is automatically EngTech-registered, and the terms are interchangeable.',
+      'JIB grading sits above Engineering Council registration — a JIB Technician outranks a CEng, with registration only relevant overseas.',
       "Different but parallel — the JIB grading ladder is the trade-collective competence framework, while Engineering Council registration (EngTech / IEng / CEng) is the wider profession's; many hold both.",
-      "You must hold one before the other — Engineering Council registration is a legal prerequisite for JIB grading via the IET.",
+      'You must hold one before the other — Engineering Council registration is a legal prerequisite for JIB grading via the IET.',
     ],
     correctAnswer: 2,
     explanation:
@@ -162,27 +160,25 @@ const quizQuestions = [
   },
   {
     id: 7,
-    question:
-      "What's the IET Code of Conduct?",
+    question: "What's the IET Code of Conduct?",
     options: [
-      "A pricing schedule the IET publishes setting the minimum rates its members must charge for design and consultancy work, to stop members undercutting each other. Members can be fined for charging below the published rate.",
+      'A pricing schedule the IET publishes setting the minimum rates its members must charge for design and consultancy work, to stop members undercutting each other. Members can be fined for charging below the published rate.',
       "A dress and behaviour standard the IET enforces at its events and conferences, covering attire, punctuality and networking etiquette. It applies only at IET functions and has no bearing on members' day-to-day work.",
-      "A technical specification, separate from BS 7671, that IET members must follow when designing installations, setting stricter requirements than the Wiring Regs.",
-      "A professional ethics code binding on IET members and registrants — integrity, public safety, competence limits, CPD and reporting concerns, enforced by disciplinary action.",
+      'A technical specification, separate from BS 7671, that IET members must follow when designing installations, setting stricter requirements than the Wiring Regs.',
+      'A professional ethics code binding on IET members and registrants — integrity, public safety, competence limits, CPD and reporting concerns, enforced by disciplinary action.',
     ],
     correctAnswer: 3,
     explanation:
-      "The IET Code of Conduct is the ethical framework that binds members. It covers integrity and honesty, public safety and interest, working within competence limits, maintaining competence through CPD, treating colleagues and clients with respect, and reporting concerns about safety or unethical conduct; failure to comply can lead to disciplinary action and removal from membership. Treat membership as ongoing commitment to professional standards. The Code provides protection (standing to refuse unethical instructions) and obligation (maintaining standards including CPD). Read it as part of joining; revisit periodically.",
+      'The IET Code of Conduct is the ethical framework that binds members. It covers integrity and honesty, public safety and interest, working within competence limits, maintaining competence through CPD, treating colleagues and clients with respect, and reporting concerns about safety or unethical conduct; failure to comply can lead to disciplinary action and removal from membership. Treat membership as ongoing commitment to professional standards. The Code provides protection (standing to refuse unethical instructions) and obligation (maintaining standards including CPD). Read it as part of joining; revisit periodically.',
   },
   {
     id: 8,
-    question:
-      "What's the practical case for joining the IET as a domestic-focused electrician?",
+    question: "What's the practical case for joining the IET as a domestic-focused electrician?",
     options: [
-      "Several real benefits — BS 7671 access, Wiring Matters and IET Online, IET Academy CPD, regional networking, the EngTech pathway and affiliated insurance, all tax-deductible.",
+      'Several real benefits — BS 7671 access, Wiring Matters and IET Online, IET Academy CPD, regional networking, the EngTech pathway and affiliated insurance, all tax-deductible.',
       "None worth the money — membership is aimed purely at chartered design engineers, so a domestic-focused electrician gets nothing their CPS scheme doesn't give free.",
-      "It is a legal requirement — every domestic electrician must hold IET membership to issue an EIC under Part P, so you cannot certify work without it.",
-      "It replaces a CPS scheme — membership lets a domestic electrician self-certify notifiable work to Building Control, so you can drop NICEIC or NAPIT.",
+      'It is a legal requirement — every domestic electrician must hold IET membership to issue an EIC under Part P, so you cannot certify work without it.',
+      'It replaces a CPS scheme — membership lets a domestic electrician self-certify notifiable work to Building Control, so you can drop NICEIC or NAPIT.',
     ],
     correctAnswer: 0,
     explanation:
@@ -192,34 +188,34 @@ const quizQuestions = [
 
 const faqs = [
   {
-    question: "Is IET membership the same as Engineering Council registration?",
+    question: 'Is IET membership the same as Engineering Council registration?',
     answer:
       "No, but they're linked. IET membership is the institution's own membership tier (Student/Apprentice / Affiliate / TMIET / MIET / FIET). Engineering Council registration (EngTech / IEng / CEng) is the wider profession's regulatory registration. You can be MIET without being CEng-registered (membership only, no registration); you can be EngTech without being TMIET (registration through another institution). Most engineering-focused IET members hold both.",
   },
   {
-    question: "How long does an EngTech application take?",
+    question: 'How long does an EngTech application take?',
     answer:
-      "Typically 3-6 months from starting the portfolio to professional review. Portfolio preparation 20-40 hours. Application submission. Application review (4-8 weeks). Professional review interview (60-90 minutes with two reviewers). Decision typically within 2-4 weeks of interview. Total timeline depends on how quickly you organise the portfolio and how soon reviewers are available.",
+      'Typically 3-6 months from starting the portfolio to professional review. Portfolio preparation 20-40 hours. Application submission. Application review (4-8 weeks). Professional review interview (60-90 minutes with two reviewers). Decision typically within 2-4 weeks of interview. Total timeline depends on how quickly you organise the portfolio and how soon reviewers are available.',
   },
   {
-    question: "Can I be a member of multiple engineering institutions?",
+    question: 'Can I be a member of multiple engineering institutions?',
     answer:
-      "Yes — many engineers belong to multiple institutions reflecting different specialisms. IET (electrical, electronic, IT), IMechE (mechanical), IChemE (chemical), CIBSE (building services). Each carries its own subscription. For an electrical practitioner IET is typically the primary institution; CIBSE may add value if you work in building services across disciplines.",
+      'Yes — many engineers belong to multiple institutions reflecting different specialisms. IET (electrical, electronic, IT), IMechE (mechanical), IChemE (chemical), CIBSE (building services). Each carries its own subscription. For an electrical practitioner IET is typically the primary institution; CIBSE may add value if you work in building services across disciplines.',
   },
   {
     question: "What's IET YPS?",
     answer:
-      "IET Young Professionals Section — community for IET members aged under 30, with regional networking events, mentoring opportunities and career-development content. Apprentices and early-career electricians benefit from the YPS network for peer connections beyond their own employer. Free for members under 30.",
+      'IET Young Professionals Section — community for IET members aged under 30, with regional networking events, mentoring opportunities and career-development content. Apprentices and early-career electricians benefit from the YPS network for peer connections beyond their own employer. Free for members under 30.',
   },
   {
-    question: "Do employers value IET membership?",
+    question: 'Do employers value IET membership?',
     answer:
-      "Increasingly yes — for engineering-direction careers IET membership and registration are widely valued by employers as evidence of professional commitment and competence. For pure trade-installer roles the value is more variable. JIB grading typically matters more for installer roles; IET more for design and engineering. Many career trajectories shift over time — early-career trade focus → mid-career engineering focus benefits from holding both.",
+      'Increasingly yes — for engineering-direction careers IET membership and registration are widely valued by employers as evidence of professional commitment and competence. For pure trade-installer roles the value is more variable. JIB grading typically matters more for installer roles; IET more for design and engineering. Many career trajectories shift over time — early-career trade focus → mid-career engineering focus benefits from holding both.',
   },
   {
-    question: "How do I find IET events near me?",
+    question: 'How do I find IET events near me?',
     answer:
-      "IET regional sections run technical events (typically free for members) covering BS 7671 amendments, specialist topics (PV, EV, electric vehicles, power quality), career development and member networking. Check theiet.org/events for your region. Most major UK cities have active IET sections with monthly or fortnightly events.",
+      'IET regional sections run technical events (typically free for members) covering BS 7671 amendments, specialist topics (PV, EV, electric vehicles, power quality), career development and member networking. Check theiet.org/events for your region. Most major UK cities have active IET sections with monthly or fortnightly events.',
   },
 ];
 
@@ -228,585 +224,587 @@ export default function Sub2() {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
-      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
-        <PageFrame>
-          <button
-            onClick={() => navigate('/study-centre/apprentice/level3-module7-section4')}
-            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
-          >
-            <ArrowLeft className="h-4 w-4" /> Section 4
-          </button>
+    <HubPage>
+      <HubMasthead
+        section="Module 7 · Section 4 · Subsection 2"
+        title="IET membership routes"
+        backTo="/study-centre/apprentice/level3-module7-section4"
+      />
+      <HubBody>
+        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
+          IET membership tiers (Student/Apprentice, Affiliate, TMIET, MIET, FIET) and linked
+          Engineering Council registrations (EngTech, IEng, CEng). Application, costs, benefits.
+        </p>
 
-          <PageHero
-            eyebrow="Module 7 · Section 4 · Subsection 2"
-            title="IET membership routes"
-            description="IET membership tiers (Student/Apprentice, Affiliate, TMIET, MIET, FIET) and linked Engineering Council registrations (EngTech, IEng, CEng). Application, costs, benefits."
-            tone="emerald"
-          />
+        <TLDR
+          points={[
+            'IET (Institution of Engineering and Technology) is the dominant UK professional body for electrical engineering — 156,000 members worldwide.',
+            "Current membership tiers: Student/Apprentice → Affiliate (entry) → TMIET (Technician Member, vocational professional tier, typically paired with EngTech) → MIET (Member, incorporated/chartered-level competence) → FIET (Fellow, senior career achievement). The older 'Associate' tier was removed in the IET's 2008 restructure.",
+            "Linked Engineering Council registrations: EngTech (technician), IEng (incorporated, degree-level), CEng (chartered, master's level).",
+            'Annual subscription £40-300/year depending on tier. Tax-deductible against income tax under HMRC List 3.',
+            'IET specifically promotes EngTech (paired with TMIET) as accessible to vocational-route practitioners — JIB Approved + 2391-52 + portfolio = typical TMIET / EngTech qualification.',
+            'Member benefits: BS 7671 access, Wiring Matters, IET Online archive, IET Academy CPD, regional events, professional registration support.',
+          ]}
+        />
 
-          <TLDR
-            points={[
-              "IET (Institution of Engineering and Technology) is the dominant UK professional body for electrical engineering — 156,000 members worldwide.",
-              "Current membership tiers: Student/Apprentice → Affiliate (entry) → TMIET (Technician Member, vocational professional tier, typically paired with EngTech) → MIET (Member, incorporated/chartered-level competence) → FIET (Fellow, senior career achievement). The older 'Associate' tier was removed in the IET's 2008 restructure.",
-              "Linked Engineering Council registrations: EngTech (technician), IEng (incorporated, degree-level), CEng (chartered, master's level).",
-              "Annual subscription £40-300/year depending on tier. Tax-deductible against income tax under HMRC List 3.",
-              "IET specifically promotes EngTech (paired with TMIET) as accessible to vocational-route practitioners — JIB Approved + 2391-52 + portfolio = typical TMIET / EngTech qualification.",
-              "Member benefits: BS 7671 access, Wiring Matters, IET Online archive, IET Academy CPD, regional events, professional registration support.",
-            ]}
-          />
+        <LearningOutcomes
+          outcomes={[
+            'Maps to C&G 2365-03 / Unit 308 / LO2 / AC 2.4 — identify the importance of CPD, including the role of professional bodies.',
+            "State the IET's role as the UK's dominant professional body for electrical engineering.",
+            "Distinguish between current IET membership tiers (Student/Apprentice, Affiliate, TMIET, MIET, FIET) and the entry criteria for each. The older 'Associate' tier was removed in the 2008 restructure.",
+            'Identify the linked Engineering Council registrations (EngTech, IEng, CEng) and the relationship with IET tiers.',
+            'Identify the practical benefits of IET membership (BS 7671, IET Online, IET Academy, regional events, professional registration).',
+            'State that IET subscriptions are tax-deductible under HMRC List 3.',
+          ]}
+          initialVisibleCount={3}
+        />
 
-          <LearningOutcomes
-            outcomes={[
-              "Maps to C&G 2365-03 / Unit 308 / LO2 / AC 2.4 — identify the importance of CPD, including the role of professional bodies.",
-              "State the IET's role as the UK's dominant professional body for electrical engineering.",
-              "Distinguish between current IET membership tiers (Student/Apprentice, Affiliate, TMIET, MIET, FIET) and the entry criteria for each. The older 'Associate' tier was removed in the 2008 restructure.",
-              "Identify the linked Engineering Council registrations (EngTech, IEng, CEng) and the relationship with IET tiers.",
-              "Identify the practical benefits of IET membership (BS 7671, IET Online, IET Academy, regional events, professional registration).",
-              "State that IET subscriptions are tax-deductible under HMRC List 3.",
-            ]}
-            initialVisibleCount={3}
-          />
+        <ContentEyebrow>What the IET is</ContentEyebrow>
 
-          <ContentEyebrow>What the IET is</ContentEyebrow>
+        <ConceptBlock
+          title="The IET — UK's dominant electrical engineering professional body"
+          plainEnglish="The Institution of Engineering and Technology (IET) is the UK's primary professional body for engineering and technology, with around 156,000 members worldwide. Founded 1871 (as the Society of Telegraph Engineers), now covering electrical, electronic, IT and wider engineering disciplines. Publishes BS 7671 (jointly with BSI). Operates as both a membership institution and an Engineering Council licensed body for professional registration."
+          onSite="For electrical practitioners IET is the institution to know. Membership opens access to BS 7671 (the IET publishes it), Wiring Matters magazine, IET Online (massive technical archive), member events, CPD content via IET Academy, and the EngTech/IEng/CEng professional registration pathway. Most career-focused UK electrical engineers and senior practitioners hold IET MIET membership."
+        >
+          <p>IET role at a glance:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Publisher of BS 7671 (the Wiring Regulations) jointly with BSI.</li>
+            <li>
+              Membership institution &mdash; current tiers (Student/Apprentice / Affiliate / TMIET /
+              MIET / FIET).
+            </li>
+            <li>Engineering Council licensed body for EngTech / IEng / CEng registration.</li>
+            <li>Publisher of IET Standards, Wiring Matters magazine, technical journals.</li>
+            <li>Operator of IET Online (large technical archive) and IET Academy (CPD).</li>
+            <li>
+              Convener of regional events, conferences, technical committees (including JPEL/64).
+            </li>
+            <li>Code of Conduct for members and registrants.</li>
+          </ul>
+        </ConceptBlock>
 
-          <ConceptBlock
-            title="The IET — UK's dominant electrical engineering professional body"
-            plainEnglish="The Institution of Engineering and Technology (IET) is the UK's primary professional body for engineering and technology, with around 156,000 members worldwide. Founded 1871 (as the Society of Telegraph Engineers), now covering electrical, electronic, IT and wider engineering disciplines. Publishes BS 7671 (jointly with BSI). Operates as both a membership institution and an Engineering Council licensed body for professional registration."
-            onSite="For electrical practitioners IET is the institution to know. Membership opens access to BS 7671 (the IET publishes it), Wiring Matters magazine, IET Online (massive technical archive), member events, CPD content via IET Academy, and the EngTech/IEng/CEng professional registration pathway. Most career-focused UK electrical engineers and senior practitioners hold IET MIET membership."
-          >
-            <p>
-              IET role at a glance:
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Publisher of BS 7671 (the Wiring Regulations) jointly with BSI.</li>
-              <li>Membership institution &mdash; current tiers (Student/Apprentice / Affiliate / TMIET / MIET / FIET).</li>
-              <li>Engineering Council licensed body for EngTech / IEng / CEng registration.</li>
-              <li>Publisher of IET Standards, Wiring Matters magazine, technical journals.</li>
-              <li>Operator of IET Online (large technical archive) and IET Academy (CPD).</li>
-              <li>Convener of regional events, conferences, technical committees (including JPEL/64).</li>
-              <li>Code of Conduct for members and registrants.</li>
-            </ul>
-          </ConceptBlock>
+        <InlineCheck
+          id={checks[0].id}
+          question={checks[0].question}
+          options={checks[0].options}
+          correctIndex={checks[0].correctIndex}
+          explanation={checks[0].explanation}
+        />
 
-          <InlineCheck
-            id={checks[0].id}
-            question={checks[0].question}
-            options={checks[0].options}
-            correctIndex={checks[0].correctIndex}
-            explanation={checks[0].explanation}
-          />
+        <SectionRule />
 
-          <SectionRule />
+        <ContentEyebrow>The membership tiers</ContentEyebrow>
 
-          <ContentEyebrow>The membership tiers</ContentEyebrow>
-
-          <ConceptBlock
-            title="Student/Apprentice → Affiliate → TMIET → MIET → FIET — the membership ladder"
-            plainEnglish="The IET's current membership structure (post-2008 restructure) has five main tiers: Student/Apprentice (for those in formal study), Affiliate (anyone with an interest, no qualifications required), Technician Member (TMIET — vocational professional tier, typically paired with EngTech registration), Member (MIET — incorporated or chartered-level competence), and Fellow (FIET — senior career achievement). The older 'Associate' tier was discontinued in 2008 when TMIET was introduced."
-            onSite="Most apprentices start as Student/Apprentice or Affiliate during the apprenticeship — low cost, immediate access to member benefits. Progress to TMIET in the post-AM2 / post-2391-52 window (often paired with EngTech registration). Progress to MIET when you can evidence IEng/CEng-level competence (typically post-HNC plus design or engineering responsibility). FIET is for senior practitioners 10+ years into their careers with demonstrable contribution beyond their day-job."
-          >
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-3">
-              <div className="rounded-2xl border border-white/[0.08] bg-[hsl(0_0%_12%)] p-4">
-                <div className="text-[11px] uppercase tracking-[0.18em] text-elec-yellow mb-2">
-                  Student / Apprentice
-                </div>
-                <p className="text-[13.5px] text-white/85 leading-relaxed">
-                  Entry tier for those in formal study (apprenticeship, HNC, HND, BEng).
-                  Free or heavily discounted. Suitable for the apprenticeship years.
-                </p>
+        <ConceptBlock
+          title="Student/Apprentice → Affiliate → TMIET → MIET → FIET — the membership ladder"
+          plainEnglish="The IET's current membership structure (post-2008 restructure) has five main tiers: Student/Apprentice (for those in formal study), Affiliate (anyone with an interest, no qualifications required), Technician Member (TMIET — vocational professional tier, typically paired with EngTech registration), Member (MIET — incorporated or chartered-level competence), and Fellow (FIET — senior career achievement). The older 'Associate' tier was discontinued in 2008 when TMIET was introduced."
+          onSite="Most apprentices start as Student/Apprentice or Affiliate during the apprenticeship — low cost, immediate access to member benefits. Progress to TMIET in the post-AM2 / post-2391-52 window (often paired with EngTech registration). Progress to MIET when you can evidence IEng/CEng-level competence (typically post-HNC plus design or engineering responsibility). FIET is for senior practitioners 10+ years into their careers with demonstrable contribution beyond their day-job."
+        >
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-3">
+            <div className="rounded-2xl border border-white/[0.08] bg-[hsl(0_0%_12%)] p-4">
+              <div className="text-[11px] uppercase tracking-[0.18em] text-elec-yellow mb-2">
+                Student / Apprentice
               </div>
-              <div className="rounded-2xl border border-white/[0.08] bg-[hsl(0_0%_12%)] p-4">
-                <div className="text-[11px] uppercase tracking-[0.18em] text-elec-yellow mb-2">
-                  Affiliate
-                </div>
-                <p className="text-[13.5px] text-white/85 leading-relaxed">
-                  Open tier. No qualifications required. Subscription
-                  &pound;40-80/year. Suitable for anyone with interest in engineering.
-                </p>
-              </div>
-              <div className="rounded-2xl border border-white/[0.08] bg-[hsl(0_0%_12%)] p-4">
-                <div className="text-[11px] uppercase tracking-[0.18em] text-elec-yellow mb-2">
-                  TMIET (Technician Member)
-                </div>
-                <p className="text-[13.5px] text-white/85 leading-relaxed">
-                  Vocational professional tier &mdash; typically Level 3 vocational
-                  qualifications (e.g. C&amp;G 2365-03) plus experience, often paired with
-                  EngTech registration. Subscription around &pound;100-150/year.
-                </p>
-              </div>
-              <div className="rounded-2xl border border-white/[0.08] bg-[hsl(0_0%_12%)] p-4">
-                <div className="text-[11px] uppercase tracking-[0.18em] text-elec-yellow mb-2">
-                  MIET (Member)
-                </div>
-                <p className="text-[13.5px] text-white/85 leading-relaxed">
-                  Standard professional tier. Incorporated or chartered-level competence
-                  anchor (typically HNC+ plus design or engineering responsibility).
-                  Subscription &pound;150-200/year.
-                </p>
-              </div>
-              <div className="rounded-2xl border border-white/[0.08] bg-[hsl(0_0%_12%)] p-4 sm:col-span-2">
-                <div className="text-[11px] uppercase tracking-[0.18em] text-elec-yellow mb-2">
-                  FIET (Fellow)
-                </div>
-                <p className="text-[13.5px] text-white/85 leading-relaxed">
-                  Senior tier. Significant career achievement required, often combined
-                  with CEng. Subscription &pound;200-300/year. Fellowship is recognition
-                  of senior standing.
-                </p>
-              </div>
+              <p className="text-[13.5px] text-white/85 leading-relaxed">
+                Entry tier for those in formal study (apprenticeship, HNC, HND, BEng). Free or
+                heavily discounted. Suitable for the apprenticeship years.
+              </p>
             </div>
-            <p className="mt-3 text-[13px] text-white/70">
-              Note: the older &quot;Associate&quot; tier was discontinued in the IET&apos;s
-              2008 restructure, replaced by the current Technician Member (TMIET)
-              designation.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck
-            id={checks[1].id}
-            question={checks[1].question}
-            options={checks[1].options}
-            correctIndex={checks[1].correctIndex}
-            explanation={checks[1].explanation}
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>The vocational route to EngTech via IET</ContentEyebrow>
-
-          <ConceptBlock
-            title="Vocational EngTech — how a JIB Approved Electrician qualifies"
-            plainEnglish="The IET specifically promotes EngTech registration as accessible to vocational-route practitioners. The standard route for a JIB Approved Electrician with several years of post-AM2 experience: hold IET MIET membership (or apply alongside EngTech) → assemble a portfolio of evidence against UK-SPEC EngTech competences → apply for EngTech via the IET → professional review interview → registration confirmed."
-            onSite="Many JIB Approved Electricians could qualify for EngTech but never apply because they assume Engineering Council registration is for graduates only. That's a myth at the EngTech tier. Application takes 20-40 hours of portfolio preparation plus the interview. Cost: £200-300 application fee plus annual EngTech subscription £30-50 (separate from IET membership). Worth the investment for the credibility and salary signal."
-          >
-            <p>
-              Vocational EngTech application checklist:
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>JIB Approved Electrician grade (or equivalent).</li>
-              <li>2391-52 (or equivalent inspection and testing qualification).</li>
-              <li>2-3+ years of post-AM2 site experience.</li>
-              <li>IET membership (TMIET or MIET).</li>
-              <li>
-                Portfolio of evidence against UK-SPEC EngTech competences (knowledge and
-                understanding, design, leadership, communication, professional commitment).
-              </li>
-              <li>Two professional reviewers (typically arranged by IET).</li>
-              <li>Professional review interview (60-90 minutes).</li>
-            </ul>
-          </ConceptBlock>
-
-          <InlineCheck
-            id={checks[2].id}
-            question={checks[2].question}
-            options={checks[2].options}
-            correctIndex={checks[2].correctIndex}
-            explanation={checks[2].explanation}
-          />
-
-          <RegsCallout
-            source="IET Royal Charter and Bylaws (paraphrased)"
-            clause={
-              <>
-                <p className="mb-2">
-                  The IET operates under Royal Charter granted in 1921 (then to the IEE,
-                  inherited by IET). The Charter and Bylaws set the institution&apos;s:
-                </p>
-                <ul className="space-y-1 list-disc pl-5 text-[14px]">
-                  <li>Object &mdash; to promote the science, engineering and technology of
-                  electricity, magnetism and their applications, and the convergence with
-                  related sciences and technologies.</li>
-                  <li>Membership tiers and qualification criteria.</li>
-                  <li>Code of Conduct binding on members.</li>
-                  <li>Engineering Council licensing for EngTech / IEng / CEng registration.</li>
-                  <li>Governance through a Board of Trustees.</li>
-                </ul>
-              </>
-            }
-            meaning={
-              <>
-                The Royal Charter status gives the IET regulatory standing as a professional
-                body. Engineering Council licensing under the Charter is what allows the IET
-                to grant EngTech / IEng / CEng registrations. As a member you&apos;re part
-                of a chartered institution &mdash; the credential carries weight.
-              </>
-            }
-            cite="Source: IET Royal Charter and Bylaws — paraphrased from publicly-available IET governance documents at theiet.org."
-          />
-
-          <RegsCallout
-            source="Engineering Council UK-SPEC — EngTech competence requirements (paraphrased)"
-            clause={
-              <>
-                <p className="mb-2">
-                  EngTech competence at the technician level under UK-SPEC requires:
-                </p>
-                <ul className="space-y-1 list-disc pl-5 text-[14px]">
-                  <li>
-                    A &mdash; Knowledge and understanding: applying proven techniques and
-                    procedures.
-                  </li>
-                  <li>
-                    B &mdash; Design and development: working under supervision on complex
-                    tasks; working independently on routine tasks.
-                  </li>
-                  <li>
-                    C &mdash; Responsibility, management and leadership: taking responsibility
-                    for own work; contributing to the work of teams.
-                  </li>
-                  <li>
-                    D &mdash; Communication: communicating effectively with technical and
-                    non-technical audiences.
-                  </li>
-                  <li>
-                    E &mdash; Professional commitment: ethical conduct, CPD, accountability.
-                  </li>
-                </ul>
-              </>
-            }
-            meaning={
-              <>
-                UK-SPEC EngTech competences are pitched at JIB Approved Electrician level.
-                If you&apos;re in that grade with several years of post-AM2 experience, you
-                very likely meet the competence anchor. The challenge is organising your
-                portfolio of evidence to map directly to each UK-SPEC competence area
-                &mdash; that&apos;s where the 20-40 hours of preparation goes.
-              </>
-            }
-            cite="Source: Engineering Council UK-SPEC (current edition) — paraphrased from publicly-available guidance at engc.org.uk."
-          />
-
-          <RegsCallout
-            source="IET Code of Conduct (paraphrased)"
-            clause={
-              <>
-                <p className="mb-2">
-                  IET members and Engineering Council registrants are bound by the IET
-                  Code of Conduct including:
-                </p>
-                <ul className="space-y-1 list-disc pl-5 text-[14px]">
-                  <li>Acting with integrity and honesty.</li>
-                  <li>Respecting public safety and the public interest.</li>
-                  <li>Working within the limits of professional competence.</li>
-                  <li>Maintaining and developing competence through CPD.</li>
-                  <li>Treating colleagues, clients and the public with respect.</li>
-                  <li>Reporting concerns about safety, integrity or unethical conduct.</li>
-                </ul>
-              </>
-            }
-            meaning={
-              <>
-                The Code of Conduct provides both protection and obligation. Protection: you
-                have professional standing to refuse unethical instructions citing the Code.
-                Obligation: you must maintain standards including CPD. Read it as part of
-                joining; revisit periodically. Failure to comply can lead to disciplinary
-                action and ultimately removal from membership.
-              </>
-            }
-            cite="Source: IET Code of Conduct (current edition) — paraphrased from publicly-available IET guidance at theiet.org."
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>Where it goes wrong</ContentEyebrow>
-
-          <CommonMistake
-            title="Joining IET as Affiliate then never progressing"
-            whatHappens={
-              <>
-                Apprentice joins IET as Affiliate during apprenticeship for the
-                BS 7671 access and CPD content. Pays subscription year after year but
-                never upgrades to TMIET or MIET. Five years post-AM2 still on Affiliate
-                tier &mdash; missing the credibility signal of TMIET / MIET on quotes and CV,
-                missing the EngTech eligibility, missing access to higher-tier events.
-              </>
-            }
-            doInstead={
-              <>
-                Plan progression: Student/Apprentice or Affiliate during apprenticeship;
-                upgrade to TMIET (typically paired with EngTech) post-AM2 + 2391-52; upgrade
-                to MIET later when you can evidence incorporated or chartered-level
-                competence. Each upgrade requires application but criteria are
-                well-documented at theiet.org. Most upgrades complete within 6-8 weeks.
-                Worth the small effort &mdash; the post-nominal letters after your name are
-                a meaningful credibility signal.
-              </>
-            }
-          />
-
-          <Scenario
-            title="JIB Approved Electrician + 2391-52 — should you apply for IET MIET and EngTech?"
-            situation={
-              <>
-                You&apos;re 4 years post-AM2, JIB Approved Electrician, hold C&amp;G
-                2391-52, work for an M&amp;E sub-contractor doing commercial install. You
-                want to formalise your professional credentials. The IET annual subscription
-                cost (&pound;180/year MIET) plus EngTech application cost (&pound;200) plus
-                annual EngTech (&pound;40/year) &mdash; total first-year &pound;420, ongoing
-                &pound;220/year. Worth it?
-              </>
-            }
-            whatToDo={
-              <>
-                <strong>Step 1 &mdash; assess the credibility value</strong>. MIET +
-                EngTech letters after your name carry weight on quotes, CV, LinkedIn. For
-                career-focused electrical practitioners they&apos;re the standard
-                credentials &mdash; not having them increasingly looks like a gap.
-                <br /><br />
-                <strong>Step 2 &mdash; assess the practical resource value</strong>. IET
-                MIET subscription gives you BS 7671 access (worth &pound;130 alone if you
-                buy a paper copy); IET Online (huge technical archive); IET Academy (CPD
-                content); regional events (free for members). The technical resources alone
-                often justify the subscription.
-                <br /><br />
-                <strong>Step 3 &mdash; assess EngTech specifically</strong>. EngTech is the
-                third-party verification of your competence. Salary signal: EngTech-required
-                roles typically &pound;5-10k above non-EngTech equivalents. CPD obligation
-                comes with it but you should be doing CPD anyway.
-                <br /><br />
-                <strong>Step 4 &mdash; remember tax deductibility</strong>. Total
-                &pound;420 first-year cost is tax-deductible. For a higher-rate taxpayer
-                that&apos;s &pound;252 net cost. For ongoing &pound;220/year, &pound;132
-                net.
-                <br /><br />
-                <strong>Step 5 &mdash; commit and apply</strong>. The case is solid for
-                career-focused electrical practitioners. Apply MIET first (typically 6-8
-                weeks); add EngTech application in parallel or 6 months later when MIET is
-                confirmed. By year-end you have both credentials and the resources.
-              </>
-            }
-            whyItMatters={
-              <>
-                Professional credentials are how the wider engineering market recognises
-                competence. JIB grading anchors trade credibility; IET MIET + EngTech
-                anchors wider professional credibility. For career trajectories that include
-                any movement toward design, senior technical roles, or specialist practice,
-                the credentials matter materially. For pure trade-installer trajectories the
-                value is more variable but typically still positive given the resource
-                access.
-              </>
-            }
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>The IET membership ladder in practice</ContentEyebrow>
-
-          <ConceptBlock
-            title="Student/Apprentice to MIET — the membership tier ladder"
-            plainEnglish="IET membership runs Student/Apprentice (free for those in formal study), Affiliate (~£40-80/yr, open to anyone with interest in engineering), TMIET (Technician Member, ~£100-150/yr — vocational professional tier typically paired with EngTech registration), MIET (Member of IET, ~£200/yr — incorporated or chartered-level competence, typically post-HNC + experience), FIET (Fellow, ~£250/yr — senior engineering practice, typically 10+ years post-MIET, application-based and selective). Each tier opens different IET resources and confers different status. Apprentices typically start as Student/Apprentice, upgrade to TMIET post-AM2 + 2391-52, and progress to MIET post-HNC + experience. The older 'Associate' tier was discontinued in the 2008 IET restructure."
-            onSite="Most working electricians never use IET membership beyond the Wiring Regs subscription — that's missing the wider value. TMIET / MIET status is increasingly looked for by main contractors on technical roles (Project Engineer, Design Engineer) as a competence signal beyond AM2 alone. The journals and online resources (engineering papers, technical guides, industry research) compound over a career. Local IET branch events are also strong for networking — particularly useful when changing firms or moving into specialist sectors. Treat membership as career infrastructure, not just a Wiring Regs paywall."
-          >
-            <p>
-              IET membership tiers:
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Student / Apprentice</strong> &mdash; free or heavily discounted while in formal study, basic resource access.
-              </li>
-              <li>
-                <strong>Affiliate</strong> &mdash; ~&pound;40-80/yr, open access for anyone with interest.
-              </li>
-              <li>
-                <strong>TMIET (Technician Member)</strong> &mdash; ~&pound;100-150/yr, vocational professional tier typically paired with EngTech registration.
-              </li>
-              <li>
-                <strong>MIET (Member)</strong> &mdash; ~&pound;200/yr, designation MIET, full Engineering Council IEng/CEng route eligibility.
-              </li>
-              <li>
-                <strong>FIET (Fellow)</strong> &mdash; ~&pound;250/yr, senior recognised engineering practice, selective.
-              </li>
-              <li>
-                <strong>Apprentice route</strong> &mdash; Student/Apprentice (free) → TMIET post-AM2 + 2391-52 → MIET post-HNC + experience.
-              </li>
-            </ul>
-            <p className="mt-3 text-[13px] text-white/70">
-              Note: the older &quot;Associate&quot; tier was removed in the IET&apos;s 2008
-              restructure when TMIET was introduced.
-            </p>
-          </ConceptBlock>
-
-          <ConceptBlock
-            title="EngTech via IET — the most accessible Engineering Council route for an electrician"
-            plainEnglish="EngTech (Engineering Technician) is the entry-level Engineering Council registration. Via the IET the typical route for an electrician is: hold C&G 2365 Level 3 + AM2 + HNC (or accepted equivalents), demonstrate competence via a Professional Review document and interview, find an IET-registered sponsor (typically a colleague who's already MIET or higher), submit application. Cost: IET membership (~£200/yr) + Engineering Council registration (~£50/yr first year, included in subsequent IET fee). Process typically 6-9 months from application to interview to award. Once held, the EngTech post-nominal goes after your name on professional correspondence."
-            onSite="EngTech is the most achievable Engineering Council route for a qualified electrician with HNC. Application steps: gather evidence of competence across 5 areas (knowledge, application, leadership, communication, professional commitment), write the Professional Review describing how you meet each area with workplace examples, identify a sponsor (often a senior colleague or your firm's Project Engineer), submit through IET. The interview is structured around your written submission. Pass rate is high for properly-prepared applicants. Most apprentices wait until 4-5 years post-AM2 + HNC before applying."
-          >
-            <p>
-              EngTech application stack:
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Qualifications</strong> &mdash; C&amp;G 2365 + AM2 + HNC (or equivalents).
-              </li>
-              <li>
-                <strong>Experience</strong> &mdash; typically 4&ndash;5 years post-AM2 demonstrating UK-SPEC competence.
-              </li>
-              <li>
-                <strong>Membership</strong> &mdash; IET MIET status as the gateway PEI.
-              </li>
-              <li>
-                <strong>Professional Review document</strong> &mdash; structured submission against UK-SPEC competence areas.
-              </li>
-              <li>
-                <strong>Sponsor</strong> &mdash; existing IET MIET (or higher) endorses application.
-              </li>
-              <li>
-                <strong>Interview</strong> &mdash; structured by IET reviewer panel.
-              </li>
-              <li>
-                <strong>Cost</strong> &mdash; ~&pound;200 IET + ~&pound;50 Engineering Council per year.
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <ConceptBlock
-            title="IEng and CEng — the longer chartered routes"
-            plainEnglish="IEng (Incorporated Engineer) and CEng (Chartered Engineer) are the next two Engineering Council registers. IEng requires HND/Bachelors-equivalent academic depth + significant engineering practice + senior technical responsibility — typically 8-12 years total post-AM2. CEng requires Bachelors-with-Masters-equivalent depth + advanced engineering practice + senior responsibility for engineering work — typically 12-18 years total. Both apply through IET via similar Professional Review process to EngTech but with substantially more rigorous evidence requirements. CEng is Pinnacle of UK engineering recognition."
-            onSite="Apprentice routes to IEng/CEng exist but require sustained academic investment alongside career — typically apprenticeship → AM2 → HNC → HND → BEng top-up → mentored design practice → IEng → years of senior responsibility → CEng. Each step typically 2-4 years. Most electrician-route CEngs are senior Project Engineers, Design Directors or Operations Engineers in major contractors or M&E Consultancies. The destination is well-paid (CEng-grade salaries typically £75-130k+) and confers significant professional status. The path is long; only worth pursuing if engineering-direction destination is clear."
-          >
-            <p>
-              IEng and CEng routes summarised:
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>IEng</strong> &mdash; HND/Bachelors + 8&ndash;12yr post-AM2 + senior technical responsibility.
-              </li>
-              <li>
-                <strong>CEng</strong> &mdash; Bachelors+Masters equivalent + 12&ndash;18yr + advanced engineering practice + senior responsibility.
-              </li>
-              <li>
-                <strong>UK-SPEC competence</strong> &mdash; 5 areas assessed via Professional Review and interview.
-              </li>
-              <li>
-                <strong>Cost</strong> &mdash; IET membership + Engineering Council fees.
-              </li>
-              <li>
-                <strong>Annual maintenance</strong> &mdash; CPD record, fee, professional conduct expectations.
-              </li>
-              <li>
-                <strong>Salary signal</strong> &mdash; CEng typically &pound;75&ndash;130k+ in senior engineering roles.
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <ConceptBlock
-            title="The IET as career infrastructure — branches, mentoring, journals"
-            plainEnglish="Beyond the formal designation, IET membership provides career infrastructure: local branches (UK-wide network of branch events, technical talks, networking dinners — typically 1-2 events/month per branch), mentoring schemes (matching newer members with senior MIET/FIET mentors), technical journals (Engineering & Technology magazine monthly, plus specialist journals), online libraries (IET Inspec engineering literature database, IET TV technical videos), formal CPD logging tools, and the IET Wiring Regs publication. Annual subscription pays for itself many times over for a member who actively engages."
-            onSite="Local IET branch events are particularly valuable for career mobility — they're where you meet senior engineers in your geographic market, hear about emerging technologies, and build the network that surfaces job opportunities. Most branches actively welcome apprentices and Affiliate / TMIET members at events — turn up, introduce yourself, ask questions. Mentoring schemes pair you with a senior member who can guide career decisions, qualification routes, application support for EngTech/IEng/CEng. The technical journals are valuable CPD reading material — they meet most CPS schemes' CPD evidence requirements when logged."
-          >
-            <p>
-              IET career infrastructure resources:
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Local branches</strong> &mdash; UK-wide network, technical talks, networking events monthly.
-              </li>
-              <li>
-                <strong>Mentoring schemes</strong> &mdash; matched senior member for career guidance.
-              </li>
-              <li>
-                <strong>E&amp;T magazine</strong> &mdash; monthly engineering &amp; technology journal.
-              </li>
-              <li>
-                <strong>Specialist journals</strong> &mdash; topic-focused (Power Engineering, Smart Cities, etc).
-              </li>
-              <li>
-                <strong>Online library</strong> &mdash; Inspec engineering database, IET Digital Library.
-              </li>
-              <li>
-                <strong>IET TV</strong> &mdash; technical video library, CPD-credit eligible.
-              </li>
-              <li>
-                <strong>CPD logging</strong> &mdash; structured tools for annual CPD records.
-              </li>
-              <li>
-                <strong>Wiring Regs / On-Site Guide</strong> &mdash; member discount on IET publications.
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <ConceptBlock
-            title="Cost-benefit — when £200/yr IET subscription pays back"
-            plainEnglish="MIET subscription at ~£200/yr pays back fastest for engineering-direction careers — Project Engineer, Design Engineer, M&E Consultancy roles where MIET (or working toward it) is increasingly the implicit baseline for hire. For pure installation careers the payback is slower but still positive (Wiring Regs subscription value alone typically £80/yr; technical resource access; networking value). The marginal cost beyond the publications and resource access is often offset by employer reimbursement — many established firms cover MIET/IET subs as a CPD investment. Ask at your firm before assuming you have to fund yourself."
-            onSite="Build the IET membership decision into your annual CPD plan. If your career direction is install-focused, Affiliate (~£40-80/yr) or TMIET (~£100-150/yr, paired with EngTech) may be sufficient; consider upgrading to MIET only when a specific role demands it. If your direction is engineering/design, MIET as soon as you qualify (post-HNC) signals intent and starts building the IEng/CEng evidence base. Many firms reimburse — ask. The cost is modest; the optionality value (keeping doors open to engineering routes) is substantial. Don't dismiss IET membership as 'just for graduates' — vocational routes to TMIET, EngTech, MIET, IEng and CEng are increasingly recognised."
-          >
-            <p>
-              IET membership ROI checklist:
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Wiring Regs access</strong> &mdash; ~&pound;80/yr equivalent value.
-              </li>
-              <li>
-                <strong>Technical resource access</strong> &mdash; journals, library, CPD content.
-              </li>
-              <li>
-                <strong>Local branch events</strong> &mdash; networking, talks, typically free.
-              </li>
-              <li>
-                <strong>Engineering Council route</strong> &mdash; EngTech / IEng / CEng eligibility.
-              </li>
-              <li>
-                <strong>Career signal</strong> &mdash; MIET on CV signals professional commitment.
-              </li>
-              <li>
-                <strong>Employer reimbursement</strong> &mdash; many firms cover; ask before self-funding.
-              </li>
-              <li>
-                <strong>Tax deductibility</strong> &mdash; IET subscription deductible against income tax.
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <FAQ items={faqs} />
-
-          <SectionRule />
-
-          <KeyTakeaways
-            points={[
-              "IET (Institution of Engineering and Technology) is the dominant UK professional body for electrical engineering — 156,000 members worldwide, publishes BS 7671.",
-              "Current membership tiers: Student/Apprentice (free or discounted while in study), Affiliate (entry, £40-80/year), TMIET (Technician Member, vocational professional tier, £100-150/year, typically paired with EngTech), MIET (Member, IEng/CEng-level, £150-200), FIET (Fellow, senior career, £200-300). The older 'Associate' tier was removed in the 2008 restructure.",
-              "Engineering Council registrations linked: EngTech (technician), IEng (incorporated, degree-level), CEng (chartered, master's-level). Separate annual fees (£30-300) on top of IET subscription.",
-              "IET specifically promotes EngTech as accessible to vocational-route practitioners — JIB Approved + 2391-52 + portfolio + professional review = typical EngTech qualification.",
-              "Subscriptions tax-deductible under HMRC List 3 — effective cost reduced by marginal tax rate.",
-              "Member benefits: BS 7671 access, Wiring Matters magazine, IET Online (large technical archive), IET Academy CPD, regional events, professional registration support.",
-              "IET regional ambassadors offer free advice on professional registration applications — particularly useful for vocational practitioners considering EngTech.",
-              "IET Code of Conduct binds members — professional ethics including competence limits, CPD obligation, public safety priority.",
-              "JIB grading and Engineering Council registration are complementary credentials — many career-focused electricians hold both.",
-            ]}
-          />
-
-          <Quiz title="IET membership routes — knowledge check" questions={quizQuestions} />
-
-          <div className="grid grid-cols-2 gap-3 pt-2">
-            <button
-              onClick={() => navigate('/study-centre/apprentice/level3-module7-section4-1')}
-              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
-                <ChevronLeft className="h-3 w-3" /> Previous
+            <div className="rounded-2xl border border-white/[0.08] bg-[hsl(0_0%_12%)] p-4">
+              <div className="text-[11px] uppercase tracking-[0.18em] text-elec-yellow mb-2">
+                Affiliate
               </div>
-              <div className="mt-1 text-[14px] font-semibold text-white truncate">
-                4.1 BS 7671 amendment cycle
+              <p className="text-[13.5px] text-white/85 leading-relaxed">
+                Open tier. No qualifications required. Subscription &pound;40-80/year. Suitable for
+                anyone with interest in engineering.
+              </p>
+            </div>
+            <div className="rounded-2xl border border-white/[0.08] bg-[hsl(0_0%_12%)] p-4">
+              <div className="text-[11px] uppercase tracking-[0.18em] text-elec-yellow mb-2">
+                TMIET (Technician Member)
               </div>
-            </button>
-            <button
-              onClick={() => navigate('/study-centre/apprentice/level3-module7-section4-3')}
-              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
-                Next <ChevronRight className="h-3 w-3" />
+              <p className="text-[13.5px] text-white/85 leading-relaxed">
+                Vocational professional tier &mdash; typically Level 3 vocational qualifications
+                (e.g. C&amp;G 2365-03) plus experience, often paired with EngTech registration.
+                Subscription around &pound;100-150/year.
+              </p>
+            </div>
+            <div className="rounded-2xl border border-white/[0.08] bg-[hsl(0_0%_12%)] p-4">
+              <div className="text-[11px] uppercase tracking-[0.18em] text-elec-yellow mb-2">
+                MIET (Member)
               </div>
-              <div className="mt-1 text-[14px] font-semibold text-black truncate">
-                4.3 Online learning + scheme CPD
+              <p className="text-[13.5px] text-white/85 leading-relaxed">
+                Standard professional tier. Incorporated or chartered-level competence anchor
+                (typically HNC+ plus design or engineering responsibility). Subscription
+                &pound;150-200/year.
+              </p>
+            </div>
+            <div className="rounded-2xl border border-white/[0.08] bg-[hsl(0_0%_12%)] p-4 sm:col-span-2">
+              <div className="text-[11px] uppercase tracking-[0.18em] text-elec-yellow mb-2">
+                FIET (Fellow)
               </div>
-            </button>
+              <p className="text-[13.5px] text-white/85 leading-relaxed">
+                Senior tier. Significant career achievement required, often combined with CEng.
+                Subscription &pound;200-300/year. Fellowship is recognition of senior standing.
+              </p>
+            </div>
           </div>
-        </PageFrame>
-      </div>
-    </div>
+          <p className="mt-3 text-[13px] text-white/70">
+            Note: the older &quot;Associate&quot; tier was discontinued in the IET&apos;s 2008
+            restructure, replaced by the current Technician Member (TMIET) designation.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck
+          id={checks[1].id}
+          question={checks[1].question}
+          options={checks[1].options}
+          correctIndex={checks[1].correctIndex}
+          explanation={checks[1].explanation}
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>The vocational route to EngTech via IET</ContentEyebrow>
+
+        <ConceptBlock
+          title="Vocational EngTech — how a JIB Approved Electrician qualifies"
+          plainEnglish="The IET specifically promotes EngTech registration as accessible to vocational-route practitioners. The standard route for a JIB Approved Electrician with several years of post-AM2 experience: hold IET MIET membership (or apply alongside EngTech) → assemble a portfolio of evidence against UK-SPEC EngTech competences → apply for EngTech via the IET → professional review interview → registration confirmed."
+          onSite="Many JIB Approved Electricians could qualify for EngTech but never apply because they assume Engineering Council registration is for graduates only. That's a myth at the EngTech tier. Application takes 20-40 hours of portfolio preparation plus the interview. Cost: £200-300 application fee plus annual EngTech subscription £30-50 (separate from IET membership). Worth the investment for the credibility and salary signal."
+        >
+          <p>Vocational EngTech application checklist:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>JIB Approved Electrician grade (or equivalent).</li>
+            <li>2391-52 (or equivalent inspection and testing qualification).</li>
+            <li>2-3+ years of post-AM2 site experience.</li>
+            <li>IET membership (TMIET or MIET).</li>
+            <li>
+              Portfolio of evidence against UK-SPEC EngTech competences (knowledge and
+              understanding, design, leadership, communication, professional commitment).
+            </li>
+            <li>Two professional reviewers (typically arranged by IET).</li>
+            <li>Professional review interview (60-90 minutes).</li>
+          </ul>
+        </ConceptBlock>
+
+        <InlineCheck
+          id={checks[2].id}
+          question={checks[2].question}
+          options={checks[2].options}
+          correctIndex={checks[2].correctIndex}
+          explanation={checks[2].explanation}
+        />
+
+        <RegsCallout
+          source="IET Royal Charter and Bylaws (paraphrased)"
+          clause={
+            <>
+              <p className="mb-2">
+                The IET operates under Royal Charter granted in 1921 (then to the IEE, inherited by
+                IET). The Charter and Bylaws set the institution&apos;s:
+              </p>
+              <ul className="space-y-1 list-disc pl-5 text-[14px]">
+                <li>
+                  Object &mdash; to promote the science, engineering and technology of electricity,
+                  magnetism and their applications, and the convergence with related sciences and
+                  technologies.
+                </li>
+                <li>Membership tiers and qualification criteria.</li>
+                <li>Code of Conduct binding on members.</li>
+                <li>Engineering Council licensing for EngTech / IEng / CEng registration.</li>
+                <li>Governance through a Board of Trustees.</li>
+              </ul>
+            </>
+          }
+          meaning={
+            <>
+              The Royal Charter status gives the IET regulatory standing as a professional body.
+              Engineering Council licensing under the Charter is what allows the IET to grant
+              EngTech / IEng / CEng registrations. As a member you&apos;re part of a chartered
+              institution &mdash; the credential carries weight.
+            </>
+          }
+          cite="Source: IET Royal Charter and Bylaws — paraphrased from publicly-available IET governance documents at theiet.org."
+        />
+
+        <RegsCallout
+          source="Engineering Council UK-SPEC — EngTech competence requirements (paraphrased)"
+          clause={
+            <>
+              <p className="mb-2">
+                EngTech competence at the technician level under UK-SPEC requires:
+              </p>
+              <ul className="space-y-1 list-disc pl-5 text-[14px]">
+                <li>
+                  A &mdash; Knowledge and understanding: applying proven techniques and procedures.
+                </li>
+                <li>
+                  B &mdash; Design and development: working under supervision on complex tasks;
+                  working independently on routine tasks.
+                </li>
+                <li>
+                  C &mdash; Responsibility, management and leadership: taking responsibility for own
+                  work; contributing to the work of teams.
+                </li>
+                <li>
+                  D &mdash; Communication: communicating effectively with technical and
+                  non-technical audiences.
+                </li>
+                <li>E &mdash; Professional commitment: ethical conduct, CPD, accountability.</li>
+              </ul>
+            </>
+          }
+          meaning={
+            <>
+              UK-SPEC EngTech competences are pitched at JIB Approved Electrician level. If
+              you&apos;re in that grade with several years of post-AM2 experience, you very likely
+              meet the competence anchor. The challenge is organising your portfolio of evidence to
+              map directly to each UK-SPEC competence area &mdash; that&apos;s where the 20-40 hours
+              of preparation goes.
+            </>
+          }
+          cite="Source: Engineering Council UK-SPEC (current edition) — paraphrased from publicly-available guidance at engc.org.uk."
+        />
+
+        <RegsCallout
+          source="IET Code of Conduct (paraphrased)"
+          clause={
+            <>
+              <p className="mb-2">
+                IET members and Engineering Council registrants are bound by the IET Code of Conduct
+                including:
+              </p>
+              <ul className="space-y-1 list-disc pl-5 text-[14px]">
+                <li>Acting with integrity and honesty.</li>
+                <li>Respecting public safety and the public interest.</li>
+                <li>Working within the limits of professional competence.</li>
+                <li>Maintaining and developing competence through CPD.</li>
+                <li>Treating colleagues, clients and the public with respect.</li>
+                <li>Reporting concerns about safety, integrity or unethical conduct.</li>
+              </ul>
+            </>
+          }
+          meaning={
+            <>
+              The Code of Conduct provides both protection and obligation. Protection: you have
+              professional standing to refuse unethical instructions citing the Code. Obligation:
+              you must maintain standards including CPD. Read it as part of joining; revisit
+              periodically. Failure to comply can lead to disciplinary action and ultimately removal
+              from membership.
+            </>
+          }
+          cite="Source: IET Code of Conduct (current edition) — paraphrased from publicly-available IET guidance at theiet.org."
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>Where it goes wrong</ContentEyebrow>
+
+        <CommonMistake
+          title="Joining IET as Affiliate then never progressing"
+          whatHappens={
+            <>
+              Apprentice joins IET as Affiliate during apprenticeship for the BS 7671 access and CPD
+              content. Pays subscription year after year but never upgrades to TMIET or MIET. Five
+              years post-AM2 still on Affiliate tier &mdash; missing the credibility signal of TMIET
+              / MIET on quotes and CV, missing the EngTech eligibility, missing access to
+              higher-tier events.
+            </>
+          }
+          doInstead={
+            <>
+              Plan progression: Student/Apprentice or Affiliate during apprenticeship; upgrade to
+              TMIET (typically paired with EngTech) post-AM2 + 2391-52; upgrade to MIET later when
+              you can evidence incorporated or chartered-level competence. Each upgrade requires
+              application but criteria are well-documented at theiet.org. Most upgrades complete
+              within 6-8 weeks. Worth the small effort &mdash; the post-nominal letters after your
+              name are a meaningful credibility signal.
+            </>
+          }
+        />
+
+        <Scenario
+          title="JIB Approved Electrician + 2391-52 — should you apply for IET MIET and EngTech?"
+          situation={
+            <>
+              You&apos;re 4 years post-AM2, JIB Approved Electrician, hold C&amp;G 2391-52, work for
+              an M&amp;E sub-contractor doing commercial install. You want to formalise your
+              professional credentials. The IET annual subscription cost (&pound;180/year MIET) plus
+              EngTech application cost (&pound;200) plus annual EngTech (&pound;40/year) &mdash;
+              total first-year &pound;420, ongoing &pound;220/year. Worth it?
+            </>
+          }
+          whatToDo={
+            <>
+              <strong>Step 1 &mdash; assess the credibility value</strong>. MIET + EngTech letters
+              after your name carry weight on quotes, CV, LinkedIn. For career-focused electrical
+              practitioners they&apos;re the standard credentials &mdash; not having them
+              increasingly looks like a gap.
+              <br />
+              <br />
+              <strong>Step 2 &mdash; assess the practical resource value</strong>. IET MIET
+              subscription gives you BS 7671 access (worth &pound;130 alone if you buy a paper
+              copy); IET Online (huge technical archive); IET Academy (CPD content); regional events
+              (free for members). The technical resources alone often justify the subscription.
+              <br />
+              <br />
+              <strong>Step 3 &mdash; assess EngTech specifically</strong>. EngTech is the
+              third-party verification of your competence. Salary signal: EngTech-required roles
+              typically &pound;5-10k above non-EngTech equivalents. CPD obligation comes with it but
+              you should be doing CPD anyway.
+              <br />
+              <br />
+              <strong>Step 4 &mdash; remember tax deductibility</strong>. Total &pound;420
+              first-year cost is tax-deductible. For a higher-rate taxpayer that&apos;s &pound;252
+              net cost. For ongoing &pound;220/year, &pound;132 net.
+              <br />
+              <br />
+              <strong>Step 5 &mdash; commit and apply</strong>. The case is solid for career-focused
+              electrical practitioners. Apply MIET first (typically 6-8 weeks); add EngTech
+              application in parallel or 6 months later when MIET is confirmed. By year-end you have
+              both credentials and the resources.
+            </>
+          }
+          whyItMatters={
+            <>
+              Professional credentials are how the wider engineering market recognises competence.
+              JIB grading anchors trade credibility; IET MIET + EngTech anchors wider professional
+              credibility. For career trajectories that include any movement toward design, senior
+              technical roles, or specialist practice, the credentials matter materially. For pure
+              trade-installer trajectories the value is more variable but typically still positive
+              given the resource access.
+            </>
+          }
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>The IET membership ladder in practice</ContentEyebrow>
+
+        <ConceptBlock
+          title="Student/Apprentice to MIET — the membership tier ladder"
+          plainEnglish="IET membership runs Student/Apprentice (free for those in formal study), Affiliate (~£40-80/yr, open to anyone with interest in engineering), TMIET (Technician Member, ~£100-150/yr — vocational professional tier typically paired with EngTech registration), MIET (Member of IET, ~£200/yr — incorporated or chartered-level competence, typically post-HNC + experience), FIET (Fellow, ~£250/yr — senior engineering practice, typically 10+ years post-MIET, application-based and selective). Each tier opens different IET resources and confers different status. Apprentices typically start as Student/Apprentice, upgrade to TMIET post-AM2 + 2391-52, and progress to MIET post-HNC + experience. The older 'Associate' tier was discontinued in the 2008 IET restructure."
+          onSite="Most working electricians never use IET membership beyond the Wiring Regs subscription — that's missing the wider value. TMIET / MIET status is increasingly looked for by main contractors on technical roles (Project Engineer, Design Engineer) as a competence signal beyond AM2 alone. The journals and online resources (engineering papers, technical guides, industry research) compound over a career. Local IET branch events are also strong for networking — particularly useful when changing firms or moving into specialist sectors. Treat membership as career infrastructure, not just a Wiring Regs paywall."
+        >
+          <p>IET membership tiers:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Student / Apprentice</strong> &mdash; free or heavily discounted while in
+              formal study, basic resource access.
+            </li>
+            <li>
+              <strong>Affiliate</strong> &mdash; ~&pound;40-80/yr, open access for anyone with
+              interest.
+            </li>
+            <li>
+              <strong>TMIET (Technician Member)</strong> &mdash; ~&pound;100-150/yr, vocational
+              professional tier typically paired with EngTech registration.
+            </li>
+            <li>
+              <strong>MIET (Member)</strong> &mdash; ~&pound;200/yr, designation MIET, full
+              Engineering Council IEng/CEng route eligibility.
+            </li>
+            <li>
+              <strong>FIET (Fellow)</strong> &mdash; ~&pound;250/yr, senior recognised engineering
+              practice, selective.
+            </li>
+            <li>
+              <strong>Apprentice route</strong> &mdash; Student/Apprentice (free) → TMIET post-AM2 +
+              2391-52 → MIET post-HNC + experience.
+            </li>
+          </ul>
+          <p className="mt-3 text-[13px] text-white/70">
+            Note: the older &quot;Associate&quot; tier was removed in the IET&apos;s 2008
+            restructure when TMIET was introduced.
+          </p>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="EngTech via IET — the most accessible Engineering Council route for an electrician"
+          plainEnglish="EngTech (Engineering Technician) is the entry-level Engineering Council registration. Via the IET the typical route for an electrician is: hold C&G 2365 Level 3 + AM2 + HNC (or accepted equivalents), demonstrate competence via a Professional Review document and interview, find an IET-registered sponsor (typically a colleague who's already MIET or higher), submit application. Cost: IET membership (~£200/yr) + Engineering Council registration (~£50/yr first year, included in subsequent IET fee). Process typically 6-9 months from application to interview to award. Once held, the EngTech post-nominal goes after your name on professional correspondence."
+          onSite="EngTech is the most achievable Engineering Council route for a qualified electrician with HNC. Application steps: gather evidence of competence across 5 areas (knowledge, application, leadership, communication, professional commitment), write the Professional Review describing how you meet each area with workplace examples, identify a sponsor (often a senior colleague or your firm's Project Engineer), submit through IET. The interview is structured around your written submission. Pass rate is high for properly-prepared applicants. Most apprentices wait until 4-5 years post-AM2 + HNC before applying."
+        >
+          <p>EngTech application stack:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Qualifications</strong> &mdash; C&amp;G 2365 + AM2 + HNC (or equivalents).
+            </li>
+            <li>
+              <strong>Experience</strong> &mdash; typically 4&ndash;5 years post-AM2 demonstrating
+              UK-SPEC competence.
+            </li>
+            <li>
+              <strong>Membership</strong> &mdash; IET MIET status as the gateway PEI.
+            </li>
+            <li>
+              <strong>Professional Review document</strong> &mdash; structured submission against
+              UK-SPEC competence areas.
+            </li>
+            <li>
+              <strong>Sponsor</strong> &mdash; existing IET MIET (or higher) endorses application.
+            </li>
+            <li>
+              <strong>Interview</strong> &mdash; structured by IET reviewer panel.
+            </li>
+            <li>
+              <strong>Cost</strong> &mdash; ~&pound;200 IET + ~&pound;50 Engineering Council per
+              year.
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="IEng and CEng — the longer chartered routes"
+          plainEnglish="IEng (Incorporated Engineer) and CEng (Chartered Engineer) are the next two Engineering Council registers. IEng requires HND/Bachelors-equivalent academic depth + significant engineering practice + senior technical responsibility — typically 8-12 years total post-AM2. CEng requires Bachelors-with-Masters-equivalent depth + advanced engineering practice + senior responsibility for engineering work — typically 12-18 years total. Both apply through IET via similar Professional Review process to EngTech but with substantially more rigorous evidence requirements. CEng is Pinnacle of UK engineering recognition."
+          onSite="Apprentice routes to IEng/CEng exist but require sustained academic investment alongside career — typically apprenticeship → AM2 → HNC → HND → BEng top-up → mentored design practice → IEng → years of senior responsibility → CEng. Each step typically 2-4 years. Most electrician-route CEngs are senior Project Engineers, Design Directors or Operations Engineers in major contractors or M&E Consultancies. The destination is well-paid (CEng-grade salaries typically £75-130k+) and confers significant professional status. The path is long; only worth pursuing if engineering-direction destination is clear."
+        >
+          <p>IEng and CEng routes summarised:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>IEng</strong> &mdash; HND/Bachelors + 8&ndash;12yr post-AM2 + senior technical
+              responsibility.
+            </li>
+            <li>
+              <strong>CEng</strong> &mdash; Bachelors+Masters equivalent + 12&ndash;18yr + advanced
+              engineering practice + senior responsibility.
+            </li>
+            <li>
+              <strong>UK-SPEC competence</strong> &mdash; 5 areas assessed via Professional Review
+              and interview.
+            </li>
+            <li>
+              <strong>Cost</strong> &mdash; IET membership + Engineering Council fees.
+            </li>
+            <li>
+              <strong>Annual maintenance</strong> &mdash; CPD record, fee, professional conduct
+              expectations.
+            </li>
+            <li>
+              <strong>Salary signal</strong> &mdash; CEng typically &pound;75&ndash;130k+ in senior
+              engineering roles.
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="The IET as career infrastructure — branches, mentoring, journals"
+          plainEnglish="Beyond the formal designation, IET membership provides career infrastructure: local branches (UK-wide network of branch events, technical talks, networking dinners — typically 1-2 events/month per branch), mentoring schemes (matching newer members with senior MIET/FIET mentors), technical journals (Engineering & Technology magazine monthly, plus specialist journals), online libraries (IET Inspec engineering literature database, IET TV technical videos), formal CPD logging tools, and the IET Wiring Regs publication. Annual subscription pays for itself many times over for a member who actively engages."
+          onSite="Local IET branch events are particularly valuable for career mobility — they're where you meet senior engineers in your geographic market, hear about emerging technologies, and build the network that surfaces job opportunities. Most branches actively welcome apprentices and Affiliate / TMIET members at events — turn up, introduce yourself, ask questions. Mentoring schemes pair you with a senior member who can guide career decisions, qualification routes, application support for EngTech/IEng/CEng. The technical journals are valuable CPD reading material — they meet most CPS schemes' CPD evidence requirements when logged."
+        >
+          <p>IET career infrastructure resources:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Local branches</strong> &mdash; UK-wide network, technical talks, networking
+              events monthly.
+            </li>
+            <li>
+              <strong>Mentoring schemes</strong> &mdash; matched senior member for career guidance.
+            </li>
+            <li>
+              <strong>E&amp;T magazine</strong> &mdash; monthly engineering &amp; technology
+              journal.
+            </li>
+            <li>
+              <strong>Specialist journals</strong> &mdash; topic-focused (Power Engineering, Smart
+              Cities, etc).
+            </li>
+            <li>
+              <strong>Online library</strong> &mdash; Inspec engineering database, IET Digital
+              Library.
+            </li>
+            <li>
+              <strong>IET TV</strong> &mdash; technical video library, CPD-credit eligible.
+            </li>
+            <li>
+              <strong>CPD logging</strong> &mdash; structured tools for annual CPD records.
+            </li>
+            <li>
+              <strong>Wiring Regs / On-Site Guide</strong> &mdash; member discount on IET
+              publications.
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="Cost-benefit — when £200/yr IET subscription pays back"
+          plainEnglish="MIET subscription at ~£200/yr pays back fastest for engineering-direction careers — Project Engineer, Design Engineer, M&E Consultancy roles where MIET (or working toward it) is increasingly the implicit baseline for hire. For pure installation careers the payback is slower but still positive (Wiring Regs subscription value alone typically £80/yr; technical resource access; networking value). The marginal cost beyond the publications and resource access is often offset by employer reimbursement — many established firms cover MIET/IET subs as a CPD investment. Ask at your firm before assuming you have to fund yourself."
+          onSite="Build the IET membership decision into your annual CPD plan. If your career direction is install-focused, Affiliate (~£40-80/yr) or TMIET (~£100-150/yr, paired with EngTech) may be sufficient; consider upgrading to MIET only when a specific role demands it. If your direction is engineering/design, MIET as soon as you qualify (post-HNC) signals intent and starts building the IEng/CEng evidence base. Many firms reimburse — ask. The cost is modest; the optionality value (keeping doors open to engineering routes) is substantial. Don't dismiss IET membership as 'just for graduates' — vocational routes to TMIET, EngTech, MIET, IEng and CEng are increasingly recognised."
+        >
+          <p>IET membership ROI checklist:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Wiring Regs access</strong> &mdash; ~&pound;80/yr equivalent value.
+            </li>
+            <li>
+              <strong>Technical resource access</strong> &mdash; journals, library, CPD content.
+            </li>
+            <li>
+              <strong>Local branch events</strong> &mdash; networking, talks, typically free.
+            </li>
+            <li>
+              <strong>Engineering Council route</strong> &mdash; EngTech / IEng / CEng eligibility.
+            </li>
+            <li>
+              <strong>Career signal</strong> &mdash; MIET on CV signals professional commitment.
+            </li>
+            <li>
+              <strong>Employer reimbursement</strong> &mdash; many firms cover; ask before
+              self-funding.
+            </li>
+            <li>
+              <strong>Tax deductibility</strong> &mdash; IET subscription deductible against income
+              tax.
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <FAQ items={faqs} />
+
+        <SectionRule />
+
+        <KeyTakeaways
+          points={[
+            'IET (Institution of Engineering and Technology) is the dominant UK professional body for electrical engineering — 156,000 members worldwide, publishes BS 7671.',
+            "Current membership tiers: Student/Apprentice (free or discounted while in study), Affiliate (entry, £40-80/year), TMIET (Technician Member, vocational professional tier, £100-150/year, typically paired with EngTech), MIET (Member, IEng/CEng-level, £150-200), FIET (Fellow, senior career, £200-300). The older 'Associate' tier was removed in the 2008 restructure.",
+            "Engineering Council registrations linked: EngTech (technician), IEng (incorporated, degree-level), CEng (chartered, master's-level). Separate annual fees (£30-300) on top of IET subscription.",
+            'IET specifically promotes EngTech as accessible to vocational-route practitioners — JIB Approved + 2391-52 + portfolio + professional review = typical EngTech qualification.',
+            'Subscriptions tax-deductible under HMRC List 3 — effective cost reduced by marginal tax rate.',
+            'Member benefits: BS 7671 access, Wiring Matters magazine, IET Online (large technical archive), IET Academy CPD, regional events, professional registration support.',
+            'IET regional ambassadors offer free advice on professional registration applications — particularly useful for vocational practitioners considering EngTech.',
+            'IET Code of Conduct binds members — professional ethics including competence limits, CPD obligation, public safety priority.',
+            'JIB grading and Engineering Council registration are complementary credentials — many career-focused electricians hold both.',
+          ]}
+        />
+
+        <Quiz title="IET membership routes — knowledge check" questions={quizQuestions} />
+
+        <div className="grid grid-cols-2 gap-3 pt-2">
+          <button
+            onClick={() => navigate('/study-centre/apprentice/level3-module7-section4-1')}
+            className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+          >
+            <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+              <ChevronLeft className="h-3 w-3" /> Previous
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-white truncate">
+              4.1 BS 7671 amendment cycle
+            </div>
+          </button>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/level3-module7-section4-3')}
+            className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+          >
+            <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+              Next <ChevronRight className="h-3 w-3" />
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-black truncate">
+              4.3 Online learning + scheme CPD
+            </div>
+          </button>
+        </div>
+      </HubBody>
+    </HubPage>
   );
 }

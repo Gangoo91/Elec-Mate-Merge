@@ -49,7 +49,14 @@ const PublicSafetySign = lazyWithRetry(() => import('@/pages/PublicSafetySign'))
 const ClientPortalView = lazyWithRetry(() => import('@/pages/public/ClientPortalView'));
 const GetQuoteView = lazyWithRetry(() => import('@/pages/public/GetQuoteView'));
 const ParentDigestPage = lazyWithRetry(() => import('@/pages/public/ParentDigestPage'));
+/** /certificate-expiry merged into /electrician/renewals — params carried over. */
+const CertExpiryRedirect = () => {
+  const location = useLocation();
+  return <Navigate to={`/electrician/renewals${location.search}`} replace />;
+};
+
 const PublicBooking = lazyWithRetry(() => import('@/pages/public/PublicBooking'));
+const AgreementSignPage = lazyWithRetry(() => import('@/pages/public/AgreementSignPage'));
 const PublicElecIdView = lazyWithRetry(() => import('@/pages/public/PublicElecIdView'));
 const SupervisorVerificationPage = lazyWithRetry(() => import('@/pages/public/SupervisorVerificationPage'));
 const PhotoSharePage = lazyWithRetry(() => import('@/pages/public/PhotoSharePage'));
@@ -120,7 +127,6 @@ const FounderSignup = lazyWithRetry(() => import('@/pages/founder/FounderSignup'
 const FounderSuccess = lazyWithRetry(() => import('@/pages/founder/FounderSuccess'));
 const CustomersPage = lazyWithRetry(() => import('@/pages/CustomersPage'));
 const CustomerDetailPage = lazyWithRetry(() => import('@/pages/CustomerDetailPage'));
-const CertificateExpiryPage = lazyWithRetry(() => import('@/pages/CertificateExpiryPage'));
 const EmployerDashboard = lazyWithRetry(() => import('@/pages/employer/EmployerDashboard'));
 const CollegeDashboard = lazyWithRetry(() => import('@/pages/college/CollegeDashboard'));
 const LtiHandoff = lazyWithRetry(() => import('@/pages/LtiHandoff'));
@@ -606,6 +612,16 @@ const AppRouter = () => {
             element={
               <LazyRoute>
                 <PublicBooking />
+              </LazyRoute>
+            }
+          />
+          {/* ELE-430 — public signing page for maintenance agreements. The
+              token addresses one contract; nothing else is reachable. */}
+          <Route
+            path="/agreement/:token"
+            element={
+              <LazyRoute>
+                <AgreementSignPage />
               </LazyRoute>
             }
           />
@@ -1491,14 +1507,11 @@ const AppRouter = () => {
                 </LazyRoute>
               }
             />
-            <Route
-              path="certificate-expiry"
-              element={
-                <LazyRoute>
-                  <CertificateExpiryPage />
-                </LazyRoute>
-              }
-            />
+            {/* Merged into Renewals & Contracts (ELE-430) — the old
+                Expiring Certificates page's ledger CRM, automation toggle
+                and start-renewal action all live there now. Query params
+                (e.g. ?contract=1&customer=…) pass straight through. */}
+            <Route path="certificate-expiry" element={<CertExpiryRedirect />} />
             <Route
               path="subscriptions"
               element={

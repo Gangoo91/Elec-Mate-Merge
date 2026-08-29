@@ -5,10 +5,10 @@
  */
 
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
-import { PageFrame, PageHero } from '@/components/college/primitives';
 import {
   CommonMistake,
   ConceptBlock,
@@ -57,10 +57,10 @@ const quickCheckQuestions = [
     id: 'isolation-coordination',
     question: 'Who must authorise electrical isolations affecting client operations?',
     options: [
-      "The site labourer who first identified the circuit",
+      'The site labourer who first identified the circuit',
       "The client's authorised person and the electrical supervisor",
       "The main contractor's quantity surveyor",
-      "Any operative holding a current ECS card",
+      'Any operative holding a current ECS card',
     ],
     correctIndex: 1,
     explanation:
@@ -283,631 +283,632 @@ const HNCModule5Section6_3 = () => {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
-      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
-        <PageFrame>
+    <HubPage>
+      <HubMasthead
+        section="Module 5 · Section 6 · Subsection 3"
+        title="Interface Coordination"
+        backTo="/study-centre/apprentice/h-n-c-module5-section6"
+      />
+      <HubBody>
+        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
+          Coordination with other trades, client operations interface, occupied premises and live
+          services management.
+        </p>
+
+        <TLDR
+          points={[
+            'Interface coordination = managing the boundaries between trades, between phases, and between contractor and operating client.',
+            'Trade interfaces: who installs what, who terminates what, who tests what — defined in the WBS and reinforced in pre-start meetings.',
+            'Client operations interface: occupied building working, live services, business continuity — risk-assessed and method-statemented.',
+            'Live services: isolation procedures, permits to work, lock-off — EAWR Reg 4 mandates working dead unless proven otherwise.',
+            'Permits to work: hot work, confined space, working at height, energised — formal authorisation system.',
+          ]}
+        />
+
+        <RegsCallout
+          source="Electricity at Work Regulations 1989 — Regulation 14 (Work on or near live conductors)"
+          clause="No person shall be engaged in any work activity on or so near any live conductor (other than one suitably covered with insulating material so as to prevent danger) that danger may arise unless — it is unreasonable in all the circumstances for it to be dead; and it is reasonable in all the circumstances for him to be at work on or near it while it is live; and suitable precautions (including where necessary the provision of suitable protective equipment) are taken to prevent injury."
+          meaning={
+            <>
+              EAWR Reg 14 is one of the very few absolute duties in UK H&S law: working dead is the
+              default; working live requires all three conditions to be satisfied AND demonstrably
+              so. Permits to work on energised systems must be the exception, not the routine. The
+              PM signing live work permits should be challenging the necessity at every request.
+            </>
+          }
+          cite="Source: Electricity at Work Regulations 1989 — legislation.gov.uk"
+        />
+
+        <LearningOutcomes
+          outcomes={[
+            'Plan and participate in effective trade coordination meetings',
+            'Develop sequencing agreements with other building services trades',
+            'Manage electrical work in occupied and operational premises',
+            'Implement isolation coordination protocols with client operations',
+            'Organise out-of-hours work safely and effectively',
+            'Establish client liaison protocols and communication channels',
+          ]}
+        />
+
+        <SectionRule />
+
+        <ConceptBlock title="Trade Coordination Meetings">
+          <p>
+            Trade coordination meetings are the cornerstone of successful building services
+            installation. On complex projects, multiple M&E contractors must share limited space and
+            coordinate their work sequences to avoid costly clashes and delays. Effective
+            coordination requires structured meetings, clear documentation, and commitment from all
+            parties.
+          </p>
+          <p>
+            <strong>Meeting structure:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Frequency:</strong> Weekly during installation, fortnightly during quieter
+              periods
+            </li>
+            <li>
+              <strong>Attendees:</strong> Supervisors from all M&E trades, main contractor
+              representative
+            </li>
+            <li>
+              <strong>Agenda:</strong> Review of previous actions, look-ahead programme, clash
+              resolution, access requests
+            </li>
+            <li>
+              <strong>Output:</strong> Formal minutes with named actions and deadlines
+            </li>
+          </ul>
+          <p>
+            <strong>Coordination meeting agenda template:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Previous actions review:</strong> Confirm completion, chase outstanding items
+              — 10 minutes
+            </li>
+            <li>
+              <strong>3-week look-ahead:</strong> Review upcoming work, identify clashes — 20
+              minutes
+            </li>
+            <li>
+              <strong>Access and sequencing:</strong> Agree work area handovers — 15 minutes
+            </li>
+            <li>
+              <strong>Technical issues:</strong> Design changes, RFIs, clash resolution — 15 minutes
+            </li>
+            <li>
+              <strong>Programme impacts:</strong> Delays, recovery plans, milestones — 10 minutes
+            </li>
+            <li>
+              <strong>AOB and next meeting:</strong> Safety matters, welfare, upcoming events — 5
+              minutes
+            </li>
+          </ul>
+          <p>
+            <strong>Real-world example — office refurbishment:</strong> On a 10-floor office
+            refurbishment, weekly M&E coordination meetings identified that electrical containment
+            routes clashed with new ductwork on floors 3-5. Early identification allowed the design
+            team to modify the containment routing before installation began, avoiding an estimated
+            3-week delay and significant abortive work costs.
+          </p>
+          <p>
+            <strong>Best practice:</strong> Circulate meeting minutes within 24 hours whilst
+            discussions are fresh. Named actions with clear deadlines ensure accountability.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...quickCheckQuestions[0]} />
+
+        <SectionRule />
+
+        <ConceptBlock title="Sequencing Agreements and Interface Management">
+          <p>
+            Sequencing agreements formalise the order of work between trades, defining access dates,
+            work durations, and handover requirements. On building services projects, electrical
+            work typically follows structural completion and precedes or runs parallel to mechanical
+            installation.
+          </p>
+          <p>
+            <strong>Typical M&E sequence:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Builders work openings formed</li>
+            <li>Primary containment installation</li>
+            <li>Main ductwork installation</li>
+            <li>Secondary containment and pipework</li>
+            <li>Cable installation</li>
+            <li>Equipment mounting</li>
+            <li>Connections and terminations</li>
+            <li>Testing and commissioning</li>
+          </ul>
+          <p>
+            <strong>Interface matrix elements:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Work package boundaries</li>
+            <li>Responsibility for builder's work</li>
+            <li>Power supply termination points</li>
+            <li>Control wiring interfaces</li>
+            <li>Testing and commissioning boundaries</li>
+            <li>Documentation handover requirements</li>
+            <li>Warranty interface points</li>
+            <li>Maintenance access requirements</li>
+          </ul>
+          <p>
+            <strong>Sequencing agreement components:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Access date:</strong> When area becomes available — Floor 3 from 15/03/2024
+            </li>
+            <li>
+              <strong>Preceding work:</strong> What must be complete first — Ceiling grid installed
+            </li>
+            <li>
+              <strong>Work duration:</strong> Time allocated for activity — 2 weeks first fix
+              containment
+            </li>
+            <li>
+              <strong>Completion date:</strong> Handover deadline — First fix complete by 29/03/2024
+            </li>
+            <li>
+              <strong>Following work:</strong> What depends on completion — Ceiling tile
+              installation
+            </li>
+            <li>
+              <strong>Handover condition:</strong> State area must be left in — Clean, labelled,
+              safe for others
+            </li>
+          </ul>
+          <p>
+            <strong>Common sequencing issues:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Containment clashes:</strong> Always coordinate routes before installation
+            </li>
+            <li>
+              <strong>Ceiling void congestion:</strong> Early BIM coordination essential
+            </li>
+            <li>
+              <strong>Access for terminations:</strong> Plan access panels with ceiling contractor
+            </li>
+            <li>
+              <strong>Testing sequences:</strong> Coordinate with mechanical commissioning
+            </li>
+          </ul>
+          <p>
+            <strong>Documentation tip:</strong> Always photograph and record interface conditions at
+            handover. This protects against claims for damage caused by following trades.
+          </p>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <ConceptBlock title="Occupied Premises and Live Services Management">
+          <p>
+            Working in occupied premises presents unique challenges. Building users continue their
+            activities whilst construction work proceeds around them. This requires exceptional
+            planning, communication, and flexibility to maintain safety whilst minimising disruption
+            to client operations.
+          </p>
+          <p>
+            <strong>Commercial offices:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Work often restricted to out-of-hours</li>
+            <li>Noise limits during business hours</li>
+            <li>Data and IT systems protection critical</li>
+            <li>Weekend working may be required</li>
+          </ul>
+          <p>
+            <strong>Healthcare facilities:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>24/7 operations - no fully quiet periods</li>
+            <li>Critical life safety systems</li>
+            <li>Infection control requirements</li>
+            <li>Patient dignity considerations</li>
+          </ul>
+          <p>
+            <strong>Retail environments:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Customer safety paramount</li>
+            <li>Stock protection requirements</li>
+            <li>Trading hours restrictions</li>
+            <li>Visual impact considerations</li>
+          </ul>
+          <p>
+            <strong>Educational buildings:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Safeguarding requirements (DBS checks)</li>
+            <li>Term time vs holiday working</li>
+            <li>Exam period restrictions</li>
+            <li>Noise during teaching hours</li>
+          </ul>
+          <p>
+            <strong>Isolation coordination protocol:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Step 1:</strong> Identify circuits requiring isolation and affected areas
+            </li>
+            <li>
+              <strong>Step 2:</strong> Submit isolation request with scope, duration, and date
+              (typically 72+ hours advance)
+            </li>
+            <li>
+              <strong>Step 3:</strong> Obtain written approval from client's authorised person
+            </li>
+            <li>
+              <strong>Step 4:</strong> Coordinate timing with client operations
+            </li>
+            <li>
+              <strong>Step 5:</strong> Implement isolation with lock-off and warning notices
+            </li>
+            <li>
+              <strong>Step 6:</strong> Complete work and test
+            </li>
+            <li>
+              <strong>Step 7:</strong> Re-energise with client authorisation
+            </li>
+            <li>
+              <strong>Step 8:</strong> Document completion and close permit
+            </li>
+          </ul>
+          <p>
+            <strong>Real-world example — hospital theatre upgrade:</strong> Upgrading the electrical
+            infrastructure to operating theatres required careful coordination with clinical staff.
+            Work was scheduled during planned maintenance shutdowns, with backup power from mobile
+            generators for adjacent theatres. Each isolation was authorised by both the electrical
+            supervisor and the clinical director, with theatre staff confirming no operations were
+            scheduled. The work proceeded over six weekends without affecting any surgical
+            procedures.
+          </p>
+          <p>
+            <strong>Live services — key controls:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Permit to work:</strong> Mandatory for all work near live services
+            </li>
+            <li>
+              <strong>Risk assessment:</strong> Specific to the task and environment
+            </li>
+            <li>
+              <strong>Barriers and signage:</strong> Physical protection from contact
+            </li>
+            <li>
+              <strong>Competent supervision:</strong> Appropriately qualified personnel
+            </li>
+            <li>
+              <strong>Emergency procedures:</strong> Known and practised by all
+            </li>
+          </ul>
+          <p>
+            <strong>Golden rule:</strong> When in doubt, stop and seek clarification. Never proceed
+            with work affecting live services without proper authorisation and controls in place.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...quickCheckQuestions[1]} />
+        <InlineCheck {...quickCheckQuestions[2]} />
+
+        <SectionRule />
+
+        <ConceptBlock title="Out-of-Hours Work and Client Liaison">
+          <p>
+            Out-of-hours work is often essential in occupied premises to minimise disruption.
+            However, it introduces additional risks and requires enhanced planning. Effective client
+            liaison protocols ensure clear communication and appropriate authorisations throughout
+            the project.
+          </p>
+          <p>
+            <strong>Out-of-hours planning requirements:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Welfare facilities:</strong> Day work — Site facilities available;
+              Out-of-hours — May need separate provision
+            </li>
+            <li>
+              <strong>First aid:</strong> Day work — Site first aider on duty; Out-of-hours —
+              Trained person in team essential
+            </li>
+            <li>
+              <strong>Emergency contact:</strong> Day work — Site manager available; Out-of-hours —
+              Dedicated emergency contact required
+            </li>
+            <li>
+              <strong>Site security:</strong> Day work — Normal site access; Out-of-hours —
+              Key/access card arrangements
+            </li>
+            <li>
+              <strong>Lone working:</strong> Day work — Other workers present; Out-of-hours —
+              Specific lone worker procedures
+            </li>
+            <li>
+              <strong>Fire procedures:</strong> Day work — Building alarm monitored; Out-of-hours —
+              Confirm alarm status, assembly point
+            </li>
+          </ul>
+          <p>
+            <strong>Client liaison protocol elements:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Single point of contact:</strong> Named client representative for day-to-day
+              matters
+            </li>
+            <li>
+              <strong>Escalation route:</strong> Clear path for issues requiring higher authority
+            </li>
+            <li>
+              <strong>Communication schedule:</strong> Regular progress updates (weekly minimum)
+            </li>
+            <li>
+              <strong>Approval authorities:</strong> Who can authorise isolations, variations,
+              access
+            </li>
+            <li>
+              <strong>Emergency contacts:</strong> 24/7 availability for urgent matters
+            </li>
+            <li>
+              <strong>Documentation requirements:</strong> Reports, permits, completion records
+            </li>
+          </ul>
+          <p>
+            <strong>Advance notice requirements:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Planned isolation:</strong> 72 hours - 1 week
+            </li>
+            <li>
+              <strong>Out-of-hours work:</strong> 2-4 weeks
+            </li>
+            <li>
+              <strong>Major shutdowns:</strong> 4-8 weeks
+            </li>
+            <li>
+              <strong>Emergency work:</strong> As soon as practicable
+            </li>
+          </ul>
+          <p>
+            <strong>Progress reporting content:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Work completed this period</li>
+            <li>Programme status and any delays</li>
+            <li>Upcoming work and access needs</li>
+            <li>Health and safety matters</li>
+            <li>Issues requiring client decision</li>
+          </ul>
+          <p>
+            <strong>Real-world example — data centre upgrade:</strong> A data centre electrical
+            upgrade required work during a two-hour maintenance window each Sunday. The client
+            liaison protocol included: 48-hour advance confirmation of the window, pre-agreed
+            rollback procedures if work overran, direct communication with the data centre manager
+            during work, and post-work energisation authorisation. All 12 weekend sessions completed
+            successfully within the allocated windows.
+          </p>
+          <p>
+            <strong>Communication tip:</strong> Over-communicate rather than under-communicate.
+            Clients prefer to know about potential issues early, even if they don't materialise,
+            rather than be surprised by problems.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...quickCheckQuestions[3]} />
+
+        <SectionRule />
+
+        <ConceptBlock title="Worked Examples">
+          <p>
+            <strong>Example 1 — Coordination meeting action:</strong> The mechanical contractor
+            reports they cannot install ductwork on Level 2 because electrical containment is
+            incomplete.
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Issue raised:</strong> Level 2 ductwork installation blocked by incomplete
+              containment
+            </li>
+            <li>Electrical: First fix 70% complete, issue in riser area</li>
+            <li>Mechanical: Need riser access for main duct by Friday</li>
+            <li>Main contractor: Ceiling grid due following Monday</li>
+            <li>1. Electrical to prioritise riser containment - complete by Thursday</li>
+            <li>2. Mechanical to install riser duct Friday-Saturday</li>
+            <li>3. Electrical to complete remaining containment Monday</li>
+            <li>4. Ceiling contractor access from Tuesday (1 day slip)</li>
+            <li>
+              <strong>Action:</strong> Electrical supervisor to confirm Thursday completion by 14:00
+              today
+            </li>
+          </ul>
+          <p>
+            <strong>Example 2 — Isolation request process:</strong> Need to replace a distribution
+            board in an occupied office, requiring a 4-hour shutdown of half the floor.
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Date of request: Monday 15th January</li>
+            <li>Requested isolation date: Saturday 27th January</li>
+            <li>Duration: 06:00 - 14:00 (8 hours including contingency)</li>
+            <li>DB-2A supplying offices 201-210</li>
+            <li>Lighting, small power, data rack supply</li>
+            <li>Area normally unoccupied Saturday</li>
+            <li>Server room on separate supply (unaffected)</li>
+            <li>Emergency lighting from DB-1 (unaffected)</li>
+            <li>Facilities manager: Approved 17/01</li>
+            <li>IT manager: Confirmed no data impact</li>
+            <li>Security: Saturday access arranged</li>
+            <li>Work completed 11:30 - 2.5 hours ahead of schedule</li>
+          </ul>
+          <p>
+            <strong>Example 3 — Interface matrix extract:</strong> Who is responsible for the
+            control wiring between the BMS panel and the AHU motor control centre?
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Interface:</strong> BMS to AHU control wiring
+            </li>
+            <li>
+              <strong>Electrical contractor responsibility:</strong> Containment from BMS panel to
+              MCC
+            </li>
+            <li>Multi-core control cable supply and installation</li>
+            <li>Termination at MCC marshalling terminals</li>
+            <li>
+              <strong>BMS contractor responsibility:</strong> Termination at BMS panel end
+            </li>
+            <li>Point-to-point testing</li>
+            <li>Commissioning and integration</li>
+            <li>
+              <strong>Mechanical contractor responsibility:</strong> Schedule of control points
+              required
+            </li>
+            <li>MCC internal terminations</li>
+            <li>
+              <strong>Handover point:</strong> MCC marshalling terminals (row 1-24)
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <ConceptBlock title="Practical guidance">
+          <p>
+            <strong>Coordination meeting preparation:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Review previous meeting actions before attending</li>
+            <li>Prepare your 3-week look-ahead with resource requirements</li>
+            <li>Identify any access or interface issues to raise</li>
+            <li>Know your programme status and any delay impacts</li>
+            <li>Bring marked-up drawings showing progress and issues</li>
+          </ul>
+          <p>
+            <strong>Key values to remember:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              Coordination meetings: <strong>Weekly</strong> during installation
+            </li>
+            <li>
+              Isolation notice: <strong>72 hours minimum</strong>
+            </li>
+            <li>
+              Out-of-hours planning: <strong>2-4 weeks advance</strong>
+            </li>
+            <li>
+              Minutes circulation: <strong>Within 24 hours</strong>
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <CommonMistake
+          title="Common mistakes to avoid"
+          whatHappens={
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+              <li>
+                <strong>Informal agreements:</strong> Always document access and sequencing
+              </li>
+              <li>
+                <strong>Late isolation requests:</strong> Plan ahead, not last minute
+              </li>
+              <li>
+                <strong>Poor handover photos:</strong> Document interface conditions
+              </li>
+              <li>
+                <strong>Ignoring client protocols:</strong> Follow their procedures exactly
+              </li>
+            </ul>
+          }
+          doInstead="Capture every access and sequencing decision in coordination minutes, submit isolations 72hr+ in advance, photograph interface handovers, and follow client site rules to the letter."
+        />
+
+        <SectionRule />
+
+        <Scenario
+          title="Live working permit challenged after near-miss"
+          situation={
+            <>
+              An MEP refurbishment in an occupied data centre. The project manager has been signing
+              live work permits routinely for cable additions to live LV switchboards because "the
+              client cannot accept a power-down". A near-miss occurs: an operative drops a tool onto
+              a live busbar, narrowly avoiding contact. The HSE inspects.
+            </>
+          }
+          whatToDo={
+            <>
+              Stop all live work immediately. Audit every live work permit issued: was working dead
+              truly unreasonable? Was the work itself reasonable to do live? Were the precautions
+              sufficient? In a data centre, alternatives include redundant supply switching, planned
+              outage windows, or staged migration. Engage the client genuinely — most "cannot accept
+              power-down" positions soften when the alternative is a fatality. Issue revised live
+              working procedure aligned to EAWR Reg 14; PM must challenge every request.
+            </>
+          }
+          whyItMatters={
+            <>
+              EAWR Reg 14 is absolute. Routine live working in MEP refurbishment is the single
+              biggest cause of electrical fatalities in UK construction. The PM's discipline at
+              permit-signing is the difference between a safe project and a Crown Court appearance.
+            </>
+          }
+        />
+
+        <SectionRule />
+
+        <FAQ items={faqs} />
+
+        <SectionRule />
+
+        <KeyTakeaways
+          points={[
+            'Interface coordination = boundaries between trades, phases, contractor/operating client.',
+            'Trade interfaces defined in WBS and reinforced in pre-start meetings.',
+            'Client operations interface: occupied working, live services, business continuity.',
+            'Live services: EAWR Reg 14 mandates working dead unless proven otherwise.',
+            'Permits to work: hot work, confined space, height, energised — formal authorisation.',
+            'Lock-off procedures: prove dead before work, prove dead before re-work after break.',
+            'PM signs live permits sparingly; challenges every request against Reg 14 three-test.',
+            'Routine live working is the leading cause of UK construction electrical fatalities.',
+          ]}
+        />
+
+        <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+
+        <div className="grid grid-cols-2 gap-3 pt-2">
           <button
             onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section6')}
-            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
           >
-            <ArrowLeft className="h-4 w-4" /> Back
+            <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+              <ChevronLeft className="h-3 w-3" /> Back to section
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-white truncate">
+              Site management and CDM
+            </div>
           </button>
-
-          <PageHero
-            eyebrow="Module 5 · Section 6 · Subsection 3"
-            title="Interface Coordination"
-            description="Coordination with other trades, client operations interface, occupied premises and live services management."
-            tone="purple"
-          />
-
-          <TLDR
-            points={[
-              "Interface coordination = managing the boundaries between trades, between phases, and between contractor and operating client.",
-              "Trade interfaces: who installs what, who terminates what, who tests what — defined in the WBS and reinforced in pre-start meetings.",
-              "Client operations interface: occupied building working, live services, business continuity — risk-assessed and method-statemented.",
-              "Live services: isolation procedures, permits to work, lock-off — EAWR Reg 4 mandates working dead unless proven otherwise.",
-              "Permits to work: hot work, confined space, working at height, energised — formal authorisation system.",
-            ]}
-          />
-
-          <RegsCallout
-            source="Electricity at Work Regulations 1989 — Regulation 14 (Work on or near live conductors)"
-            clause="No person shall be engaged in any work activity on or so near any live conductor (other than one suitably covered with insulating material so as to prevent danger) that danger may arise unless — it is unreasonable in all the circumstances for it to be dead; and it is reasonable in all the circumstances for him to be at work on or near it while it is live; and suitable precautions (including where necessary the provision of suitable protective equipment) are taken to prevent injury."
-            meaning={
-              <>
-                EAWR Reg 14 is one of the very few absolute duties in UK H&S law: working dead is the default; working live requires all three conditions to be satisfied AND demonstrably so. Permits to work on energised systems must be the exception, not the routine. The PM signing live work permits should be challenging the necessity at every request.
-              </>
-            }
-            cite="Source: Electricity at Work Regulations 1989 — legislation.gov.uk"
-          />
-
-
-          <LearningOutcomes
-            outcomes={[
-              'Plan and participate in effective trade coordination meetings',
-              'Develop sequencing agreements with other building services trades',
-              'Manage electrical work in occupied and operational premises',
-              'Implement isolation coordination protocols with client operations',
-              'Organise out-of-hours work safely and effectively',
-              'Establish client liaison protocols and communication channels',
-            ]}
-          />
-
-          <SectionRule />
-
-          <ConceptBlock title="Trade Coordination Meetings">
-            <p>
-              Trade coordination meetings are the cornerstone of successful building services
-              installation. On complex projects, multiple M&E contractors must share limited space
-              and coordinate their work sequences to avoid costly clashes and delays. Effective
-              coordination requires structured meetings, clear documentation, and commitment from
-              all parties.
-            </p>
-            <p>
-              <strong>Meeting structure:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Frequency:</strong> Weekly during installation, fortnightly during quieter
-                periods
-              </li>
-              <li>
-                <strong>Attendees:</strong> Supervisors from all M&E trades, main contractor
-                representative
-              </li>
-              <li>
-                <strong>Agenda:</strong> Review of previous actions, look-ahead programme, clash
-                resolution, access requests
-              </li>
-              <li>
-                <strong>Output:</strong> Formal minutes with named actions and deadlines
-              </li>
-            </ul>
-            <p>
-              <strong>Coordination meeting agenda template:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Previous actions review:</strong> Confirm completion, chase outstanding
-                items — 10 minutes
-              </li>
-              <li>
-                <strong>3-week look-ahead:</strong> Review upcoming work, identify clashes — 20
-                minutes
-              </li>
-              <li>
-                <strong>Access and sequencing:</strong> Agree work area handovers — 15 minutes
-              </li>
-              <li>
-                <strong>Technical issues:</strong> Design changes, RFIs, clash resolution — 15
-                minutes
-              </li>
-              <li>
-                <strong>Programme impacts:</strong> Delays, recovery plans, milestones — 10 minutes
-              </li>
-              <li>
-                <strong>AOB and next meeting:</strong> Safety matters, welfare, upcoming events — 5
-                minutes
-              </li>
-            </ul>
-            <p>
-              <strong>Real-world example — office refurbishment:</strong> On a 10-floor office
-              refurbishment, weekly M&E coordination meetings identified that electrical containment
-              routes clashed with new ductwork on floors 3-5. Early identification allowed the
-              design team to modify the containment routing before installation began, avoiding an
-              estimated 3-week delay and significant abortive work costs.
-            </p>
-            <p>
-              <strong>Best practice:</strong> Circulate meeting minutes within 24 hours whilst
-              discussions are fresh. Named actions with clear deadlines ensure accountability.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...quickCheckQuestions[0]} />
-
-          <SectionRule />
-
-          <ConceptBlock title="Sequencing Agreements and Interface Management">
-            <p>
-              Sequencing agreements formalise the order of work between trades, defining access
-              dates, work durations, and handover requirements. On building services projects,
-              electrical work typically follows structural completion and precedes or runs parallel
-              to mechanical installation.
-            </p>
-            <p>
-              <strong>Typical M&E sequence:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Builders work openings formed</li>
-              <li>Primary containment installation</li>
-              <li>Main ductwork installation</li>
-              <li>Secondary containment and pipework</li>
-              <li>Cable installation</li>
-              <li>Equipment mounting</li>
-              <li>Connections and terminations</li>
-              <li>Testing and commissioning</li>
-            </ul>
-            <p>
-              <strong>Interface matrix elements:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Work package boundaries</li>
-              <li>Responsibility for builder's work</li>
-              <li>Power supply termination points</li>
-              <li>Control wiring interfaces</li>
-              <li>Testing and commissioning boundaries</li>
-              <li>Documentation handover requirements</li>
-              <li>Warranty interface points</li>
-              <li>Maintenance access requirements</li>
-            </ul>
-            <p>
-              <strong>Sequencing agreement components:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Access date:</strong> When area becomes available — Floor 3 from 15/03/2024
-              </li>
-              <li>
-                <strong>Preceding work:</strong> What must be complete first — Ceiling grid
-                installed
-              </li>
-              <li>
-                <strong>Work duration:</strong> Time allocated for activity — 2 weeks first fix
-                containment
-              </li>
-              <li>
-                <strong>Completion date:</strong> Handover deadline — First fix complete by
-                29/03/2024
-              </li>
-              <li>
-                <strong>Following work:</strong> What depends on completion — Ceiling tile
-                installation
-              </li>
-              <li>
-                <strong>Handover condition:</strong> State area must be left in — Clean, labelled,
-                safe for others
-              </li>
-            </ul>
-            <p>
-              <strong>Common sequencing issues:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Containment clashes:</strong> Always coordinate routes before installation
-              </li>
-              <li>
-                <strong>Ceiling void congestion:</strong> Early BIM coordination essential
-              </li>
-              <li>
-                <strong>Access for terminations:</strong> Plan access panels with ceiling contractor
-              </li>
-              <li>
-                <strong>Testing sequences:</strong> Coordinate with mechanical commissioning
-              </li>
-            </ul>
-            <p>
-              <strong>Documentation tip:</strong> Always photograph and record interface conditions
-              at handover. This protects against claims for damage caused by following trades.
-            </p>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <ConceptBlock title="Occupied Premises and Live Services Management">
-            <p>
-              Working in occupied premises presents unique challenges. Building users continue their
-              activities whilst construction work proceeds around them. This requires exceptional
-              planning, communication, and flexibility to maintain safety whilst minimising
-              disruption to client operations.
-            </p>
-            <p>
-              <strong>Commercial offices:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Work often restricted to out-of-hours</li>
-              <li>Noise limits during business hours</li>
-              <li>Data and IT systems protection critical</li>
-              <li>Weekend working may be required</li>
-            </ul>
-            <p>
-              <strong>Healthcare facilities:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>24/7 operations - no fully quiet periods</li>
-              <li>Critical life safety systems</li>
-              <li>Infection control requirements</li>
-              <li>Patient dignity considerations</li>
-            </ul>
-            <p>
-              <strong>Retail environments:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Customer safety paramount</li>
-              <li>Stock protection requirements</li>
-              <li>Trading hours restrictions</li>
-              <li>Visual impact considerations</li>
-            </ul>
-            <p>
-              <strong>Educational buildings:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Safeguarding requirements (DBS checks)</li>
-              <li>Term time vs holiday working</li>
-              <li>Exam period restrictions</li>
-              <li>Noise during teaching hours</li>
-            </ul>
-            <p>
-              <strong>Isolation coordination protocol:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Step 1:</strong> Identify circuits requiring isolation and affected areas
-              </li>
-              <li>
-                <strong>Step 2:</strong> Submit isolation request with scope, duration, and date
-                (typically 72+ hours advance)
-              </li>
-              <li>
-                <strong>Step 3:</strong> Obtain written approval from client's authorised person
-              </li>
-              <li>
-                <strong>Step 4:</strong> Coordinate timing with client operations
-              </li>
-              <li>
-                <strong>Step 5:</strong> Implement isolation with lock-off and warning notices
-              </li>
-              <li>
-                <strong>Step 6:</strong> Complete work and test
-              </li>
-              <li>
-                <strong>Step 7:</strong> Re-energise with client authorisation
-              </li>
-              <li>
-                <strong>Step 8:</strong> Document completion and close permit
-              </li>
-            </ul>
-            <p>
-              <strong>Real-world example — hospital theatre upgrade:</strong> Upgrading the
-              electrical infrastructure to operating theatres required careful coordination with
-              clinical staff. Work was scheduled during planned maintenance shutdowns, with backup
-              power from mobile generators for adjacent theatres. Each isolation was authorised by
-              both the electrical supervisor and the clinical director, with theatre staff
-              confirming no operations were scheduled. The work proceeded over six weekends without
-              affecting any surgical procedures.
-            </p>
-            <p>
-              <strong>Live services — key controls:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Permit to work:</strong> Mandatory for all work near live services
-              </li>
-              <li>
-                <strong>Risk assessment:</strong> Specific to the task and environment
-              </li>
-              <li>
-                <strong>Barriers and signage:</strong> Physical protection from contact
-              </li>
-              <li>
-                <strong>Competent supervision:</strong> Appropriately qualified personnel
-              </li>
-              <li>
-                <strong>Emergency procedures:</strong> Known and practised by all
-              </li>
-            </ul>
-            <p>
-              <strong>Golden rule:</strong> When in doubt, stop and seek clarification. Never
-              proceed with work affecting live services without proper authorisation and controls in
-              place.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...quickCheckQuestions[1]} />
-          <InlineCheck {...quickCheckQuestions[2]} />
-
-          <SectionRule />
-
-          <ConceptBlock title="Out-of-Hours Work and Client Liaison">
-            <p>
-              Out-of-hours work is often essential in occupied premises to minimise disruption.
-              However, it introduces additional risks and requires enhanced planning. Effective
-              client liaison protocols ensure clear communication and appropriate authorisations
-              throughout the project.
-            </p>
-            <p>
-              <strong>Out-of-hours planning requirements:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Welfare facilities:</strong> Day work — Site facilities available;
-                Out-of-hours — May need separate provision
-              </li>
-              <li>
-                <strong>First aid:</strong> Day work — Site first aider on duty; Out-of-hours —
-                Trained person in team essential
-              </li>
-              <li>
-                <strong>Emergency contact:</strong> Day work — Site manager available; Out-of-hours
-                — Dedicated emergency contact required
-              </li>
-              <li>
-                <strong>Site security:</strong> Day work — Normal site access; Out-of-hours —
-                Key/access card arrangements
-              </li>
-              <li>
-                <strong>Lone working:</strong> Day work — Other workers present; Out-of-hours —
-                Specific lone worker procedures
-              </li>
-              <li>
-                <strong>Fire procedures:</strong> Day work — Building alarm monitored; Out-of-hours
-                — Confirm alarm status, assembly point
-              </li>
-            </ul>
-            <p>
-              <strong>Client liaison protocol elements:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Single point of contact:</strong> Named client representative for day-to-day
-                matters
-              </li>
-              <li>
-                <strong>Escalation route:</strong> Clear path for issues requiring higher authority
-              </li>
-              <li>
-                <strong>Communication schedule:</strong> Regular progress updates (weekly minimum)
-              </li>
-              <li>
-                <strong>Approval authorities:</strong> Who can authorise isolations, variations,
-                access
-              </li>
-              <li>
-                <strong>Emergency contacts:</strong> 24/7 availability for urgent matters
-              </li>
-              <li>
-                <strong>Documentation requirements:</strong> Reports, permits, completion records
-              </li>
-            </ul>
-            <p>
-              <strong>Advance notice requirements:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Planned isolation:</strong> 72 hours - 1 week
-              </li>
-              <li>
-                <strong>Out-of-hours work:</strong> 2-4 weeks
-              </li>
-              <li>
-                <strong>Major shutdowns:</strong> 4-8 weeks
-              </li>
-              <li>
-                <strong>Emergency work:</strong> As soon as practicable
-              </li>
-            </ul>
-            <p>
-              <strong>Progress reporting content:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Work completed this period</li>
-              <li>Programme status and any delays</li>
-              <li>Upcoming work and access needs</li>
-              <li>Health and safety matters</li>
-              <li>Issues requiring client decision</li>
-            </ul>
-            <p>
-              <strong>Real-world example — data centre upgrade:</strong> A data centre electrical
-              upgrade required work during a two-hour maintenance window each Sunday. The client
-              liaison protocol included: 48-hour advance confirmation of the window, pre-agreed
-              rollback procedures if work overran, direct communication with the data centre manager
-              during work, and post-work energisation authorisation. All 12 weekend sessions
-              completed successfully within the allocated windows.
-            </p>
-            <p>
-              <strong>Communication tip:</strong> Over-communicate rather than under-communicate.
-              Clients prefer to know about potential issues early, even if they don't materialise,
-              rather than be surprised by problems.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...quickCheckQuestions[3]} />
-
-          <SectionRule />
-
-          <ConceptBlock title="Worked Examples">
-            <p>
-              <strong>Example 1 — Coordination meeting action:</strong> The mechanical contractor
-              reports they cannot install ductwork on Level 2 because electrical containment is
-              incomplete.
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Issue raised:</strong> Level 2 ductwork installation blocked by incomplete
-                containment
-              </li>
-              <li>Electrical: First fix 70% complete, issue in riser area</li>
-              <li>Mechanical: Need riser access for main duct by Friday</li>
-              <li>Main contractor: Ceiling grid due following Monday</li>
-              <li>1. Electrical to prioritise riser containment - complete by Thursday</li>
-              <li>2. Mechanical to install riser duct Friday-Saturday</li>
-              <li>3. Electrical to complete remaining containment Monday</li>
-              <li>4. Ceiling contractor access from Tuesday (1 day slip)</li>
-              <li>
-                <strong>Action:</strong> Electrical supervisor to confirm Thursday completion by
-                14:00 today
-              </li>
-            </ul>
-            <p>
-              <strong>Example 2 — Isolation request process:</strong> Need to replace a distribution
-              board in an occupied office, requiring a 4-hour shutdown of half the floor.
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Date of request: Monday 15th January</li>
-              <li>Requested isolation date: Saturday 27th January</li>
-              <li>Duration: 06:00 - 14:00 (8 hours including contingency)</li>
-              <li>DB-2A supplying offices 201-210</li>
-              <li>Lighting, small power, data rack supply</li>
-              <li>Area normally unoccupied Saturday</li>
-              <li>Server room on separate supply (unaffected)</li>
-              <li>Emergency lighting from DB-1 (unaffected)</li>
-              <li>Facilities manager: Approved 17/01</li>
-              <li>IT manager: Confirmed no data impact</li>
-              <li>Security: Saturday access arranged</li>
-              <li>Work completed 11:30 - 2.5 hours ahead of schedule</li>
-            </ul>
-            <p>
-              <strong>Example 3 — Interface matrix extract:</strong> Who is responsible for the
-              control wiring between the BMS panel and the AHU motor control centre?
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Interface:</strong> BMS to AHU control wiring
-              </li>
-              <li>
-                <strong>Electrical contractor responsibility:</strong> Containment from BMS panel to
-                MCC
-              </li>
-              <li>Multi-core control cable supply and installation</li>
-              <li>Termination at MCC marshalling terminals</li>
-              <li>
-                <strong>BMS contractor responsibility:</strong> Termination at BMS panel end
-              </li>
-              <li>Point-to-point testing</li>
-              <li>Commissioning and integration</li>
-              <li>
-                <strong>Mechanical contractor responsibility:</strong> Schedule of control points
-                required
-              </li>
-              <li>MCC internal terminations</li>
-              <li>
-                <strong>Handover point:</strong> MCC marshalling terminals (row 1-24)
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <ConceptBlock title="Practical guidance">
-            <p>
-              <strong>Coordination meeting preparation:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Review previous meeting actions before attending</li>
-              <li>Prepare your 3-week look-ahead with resource requirements</li>
-              <li>Identify any access or interface issues to raise</li>
-              <li>Know your programme status and any delay impacts</li>
-              <li>Bring marked-up drawings showing progress and issues</li>
-            </ul>
-            <p>
-              <strong>Key values to remember:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                Coordination meetings: <strong>Weekly</strong> during installation
-              </li>
-              <li>
-                Isolation notice: <strong>72 hours minimum</strong>
-              </li>
-              <li>
-                Out-of-hours planning: <strong>2-4 weeks advance</strong>
-              </li>
-              <li>
-                Minutes circulation: <strong>Within 24 hours</strong>
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <CommonMistake
-            title="Common mistakes to avoid"
-            whatHappens={
-              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
-                <li>
-                  <strong>Informal agreements:</strong> Always document access and sequencing
-                </li>
-                <li>
-                  <strong>Late isolation requests:</strong> Plan ahead, not last minute
-                </li>
-                <li>
-                  <strong>Poor handover photos:</strong> Document interface conditions
-                </li>
-                <li>
-                  <strong>Ignoring client protocols:</strong> Follow their procedures exactly
-                </li>
-              </ul>
-            }
-            doInstead="Capture every access and sequencing decision in coordination minutes, submit isolations 72hr+ in advance, photograph interface handovers, and follow client site rules to the letter."
-          />
-
-          <SectionRule />
-
-          <Scenario
-            title="Live working permit challenged after near-miss"
-            situation={
-              <>
-                An MEP refurbishment in an occupied data centre. The project manager has been signing live work permits routinely for cable additions to live LV switchboards because "the client cannot accept a power-down". A near-miss occurs: an operative drops a tool onto a live busbar, narrowly avoiding contact. The HSE inspects.
-              </>
-            }
-            whatToDo={
-              <>
-                Stop all live work immediately. Audit every live work permit issued: was working dead truly unreasonable? Was the work itself reasonable to do live? Were the precautions sufficient? In a data centre, alternatives include redundant supply switching, planned outage windows, or staged migration. Engage the client genuinely — most "cannot accept power-down" positions soften when the alternative is a fatality. Issue revised live working procedure aligned to EAWR Reg 14; PM must challenge every request.
-              </>
-            }
-            whyItMatters={
-              <>
-                EAWR Reg 14 is absolute. Routine live working in MEP refurbishment is the single biggest cause of electrical fatalities in UK construction. The PM's discipline at permit-signing is the difference between a safe project and a Crown Court appearance.
-              </>
-            }
-          />
-
-          <SectionRule />
-
-          <FAQ items={faqs} />
-
-          <SectionRule />
-
-                    <KeyTakeaways
-            points={[
-              "Interface coordination = boundaries between trades, phases, contractor/operating client.",
-              "Trade interfaces defined in WBS and reinforced in pre-start meetings.",
-              "Client operations interface: occupied working, live services, business continuity.",
-              "Live services: EAWR Reg 14 mandates working dead unless proven otherwise.",
-              "Permits to work: hot work, confined space, height, energised — formal authorisation.",
-              "Lock-off procedures: prove dead before work, prove dead before re-work after break.",
-              "PM signs live permits sparingly; challenges every request against Reg 14 three-test.",
-              "Routine live working is the leading cause of UK construction electrical fatalities.",
-            ]}
-          />
-
-
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-
-          <div className="grid grid-cols-2 gap-3 pt-2">
-            <button
-              onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section6')}
-              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
-                <ChevronLeft className="h-3 w-3" /> Back to section
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-white truncate">
-                Site management and CDM
-              </div>
-            </button>
-            <button
-              onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section6-4')}
-              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
-                Next subsection <ChevronRight className="h-3 w-3" />
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-black truncate">
-                CDM site compliance
-              </div>
-            </button>
-          </div>
-        </PageFrame>
-      </div>
-    </div>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section6-4')}
+            className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+          >
+            <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+              Next subsection <ChevronRight className="h-3 w-3" />
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-black truncate">
+              CDM site compliance
+            </div>
+          </button>
+        </div>
+      </HubBody>
+    </HubPage>
   );
 };
 

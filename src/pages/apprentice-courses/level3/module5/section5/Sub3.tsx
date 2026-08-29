@@ -14,11 +14,11 @@
  */
 
 import { useNavigate } from 'react-router-dom';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { ArrowLeft, ChevronRight } from 'lucide-react';
 
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
-import { PageFrame, PageHero } from '@/components/college/primitives';
 import {
   TLDR,
   ConceptBlock,
@@ -40,12 +40,13 @@ const DESCRIPTION =
 const checks = [
   {
     id: 'm5-s5-sub3-sampling-default',
-    question: 'GN3 sets a typical default sampling rate for periodic inspection of an installation in occupied use as:',
+    question:
+      'GN3 sets a typical default sampling rate for periodic inspection of an installation in occupied use as:',
     options: [
-      "10% of accessories with all DBs and CUs fully inspected, all final-circuit dead and live tests on a sampled basis where the inspection cannot be 100% without disruption — sampling rate must be agreed in writing with the customer in advance and recorded in the limitations on the report.",
-      "100% of every accessory, DB and circuit on every periodic inspection — sampling is not permitted on an occupied installation because every point must be proven before the report can be issued",
-      "A fixed 25% of accessories with the consumer units excluded — the CUs are covered separately by the manufacturer maintenance contract, so the periodic inspection samples only the final-circuit accessories",
-      "1% of accessories chosen at random, with the sampling rate fixed by GN3 regardless of installation type, so the inspector has no discretion to vary it",
+      '10% of accessories with all DBs and CUs fully inspected, all final-circuit dead and live tests on a sampled basis where the inspection cannot be 100% without disruption — sampling rate must be agreed in writing with the customer in advance and recorded in the limitations on the report.',
+      '100% of every accessory, DB and circuit on every periodic inspection — sampling is not permitted on an occupied installation because every point must be proven before the report can be issued',
+      'A fixed 25% of accessories with the consumer units excluded — the CUs are covered separately by the manufacturer maintenance contract, so the periodic inspection samples only the final-circuit accessories',
+      '1% of accessories chosen at random, with the sampling rate fixed by GN3 regardless of installation type, so the inspector has no discretion to vary it',
     ],
     correctIndex: 0,
     explanation:
@@ -55,10 +56,10 @@ const checks = [
     id: 'm5-s5-sub3-extent-record',
     question: 'The "Extent and Limitations of the Inspection" section on the EICR exists to:',
     options: [
-      "Set the price of the inspection by listing the accessories to be tested, so the customer can see how the quote was built up from the number of points covered",
-      "Record exactly what the inspection covered (extent) and what was excluded or sampled rather than 100% inspected (limitations) — agreed with the customer in writing before the inspection started, signed off by the customer, and reproduced on the front of the report so anyone reading the EICR knows what is and is not certified.",
-      "Record the test instrument serial numbers and calibration dates, so the next inspector can confirm the readings were taken with traceable equipment",
-      "List the BS 7671 regulation numbers that each circuit was tested against, so the report demonstrates which clauses were applied during the inspection",
+      'Set the price of the inspection by listing the accessories to be tested, so the customer can see how the quote was built up from the number of points covered',
+      'Record exactly what the inspection covered (extent) and what was excluded or sampled rather than 100% inspected (limitations) — agreed with the customer in writing before the inspection started, signed off by the customer, and reproduced on the front of the report so anyone reading the EICR knows what is and is not certified.',
+      'Record the test instrument serial numbers and calibration dates, so the next inspector can confirm the readings were taken with traceable equipment',
+      'List the BS 7671 regulation numbers that each circuit was tested against, so the report demonstrates which clauses were applied during the inspection',
     ],
     correctIndex: 1,
     explanation:
@@ -66,16 +67,17 @@ const checks = [
   },
   {
     id: 'm5-s5-sub3-sample-fail',
-    question: 'During a 10% sample of socket-outlets you find that 3 out of 10 sampled have evidence of overheating at terminations. Best response:',
+    question:
+      'During a 10% sample of socket-outlets you find that 3 out of 10 sampled have evidence of overheating at terminations. Best response:',
     options: [
-      "Record the three defective sockets as C2 observations and leave the rest of the sample untested, because the agreed 10% sample has now been completed and the inspection scope is therefore satisfied",
-      "Average the defect rate across the whole installation — three faults in ten implies about thirty across a hundred sockets, so record that estimated figure on the report and move on without further testing",
-      "Expand the sample — typically to 100% or until the defect rate falls — because a 30% rate breaks the assumption that defects are rare. Document the expansion; broader inspection is needed to characterise the true condition",
-      "Stop the inspection and issue an Unsatisfactory report straight away, because three faults in the sample is already enough to fail the whole installation and no further testing of the sockets is needed",
+      'Record the three defective sockets as C2 observations and leave the rest of the sample untested, because the agreed 10% sample has now been completed and the inspection scope is therefore satisfied',
+      'Average the defect rate across the whole installation — three faults in ten implies about thirty across a hundred sockets, so record that estimated figure on the report and move on without further testing',
+      'Expand the sample — typically to 100% or until the defect rate falls — because a 30% rate breaks the assumption that defects are rare. Document the expansion; broader inspection is needed to characterise the true condition',
+      'Stop the inspection and issue an Unsatisfactory report straight away, because three faults in the sample is already enough to fail the whole installation and no further testing of the sockets is needed',
     ],
     correctIndex: 2,
     explanation:
-      "Sampling assumes the sample is representative. A high defect rate in the sample falsifies that assumption — there could be 30 problem sockets in 100, or 3 in 10 by chance, but you cannot tell without expanding. BPG4 and GN3 both expect the inspector to expand the sample when sample defect rates are elevated. Document the expansion (\"Sample expanded from 10% to 100% of socket-outlets following identification of overheating evidence on 3 of initial 10 sampled\") so the report shows both the sampling decision and the response to the findings. Customer commercial concerns come second to the duty to characterise the actual installation condition — but a quick phone call to the customer explaining the expansion is good practice and usually accepted because the alternative is an Unsatisfactory report on incomplete evidence.",
+      'Sampling assumes the sample is representative. A high defect rate in the sample falsifies that assumption — there could be 30 problem sockets in 100, or 3 in 10 by chance, but you cannot tell without expanding. BPG4 and GN3 both expect the inspector to expand the sample when sample defect rates are elevated. Document the expansion ("Sample expanded from 10% to 100% of socket-outlets following identification of overheating evidence on 3 of initial 10 sampled") so the report shows both the sampling decision and the response to the findings. Customer commercial concerns come second to the duty to characterise the actual installation condition — but a quick phone call to the customer explaining the expansion is good practice and usually accepted because the alternative is an Unsatisfactory report on incomplete evidence.',
   },
 ];
 
@@ -84,23 +86,24 @@ const quizQuestions = [
     id: 1,
     question: 'The "scope" of an EICR is set by:',
     options: [
-      "BS 7671 Part 6, which sets a fixed mandatory scope for every EICR — the inspector must cover every circuit and accessory in full, with no scope for negotiation or sampling",
-      "Written agreement between the contractor and the customer in advance of the inspection, recorded on the front of the EICR under Extent of the Inspection, defining what is included, what is excluded, and any sampling rates applied.",
-      "The competent person scheme the inspector belongs to, which dictates a standard scope for all members so that every EICR issued under the scheme covers identical items",
-      "The age of the installation alone — older installations are inspected in full and newer ones sampled, with the cut-off set by the edition of BS 7671 in force at installation",
+      'BS 7671 Part 6, which sets a fixed mandatory scope for every EICR — the inspector must cover every circuit and accessory in full, with no scope for negotiation or sampling',
+      'Written agreement between the contractor and the customer in advance of the inspection, recorded on the front of the EICR under Extent of the Inspection, defining what is included, what is excluded, and any sampling rates applied.',
+      'The competent person scheme the inspector belongs to, which dictates a standard scope for all members so that every EICR issued under the scheme covers identical items',
+      'The age of the installation alone — older installations are inspected in full and newer ones sampled, with the cut-off set by the edition of BS 7671 in force at installation',
     ],
     correctAnswer: 1,
     explanation:
-      "Scope is contractual. The customer commissioning the EICR and the contractor delivering it agree the scope in advance — what is covered, what is excluded (e.g. equipment under separate maintenance contract, inaccessible voids, occupied tenant spaces), what sampling rate applies. The agreement is recorded on the EICR so the report stands as a clear record of what was and was not certified. BS 7671 and GN3 set the technical framework but leave the commercial scope to the parties.",
+      'Scope is contractual. The customer commissioning the EICR and the contractor delivering it agree the scope in advance — what is covered, what is excluded (e.g. equipment under separate maintenance contract, inaccessible voids, occupied tenant spaces), what sampling rate applies. The agreement is recorded on the EICR so the report stands as a clear record of what was and was not certified. BS 7671 and GN3 set the technical framework but leave the commercial scope to the parties.',
   },
   {
     id: 2,
-    question: 'A customer asks you to quote for an EICR but says "just do the bare minimum to get a piece of paper". The right professional response is:',
+    question:
+      'A customer asks you to quote for an EICR but says "just do the bare minimum to get a piece of paper". The right professional response is:',
     options: [
-      "Agree to issue a basic certificate covering only the consumer unit, since the CU is the most important part and a quick CU-only check satisfies the minimum requirement for a periodic report",
-      "Quote for a visual-inspection-only EICR with no testing, because a visual report is quicker and cheaper and still counts as a valid periodic inspection where the customer wants the bare minimum",
-      "Explain that an EICR has minimum content set by BS 7671 Part 6, GN3 and BPG4 — sampling can be agreed but must be representative and the limitations recorded in writing. Walk them through what it can and cannot exclude; if they still want sub-minimum work, decline and document the refusal",
-      "Decline the work entirely and report the customer to the local authority, because any request to limit the scope of an EICR is an attempt to obtain a fraudulent certificate",
+      'Agree to issue a basic certificate covering only the consumer unit, since the CU is the most important part and a quick CU-only check satisfies the minimum requirement for a periodic report',
+      'Quote for a visual-inspection-only EICR with no testing, because a visual report is quicker and cheaper and still counts as a valid periodic inspection where the customer wants the bare minimum',
+      'Explain that an EICR has minimum content set by BS 7671 Part 6, GN3 and BPG4 — sampling can be agreed but must be representative and the limitations recorded in writing. Walk them through what it can and cannot exclude; if they still want sub-minimum work, decline and document the refusal',
+      'Decline the work entirely and report the customer to the local authority, because any request to limit the scope of an EICR is an attempt to obtain a fraudulent certificate',
     ],
     correctAnswer: 2,
     explanation:
@@ -108,25 +111,27 @@ const quizQuestions = [
   },
   {
     id: 3,
-    question: "On a 1980s industrial unit with documented full O&M records and a competent on-site maintenance team that carries out monthly checks and annual deep maintenance, the inspector can:",
+    question:
+      'On a 1980s industrial unit with documented full O&M records and a competent on-site maintenance team that carries out monthly checks and annual deep maintenance, the inspector can:',
     options: [
-      "Skip the inspection entirely, because a competent on-site maintenance team carrying out monthly checks removes the legal need for any periodic inspection of the fixed installation",
-      "Extend the inspection interval to twenty years, because the documented maintenance regime guarantees the installation will remain compliant for that period without further inspection",
-      "Reduce the sampling rate to 1% of accessories, because the maintenance team has already inspected the rest, so the inspector only needs to spot-check a token sample",
-      "Reduce or replace the formal periodic with reliance on the O&M regime under GN3 — permitted where an effective management system with competent permanent on-site maintenance staff is in place, provided the decision is documented and the regime is evidenced",
+      'Skip the inspection entirely, because a competent on-site maintenance team carrying out monthly checks removes the legal need for any periodic inspection of the fixed installation',
+      'Extend the inspection interval to twenty years, because the documented maintenance regime guarantees the installation will remain compliant for that period without further inspection',
+      'Reduce the sampling rate to 1% of accessories, because the maintenance team has already inspected the rest, so the inspector only needs to spot-check a token sample',
+      'Reduce or replace the formal periodic with reliance on the O&M regime under GN3 — permitted where an effective management system with competent permanent on-site maintenance staff is in place, provided the decision is documented and the regime is evidenced',
     ],
     correctAnswer: 3,
     explanation:
-      "GN3 explicitly recognises that where there is an effective management system in place for inspection and preventative maintenance — for example, competent permanent on-site maintenance staff — periodic inspection and testing can be replaced by an alternative regime. This is not a free pass; the management regime must be genuinely effective, documented, and the decision to rely on it must be recorded with the rationale. Common in larger industrial sites, hospitals, data centres, infrastructure assets where a documented preventative maintenance programme is more comprehensive than a periodic snapshot. The decision lives with the duty holder under EAWR Reg 4(2); the inspector advises and documents.",
+      'GN3 explicitly recognises that where there is an effective management system in place for inspection and preventative maintenance — for example, competent permanent on-site maintenance staff — periodic inspection and testing can be replaced by an alternative regime. This is not a free pass; the management regime must be genuinely effective, documented, and the decision to rely on it must be recorded with the rationale. Common in larger industrial sites, hospitals, data centres, infrastructure assets where a documented preventative maintenance programme is more comprehensive than a periodic snapshot. The decision lives with the duty holder under EAWR Reg 4(2); the inspector advises and documents.',
   },
   {
     id: 4,
-    question: 'You are quoting an EICR on a fully tenanted block of 30 flats. The freeholder commissions the inspection and wants the common parts plus a sample of flats inspected. The right scope to propose:',
+    question:
+      'You are quoting an EICR on a fully tenanted block of 30 flats. The freeholder commissions the inspection and wants the common parts plus a sample of flats inspected. The right scope to propose:',
     options: [
       "Inspect the common parts (landlord supply, intake, distribution, common lighting, lift supplies) in full and sample 10-20% of flats with the freeholder's agreement, recording clearly that unsampled flats retain their own EICR responsibility under the PRS Regulations or the leaseholder",
-      "Inspect every flat in full as well as the common parts, because the freeholder is the duty holder for the entire block and sampling only some of the flats would leave the overall report unsatisfactory and incomplete",
+      'Inspect every flat in full as well as the common parts, because the freeholder is the duty holder for the entire block and sampling only some of the flats would leave the overall report unsatisfactory and incomplete',
       "Inspect only the common parts and exclude all of the flats, because the installations inside individual flats are always the leaseholder's responsibility and can never be included in a freeholder-commissioned EICR",
-      "Inspect a sample of the flats only and exclude the common parts, because the common-area installations are already covered by the building insurance survey rather than needing a separate EICR",
+      'Inspect a sample of the flats only and exclude the common parts, because the common-area installations are already covered by the building insurance survey rather than needing a separate EICR',
     ],
     correctAnswer: 0,
     explanation:
@@ -136,10 +141,10 @@ const quizQuestions = [
     id: 5,
     question: "GN3's guidance on the sampling principle is best summarised as:",
     options: [
-      "Always sample exactly 10% of every item on every installation, because GN3 fixes the sampling rate at 10% and the inspector has no discretion to vary it up or down",
-      "Sample sufficiently to give a representative picture of the installation condition; expand the sample if defects are found at higher than expected rates; record the sampling rate and any expansion on the report; agree the sampling approach with the customer in writing in advance.",
-      "Sample only the circuits the customer specifically asks about, because the scope of a periodic inspection is set entirely by the customer instructions rather than by the inspector judgement",
-      "Sample the easiest-to-access points first and stop once the quoted time is used up, because the commercial limit on the job determines how much of the installation is inspected",
+      'Always sample exactly 10% of every item on every installation, because GN3 fixes the sampling rate at 10% and the inspector has no discretion to vary it up or down',
+      'Sample sufficiently to give a representative picture of the installation condition; expand the sample if defects are found at higher than expected rates; record the sampling rate and any expansion on the report; agree the sampling approach with the customer in writing in advance.',
+      'Sample only the circuits the customer specifically asks about, because the scope of a periodic inspection is set entirely by the customer instructions rather than by the inspector judgement',
+      'Sample the easiest-to-access points first and stop once the quoted time is used up, because the commercial limit on the job determines how much of the installation is inspected',
     ],
     correctAnswer: 1,
     explanation:
@@ -147,42 +152,44 @@ const quizQuestions = [
   },
   {
     id: 6,
-    question: "A customer tells you that the data centre's main switchboard cannot be isolated for testing because the IT load is 24/7 critical. Your right response on EICR scope:",
+    question:
+      "A customer tells you that the data centre's main switchboard cannot be isolated for testing because the IT load is 24/7 critical. Your right response on EICR scope:",
     options: [
-      "Refuse the inspection until the data centre agrees to a full shutdown, because an EICR cannot be issued unless every circuit has been dead-tested with the supply isolated",
-      "Carry out all the dead tests with the switchboard live, because modern test instruments are designed to take continuity and insulation readings on energised conductors safely",
+      'Refuse the inspection until the data centre agrees to a full shutdown, because an EICR cannot be issued unless every circuit has been dead-tested with the supply isolated',
+      'Carry out all the dead tests with the switchboard live, because modern test instruments are designed to take continuity and insulation readings on energised conductors safely',
       "Propose a scope covering everything that can be tested safely live (visual, thermographic survey, RCD test buttons, live tests where safe), clearly exclude what needs isolation under Limitations, recommend a planned outage within an agreed period, and code FI for items the live-only inspection can't fully verify",
-      "Issue a Satisfactory EICR covering only the visual inspection, recording no limitations, because the IT load being critical is itself a justification for omitting all electrical testing",
+      'Issue a Satisfactory EICR covering only the visual inspection, recording no limitations, because the IT load being critical is itself a justification for omitting all electrical testing',
     ],
     correctAnswer: 2,
     explanation:
-      "Critical-load installations create a real tension between EAWR Reg 14 (default to dead working) and the practical need to keep the load running. The right answer is honest scope — agree what can be safely inspected without outage, document what cannot, recommend a planned outage with sufficient notice, and code FI for items the live-only inspection cannot fully verify. The duty holder retains the EAWR Reg 4(2) duty to maintain the system in safe condition; an EICR limited by access constraints is better than no EICR, provided the limitations are clearly recorded and the duty holder is told what the limitations mean for residual risk.",
+      'Critical-load installations create a real tension between EAWR Reg 14 (default to dead working) and the practical need to keep the load running. The right answer is honest scope — agree what can be safely inspected without outage, document what cannot, recommend a planned outage with sufficient notice, and code FI for items the live-only inspection cannot fully verify. The duty holder retains the EAWR Reg 4(2) duty to maintain the system in safe condition; an EICR limited by access constraints is better than no EICR, provided the limitations are clearly recorded and the duty holder is told what the limitations mean for residual risk.',
   },
   {
     id: 7,
-    question: 'When sampling final circuits for testing, the priorities for inclusion in the sample are:',
+    question:
+      'When sampling final circuits for testing, the priorities for inclusion in the sample are:',
     options: [
-      "Random selection across the whole installation, because a truly random sample is the only statistically valid way to estimate the overall defect rate without bias",
-      "Whichever circuits are easiest to access and quickest to test, because minimising disruption to the occupier is the primary consideration when choosing the sample",
-      "The newest circuits first, because recently installed wiring is most likely to contain workmanship defects, whereas older circuits have already proven themselves in service",
-      "Risk-weighted — circuits in special locations, socket circuits used by ordinary persons, circuits feeding high-risk equipment (showers, EV chargers, electric heating) and any showing visible damage or modification get priority. Document the sampling logic",
+      'Random selection across the whole installation, because a truly random sample is the only statistically valid way to estimate the overall defect rate without bias',
+      'Whichever circuits are easiest to access and quickest to test, because minimising disruption to the occupier is the primary consideration when choosing the sample',
+      'The newest circuits first, because recently installed wiring is most likely to contain workmanship defects, whereas older circuits have already proven themselves in service',
+      'Risk-weighted — circuits in special locations, socket circuits used by ordinary persons, circuits feeding high-risk equipment (showers, EV chargers, electric heating) and any showing visible damage or modification get priority. Document the sampling logic',
     ],
     correctAnswer: 3,
     explanation:
-      "Sampling is risk-weighted, not random. Special-location circuits (Section 700 series) carry higher consequence in fault. Socket circuits used by ordinary persons are higher exposure. Circuits feeding high-risk equipment (showers, EV chargers, electric vehicle supply equipment under Section 722) deserve priority. Circuits showing visible damage or modification need full attention. The sample logic is documented so the report reader understands why these circuits were chosen — and conversely why others were not. Convenience-driven sampling (only the easy ones) is not defensible.",
+      'Sampling is risk-weighted, not random. Special-location circuits (Section 700 series) carry higher consequence in fault. Socket circuits used by ordinary persons are higher exposure. Circuits feeding high-risk equipment (showers, EV chargers, electric vehicle supply equipment under Section 722) deserve priority. Circuits showing visible damage or modification need full attention. The sample logic is documented so the report reader understands why these circuits were chosen — and conversely why others were not. Convenience-driven sampling (only the easy ones) is not defensible.',
   },
   {
     id: 8,
     question: "The 'Extent and Limitations' agreement should be:",
     options: [
-      "Tailored to the installation, agreed in writing in advance (or via written quote acceptance), reproduced on the front of the EICR, and specific enough that any reader can understand exactly what was inspected and what was not",
-      "A standard pre-printed paragraph used on every EICR, because a single generic statement covers all eventualities and saves the inspector from having to tailor the extent-and-limitations wording to each individual job",
-      "Agreed verbally on the day of the inspection, because recording extent and limitations in advance would delay the start of the work and is not required by BS 7671",
-      "Left blank where a full inspection was carried out, because the extent and limitations section only needs completing when some part of the installation was excluded from the inspection.",
+      'Tailored to the installation, agreed in writing in advance (or via written quote acceptance), reproduced on the front of the EICR, and specific enough that any reader can understand exactly what was inspected and what was not',
+      'A standard pre-printed paragraph used on every EICR, because a single generic statement covers all eventualities and saves the inspector from having to tailor the extent-and-limitations wording to each individual job',
+      'Agreed verbally on the day of the inspection, because recording extent and limitations in advance would delay the start of the work and is not required by BS 7671',
+      'Left blank where a full inspection was carried out, because the extent and limitations section only needs completing when some part of the installation was excluded from the inspection.',
     ],
     correctAnswer: 0,
     explanation:
-      "A vague Extent and Limitations is worse than none — it creates the illusion of clarity without the substance. The agreement should be specific to the installation: \"Sampling rate: 10% of socket-outlets, 100% of accessories in special locations, 100% of CUs and DBs, 100% of main bonding inspection, exclusion of equipment under separate maintenance contract namely the lift drive controller and the fire alarm panel.\" Reproduced on the EICR. Agreed in writing in advance via the quote acceptance. The clarity protects everyone — the customer knows what they bought, the inspector knows what they signed for, the next reader of the report knows what is and is not certified.",
+      'A vague Extent and Limitations is worse than none — it creates the illusion of clarity without the substance. The agreement should be specific to the installation: "Sampling rate: 10% of socket-outlets, 100% of accessories in special locations, 100% of CUs and DBs, 100% of main bonding inspection, exclusion of equipment under separate maintenance contract namely the lift drive controller and the fire alarm panel." Reproduced on the EICR. Agreed in writing in advance via the quote acceptance. The clarity protects everyone — the customer knows what they bought, the inspector knows what they signed for, the next reader of the report knows what is and is not certified.',
   },
 ];
 
@@ -190,32 +197,32 @@ const faqs = [
   {
     question: 'Where does GN3 define the sampling rules for periodic inspection?',
     answer:
-      "GN3 Chapter 3 — frequency and periodicity of inspection — and the supporting guidance through Chapter 8 (inspection and testing scope for circuits) set the framework. The exact sampling percentages are not prescribed as a fixed rule; GN3 gives typical figures (around 10% of accessories with full DB/CU coverage) and emphasises that the sampling rate must be appropriate to the installation, agreed with the customer, and recorded on the report. BPG4 supplements GN3 with worked-example coding and reinforces the importance of documenting sampling decisions.",
+      'GN3 Chapter 3 — frequency and periodicity of inspection — and the supporting guidance through Chapter 8 (inspection and testing scope for circuits) set the framework. The exact sampling percentages are not prescribed as a fixed rule; GN3 gives typical figures (around 10% of accessories with full DB/CU coverage) and emphasises that the sampling rate must be appropriate to the installation, agreed with the customer, and recorded on the report. BPG4 supplements GN3 with worked-example coding and reinforces the importance of documenting sampling decisions.',
   },
   {
     question: "If I'm doing a 10% sample, do I still need to inspect the consumer unit fully?",
     answer:
-      "Yes — sampling applies to accessories and final-circuit testing. Consumer units, distribution boards, main switchgear, the main earthing arrangement, the main protective bonding, and the supply intake are inspected fully on every EICR. These are the safety-critical hubs of the installation and a sample-based approach is not defensible. Sampling is appropriate for repetitive items (sockets, switches, light fittings, accessory back boxes) where the inspection of one is broadly representative of the inspection of others of the same type in the same area.",
+      'Yes — sampling applies to accessories and final-circuit testing. Consumer units, distribution boards, main switchgear, the main earthing arrangement, the main protective bonding, and the supply intake are inspected fully on every EICR. These are the safety-critical hubs of the installation and a sample-based approach is not defensible. Sampling is appropriate for repetitive items (sockets, switches, light fittings, accessory back boxes) where the inspection of one is broadly representative of the inspection of others of the same type in the same area.',
   },
   {
-    question: "What is the difference between scope, extent, and limitations on the EICR?",
+    question: 'What is the difference between scope, extent, and limitations on the EICR?',
     answer:
       'Scope is the broad agreement of what is to be inspected — "the electrical installation at 12 Acacia Avenue, ground floor and first floor, common parts of the building". Extent is the precise definition — "all final circuits supplied from the consumer unit located in the under-stairs cupboard, plus the dedicated cooker circuit and the EV charge point sub-board on the front drive, sampling rate 10% of socket-outlets, 100% of consumer unit and main bonding". Limitations are the explicit exclusions and constraints — "first floor bedroom 2 not accessed due to occupant absence at agreed visit time; recommendation made for re-inspection; sampling expanded from 10% to 100% of socket-outlets following identification of overheating evidence". Together they define the EICR\'s contractual and certification boundary.',
   },
   {
     question: 'Can I increase the sampling rate during the inspection without re-quoting?',
     answer:
-      "Yes — and you must where the sample reveals defect rates that falsify the sampling assumption. The customer relationship matters but does not override the duty to characterise the installation accurately. Best practice: phone the customer when expansion is needed, explain why (\"3 of the first 10 sockets sampled showed overheating evidence — I need to expand to 100% of sockets to establish the true scope of the issue\"), agree the expansion, and document the conversation on the EICR. Most customers accept the expansion because the alternative is an Unsatisfactory report on incomplete evidence — which is worse for them than the additional cost. If the customer refuses the expansion, document the refusal and code FI for the items not fully inspected.",
+      'Yes — and you must where the sample reveals defect rates that falsify the sampling assumption. The customer relationship matters but does not override the duty to characterise the installation accurately. Best practice: phone the customer when expansion is needed, explain why ("3 of the first 10 sockets sampled showed overheating evidence — I need to expand to 100% of sockets to establish the true scope of the issue"), agree the expansion, and document the conversation on the EICR. Most customers accept the expansion because the alternative is an Unsatisfactory report on incomplete evidence — which is worse for them than the additional cost. If the customer refuses the expansion, document the refusal and code FI for the items not fully inspected.',
   },
   {
-    question: "How do I sample fairly across a multi-zone installation like a school?",
+    question: 'How do I sample fairly across a multi-zone installation like a school?',
     answer:
-      "Stratified sampling — divide the installation into representative zones (classrooms, science labs, kitchen, sports hall, IT rooms, plant rooms, external lighting) and sample within each zone proportionally to its risk and size. Special-location zones (kitchen, science lab, plant rooms) get higher sampling rates than general teaching spaces. Plant rooms typically get 100% inspection. Document the zone-based sampling logic on the EICR so the head of estates and the next inspector can understand and replicate the approach. Pure random sampling across a multi-zone installation can leave high-risk zones under-tested.",
+      'Stratified sampling — divide the installation into representative zones (classrooms, science labs, kitchen, sports hall, IT rooms, plant rooms, external lighting) and sample within each zone proportionally to its risk and size. Special-location zones (kitchen, science lab, plant rooms) get higher sampling rates than general teaching spaces. Plant rooms typically get 100% inspection. Document the zone-based sampling logic on the EICR so the head of estates and the next inspector can understand and replicate the approach. Pure random sampling across a multi-zone installation can leave high-risk zones under-tested.',
   },
   {
-    question: "What if the customer wants the report issued before the work is finished?",
+    question: 'What if the customer wants the report issued before the work is finished?',
     answer:
-      "Decline — and explain why. The EICR is a record of completed inspection and testing. Issuing an EICR before the work is complete is not a real EICR; it is a draft that misrepresents the certification status. If the customer needs a partial-completion document for a transactional reason (sale, insurance, lease), the right route is a written summary of work completed to date with explicit notation that the EICR has not yet been issued and is conditional on completion. Some inspectors carry an interim status letter for these situations. Never sign an EICR for work not yet done — the EAWR Reg 4 continuing duty attaches the moment you sign.",
+      'Decline — and explain why. The EICR is a record of completed inspection and testing. Issuing an EICR before the work is complete is not a real EICR; it is a draft that misrepresents the certification status. If the customer needs a partial-completion document for a transactional reason (sale, insurance, lease), the right route is a written summary of work completed to date with explicit notation that the EICR has not yet been issued and is conditional on completion. Some inspectors carry an interim status letter for these situations. Never sign an EICR for work not yet done — the EAWR Reg 4 continuing duty attaches the moment you sign.',
   },
 ];
 
@@ -224,685 +231,670 @@ export default function Sub3() {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
-      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
-        <PageFrame>
+    <HubPage>
+      <HubMasthead
+        section="Module 5 · Section 5 · Subsection 3"
+        title="EICR sampling and scope agreement"
+        backTo="/study-centre/apprentice/level3-module5-section5"
+      />
+      <HubBody>
+        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
+          The negotiation that turns a customer enquiry into a defensible inspection — agreeing
+          scope, sampling, limitations in writing, and recording the decisions on the report.
+        </p>
+
+        <TLDR
+          points={[
+            'Scope is contractual — agreed in writing between contractor and customer in advance, recorded on the EICR Extent and Limitations section.',
+            'Sampling is permitted by GN3 — typical defaults around 10% of accessories with full DB/CU coverage, but the rate must be appropriate to the installation and agreed with the customer.',
+            'Consumer units, DBs, main switchgear, main earthing and main bonding are inspected fully on every EICR — never sampled.',
+            'If sample defect rates exceed expectations, the inspector must expand the sample and document the expansion on the report.',
+            'GN3 allows replacement of formal periodic with reliance on an effective management system where competent permanent on-site maintenance staff are in place.',
+          ]}
+        />
+
+        <LearningOutcomes
+          outcomes={[
+            "Negotiate an EICR scope with the customer that meets GN3 minimum content requirements while reflecting the installation's specific characteristics.",
+            'Apply GN3 Chapter 3 sampling guidance — typical defaults, risk-weighted selection, expansion triggers.',
+            'Identify the items that must be inspected fully on every EICR (CUs, DBs, main switchgear, earthing, bonding, supply intake) versus those that can be sampled.',
+            'Record Extent and Limitations on the EICR with the specificity required for legal and contractual defence.',
+            'Manage scope conflicts where customer commercial pressures conflict with inspection integrity.',
+            'Stratify sampling across multi-zone installations with appropriate weighting for risk and use.',
+            'Recognise the GN3 conditions under which an effective management system can replace formal periodic inspection.',
+          ]}
+          initialVisibleCount={4}
+        />
+
+        <ContentEyebrow>Setting the scope before the inspection starts</ContentEyebrow>
+
+        <ConceptBlock
+          title="Scope is contractual — agree it in writing before you start"
+          plainEnglish="The EICR scope is a written agreement between the contractor and the customer. It defines what will be inspected, what will be excluded, what sampling rate will apply, and what limitations the customer accepts in advance. Done well, scope agreement protects both parties and sets up a defensible report."
+          onSite="Never start an EICR without a written scope. The quote acceptance counts as written agreement if it specifies the scope clearly. Verbal agreements on the day create disputes later. Take five minutes to confirm scope at the start of the inspection — pointing at the CU, the bonding, the special-location areas — so the customer knows what you will and will not be doing."
+        >
+          <p>The scope-setting conversation, structured:</p>
+          <ol className="space-y-1.5 list-decimal pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Identify the duty holder.</strong> Who is commissioning the EICR? Owner,
+              landlord, freeholder, tenant on behalf of landlord, managing agent, employer? The duty
+              holder defines the scope; not anyone present on the day.
+            </li>
+            <li>
+              <strong>Define the physical extent.</strong> Address, building, floors, rooms,
+              external areas. For multi-tenant buildings, what units are included.
+            </li>
+            <li>
+              <strong>Define the electrical extent.</strong> Which consumer unit(s), DBs, sub-mains.
+              Whether sub-tenant installations are included. Whether equipment under separate
+              maintenance contract (lifts, fire alarms, BMS) is included.
+            </li>
+            <li>
+              <strong>Agree the sampling rate.</strong> Typical defaults — 10% of socket-outlets,
+              100% of accessories in special locations, 100% of CUs and main bonding. Adjust for
+              installation age, condition, use, access, disruption tolerance.
+            </li>
+            <li>
+              <strong>Identify known limitations in advance.</strong> Inaccessible areas,
+              tenant-occupied units, items requiring isolation that cannot be isolated, equipment
+              outside the inspector's competence.
+            </li>
+            <li>
+              <strong>Confirm in writing.</strong> Quote, email, contract — any written form is
+              fine, but written it must be. Reproduce on the EICR Extent and Limitations section.
+            </li>
+          </ol>
+          <p>
+            The scope conversation typically takes 10-20 minutes for a domestic EICR and longer for
+            commercial. It is part of the cost of doing the job properly. Skipping it to get on with
+            the testing means doing the job at risk — both to inspection quality and to the
+            inspector's professional standing if the report is later challenged.
+          </p>
+        </ConceptBlock>
+
+        <RegsCallout
+          source="IET Guidance Note 3 — purpose of periodic inspection and testing"
+          clause="The purpose of periodic inspection and testing is to determine whether an electrical installation is in a satisfactory condition for continued service and to identify any deterioration, defects, or potential safety hazards that may give rise to danger. This includes assessing whether existing circuits, equipment, and protective measures continue to comply with current safety requirements and remain effective."
+          meaning={
+            <>
+              GN3 frames the purpose in safety terms — satisfactory for continued service, identify
+              hazards, assess against current standards. The scope agreement must support this
+              purpose. A scope that excludes too much, samples too little, or avoids the
+              hard-to-access areas defeats the purpose. The contractor must push back on customer
+              pressure to narrow the scope below what GN3's purpose can support — and document the
+              refusal if the customer insists.
+            </>
+          }
+          cite="Source: IET Guidance Note 3 — periodic inspection purpose and required outcomes."
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>The sampling principle</ContentEyebrow>
+
+        <ConceptBlock
+          title="Sampling — what GN3 actually says"
+          plainEnglish="GN3 permits sampling on periodic inspection because 100% inspection of a large or occupied installation is often impractical and disruptive. The sampling rate must be appropriate to the installation, representative of its condition, agreed with the customer in advance, and expanded if the sample reveals higher-than-expected defect rates."
+          onSite="Sampling is not a shortcut — it's a structured methodology. Start with a defensible sample, expand if the sample reveals problems, document everything. The defensibility of the sample matters more than the percentage; a well-chosen 10% can be more representative than a poorly-chosen 50%."
+        >
+          <p>The items that are sampled vs always inspected fully:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Always 100% inspection</strong> — supply intake, MET, main earthing
+              arrangement, main protective bonding, consumer units, distribution boards, main
+              switchgear, sub-mains, supply tails, RCD/RCBO/AFDD operational tests at the device,
+              accessory verification in special locations (Section 700 series — bathrooms, swimming
+              pools, agricultural premises, EV charge points, etc.).
+            </li>
+            <li>
+              <strong>Sampling permitted</strong> — final-circuit testing (R1+R2, IR, polarity, Zs),
+              socket-outlet inspection in non-special locations, light fitting inspection in
+              non-special locations, accessory back box inspection, switch and accessory cover
+              inspection.
+            </li>
+            <li>
+              <strong>Risk-weighted within sample</strong> — circuits in special locations get
+              higher sampling rates; socket circuits used by ordinary persons get higher rates than
+              infrequently-used outlets; circuits supplying high-risk equipment (showers, EV
+              chargers) get priority; circuits with visible signs of damage or modification get full
+              attention.
+            </li>
+            <li>
+              <strong>Stratified across zones</strong> — multi-zone installations (schools,
+              hospitals, multi-tenant blocks) sampled with weighting per zone risk and size, not
+              pure random across the whole installation.
+            </li>
+          </ul>
+          <p>
+            Typical default rates in the industry — 10% of socket-outlets and lighting points in
+            general areas, 100% of CUs and DBs, 100% of accessories in special locations, 100% of
+            main bonding and earthing inspection. Adjust upward for older installations,
+            installations with documented incident history, or installations where the customer
+            wants extra assurance.
+          </p>
+        </ConceptBlock>
+
+        <RegsCallout
+          source="IET Guidance Note 3 — Setting and scope of inspection and testing activities"
+          clause="This clause heading 'Setting' in Guidance Note 3 identifies the subject matter as the required approach to inspection and testing settings. It denotes that the subsequent text concerns how inspection and testing activities are to be set up and sampled for periodic inspection. It is a scope marker indicating that procedures, sampling and setting considerations apply to periodic inspection and testing work under GN3 and BS 7671 Part 6."
+          meaning={
+            <>
+              GN3 explicitly recognises that sampling and setting decisions are part of the
+              inspection methodology. The setup of the inspection — what is sampled, how much, in
+              what order, with what access — is itself a competence decision that the inspector
+              takes within the framework GN3 provides. The "settings" language acknowledges that no
+              two installations are identical and the inspector must adapt the standard methodology
+              to the specific installation.
+            </>
+          }
+          cite="Source: IET Guidance Note 3 — Chapter 8 setting and scope guidance for periodic inspection."
+        />
+
+        <InlineCheck
+          id={checks[0].id}
+          question={checks[0].question}
+          options={checks[0].options}
+          correctIndex={checks[0].correctIndex}
+          explanation={checks[0].explanation}
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>Recording extent and limitations</ContentEyebrow>
+
+        <ConceptBlock
+          title="Extent and Limitations — the EICR's contractual core"
+          plainEnglish="The Extent and Limitations section on the front of the EICR records what was and was not inspected. It is the document's contractual heart — the duty holder, the next inspector, and any HSE investigator all read this section first to understand what the EICR actually certifies."
+          onSite="Write the Extent and Limitations as if a stranger were going to read it five years from now and need to decide whether the failed component was within the inspected scope. That is exactly what happens after an incident."
+        >
+          <p>The Extent section structure:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Physical extent.</strong> Address, building, floors, rooms covered. For
+              multi-occupancy, the units in scope.
+            </li>
+            <li>
+              <strong>Electrical extent.</strong> Each consumer unit, DB, sub-board covered.
+              Sub-mains traced. Equipment included.
+            </li>
+            <li>
+              <strong>Sampling rate per item type.</strong> "Socket-outlets sampled at 10%; light
+              fittings sampled at 10%; accessories in bathrooms 100%; consumer units and main
+              bonding 100%."
+            </li>
+            <li>
+              <strong>Test method statement.</strong> Tests carried out per GN3 / BS 7671 Part 6 —
+              continuity, IR, polarity, Zs, RCD operation. Special-location tests applied as
+              relevant.
+            </li>
+          </ul>
+          <p>The Limitations section structure:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Items excluded by agreement.</strong> "Lift drive controller excluded — under
+              separate maintenance contract with [contractor]. Fire alarm panel excluded — under
+              separate maintenance contract."
+            </li>
+            <li>
+              <strong>Items inaccessible at the time of inspection.</strong> "First-floor bedroom 2
+              not accessed — tenant absent at the agreed inspection slot. Recommend re-inspection of
+              this room within 28 days."
+            </li>
+            <li>
+              <strong>Items requiring isolation that could not be isolated.</strong> "Main
+              switchboard not isolated for full dead testing — site operating 24/7. Live tests
+              completed where safe; recommend planned outage for full testing within 6 months."
+            </li>
+            <li>
+              <strong>Sample expansions during the inspection.</strong> "Sample expanded from 10% to
+              100% of socket-outlets following identification of overheating evidence on 3 of
+              initial 10 sampled."
+            </li>
+            <li>
+              <strong>FI items pending investigation.</strong> Listed with reference to the
+              Observations section detail.
+            </li>
+          </ul>
+          <p>
+            The clarity test — read the Extent and Limitations to a stranger and ask "do you
+            understand what was and was not certified?". If they cannot answer with confidence,
+            rewrite. The downstream consequences of a vague Extent and Limitations include insurance
+            disputes, contractual claims, and on serious incidents potential criminal proceedings
+            turning on whether the defect was in scope.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck
+          id={checks[1].id}
+          question={checks[1].question}
+          options={checks[1].options}
+          correctIndex={checks[1].correctIndex}
+          explanation={checks[1].explanation}
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>When sampling reveals more than expected</ContentEyebrow>
+
+        <ConceptBlock
+          title="Expanding the sample — when and why"
+          plainEnglish="Sampling assumes the sample is representative of the whole. If the sample reveals defect rates higher than expected, that assumption is broken. The right response is to expand the sample — usually toward 100% — until the defect rate falls back to expected levels and the inspector can characterise the true installation condition."
+          onSite="Expansion triggers — multiple defects of the same type in one sample, defects in safety-critical items even at low rates, evidence of systemic issues (e.g. installation by an unknown previous contractor with no records). When in doubt, expand. The customer would rather know the truth than receive a clean report on incomplete evidence."
+        >
+          <p>The sampling-expansion decision rules:</p>
+          <ol className="space-y-1.5 list-decimal pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Defect rate exceeds expectations.</strong> Default expectation is rare defects
+              (single-figure percentages) in the sample. A 30% defect rate falsifies the assumption
+              — expand to characterise the true rate.
+            </li>
+            <li>
+              <strong>Defects in safety-critical items.</strong> Even a single defect in main
+              bonding, earthing arrangement, or RCD operation triggers full inspection of all items
+              of that type — these are not appropriate for sampling regardless of starting rate.
+            </li>
+            <li>
+              <strong>Evidence of systemic issues.</strong> A pattern emerging — e.g. all sockets
+              installed by the same contractor showing similar overheating, all CUs of a particular
+              product range exhibiting the same defect — warrants expanded inspection across all
+              items potentially affected.
+            </li>
+            <li>
+              <strong>Customer concern triggers.</strong> Customer flags a recent incident or
+              concern — investigate fully even if it falls outside the agreed sample.
+            </li>
+            <li>
+              <strong>Visible installation history.</strong> Multiple contractor signatures on the
+              CU, evidence of DIY work, modifications without certification — expand the sample to
+              characterise the cumulative quality.
+            </li>
+          </ol>
+          <p>
+            Document each expansion on the EICR Extent and Limitations section — what triggered the
+            expansion, what new sampling rate was applied, what the expanded sample revealed. The
+            documentation protects both the inspection quality (showing evidence of professional
+            judgement applied) and the commercial relationship (showing the customer why additional
+            time was spent).
+          </p>
+        </ConceptBlock>
+
+        <CommonMistake
+          title="Standardising on 10% across every installation regardless of context"
+          whatHappens={
+            <>
+              You apply a flat 10% sampling rate to every EICR you do — it's what your boss taught
+              you, it appears on your default template. You inspect a 1960s industrial unit with
+              50-year-old wiring, evidence of multiple uncontrolled additions, and no maintenance
+              records — at 10%. You miss four of the five circuits that have significant insulation
+              degradation because they happened not to fall in your sample. The Satisfactory report
+              goes out. Three months later a fire investigation identifies one of the un-sampled
+              circuits as the source. The HSE asks why the sample was so low for an installation of
+              that profile.
+            </>
+          }
+          doInstead={
+            <>
+              Sampling rate is risk-weighted, not flat. A 1960s industrial unit with no records gets
+              50-100% sampling because the risk profile justifies it. A 2020 domestic installation
+              with full O&M records and no incident history gets 10%. The starting rate reflects the
+              inferred condition; the actual rate during inspection adjusts upward as evidence
+              emerges. Document the sampling logic on the EICR — "Sampling rate set at 50% of all
+              circuits given installation age (60+ years), absence of maintenance records, and
+              visible evidence of uncontrolled modifications." That is a defensible decision; "10%
+              as standard" is not.
+            </>
+          }
+        />
+
+        <CommonMistake
+          title="Failing to record sampling expansion on the EICR"
+          whatHappens={
+            <>
+              You start at 10% sampling. After finding overheating on 3 of 10 sockets, you expand to
+              100% on the day. You find another 8 defective sockets across the installation. You
+              code them all and issue the Unsatisfactory report. But you do not update the Extent
+              and Limitations section to record the expansion. Two years later the next inspector
+              reads your EICR, sees the 10% sampling rate stated, and assumes the high defect rate
+              was extrapolated from a small sample — they re-inspect on the same basis and miss new
+              defects that have emerged since.
+            </>
+          }
+          doInstead={
+            <>
+              Update the Extent and Limitations section before issuing the report. "Sampling rate
+              originally agreed: 10% of socket-outlets. Expanded to 100% of socket-outlets during
+              inspection following identification of overheating evidence on 3 of initial 10
+              sampled. Final rate: 100% of socket-outlets, 10% of light fittings, 100% of consumer
+              unit and main bonding." The next inspector reads the full picture; the duty holder
+              understands the reasoning; the report is internally consistent. The 30 seconds it
+              takes to update the section is one of the highest- leverage uses of inspection time.
+            </>
+          }
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>Worked scenario — landlord 5-year periodic</ContentEyebrow>
+
+        <Scenario
+          title="Negotiating scope on a landlord 5-year EICR — three-bed terrace"
+          situation={
+            <>
+              A landlord phones you. Three-bed mid-terrace, tenanted, last EICR five years ago
+              Satisfactory, the tenants have lived there throughout. The landlord wants a quote for
+              the statutory 5-year EICR under the PRS Regulations. He asks "can you do it in 90
+              minutes for £150?" — he has a quote from another contractor at that price. You know
+              that the property has a 1990s consumer unit with no RCBOs, an old-style shower circuit
+              on a 30 mA RCD, and the bathroom has been re-plumbed in the intervening period (so
+              bonding may have been disturbed). The tenants will be present for access.
+            </>
+          }
+          whatToDo={
+            <>
+              Quote the job honestly. Explain that a defensible 5-year EICR on a property of that
+              age and history needs at least half a day to do properly — full inspection of the
+              consumer unit, full inspection and continuity test of all main bonding (especially
+              with the bathroom re-plumb history), 100% inspection of accessories in the bathroom
+              (special location), 10-25% sample of socket-outlets and lighting points elsewhere
+              depending on what the initial inspection reveals, full Zs measurement at sampled
+              circuit endpoints, RCD test at the device. Walk the landlord through the PRS Regs
+              implications — an Unsatisfactory report on a quick inspection is just as legally
+              binding on him as one on a thorough inspection, and a missed defect that leads to a
+              tenant injury exposes him to personal liability under the Landlord and Tenant Act and
+              potentially under HSWA. Quote a price that reflects the actual time. If the landlord
+              still wants the cheap quote, decline politely — the cheap inspector who issues a
+              Satisfactory report on inadequate inspection is doing the landlord no favours.
+            </>
+          }
+          whyItMatters={
+            <>
+              The PRS Regulations 2020 make the EICR a statutory document with real legal weight.
+              The landlord's exposure on a defective EICR is not theoretical — local authority
+              enforcement carries civil penalties up to £30,000 per breach, and a tenant injury
+              traceable to a missed defect could expose the landlord to civil claims and potentially
+              HSE prosecution. The cheap-and-fast EICR market exists but it is a race to the bottom
+              that everyone loses — the inspector loses professional standing, the landlord loses
+              statutory protection, the tenant loses real safety. Quoting honestly and walking away
+              from work that cannot be done properly at the offered price is part of being a
+              competent professional.
+            </>
+          }
+        />
+
+        <InlineCheck
+          id={checks[2].id}
+          question={checks[2].question}
+          options={checks[2].options}
+          correctIndex={checks[2].correctIndex}
+          explanation={checks[2].explanation}
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>The management-system alternative</ContentEyebrow>
+
+        <ConceptBlock
+          title="When formal periodic can be replaced by an effective management system"
+          plainEnglish="GN3 explicitly recognises that some installations have an in-place maintenance regime so comprehensive that a formal periodic snapshot adds little. Where a competent permanent on-site team carries out documented preventative maintenance, the formal periodic can be reduced or replaced by reliance on the management system."
+          onSite="This is a real option for hospitals, data centres, large industrial sites, infrastructure assets — anywhere with a documented O&M programme that goes beyond what a 5-yearly snapshot could achieve. The decision is the duty holder's; the inspector advises and documents."
+        >
+          <p>The conditions for the management-system route:</p>
+          <ol className="space-y-1.5 list-decimal pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Competent permanent on-site maintenance staff.</strong> Not a visiting
+              contractor on annual call. Permanent in-house team with electrical competence
+              proportionate to the installation.
+            </li>
+            <li>
+              <strong>Documented preventative maintenance programme.</strong> Schedule of planned
+              tasks, frequency, recording of completion, recording of defects found and remedial
+              action.
+            </li>
+            <li>
+              <strong>Records that demonstrate the regime works.</strong> Defect logs, near-miss
+              reports, response times to issues raised, audit trail showing the regime identifies
+              and addresses issues.
+            </li>
+            <li>
+              <strong>A management commitment to maintain the regime.</strong> Budget, personnel,
+              training, governance — not a paper exercise.
+            </li>
+            <li>
+              <strong>An EAWR Reg 4(2) compliance demonstration.</strong> The regime must positively
+              demonstrate the duty holder is discharging the maintain-in-safe- condition duty better
+              through ongoing maintenance than they would through a periodic snapshot.
+            </li>
+          </ol>
+          <p>
+            Where these conditions are met, the inspector can advise the duty holder that the formal
+            periodic interval can be extended or the periodic itself replaced with a periodic audit
+            of the maintenance system. The inspector's role shifts from primary verification to
+            system audit. Document the decision with supporting evidence. The duty under EAWR Reg
+            4(2) does not transfer — it remains with the duty holder, who relies on the management
+            system as their chosen compliance route.
+          </p>
+        </ConceptBlock>
+
+        <RegsCallout
+          source="IET Guidance Note 3 — Effective management system replacing periodic"
+          clause="Where there is an effective management system in place for inspection and preventative maintenance of the installation (for example, where there are competent permanent on-site maintenance staff), periodic inspection and testing can be replaced by an alternative regime. The existence of an effective management system is a condition allowing replacement of formal periodic inspection and testing."
+          meaning={
+            <>
+              GN3 codifies a pragmatic reality — for installations under continuous competent
+              management, a 5-yearly snapshot adds less than the day-to-day maintenance programme.
+              The clause requires the management system to be effective, not merely present.
+              Inspectors advising on this route should evidence the effectiveness (documented
+              programme, defect logs, response records, governance) and document the decision so a
+              future inspector or HSE investigator can see why the formal periodic was reduced or
+              replaced.
+            </>
+          }
+          cite="Source: IET Guidance Note 3 — alternative regimes for periodic inspection where effective management systems are in place."
+        />
+
+        <SectionRule />
+
+        <ConceptBlock
+          title="Multi-tenant buildings — the layered scope problem"
+          plainEnglish="Blocks of flats, mixed-use buildings, shared offices create overlapping duty-holder responsibilities. The freeholder is the duty holder for common parts and landlord-supplied installations; each leaseholder or rental landlord is responsible for the installation within their unit. An EICR commissioned by one party cannot certify the installations belonging to another party."
+          onSite="Always clarify who is commissioning what before quoting. A freeholder asking for an EICR usually wants common parts plus a sample of flats; a landlord of one rented flat needs the EICR for that flat under the PRS Regs; a leaseholder commissioning their own EICR for sale needs their unit only."
+        >
+          <p>The scope decision tree for multi-tenant buildings:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Freeholder commissioning common parts.</strong> Scope = landlord's supply,
+              intake, common-area distribution, common-area lighting, lift supplies, cleaner
+              sockets, external lighting, communal heating controls. Plus an agreed sample of
+              individual units (typical 10-20%) to characterise condition. Each rented unit retains
+              its own PRS Regs EICR responsibility.
+            </li>
+            <li>
+              <strong>Landlord of a single rented unit.</strong> Scope = the installation within
+              that unit, from the landlord's incoming supply (usually the consumer unit in the unit)
+              through to all final circuits. Common parts are the freeholder's responsibility, not
+              in scope.
+            </li>
+            <li>
+              <strong>Leaseholder owner-occupied for sale or insurance.</strong> Scope = the
+              installation within the unit. Common parts are not in scope. Recommend that the
+              buyer/insurer also reviews the freeholder's most recent common-parts EICR.
+            </li>
+            <li>
+              <strong>Mixed-use building (commercial ground, residential above).</strong>
+              Typically multiple separate EICRs — one for each commercial unit (commissioned by the
+              commercial tenant or landlord per lease), one for the common parts (freeholder), one
+              per residential unit (landlord under PRS Regs or owner-occupier).
+            </li>
+          </ul>
+          <p>
+            The scope confusion in multi-tenant buildings is the source of frequent disputes and
+            missed inspections. Clear scope agreement at the quote stage avoids the trap of issuing
+            an EICR that the customer thinks covers more than it does.
+          </p>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <ContentEyebrow>Sequencing the inspection on site</ContentEyebrow>
+
+        <ConceptBlock
+          title="The on-site sequence — front door to final reading"
+          plainEnglish="Once the scope is agreed, the inspection itself follows a structured sequence. Visual first, dead tests next, live tests last. Within each block, work systematically — supply intake first, then CU, then circuits in order — so nothing is missed and the test record builds in a logical sequence the next reader can follow."
+          onSite="The order matters because each step builds on the previous one. You cannot meaningfully measure Zs on a circuit you have not first proven for continuity. Skipping the visual to save time misses defects that the tests themselves cannot detect."
+        >
+          <p>The recommended on-site sequence:</p>
+          <ol className="space-y-1.5 list-decimal pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Arrival and confirmation.</strong> Confirm the scope agreed at quote with the
+              customer or duty holder representative. Walk the site briefly to confirm access,
+              identify special-location areas, identify any new equipment or alterations since the
+              last EICR.
+            </li>
+            <li>
+              <strong>Visual inspection.</strong> Supply intake, MET, main bonding clamp inspection,
+              CU inspection (front cover off where safe), accessory sample inspection, special
+              location 100% inspection. Photographs of as-found conditions where reportable items
+              are identified.
+            </li>
+            <li>
+              <strong>Isolation planning.</strong> Identify which circuits can be isolated for dead
+              testing and which cannot (critical loads, occupied spaces). Agree any temporary outage
+              with the duty holder.
+            </li>
+            <li>
+              <strong>Dead tests in BS 7671 sequence.</strong> Continuity of protective conductors
+              (R2 or R1+R2 depending on method), continuity of ring final circuits, insulation
+              resistance (line-line, line-earth, neutral-earth), polarity, earth electrode
+              resistance where TT.
+            </li>
+            <li>
+              <strong>Re-energise and live tests.</strong> Ze at origin, prospective fault current,
+              Zs at sampled circuit endpoints, RCD operating current and time per Reg 643.7.3 single
+              AC test (A4:2026), AFDD test where fitted, SPD status check where fitted.
+            </li>
+            <li>
+              <strong>Functional tests.</strong> Switching, control gear operation, safety
+              interlocks, emergency lighting where applicable, fire alarm interface where
+              applicable.
+            </li>
+            <li>
+              <strong>Coding and report drafting.</strong> Allocate codes per BPG4 four-question
+              test, draft Section K Observations, complete Schedule of Test Results, complete
+              Schedule of Inspections, draft overall classification.
+            </li>
+            <li>
+              <strong>Customer briefing and handover.</strong> Walk the customer through the report,
+              confirm next inspection date, agree remedial priority where Unsatisfactory.
+            </li>
+          </ol>
+          <p>
+            The sequence keeps the inspection internally consistent. A test out of sequence (e.g.
+            live tests before dead tests confirmed) is a competence failure that could expose the
+            inspector and others to unnecessary risk. The structured sequence is also easier to
+            defend — the report shows the inspection followed BS 7671 Part 6 methodology.
+          </p>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="Special locations — why they need 100% inspection within the sample"
+          plainEnglish="The Section 700 series of BS 7671 covers special locations — bathrooms, swimming pools, agricultural premises, EV charging, marinas. These locations carry elevated risk and the 700-series gives them additional requirements. Sampling is not appropriate for special-location accessories within an EICR; each one gets full inspection."
+          onSite="When you walk into a property, mentally identify the special-location areas first — bathroom for sure, EV charge point if present, garden socket, swimming pool plant room. Plan to give 100% inspection time to those areas before sampling the general installation."
+        >
+          <p>The special locations most commonly encountered on EICRs:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Section 701 — locations containing a bath or shower.</strong> Zonal
+              requirements (Zone 0/1/2), ingress protection ratings per zone, supplementary bonding
+              considerations, additional protection by RCD. 100% inspection of all accessories
+              within the room.
+            </li>
+            <li>
+              <strong>Section 702 — swimming pools and other basins.</strong> Tighter zonal
+              requirements than baths/showers. Plant room inspection annually per ESF/GN3.
+            </li>
+            <li>
+              <strong>Section 705 — agricultural and horticultural premises.</strong> Harsh
+              environment (water, dust, livestock, machinery), 3-year inspection cycle, particular
+              attention to bonding given conductive parts in livestock areas.
+            </li>
+            <li>
+              <strong>Section 711 — exhibitions, shows and stands.</strong> Temporary installations
+              with frequent reconfiguration, short inspection cycles.
+            </li>
+            <li>
+              <strong>Section 717 — mobile or transportable units.</strong> Including towable site
+              cabins, food trailers, mobile workshops.
+            </li>
+            <li>
+              <strong>Section 721 — caravans and motor caravans.</strong> Per GN3 Chapter 66
+              in-service inspection requirements.
+            </li>
+            <li>
+              <strong>Section 722 — electric vehicle charging installations.</strong> Annual or per
+              manufacturer recommendation, particular attention to RCD type (Type B for EV charging
+              where DC residual currents possible), AFDD recommendations under A4:2026 Reg 421.1.7
+              in some installations.
+            </li>
+            <li>
+              <strong>Section 753 — heating cables and embedded heating systems.</strong>
+              Underfloor heating, electric showers, embedded heating in walls or ceilings.
+            </li>
+          </ul>
+          <p>
+            Each special location has its own technical requirements that the inspector must know to
+            verify properly. Sampling within special locations is not appropriate — every accessory
+            in a bathroom gets visual inspection plus the relevant tests; every EV charge point gets
+            full inspection of the dedicated circuit, the EVSE itself, and any associated load
+            management equipment.
+          </p>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <FAQ items={faqs} />
+
+        <SectionRule />
+
+        <KeyTakeaways
+          points={[
+            'Scope is contractual — agreed in writing before inspection, recorded on EICR Extent and Limitations, signed off by the customer via quote acceptance.',
+            'GN3 sampling guidance — typical 10% of accessories with full DB/CU coverage, but the rate must be appropriate to the installation and risk-weighted within the sample.',
+            'Always 100% inspection — supply intake, MET, main earthing, main bonding, CUs, DBs, switchgear, accessories in special locations.',
+            'Sampling permitted — final-circuit testing, accessories in non-special locations, light fittings, switches in non-special locations.',
+            'Expand the sample if defect rates exceed expectations or safety-critical defects appear; document the expansion on the report.',
+            'Multi-tenant buildings need layered scope — freeholder for common parts and landlord supplies, leaseholder/rental landlord for individual units.',
+            'GN3 allows replacement of formal periodic with reliance on an effective management system where competent permanent on-site maintenance staff are documented and evidenced.',
+            'The Extent and Limitations section must be specific enough that a stranger reading it five years later can understand exactly what was and was not certified.',
+          ]}
+        />
+
+        <Quiz title="EICR sampling and scope — knowledge check" questions={quizQuestions} />
+
+        <div className="grid grid-cols-2 gap-3 pt-2">
           <button
-            onClick={() => navigate('/study-centre/apprentice/level3-module5-section5')}
-            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            onClick={() => navigate('/study-centre/apprentice/level3-module5-section5-2')}
+            className="rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] transition-colors border border-white/10 p-4 text-left touch-manipulation active:scale-[0.99]"
           >
-            <ArrowLeft className="h-4 w-4" /> Section 5
+            <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white/60">
+              <ArrowLeft className="h-3 w-3" /> Previous
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-white truncate">
+              5.2 EICR coding rubric
+            </div>
           </button>
-
-          <PageHero
-            eyebrow="Module 5 · Section 5 · Subsection 3"
-            title="EICR sampling and scope agreement"
-            description="The negotiation that turns a customer enquiry into a defensible inspection — agreeing scope, sampling, limitations in writing, and recording the decisions on the report."
-            tone="emerald"
-          />
-
-          <TLDR
-            points={[
-              "Scope is contractual — agreed in writing between contractor and customer in advance, recorded on the EICR Extent and Limitations section.",
-              "Sampling is permitted by GN3 — typical defaults around 10% of accessories with full DB/CU coverage, but the rate must be appropriate to the installation and agreed with the customer.",
-              "Consumer units, DBs, main switchgear, main earthing and main bonding are inspected fully on every EICR — never sampled.",
-              "If sample defect rates exceed expectations, the inspector must expand the sample and document the expansion on the report.",
-              "GN3 allows replacement of formal periodic with reliance on an effective management system where competent permanent on-site maintenance staff are in place.",
-            ]}
-          />
-
-          <LearningOutcomes
-            outcomes={[
-              "Negotiate an EICR scope with the customer that meets GN3 minimum content requirements while reflecting the installation's specific characteristics.",
-              "Apply GN3 Chapter 3 sampling guidance — typical defaults, risk-weighted selection, expansion triggers.",
-              "Identify the items that must be inspected fully on every EICR (CUs, DBs, main switchgear, earthing, bonding, supply intake) versus those that can be sampled.",
-              "Record Extent and Limitations on the EICR with the specificity required for legal and contractual defence.",
-              "Manage scope conflicts where customer commercial pressures conflict with inspection integrity.",
-              "Stratify sampling across multi-zone installations with appropriate weighting for risk and use.",
-              "Recognise the GN3 conditions under which an effective management system can replace formal periodic inspection.",
-            ]}
-            initialVisibleCount={4}
-          />
-
-          <ContentEyebrow>Setting the scope before the inspection starts</ContentEyebrow>
-
-          <ConceptBlock
-            title="Scope is contractual — agree it in writing before you start"
-            plainEnglish="The EICR scope is a written agreement between the contractor and the customer. It defines what will be inspected, what will be excluded, what sampling rate will apply, and what limitations the customer accepts in advance. Done well, scope agreement protects both parties and sets up a defensible report."
-            onSite="Never start an EICR without a written scope. The quote acceptance counts as written agreement if it specifies the scope clearly. Verbal agreements on the day create disputes later. Take five minutes to confirm scope at the start of the inspection — pointing at the CU, the bonding, the special-location areas — so the customer knows what you will and will not be doing."
+          <button
+            onClick={() => navigate('/study-centre/apprentice/level3-module5-section5-4')}
+            className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
           >
-            <p>The scope-setting conversation, structured:</p>
-            <ol className="space-y-1.5 list-decimal pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Identify the duty holder.</strong> Who is commissioning the EICR? Owner,
-                landlord, freeholder, tenant on behalf of landlord, managing agent, employer? The
-                duty holder defines the scope; not anyone present on the day.
-              </li>
-              <li>
-                <strong>Define the physical extent.</strong> Address, building, floors, rooms,
-                external areas. For multi-tenant buildings, what units are included.
-              </li>
-              <li>
-                <strong>Define the electrical extent.</strong> Which consumer unit(s), DBs,
-                sub-mains. Whether sub-tenant installations are included. Whether equipment under
-                separate maintenance contract (lifts, fire alarms, BMS) is included.
-              </li>
-              <li>
-                <strong>Agree the sampling rate.</strong> Typical defaults — 10% of
-                socket-outlets, 100% of accessories in special locations, 100% of CUs and main
-                bonding. Adjust for installation age, condition, use, access, disruption tolerance.
-              </li>
-              <li>
-                <strong>Identify known limitations in advance.</strong> Inaccessible areas,
-                tenant-occupied units, items requiring isolation that cannot be isolated,
-                equipment outside the inspector's competence.
-              </li>
-              <li>
-                <strong>Confirm in writing.</strong> Quote, email, contract — any written form is
-                fine, but written it must be. Reproduce on the EICR Extent and Limitations
-                section.
-              </li>
-            </ol>
-            <p>
-              The scope conversation typically takes 10-20 minutes for a domestic EICR and longer
-              for commercial. It is part of the cost of doing the job properly. Skipping it to get
-              on with the testing means doing the job at risk — both to inspection quality and to
-              the inspector's professional standing if the report is later challenged.
-            </p>
-          </ConceptBlock>
-
-          <RegsCallout
-            source="IET Guidance Note 3 — purpose of periodic inspection and testing"
-            clause="The purpose of periodic inspection and testing is to determine whether an electrical installation is in a satisfactory condition for continued service and to identify any deterioration, defects, or potential safety hazards that may give rise to danger. This includes assessing whether existing circuits, equipment, and protective measures continue to comply with current safety requirements and remain effective."
-            meaning={
-              <>
-                GN3 frames the purpose in safety terms — satisfactory for continued service,
-                identify hazards, assess against current standards. The scope agreement must
-                support this purpose. A scope that excludes too much, samples too little, or
-                avoids the hard-to-access areas defeats the purpose. The contractor must push back
-                on customer pressure to narrow the scope below what GN3's purpose can support —
-                and document the refusal if the customer insists.
-              </>
-            }
-            cite="Source: IET Guidance Note 3 — periodic inspection purpose and required outcomes."
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>The sampling principle</ContentEyebrow>
-
-          <ConceptBlock
-            title="Sampling — what GN3 actually says"
-            plainEnglish="GN3 permits sampling on periodic inspection because 100% inspection of a large or occupied installation is often impractical and disruptive. The sampling rate must be appropriate to the installation, representative of its condition, agreed with the customer in advance, and expanded if the sample reveals higher-than-expected defect rates."
-            onSite="Sampling is not a shortcut — it's a structured methodology. Start with a defensible sample, expand if the sample reveals problems, document everything. The defensibility of the sample matters more than the percentage; a well-chosen 10% can be more representative than a poorly-chosen 50%."
-          >
-            <p>The items that are sampled vs always inspected fully:</p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Always 100% inspection</strong> — supply intake, MET, main earthing
-                arrangement, main protective bonding, consumer units, distribution boards, main
-                switchgear, sub-mains, supply tails, RCD/RCBO/AFDD operational tests at the device,
-                accessory verification in special locations (Section 700 series — bathrooms,
-                swimming pools, agricultural premises, EV charge points, etc.).
-              </li>
-              <li>
-                <strong>Sampling permitted</strong> — final-circuit testing (R1+R2, IR, polarity,
-                Zs), socket-outlet inspection in non-special locations, light fitting inspection
-                in non-special locations, accessory back box inspection, switch and accessory
-                cover inspection.
-              </li>
-              <li>
-                <strong>Risk-weighted within sample</strong> — circuits in special locations get
-                higher sampling rates; socket circuits used by ordinary persons get higher rates
-                than infrequently-used outlets; circuits supplying high-risk equipment (showers,
-                EV chargers) get priority; circuits with visible signs of damage or modification
-                get full attention.
-              </li>
-              <li>
-                <strong>Stratified across zones</strong> — multi-zone installations (schools,
-                hospitals, multi-tenant blocks) sampled with weighting per zone risk and size, not
-                pure random across the whole installation.
-              </li>
-            </ul>
-            <p>
-              Typical default rates in the industry — 10% of socket-outlets and lighting points in
-              general areas, 100% of CUs and DBs, 100% of accessories in special locations, 100%
-              of main bonding and earthing inspection. Adjust upward for older installations,
-              installations with documented incident history, or installations where the customer
-              wants extra assurance.
-            </p>
-          </ConceptBlock>
-
-          <RegsCallout
-            source="IET Guidance Note 3 — Setting and scope of inspection and testing activities"
-            clause="This clause heading 'Setting' in Guidance Note 3 identifies the subject matter as the required approach to inspection and testing settings. It denotes that the subsequent text concerns how inspection and testing activities are to be set up and sampled for periodic inspection. It is a scope marker indicating that procedures, sampling and setting considerations apply to periodic inspection and testing work under GN3 and BS 7671 Part 6."
-            meaning={
-              <>
-                GN3 explicitly recognises that sampling and setting decisions are part of the
-                inspection methodology. The setup of the inspection — what is sampled, how much,
-                in what order, with what access — is itself a competence decision that the
-                inspector takes within the framework GN3 provides. The "settings" language
-                acknowledges that no two installations are identical and the inspector must adapt
-                the standard methodology to the specific installation.
-              </>
-            }
-            cite="Source: IET Guidance Note 3 — Chapter 8 setting and scope guidance for periodic inspection."
-          />
-
-          <InlineCheck
-            id={checks[0].id}
-            question={checks[0].question}
-            options={checks[0].options}
-            correctIndex={checks[0].correctIndex}
-            explanation={checks[0].explanation}
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>Recording extent and limitations</ContentEyebrow>
-
-          <ConceptBlock
-            title="Extent and Limitations — the EICR's contractual core"
-            plainEnglish="The Extent and Limitations section on the front of the EICR records what was and was not inspected. It is the document's contractual heart — the duty holder, the next inspector, and any HSE investigator all read this section first to understand what the EICR actually certifies."
-            onSite="Write the Extent and Limitations as if a stranger were going to read it five years from now and need to decide whether the failed component was within the inspected scope. That is exactly what happens after an incident."
-          >
-            <p>The Extent section structure:</p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Physical extent.</strong> Address, building, floors, rooms covered. For
-                multi-occupancy, the units in scope.
-              </li>
-              <li>
-                <strong>Electrical extent.</strong> Each consumer unit, DB, sub-board covered.
-                Sub-mains traced. Equipment included.
-              </li>
-              <li>
-                <strong>Sampling rate per item type.</strong> "Socket-outlets sampled at 10%; light
-                fittings sampled at 10%; accessories in bathrooms 100%; consumer units and main
-                bonding 100%."
-              </li>
-              <li>
-                <strong>Test method statement.</strong> Tests carried out per GN3 / BS 7671 Part 6
-                — continuity, IR, polarity, Zs, RCD operation. Special-location tests applied as
-                relevant.
-              </li>
-            </ul>
-            <p>The Limitations section structure:</p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Items excluded by agreement.</strong> "Lift drive controller excluded —
-                under separate maintenance contract with [contractor]. Fire alarm panel excluded —
-                under separate maintenance contract."
-              </li>
-              <li>
-                <strong>Items inaccessible at the time of inspection.</strong> "First-floor
-                bedroom 2 not accessed — tenant absent at the agreed inspection slot. Recommend
-                re-inspection of this room within 28 days."
-              </li>
-              <li>
-                <strong>Items requiring isolation that could not be isolated.</strong> "Main
-                switchboard not isolated for full dead testing — site operating 24/7. Live tests
-                completed where safe; recommend planned outage for full testing within 6 months."
-              </li>
-              <li>
-                <strong>Sample expansions during the inspection.</strong> "Sample expanded from
-                10% to 100% of socket-outlets following identification of overheating evidence on
-                3 of initial 10 sampled."
-              </li>
-              <li>
-                <strong>FI items pending investigation.</strong> Listed with reference to the
-                Observations section detail.
-              </li>
-            </ul>
-            <p>
-              The clarity test — read the Extent and Limitations to a stranger and ask "do you
-              understand what was and was not certified?". If they cannot answer with confidence,
-              rewrite. The downstream consequences of a vague Extent and Limitations include
-              insurance disputes, contractual claims, and on serious incidents potential criminal
-              proceedings turning on whether the defect was in scope.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck
-            id={checks[1].id}
-            question={checks[1].question}
-            options={checks[1].options}
-            correctIndex={checks[1].correctIndex}
-            explanation={checks[1].explanation}
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>When sampling reveals more than expected</ContentEyebrow>
-
-          <ConceptBlock
-            title="Expanding the sample — when and why"
-            plainEnglish="Sampling assumes the sample is representative of the whole. If the sample reveals defect rates higher than expected, that assumption is broken. The right response is to expand the sample — usually toward 100% — until the defect rate falls back to expected levels and the inspector can characterise the true installation condition."
-            onSite="Expansion triggers — multiple defects of the same type in one sample, defects in safety-critical items even at low rates, evidence of systemic issues (e.g. installation by an unknown previous contractor with no records). When in doubt, expand. The customer would rather know the truth than receive a clean report on incomplete evidence."
-          >
-            <p>The sampling-expansion decision rules:</p>
-            <ol className="space-y-1.5 list-decimal pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Defect rate exceeds expectations.</strong> Default expectation is rare
-                defects (single-figure percentages) in the sample. A 30% defect rate falsifies the
-                assumption — expand to characterise the true rate.
-              </li>
-              <li>
-                <strong>Defects in safety-critical items.</strong> Even a single defect in main
-                bonding, earthing arrangement, or RCD operation triggers full inspection of all
-                items of that type — these are not appropriate for sampling regardless of starting
-                rate.
-              </li>
-              <li>
-                <strong>Evidence of systemic issues.</strong> A pattern emerging — e.g. all sockets
-                installed by the same contractor showing similar overheating, all CUs of a
-                particular product range exhibiting the same defect — warrants expanded inspection
-                across all items potentially affected.
-              </li>
-              <li>
-                <strong>Customer concern triggers.</strong> Customer flags a recent incident or
-                concern — investigate fully even if it falls outside the agreed sample.
-              </li>
-              <li>
-                <strong>Visible installation history.</strong> Multiple contractor signatures on
-                the CU, evidence of DIY work, modifications without certification — expand the
-                sample to characterise the cumulative quality.
-              </li>
-            </ol>
-            <p>
-              Document each expansion on the EICR Extent and Limitations section — what triggered
-              the expansion, what new sampling rate was applied, what the expanded sample
-              revealed. The documentation protects both the inspection quality (showing evidence
-              of professional judgement applied) and the commercial relationship (showing the
-              customer why additional time was spent).
-            </p>
-          </ConceptBlock>
-
-          <CommonMistake
-            title="Standardising on 10% across every installation regardless of context"
-            whatHappens={
-              <>
-                You apply a flat 10% sampling rate to every EICR you do — it's what your boss
-                taught you, it appears on your default template. You inspect a 1960s industrial
-                unit with 50-year-old wiring, evidence of multiple uncontrolled additions, and no
-                maintenance records — at 10%. You miss four of the five circuits that have
-                significant insulation degradation because they happened not to fall in your
-                sample. The Satisfactory report goes out. Three months later a fire investigation
-                identifies one of the un-sampled circuits as the source. The HSE asks why the
-                sample was so low for an installation of that profile.
-              </>
-            }
-            doInstead={
-              <>
-                Sampling rate is risk-weighted, not flat. A 1960s industrial unit with no records
-                gets 50-100% sampling because the risk profile justifies it. A 2020 domestic
-                installation with full O&M records and no incident history gets 10%. The starting
-                rate reflects the inferred condition; the actual rate during inspection adjusts
-                upward as evidence emerges. Document the sampling logic on the EICR — "Sampling
-                rate set at 50% of all circuits given installation age (60+ years), absence of
-                maintenance records, and visible evidence of uncontrolled modifications." That is
-                a defensible decision; "10% as standard" is not.
-              </>
-            }
-          />
-
-          <CommonMistake
-            title="Failing to record sampling expansion on the EICR"
-            whatHappens={
-              <>
-                You start at 10% sampling. After finding overheating on 3 of 10 sockets, you
-                expand to 100% on the day. You find another 8 defective sockets across the
-                installation. You code them all and issue the Unsatisfactory report. But you do
-                not update the Extent and Limitations section to record the expansion. Two years
-                later the next inspector reads your EICR, sees the 10% sampling rate stated, and
-                assumes the high defect rate was extrapolated from a small sample — they
-                re-inspect on the same basis and miss new defects that have emerged since.
-              </>
-            }
-            doInstead={
-              <>
-                Update the Extent and Limitations section before issuing the report.
-                "Sampling rate originally agreed: 10% of socket-outlets. Expanded to 100% of
-                socket-outlets during inspection following identification of overheating evidence
-                on 3 of initial 10 sampled. Final rate: 100% of socket-outlets, 10% of light
-                fittings, 100% of consumer unit and main bonding." The next inspector reads the
-                full picture; the duty holder understands the reasoning; the report is internally
-                consistent. The 30 seconds it takes to update the section is one of the highest-
-                leverage uses of inspection time.
-              </>
-            }
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>Worked scenario — landlord 5-year periodic</ContentEyebrow>
-
-          <Scenario
-            title="Negotiating scope on a landlord 5-year EICR — three-bed terrace"
-            situation={
-              <>
-                A landlord phones you. Three-bed mid-terrace, tenanted, last EICR five years ago
-                Satisfactory, the tenants have lived there throughout. The landlord wants a quote
-                for the statutory 5-year EICR under the PRS Regulations. He asks "can you do it
-                in 90 minutes for £150?" — he has a quote from another contractor at that price.
-                You know that the property has a 1990s consumer unit with no RCBOs, an old-style
-                shower circuit on a 30 mA RCD, and the bathroom has been re-plumbed in the
-                intervening period (so bonding may have been disturbed). The tenants will be
-                present for access.
-              </>
-            }
-            whatToDo={
-              <>
-                Quote the job honestly. Explain that a defensible 5-year EICR on a property of
-                that age and history needs at least half a day to do properly — full inspection
-                of the consumer unit, full inspection and continuity test of all main bonding
-                (especially with the bathroom re-plumb history), 100% inspection of accessories in
-                the bathroom (special location), 10-25% sample of socket-outlets and lighting
-                points elsewhere depending on what the initial inspection reveals, full Zs
-                measurement at sampled circuit endpoints, RCD test at the device. Walk the
-                landlord through the PRS Regs implications — an Unsatisfactory report on a quick
-                inspection is just as legally binding on him as one on a thorough inspection, and
-                a missed defect that leads to a tenant injury exposes him to personal liability
-                under the Landlord and Tenant Act and potentially under HSWA. Quote a price that
-                reflects the actual time. If the landlord still wants the cheap quote, decline
-                politely — the cheap inspector who issues a Satisfactory report on inadequate
-                inspection is doing the landlord no favours.
-              </>
-            }
-            whyItMatters={
-              <>
-                The PRS Regulations 2020 make the EICR a statutory document with real legal
-                weight. The landlord's exposure on a defective EICR is not theoretical — local
-                authority enforcement carries civil penalties up to £30,000 per breach, and a
-                tenant injury traceable to a missed defect could expose the landlord to civil
-                claims and potentially HSE prosecution. The cheap-and-fast EICR market exists but
-                it is a race to the bottom that everyone loses — the inspector loses professional
-                standing, the landlord loses statutory protection, the tenant loses real safety.
-                Quoting honestly and walking away from work that cannot be done properly at the
-                offered price is part of being a competent professional.
-              </>
-            }
-          />
-
-          <InlineCheck
-            id={checks[2].id}
-            question={checks[2].question}
-            options={checks[2].options}
-            correctIndex={checks[2].correctIndex}
-            explanation={checks[2].explanation}
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>The management-system alternative</ContentEyebrow>
-
-          <ConceptBlock
-            title="When formal periodic can be replaced by an effective management system"
-            plainEnglish="GN3 explicitly recognises that some installations have an in-place maintenance regime so comprehensive that a formal periodic snapshot adds little. Where a competent permanent on-site team carries out documented preventative maintenance, the formal periodic can be reduced or replaced by reliance on the management system."
-            onSite="This is a real option for hospitals, data centres, large industrial sites, infrastructure assets — anywhere with a documented O&M programme that goes beyond what a 5-yearly snapshot could achieve. The decision is the duty holder's; the inspector advises and documents."
-          >
-            <p>The conditions for the management-system route:</p>
-            <ol className="space-y-1.5 list-decimal pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Competent permanent on-site maintenance staff.</strong> Not a visiting
-                contractor on annual call. Permanent in-house team with electrical competence
-                proportionate to the installation.
-              </li>
-              <li>
-                <strong>Documented preventative maintenance programme.</strong> Schedule of
-                planned tasks, frequency, recording of completion, recording of defects found and
-                remedial action.
-              </li>
-              <li>
-                <strong>Records that demonstrate the regime works.</strong> Defect logs, near-miss
-                reports, response times to issues raised, audit trail showing the regime
-                identifies and addresses issues.
-              </li>
-              <li>
-                <strong>A management commitment to maintain the regime.</strong> Budget,
-                personnel, training, governance — not a paper exercise.
-              </li>
-              <li>
-                <strong>An EAWR Reg 4(2) compliance demonstration.</strong> The regime must
-                positively demonstrate the duty holder is discharging the maintain-in-safe-
-                condition duty better through ongoing maintenance than they would through a
-                periodic snapshot.
-              </li>
-            </ol>
-            <p>
-              Where these conditions are met, the inspector can advise the duty holder that the
-              formal periodic interval can be extended or the periodic itself replaced with a
-              periodic audit of the maintenance system. The inspector's role shifts from primary
-              verification to system audit. Document the decision with supporting evidence. The
-              duty under EAWR Reg 4(2) does not transfer — it remains with the duty holder, who
-              relies on the management system as their chosen compliance route.
-            </p>
-          </ConceptBlock>
-
-          <RegsCallout
-            source="IET Guidance Note 3 — Effective management system replacing periodic"
-            clause="Where there is an effective management system in place for inspection and preventative maintenance of the installation (for example, where there are competent permanent on-site maintenance staff), periodic inspection and testing can be replaced by an alternative regime. The existence of an effective management system is a condition allowing replacement of formal periodic inspection and testing."
-            meaning={
-              <>
-                GN3 codifies a pragmatic reality — for installations under continuous competent
-                management, a 5-yearly snapshot adds less than the day-to-day maintenance
-                programme. The clause requires the management system to be effective, not merely
-                present. Inspectors advising on this route should evidence the effectiveness
-                (documented programme, defect logs, response records, governance) and document
-                the decision so a future inspector or HSE investigator can see why the formal
-                periodic was reduced or replaced.
-              </>
-            }
-            cite="Source: IET Guidance Note 3 — alternative regimes for periodic inspection where effective management systems are in place."
-          />
-
-          <SectionRule />
-
-          <ConceptBlock
-            title="Multi-tenant buildings — the layered scope problem"
-            plainEnglish="Blocks of flats, mixed-use buildings, shared offices create overlapping duty-holder responsibilities. The freeholder is the duty holder for common parts and landlord-supplied installations; each leaseholder or rental landlord is responsible for the installation within their unit. An EICR commissioned by one party cannot certify the installations belonging to another party."
-            onSite="Always clarify who is commissioning what before quoting. A freeholder asking for an EICR usually wants common parts plus a sample of flats; a landlord of one rented flat needs the EICR for that flat under the PRS Regs; a leaseholder commissioning their own EICR for sale needs their unit only."
-          >
-            <p>The scope decision tree for multi-tenant buildings:</p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Freeholder commissioning common parts.</strong> Scope = landlord's
-                supply, intake, common-area distribution, common-area lighting, lift supplies,
-                cleaner sockets, external lighting, communal heating controls. Plus an agreed
-                sample of individual units (typical 10-20%) to characterise condition. Each
-                rented unit retains its own PRS Regs EICR responsibility.
-              </li>
-              <li>
-                <strong>Landlord of a single rented unit.</strong> Scope = the installation
-                within that unit, from the landlord's incoming supply (usually the consumer unit
-                in the unit) through to all final circuits. Common parts are the freeholder's
-                responsibility, not in scope.
-              </li>
-              <li>
-                <strong>Leaseholder owner-occupied for sale or insurance.</strong> Scope = the
-                installation within the unit. Common parts are not in scope. Recommend that the
-                buyer/insurer also reviews the freeholder's most recent common-parts EICR.
-              </li>
-              <li>
-                <strong>Mixed-use building (commercial ground, residential above).</strong>
-                Typically multiple separate EICRs — one for each commercial unit (commissioned by
-                the commercial tenant or landlord per lease), one for the common parts
-                (freeholder), one per residential unit (landlord under PRS Regs or
-                owner-occupier).
-              </li>
-            </ul>
-            <p>
-              The scope confusion in multi-tenant buildings is the source of frequent disputes
-              and missed inspections. Clear scope agreement at the quote stage avoids the trap of
-              issuing an EICR that the customer thinks covers more than it does.
-            </p>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <ContentEyebrow>Sequencing the inspection on site</ContentEyebrow>
-
-          <ConceptBlock
-            title="The on-site sequence — front door to final reading"
-            plainEnglish="Once the scope is agreed, the inspection itself follows a structured sequence. Visual first, dead tests next, live tests last. Within each block, work systematically — supply intake first, then CU, then circuits in order — so nothing is missed and the test record builds in a logical sequence the next reader can follow."
-            onSite="The order matters because each step builds on the previous one. You cannot meaningfully measure Zs on a circuit you have not first proven for continuity. Skipping the visual to save time misses defects that the tests themselves cannot detect."
-          >
-            <p>The recommended on-site sequence:</p>
-            <ol className="space-y-1.5 list-decimal pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Arrival and confirmation.</strong> Confirm the scope agreed at quote with
-                the customer or duty holder representative. Walk the site briefly to confirm
-                access, identify special-location areas, identify any new equipment or alterations
-                since the last EICR.
-              </li>
-              <li>
-                <strong>Visual inspection.</strong> Supply intake, MET, main bonding clamp inspection,
-                CU inspection (front cover off where safe), accessory sample inspection, special
-                location 100% inspection. Photographs of as-found conditions where reportable
-                items are identified.
-              </li>
-              <li>
-                <strong>Isolation planning.</strong> Identify which circuits can be isolated for
-                dead testing and which cannot (critical loads, occupied spaces). Agree any
-                temporary outage with the duty holder.
-              </li>
-              <li>
-                <strong>Dead tests in BS 7671 sequence.</strong> Continuity of protective
-                conductors (R2 or R1+R2 depending on method), continuity of ring final circuits,
-                insulation resistance (line-line, line-earth, neutral-earth), polarity, earth
-                electrode resistance where TT.
-              </li>
-              <li>
-                <strong>Re-energise and live tests.</strong> Ze at origin, prospective fault
-                current, Zs at sampled circuit endpoints, RCD operating current and time per
-                Reg 643.7.3 single AC test (A4:2026), AFDD test where fitted, SPD status check
-                where fitted.
-              </li>
-              <li>
-                <strong>Functional tests.</strong> Switching, control gear operation, safety
-                interlocks, emergency lighting where applicable, fire alarm interface where
-                applicable.
-              </li>
-              <li>
-                <strong>Coding and report drafting.</strong> Allocate codes per BPG4 four-question
-                test, draft Section K Observations, complete Schedule of Test Results,
-                complete Schedule of Inspections, draft overall classification.
-              </li>
-              <li>
-                <strong>Customer briefing and handover.</strong> Walk the customer through the
-                report, confirm next inspection date, agree remedial priority where Unsatisfactory.
-              </li>
-            </ol>
-            <p>
-              The sequence keeps the inspection internally consistent. A test out of sequence
-              (e.g. live tests before dead tests confirmed) is a competence failure that could
-              expose the inspector and others to unnecessary risk. The structured sequence is
-              also easier to defend — the report shows the inspection followed BS 7671 Part 6
-              methodology.
-            </p>
-          </ConceptBlock>
-
-          <ConceptBlock
-            title="Special locations — why they need 100% inspection within the sample"
-            plainEnglish="The Section 700 series of BS 7671 covers special locations — bathrooms, swimming pools, agricultural premises, EV charging, marinas. These locations carry elevated risk and the 700-series gives them additional requirements. Sampling is not appropriate for special-location accessories within an EICR; each one gets full inspection."
-            onSite="When you walk into a property, mentally identify the special-location areas first — bathroom for sure, EV charge point if present, garden socket, swimming pool plant room. Plan to give 100% inspection time to those areas before sampling the general installation."
-          >
-            <p>The special locations most commonly encountered on EICRs:</p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Section 701 — locations containing a bath or shower.</strong> Zonal
-                requirements (Zone 0/1/2), ingress protection ratings per zone, supplementary
-                bonding considerations, additional protection by RCD. 100% inspection of all
-                accessories within the room.
-              </li>
-              <li>
-                <strong>Section 702 — swimming pools and other basins.</strong> Tighter zonal
-                requirements than baths/showers. Plant room inspection annually per ESF/GN3.
-              </li>
-              <li>
-                <strong>Section 705 — agricultural and horticultural premises.</strong> Harsh
-                environment (water, dust, livestock, machinery), 3-year inspection cycle,
-                particular attention to bonding given conductive parts in livestock areas.
-              </li>
-              <li>
-                <strong>Section 711 — exhibitions, shows and stands.</strong> Temporary
-                installations with frequent reconfiguration, short inspection cycles.
-              </li>
-              <li>
-                <strong>Section 717 — mobile or transportable units.</strong> Including towable
-                site cabins, food trailers, mobile workshops.
-              </li>
-              <li>
-                <strong>Section 721 — caravans and motor caravans.</strong> Per GN3 Chapter 66
-                in-service inspection requirements.
-              </li>
-              <li>
-                <strong>Section 722 — electric vehicle charging installations.</strong> Annual or
-                per manufacturer recommendation, particular attention to RCD type (Type B for
-                EV charging where DC residual currents possible), AFDD recommendations under
-                A4:2026 Reg 421.1.7 in some installations.
-              </li>
-              <li>
-                <strong>Section 753 — heating cables and embedded heating systems.</strong>
-                Underfloor heating, electric showers, embedded heating in walls or ceilings.
-              </li>
-            </ul>
-            <p>
-              Each special location has its own technical requirements that the inspector must
-              know to verify properly. Sampling within special locations is not appropriate —
-              every accessory in a bathroom gets visual inspection plus the relevant tests; every
-              EV charge point gets full inspection of the dedicated circuit, the EVSE itself, and
-              any associated load management equipment.
-            </p>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <FAQ items={faqs} />
-
-          <SectionRule />
-
-          <KeyTakeaways
-            points={[
-              "Scope is contractual — agreed in writing before inspection, recorded on EICR Extent and Limitations, signed off by the customer via quote acceptance.",
-              "GN3 sampling guidance — typical 10% of accessories with full DB/CU coverage, but the rate must be appropriate to the installation and risk-weighted within the sample.",
-              "Always 100% inspection — supply intake, MET, main earthing, main bonding, CUs, DBs, switchgear, accessories in special locations.",
-              "Sampling permitted — final-circuit testing, accessories in non-special locations, light fittings, switches in non-special locations.",
-              "Expand the sample if defect rates exceed expectations or safety-critical defects appear; document the expansion on the report.",
-              "Multi-tenant buildings need layered scope — freeholder for common parts and landlord supplies, leaseholder/rental landlord for individual units.",
-              "GN3 allows replacement of formal periodic with reliance on an effective management system where competent permanent on-site maintenance staff are documented and evidenced.",
-              "The Extent and Limitations section must be specific enough that a stranger reading it five years later can understand exactly what was and was not certified.",
-            ]}
-          />
-
-          <Quiz title="EICR sampling and scope — knowledge check" questions={quizQuestions} />
-
-          <div className="grid grid-cols-2 gap-3 pt-2">
-            <button
-              onClick={() => navigate('/study-centre/apprentice/level3-module5-section5-2')}
-              className="rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] transition-colors border border-white/10 p-4 text-left touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white/60">
-                <ArrowLeft className="h-3 w-3" /> Previous
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-white truncate">
-                5.2 EICR coding rubric
-              </div>
-            </button>
-            <button
-              onClick={() => navigate('/study-centre/apprentice/level3-module5-section5-4')}
-              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
-                Next subsection <ChevronRight className="h-3 w-3" />
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-black truncate">
-                5.4 Reporting and remedial works
-              </div>
-            </button>
-          </div>
-        </PageFrame>
-      </div>
-    </div>
+            <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+              Next subsection <ChevronRight className="h-3 w-3" />
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-black truncate">
+              5.4 Reporting and remedial works
+            </div>
+          </button>
+        </div>
+      </HubBody>
+    </HubPage>
   );
 }

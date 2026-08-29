@@ -11,13 +11,45 @@ interface BoardPhotoCaptureProps {
    * `board-read-enhanced` flow was removed — this component is capture-only.)
    */
   onPhotosReady: (imageUrls: string[]) => void;
+  /**
+   * ELE-1606 — photos already stored against this report, from a previous
+   * device. Shown as ready-to-use captures so scanning on an iPad at the board
+   * and finishing on a desktop does not mean photographing it twice.
+   */
+  initialPhotos?: string[];
 }
 
-export const BoardPhotoCapture: React.FC<BoardPhotoCaptureProps> = ({ onPhotosReady }) => {
+export const BoardPhotoCapture: React.FC<BoardPhotoCaptureProps> = ({
+  onPhotosReady,
+  initialPhotos,
+}) => {
   const haptic = useHaptic();
   const [capturedImages, setCapturedImages] = useState<
     Array<{ url: string; status: 'compressing' | 'ready'; quality?: 'ok' | 'blurry' }>
   >([]);
+
+  /*
+   * 🔴 A `useState` INITIALISER WOULD NOT WORK HERE, and that is the whole bug.
+   *
+   * `initialPhotos` is fetched asynchronously by the parent, so on first render
+   * it is undefined. A `useState(() => initialPhotos.map(...))` seed runs once
+   * and never again — the photos would arrive a moment later and the list would
+   * stay empty, which is precisely the failure this ticket is about.
+   *
+   * An effect merges them whenever they arrive, and de-dupes so a re-render
+   * cannot double them up. They are `ready` by definition: they were compressed
+   * and quality-gated on the device that captured them.
+   */
+  useEffect(() => {
+    if (!initialPhotos?.length) return;
+    setCapturedImages((prev) => {
+      const have = new Set(prev.map((i) => i.url));
+      const incoming = initialPhotos
+        .filter((url) => !have.has(url))
+        .map((url) => ({ url, status: 'ready' as const, quality: 'ok' as const }));
+      return incoming.length ? [...prev, ...incoming] : prev;
+    });
+  }, [initialPhotos]);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [stream, setStream] = useState<MediaStream | null>(null);

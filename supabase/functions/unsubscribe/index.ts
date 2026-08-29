@@ -167,10 +167,25 @@ Deno.serve(async (req) => {
     // Only the campaign_opted_out_at flag on that electrician's copy of the
     // customer record is set.
     const isScoped = payload.scope === 'customer_campaign' && !!payload.user_id;
+    // Morning brief opt-out: the USER asked to stop their own daily brief —
+    // flip their automation row off, never the global suppression list (that
+    // would also kill their invoices' open-tracking mail and lifecycle email).
+    const isMorningBrief = payload.scope === 'morning_brief' && !!payload.user_id;
 
     let suppressError: { message: string } | null = null;
 
-    if (isScoped) {
+    if (isMorningBrief) {
+      const { error } = await supabase.from('user_automations').upsert(
+        {
+          user_id: payload.user_id!,
+          key: 'morning_brief',
+          mode: 'off',
+          updated_at: new Date().toISOString(),
+        },
+        { onConflict: 'user_id,key' }
+      );
+      suppressError = error;
+    } else if (isScoped) {
       const { error } = await supabase
         .from('customers')
         .update({ campaign_opted_out_at: new Date().toISOString() })

@@ -1,8 +1,8 @@
-import { ArrowLeft, ChevronLeft, ChevronRight, Activity } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Activity } from 'lucide-react';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { useNavigate } from 'react-router-dom';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
-import { PageFrame, PageHero } from '@/components/college/primitives';
 import {
   TLDR,
   LearningOutcomes,
@@ -177,8 +177,7 @@ const quizQuestions = [
   },
   {
     id: 8,
-    question:
-      'What is the rated DURATION for high-risk task area lighting under BS 5266-1:2025?',
+    question: 'What is the rated DURATION for high-risk task area lighting under BS 5266-1:2025?',
     options: [
       '1 minute — only long enough to switch off the machinery at the task point.',
       '5 minutes — long enough to cover machine shutdown and immediate operator withdrawal.',
@@ -229,687 +228,745 @@ const EmergencyLightingModule2Section3 = () => {
   });
 
   return (
-    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
-      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
-        <PageFrame>
+    <HubPage>
+      <HubMasthead
+        section="Module 2 · Section 3"
+        title="High-risk task area lighting"
+        backTo="/electrician/upskilling/emergency-lighting-module-2"
+      />
+      <HubBody>
+        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
+          The third functional category — and the most demanding. BS EN 1838:2024: 15 lx OR 10 % of
+          normal task illuminance (whichever higher) at the working plane, with full output within
+          0.5 s of mains failure. NEW under BS 5266-1:2025: high-risk task circuits must be split
+          across at least two circuits with no more than 20 luminaires per circuit.
+        </p>
+
+        <TLDR
+          points={[
+            'High-risk task area lighting allows occupants to safely shut down hazardous processes (machinery, hot processes, chemical reactions, lifts mid-cycle) before evacuating.',
+            'BS EN 1838:2024 minimum: 15 lx OR 10 % of normal maintained task illuminance, whichever is HIGHER. The double rule scales emergency level with task demand.',
+            'Response time: full rated illuminance within 0.5 s — an order of magnitude tighter than the 5 s for escape route / anti-panic. LED mandatory; many designs use continuous-operation (maintained) mode to eliminate switchover delay.',
+            'NEW under BS 5266-1:2025 §7.5: high-risk task lighting requires AT LEAST 2 separate circuits, with NO MORE THAN 20 luminaires per circuit. A single circuit fault must not extinguish all illumination at a high-risk task.',
+            'Trigger: risk assessment. Not area-led, not occupancy-led. The assessor identifies specific points where machinery shutdown / hot-process control / hazardous task completion is required during evacuation.',
+            'Mounting: typically dedicated task-specific luminaires above or beside the machinery, often integrated into the machine guard, aimed at the working plane (not floor).',
+            'Duration: matches the building emergency lighting duration (3 h non-domestic default). Not a shorter "shutdown-only" duration.',
+            'Independent of escape route and anti-panic — high-risk task is in ADDITION to those, not instead of them.',
+          ]}
+        />
+
+        <LearningOutcomes
+          outcomes={[
+            'State the BS EN 1838:2024 illuminance, response-time and duration requirements for high-risk task area lighting',
+            'Apply the "15 lx OR 10 % of normal task illuminance, whichever higher" rule to specific task examples',
+            'Identify the NEW BS 5266-1:2025 dual-circuit rule (≥ 2 circuits, ≤ 20 luminaires per circuit) and explain its rationale',
+            'Use a risk assessment to determine where high-risk task lighting is mandatory',
+            'Specify task-specific luminaire placement (above / beside machinery, integrated into guards) and continuous-operation mode',
+            'Distinguish high-risk task lighting (15 lx, 0.5 s, working plane) from escape route (1 lx, 5 s, floor) and anti-panic (0.5 lx, 5 s, floor)',
+            'Recognise that high-risk task lighting applies in ADDITION to escape route and anti-panic, not instead of them',
+          ]}
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>What high-risk task lighting is for</ContentEyebrow>
+
+        <ConceptBlock
+          title="Safe shutdown before evacuation"
+          plainEnglish="The other emergency lighting categories assume occupants leave the building. High-risk task lighting recognises that some occupants cannot leave immediately — they have to do something hazardous first. A printing press operator cannot just walk away from a running press; the press has to be brought to a controlled stop (emergency stop button, isolation, blade locked). A chemist mid-reaction cannot just walk away from an exothermic process; the reaction has to be quenched or the system isolated. A lift operator cannot just walk away from a stuck lift; the car has to be levelled and the doors opened. In each case, the work-to-make-safe takes seconds to minutes and requires the operator to see the equipment they are controlling. High-risk task lighting provides the visual environment for this shutdown phase."
+          onSite="Identify the high-risk task points first by walking the building with the operator. 'What can't you just walk away from?' is the survey question. The points where the operator hesitates — that's where high-risk task lighting goes."
+        >
+          <p>Typical high-risk task locations:</p>
+          <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
+            <li>
+              <strong>Machine tools.</strong> Lathes, mills, presses, saws, grinders. Operators need
+              to see the cutting edge / press platen / blade to engage emergency stop and withdraw
+              hands.
+            </li>
+            <li>
+              <strong>Printing and converting.</strong> Web presses, slitter / rewinders, label
+              machines. The running web has to be stopped, the rollers parked, the nip points
+              cleared.
+            </li>
+            <li>
+              <strong>Hot processes.</strong> Furnaces, ovens, soldering / welding stations, molten
+              material handling. Stop the process safely; isolate the gas / power.
+            </li>
+            <li>
+              <strong>Chemical processes.</strong> Reactors, fume hoods, mixing stations. Quench
+              reactions, close valves, evacuate vessels.
+            </li>
+            <li>
+              <strong>Lifts mid-cycle.</strong> A stuck lift car must be levelled and doors opened
+              from inside. The lift control panel needs illumination.
+            </li>
+            <li>
+              <strong>Food processing.</strong> Slicers, mixers, ovens, fryers. Hot oil and rotating
+              blades need controlled shutdown.
+            </li>
+            <li>
+              <strong>High-voltage / high-current operations.</strong> Live HV switching, substation
+              work, electroplating baths. Operators need clear sight of the work area to disengage
+              safely.
+            </li>
+            <li>
+              <strong>Material handling at height.</strong> Cranes, gantries, hoists. Operators need
+              to see the load and ground crew to stop safely.
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <RegsCallout
+          source="BS EN 1838:2024 · §6 (High-risk task area lighting)"
+          clause={
+            <>
+              High-risk task area lighting shall provide an illuminance not less than 15 lx or 10 %
+              of the maintained illuminance of the normal lighting at the task, whichever is the
+              higher. The illuminance shall be reached within 0.5 s. The minimum duration shall be
+              the period of operation of the high-risk task.
+            </>
+          }
+          meaning="Two-part minimum (15 lx OR 10 % of normal, whichever higher) makes the emergency level scale with task demand. 0.5 s response — order of magnitude tighter than the 5 s for other categories. Duration is the period of operation of the task — in practice this means as long as the task may be performed, which is the building duration."
+        />
+
+        <ConceptBlock
+          title="The 'whichever higher' rule"
+          plainEnglish="The rule has two thresholds and you take the higher. The 15 lx is a headline floor — emergency illumination cannot be less than 15 lx anywhere a high-risk task is performed, even if the task is normally done at low light. The 10 % is a scaling rule — for tasks that are normally done at high illumination, emergency illumination scales up proportionally. The result: simple high-risk tasks at 100 lx normal get 15 lx emergency (10 % is only 10 lx, so the headline floor wins). Complex high-risk tasks at 1000 lx normal get 100 lx emergency (the 10 % rule wins). The rule scales emergency provision with task demand."
+        >
+          <p>Worked examples:</p>
+          <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
+            <li>
+              <strong>Loading bay forklift operation, 100 lx normal.</strong> 10 % = 10 lx; 15 lx
+              headline higher. Emergency = 15 lx.
+            </li>
+            <li>
+              <strong>Assembly bench, 300 lx normal.</strong> 10 % = 30 lx; 15 lx headline lower.
+              Emergency = 30 lx.
+            </li>
+            <li>
+              <strong>Chemical fume hood, 500 lx normal.</strong> 10 % = 50 lx; emergency = 50 lx.
+            </li>
+            <li>
+              <strong>Printing press, 750 lx normal.</strong> 10 % = 75 lx; emergency = 75 lx.
+            </li>
+            <li>
+              <strong>Precision machining, 1000 lx normal.</strong> 10 % = 100 lx; emergency = 100
+              lx.
+            </li>
+            <li>
+              <strong>Microscopic / inspection work, 2000 lx normal.</strong> 10 % = 200 lx;
+              emergency = 200 lx.
+            </li>
+          </ul>
+          <p>
+            The figures are at the WORKING PLANE (typically table or bench level) not at floor
+            level. This is a key difference from escape route and anti-panic, both measured at
+            floor. The working plane is wherever the task is performed — usually 0.85 m for standing
+            tasks, 0.5 m for sitting tasks, on the equipment surface for machine tools.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck
+          id={inlineChecks[0].id}
+          question={inlineChecks[0].question}
+          options={inlineChecks[0].options}
+          correctIndex={inlineChecks[0].correctIndex}
+          explanation={inlineChecks[0].explanation}
+        />
+
+        {/* Diagram: high-risk task with 15 lx + 0.5 s + dual-circuit (NEW 2025) */}
+        <div className="bg-white/5 border border-white/10 rounded-2xl p-4 sm:p-6 my-6">
+          <p className="text-xs font-semibold text-elec-yellow/60 uppercase tracking-wider mb-3">
+            Diagram
+          </p>
+          <h4 className="text-sm font-bold text-white mb-4">
+            High-risk task — 15 lx working plane, 0.5 s response, dual-circuit (NEW 2025)
+          </h4>
+          <svg
+            viewBox="0 0 820 460"
+            className="w-full h-auto"
+            role="img"
+            aria-label="Plan and elevation of a high-risk task area showing dedicated task-specific luminaires above the machinery, working plane illuminance 15 lx (or 10 % of normal task illuminance), 0.5 s response time, and the new BS 5266-1:2025 requirement for at least two separate circuits with no more than 20 luminaires per circuit."
+          >
+            <text x="410" y="24" textAnchor="middle" fill="#FBBF24" fontSize="13" fontWeight="bold">
+              HIGH-RISK TASK — 15 lx (or 10 % of normal) at working plane in 0.5 s
+            </text>
+            <text x="410" y="40" textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize="10">
+              BS EN 1838:2024 §6 · BS 5266-1:2025 §7.5 (NEW dual-circuit rule)
+            </text>
+
+            {/* Machine outline */}
+            <rect
+              x="200"
+              y="160"
+              width="240"
+              height="120"
+              rx="6"
+              fill="rgba(255,255,255,0.06)"
+              stroke="rgba(255,255,255,0.5)"
+              strokeWidth="1.6"
+            />
+            <text
+              x="320"
+              y="226"
+              textAnchor="middle"
+              fill="rgba(255,255,255,0.85)"
+              fontSize="11"
+              fontWeight="bold"
+            >
+              Machine tool / press / mixer
+            </text>
+            <text x="320" y="242" textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize="9">
+              normal task illuminance e.g. 750 lx
+            </text>
+
+            {/* Working plane (red dashed at top of machine) */}
+            <line
+              x1="200"
+              y1="180"
+              x2="440"
+              y2="180"
+              stroke="#EF4444"
+              strokeWidth="1.5"
+              strokeDasharray="4,3"
+            />
+            <text x="450" y="184" fill="#EF4444" fontSize="9" fontWeight="bold">
+              working plane (15 lx min)
+            </text>
+
+            {/* Luminaire 1 (circuit A) */}
+            <g>
+              <circle cx="240" cy="120" r="9" fill="rgba(251,191,36,0.95)" />
+              <circle cx="240" cy="120" r="18" fill="rgba(251,191,36,0.18)" />
+              <text
+                x="240"
+                y="105"
+                textAnchor="middle"
+                fill="#22D3EE"
+                fontSize="9"
+                fontWeight="bold"
+              >
+                Circuit A
+              </text>
+              <line
+                x1="240"
+                y1="129"
+                x2="240"
+                y2="180"
+                stroke="rgba(251,191,36,0.4)"
+                strokeWidth="1"
+                strokeDasharray="2,2"
+              />
+            </g>
+
+            {/* Luminaire 2 (circuit B) */}
+            <g>
+              <circle cx="400" cy="120" r="9" fill="rgba(251,191,36,0.95)" />
+              <circle cx="400" cy="120" r="18" fill="rgba(251,191,36,0.18)" />
+              <text
+                x="400"
+                y="105"
+                textAnchor="middle"
+                fill="#A855F7"
+                fontSize="9"
+                fontWeight="bold"
+              >
+                Circuit B
+              </text>
+              <line
+                x1="400"
+                y1="129"
+                x2="400"
+                y2="180"
+                stroke="rgba(251,191,36,0.4)"
+                strokeWidth="1"
+                strokeDasharray="2,2"
+              />
+            </g>
+
+            {/* Operator silhouette beside machine */}
+            <g transform="translate(490 220)">
+              <circle cx="0" cy="-20" r="9" fill="rgba(255,255,255,0.5)" />
+              <rect x="-8" y="-10" width="16" height="36" fill="rgba(255,255,255,0.3)" />
+              <text x="0" y="50" textAnchor="middle" fill="rgba(255,255,255,0.6)" fontSize="9">
+                operator
+              </text>
+            </g>
+
+            {/* Circuit feeders schematic */}
+            <g>
+              <rect
+                x="60"
+                y="80"
+                width="100"
+                height="40"
+                rx="6"
+                fill="rgba(34,211,238,0.1)"
+                stroke="#22D3EE"
+                strokeWidth="1.5"
+              />
+              <text
+                x="110"
+                y="98"
+                textAnchor="middle"
+                fill="#22D3EE"
+                fontSize="10"
+                fontWeight="bold"
+              >
+                MCB A
+              </text>
+              <text x="110" y="112" textAnchor="middle" fill="rgba(255,255,255,0.6)" fontSize="9">
+                ≤ 20 lum.
+              </text>
+              <line x1="160" y1="100" x2="240" y2="120" stroke="#22D3EE" strokeWidth="1.5" />
+            </g>
+            <g>
+              <rect
+                x="660"
+                y="80"
+                width="100"
+                height="40"
+                rx="6"
+                fill="rgba(168,85,247,0.1)"
+                stroke="#A855F7"
+                strokeWidth="1.5"
+              />
+              <text
+                x="710"
+                y="98"
+                textAnchor="middle"
+                fill="#A855F7"
+                fontSize="10"
+                fontWeight="bold"
+              >
+                MCB B
+              </text>
+              <text x="710" y="112" textAnchor="middle" fill="rgba(255,255,255,0.6)" fontSize="9">
+                ≤ 20 lum.
+              </text>
+              <line x1="660" y1="100" x2="400" y2="120" stroke="#A855F7" strokeWidth="1.5" />
+            </g>
+
+            {/* Response time + dual circuit annotation */}
+            <g>
+              <rect
+                x="60"
+                y="320"
+                width="700"
+                height="120"
+                rx="10"
+                fill="rgba(239,68,68,0.06)"
+                stroke="rgba(239,68,68,0.45)"
+                strokeWidth="1.4"
+              />
+              <text x="80" y="344" fill="#EF4444" fontSize="11" fontWeight="bold">
+                Response time: full rated illuminance within 0.5 s of mains failure.
+              </text>
+              <text x="80" y="362" fill="rgba(255,255,255,0.7)" fontSize="10">
+                10× tighter than escape route (5 s). LED mandatory. Maintained mode typical
+                (always-on).
+              </text>
+              <text x="80" y="384" fill="#EF4444" fontSize="11" fontWeight="bold">
+                NEW BS 5266-1:2025 §7.5: ≥ 2 separate circuits, ≤ 20 luminaires per circuit.
+              </text>
+              <text x="80" y="402" fill="rgba(255,255,255,0.7)" fontSize="10">
+                Single circuit fault must not extinguish all illumination at a high-risk task.
+              </text>
+              <text x="80" y="420" fill="rgba(255,255,255,0.7)" fontSize="10">
+                Duration: matches building duration (3 h non-domestic default). Working plane, not
+                floor.
+              </text>
+            </g>
+          </svg>
+        </div>
+
+        <SectionRule />
+
+        <ContentEyebrow>The 0.5 s response time</ContentEyebrow>
+
+        <ConceptBlock
+          title="Why 0.5 s — the hazard timing argument"
+          plainEnglish="Hazardous machinery does not stop instantaneously when power is cut. A band saw spins down over 4-8 seconds. A printing press web takes 6-10 seconds to stop. A mixer with mechanical inertia takes 3-5 seconds. During that spin-down, the equipment is still moving — the blade is still cutting, the rollers are still pulling, the mixer is still rotating. The operator needs to see what is happening to bring it under control safely. A 5-second blackout (the figure used for escape route lighting) leaves the operator in darkness through the entire spin-down window. 0.5 s ensures continuous visual contact with the equipment from the moment of mains failure onward. The figure is calibrated against typical industrial machinery spin-down timing — 0.5 s is short enough that the human eye does not lose visual orientation, and short enough that the spin-down phase is fully illuminated."
+        >
+          <p>How designs achieve 0.5 s in practice:</p>
+          <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
+            <li>
+              <strong>LED technology mandatory.</strong> Discharge lamps cannot meet 0.5 s — their
+              ignition / warm-up cycle is 5-30 s. LED is effectively instant. Older installations
+              using sodium / fluorescent lighting cannot be retrofitted to high-risk task without
+              converting to LED.
+            </li>
+            <li>
+              <strong>Maintained mode common.</strong> The simplest way to achieve 0.5 s is
+              continuous operation — the luminaire is ALWAYS on at emergency level (or higher). On
+              mains failure, the luminaire keeps running on battery; there is no switchover. Used at
+              machinery, fume hoods, hot processes.
+            </li>
+            <li>
+              <strong>Sustained / dual-emergency luminaires.</strong> Have a separate emergency lamp
+              inside the same luminaire, always energised, with the main lamp providing additional
+              output during normal operation. On mains failure the main goes off and the emergency
+              continues. Compact and reliable.
+            </li>
+            <li>
+              <strong>Self-contained switchover.</strong> Standard non-maintained luminaires use a
+              relay that responds in milliseconds — well within 0.5 s. The risk is relay wear over
+              many years; high-risk task installations should avoid relay-based switchover where
+              possible.
+            </li>
+            <li>
+              <strong>Central battery with fast switchover.</strong> Modern central battery systems
+              achieve switchover in under 100 ms. Older systems may be 1-2 s — too slow for
+              high-risk task. Audit installations using central battery for high-risk task to
+              confirm switchover speed.
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <RegsCallout
+          source="BS EN 1838:2024 · §6.2 (Response time for high-risk task lighting)"
+          clause={
+            <>
+              For high-risk task area lighting, the illuminance shall reach the required value
+              within 0.5 s of the failure of the normal supply.
+            </>
+          }
+          meaning="0.5 s is full output, not 50 % output (the 5 s escape route figure was 50 %). The faster figure plus the higher absolute level (full output) means the high-risk task is illuminated continuously at the working level from the moment of mains failure. Operators do not lose any meaningful visual control."
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>BS 5266-1:2025 NEW dual-circuit rule</ContentEyebrow>
+
+        <ConceptBlock
+          title="≥ 2 circuits, ≤ 20 luminaires per circuit"
+          plainEnglish="BS 5266-1:2025 introduced a new specific requirement for high-risk task lighting circuits: at least two separate circuits, with no more than 20 luminaires on any one circuit. The rule does NOT apply to escape route or anti-panic lighting; it is specific to high-risk task. The reason is the consequence of total lighting loss at a high-risk task. Escape route loss is recoverable — occupants navigate slowly, but they can still navigate. High-risk task loss is not — the operator at a running press cannot do anything safely without illumination. The dual-circuit rule ensures a single circuit fault (short, MCB trip, broken cable, fuse blow) leaves at least one circuit intact, so partial illumination remains while the operator achieves shutdown."
+        >
+          <p>How the rule works in practice:</p>
+          <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
+            <li>
+              <strong>Self-contained luminaires.</strong> Two luminaires above each high-risk task,
+              each on a different final circuit (different MCB / fuse). One MCB tripping kills one
+              luminaire; the other remains.
+            </li>
+            <li>
+              <strong>Central battery system.</strong> Two parallel feeders from the central battery
+              to the high-risk task luminaires, each on a different protective device. A feeder
+              fault kills one feeder; the other remains.
+            </li>
+            <li>
+              <strong>20-luminaire limit.</strong> A circuit serving 50 luminaires across many
+              high-risk tasks would, on a fault, kill all 50 — defeating the redundancy. Limiting to
+              20 luminaires per circuit restricts the impact of a single fault.
+            </li>
+            <li>
+              <strong>Backwards compatibility.</strong> Existing installations from before BS
+              5266-1:2025 are not retrospectively non-compliant; the rule applies to new
+              installations and major refurbishments. Risk-assessment-led upgrade is encouraged.
+            </li>
+            <li>
+              <strong>Documentation.</strong> The dual-circuit arrangement should be reflected in
+              the as-built drawings, with each circuit clearly identified and the serving MCB /
+              protective device marked.
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <RegsCallout
+          source="BS 5266-1:2025 · §7.5 (Circuit arrangements for high-risk task area lighting)"
+          clause={
+            <>
+              Emergency lighting installations serving high-risk task areas shall be arranged such
+              that the failure of any single circuit does not extinguish all the emergency
+              illumination at the task. At least two separate circuits shall be provided for each
+              high-risk task area, with no single circuit serving more than 20 luminaires.
+            </>
+          }
+          meaning="The rule has two parts. First, two separate circuits are mandatory at every high-risk task area. Second, no circuit may carry more than 20 luminaires regardless of how many tasks it serves. Both parts must be satisfied; one without the other is not compliant. The rule is new in BS 5266-1:2025 and applies prospectively."
+        />
+
+        <CommonMistake
+          title="Single-circuit emergency lighting at machinery"
+          whatHappens="A factory installs emergency lighting throughout including at the machine tool area, all on a single emergency circuit fed from one central battery feeder. Under BS 5266-1:2025 §7.5 this is non-compliant for the high-risk task area. A single feeder fault would extinguish ALL emergency illumination at the machinery during a power outage — operator at the press is in total darkness during the spin-down. Re-design needed: split the high-risk task luminaires across two feeders."
+          doInstead="At every high-risk task area, plan dual-circuit emergency lighting from the start. Identify which luminaires serve high-risk tasks and which serve escape route / anti-panic only. The high-risk task luminaires need the dual-circuit redundancy; the others may be on a single circuit if simpler. Split the high-risk task luminaires across two MCBs (or two central battery feeders) at design stage."
+        />
+
+        <CommonMistake
+          title="Treating a generic 5 s response as adequate for high-risk task"
+          whatHappens="A designer specifies escape-route-grade luminaires (5 s response) above a printing press, on the basis that they are emergency luminaires and meet the general standard. The press is a high-risk task and the BS EN 1838:2024 §6 response time is 0.5 s, not 5 s. On commissioning, the switchover test takes 1.2 s — fails high-risk task response. The luminaires are non-compliant for that location; they would be fine in a corridor."
+          doInstead="Identify the response-time category at design stage. High-risk task luminaires are a specific product class — typically marked '0.5 s response' or 'continuous-operation maintained' on the rating plate. They are slightly more expensive than standard emergency luminaires and use different switching electronics. Specify the right product for the task; do not assume 'emergency' is enough."
+        />
+
+        <InlineCheck
+          id={inlineChecks[1].id}
+          question={inlineChecks[1].question}
+          options={inlineChecks[1].options}
+          correctIndex={inlineChecks[1].correctIndex}
+          explanation={inlineChecks[1].explanation}
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>Risk assessment as the trigger</ContentEyebrow>
+
+        <ConceptBlock
+          title="Risk-assessment-led, not premises-led"
+          plainEnglish="Unlike escape route lighting (mandatory wherever an escape route exists) and anti-panic lighting (triggered by area or occupancy), high-risk task lighting is risk-assessment-led. The competent person — usually a fire risk assessor or a technical specialist — walks the building and identifies specific points where occupants must perform a hazardous task to make safe before evacuating. The risk assessment documents these points. The lighting design then provides 15 lx (or 10 % of normal) at each documented point, with 0.5 s response and dual-circuit redundancy. The trigger is the risk assessment; the design follows it."
+        >
+          <p>What the risk assessor is looking for:</p>
+          <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
+            <li>
+              <strong>"Walk-away unsafe" tasks.</strong> Can the occupant safely walk away from the
+              equipment / process without doing something first? If yes (e.g. office desk with
+              computer) — no high-risk task lighting. If no (e.g. running mixer) — high-risk task
+              lighting required.
+            </li>
+            <li>
+              <strong>Spin-down / cool-down hazards.</strong> Equipment that retains energy after
+              power loss — rotating machinery, hot surfaces, pressurised systems — typically
+              qualifies because the operator needs to see the spin-down / cool-down to manage it.
+            </li>
+            <li>
+              <strong>Manual emergency-stop sequences.</strong> Where the operator has to physically
+              engage emergency stops, isolate gas / chemicals, lock out energy sources —
+              illumination of those controls is mandatory.
+            </li>
+            <li>
+              <strong>Trapped-occupant scenarios.</strong> Lifts, hoists, confined spaces — any
+              location where occupants might be inside and need to operate controls to escape. The
+              lift car is a classic example; the inside of a confined space access hatch is another.
+            </li>
+            <li>
+              <strong>Process-criticality.</strong> Some processes cannot be left in an
+              indeterminate state without producing further hazard (chemical reactions, hot metal
+              handling, live-line work). The risk assessment identifies these process-stop
+              requirements.
+            </li>
+            <li>
+              <strong>Premises type does not exempt.</strong> An office can have a high-risk task
+              (e.g. a small chemistry lab in an R&D building, a 3D printer with hot parts). A
+              factory may not have any high-risk tasks if the operations are passive (e.g. product
+              storage). The premises label does not predict the requirement; the risk assessment
+              does.
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <RegsCallout
+          source="BS 5266-1:2025 · §5.5 (Identification of high-risk task areas)"
+          clause={
+            <>
+              The responsible person, in consultation with competent persons as necessary, shall
+              identify any high-risk task areas within the premises. A high-risk task area is any
+              location where the failure of normal lighting could prevent the safe shutdown of a
+              hazardous process or operation. The identification shall be documented in the fire
+              risk assessment.
+            </>
+          }
+          meaning="The responsible person (typically the building owner or operator) leads the identification, supported by competent persons (risk assessor, lighting designer). The output is documented — listed in the fire risk assessment as specific locations. The lighting design takes that list and provides the 15 lx / 0.5 s / dual-circuit provision at each."
+        />
+
+        <Scenario
+          title="The R&D laboratory in an office building"
+          situation="A general office building in central London has, on its 4th floor, a small R&D laboratory with one fume hood used for occasional hazardous reactions. The building's main use is office (escape route 1 lx, anti-panic 0.5 lx where triggers fire). The lab is 35 m² with maximum 4 occupants. Anti-panic does not trigger (small area, low occupancy). The fume hood, however, is used for reactions that cannot be left running during a power loss — they need active quenching. Risk assessment identifies the fume hood working plane as a high-risk task area. Normal task illuminance at the hood is 500 lx."
+          whatToDo="High-risk task lighting at the fume hood working plane: 50 lx (10 % of 500 lx, higher than 15 lx headline), within 0.5 s response, supplied by two separate emergency circuits (BS 5266-1:2025 dual-circuit rule), with rated duration matching the building (3 h). Practical implementation: two LED downlights mounted directly above the fume hood, each on a different emergency circuit, in maintained mode (always on at emergency level during occupancy). The rest of the lab gets escape route lighting at the door (1 lx) and signage; anti-panic does not trigger so no 0.5 lx area-wide requirement."
+          whyItMatters="High-risk task is location-specific, not premises-specific. An office building usually has none, but a single specialist room can change the requirement at one bench. The risk assessment is the trigger; identification of the trigger drives the design. Designers who survey only the building type (office = escape route + anti-panic) miss the high-risk task points."
+        />
+
+        <InlineCheck
+          id={inlineChecks[2].id}
+          question={inlineChecks[2].question}
+          options={inlineChecks[2].options}
+          correctIndex={inlineChecks[2].correctIndex}
+          explanation={inlineChecks[2].explanation}
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>Mounting and luminaire choice</ContentEyebrow>
+
+        <ConceptBlock
+          title="Task-specific luminaires above the work"
+          plainEnglish="High-risk task lighting is not general room lighting. It is dedicated luminaires aimed at the working plane of the specific task. A printing press has its own task luminaires above the press; a fume hood has its own above the hood; a machine tool has its own above the cutting area. The lighting design treats each high-risk task as a discrete lighting zone with its own design calculation, regardless of where the rest of the room's emergency lighting sits."
+        >
+          <p>Mounting and design considerations:</p>
+          <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
+            <li>
+              <strong>Direct overhead.</strong> Most common. Luminaire mounted on the ceiling
+              directly above the working plane, giving maximum lux per watt at the task. Suitable
+              for benches, fume hoods, conveyor sections.
+            </li>
+            <li>
+              <strong>Side-mounted.</strong> For tasks where overhead is not practical (e.g. under a
+              low ceiling, behind a guard structure). Luminaires mounted to the side of the task
+              with appropriate aim.
+            </li>
+            <li>
+              <strong>Integrated into machine guard.</strong> Used on enclosed machine tools (CNC,
+              presses) where the task is inside a guarded enclosure. Luminaires inside the guard, on
+              the machine's own emergency supply (or a parallel building emergency supply).
+            </li>
+            <li>
+              <strong>Track-mounted / adjustable.</strong> For tasks that may move within the area
+              (workshop with multiple bench positions). Adjustable aim ensures the working plane is
+              illuminated regardless of bench layout.
+            </li>
+            <li>
+              <strong>Maintained / continuous-operation.</strong> Luminaire is always on at
+              emergency level. Eliminates switchover delay. Used at high-criticality tasks where 0.5
+              s switchover is a risk.
+            </li>
+            <li>
+              <strong>Sealed / IP-rated.</strong> Many high-risk task locations are wet, dusty, or
+              chemically aggressive. IP54 minimum typical; IP65 or higher for fume hoods, wash
+              areas, food processing.
+            </li>
+            <li>
+              <strong>Impact-rated.</strong> IK rating for areas with mechanical impact risk
+              (forklift collision zones, swinging boom hazards). IK08 or higher typical.
+            </li>
+            <li>
+              <strong>Anti-glare.</strong> Some tasks (precision inspection, microscope work) are
+              sensitive to direct glare. Use indirect or low-glare luminaires; aim for diffuse
+              illumination of the working plane.
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <RegsCallout
+          source="BS 5266-1:2025 · §7.6 (Luminaire selection for high-risk task areas)"
+          clause={
+            <>
+              Luminaires used in high-risk task areas shall be selected with regard to the
+              environmental conditions of the location, including ingress protection, impact
+              resistance, ambient temperature, and any chemical or corrosive influences. Luminaires
+              shall be mounted to provide the required illuminance at the working plane of the task,
+              with consideration of glare control where the task is visually demanding.
+            </>
+          }
+          meaning="Environmental robustness is part of the spec. A ceiling downlight that suits a corridor will not survive in a fume hood, a wash bay, or a forklift zone. Match the luminaire to the location: IP rating, IK rating, temperature, chemical resistance. The mounting must produce the required illuminance at the working plane — not just at floor level."
+        />
+
+        <CommonMistake
+          title="Generic ceiling emergency luminaires above a fume hood"
+          whatHappens="A designer specifies a row of standard 3-hour LED emergency downlights across a chemistry lab ceiling. The fume hood gets one luminaire above it, in line with the rest of the row. The luminaire is rated IP20 (open ceiling). The fume hood handles corrosive vapours that escape periodically; over 18 months the luminaire's electronics corrode and it fails the annual test. Replacement costs significant downtime; the lab loses certification."
+          doInstead="At the fume hood specifically, specify an IP65 or higher luminaire rated for chemical environments. Mount it for direct illumination of the working plane. Often this means a different product to the rest of the lab ceiling; the cost premium is small and the lifetime is longer. Match luminaire IP / IK / chemical rating to the task environment, not just to the ceiling-mounting convention."
+        />
+
+        <InlineCheck
+          id={inlineChecks[3].id}
+          question={inlineChecks[3].question}
+          options={inlineChecks[3].options}
+          correctIndex={inlineChecks[3].correctIndex}
+          explanation={inlineChecks[3].explanation}
+        />
+
+        <SectionRule />
+
+        <KeyTakeaways
+          title="What to remember on site"
+          points={[
+            'High-risk task area lighting allows safe shutdown of hazardous processes before evacuation. 15 lx OR 10 % of normal task illuminance, whichever HIGHER (BS EN 1838:2024 §6).',
+            'Response time: full rated illuminance within 0.5 s of mains failure — order of magnitude tighter than the 5 s for escape route or anti-panic. LED mandatory.',
+            'NEW BS 5266-1:2025 §7.5: at least 2 separate circuits, no more than 20 luminaires per circuit. Single circuit fault must not extinguish all illumination at high-risk task.',
+            'Trigger: risk assessment. The competent person identifies specific points where occupants must perform hazardous tasks before evacuating. Lighting design provides 15 lx / 0.5 s / dual-circuit at those points.',
+            'Mounting: dedicated task-specific luminaires above or beside the machinery, often integrated into machine guards. Aimed at the working plane (not floor).',
+            'Maintained / continuous-operation mode common — eliminates switchover delay risk.',
+            'Working plane (where task is performed) is the verification point — typically 0.85 m for standing tasks, 0.5 m for sitting, on equipment surface for machine tools. NOT floor level.',
+            'Independent of escape route and anti-panic. High-risk task is in ADDITION to those, not instead of. A high-risk task room has all three categories applied concurrently.',
+            'Duration matches building duration (3 h non-domestic default). Not a shorter "shutdown-only" period.',
+          ]}
+        />
+
+        <FAQ
+          items={[
+            {
+              question: 'How is the working plane illuminance verified at commissioning?',
+              answer:
+                'Lux meter held at the working plane of the task — typically the bench top, machine table, or fume hood platform, depending on the task. Take readings at the task position(s) where the operator works. Commissioning report records the meter reading at each high-risk task position, plus the time-to-full-output (must be ≤ 0.5 s) and the dual-circuit verification (each circuit independently switched on and off, illumination retained when one is killed). Three separate verifications.',
+            },
+            {
+              question:
+                'Does the dual-circuit rule apply to existing installations from before BS 5266-1:2025?',
+              answer:
+                'No, prospectively only. Existing installations remain compliant under the standard in force when commissioned. New installations and major refurbishments after the BS 5266-1:2025 effective date (31 October 2025) must comply with the dual-circuit rule. Best practice is to upgrade existing high-risk task installations at the next major maintenance cycle, particularly where battery / luminaire replacement is being undertaken anyway.',
+            },
+            {
+              question:
+                'Can a single luminaire above a high-risk task meet the dual-circuit rule by being a "dual-supply" product?',
+              answer:
+                'No. The dual-circuit rule requires two SEPARATE circuits (each with its own protective device) and the failure mode it defends against is at the circuit level (cable fault, MCB trip, fuse blow). A single luminaire with two internal supplies still goes dark if either circuit fails at the consumer unit level. Implementation requires at least two physically separate luminaires, each on a different circuit, illuminating the same task.',
+            },
+            {
+              question:
+                'Is a "high-risk task" the same as an "Atex zone" or "explosive atmosphere"?',
+              answer:
+                'Different concepts that may overlap. Atex zones are about explosive atmospheres (DSEAR / DSEAR-related); high-risk task is about lighting for safe shutdown. A single location can be both (a chemical reactor in a Zone 1 atmosphere is both high-risk task AND Atex). The high-risk task lighting must comply with BS EN 1838 §6 illuminance / response / circuits AND the Atex / IECEx requirements for the zone (IIB / IIC, T-class, IP). Specify Atex-rated emergency luminaires for these locations.',
+            },
+            {
+              question:
+                'My factory has 50 high-risk task locations. Does the 20-luminaire-per-circuit rule mean I need many circuits?',
+              answer:
+                'Yes. With dual-circuit redundancy at each task, and ≤ 20 luminaires per circuit, the wiring distribution is more granular than a typical escape route system. A practical approach: group nearby tasks onto pairs of feeders, with each feeder serving up to 20 luminaires across multiple tasks. Plan the circuit topology at design stage; do not retrofit the rule onto an existing single-circuit layout — the consumer unit and feeders both have to be redesigned.',
+            },
+            {
+              question: 'What if my high-risk task is normally lit at 50 lx (low-light task)?',
+              answer:
+                'Apply the headline minimum: 15 lx. The 10 % of 50 lx (5 lx) is below the 15 lx headline, so 15 lx wins under "whichever higher". Some "high-risk" tasks are deliberately low-light (e.g. photographic darkrooms, certain inspection tasks). The 15 lx emergency floor still applies because the SHUTDOWN requirement is independent of the normal task light level — operators can navigate the equipment and engage emergency stops at 15 lx even if normal operation is darker.',
+            },
+            {
+              question:
+                'Can general escape route luminaires above a high-risk task area double as the high-risk task lighting?',
+              answer:
+                'Only if they meet ALL the high-risk task criteria simultaneously: 15 lx (or 10 % of normal) at the working plane, 0.5 s response, dual-circuit, working plane verification. In practice escape-route-grade luminaires (1 lx, 5 s, single-circuit acceptable) usually do not. Treat high-risk task lighting as a separate provision; do not assume general emergency lighting is sufficient.',
+            },
+            {
+              question: 'How does this interact with HSE machinery safety guidance and PUWER 1998?',
+              answer:
+                'PUWER (Provision and Use of Work Equipment Regulations 1998) requires equipment to have appropriate emergency stop arrangements that include the means to operate them safely. Adequate illumination at the controls is part of "safely". HSE guidance on machinery safety often references emergency lighting as a prerequisite for emergency-stop usability. BS 5266-1:2025 high-risk task provision is the technical means by which this PUWER duty is discharged for emergency-stop scenarios. The two regimes converge at the same physical luminaires.',
+            },
+          ]}
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>Knowledge check</ContentEyebrow>
+        <Quiz title="High-risk task area lighting — Module 2.3" questions={quizQuestions} />
+
+        <div className="grid grid-cols-2 gap-3 pt-2">
           <button
             type="button"
             onClick={() => navigate('/electrician/upskilling/emergency-lighting-module-2')}
-            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
           >
-            <ArrowLeft className="h-4 w-4" /> Module 2
+            <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+              <ChevronLeft className="h-3 w-3" /> Module 2
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-white truncate">
+              Module overview
+            </div>
           </button>
-
-          <PageHero
-            eyebrow="Module 2 · Section 3"
-            title="High-risk task area lighting"
-            description="The third functional category — and the most demanding. BS EN 1838:2024: 15 lx OR 10 % of normal task illuminance (whichever higher) at the working plane, with full output within 0.5 s of mains failure. NEW under BS 5266-1:2025: high-risk task circuits must be split across at least two circuits with no more than 20 luminaires per circuit."
-            tone="yellow"
-          />
-
-          <TLDR
-            points={[
-              'High-risk task area lighting allows occupants to safely shut down hazardous processes (machinery, hot processes, chemical reactions, lifts mid-cycle) before evacuating.',
-              'BS EN 1838:2024 minimum: 15 lx OR 10 % of normal maintained task illuminance, whichever is HIGHER. The double rule scales emergency level with task demand.',
-              'Response time: full rated illuminance within 0.5 s — an order of magnitude tighter than the 5 s for escape route / anti-panic. LED mandatory; many designs use continuous-operation (maintained) mode to eliminate switchover delay.',
-              'NEW under BS 5266-1:2025 §7.5: high-risk task lighting requires AT LEAST 2 separate circuits, with NO MORE THAN 20 luminaires per circuit. A single circuit fault must not extinguish all illumination at a high-risk task.',
-              'Trigger: risk assessment. Not area-led, not occupancy-led. The assessor identifies specific points where machinery shutdown / hot-process control / hazardous task completion is required during evacuation.',
-              'Mounting: typically dedicated task-specific luminaires above or beside the machinery, often integrated into the machine guard, aimed at the working plane (not floor).',
-              'Duration: matches the building emergency lighting duration (3 h non-domestic default). Not a shorter "shutdown-only" duration.',
-              'Independent of escape route and anti-panic — high-risk task is in ADDITION to those, not instead of them.',
-            ]}
-          />
-
-          <LearningOutcomes
-            outcomes={[
-              'State the BS EN 1838:2024 illuminance, response-time and duration requirements for high-risk task area lighting',
-              'Apply the "15 lx OR 10 % of normal task illuminance, whichever higher" rule to specific task examples',
-              'Identify the NEW BS 5266-1:2025 dual-circuit rule (≥ 2 circuits, ≤ 20 luminaires per circuit) and explain its rationale',
-              'Use a risk assessment to determine where high-risk task lighting is mandatory',
-              'Specify task-specific luminaire placement (above / beside machinery, integrated into guards) and continuous-operation mode',
-              'Distinguish high-risk task lighting (15 lx, 0.5 s, working plane) from escape route (1 lx, 5 s, floor) and anti-panic (0.5 lx, 5 s, floor)',
-              'Recognise that high-risk task lighting applies in ADDITION to escape route and anti-panic, not instead of them',
-            ]}
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>What high-risk task lighting is for</ContentEyebrow>
-
-          <ConceptBlock
-            title="Safe shutdown before evacuation"
-            plainEnglish="The other emergency lighting categories assume occupants leave the building. High-risk task lighting recognises that some occupants cannot leave immediately — they have to do something hazardous first. A printing press operator cannot just walk away from a running press; the press has to be brought to a controlled stop (emergency stop button, isolation, blade locked). A chemist mid-reaction cannot just walk away from an exothermic process; the reaction has to be quenched or the system isolated. A lift operator cannot just walk away from a stuck lift; the car has to be levelled and the doors opened. In each case, the work-to-make-safe takes seconds to minutes and requires the operator to see the equipment they are controlling. High-risk task lighting provides the visual environment for this shutdown phase."
-            onSite="Identify the high-risk task points first by walking the building with the operator. 'What can't you just walk away from?' is the survey question. The points where the operator hesitates — that's where high-risk task lighting goes."
-          >
-            <p>Typical high-risk task locations:</p>
-            <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
-              <li>
-                <strong>Machine tools.</strong> Lathes, mills, presses, saws, grinders. Operators
-                need to see the cutting edge / press platen / blade to engage emergency stop and
-                withdraw hands.
-              </li>
-              <li>
-                <strong>Printing and converting.</strong> Web presses, slitter / rewinders, label
-                machines. The running web has to be stopped, the rollers parked, the nip points
-                cleared.
-              </li>
-              <li>
-                <strong>Hot processes.</strong> Furnaces, ovens, soldering / welding stations,
-                molten material handling. Stop the process safely; isolate the gas / power.
-              </li>
-              <li>
-                <strong>Chemical processes.</strong> Reactors, fume hoods, mixing stations.
-                Quench reactions, close valves, evacuate vessels.
-              </li>
-              <li>
-                <strong>Lifts mid-cycle.</strong> A stuck lift car must be levelled and doors
-                opened from inside. The lift control panel needs illumination.
-              </li>
-              <li>
-                <strong>Food processing.</strong> Slicers, mixers, ovens, fryers. Hot oil and
-                rotating blades need controlled shutdown.
-              </li>
-              <li>
-                <strong>High-voltage / high-current operations.</strong> Live HV switching,
-                substation work, electroplating baths. Operators need clear sight of the work
-                area to disengage safely.
-              </li>
-              <li>
-                <strong>Material handling at height.</strong> Cranes, gantries, hoists. Operators
-                need to see the load and ground crew to stop safely.
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <RegsCallout
-            source="BS EN 1838:2024 · §6 (High-risk task area lighting)"
-            clause={
-              <>
-                High-risk task area lighting shall provide an illuminance not less than 15 lx or
-                10 % of the maintained illuminance of the normal lighting at the task, whichever
-                is the higher. The illuminance shall be reached within 0.5 s. The minimum
-                duration shall be the period of operation of the high-risk task.
-              </>
+          <button
+            type="button"
+            onClick={() =>
+              navigate('/electrician/upskilling/emergency-lighting-module-2-section-4')
             }
-            meaning="Two-part minimum (15 lx OR 10 % of normal, whichever higher) makes the emergency level scale with task demand. 0.5 s response — order of magnitude tighter than the 5 s for other categories. Duration is the period of operation of the task — in practice this means as long as the task may be performed, which is the building duration."
-          />
-
-          <ConceptBlock
-            title="The 'whichever higher' rule"
-            plainEnglish="The rule has two thresholds and you take the higher. The 15 lx is a headline floor — emergency illumination cannot be less than 15 lx anywhere a high-risk task is performed, even if the task is normally done at low light. The 10 % is a scaling rule — for tasks that are normally done at high illumination, emergency illumination scales up proportionally. The result: simple high-risk tasks at 100 lx normal get 15 lx emergency (10 % is only 10 lx, so the headline floor wins). Complex high-risk tasks at 1000 lx normal get 100 lx emergency (the 10 % rule wins). The rule scales emergency provision with task demand."
+            className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
           >
-            <p>Worked examples:</p>
-            <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
-              <li>
-                <strong>Loading bay forklift operation, 100 lx normal.</strong> 10 % = 10 lx; 15
-                lx headline higher. Emergency = 15 lx.
-              </li>
-              <li>
-                <strong>Assembly bench, 300 lx normal.</strong> 10 % = 30 lx; 15 lx headline lower.
-                Emergency = 30 lx.
-              </li>
-              <li>
-                <strong>Chemical fume hood, 500 lx normal.</strong> 10 % = 50 lx; emergency = 50
-                lx.
-              </li>
-              <li>
-                <strong>Printing press, 750 lx normal.</strong> 10 % = 75 lx; emergency = 75 lx.
-              </li>
-              <li>
-                <strong>Precision machining, 1000 lx normal.</strong> 10 % = 100 lx; emergency =
-                100 lx.
-              </li>
-              <li>
-                <strong>Microscopic / inspection work, 2000 lx normal.</strong> 10 % = 200 lx;
-                emergency = 200 lx.
-              </li>
-            </ul>
-            <p>
-              The figures are at the WORKING PLANE (typically table or bench level) not at floor
-              level. This is a key difference from escape route and anti-panic, both measured at
-              floor. The working plane is wherever the task is performed — usually 0.85 m for
-              standing tasks, 0.5 m for sitting tasks, on the equipment surface for machine tools.
-            </p>
-          </ConceptBlock>
+            <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+              Next section <ChevronRight className="h-3 w-3" />
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-black truncate">
+              2.4 Maintained vs non-maintained
+            </div>
+          </button>
+        </div>
 
-          <InlineCheck
-            id={inlineChecks[0].id}
-            question={inlineChecks[0].question}
-            options={inlineChecks[0].options}
-            correctIndex={inlineChecks[0].correctIndex}
-            explanation={inlineChecks[0].explanation}
-          />
-
-          {/* Diagram: high-risk task with 15 lx + 0.5 s + dual-circuit (NEW 2025) */}
-          <div className="bg-white/5 border border-white/10 rounded-2xl p-4 sm:p-6 my-6">
-            <p className="text-xs font-semibold text-elec-yellow/60 uppercase tracking-wider mb-3">
-              Diagram
-            </p>
-            <h4 className="text-sm font-bold text-white mb-4">
-              High-risk task — 15 lx working plane, 0.5 s response, dual-circuit (NEW 2025)
-            </h4>
-            <svg
-              viewBox="0 0 820 460"
-              className="w-full h-auto"
-              role="img"
-              aria-label="Plan and elevation of a high-risk task area showing dedicated task-specific luminaires above the machinery, working plane illuminance 15 lx (or 10 % of normal task illuminance), 0.5 s response time, and the new BS 5266-1:2025 requirement for at least two separate circuits with no more than 20 luminaires per circuit."
-            >
-              <text x="410" y="24" textAnchor="middle" fill="#FBBF24" fontSize="13" fontWeight="bold">
-                HIGH-RISK TASK — 15 lx (or 10 % of normal) at working plane in 0.5 s
-              </text>
-              <text x="410" y="40" textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize="10">
-                BS EN 1838:2024 §6 · BS 5266-1:2025 §7.5 (NEW dual-circuit rule)
-              </text>
-
-              {/* Machine outline */}
-              <rect
-                x="200"
-                y="160"
-                width="240"
-                height="120"
-                rx="6"
-                fill="rgba(255,255,255,0.06)"
-                stroke="rgba(255,255,255,0.5)"
-                strokeWidth="1.6"
-              />
-              <text x="320" y="226" textAnchor="middle" fill="rgba(255,255,255,0.85)" fontSize="11" fontWeight="bold">
-                Machine tool / press / mixer
-              </text>
-              <text x="320" y="242" textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize="9">
-                normal task illuminance e.g. 750 lx
-              </text>
-
-              {/* Working plane (red dashed at top of machine) */}
-              <line
-                x1="200"
-                y1="180"
-                x2="440"
-                y2="180"
-                stroke="#EF4444"
-                strokeWidth="1.5"
-                strokeDasharray="4,3"
-              />
-              <text x="450" y="184" fill="#EF4444" fontSize="9" fontWeight="bold">
-                working plane (15 lx min)
-              </text>
-
-              {/* Luminaire 1 (circuit A) */}
-              <g>
-                <circle cx="240" cy="120" r="9" fill="rgba(251,191,36,0.95)" />
-                <circle cx="240" cy="120" r="18" fill="rgba(251,191,36,0.18)" />
-                <text x="240" y="105" textAnchor="middle" fill="#22D3EE" fontSize="9" fontWeight="bold">
-                  Circuit A
-                </text>
-                <line x1="240" y1="129" x2="240" y2="180" stroke="rgba(251,191,36,0.4)" strokeWidth="1" strokeDasharray="2,2" />
-              </g>
-
-              {/* Luminaire 2 (circuit B) */}
-              <g>
-                <circle cx="400" cy="120" r="9" fill="rgba(251,191,36,0.95)" />
-                <circle cx="400" cy="120" r="18" fill="rgba(251,191,36,0.18)" />
-                <text x="400" y="105" textAnchor="middle" fill="#A855F7" fontSize="9" fontWeight="bold">
-                  Circuit B
-                </text>
-                <line x1="400" y1="129" x2="400" y2="180" stroke="rgba(251,191,36,0.4)" strokeWidth="1" strokeDasharray="2,2" />
-              </g>
-
-              {/* Operator silhouette beside machine */}
-              <g transform="translate(490 220)">
-                <circle cx="0" cy="-20" r="9" fill="rgba(255,255,255,0.5)" />
-                <rect x="-8" y="-10" width="16" height="36" fill="rgba(255,255,255,0.3)" />
-                <text x="0" y="50" textAnchor="middle" fill="rgba(255,255,255,0.6)" fontSize="9">
-                  operator
-                </text>
-              </g>
-
-              {/* Circuit feeders schematic */}
-              <g>
-                <rect x="60" y="80" width="100" height="40" rx="6" fill="rgba(34,211,238,0.1)" stroke="#22D3EE" strokeWidth="1.5" />
-                <text x="110" y="98" textAnchor="middle" fill="#22D3EE" fontSize="10" fontWeight="bold">
-                  MCB A
-                </text>
-                <text x="110" y="112" textAnchor="middle" fill="rgba(255,255,255,0.6)" fontSize="9">
-                  ≤ 20 lum.
-                </text>
-                <line x1="160" y1="100" x2="240" y2="120" stroke="#22D3EE" strokeWidth="1.5" />
-              </g>
-              <g>
-                <rect x="660" y="80" width="100" height="40" rx="6" fill="rgba(168,85,247,0.1)" stroke="#A855F7" strokeWidth="1.5" />
-                <text x="710" y="98" textAnchor="middle" fill="#A855F7" fontSize="10" fontWeight="bold">
-                  MCB B
-                </text>
-                <text x="710" y="112" textAnchor="middle" fill="rgba(255,255,255,0.6)" fontSize="9">
-                  ≤ 20 lum.
-                </text>
-                <line x1="660" y1="100" x2="400" y2="120" stroke="#A855F7" strokeWidth="1.5" />
-              </g>
-
-              {/* Response time + dual circuit annotation */}
-              <g>
-                <rect
-                  x="60"
-                  y="320"
-                  width="700"
-                  height="120"
-                  rx="10"
-                  fill="rgba(239,68,68,0.06)"
-                  stroke="rgba(239,68,68,0.45)"
-                  strokeWidth="1.4"
-                />
-                <text x="80" y="344" fill="#EF4444" fontSize="11" fontWeight="bold">
-                  Response time: full rated illuminance within 0.5 s of mains failure.
-                </text>
-                <text x="80" y="362" fill="rgba(255,255,255,0.7)" fontSize="10">
-                  10× tighter than escape route (5 s). LED mandatory. Maintained mode typical (always-on).
-                </text>
-                <text x="80" y="384" fill="#EF4444" fontSize="11" fontWeight="bold">
-                  NEW BS 5266-1:2025 §7.5: ≥ 2 separate circuits, ≤ 20 luminaires per circuit.
-                </text>
-                <text x="80" y="402" fill="rgba(255,255,255,0.7)" fontSize="10">
-                  Single circuit fault must not extinguish all illumination at a high-risk task.
-                </text>
-                <text x="80" y="420" fill="rgba(255,255,255,0.7)" fontSize="10">
-                  Duration: matches building duration (3 h non-domestic default). Working plane, not floor.
-                </text>
-              </g>
-            </svg>
-          </div>
-
-          <SectionRule />
-
-          <ContentEyebrow>The 0.5 s response time</ContentEyebrow>
-
-          <ConceptBlock
-            title="Why 0.5 s — the hazard timing argument"
-            plainEnglish="Hazardous machinery does not stop instantaneously when power is cut. A band saw spins down over 4-8 seconds. A printing press web takes 6-10 seconds to stop. A mixer with mechanical inertia takes 3-5 seconds. During that spin-down, the equipment is still moving — the blade is still cutting, the rollers are still pulling, the mixer is still rotating. The operator needs to see what is happening to bring it under control safely. A 5-second blackout (the figure used for escape route lighting) leaves the operator in darkness through the entire spin-down window. 0.5 s ensures continuous visual contact with the equipment from the moment of mains failure onward. The figure is calibrated against typical industrial machinery spin-down timing — 0.5 s is short enough that the human eye does not lose visual orientation, and short enough that the spin-down phase is fully illuminated."
-          >
-            <p>How designs achieve 0.5 s in practice:</p>
-            <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
-              <li>
-                <strong>LED technology mandatory.</strong> Discharge lamps cannot meet 0.5 s —
-                their ignition / warm-up cycle is 5-30 s. LED is effectively instant. Older
-                installations using sodium / fluorescent lighting cannot be retrofitted to
-                high-risk task without converting to LED.
-              </li>
-              <li>
-                <strong>Maintained mode common.</strong> The simplest way to achieve 0.5 s is
-                continuous operation — the luminaire is ALWAYS on at emergency level (or higher).
-                On mains failure, the luminaire keeps running on battery; there is no switchover.
-                Used at machinery, fume hoods, hot processes.
-              </li>
-              <li>
-                <strong>Sustained / dual-emergency luminaires.</strong> Have a separate emergency
-                lamp inside the same luminaire, always energised, with the main lamp providing
-                additional output during normal operation. On mains failure the main goes off and
-                the emergency continues. Compact and reliable.
-              </li>
-              <li>
-                <strong>Self-contained switchover.</strong> Standard non-maintained luminaires use
-                a relay that responds in milliseconds — well within 0.5 s. The risk is relay wear
-                over many years; high-risk task installations should avoid relay-based switchover
-                where possible.
-              </li>
-              <li>
-                <strong>Central battery with fast switchover.</strong> Modern central battery
-                systems achieve switchover in under 100 ms. Older systems may be 1-2 s — too slow
-                for high-risk task. Audit installations using central battery for high-risk task
-                to confirm switchover speed.
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <RegsCallout
-            source="BS EN 1838:2024 · §6.2 (Response time for high-risk task lighting)"
-            clause={
-              <>
-                For high-risk task area lighting, the illuminance shall reach the required value
-                within 0.5 s of the failure of the normal supply.
-              </>
-            }
-            meaning="0.5 s is full output, not 50 % output (the 5 s escape route figure was 50 %). The faster figure plus the higher absolute level (full output) means the high-risk task is illuminated continuously at the working level from the moment of mains failure. Operators do not lose any meaningful visual control."
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>BS 5266-1:2025 NEW dual-circuit rule</ContentEyebrow>
-
-          <ConceptBlock
-            title="≥ 2 circuits, ≤ 20 luminaires per circuit"
-            plainEnglish="BS 5266-1:2025 introduced a new specific requirement for high-risk task lighting circuits: at least two separate circuits, with no more than 20 luminaires on any one circuit. The rule does NOT apply to escape route or anti-panic lighting; it is specific to high-risk task. The reason is the consequence of total lighting loss at a high-risk task. Escape route loss is recoverable — occupants navigate slowly, but they can still navigate. High-risk task loss is not — the operator at a running press cannot do anything safely without illumination. The dual-circuit rule ensures a single circuit fault (short, MCB trip, broken cable, fuse blow) leaves at least one circuit intact, so partial illumination remains while the operator achieves shutdown."
-          >
-            <p>How the rule works in practice:</p>
-            <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
-              <li>
-                <strong>Self-contained luminaires.</strong> Two luminaires above each high-risk
-                task, each on a different final circuit (different MCB / fuse). One MCB tripping
-                kills one luminaire; the other remains.
-              </li>
-              <li>
-                <strong>Central battery system.</strong> Two parallel feeders from the central
-                battery to the high-risk task luminaires, each on a different protective device.
-                A feeder fault kills one feeder; the other remains.
-              </li>
-              <li>
-                <strong>20-luminaire limit.</strong> A circuit serving 50 luminaires across many
-                high-risk tasks would, on a fault, kill all 50 — defeating the redundancy.
-                Limiting to 20 luminaires per circuit restricts the impact of a single fault.
-              </li>
-              <li>
-                <strong>Backwards compatibility.</strong> Existing installations from before BS
-                5266-1:2025 are not retrospectively non-compliant; the rule applies to new
-                installations and major refurbishments. Risk-assessment-led upgrade is encouraged.
-              </li>
-              <li>
-                <strong>Documentation.</strong> The dual-circuit arrangement should be reflected
-                in the as-built drawings, with each circuit clearly identified and the serving
-                MCB / protective device marked.
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <RegsCallout
-            source="BS 5266-1:2025 · §7.5 (Circuit arrangements for high-risk task area lighting)"
-            clause={
-              <>
-                Emergency lighting installations serving high-risk task areas shall be arranged
-                such that the failure of any single circuit does not extinguish all the emergency
-                illumination at the task. At least two separate circuits shall be provided for
-                each high-risk task area, with no single circuit serving more than 20 luminaires.
-              </>
-            }
-            meaning="The rule has two parts. First, two separate circuits are mandatory at every high-risk task area. Second, no circuit may carry more than 20 luminaires regardless of how many tasks it serves. Both parts must be satisfied; one without the other is not compliant. The rule is new in BS 5266-1:2025 and applies prospectively."
-          />
-
-          <CommonMistake
-            title="Single-circuit emergency lighting at machinery"
-            whatHappens="A factory installs emergency lighting throughout including at the machine tool area, all on a single emergency circuit fed from one central battery feeder. Under BS 5266-1:2025 §7.5 this is non-compliant for the high-risk task area. A single feeder fault would extinguish ALL emergency illumination at the machinery during a power outage — operator at the press is in total darkness during the spin-down. Re-design needed: split the high-risk task luminaires across two feeders."
-            doInstead="At every high-risk task area, plan dual-circuit emergency lighting from the start. Identify which luminaires serve high-risk tasks and which serve escape route / anti-panic only. The high-risk task luminaires need the dual-circuit redundancy; the others may be on a single circuit if simpler. Split the high-risk task luminaires across two MCBs (or two central battery feeders) at design stage."
-          />
-
-          <CommonMistake
-            title="Treating a generic 5 s response as adequate for high-risk task"
-            whatHappens="A designer specifies escape-route-grade luminaires (5 s response) above a printing press, on the basis that they are emergency luminaires and meet the general standard. The press is a high-risk task and the BS EN 1838:2024 §6 response time is 0.5 s, not 5 s. On commissioning, the switchover test takes 1.2 s — fails high-risk task response. The luminaires are non-compliant for that location; they would be fine in a corridor."
-            doInstead="Identify the response-time category at design stage. High-risk task luminaires are a specific product class — typically marked '0.5 s response' or 'continuous-operation maintained' on the rating plate. They are slightly more expensive than standard emergency luminaires and use different switching electronics. Specify the right product for the task; do not assume 'emergency' is enough."
-          />
-
-          <InlineCheck
-            id={inlineChecks[1].id}
-            question={inlineChecks[1].question}
-            options={inlineChecks[1].options}
-            correctIndex={inlineChecks[1].correctIndex}
-            explanation={inlineChecks[1].explanation}
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>Risk assessment as the trigger</ContentEyebrow>
-
-          <ConceptBlock
-            title="Risk-assessment-led, not premises-led"
-            plainEnglish="Unlike escape route lighting (mandatory wherever an escape route exists) and anti-panic lighting (triggered by area or occupancy), high-risk task lighting is risk-assessment-led. The competent person — usually a fire risk assessor or a technical specialist — walks the building and identifies specific points where occupants must perform a hazardous task to make safe before evacuating. The risk assessment documents these points. The lighting design then provides 15 lx (or 10 % of normal) at each documented point, with 0.5 s response and dual-circuit redundancy. The trigger is the risk assessment; the design follows it."
-          >
-            <p>What the risk assessor is looking for:</p>
-            <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
-              <li>
-                <strong>"Walk-away unsafe" tasks.</strong> Can the occupant safely walk away from
-                the equipment / process without doing something first? If yes (e.g. office desk
-                with computer) — no high-risk task lighting. If no (e.g. running mixer) — high-risk
-                task lighting required.
-              </li>
-              <li>
-                <strong>Spin-down / cool-down hazards.</strong> Equipment that retains energy after
-                power loss — rotating machinery, hot surfaces, pressurised systems — typically
-                qualifies because the operator needs to see the spin-down / cool-down to manage
-                it.
-              </li>
-              <li>
-                <strong>Manual emergency-stop sequences.</strong> Where the operator has to
-                physically engage emergency stops, isolate gas / chemicals, lock out energy
-                sources — illumination of those controls is mandatory.
-              </li>
-              <li>
-                <strong>Trapped-occupant scenarios.</strong> Lifts, hoists, confined spaces — any
-                location where occupants might be inside and need to operate controls to escape.
-                The lift car is a classic example; the inside of a confined space access hatch is
-                another.
-              </li>
-              <li>
-                <strong>Process-criticality.</strong> Some processes cannot be left in an
-                indeterminate state without producing further hazard (chemical reactions, hot
-                metal handling, live-line work). The risk assessment identifies these process-stop
-                requirements.
-              </li>
-              <li>
-                <strong>Premises type does not exempt.</strong> An office can have a high-risk
-                task (e.g. a small chemistry lab in an R&D building, a 3D printer with hot parts).
-                A factory may not have any high-risk tasks if the operations are passive (e.g.
-                product storage). The premises label does not predict the requirement; the risk
-                assessment does.
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <RegsCallout
-            source="BS 5266-1:2025 · §5.5 (Identification of high-risk task areas)"
-            clause={
-              <>
-                The responsible person, in consultation with competent persons as necessary, shall
-                identify any high-risk task areas within the premises. A high-risk task area is
-                any location where the failure of normal lighting could prevent the safe shutdown
-                of a hazardous process or operation. The identification shall be documented in the
-                fire risk assessment.
-              </>
-            }
-            meaning="The responsible person (typically the building owner or operator) leads the identification, supported by competent persons (risk assessor, lighting designer). The output is documented — listed in the fire risk assessment as specific locations. The lighting design takes that list and provides the 15 lx / 0.5 s / dual-circuit provision at each."
-          />
-
-          <Scenario
-            title="The R&D laboratory in an office building"
-            situation="A general office building in central London has, on its 4th floor, a small R&D laboratory with one fume hood used for occasional hazardous reactions. The building's main use is office (escape route 1 lx, anti-panic 0.5 lx where triggers fire). The lab is 35 m² with maximum 4 occupants. Anti-panic does not trigger (small area, low occupancy). The fume hood, however, is used for reactions that cannot be left running during a power loss — they need active quenching. Risk assessment identifies the fume hood working plane as a high-risk task area. Normal task illuminance at the hood is 500 lx."
-            whatToDo="High-risk task lighting at the fume hood working plane: 50 lx (10 % of 500 lx, higher than 15 lx headline), within 0.5 s response, supplied by two separate emergency circuits (BS 5266-1:2025 dual-circuit rule), with rated duration matching the building (3 h). Practical implementation: two LED downlights mounted directly above the fume hood, each on a different emergency circuit, in maintained mode (always on at emergency level during occupancy). The rest of the lab gets escape route lighting at the door (1 lx) and signage; anti-panic does not trigger so no 0.5 lx area-wide requirement."
-            whyItMatters="High-risk task is location-specific, not premises-specific. An office building usually has none, but a single specialist room can change the requirement at one bench. The risk assessment is the trigger; identification of the trigger drives the design. Designers who survey only the building type (office = escape route + anti-panic) miss the high-risk task points."
-          />
-
-          <InlineCheck
-            id={inlineChecks[2].id}
-            question={inlineChecks[2].question}
-            options={inlineChecks[2].options}
-            correctIndex={inlineChecks[2].correctIndex}
-            explanation={inlineChecks[2].explanation}
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>Mounting and luminaire choice</ContentEyebrow>
-
-          <ConceptBlock
-            title="Task-specific luminaires above the work"
-            plainEnglish="High-risk task lighting is not general room lighting. It is dedicated luminaires aimed at the working plane of the specific task. A printing press has its own task luminaires above the press; a fume hood has its own above the hood; a machine tool has its own above the cutting area. The lighting design treats each high-risk task as a discrete lighting zone with its own design calculation, regardless of where the rest of the room's emergency lighting sits."
-          >
-            <p>Mounting and design considerations:</p>
-            <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
-              <li>
-                <strong>Direct overhead.</strong> Most common. Luminaire mounted on the ceiling
-                directly above the working plane, giving maximum lux per watt at the task.
-                Suitable for benches, fume hoods, conveyor sections.
-              </li>
-              <li>
-                <strong>Side-mounted.</strong> For tasks where overhead is not practical (e.g.
-                under a low ceiling, behind a guard structure). Luminaires mounted to the side of
-                the task with appropriate aim.
-              </li>
-              <li>
-                <strong>Integrated into machine guard.</strong> Used on enclosed machine tools
-                (CNC, presses) where the task is inside a guarded enclosure. Luminaires inside
-                the guard, on the machine's own emergency supply (or a parallel building
-                emergency supply).
-              </li>
-              <li>
-                <strong>Track-mounted / adjustable.</strong> For tasks that may move within the
-                area (workshop with multiple bench positions). Adjustable aim ensures the working
-                plane is illuminated regardless of bench layout.
-              </li>
-              <li>
-                <strong>Maintained / continuous-operation.</strong> Luminaire is always on at
-                emergency level. Eliminates switchover delay. Used at high-criticality tasks
-                where 0.5 s switchover is a risk.
-              </li>
-              <li>
-                <strong>Sealed / IP-rated.</strong> Many high-risk task locations are wet, dusty,
-                or chemically aggressive. IP54 minimum typical; IP65 or higher for fume hoods,
-                wash areas, food processing.
-              </li>
-              <li>
-                <strong>Impact-rated.</strong> IK rating for areas with mechanical impact risk
-                (forklift collision zones, swinging boom hazards). IK08 or higher typical.
-              </li>
-              <li>
-                <strong>Anti-glare.</strong> Some tasks (precision inspection, microscope work)
-                are sensitive to direct glare. Use indirect or low-glare luminaires; aim for
-                diffuse illumination of the working plane.
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <RegsCallout
-            source="BS 5266-1:2025 · §7.6 (Luminaire selection for high-risk task areas)"
-            clause={
-              <>
-                Luminaires used in high-risk task areas shall be selected with regard to the
-                environmental conditions of the location, including ingress protection, impact
-                resistance, ambient temperature, and any chemical or corrosive influences.
-                Luminaires shall be mounted to provide the required illuminance at the working
-                plane of the task, with consideration of glare control where the task is
-                visually demanding.
-              </>
-            }
-            meaning="Environmental robustness is part of the spec. A ceiling downlight that suits a corridor will not survive in a fume hood, a wash bay, or a forklift zone. Match the luminaire to the location: IP rating, IK rating, temperature, chemical resistance. The mounting must produce the required illuminance at the working plane — not just at floor level."
-          />
-
-          <CommonMistake
-            title="Generic ceiling emergency luminaires above a fume hood"
-            whatHappens="A designer specifies a row of standard 3-hour LED emergency downlights across a chemistry lab ceiling. The fume hood gets one luminaire above it, in line with the rest of the row. The luminaire is rated IP20 (open ceiling). The fume hood handles corrosive vapours that escape periodically; over 18 months the luminaire's electronics corrode and it fails the annual test. Replacement costs significant downtime; the lab loses certification."
-            doInstead="At the fume hood specifically, specify an IP65 or higher luminaire rated for chemical environments. Mount it for direct illumination of the working plane. Often this means a different product to the rest of the lab ceiling; the cost premium is small and the lifetime is longer. Match luminaire IP / IK / chemical rating to the task environment, not just to the ceiling-mounting convention."
-          />
-
-          <InlineCheck
-            id={inlineChecks[3].id}
-            question={inlineChecks[3].question}
-            options={inlineChecks[3].options}
-            correctIndex={inlineChecks[3].correctIndex}
-            explanation={inlineChecks[3].explanation}
-          />
-
-          <SectionRule />
-
-          <KeyTakeaways
-            title="What to remember on site"
-            points={[
-              'High-risk task area lighting allows safe shutdown of hazardous processes before evacuation. 15 lx OR 10 % of normal task illuminance, whichever HIGHER (BS EN 1838:2024 §6).',
-              'Response time: full rated illuminance within 0.5 s of mains failure — order of magnitude tighter than the 5 s for escape route or anti-panic. LED mandatory.',
-              'NEW BS 5266-1:2025 §7.5: at least 2 separate circuits, no more than 20 luminaires per circuit. Single circuit fault must not extinguish all illumination at high-risk task.',
-              'Trigger: risk assessment. The competent person identifies specific points where occupants must perform hazardous tasks before evacuating. Lighting design provides 15 lx / 0.5 s / dual-circuit at those points.',
-              'Mounting: dedicated task-specific luminaires above or beside the machinery, often integrated into machine guards. Aimed at the working plane (not floor).',
-              'Maintained / continuous-operation mode common — eliminates switchover delay risk.',
-              'Working plane (where task is performed) is the verification point — typically 0.85 m for standing tasks, 0.5 m for sitting, on equipment surface for machine tools. NOT floor level.',
-              'Independent of escape route and anti-panic. High-risk task is in ADDITION to those, not instead of. A high-risk task room has all three categories applied concurrently.',
-              'Duration matches building duration (3 h non-domestic default). Not a shorter "shutdown-only" period.',
-            ]}
-          />
-
-          <FAQ
-            items={[
-              {
-                question:
-                  'How is the working plane illuminance verified at commissioning?',
-                answer:
-                  'Lux meter held at the working plane of the task — typically the bench top, machine table, or fume hood platform, depending on the task. Take readings at the task position(s) where the operator works. Commissioning report records the meter reading at each high-risk task position, plus the time-to-full-output (must be ≤ 0.5 s) and the dual-circuit verification (each circuit independently switched on and off, illumination retained when one is killed). Three separate verifications.',
-              },
-              {
-                question:
-                  'Does the dual-circuit rule apply to existing installations from before BS 5266-1:2025?',
-                answer:
-                  'No, prospectively only. Existing installations remain compliant under the standard in force when commissioned. New installations and major refurbishments after the BS 5266-1:2025 effective date (31 October 2025) must comply with the dual-circuit rule. Best practice is to upgrade existing high-risk task installations at the next major maintenance cycle, particularly where battery / luminaire replacement is being undertaken anyway.',
-              },
-              {
-                question:
-                  'Can a single luminaire above a high-risk task meet the dual-circuit rule by being a "dual-supply" product?',
-                answer:
-                  'No. The dual-circuit rule requires two SEPARATE circuits (each with its own protective device) and the failure mode it defends against is at the circuit level (cable fault, MCB trip, fuse blow). A single luminaire with two internal supplies still goes dark if either circuit fails at the consumer unit level. Implementation requires at least two physically separate luminaires, each on a different circuit, illuminating the same task.',
-              },
-              {
-                question:
-                  'Is a "high-risk task" the same as an "Atex zone" or "explosive atmosphere"?',
-                answer:
-                  'Different concepts that may overlap. Atex zones are about explosive atmospheres (DSEAR / DSEAR-related); high-risk task is about lighting for safe shutdown. A single location can be both (a chemical reactor in a Zone 1 atmosphere is both high-risk task AND Atex). The high-risk task lighting must comply with BS EN 1838 §6 illuminance / response / circuits AND the Atex / IECEx requirements for the zone (IIB / IIC, T-class, IP). Specify Atex-rated emergency luminaires for these locations.',
-              },
-              {
-                question:
-                  'My factory has 50 high-risk task locations. Does the 20-luminaire-per-circuit rule mean I need many circuits?',
-                answer:
-                  'Yes. With dual-circuit redundancy at each task, and ≤ 20 luminaires per circuit, the wiring distribution is more granular than a typical escape route system. A practical approach: group nearby tasks onto pairs of feeders, with each feeder serving up to 20 luminaires across multiple tasks. Plan the circuit topology at design stage; do not retrofit the rule onto an existing single-circuit layout — the consumer unit and feeders both have to be redesigned.',
-              },
-              {
-                question:
-                  'What if my high-risk task is normally lit at 50 lx (low-light task)?',
-                answer:
-                  'Apply the headline minimum: 15 lx. The 10 % of 50 lx (5 lx) is below the 15 lx headline, so 15 lx wins under "whichever higher". Some "high-risk" tasks are deliberately low-light (e.g. photographic darkrooms, certain inspection tasks). The 15 lx emergency floor still applies because the SHUTDOWN requirement is independent of the normal task light level — operators can navigate the equipment and engage emergency stops at 15 lx even if normal operation is darker.',
-              },
-              {
-                question:
-                  'Can general escape route luminaires above a high-risk task area double as the high-risk task lighting?',
-                answer:
-                  'Only if they meet ALL the high-risk task criteria simultaneously: 15 lx (or 10 % of normal) at the working plane, 0.5 s response, dual-circuit, working plane verification. In practice escape-route-grade luminaires (1 lx, 5 s, single-circuit acceptable) usually do not. Treat high-risk task lighting as a separate provision; do not assume general emergency lighting is sufficient.',
-              },
-              {
-                question:
-                  'How does this interact with HSE machinery safety guidance and PUWER 1998?',
-                answer:
-                  'PUWER (Provision and Use of Work Equipment Regulations 1998) requires equipment to have appropriate emergency stop arrangements that include the means to operate them safely. Adequate illumination at the controls is part of "safely". HSE guidance on machinery safety often references emergency lighting as a prerequisite for emergency-stop usability. BS 5266-1:2025 high-risk task provision is the technical means by which this PUWER duty is discharged for emergency-stop scenarios. The two regimes converge at the same physical luminaires.',
-              },
-            ]}
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>Knowledge check</ContentEyebrow>
-          <Quiz title="High-risk task area lighting — Module 2.3" questions={quizQuestions} />
-
-          <div className="grid grid-cols-2 gap-3 pt-2">
-            <button
-              type="button"
-              onClick={() => navigate('/electrician/upskilling/emergency-lighting-module-2')}
-              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
-                <ChevronLeft className="h-3 w-3" /> Module 2
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-white truncate">
-                Module overview
-              </div>
-            </button>
-            <button
-              type="button"
-              onClick={() =>
-                navigate('/electrician/upskilling/emergency-lighting-module-2-section-4')
-              }
-              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
-                Next section <ChevronRight className="h-3 w-3" />
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-black truncate">
-                2.4 Maintained vs non-maintained
-              </div>
-            </button>
-          </div>
-
-          <div className="hidden">
-            <Activity />
-          </div>
-        </PageFrame>
-      </div>
-    </div>
+        <div className="hidden">
+          <Activity />
+        </div>
+      </HubBody>
+    </HubPage>
   );
 };
 

@@ -64,6 +64,8 @@ export function useCalendarRealtimeInvalidation() {
               });
             }
             queryClient.invalidateQueries({ queryKey: ['calendar-events'] });
+      // Nudge the always-on Google sync so the change lands there in seconds.
+      window.dispatchEvent(new CustomEvent('elecmate:gcal-sync'));
           }
         )
         .on(
@@ -76,6 +78,8 @@ export function useCalendarRealtimeInvalidation() {
           },
           () => {
             queryClient.invalidateQueries({ queryKey: ['calendar-events'] });
+      // Nudge the always-on Google sync so the change lands there in seconds.
+      window.dispatchEvent(new CustomEvent('elecmate:gcal-sync'));
           }
         )
         .on(
@@ -88,6 +92,8 @@ export function useCalendarRealtimeInvalidation() {
           },
           () => {
             queryClient.invalidateQueries({ queryKey: ['calendar-events'] });
+      // Nudge the always-on Google sync so the change lands there in seconds.
+      window.dispatchEvent(new CustomEvent('elecmate:gcal-sync'));
           }
         )
         .subscribe();
@@ -135,6 +141,7 @@ export function useCalendarEvents(dateFrom: string, dateTo: string, enabled = tr
         `
         )
         .eq('user_id', user.id)
+        .neq('sync_status', 'pending_delete')
         // OVERLAP, not "starts inside". Filtering on start_at alone dropped
         // every event that began before the window — a job running Sat–Tue
         // simply vanished from the week you opened on the Monday. An event is
@@ -313,6 +320,8 @@ export function useCreateCalendarEvent() {
     },
     onSuccess: (created) => {
       queryClient.invalidateQueries({ queryKey: ['calendar-events'] });
+      // Nudge the always-on Google sync so the change lands there in seconds.
+      window.dispatchEvent(new CustomEvent('elecmate:gcal-sync'));
       toast({ title: 'Event created' });
       if (created?.user_id) {
         void trackUserEvent(created.user_id, 'feature_use', {
@@ -371,6 +380,8 @@ export function useUpdateCalendarEvent() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['calendar-events'] });
+      // Nudge the always-on Google sync so the change lands there in seconds.
+      window.dispatchEvent(new CustomEvent('elecmate:gcal-sync'));
       toast({ title: 'Event updated' });
     },
     onError: (error: Error) => {
@@ -392,16 +403,42 @@ export function useDeleteCalendarEvent() {
       } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
-      const { error } = await supabase
+      // An event that also lives in Google/Outlook can't just be deleted
+      // locally — the next pull would re-import it. Tombstone it instead;
+      // the sync engine deletes it at the provider, then drops the row.
+      const { data: row } = await supabase
         .from('calendar_events')
-        .delete()
+        .select('google_event_id, outlook_event_id')
         .eq('id', id)
-        .eq('user_id', user.id);
+        .eq('user_id', user.id)
+        .maybeSingle();
 
-      if (error) throw error;
+      const linkedToProvider = !!(
+        (row as { google_event_id?: string | null; outlook_event_id?: string | null } | null)
+          ?.google_event_id ||
+        (row as { outlook_event_id?: string | null } | null)?.outlook_event_id
+      );
+
+      if (linkedToProvider) {
+        const { error } = await supabase
+          .from('calendar_events')
+          .update({ sync_status: 'pending_delete' } as never)
+          .eq('id', id)
+          .eq('user_id', user.id);
+        if (error) throw error;
+      } else {
+        const { error } = await supabase
+          .from('calendar_events')
+          .delete()
+          .eq('id', id)
+          .eq('user_id', user.id);
+        if (error) throw error;
+      }
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['calendar-events'] });
+      // Nudge the always-on Google sync so the change lands there in seconds.
+      window.dispatchEvent(new CustomEvent('elecmate:gcal-sync'));
       toast({ title: 'Event deleted' });
     },
     onError: (error: Error) => {

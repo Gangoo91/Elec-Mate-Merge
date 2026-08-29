@@ -1,8 +1,8 @@
-import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { useNavigate } from 'react-router-dom';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
-import { PageFrame, PageHero } from '@/components/college/primitives';
 import {
   TLDR,
   ConceptBlock,
@@ -293,525 +293,518 @@ const BS7671Module5Section2 = () => {
   });
 
   return (
-    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
-      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
-        <PageFrame>
+    <HubPage>
+      <HubMasthead
+        section="Module 5 · Section 2"
+        title="Cable types, sizing, grouping and routing"
+        backTo="../bs7671-module-5"
+      />
+      <HubBody>
+        <div className="max-w-3xl text-[13px] leading-relaxed text-white">
+          {
+            'Selecting the right cable for the route, deriving Iz from It through Ca, Cg, Ci and Cf, applying mV/A·m for voltage drop, and meeting Reg 522.6 for cables concealed in walls. Includes the A4:2026 refinements to App 4 buried-cable methods.'
+          }
+        </div>
+
+        <div className="flex flex-wrap items-center gap-2">
+          {
+            <>
+              <RegBadge>521.5</RegBadge>
+              <RegBadge>522.6</RegBadge>
+              <RegBadge>525.1</RegBadge>
+              <AmendmentBadge regs={['App 4']} />
+            </>
+          }
+        </div>
+
+        <TLDR
+          points={[
+            'Cable selection (Reg 521.5) is suitability-driven: type, mode of installation and external influences (AD water, AG mechanical impact, AJ mechanical stress, AF corrosive) all feed the choice.',
+            'Current-carrying capacity follows Iz = It × Ca × Cg × Ci × Cf — apply every factor that genuinely exists, never default the inconvenient ones to 1.00.',
+            'Routing rules separate into three pillars: 522.6 (mechanical impact, including the 50 mm rule for cables in walls), 522.8 (mechanical stress, including buried cables), and 525 (voltage drop limits 3%/5%/8%).',
+          ]}
+        />
+
+        <LearningOutcomes
+          outcomes={[
+            'Identify the major UK cable types — T&E (6242Y), 6491X singles, SWA, FP200/FP400, MICC, Hi-Tuf, LSF/LSZH variants — and pick the right family for a given route.',
+            'Read the correct Reference Method (A through G+, plus 100–103 for thermal insulation, plus D for buried) from App 4 and locate the right CCC column.',
+            'Apply Ca (ambient), Cg (grouping), Ci (thermal insulation) and Cf (BS 3036 fuse) as multiplicative factors to derive Iz from the nominal It.',
+            'Calculate voltage drop using mV/A·m × Ib × L / 1000 and compare to Reg 525.201 (3%/5%) or 525.202 (6%/8%) limits.',
+            'Apply Reg 522.6.202 / 522.6.203 to cables concealed in walls — the 50 mm rule, safe zones and the 30 mA RCD route.',
+            'Apply Reg 522.8.10 to buried cables — Reference Method D, depth, marker tape, cable tiles — including A4:2026 refinements.',
+          ]}
+          initialVisibleCount={3}
+        />
+
+        <ContentEyebrow>Cable type families — what to specify</ContentEyebrow>
+
+        <ConceptBlock
+          title="The UK cable family tree (Reg 521.5)"
+          plainEnglish="Cables are not interchangeable. Each family is engineered for a specific set of installation conditions and external influences. Pick the wrong family and the install fails Reg 521.5 the moment external influences exceed the cable's design envelope."
+          onSite="Walk into a wholesaler and the cable wall is organised by family. Knowing the family before you buy saves money and rework: the BS code on the drum (BS 6004, BS 5467, BS 5839, BS 7846 etc.) tells you the design envelope at a glance."
+        >
+          <p>
+            <strong>6242Y twin and earth (T&amp;E)</strong> &mdash; the everyday domestic cable.
+            Single-core PVC-insulated, two cores plus uninsulated CPC, PVC sheath. BS 6004. Used
+            clipped, in conduit, in trunking and in safe zones in walls. Not for direct burial, not
+            for fire-survival, and the CPC is uninsulated so requires sleeving where exposed.
+          </p>
+          <p>
+            <strong>6491X / 6491B singles</strong> &mdash; PVC-insulated single-core conductors for
+            installation inside conduit or trunking. BS 6004. Used wherever segregation,
+            identification or future-proofing argues for separate cores rather than a multi-core
+            cable.
+          </p>
+          <p>
+            <strong>SWA (steel wire armoured)</strong> &mdash; thermosetting (XLPE) or thermoplastic
+            (PVC) cores with a galvanised steel-wire armour layer. BS 5467 (XLPE, 90&deg;C) or BS
+            6346 (PVC, 70&deg;C). Used for sub-mains, external runs, direct burial, cable trays,
+            plant rooms. The armour acts as a CPC subject to Reg 543.2.
+          </p>
+          <p>
+            <strong>FP200 / FP200 Gold / FP400</strong> &mdash; fire-resistant cables for
+            life-safety circuits (fire alarms, emergency lighting, smoke ventilation). BS 7629 and
+            BS 5839 references. FP400 offers extended fire-survival ratings (up to 2 hours) for
+            high-rise and complex evacuation buildings.
+          </p>
+          <p>
+            <strong>MICC (mineral insulated copper clad)</strong> &mdash; copper conductors in
+            compressed magnesium-oxide insulation, copper outer sheath. Effectively indestructible
+            by fire, mechanical impact or chemical attack. Used for critical fire-survival circuits
+            where even FP400 may not suffice.
+          </p>
+          <p>
+            <strong>Hi-Tuf</strong> &mdash; ruggedised PVC cable with enhanced sheath construction
+            for rough installation conditions (caravan parks, building sites, external runs short of
+            full SWA).
+          </p>
+          <p>
+            <strong>LSF and LSZH variants</strong> &mdash; Low Smoke and Fume (reduced halogen,
+            reduced smoke) and Low Smoke Zero Halogen (essentially no halogen evolution) variants of
+            the above families. Specified where fire-evacuation toxicity or equipment-corrosion risk
+            drives a stricter sheath compound. Reg 521.5 plus the building&apos;s fire strategy
+            determines which.
+          </p>
+        </ConceptBlock>
+
+        <RegsCallout
+          source="BS 7671:2018+A4:2026 · Reg 521.5 — Types of wiring system in relation to types of installation"
+          clause="The type of wiring system (cable, conductor and method of installation) shall be selected so as to be suitable for the type of installation and to withstand the external influences and electromagnetic conditions to which it will be subjected during normal use."
+          meaning="Cable type is not a free choice — the selection has to evidence suitability against the actual external influences (Section 522 list: AD water, AG impact, AJ stress, AF corrosion, AN solar, etc.). On the EIC the designer has implicitly justified this every time a cable is ticked off the schedule."
+          cite="BS 7671:2018+A4:2026, Reg 521.5"
+        />
+
+        <InlineCheck {...inlineChecks[0]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>Reference Methods — App 4&apos;s rosetta stone</ContentEyebrow>
+
+        <ConceptBlock
+          title="Reading the right column"
+          plainEnglish="App 4 publishes nominal current-carrying capacity (It) values. Each column corresponds to a Reference Method — the way the cable is installed. Pick the wrong column and the rest of the calculation is built on sand."
+          onSite="Method A (in conduit in a thermally insulating wall) and Method C (clipped direct) typically differ by 30%+ at the same conductor size. The single biggest mistake apprentices make is reading Method C numbers for a cable that is actually inside a stud wall in conduit (Method A)."
+        >
+          <p>
+            <strong>Method A</strong> &mdash; cable in conduit in a thermally insulating wall.
+            Worst-case for thermal dissipation. Used for cables run inside a stud wall where
+            insulation surrounds the conduit.
+          </p>
+          <p>
+            <strong>Method B</strong> &mdash; cable in conduit on a wall (surface-mounted conduit).
+            Better than A because the conduit is in free air.
+          </p>
+          <p>
+            <strong>Method C</strong> &mdash; clipped direct to a non-metallic surface, in free air.
+            The default for surface-clipped runs across joists, walls and ceilings without
+            insulation contact.
+          </p>
+          <p>
+            <strong>Method D</strong> &mdash; in or against the ground (direct buried, or in a duct
+            buried in the ground). Specific to underground supplies. App 4 Table 4D4A or 4E4A.
+          </p>
+          <p>
+            <strong>Method E</strong> &mdash; multi-core cable in free air (e.g. SWA on a tray
+            well-separated from other cables).
+          </p>
+          <p>
+            <strong>Method F</strong> &mdash; single-core cables in free air, touching, in trefoil
+            or flat formation.
+          </p>
+          <p>
+            <strong>Method G</strong> &mdash; single-core cables in free air, spaced.
+          </p>
+          <p>
+            <strong>Methods 100&ndash;103</strong> &mdash; cables above plasterboard ceilings in
+            progressively worse thermal-insulation conditions. 100 = no insulation contact. 101 = in
+            contact with insulation on one side. 102 = surrounded but not enclosed. 103 = fully
+            enclosed within thermal insulation. Driven by Reg 523.7 / 523.8.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...inlineChecks[1]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>The Iz formula — every factor that matters</ContentEyebrow>
+
+        <ConceptBlock
+          title="Iz = It × Ca × Cg × Ci × Cf"
+          plainEnglish="It is the nominal table value. Ca corrects for ambient temperature different from 30°C. Cg corrects for grouping with other circuits. Ci corrects for contact with thermal insulation. Cf corrects for the protective device being a BS 3036 rewireable fuse."
+          onSite="Treat each factor as a checklist on the design sheet. If the factor doesn't apply — leave it 1.00 explicitly. If it does — write the source (Table 4B1 for Ca, 4C1 for Cg, etc.). When the inspector queries cable size on the EICR in five years, the sheet shows your reasoning."
+        >
+          <p>
+            <strong>Ca &mdash; Ambient temperature.</strong> Default 1.00 at 30&deg;C. App 4 Table
+            4B1 gives the values for both PVC (70&deg;C conductor) and thermosetting (90&deg;C
+            conductor) insulations across ambients 25&deg;C to 80&deg;C. A loft in a UK summer can
+            hit 50&deg;C; a boiler-room ceiling void can hit 60&deg;C. Both materially derate the
+            cable.
+          </p>
+          <p>
+            <strong>Cg &mdash; Grouping.</strong> App 4 Table 4C1 gives derates for cables bunched
+            together. Two circuits = ~0.80, three = ~0.70, four = ~0.65, six = ~0.57, nine = ~0.50.
+            The factor depends on how the cables are grouped (clipped direct, perforated tray,
+            conduit, etc.) &mdash; tables 4C1 to 4C5 cover the variants.
+          </p>
+          <p>
+            <strong>Ci &mdash; Thermal insulation.</strong> Applies wherever the cable is in contact
+            with or surrounded by thermal insulation. Reference Methods 100&ndash;103 are the formal
+            mechanism for cables above plasterboard with loft insulation; Reg 523.7 gives the
+            underlying principle. Typical Ci values range from 0.50 (fully enclosed, long runs,
+            small conductor) to 0.78 (one-side contact). For runs &gt; 0.5 m fully enclosed, BS 7671
+            publishes specific derates &mdash; do not guess.
+          </p>
+          <p>
+            <strong>Cf &mdash; Protective device (BS 3036).</strong> Where the protective device is
+            a BS 3036 rewireable (semi-enclosed) fuse, apply Cf = 0.725. The factor reflects the
+            higher fusing factor of rewireable fuses compared to HBC fuses (BS 88) and MCBs. For
+            modern installations this is rarely engaged but appears on EICRs of pre-1980s dwellings.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...inlineChecks[6]} />
+
+        <RegsCallout
+          source="BS 7671:2018+A4:2026 · Reg 523.1 — Operating temperature"
+          clause="The current-carrying capacity of a conductor shall be such that the limiting temperature is not exceeded under all conditions of normal use. The values of current-carrying capacity may be determined by methods given in Appendix 4 or by calculation, taking account of the design current, the type of insulation, the method of installation, and the ambient temperature."
+          meaning="Iz is not a number — it's a verified design statement that the conductor will not exceed its rated limiting temperature (70°C for PVC, 90°C for thermosetting/XLPE) under the design current with all correction factors applied. App 4 is the prescribed method; bespoke calculation is permitted but rare in routine UK installs."
+          cite="BS 7671:2018+A4:2026, Reg 523.1 / Appendix 4"
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>Voltage drop — Reg 525</ContentEyebrow>
+
+        <ConceptBlock
+          title="The mV/A·m method"
+          plainEnglish="App 4 publishes a tabulated voltage-drop figure (mV/A·m) for every cable size and Reference Method. Multiply by the design current (Ib) and the route length (m), divide by 1000, and you get volts dropped. Compare to the regulation's percentage limit."
+          onSite="On a 230 V single-phase circuit, 3% = 6.9 V (lighting on public supply) and 5% = 11.5 V (other uses on public supply). For private supply (525.202) the caps rise to 6%/8%. Mark each circuit's permitted drop on the design sheet before you calculate; it stops marginal cases sliding through."
+        >
+          <p>
+            <strong>Reg 525.201</strong> &mdash; default for installations supplied directly from a
+            public LV distribution system: 3% lighting, 5% other uses, of nominal voltage. The
+            percentages account for the voltage drop already happening between the substation and
+            the cut-out before the installation starts.
+          </p>
+          <p>
+            <strong>Reg 525.202</strong> &mdash; private-supply systems (own transformer, off-grid
+            solar, large industrial): cap rises to 6% lighting / 8% other uses, recognising the long
+            internal run. The full drop budget shifts inside the installation.
+          </p>
+          <p>
+            For three-phase circuits, the table value is given line-to-line and the calculation
+            divides by &radic;3 where appropriate. App 4 explicitly gives the formula in its
+            preamble &mdash; the apprentice mistake is using the single-phase value on a 400 V
+            circuit and over-rating the cable. Always confirm the column header matches the circuit
+            topology.
+          </p>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="When voltage drop drives cable size"
+          plainEnglish="Long runs at moderate current routinely fail voltage drop while comfortably passing thermal CCC. Garden offices, EV chargers, outbuilding sub-mains and farm supplies are the classic cases."
+          onSite="A 6 m kitchen radial at 16 A is voltage-drop trivial. A 35 m EV charger feed at 32 A on the same 6 mm² cable will fail 5% on a public supply. Either upsize the cable or move the protective device closer to the load. The cable goes up before the calculation comes back acceptable — there is no shortcut."
+        />
+
+        <InlineCheck {...inlineChecks[4]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>Cable grouping — when Cg bites</ContentEyebrow>
+
+        <ConceptBlock
+          title="Why grouping matters more than apprentices think"
+          plainEnglish="When cables are bunched together, each one's heat dissipates into the next. The current rating of every cable in the bunch drops simultaneously."
+          onSite="Walk a typical consumer-unit-to-loft riser: 8 to 12 T&E cables zip-tied together as they leave the CU. Bunching factor at 8+ circuits sits around 0.52. Every one of those cables loses nearly half its nominal CCC in the bunched section. The fix is either to fan the cables out as soon as possible above the CU, or to upsize the cables to compensate."
+        >
+          <p>
+            Table 4C1 covers cables clipped direct or on a perforated tray, bunched. Table 4C2
+            covers cables in conduit or trunking. Table 4C3 covers cables on a non-perforated tray.
+            Read the right table for the installation method &mdash; a 6-circuit bunched clip-direct
+            value is different from a 6-circuit in-trunking value.
+          </p>
+          <p>
+            The factor applies only to the bunched section. If the cables fan out 0.5 m above the CU
+            and run individually to their loads, you size the cable for the bunched section&apos;s
+            Cg, and the rest of the run is at Cg = 1.00. This gets recorded on the design as
+            &quot;Cg = 0.57 over first 0.5 m, Cg = 1.00 thereafter&quot; and the worst-case is the
+            design driver.
+          </p>
+          <p>
+            Different-load circuits do not get a discount. Two cables touching produce thermal
+            interference regardless of whether one is a lighting circuit at 0.5 A and the other an
+            immersion at 13 A &mdash; the heat from the 13 A still raises the lighting cable&apos;s
+            temperature and vice versa. The Cg tables assume worst-case simultaneous loading.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...inlineChecks[2]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>Cables in thermal insulation</ContentEyebrow>
+
+        <ConceptBlock
+          title="Methods 100–103 and Reg 523.7"
+          plainEnglish="Modern lofts contain 270 mm+ of mineral wool. Cables routed through that insulation cannot dissipate heat sideways into air — they sit in a thermal jacket. App 4 publishes specific derates for this scenario."
+          onSite="On a typical rewire, the lighting circuits run above the ceiling plasterboard, often draped on the ceiling under the loft insulation. That is Method 101 or 102 and the Ci factor — typically 0.72 to 0.78 — is non-trivial. Cables fully enclosed within insulation (running through the middle of the insulation depth, fully buried in mineral wool) are Method 103 and can derate by 50% or more."
+        >
+          <p>
+            The mitigations are limited: lift the cable above the insulation on plastic battens
+            (returning it to Method C), upsize the cable to compensate, or route the cable in
+            conduit through the insulation (still Method 100&ndash;103 territory but slightly
+            improved heat dissipation depending on conduit material). Burying T&amp;E in 270 mm of
+            wool with no compensation is an under-rated cable waiting to be flagged on the next
+            EICR.
+          </p>
+          <p>
+            Reg 523.7 / 523.8 are the regulatory hooks. They cross-reference App 4 Tables 4A2 for
+            the methods and Table 4D5 (single-phase T&amp;E) or 4E5 (three-phase) for the capacity
+            columns. Always read the table, not the legend &mdash; the values are tabulated for a
+            reason.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...inlineChecks[3]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>Cable routing — Reg 522.6 and 522.8</ContentEyebrow>
+
+        <ConceptBlock
+          title="Reg 522.6 — Mechanical impact (external influence AG)"
+          plainEnglish="The cable has to survive what its environment can do to it. AG1 (low impact) covers normal domestic and office. AG2 (medium) covers light commercial and workshops. AG3 (high) covers heavy industrial and construction sites."
+          onSite="Most of the EICR observations on cable routing live in this regulation. Cable too close to the surface in a stud wall? 522.6.202. Surface-clipped run through a workshop where forklifts pass? 522.6.1 (the cable needs additional mechanical protection). Cable above a suspended ceiling where maintenance staff climb? 522.6.1 plus 522.8."
+        >
+          <p>
+            The text of Reg 522.6 is broad: cables shall be protected against mechanical damage
+            appropriate to the external influences. The specific sub-clauses (522.6.1 to 522.6.204)
+            make this concrete.
+          </p>
+          <p>
+            <strong>Reg 522.6.202</strong> &mdash; cables concealed in walls or partitions at a
+            depth less than 50 mm. Permitted by one of: (i) depth &ge; 50 mm, (ii) earthed metallic
+            covering, (iii) mechanical protection sufficient against expected impact, (iv) run in
+            safe zones AND protected by 30 mA RCD, or (v) cable with earthed metallic screen /
+            armour. Modern domestic rewires almost universally use (iv).
+          </p>
+          <p>
+            <strong>Reg 522.6.203</strong> &mdash; locations used by ordinary persons (BA1) /
+            dwellings: where 522.6.202 is satisfied by safe-zone routing without 50 mm depth or
+            metallic protection, the 30 mA RCD requirement is a hard &quot;shall.&quot; The
+            regulation does not allow a risk-assessment exception within domestic premises.
+          </p>
+          <p>
+            <strong>Reg 522.6.204</strong> &mdash; metal-framed (steel-stud) walls. The risk of
+            fixings penetrating the cable is much higher than in timber-stud walls. The mitigation
+            menu narrows: typically (ii) earthed metallic covering or (iii) full mechanical
+            protection.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...inlineChecks[5]} />
+
+        <ConceptBlock
+          title="Reg 522.8 — Mechanical stress (external influence AJ)"
+          plainEnglish="Cables under tension, compression, repeated bending or vibration must be selected and supported to handle those stresses. Bending radii, fixing intervals and support spacings are all under 522.8."
+          onSite="The 522.8 corollaries appear in the OSG and IET manufacturer guides as bending-radius tables (typically 6× to 8× outside diameter for fixed installations) and fixing intervals (typically 250–400 mm for surface-clipped horizontal T&E). Get either wrong and the cable insulation work-hardens at the bend or the fixing point and fails over time."
+        >
+          <p>
+            <strong>Reg 522.8.4</strong> &mdash; cables shall be supported in such a way that they
+            are not subjected to undue mechanical strain, especially at conductor or cable
+            terminations. This is the rule that makes you provide cable glands at SWA terminations
+            and tails-clamps at consumer units.
+          </p>
+          <p>
+            <strong>Reg 522.8.10</strong> &mdash; cables in or against the ground. Refers installer
+            to Reference Method D, requires sufficient burial depth to avoid foreseeable
+            disturbance, and typically (per OSG) marker tape and cable tiles. A4:2026 has refined
+            some of the App 4 buried-cable methods to account for soil thermal resistivity and
+            burial conditions.
+          </p>
+          <p>
+            <strong>Reg 522.10</strong> &mdash; corrosive substances (external influence AF). Where
+            cables are routed near substances that attack the sheath (acids, alkalis, certain
+            paints, some insulation foams), the cable selection must account for it. PVC is
+            incompatible with extruded polystyrene insulation in some formulations &mdash; a common
+            surprise where polystyrene panels touch PVC sheath.
+          </p>
+          <p>
+            <strong>Reg 521.10</strong> &mdash; cable enclosures. Where cables run in a non-metallic
+            enclosure (PVC conduit, plastic trunking) the enclosure must be suitable for the
+            environment and the cables inside it. Reg 521.10.1 (in particular) prohibits the use of
+            single-core cables of an a.c. circuit being installed in an enclosure of magnetic
+            material with the conductors not in contact &mdash; the ferromagnetic loop heats from
+            induced eddy currents. Run all line/neutral conductors of a single circuit through the
+            same enclosure to keep the magnetic flux balanced.
+          </p>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <ContentEyebrow>Buried cables and A4:2026 changes</ContentEyebrow>
+
+        <ConceptBlock
+          title="Direct burial — Reg 522.8.10 and Reference Method D"
+          plainEnglish="Buried cables sit in soil, which has different thermal properties from air. Reference Method D in App 4 provides the dedicated CCC tables, with assumed soil thermal resistivity and depth conditions baked in."
+          onSite="Typical UK practice: SWA cable, buried at 500 mm under footpath/lawn or 600–750 mm under vehicular access, with yellow warning tape laid 150 mm above the cable, and cable tiles where local hazards or shallow depth dictate. The DNO supply trench and the customer's sub-main trench follow similar standards but the customer's cable is BS 7671's responsibility, not the DNO's."
+        >
+          <p>
+            Reference Method D distinguishes between cables direct in the ground and cables in ducts
+            in the ground. The latter has slightly higher CCC because the air gap inside the duct
+            improves heat dissipation, but the duct itself adds thermal resistance. Tables 4D4A and
+            4E4A list the values.
+          </p>
+          <p>
+            <strong>A4:2026 changes</strong> &mdash; A4 has refined the App 4 buried-cable
+            tabulation, including soil thermal resistivity assumptions and the interaction with
+            thermal insulation surrounding buried cables (e.g. a buried cable rising into a
+            foundation void with insulation above). Always work from the in-force edition. Where
+            soil is unusually rocky, dry, peaty or high-organic, the designer departs from the
+            tabulated values with documented justification under Reg 120.3 and references BS EN IEC
+            60287 for the bespoke calculation.
+          </p>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <ContentEyebrow>Where it goes wrong</ContentEyebrow>
+
+        <CommonMistake
+          title="Reading Method C numbers for a Method A install"
+          whatHappens="Apprentice sizes a 32 A ring final at 4 mm² T&E reading the Method C column (Iz nominal ~36 A). The cable is actually run inside studwork in conduit through insulated walls — Method A (Iz nominal ~25 A). The cable is under-rated by ~30% and the design fails Reg 433.1.1 (In ≤ Iz)."
+          doInstead="Confirm the Reference Method on the design sheet before reading App 4. Walk the route visually: where will the cable physically sit? Then map it to the Method A–G or 100–103 list. The single biggest source of cable-sizing errors in apprentice paperwork is mis-reading the Method column."
+        />
+
+        <CommonMistake
+          title="Forgetting to multiply correction factors"
+          whatHappens="Designer applies Ca = 0.94 alone, ignoring Cg = 0.65 because the grouping is only 4 circuits and they will spread out further along the run. The first 0.5 m of bunched cable runs at 0.94 × 0.65 = 0.61 corrected, not 0.94. The cable is under-rated for that section and the worst-case section is what drives the design."
+          doInstead="Apply every factor that exists, multiply them all, and use the result as Iz. If a factor varies along the route (e.g. grouped at the CU, fanned out at the loads), use the worst-case value of the product. The protective device must satisfy In ≤ Iz throughout the entire length, not just where it is convenient."
+        />
+
+        <CommonMistake
+          title="Treating mV/A·m as resistance"
+          whatHappens="Designer pulls the mV/A·m value from App 4 Table 4D5B, then multiplies by current squared and length, getting a power figure. Wrong calculation. Voltage drop is mV/A·m × I × L / 1000 — linear in current, not quadratic."
+          doInstead="The mV/A·m value already includes the cable's resistance per metre (loop, both legs of a single-phase circuit). Multiply by Ib (design current, not In), by route length L in metres, then divide by 1000 to convert mV to V. Compare to the percentage limit of nominal voltage (e.g. 6.9 V on a 230 V lighting circuit). Three-phase calculations have an additional &radic;3 step depending on the table column."
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>Scenarios — applying it on the day</ContentEyebrow>
+
+        <Scenario
+          title="Loft lighting circuit buried under thermal insulation"
+          situation="Customer wants 9 LED downlights in a bedroom ceiling, plus 3 spots in the en-suite. Existing loft has 270 mm of mineral wool laid on top of the plasterboard. The new cable will run from the consumer unit, up the wall, over the bedroom ceiling joists, and down to each downlight. The installer plans to drape the cable under the loft insulation to keep it concealed."
+          whatToDo="Identify the Reference Method for the loft section: cable above plasterboard, surrounded by 270 mm of insulation = Method 102 or 103 depending on whether it sits on top of, within, or fully enclosed by the wool. Worst-case Method 103 with Ci ~ 0.50 means 1.5 mm² T&E nominal Iz of ~16 A drops to ~8 A — barely enough for the 6 A MCB, no margin. The fix is one of: (a) lift the cable on plastic battens above the insulation (returning to Method C), (b) upsize the cable to 2.5 mm², or (c) re-route through the joists below the insulation (also Method C). Apply the new Reg 411.3.4 (A4) — the lighting circuit must be on a 30 mA RCD/RCBO regardless."
+          whyItMatters="Under-rated lighting cables in lofts cause sustained warm-running that ages the insulation and creates the long-term fire risk. The A4 Reg 411.3.4 RCD does not protect against thermal under-rating — it protects against shock. Both rules have to be satisfied independently. On the EICR the missed Method 103 derate is C2 (potentially dangerous) where the cable is materially under-rated; C3 where the under-rate is marginal but verifiable."
+        />
+
+        <Scenario
+          title="Kitchen socket ring with multi-circuit grouping at the consumer unit"
+          situation="A new kitchen has 12 sockets on a 32 A ring final (Type B MCB, Reference Method C, 2.5 mm² T&E). The CU is in the under-stair cupboard. The first 0.8 m of the ring leaves the CU bunched with 7 other cables in a 50 mm trunking riser — kitchen ring, kitchen lighting, hallway lighting, upstairs lighting, upstairs sockets, immersion, EV charger feed, garden office sub-main."
+          whatToDo="Identify the bunched section: 8 circuits in trunking, Cg from Table 4C2 ≈ 0.52. The kitchen ring's 2.5 mm² nominal It (Method C, 27 A) becomes 27 × 0.52 = ~14 A in the bunched section. The 32 A MCB no longer satisfies In ≤ Iz (32 vs 14). The fix options: (a) fan the cables out earlier and reduce the bunched count, (b) upsize the bunched section to 4 mm² (Iz nominal ~37 A, corrected to ~19 A — still tight), (c) split the bunched section across two trunking runs to reduce Cg. The realistic fix on a new install is (a) — design the riser so cables fan out 0.3 m above the CU into separate routes."
+          whyItMatters="Bunching is the silent killer of cable ratings. Inspectors checking Iz at the load end of a circuit see a clip-direct cable comfortably at Method C and miss the bunched bit at the CU. The cable that overheats is the one in the trunking, not the one at the load. EICR coding for bunched-but-under-rated runs is typically C2 (potentially dangerous, sustained over-temperature accelerates insulation ageing) where the bunching is severe; C3 where marginal. The fix is design — once installed, splitting a riser is a re-rewire."
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>Designer&apos;s quick reference</ContentEyebrow>
+
+        <ConceptBlock
+          title="Six-step cable selection checklist"
+          plainEnglish="Walk every cable through six steps before specifying. Most assessment failures come from skipping one of them."
+          onSite="(1) What family fits the external influences (Reg 521.5)? (2) What Reference Method is the install path (App 4 column)? (3) What is the design current Ib? (4) Apply Ca, Cg, Ci, Cf — derive Iz. Verify In ≤ Iz. (5) Calculate voltage drop with mV/A·m × Ib × L / 1000. Verify against Reg 525.201 (3%/5%) or 525.202 (6%/8%). (6) Check Reg 522.6 routing rules — concealment, mechanical impact, RCD requirement (411.3.4 for domestic lighting from A4)."
+        >
+          <p>
+            The six-step sheet is the audit trail when an inspector queries cable choice in three
+            years. Without it, the answer becomes &quot;I have always used 2.5 mm&sup2; on ring
+            finals&quot; &mdash; which may be right but cannot be evidenced. With it, the answer is
+            &quot;Reg 521.5: T&amp;E suitable; Method C clipped direct in joist void; Ib = 25 A; Ca
+            = 1.00, Cg = 1.00 (single circuit beyond CU), Ci = 1.00 (above insulation on plastic
+            batten), Cf = 1.00; Iz = 27 A; In = 32 A — verified using the ring-final exception per
+            BS 7671 Section 433; voltage drop 4.2% over 18 m route at 25 A — within 5%; routing per
+            522.6.202 (iv) safe-zone + 30 mA RCBO.&quot; That is a defensible record.
+          </p>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="Reg cite map — what to quote on the EIC"
+          plainEnglish="Each design decision has a regulation. Citing the regulation on the schedule turns a judgement call into an evidenced one."
+          onSite="Cable type → Reg 521.5 plus any specific environmental reg (522.3 water, 522.6 impact, 522.8 stress, 522.10 corrosion). Cable size → App 4 plus Reg 523.1 (operating temperature) and Reg 433.1.1 (coordination with protective device). Voltage drop → Reg 525.201 (public supply) or 525.202 (private supply). Cables in walls → Reg 522.6.202 / 522.6.203 / 522.6.204. Buried cables → Reg 522.8.10 plus App 4 Method D. Cable enclosures → Reg 521.10."
+        >
+          <p>
+            The Reg-cite map appears as a one-line annotation against each circuit on the design
+            record. It is not required by BS 7671 to appear on the EIC itself, but every cert
+            auditor and EICR inspector working from a defensible design will look for it. The
+            electrical designer who routinely cites regulations is several orders of magnitude more
+            defensible than one who relies on convention alone.
+          </p>
+        </ConceptBlock>
+
+        <FAQ items={faqItems} />
+
+        <KeyTakeaways
+          points={[
+            'Cable type selection is governed by Reg 521.5 — match the family (T&E, SWA, FP200, MICC, Hi-Tuf, LSF/LSZH) to the external influences and installation method.',
+            'Read the right Reference Method from App 4 — A through G+ for general, 100–103 for thermal insulation, D for buried — before pulling any It value.',
+            'Apply every correction factor that exists: Iz = It × Ca × Cg × Ci × Cf. Never default the inconvenient ones to 1.00.',
+            'Voltage drop limits per Reg 525.201 are 3% lighting / 5% other on public supply. Reg 525.202 raises this to 6%/8% for private-supply systems. mV/A·m × Ib × L / 1000 is the calculation.',
+            'Cables concealed in walls/partitions at less than 50 mm depth must satisfy Reg 522.6.202 — typically by safe-zone routing plus 30 mA RCD additional protection (which A4 Reg 411.3.4 already mandates for domestic luminaires).',
+            'Buried cables: Reg 522.8.10 plus Reference Method D. A4:2026 has refined some buried-cable tabulations — always read the in-force edition.',
+          ]}
+        />
+
+        <Quiz questions={quizQuestions} />
+
+        <div className="grid grid-cols-2 gap-3 pt-2">
           <button
             type="button"
-            onClick={() => navigate('../bs7671-module-5')}
-            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            onClick={() => navigate('/electrician/upskilling/bs7671-module-5')}
+            className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
           >
-            <ArrowLeft className="h-4 w-4" /> Module 5
+            <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+              <ChevronLeft className="h-3 w-3" /> Module 5
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-white truncate">
+              Module overview
+            </div>
           </button>
-
-          <PageHero
-            eyebrow="Module 5 · Section 2"
-            title="Cable types, sizing, grouping and routing"
-            description="Selecting the right cable for the route, deriving Iz from It through Ca, Cg, Ci and Cf, applying mV/A·m for voltage drop, and meeting Reg 522.6 for cables concealed in walls. Includes the A4:2026 refinements to App 4 buried-cable methods."
-            actions={
-              <>
-                <RegBadge>521.5</RegBadge>
-                <RegBadge>522.6</RegBadge>
-                <RegBadge>525.1</RegBadge>
-                <AmendmentBadge regs={['App 4']} />
-              </>
-            }
-            tone="yellow"
-          />
-
-          <TLDR
-            points={[
-              'Cable selection (Reg 521.5) is suitability-driven: type, mode of installation and external influences (AD water, AG mechanical impact, AJ mechanical stress, AF corrosive) all feed the choice.',
-              'Current-carrying capacity follows Iz = It × Ca × Cg × Ci × Cf — apply every factor that genuinely exists, never default the inconvenient ones to 1.00.',
-              'Routing rules separate into three pillars: 522.6 (mechanical impact, including the 50 mm rule for cables in walls), 522.8 (mechanical stress, including buried cables), and 525 (voltage drop limits 3%/5%/8%).',
-            ]}
-          />
-
-          <LearningOutcomes
-            outcomes={[
-              'Identify the major UK cable types — T&E (6242Y), 6491X singles, SWA, FP200/FP400, MICC, Hi-Tuf, LSF/LSZH variants — and pick the right family for a given route.',
-              'Read the correct Reference Method (A through G+, plus 100–103 for thermal insulation, plus D for buried) from App 4 and locate the right CCC column.',
-              'Apply Ca (ambient), Cg (grouping), Ci (thermal insulation) and Cf (BS 3036 fuse) as multiplicative factors to derive Iz from the nominal It.',
-              'Calculate voltage drop using mV/A·m × Ib × L / 1000 and compare to Reg 525.201 (3%/5%) or 525.202 (6%/8%) limits.',
-              'Apply Reg 522.6.202 / 522.6.203 to cables concealed in walls — the 50 mm rule, safe zones and the 30 mA RCD route.',
-              'Apply Reg 522.8.10 to buried cables — Reference Method D, depth, marker tape, cable tiles — including A4:2026 refinements.',
-            ]}
-            initialVisibleCount={3}
-          />
-
-          <ContentEyebrow>Cable type families — what to specify</ContentEyebrow>
-
-          <ConceptBlock
-            title="The UK cable family tree (Reg 521.5)"
-            plainEnglish="Cables are not interchangeable. Each family is engineered for a specific set of installation conditions and external influences. Pick the wrong family and the install fails Reg 521.5 the moment external influences exceed the cable's design envelope."
-            onSite="Walk into a wholesaler and the cable wall is organised by family. Knowing the family before you buy saves money and rework: the BS code on the drum (BS 6004, BS 5467, BS 5839, BS 7846 etc.) tells you the design envelope at a glance."
+          <button
+            type="button"
+            onClick={() => navigate('/electrician/upskilling/bs7671-module-5-section-3')}
+            className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
           >
-            <p>
-              <strong>6242Y twin and earth (T&amp;E)</strong> &mdash; the everyday domestic cable.
-              Single-core PVC-insulated, two cores plus uninsulated CPC, PVC sheath. BS 6004. Used
-              clipped, in conduit, in trunking and in safe zones in walls. Not for direct burial,
-              not for fire-survival, and the CPC is uninsulated so requires sleeving where exposed.
-            </p>
-            <p>
-              <strong>6491X / 6491B singles</strong> &mdash; PVC-insulated single-core conductors
-              for installation inside conduit or trunking. BS 6004. Used wherever segregation,
-              identification or future-proofing argues for separate cores rather than a multi-core
-              cable.
-            </p>
-            <p>
-              <strong>SWA (steel wire armoured)</strong> &mdash; thermosetting (XLPE) or
-              thermoplastic (PVC) cores with a galvanised steel-wire armour layer. BS 5467 (XLPE,
-              90&deg;C) or BS 6346 (PVC, 70&deg;C). Used for sub-mains, external runs, direct
-              burial, cable trays, plant rooms. The armour acts as a CPC subject to Reg 543.2.
-            </p>
-            <p>
-              <strong>FP200 / FP200 Gold / FP400</strong> &mdash; fire-resistant cables for
-              life-safety circuits (fire alarms, emergency lighting, smoke ventilation). BS 7629 and
-              BS 5839 references. FP400 offers extended fire-survival ratings (up to 2 hours) for
-              high-rise and complex evacuation buildings.
-            </p>
-            <p>
-              <strong>MICC (mineral insulated copper clad)</strong> &mdash; copper conductors in
-              compressed magnesium-oxide insulation, copper outer sheath. Effectively indestructible
-              by fire, mechanical impact or chemical attack. Used for critical fire-survival
-              circuits where even FP400 may not suffice.
-            </p>
-            <p>
-              <strong>Hi-Tuf</strong> &mdash; ruggedised PVC cable with enhanced sheath construction
-              for rough installation conditions (caravan parks, building sites, external runs short
-              of full SWA).
-            </p>
-            <p>
-              <strong>LSF and LSZH variants</strong> &mdash; Low Smoke and Fume (reduced halogen,
-              reduced smoke) and Low Smoke Zero Halogen (essentially no halogen evolution) variants
-              of the above families. Specified where fire-evacuation toxicity or equipment-corrosion
-              risk drives a stricter sheath compound. Reg 521.5 plus the building&apos;s fire
-              strategy determines which.
-            </p>
-          </ConceptBlock>
-
-          <RegsCallout
-            source="BS 7671:2018+A4:2026 · Reg 521.5 — Types of wiring system in relation to types of installation"
-            clause="The type of wiring system (cable, conductor and method of installation) shall be selected so as to be suitable for the type of installation and to withstand the external influences and electromagnetic conditions to which it will be subjected during normal use."
-            meaning="Cable type is not a free choice — the selection has to evidence suitability against the actual external influences (Section 522 list: AD water, AG impact, AJ stress, AF corrosion, AN solar, etc.). On the EIC the designer has implicitly justified this every time a cable is ticked off the schedule."
-            cite="BS 7671:2018+A4:2026, Reg 521.5"
-          />
-
-          <InlineCheck {...inlineChecks[0]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>Reference Methods — App 4&apos;s rosetta stone</ContentEyebrow>
-
-          <ConceptBlock
-            title="Reading the right column"
-            plainEnglish="App 4 publishes nominal current-carrying capacity (It) values. Each column corresponds to a Reference Method — the way the cable is installed. Pick the wrong column and the rest of the calculation is built on sand."
-            onSite="Method A (in conduit in a thermally insulating wall) and Method C (clipped direct) typically differ by 30%+ at the same conductor size. The single biggest mistake apprentices make is reading Method C numbers for a cable that is actually inside a stud wall in conduit (Method A)."
-          >
-            <p>
-              <strong>Method A</strong> &mdash; cable in conduit in a thermally insulating wall.
-              Worst-case for thermal dissipation. Used for cables run inside a stud wall where
-              insulation surrounds the conduit.
-            </p>
-            <p>
-              <strong>Method B</strong> &mdash; cable in conduit on a wall (surface-mounted
-              conduit). Better than A because the conduit is in free air.
-            </p>
-            <p>
-              <strong>Method C</strong> &mdash; clipped direct to a non-metallic surface, in free
-              air. The default for surface-clipped runs across joists, walls and ceilings without
-              insulation contact.
-            </p>
-            <p>
-              <strong>Method D</strong> &mdash; in or against the ground (direct buried, or in a
-              duct buried in the ground). Specific to underground supplies. App 4 Table 4D4A or
-              4E4A.
-            </p>
-            <p>
-              <strong>Method E</strong> &mdash; multi-core cable in free air (e.g. SWA on a tray
-              well-separated from other cables).
-            </p>
-            <p>
-              <strong>Method F</strong> &mdash; single-core cables in free air, touching, in trefoil
-              or flat formation.
-            </p>
-            <p>
-              <strong>Method G</strong> &mdash; single-core cables in free air, spaced.
-            </p>
-            <p>
-              <strong>Methods 100&ndash;103</strong> &mdash; cables above plasterboard ceilings in
-              progressively worse thermal-insulation conditions. 100 = no insulation contact. 101 =
-              in contact with insulation on one side. 102 = surrounded but not enclosed. 103 = fully
-              enclosed within thermal insulation. Driven by Reg 523.7 / 523.8.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...inlineChecks[1]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>The Iz formula — every factor that matters</ContentEyebrow>
-
-          <ConceptBlock
-            title="Iz = It × Ca × Cg × Ci × Cf"
-            plainEnglish="It is the nominal table value. Ca corrects for ambient temperature different from 30°C. Cg corrects for grouping with other circuits. Ci corrects for contact with thermal insulation. Cf corrects for the protective device being a BS 3036 rewireable fuse."
-            onSite="Treat each factor as a checklist on the design sheet. If the factor doesn't apply — leave it 1.00 explicitly. If it does — write the source (Table 4B1 for Ca, 4C1 for Cg, etc.). When the inspector queries cable size on the EICR in five years, the sheet shows your reasoning."
-          >
-            <p>
-              <strong>Ca &mdash; Ambient temperature.</strong> Default 1.00 at 30&deg;C. App 4 Table
-              4B1 gives the values for both PVC (70&deg;C conductor) and thermosetting (90&deg;C
-              conductor) insulations across ambients 25&deg;C to 80&deg;C. A loft in a UK summer can
-              hit 50&deg;C; a boiler-room ceiling void can hit 60&deg;C. Both materially derate the
-              cable.
-            </p>
-            <p>
-              <strong>Cg &mdash; Grouping.</strong> App 4 Table 4C1 gives derates for cables bunched
-              together. Two circuits = ~0.80, three = ~0.70, four = ~0.65, six = ~0.57, nine =
-              ~0.50. The factor depends on how the cables are grouped (clipped direct, perforated
-              tray, conduit, etc.) &mdash; tables 4C1 to 4C5 cover the variants.
-            </p>
-            <p>
-              <strong>Ci &mdash; Thermal insulation.</strong> Applies wherever the cable is in
-              contact with or surrounded by thermal insulation. Reference Methods 100&ndash;103 are
-              the formal mechanism for cables above plasterboard with loft insulation; Reg 523.7
-              gives the underlying principle. Typical Ci values range from 0.50 (fully enclosed,
-              long runs, small conductor) to 0.78 (one-side contact). For runs &gt; 0.5 m fully
-              enclosed, BS 7671 publishes specific derates &mdash; do not guess.
-            </p>
-            <p>
-              <strong>Cf &mdash; Protective device (BS 3036).</strong> Where the protective device
-              is a BS 3036 rewireable (semi-enclosed) fuse, apply Cf = 0.725. The factor reflects
-              the higher fusing factor of rewireable fuses compared to HBC fuses (BS 88) and MCBs.
-              For modern installations this is rarely engaged but appears on EICRs of pre-1980s
-              dwellings.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...inlineChecks[6]} />
-
-          <RegsCallout
-            source="BS 7671:2018+A4:2026 · Reg 523.1 — Operating temperature"
-            clause="The current-carrying capacity of a conductor shall be such that the limiting temperature is not exceeded under all conditions of normal use. The values of current-carrying capacity may be determined by methods given in Appendix 4 or by calculation, taking account of the design current, the type of insulation, the method of installation, and the ambient temperature."
-            meaning="Iz is not a number — it's a verified design statement that the conductor will not exceed its rated limiting temperature (70°C for PVC, 90°C for thermosetting/XLPE) under the design current with all correction factors applied. App 4 is the prescribed method; bespoke calculation is permitted but rare in routine UK installs."
-            cite="BS 7671:2018+A4:2026, Reg 523.1 / Appendix 4"
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>Voltage drop — Reg 525</ContentEyebrow>
-
-          <ConceptBlock
-            title="The mV/A·m method"
-            plainEnglish="App 4 publishes a tabulated voltage-drop figure (mV/A·m) for every cable size and Reference Method. Multiply by the design current (Ib) and the route length (m), divide by 1000, and you get volts dropped. Compare to the regulation's percentage limit."
-            onSite="On a 230 V single-phase circuit, 3% = 6.9 V (lighting on public supply) and 5% = 11.5 V (other uses on public supply). For private supply (525.202) the caps rise to 6%/8%. Mark each circuit's permitted drop on the design sheet before you calculate; it stops marginal cases sliding through."
-          >
-            <p>
-              <strong>Reg 525.201</strong> &mdash; default for installations supplied directly from
-              a public LV distribution system: 3% lighting, 5% other uses, of nominal voltage. The
-              percentages account for the voltage drop already happening between the substation and
-              the cut-out before the installation starts.
-            </p>
-            <p>
-              <strong>Reg 525.202</strong> &mdash; private-supply systems (own transformer, off-grid
-              solar, large industrial): cap rises to 6% lighting / 8% other uses, recognising the
-              long internal run. The full drop budget shifts inside the installation.
-            </p>
-            <p>
-              For three-phase circuits, the table value is given line-to-line and the calculation
-              divides by &radic;3 where appropriate. App 4 explicitly gives the formula in its
-              preamble &mdash; the apprentice mistake is using the single-phase value on a 400 V
-              circuit and over-rating the cable. Always confirm the column header matches the
-              circuit topology.
-            </p>
-          </ConceptBlock>
-
-          <ConceptBlock
-            title="When voltage drop drives cable size"
-            plainEnglish="Long runs at moderate current routinely fail voltage drop while comfortably passing thermal CCC. Garden offices, EV chargers, outbuilding sub-mains and farm supplies are the classic cases."
-            onSite="A 6 m kitchen radial at 16 A is voltage-drop trivial. A 35 m EV charger feed at 32 A on the same 6 mm² cable will fail 5% on a public supply. Either upsize the cable or move the protective device closer to the load. The cable goes up before the calculation comes back acceptable — there is no shortcut."
-          />
-
-          <InlineCheck {...inlineChecks[4]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>Cable grouping — when Cg bites</ContentEyebrow>
-
-          <ConceptBlock
-            title="Why grouping matters more than apprentices think"
-            plainEnglish="When cables are bunched together, each one's heat dissipates into the next. The current rating of every cable in the bunch drops simultaneously."
-            onSite="Walk a typical consumer-unit-to-loft riser: 8 to 12 T&E cables zip-tied together as they leave the CU. Bunching factor at 8+ circuits sits around 0.52. Every one of those cables loses nearly half its nominal CCC in the bunched section. The fix is either to fan the cables out as soon as possible above the CU, or to upsize the cables to compensate."
-          >
-            <p>
-              Table 4C1 covers cables clipped direct or on a perforated tray, bunched. Table 4C2
-              covers cables in conduit or trunking. Table 4C3 covers cables on a non-perforated
-              tray. Read the right table for the installation method &mdash; a 6-circuit bunched
-              clip-direct value is different from a 6-circuit in-trunking value.
-            </p>
-            <p>
-              The factor applies only to the bunched section. If the cables fan out 0.5 m above the
-              CU and run individually to their loads, you size the cable for the bunched
-              section&apos;s Cg, and the rest of the run is at Cg = 1.00. This gets recorded on the
-              design as &quot;Cg = 0.57 over first 0.5 m, Cg = 1.00 thereafter&quot; and the
-              worst-case is the design driver.
-            </p>
-            <p>
-              Different-load circuits do not get a discount. Two cables touching produce thermal
-              interference regardless of whether one is a lighting circuit at 0.5 A and the other an
-              immersion at 13 A &mdash; the heat from the 13 A still raises the lighting
-              cable&apos;s temperature and vice versa. The Cg tables assume worst-case simultaneous
-              loading.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...inlineChecks[2]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>Cables in thermal insulation</ContentEyebrow>
-
-          <ConceptBlock
-            title="Methods 100–103 and Reg 523.7"
-            plainEnglish="Modern lofts contain 270 mm+ of mineral wool. Cables routed through that insulation cannot dissipate heat sideways into air — they sit in a thermal jacket. App 4 publishes specific derates for this scenario."
-            onSite="On a typical rewire, the lighting circuits run above the ceiling plasterboard, often draped on the ceiling under the loft insulation. That is Method 101 or 102 and the Ci factor — typically 0.72 to 0.78 — is non-trivial. Cables fully enclosed within insulation (running through the middle of the insulation depth, fully buried in mineral wool) are Method 103 and can derate by 50% or more."
-          >
-            <p>
-              The mitigations are limited: lift the cable above the insulation on plastic battens
-              (returning it to Method C), upsize the cable to compensate, or route the cable in
-              conduit through the insulation (still Method 100&ndash;103 territory but slightly
-              improved heat dissipation depending on conduit material). Burying T&amp;E in 270 mm of
-              wool with no compensation is an under-rated cable waiting to be flagged on the next
-              EICR.
-            </p>
-            <p>
-              Reg 523.7 / 523.8 are the regulatory hooks. They cross-reference App 4 Tables 4A2 for
-              the methods and Table 4D5 (single-phase T&amp;E) or 4E5 (three-phase) for the capacity
-              columns. Always read the table, not the legend &mdash; the values are tabulated for a
-              reason.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...inlineChecks[3]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>Cable routing — Reg 522.6 and 522.8</ContentEyebrow>
-
-          <ConceptBlock
-            title="Reg 522.6 — Mechanical impact (external influence AG)"
-            plainEnglish="The cable has to survive what its environment can do to it. AG1 (low impact) covers normal domestic and office. AG2 (medium) covers light commercial and workshops. AG3 (high) covers heavy industrial and construction sites."
-            onSite="Most of the EICR observations on cable routing live in this regulation. Cable too close to the surface in a stud wall? 522.6.202. Surface-clipped run through a workshop where forklifts pass? 522.6.1 (the cable needs additional mechanical protection). Cable above a suspended ceiling where maintenance staff climb? 522.6.1 plus 522.8."
-          >
-            <p>
-              The text of Reg 522.6 is broad: cables shall be protected against mechanical damage
-              appropriate to the external influences. The specific sub-clauses (522.6.1 to
-              522.6.204) make this concrete.
-            </p>
-            <p>
-              <strong>Reg 522.6.202</strong> &mdash; cables concealed in walls or partitions at a
-              depth less than 50 mm. Permitted by one of: (i) depth &ge; 50 mm, (ii) earthed
-              metallic covering, (iii) mechanical protection sufficient against expected impact,
-              (iv) run in safe zones AND protected by 30 mA RCD, or (v) cable with earthed metallic
-              screen / armour. Modern domestic rewires almost universally use (iv).
-            </p>
-            <p>
-              <strong>Reg 522.6.203</strong> &mdash; locations used by ordinary persons (BA1) /
-              dwellings: where 522.6.202 is satisfied by safe-zone routing without 50 mm depth or
-              metallic protection, the 30 mA RCD requirement is a hard &quot;shall.&quot; The
-              regulation does not allow a risk-assessment exception within domestic premises.
-            </p>
-            <p>
-              <strong>Reg 522.6.204</strong> &mdash; metal-framed (steel-stud) walls. The risk of
-              fixings penetrating the cable is much higher than in timber-stud walls. The mitigation
-              menu narrows: typically (ii) earthed metallic covering or (iii) full mechanical
-              protection.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...inlineChecks[5]} />
-
-          <ConceptBlock
-            title="Reg 522.8 — Mechanical stress (external influence AJ)"
-            plainEnglish="Cables under tension, compression, repeated bending or vibration must be selected and supported to handle those stresses. Bending radii, fixing intervals and support spacings are all under 522.8."
-            onSite="The 522.8 corollaries appear in the OSG and IET manufacturer guides as bending-radius tables (typically 6× to 8× outside diameter for fixed installations) and fixing intervals (typically 250–400 mm for surface-clipped horizontal T&E). Get either wrong and the cable insulation work-hardens at the bend or the fixing point and fails over time."
-          >
-            <p>
-              <strong>Reg 522.8.4</strong> &mdash; cables shall be supported in such a way that they
-              are not subjected to undue mechanical strain, especially at conductor or cable
-              terminations. This is the rule that makes you provide cable glands at SWA terminations
-              and tails-clamps at consumer units.
-            </p>
-            <p>
-              <strong>Reg 522.8.10</strong> &mdash; cables in or against the ground. Refers
-              installer to Reference Method D, requires sufficient burial depth to avoid foreseeable
-              disturbance, and typically (per OSG) marker tape and cable tiles. A4:2026 has refined
-              some of the App 4 buried-cable methods to account for soil thermal resistivity and
-              burial conditions.
-            </p>
-            <p>
-              <strong>Reg 522.10</strong> &mdash; corrosive substances (external influence AF).
-              Where cables are routed near substances that attack the sheath (acids, alkalis,
-              certain paints, some insulation foams), the cable selection must account for it. PVC
-              is incompatible with extruded polystyrene insulation in some formulations &mdash; a
-              common surprise where polystyrene panels touch PVC sheath.
-            </p>
-            <p>
-              <strong>Reg 521.10</strong> &mdash; cable enclosures. Where cables run in a
-              non-metallic enclosure (PVC conduit, plastic trunking) the enclosure must be suitable
-              for the environment and the cables inside it. Reg 521.10.1 (in particular) prohibits
-              the use of single-core cables of an a.c. circuit being installed in an enclosure of
-              magnetic material with the conductors not in contact &mdash; the ferromagnetic loop
-              heats from induced eddy currents. Run all line/neutral conductors of a single circuit
-              through the same enclosure to keep the magnetic flux balanced.
-            </p>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <ContentEyebrow>Buried cables and A4:2026 changes</ContentEyebrow>
-
-          <ConceptBlock
-            title="Direct burial — Reg 522.8.10 and Reference Method D"
-            plainEnglish="Buried cables sit in soil, which has different thermal properties from air. Reference Method D in App 4 provides the dedicated CCC tables, with assumed soil thermal resistivity and depth conditions baked in."
-            onSite="Typical UK practice: SWA cable, buried at 500 mm under footpath/lawn or 600–750 mm under vehicular access, with yellow warning tape laid 150 mm above the cable, and cable tiles where local hazards or shallow depth dictate. The DNO supply trench and the customer's sub-main trench follow similar standards but the customer's cable is BS 7671's responsibility, not the DNO's."
-          >
-            <p>
-              Reference Method D distinguishes between cables direct in the ground and cables in
-              ducts in the ground. The latter has slightly higher CCC because the air gap inside the
-              duct improves heat dissipation, but the duct itself adds thermal resistance. Tables
-              4D4A and 4E4A list the values.
-            </p>
-            <p>
-              <strong>A4:2026 changes</strong> &mdash; A4 has refined the App 4 buried-cable
-              tabulation, including soil thermal resistivity assumptions and the interaction with
-              thermal insulation surrounding buried cables (e.g. a buried cable rising into a
-              foundation void with insulation above). Always work from the in-force edition. Where
-              soil is unusually rocky, dry, peaty or high-organic, the designer departs from the
-              tabulated values with documented justification under Reg 120.3 and references BS EN
-              IEC 60287 for the bespoke calculation.
-            </p>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <ContentEyebrow>Where it goes wrong</ContentEyebrow>
-
-          <CommonMistake
-            title="Reading Method C numbers for a Method A install"
-            whatHappens="Apprentice sizes a 32 A ring final at 4 mm² T&E reading the Method C column (Iz nominal ~36 A). The cable is actually run inside studwork in conduit through insulated walls — Method A (Iz nominal ~25 A). The cable is under-rated by ~30% and the design fails Reg 433.1.1 (In ≤ Iz)."
-            doInstead="Confirm the Reference Method on the design sheet before reading App 4. Walk the route visually: where will the cable physically sit? Then map it to the Method A–G or 100–103 list. The single biggest source of cable-sizing errors in apprentice paperwork is mis-reading the Method column."
-          />
-
-          <CommonMistake
-            title="Forgetting to multiply correction factors"
-            whatHappens="Designer applies Ca = 0.94 alone, ignoring Cg = 0.65 because the grouping is only 4 circuits and they will spread out further along the run. The first 0.5 m of bunched cable runs at 0.94 × 0.65 = 0.61 corrected, not 0.94. The cable is under-rated for that section and the worst-case section is what drives the design."
-            doInstead="Apply every factor that exists, multiply them all, and use the result as Iz. If a factor varies along the route (e.g. grouped at the CU, fanned out at the loads), use the worst-case value of the product. The protective device must satisfy In ≤ Iz throughout the entire length, not just where it is convenient."
-          />
-
-          <CommonMistake
-            title="Treating mV/A·m as resistance"
-            whatHappens="Designer pulls the mV/A·m value from App 4 Table 4D5B, then multiplies by current squared and length, getting a power figure. Wrong calculation. Voltage drop is mV/A·m × I × L / 1000 — linear in current, not quadratic."
-            doInstead="The mV/A·m value already includes the cable's resistance per metre (loop, both legs of a single-phase circuit). Multiply by Ib (design current, not In), by route length L in metres, then divide by 1000 to convert mV to V. Compare to the percentage limit of nominal voltage (e.g. 6.9 V on a 230 V lighting circuit). Three-phase calculations have an additional &radic;3 step depending on the table column."
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>Scenarios — applying it on the day</ContentEyebrow>
-
-          <Scenario
-            title="Loft lighting circuit buried under thermal insulation"
-            situation="Customer wants 9 LED downlights in a bedroom ceiling, plus 3 spots in the en-suite. Existing loft has 270 mm of mineral wool laid on top of the plasterboard. The new cable will run from the consumer unit, up the wall, over the bedroom ceiling joists, and down to each downlight. The installer plans to drape the cable under the loft insulation to keep it concealed."
-            whatToDo="Identify the Reference Method for the loft section: cable above plasterboard, surrounded by 270 mm of insulation = Method 102 or 103 depending on whether it sits on top of, within, or fully enclosed by the wool. Worst-case Method 103 with Ci ~ 0.50 means 1.5 mm² T&E nominal Iz of ~16 A drops to ~8 A — barely enough for the 6 A MCB, no margin. The fix is one of: (a) lift the cable on plastic battens above the insulation (returning to Method C), (b) upsize the cable to 2.5 mm², or (c) re-route through the joists below the insulation (also Method C). Apply the new Reg 411.3.4 (A4) — the lighting circuit must be on a 30 mA RCD/RCBO regardless."
-            whyItMatters="Under-rated lighting cables in lofts cause sustained warm-running that ages the insulation and creates the long-term fire risk. The A4 Reg 411.3.4 RCD does not protect against thermal under-rating — it protects against shock. Both rules have to be satisfied independently. On the EICR the missed Method 103 derate is C2 (potentially dangerous) where the cable is materially under-rated; C3 where the under-rate is marginal but verifiable."
-          />
-
-          <Scenario
-            title="Kitchen socket ring with multi-circuit grouping at the consumer unit"
-            situation="A new kitchen has 12 sockets on a 32 A ring final (Type B MCB, Reference Method C, 2.5 mm² T&E). The CU is in the under-stair cupboard. The first 0.8 m of the ring leaves the CU bunched with 7 other cables in a 50 mm trunking riser — kitchen ring, kitchen lighting, hallway lighting, upstairs lighting, upstairs sockets, immersion, EV charger feed, garden office sub-main."
-            whatToDo="Identify the bunched section: 8 circuits in trunking, Cg from Table 4C2 ≈ 0.52. The kitchen ring's 2.5 mm² nominal It (Method C, 27 A) becomes 27 × 0.52 = ~14 A in the bunched section. The 32 A MCB no longer satisfies In ≤ Iz (32 vs 14). The fix options: (a) fan the cables out earlier and reduce the bunched count, (b) upsize the bunched section to 4 mm² (Iz nominal ~37 A, corrected to ~19 A — still tight), (c) split the bunched section across two trunking runs to reduce Cg. The realistic fix on a new install is (a) — design the riser so cables fan out 0.3 m above the CU into separate routes."
-            whyItMatters="Bunching is the silent killer of cable ratings. Inspectors checking Iz at the load end of a circuit see a clip-direct cable comfortably at Method C and miss the bunched bit at the CU. The cable that overheats is the one in the trunking, not the one at the load. EICR coding for bunched-but-under-rated runs is typically C2 (potentially dangerous, sustained over-temperature accelerates insulation ageing) where the bunching is severe; C3 where marginal. The fix is design — once installed, splitting a riser is a re-rewire."
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>Designer&apos;s quick reference</ContentEyebrow>
-
-          <ConceptBlock
-            title="Six-step cable selection checklist"
-            plainEnglish="Walk every cable through six steps before specifying. Most assessment failures come from skipping one of them."
-            onSite="(1) What family fits the external influences (Reg 521.5)? (2) What Reference Method is the install path (App 4 column)? (3) What is the design current Ib? (4) Apply Ca, Cg, Ci, Cf — derive Iz. Verify In ≤ Iz. (5) Calculate voltage drop with mV/A·m × Ib × L / 1000. Verify against Reg 525.201 (3%/5%) or 525.202 (6%/8%). (6) Check Reg 522.6 routing rules — concealment, mechanical impact, RCD requirement (411.3.4 for domestic lighting from A4)."
-          >
-            <p>
-              The six-step sheet is the audit trail when an inspector queries cable choice in three
-              years. Without it, the answer becomes &quot;I have always used 2.5 mm&sup2; on ring
-              finals&quot; &mdash; which may be right but cannot be evidenced. With it, the answer
-              is &quot;Reg 521.5: T&amp;E suitable; Method C clipped direct in joist void; Ib = 25
-              A; Ca = 1.00, Cg = 1.00 (single circuit beyond CU), Ci = 1.00 (above insulation on
-              plastic batten), Cf = 1.00; Iz = 27 A; In = 32 A — verified using the ring-final
-              exception per BS 7671 Section 433; voltage drop 4.2% over 18 m route at 25 A — within
-              5%; routing per 522.6.202 (iv) safe-zone + 30 mA RCBO.&quot; That is a defensible
-              record.
-            </p>
-          </ConceptBlock>
-
-          <ConceptBlock
-            title="Reg cite map — what to quote on the EIC"
-            plainEnglish="Each design decision has a regulation. Citing the regulation on the schedule turns a judgement call into an evidenced one."
-            onSite="Cable type → Reg 521.5 plus any specific environmental reg (522.3 water, 522.6 impact, 522.8 stress, 522.10 corrosion). Cable size → App 4 plus Reg 523.1 (operating temperature) and Reg 433.1.1 (coordination with protective device). Voltage drop → Reg 525.201 (public supply) or 525.202 (private supply). Cables in walls → Reg 522.6.202 / 522.6.203 / 522.6.204. Buried cables → Reg 522.8.10 plus App 4 Method D. Cable enclosures → Reg 521.10."
-          >
-            <p>
-              The Reg-cite map appears as a one-line annotation against each circuit on the design
-              record. It is not required by BS 7671 to appear on the EIC itself, but every cert
-              auditor and EICR inspector working from a defensible design will look for it. The
-              electrical designer who routinely cites regulations is several orders of magnitude
-              more defensible than one who relies on convention alone.
-            </p>
-          </ConceptBlock>
-
-          <FAQ items={faqItems} />
-
-          <KeyTakeaways
-            points={[
-              'Cable type selection is governed by Reg 521.5 — match the family (T&E, SWA, FP200, MICC, Hi-Tuf, LSF/LSZH) to the external influences and installation method.',
-              'Read the right Reference Method from App 4 — A through G+ for general, 100–103 for thermal insulation, D for buried — before pulling any It value.',
-              'Apply every correction factor that exists: Iz = It × Ca × Cg × Ci × Cf. Never default the inconvenient ones to 1.00.',
-              'Voltage drop limits per Reg 525.201 are 3% lighting / 5% other on public supply. Reg 525.202 raises this to 6%/8% for private-supply systems. mV/A·m × Ib × L / 1000 is the calculation.',
-              'Cables concealed in walls/partitions at less than 50 mm depth must satisfy Reg 522.6.202 — typically by safe-zone routing plus 30 mA RCD additional protection (which A4 Reg 411.3.4 already mandates for domestic luminaires).',
-              'Buried cables: Reg 522.8.10 plus Reference Method D. A4:2026 has refined some buried-cable tabulations — always read the in-force edition.',
-            ]}
-          />
-
-          <Quiz questions={quizQuestions} />
-
-          <div className="grid grid-cols-2 gap-3 pt-2">
-            <button
-              type="button"
-              onClick={() => navigate('/electrician/upskilling/bs7671-module-5')}
-              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
-                <ChevronLeft className="h-3 w-3" /> Module 5
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-white truncate">
-                Module overview
-              </div>
-            </button>
-            <button
-              type="button"
-              onClick={() => navigate('/electrician/upskilling/bs7671-module-5-section-3')}
-              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
-                Next section <ChevronRight className="h-3 w-3" />
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-black truncate">
-                5.3 Containment systems and mechanical protection
-              </div>
-            </button>
-          </div>
-        </PageFrame>
-      </div>
-    </div>
+            <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+              Next section <ChevronRight className="h-3 w-3" />
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-black truncate">
+              5.3 Containment systems and mechanical protection
+            </div>
+          </button>
+        </div>
+      </HubBody>
+    </HubPage>
   );
 };
 

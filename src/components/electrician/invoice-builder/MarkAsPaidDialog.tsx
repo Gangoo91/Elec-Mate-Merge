@@ -97,7 +97,13 @@ export const MarkAsPaidDialog = ({
 
       toast({
         title: 'Invoice marked as paid',
-        description: `Invoice ${invoice.invoice_number} has been marked as paid`,
+        description: `Invoice ${invoice.invoice_number} has been marked as paid${
+          invoice.linked_certificate_id &&
+          invoice.certificate_release_mode === 'on_payment' &&
+          !invoice.certificate_released_at
+            ? `. The ${invoice.linked_certificate_type || 'certificate'} is on its way to the customer.`
+            : ''
+        }`,
         variant: 'success',
       });
 
@@ -161,6 +167,14 @@ export const MarkAsPaidDialog = ({
           <DialogTitle>Mark Invoice as Paid</DialogTitle>
           <DialogDescription>
             Record payment details for invoice {invoice.invoice_number}
+            {invoice.linked_certificate_id &&
+              invoice.certificate_release_mode === 'on_payment' &&
+              !invoice.certificate_released_at && (
+                <span className="mt-2 block text-teal-300">
+                  The held {invoice.linked_certificate_type || 'certificate'} will be emailed to
+                  the customer automatically once this is saved.
+                </span>
+              )}
           </DialogDescription>
         </DialogHeader>
 

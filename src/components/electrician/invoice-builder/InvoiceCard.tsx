@@ -100,7 +100,14 @@ export function InvoiceCard({
           ? { text: `Paid ${paidLateDays}d late`, cls: 'text-white/55' }
           : isDraft
             ? { text: 'Not sent yet', cls: 'text-white/55' }
-            : null;
+            : !isPaid &&
+                invoice.linked_certificate_id &&
+                invoice.certificate_release_mode === 'on_payment' &&
+                !invoice.certificate_released_at
+              ? { text: 'Certificate held — sends when paid', cls: 'text-teal-300' }
+              : isPaid && invoice.certificate_released_at
+                ? { text: 'Certificate sent automatically', cls: 'text-teal-300' }
+                : null;
 
   const busy = isMarkingPaid || isDownloading || isDeleting;
 

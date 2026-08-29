@@ -38,11 +38,14 @@ export const TypingCursor = memo(function TypingCursor({
   return (
     <motion.span
       initial={{ opacity: 1 }}
-      animate={{ opacity: [1, 0, 1] }}
+      // Near-instant transitions between held opacities — a hard terminal
+      // blink. ('steps(2)' read nicely but isn't a framer-motion Easing.)
+      animate={{ opacity: [1, 1, 0, 0, 1] }}
       transition={{
         duration: 1,
         repeat: Infinity,
-        ease: 'steps(2)',
+        times: [0, 0.49, 0.5, 0.99, 1],
+        ease: 'linear',
       }}
       className={cn(
         'inline-block align-middle ml-0.5',

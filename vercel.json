@@ -11,7 +11,7 @@
       "headers": [
         {
           "key": "Cache-Control",
-          "value": "public, s-maxage=60, stale-while-revalidate=300"
+          "value": "public, max-age=0, must-revalidate, s-maxage=60, stale-while-revalidate=300"
         }
       ]
     },
@@ -965,6 +965,10 @@
     }
   ],
   "rewrites": [
+    {
+      "source": "/api/oauth/calendar-callback",
+      "destination": "https://jtwygbeceundfgnkirof.supabase.co/functions/v1/calendar-oauth-callback"
+    },
     {
       "source": "/verify/:number",
       "has": [

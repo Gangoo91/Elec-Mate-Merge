@@ -120,6 +120,18 @@ const InspectionIndex = () => {
     } else if (reportType === 'disconnection') {
       navigate(`/electrician/inspection-testing/disconnection/${reportId}`);
       return;
+    } else if (reportType === 'visual-condition') {
+      // Without this a saved Visual Condition Report fell through to the
+      // default EICR branch below and opened as a blank EICR — the same way
+      // the fire-alarm variants used to lose a user's data.
+      navigate(`/electrician/inspection-testing/visual-condition/${reportId}`);
+      return;
+    } else if (reportType === 'routine-inspection') {
+      // Same trap as the visual condition report: without an explicit branch a
+      // saved routine inspection falls through to the default EICR case below
+      // and opens as a blank EICR, losing the visit.
+      navigate(`/electrician/inspection-testing/routine-inspection/${reportId}`);
+      return;
     }
 
     // Legacy certificate types use section-based routing
@@ -147,6 +159,8 @@ const InspectionIndex = () => {
       'solar-pv',
       'testing-only',
       'disconnection',
+      'visual-condition',
+      'routine-inspection',
     ];
     const effectiveType = reportType || section;
     if (dedicatedRouteTypes.includes(effectiveType) && reportId) {
@@ -154,7 +168,7 @@ const InspectionIndex = () => {
       return;
     }
     // Types that go straight to /new (no hub page)
-    const directToNewTypes = ['testing-only', 'bess', 'lightning-protection', 'g98-commissioning', 'g99-commissioning', 'smoke-co-alarm', 'disconnection'];
+    const directToNewTypes = ['testing-only', 'bess', 'lightning-protection', 'g98-commissioning', 'g99-commissioning', 'smoke-co-alarm', 'disconnection', 'visual-condition', 'routine-inspection'];
     if (dedicatedRouteTypes.includes(effectiveType) && !reportId) {
       if (directToNewTypes.includes(effectiveType)) {
         navigate(`/electrician/inspection-testing/${effectiveType}/new`);

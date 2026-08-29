@@ -460,7 +460,7 @@ const FunctionalSkillsModule5Section4 = () => {
         {/* InlineCheck after 02 */}
         <InlineCheck
           question="Name four different types of evidence you can include in your portfolio."
-          answer="You can include: (1) Certificates and qualifications, (2) Work products (job sheets, risk assessments, emails, calculations), (3) Photographic evidence of completed work, (4) Reflective accounts using the STAR structure, (5) Witness testimonies from supervisors. Using a variety of types creates a stronger, more convincing portfolio."
+          correctAnswer="You can include: (1) Certificates and qualifications, (2) Work products (job sheets, risk assessments, emails, calculations), (3) Photographic evidence of completed work, (4) Reflective accounts using the STAR structure, (5) Witness testimonies from supervisors. Using a variety of types creates a stronger, more convincing portfolio."
         />
 
         {/* 03 - Photographic Evidence */}
@@ -762,7 +762,7 @@ const FunctionalSkillsModule5Section4 = () => {
         {/* InlineCheck after 04 */}
         <InlineCheck
           question="Why should you annotate written evidence before adding it to your portfolio?"
-          answer="Annotations explain what the document is, when you created it, which parts were your work (if it was a team effort), and which assessment criteria it covers. Without annotations, the assessor may not understand the context or relevance of the document, which reduces its value as evidence."
+          correctAnswer="Annotations explain what the document is, when you created it, which parts were your work (if it was a team effort), and which assessment criteria it covers. Without annotations, the assessor may not understand the context or relevance of the document, which reduces its value as evidence."
         />
 
         {/* 05 - Witness Testimonies */}
@@ -1023,7 +1023,7 @@ const FunctionalSkillsModule5Section4 = () => {
         {/* InlineCheck after 06 */}
         <InlineCheck
           question="In the STAR structure for reflective accounts, what does the 'A' stand for and why is it the most important section?"
-          answer="The 'A' stands for Action — describing what you actually did, including the specific skills, tools, techniques, calculations, and decisions you used. It is the most important section because it directly demonstrates your competence. It shows the assessor not just that you were present, but that you actively performed the work and understood what you were doing."
+          correctAnswer="The 'A' stands for Action — describing what you actually did, including the specific skills, tools, techniques, calculations, and decisions you used. It is the most important section because it directly demonstrates your competence. It shows the assessor not just that you were present, but that you actively performed the work and understood what you were doing."
         />
 
         {/* 07 - Organising Your Portfolio */}

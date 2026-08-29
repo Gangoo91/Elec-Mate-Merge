@@ -1,8 +1,8 @@
-import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { useNavigate } from 'react-router-dom';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
-import { PageFrame, PageHero } from '@/components/college/primitives';
 import {
   TLDR,
   ConceptBlock,
@@ -292,409 +292,404 @@ const BS7671Module2Section3 = () => {
   });
 
   return (
-    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
-      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
-        <PageFrame>
+    <HubPage>
+      <HubMasthead
+        section="Module 2 · Section 3 · Updated for A4:2026"
+        title="New definitions — AFDD, PEI, bidirectional energy, prosumer"
+        backTo="../bs7671-module-2"
+      />
+      <HubBody>
+        <div className="max-w-3xl text-[13px] leading-relaxed text-white">
+          {
+            'The vocabulary BS 7671 added (and clarified) in A2, A3 and A4 — AFDDs, prosumer electrical installations, bidirectional energy flow, PNB on the new cert form, PCE at the AC/DC interface, and how they shift design choices on every modern domestic installation.'
+          }
+        </div>
+
+        <div className="flex flex-wrap items-center gap-2">
+          {
+            <>
+              <RegBadge>421.1.7</RegBadge>
+              <RegBadge>551.7.1</RegBadge>
+              <AmendmentBadge regs={['421.1.7', '551.7.1', '411.3.4']} />
+            </>
+          }
+        </div>
+
+        <TLDR
+          points={[
+            'A4:2026 brings AFDDs into BS 7671 (Reg 421.1.7, BS EN 62606) — mandatory in higher-risk premises, recommended elsewhere. Targets fire ignition by series and parallel arc faults that an MCB or RCD never sees.',
+            'PEI (Prosumer Electrical Installation) is the new umbrella term for any installation where energy can flow in BOTH directions at the supply interface — PV, battery, V2G EV. Reg 530.3.201 (bidirectional devices) and Reg 551.7.1 (parallel sources) become live the moment you cross into PEI.',
+            'A4 distinguishes TN-C-S (PME) from TN-C-S (PNB) on the cert form, adds an explicit Reg 411.3.4 luminaire-RCD declaration, and consolidates prosumer / parallel-source declarations in the supply block.',
+          ]}
+        />
+
+        <LearningOutcomes
+          outcomes={[
+            'Define AFDD, PEI, prosumer, bidirectional energy flow, PNB and PCE in the precise sense BS 7671:2018+A4:2026 uses them.',
+            'Apply Reg 421.1.7 (AFDDs) — distinguish where the regulation says "shall" from where it says "should be considered", and pick the correct product standard (BS EN 62606).',
+            'Identify when an installation crosses from consumer to PEI, and walk through the Reg 530.3.201 / Reg 551.7.1 design implications for bidirectional protective devices and parallel sources.',
+            'Distinguish PME from PNB on the A4 cert form, and explain why the open-PEN failure mode still triggers Reg 722.312.2.1 in both cases.',
+            'Match RCD type (AC, A, F, B per Reg 531.3.3 and BS EN 62423) to the actual residual-current waveform the load and any PCE produce.',
+            'Apply Reg 411.3.4 (NEW — domestic luminaire RCDs) and identify the correct EICR coding for non-compliance after 15 April 2026.',
+            'Recognise when Reg 419 alternatives apply and document the design route taken when ADS cannot deliver Section 411 disconnection times.',
+          ]}
+          initialVisibleCount={3}
+        />
+
+        <ContentEyebrow>AFDD — Arc Fault Detection Device</ContentEyebrow>
+
+        <ConceptBlock
+          title="What an AFDD detects (and why an MCB / RCD will not)"
+          plainEnglish="An AFDD watches for the high-frequency electrical noise that arcing produces — a degrading termination, a chafed flex behind the wardrobe, a stapled-through cable that has cooked over years."
+          onSite="The arcing current can be well below the MCB trip threshold (so no overcurrent — no MCB trip) and well below 30 mA to earth (so no RCD trip), yet still pump enough heat into the surrounding combustibles to ignite them. The AFDD is a fire-prevention device, not a shock-protection device."
+        >
+          <p>
+            AFDDs (BS EN 62606) work by signal-processing the current waveform, looking for the
+            characteristic broadband noise that arcing produces. There are two arc-fault classes:
+            <strong> series-arc</strong> faults (a single conductor with a degrading high-resistance
+            termination — a loose neutral in a back-box, a corroded crimp) and
+            <strong> parallel-arc</strong> faults (insulation breakdown causing arcing between line
+            and neutral, or line and earth). Both are invisible to a conventional MCB or RCD. AFDDs
+            combine arc-pattern recognition with overcurrent and (typically) residual-current
+            functions in a single device — an "AFDD-RCBO" is the common form factor.
+          </p>
+        </ConceptBlock>
+
+        <RegsCallout
+          source="BS 7671:2018+A4:2026 · Reg 421.1.7 — Arc Fault Detection Devices"
+          clause="Arc Fault Detection Devices (AFDDs) conforming to BS EN 62606 shall be provided to mitigate the risk of fire in final circuits of fixed installations in specified premises types. In other premises, the provision of AFDDs should be considered."
+          meaning="Mandatory in the listed higher-risk premises (sleeping accommodation in HMOs, certain care premises, premises with combustible-construction or heritage / irreplaceable-content concerns — read the published regulation against your specific building category). Recommended elsewhere — fitting them is rarely wrong; omitting them needs to be a documented design decision."
+          cite="BS 7671:2018+A4:2026, Reg 421.1.7 (in force 15 April 2026)"
+        />
+
+        <InlineCheck {...inlineChecks[0]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>PEI — Prosumer Electrical Installation</ContentEyebrow>
+
+        <ConceptBlock
+          title="From consumer to prosumer"
+          plainEnglish="A consumer takes energy from the grid. A prosumer also produces energy — PV exports, battery discharge to grid, V2G EV — so net energy flows in both directions at the supply interface."
+          onSite="The line is crossed the moment the installation can export. A 4 kW PV array makes the property a prosumer. A 5 kWh battery makes it more so. A V2G-capable EV charger fully closes the loop. Reg 530.3.201 (bidirectional protective devices) and Reg 551.7.1 (parallel sources) become live design considerations on the same day the system is energised."
+        >
+          <p>
+            GN3 / A4 treats PEI (Prosumer Electrical Installation) as the umbrella term. The
+            definition is functional, not commercial: it does not matter whether the customer has an
+            export tariff or whether they are net-positive over the year. What matters is that
+            bidirectional energy flow is possible at the supply interface. Once it is, the
+            installation must be designed against the parallel-source rules (Reg 551.7.1), the
+            bidirectional-device rules (Reg 530.3.201), and the relevant Part 7 sections (Section
+            712 for PV, Section 722 for EV, Section 826 for battery) — and the cert form must
+            declare the parallel-source presence in the supply-characteristics block.
+          </p>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="Bidirectional energy flow — what the term actually requires"
+          plainEnglish="Net current can pass through the supply interface in both directions over the operating cycle. Source-to-load AND load-to-source."
+          onSite="The supply tails are no longer 'mains in' — they are a bidirectional energy port. Phasing, sequencing, anti-islanding (G98 / G99) and parallel-source coordination all sit on top of the BS 7671 protective design."
+        >
+          <p>
+            Bidirectional energy flow is what links the term "prosumer" to actual installation
+            design. A unidirectional grid-tie inverter will not export — it has no interface to do
+            so. A grid-following inverter without battery cannot island — it shuts down on grid
+            loss. A battery hybrid inverter with G99 functions can island AND export. Each
+            functional level shifts the protective-device requirements, the labelling requirements,
+            and the cert declarations. A4 codifies this in the 530.3.201 / 551.7.1 pair so the
+            designer no longer has to reason from first principles.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...inlineChecks[1]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>Bidirectional protective devices — Reg 530.3.201</ContentEyebrow>
+
+        <ConceptBlock
+          title="Why direction of current flow matters for an MCB or RCBO"
+          plainEnglish="A device specified only for the conventional source-to-load direction may have reduced breaking capacity, slower magnetic-trip response, or compromised arc-quench when current flows the other way."
+          onSite="On a PEI, the 'load' side of a busbar protective device is the energised side at any given moment — battery discharging into the busbar, PV exporting through the busbar, EV in V2G feeding the busbar. The device must be rated for fault interruption when the source is upstream OR downstream."
+        >
+          <p>
+            Reg 530.3.201 (NEW in A4) requires the designer to verify that protective devices in
+            circuits where bidirectional current can flow are suitable for the actual current
+            directions. This is a manufacturer-datasheet check: many modern MCBs, RCBOs and AFDD
+            devices are explicitly marked "bidirectional" or "for use with parallel sources"; legacy
+            devices marked with a directional line/load arrow may NOT be suitable. The practical
+            consequence: when re-fitting a domestic CU on a PEI, specify a range explicitly approved
+            for bidirectional service across the entire CU rather than mixing directional and
+            non-directional devices.
+          </p>
+        </ConceptBlock>
+
+        <RegsCallout
+          source="BS 7671:2018+A4:2026 · Reg 530.3.201 — Bidirectional protective devices"
+          clause="Where a protective device is installed in a circuit in which current can flow in both directions during normal operation (for example, in a Prosumer Electrical Installation), the device shall be selected to operate correctly for the maximum prospective fault current in either direction of current flow."
+          meaning="A datasheet check, not a rule of thumb. The manufacturer must confirm the device is rated for bidirectional fault interruption — breaking capacity, magnetic-trip and arc-quench all verified in either direction. Mark this on the designer's circuit list and keep the datasheet reference."
+          cite="BS 7671:2018+A4:2026, Reg 530.3.201"
+        />
+
+        <InlineCheck {...inlineChecks[2]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>PNB — Protective Neutral Bonding (TN-C-S variant)</ContentEyebrow>
+
+        <ConceptBlock
+          title="PME vs PNB on the A4 cert form"
+          plainEnglish="Both are TN-C-S. PME has the neutral earthed at multiple points across the DNO LV network. PNB has a single point of earth connection — typically at the customer cut-out for a private transformer."
+          onSite="On the A4 cert form, the system-earthing dropdown now includes 'TN-C-S (PNB)' as a distinct option alongside 'TN-C-S (PME)', 'TN-S', 'TT' and 'IT'. Picking the right one is a designer's call after confirming with the DNO or the on-site infrastructure."
+        >
+          <p>
+            The reason A4 splits PME and PNB is that the open-PEN failure-mode profile differs. In a
+            PME network, multiple earth-connection points across the LV mains provide redundancy —
+            an open PEN at one point does not necessarily collapse the local earth reference,
+            because other earth points hold it. In a PNB arrangement (private transformer with a
+            single earth point at the cut-out), the earth reference is by definition non-redundant —
+            an open PEN there is the open PEN. The mitigations remain the same (Reg 461.2 — no
+            switching of the PEN; Reg 722.312.2.1 — no PEN in EV circuits) but the cert
+            classification reflects the network topology accurately.
+          </p>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="Why both PME and PNB still trigger Reg 722.312.2.1"
+          plainEnglish="The EV-circuit PEN prohibition applies to ALL TN-C-S supplies — it is about the consequence of an open PEN, not the topology that produced it."
+          onSite="When you fit an EV charger on either PME or PNB, you either (a) split N and PE upstream of the EV way and run the EV circuit as TN-S, or (b) apply an approved open-PEN protection device at the charge-point. Type AC RCDs are out either way; the upstream type depends on whether the charger is a 'PCE with simple separation'."
+        >
+          <p>
+            Reg 722.312.2.1 (NEW in A4) is unconditional: an EV-charging circuit on a TN system
+            shall not include a PEN conductor. The customer-side PNB single-point-earth case is
+            actually a slightly higher-risk variant of the rule — the open-PEN consequence is not
+            buffered by network redundancy. Designers commonly fit a CCS-style open-PEN detection
+            relay at the charge-point on TN-C-S supplies (PME or PNB) and split N / PE at the
+            consumer unit specifically for the EV way. The cert records the system as TN-C-S (PME)
+            or TN-C-S (PNB), and the EV-way arrangement separately as TN-S with the open-PEN
+            protective device noted.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...inlineChecks[3]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>PCE — Power Conversion Equipment</ContentEyebrow>
+
+        <ConceptBlock
+          title="The AC / DC interface inside the installation"
+          plainEnglish="A PCE is anything that converts AC to DC, DC to AC, or DC to a different DC voltage — inverters, EV chargers, rectifiers, DC-DC converters, bidirectional charge controllers."
+          onSite="Most domestic PEIs contain at least three: the PV inverter, the battery hybrid inverter (or the BMS-side charger), and the EV charger. Each PCE has its own DC and AC sides, its own residual-current footprint, and its own internal DC fault detection (or lack of it)."
+        >
+          <p>
+            The PCE term lets BS 7671 talk about the AC / DC interface without specifying every
+            device class. What matters for the upstream design is whether the PCE provides
+            <strong> simple separation</strong> between its DC and AC sides AND
+            <strong> internal DC residual-current detection</strong> at the 6 mA threshold per the
+            relevant product standard (BS EN 61851 for EV charging, the inverter standards for PV /
+            battery). A "PCE with simple separation" lets a Type A 30 mA RCD upstream suffice. A PCE
+            without it forces Type B upstream — because smooth DC residual would otherwise pass
+            through to the upstream RCD, and only Type B can see smooth DC.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...inlineChecks[4]} />
+
+        <ConceptBlock
+          title="Type AC, A, F and B — the residual-current waveform map"
+          plainEnglish="A2 added Type F awareness, A3 reinforced Type A as the domestic baseline, A4 confirms when Type B is mandatory. Pick the wrong type and the device is blind to the very fault it is meant to clear."
+          onSite="Type AC sees only sinusoidal AC residual — now obsolete domestically. Type A sees AC + pulsating DC (the modern domestic baseline). Type F adds composite high-frequency residual (single-phase VSDs, some heat pumps). Type B sees smooth DC residual on top of all of the above (three-phase VSDs, EV chargers without internal DC detection, larger PV / battery hybrids)."
+        >
+          <p>
+            Reg 531.3.3 requires the designer to match RCD waveform sensitivity to the actual
+            residual-current spectrum the load can produce. The mistake to avoid is treating "RCD"
+            as a single product. A 100 mA Type AC upstream RCD on a board feeding modern LED
+            lighting, an air-source heat pump and an EV charger may already be defeated: pulsating
+            DC from the lighting drivers and smooth DC from the EV charger fall outside its
+            detection window. Confirm against the equipment manufacturer's installation guidance —
+            and the PCE specification — before committing a type. This is product standard BS EN
+            62423 territory: Type F and Type B are both defined there; Type A and Type AC are
+            defined in BS EN 61008 / BS EN 61009.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...inlineChecks[5]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>Reg 411.3.4 — luminaire RCD (NEW in A4)</ContentEyebrow>
+
+        <ConceptBlock
+          title="The headline domestic A4 change"
+          plainEnglish="From 15 April 2026, every AC final circuit supplying luminaires within domestic premises must have 30 mA RCD additional protection."
+          onSite="On a CU upgrade or rewire, default to RCBOs across every way. The cost difference is small; the design defensibility is large. Lighting circuits on a Type B 6 A MCB without RCD are non-compliant from the in-force date — no risk-assessment exception applies."
+        />
+
+        <RegsCallout
+          source="BS 7671:2018+A4:2026 · Reg 411.3.4 — Additional requirements for circuits with luminaires (NEW IN A4)"
+          clause="Within domestic (household) premises, additional protection by an RCD with a rated residual operating current not exceeding 30 mA shall be provided for AC final circuits supplying luminaires."
+          meaning="Mandatory ('shall'), unconditional within scope, no risk-assessment exception. Applies to every AC final circuit feeding luminaires inside a private dwelling — kitchen, bedroom, hallway, loft, outside lights — not just bathroom or kitchen."
+          cite="BS 7671:2018+A4:2026, Reg 411.3.4 (in force 15 April 2026)"
+        />
+
+        <InlineCheck {...inlineChecks[6]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>Reg 419 group — alternatives where ADS not feasible</ContentEyebrow>
+
+        <ConceptBlock
+          title="When the loop impedance just will not behave"
+          plainEnglish="On very long circuits, certain agricultural / heritage installations and remote plant rooms, the measured Zs sometimes cannot be brought below the Section 411 maximum. Reg 419 lists what to do instead."
+          onSite="The 419 toolkit: double or reinforced insulation as the protective measure (Section 412), electrical separation (Section 413), non-conducting location, earth-free local equipotential bonding, or supplementary equipotential bonding sized so the touch voltage stays below 50 V during a fault. Each has narrow scope and a documentation burden — A4 sharpens the latter."
+        >
+          <p>
+            Reg 419.1 (the parent regulation in the group) sets the principle: where ADS per Section
+            411 is not feasible, one of the alternative protective measures must be applied AND
+            documented. A4 makes the documentation requirement explicit — the certificate must
+            record which alternative is in use and why ADS could not be achieved. This is not a
+            fallback to be reached for casually; the designer carries the burden of justification
+            under Reg 120.3 if the route is challenged. In practice Reg 419 routes show up on EVSE
+            installations with very long sub-mains, agricultural feeds, and some heritage work where
+            rewiring the existing protective conductor is not possible.
+          </p>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="Open-PEN protection devices for EV charging on TN supplies"
+          plainEnglish="An open-PEN protection device is a relay at the EV charge-point that monitors line-to-earth voltage and disconnects the EV circuit if the PEN above the property fails."
+          onSite="Modern domestic chargers commonly bundle an integrated open-PEN protection function — but verify against the manufacturer datasheet, not the marketing copy. The device must comply with the EV-charging product standards (BS EN 61851 family) and be commissioned per the installation manual. Without the open-PEN device AND without splitting N / PE upstream as TN-S, the EV install is non-compliant on a TN-C-S supply."
+        >
+          <p>
+            The functional principle is simple: in a healthy TN-C-S supply, the line-to-earth
+            voltage at the charger sits at the nominal phase voltage (≈230 V) and the
+            neutral-to-earth voltage sits at near zero. If the PEN opens upstream, the load current
+            still flowing through the property pushes the earth reference up — neutral and earth
+            rise together, line-to-earth and line-to-neutral diverge from each other. The open-PEN
+            protection device monitors that divergence and trips before the touch voltage on the
+            vehicle becomes dangerous. It does not replace the BS 7671 requirements for upstream RCD
+            type, AFDD provision (where in scope), or the cert-form declarations — it is an
+            additional layer specific to the TN-C-S EV-charging risk that Reg 722.312.2.1 addresses
+            directly.
+          </p>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <ContentEyebrow>Where it goes wrong</ContentEyebrow>
+
+        <CommonMistake
+          title="Issuing an EIC against the A3 model form after 15 April 2026"
+          whatHappens="Designer is mid-project on 10 March 2026, completes the install on 20 April 2026, and prints the EIC against the A3:2024 model form because that is what the certification software defaulted to. The cert is missing the Reg 411.3.4 luminaire-RCD declaration row, the AFDD declaration row, and the TN-C-S (PNB) classification option."
+          doInstead="Once A4 is in force, the cert must be issued against the in-force edition. Update the certification software to the A4 model form before 15 April 2026. If the design genuinely predates A4 and only meets A3, the route is a documented Reg 120.3 departure — not silently using the obsolete model form. Burden of justification sits with the designer."
+        />
+
+        <CommonMistake
+          title="Fitting Type AC RCDs on a modern domestic CU upgrade"
+          whatHappens="Installer fits Type AC 30 mA RCBOs throughout because they are cheaper and 'an RCD is an RCD'. The board feeds LED lighting, phone chargers, an induction hob and a heat pump — all of which produce some pulsating DC residual. The Type AC devices are blind to it; the additional-protection function is not reliably delivered. EICR coding is typically C2 — potentially dangerous."
+          doInstead="Type A is the 2026 domestic baseline (Reg 531.3.3). Specify Type A 30 mA RCBOs as standard, Type F where single-phase VSD-driven loads dominate (some heat pumps, some appliance circuits), Type B where smooth DC residual can occur and is not handled by an upstream PCE (some EV ways, some PV / battery ways). Type AC has no place on a 2026 domestic install."
+        />
+
+        <CommonMistake
+          title="Calling a PEI 'just a domestic with PV bolted on'"
+          whatHappens="Customer adds a 4 kW PV array, a 5 kWh battery and later a V2G EV charger. The original certifying engineer treats each addition as a minor works and never re-classifies the installation as a PEI. Reg 530.3.201 (bidirectional devices) is not assessed; the existing CU contains directional MCBs marked line/load that are not approved for parallel-source service; the cert form never declares parallel sources in the supply block."
+          doInstead="The moment an installation crosses the bidirectional-energy-flow threshold (typically the PV addition), it is a PEI. Re-classify on the cert. Verify every busbar protective device is rated for bidirectional service per Reg 530.3.201. Confirm the parallel-source declaration is on the cert (Reg 551.7.1). Issue an EIC for the upgraded installation as a whole, not a string of minor works."
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>Scenarios — applying it on the day</ContentEyebrow>
+
+        <Scenario
+          title="Designer using the A3 model form after 15 April 2026"
+          situation="A consultant designer issues a CU-upgrade EIC dated 20 April 2026. The certification software still defaults to the A3:2024 model form. The cert lists TN-C-S (PME) but the property is actually fed from a private farm transformer (single-customer earth point — PNB). The schedule of inspection has no row for AFDDs and no explicit Reg 411.3.4 declaration."
+          whatToDo="Stop. Do not issue the cert in this form. Update the certification software to the A4:2026 model form (or use a vendor's confirmed-A4 template). Re-classify the supply as TN-C-S (PNB). Add the Reg 411.3.4 declaration (mandatory on any AC final circuit supplying luminaires within the dwelling). Confirm the AFDD declaration — required if the premises falls into the Reg 421.1.7 mandatory category, otherwise recorded as 'considered, not provided' with a brief justification."
+          whyItMatters="An EIC is a legal record. Issuing it against the wrong edition at certification date undermines the documentary basis of the install. If a fire investigation later asks 'was the installation certified to the in-force edition of BS 7671?', the answer must be yes. The A3 form fails that question on a 20 April 2026 cert. Reg 120.3 lets you depart from a specific clause with documented justification — it does not let you certify against the wrong edition wholesale."
+        />
+
+        <Scenario
+          title="Installer fits Type AC RCBOs on a 2026 domestic CU"
+          situation="Customer asks for a like-for-like CU replacement on a 1990s 4-bedroom house. Installer reaches for a stock of Type AC 30 mA RCBOs because they are 30% cheaper than Type A and 'the existing board has worked fine for 30 years'. The new house contains LED lighting throughout, an induction hob, a heat pump (added 2024), and an EV charger socket added 2025."
+          whatToDo="Refuse the like-for-like Type AC route. The 2026 load profile is not the 1990s load profile — virtually every modern domestic load produces pulsating DC residual, and the EV charger produces smooth DC residual that the upstream RCD must handle (unless the charger is a PCE with simple separation and 6 mA DC detection — check the spec sheet). Specify Type A 30 mA RCBOs across the board as the baseline. Add a Type B 30 mA RCD on the EV way if the charger does not handle DC residual itself. Confirm AFDD requirement against Reg 421.1.7 for the specific premises type."
+          whyItMatters="Type AC RCBOs on a modern domestic load are an EICR observation waiting to happen — and an inspector's pen is not the worst-case outcome. The next-worst-case is a fire or an electric shock incident where the additional-protection device was specified but materially compromised. The cost difference between Type AC and Type A across a 12-way CU is small; the design defensibility difference is large."
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>Designer's quick reference — the A4 vocabulary</ContentEyebrow>
+
+        <ConceptBlock
+          title="One-line definitions to keep on the design log"
+          plainEnglish="A glossary cribsheet for the A4 vocabulary — the words that change how the cert form is filled in."
+          onSite="Pin this to the inside of the desk drawer. AFDD, PEI, prosumer, bidirectional, PNB, PCE, Type A / B, Reg 411.3.4, Reg 419, Reg 530.3.201 — the ten terms that define A4-era design."
+        >
+          <p>
+            <strong>AFDD</strong> — Arc Fault Detection Device, BS EN 62606. Fire-prevention via
+            series and parallel arc detection. Mandatory in higher-risk premises per Reg 421.1.7;
+            recommended elsewhere. <strong>PEI</strong> — Prosumer Electrical Installation. Any
+            installation where bidirectional energy flow is possible at the supply interface.{' '}
+            <strong>Prosumer</strong> — the consumer who is also a producer. Functional definition;
+            net annual import is irrelevant. <strong>Bidirectional energy flow</strong> — net
+            current can pass through the supply interface in both directions over the operating
+            cycle. <strong>PNB</strong> — Protective Neutral Bonding. TN-C-S variant with a single
+            point of earth connection (private transformer); distinct from PME on the A4 cert form.{' '}
+            <strong>PCE</strong> — Power Conversion Equipment. Any inverter, converter, rectifier or
+            DC-DC unit at the AC / DC interface. A "PCE with simple separation" handles its own 6 mA
+            DC fault detection and lets a Type A upstream RCD suffice. <strong>Reg 411.3.4</strong>{' '}
+            — 30 mA RCD additional protection mandatory on AC luminaire final circuits within
+            domestic premises. <strong>Reg 419</strong> — alternatives where ADS cannot deliver the
+            disconnection time; documented design route. <strong>Reg 530.3.201</strong> —
+            bidirectional protective devices required where current can flow in both directions
+            during normal operation (PEI). <strong>Reg 551.7.1</strong> — parallel sources of
+            supply: the regulation that governs how PV, battery and grid coordinate.
+          </p>
+        </ConceptBlock>
+
+        <FAQ items={faqItems} />
+
+        <KeyTakeaways
+          points={[
+            'AFDDs (Reg 421.1.7, BS EN 62606) target series and parallel arc faults — fire ignition that an MCB or RCD will not see. Mandatory in specified higher-risk premises; recommended elsewhere.',
+            'PEI = Prosumer Electrical Installation. The moment bidirectional energy flow is possible, Reg 530.3.201 (bidirectional devices) and Reg 551.7.1 (parallel sources) apply.',
+            'A4 distinguishes TN-C-S (PME) from TN-C-S (PNB) on the cert form. Both still trigger Reg 722.312.2.1 — no PEN in EV circuits.',
+            'PCE (Power Conversion Equipment) with simple separation + 6 mA DC detection lets Type A 30 mA RCD upstream suffice. Without it, Type B is mandatory upstream (BS EN 62423).',
+            'Reg 411.3.4 (NEW) — 30 mA RCD additional protection on every AC luminaire final circuit within domestic premises. No exceptions.',
+            'Reg 419 — alternatives where ADS not feasible. A4 sharpens the documentation burden: record which alternative is in use and why ADS could not be achieved.',
+            'After 15 April 2026, certs must be issued against the A4 model form. Using the A3 form is not a Reg 120.3 departure — it is the wrong edition.',
+          ]}
+        />
+
+        <Quiz questions={quizQuestions} />
+
+        <div className="grid grid-cols-2 gap-3 pt-2">
           <button
             type="button"
-            onClick={() => navigate('../bs7671-module-2')}
-            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            onClick={() => navigate('/electrician/upskilling/bs7671-module-2')}
+            className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
           >
-            <ArrowLeft className="h-4 w-4" /> Module 2
+            <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+              <ChevronLeft className="h-3 w-3" /> Module 2
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-white truncate">
+              Module overview
+            </div>
           </button>
-
-          <PageHero
-            eyebrow="Module 2 · Section 3 · Updated for A4:2026"
-            title="New definitions — AFDD, PEI, bidirectional energy, prosumer"
-            description="The vocabulary BS 7671 added (and clarified) in A2, A3 and A4 — AFDDs, prosumer electrical installations, bidirectional energy flow, PNB on the new cert form, PCE at the AC/DC interface, and how they shift design choices on every modern domestic installation."
-            actions={
-              <>
-                <RegBadge>421.1.7</RegBadge>
-                <RegBadge>551.7.1</RegBadge>
-                <AmendmentBadge regs={['421.1.7', '551.7.1', '411.3.4']} />
-              </>
-            }
-            tone="yellow"
-          />
-
-          <TLDR
-            points={[
-              'A4:2026 brings AFDDs into BS 7671 (Reg 421.1.7, BS EN 62606) — mandatory in higher-risk premises, recommended elsewhere. Targets fire ignition by series and parallel arc faults that an MCB or RCD never sees.',
-              'PEI (Prosumer Electrical Installation) is the new umbrella term for any installation where energy can flow in BOTH directions at the supply interface — PV, battery, V2G EV. Reg 530.3.201 (bidirectional devices) and Reg 551.7.1 (parallel sources) become live the moment you cross into PEI.',
-              'A4 distinguishes TN-C-S (PME) from TN-C-S (PNB) on the cert form, adds an explicit Reg 411.3.4 luminaire-RCD declaration, and consolidates prosumer / parallel-source declarations in the supply block.',
-            ]}
-          />
-
-          <LearningOutcomes
-            outcomes={[
-              'Define AFDD, PEI, prosumer, bidirectional energy flow, PNB and PCE in the precise sense BS 7671:2018+A4:2026 uses them.',
-              'Apply Reg 421.1.7 (AFDDs) — distinguish where the regulation says "shall" from where it says "should be considered", and pick the correct product standard (BS EN 62606).',
-              'Identify when an installation crosses from consumer to PEI, and walk through the Reg 530.3.201 / Reg 551.7.1 design implications for bidirectional protective devices and parallel sources.',
-              'Distinguish PME from PNB on the A4 cert form, and explain why the open-PEN failure mode still triggers Reg 722.312.2.1 in both cases.',
-              'Match RCD type (AC, A, F, B per Reg 531.3.3 and BS EN 62423) to the actual residual-current waveform the load and any PCE produce.',
-              'Apply Reg 411.3.4 (NEW — domestic luminaire RCDs) and identify the correct EICR coding for non-compliance after 15 April 2026.',
-              'Recognise when Reg 419 alternatives apply and document the design route taken when ADS cannot deliver Section 411 disconnection times.',
-            ]}
-            initialVisibleCount={3}
-          />
-
-          <ContentEyebrow>AFDD — Arc Fault Detection Device</ContentEyebrow>
-
-          <ConceptBlock
-            title="What an AFDD detects (and why an MCB / RCD will not)"
-            plainEnglish="An AFDD watches for the high-frequency electrical noise that arcing produces — a degrading termination, a chafed flex behind the wardrobe, a stapled-through cable that has cooked over years."
-            onSite="The arcing current can be well below the MCB trip threshold (so no overcurrent — no MCB trip) and well below 30 mA to earth (so no RCD trip), yet still pump enough heat into the surrounding combustibles to ignite them. The AFDD is a fire-prevention device, not a shock-protection device."
+          <button
+            type="button"
+            onClick={() => navigate('/electrician/upskilling/bs7671-module-2-section-4')}
+            className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
           >
-            <p>
-              AFDDs (BS EN 62606) work by signal-processing the current waveform, looking for the
-              characteristic broadband noise that arcing produces. There are two arc-fault classes:
-              <strong> series-arc</strong> faults (a single conductor with a degrading
-              high-resistance termination — a loose neutral in a back-box, a corroded crimp) and
-              <strong> parallel-arc</strong> faults (insulation breakdown causing arcing between
-              line and neutral, or line and earth). Both are invisible to a conventional MCB or RCD.
-              AFDDs combine arc-pattern recognition with overcurrent and (typically)
-              residual-current functions in a single device — an "AFDD-RCBO" is the common form
-              factor.
-            </p>
-          </ConceptBlock>
-
-          <RegsCallout
-            source="BS 7671:2018+A4:2026 · Reg 421.1.7 — Arc Fault Detection Devices"
-            clause="Arc Fault Detection Devices (AFDDs) conforming to BS EN 62606 shall be provided to mitigate the risk of fire in final circuits of fixed installations in specified premises types. In other premises, the provision of AFDDs should be considered."
-            meaning="Mandatory in the listed higher-risk premises (sleeping accommodation in HMOs, certain care premises, premises with combustible-construction or heritage / irreplaceable-content concerns — read the published regulation against your specific building category). Recommended elsewhere — fitting them is rarely wrong; omitting them needs to be a documented design decision."
-            cite="BS 7671:2018+A4:2026, Reg 421.1.7 (in force 15 April 2026)"
-          />
-
-          <InlineCheck {...inlineChecks[0]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>PEI — Prosumer Electrical Installation</ContentEyebrow>
-
-          <ConceptBlock
-            title="From consumer to prosumer"
-            plainEnglish="A consumer takes energy from the grid. A prosumer also produces energy — PV exports, battery discharge to grid, V2G EV — so net energy flows in both directions at the supply interface."
-            onSite="The line is crossed the moment the installation can export. A 4 kW PV array makes the property a prosumer. A 5 kWh battery makes it more so. A V2G-capable EV charger fully closes the loop. Reg 530.3.201 (bidirectional protective devices) and Reg 551.7.1 (parallel sources) become live design considerations on the same day the system is energised."
-          >
-            <p>
-              GN3 / A4 treats PEI (Prosumer Electrical Installation) as the umbrella term. The
-              definition is functional, not commercial: it does not matter whether the customer has
-              an export tariff or whether they are net-positive over the year. What matters is that
-              bidirectional energy flow is possible at the supply interface. Once it is, the
-              installation must be designed against the parallel-source rules (Reg 551.7.1), the
-              bidirectional-device rules (Reg 530.3.201), and the relevant Part 7 sections (Section
-              712 for PV, Section 722 for EV, Section 826 for battery) — and the cert form must
-              declare the parallel-source presence in the supply-characteristics block.
-            </p>
-          </ConceptBlock>
-
-          <ConceptBlock
-            title="Bidirectional energy flow — what the term actually requires"
-            plainEnglish="Net current can pass through the supply interface in both directions over the operating cycle. Source-to-load AND load-to-source."
-            onSite="The supply tails are no longer 'mains in' — they are a bidirectional energy port. Phasing, sequencing, anti-islanding (G98 / G99) and parallel-source coordination all sit on top of the BS 7671 protective design."
-          >
-            <p>
-              Bidirectional energy flow is what links the term "prosumer" to actual installation
-              design. A unidirectional grid-tie inverter will not export — it has no interface to do
-              so. A grid-following inverter without battery cannot island — it shuts down on grid
-              loss. A battery hybrid inverter with G99 functions can island AND export. Each
-              functional level shifts the protective-device requirements, the labelling
-              requirements, and the cert declarations. A4 codifies this in the 530.3.201 / 551.7.1
-              pair so the designer no longer has to reason from first principles.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...inlineChecks[1]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>Bidirectional protective devices — Reg 530.3.201</ContentEyebrow>
-
-          <ConceptBlock
-            title="Why direction of current flow matters for an MCB or RCBO"
-            plainEnglish="A device specified only for the conventional source-to-load direction may have reduced breaking capacity, slower magnetic-trip response, or compromised arc-quench when current flows the other way."
-            onSite="On a PEI, the 'load' side of a busbar protective device is the energised side at any given moment — battery discharging into the busbar, PV exporting through the busbar, EV in V2G feeding the busbar. The device must be rated for fault interruption when the source is upstream OR downstream."
-          >
-            <p>
-              Reg 530.3.201 (NEW in A4) requires the designer to verify that protective devices in
-              circuits where bidirectional current can flow are suitable for the actual current
-              directions. This is a manufacturer-datasheet check: many modern MCBs, RCBOs and AFDD
-              devices are explicitly marked "bidirectional" or "for use with parallel sources";
-              legacy devices marked with a directional line/load arrow may NOT be suitable. The
-              practical consequence: when re-fitting a domestic CU on a PEI, specify a range
-              explicitly approved for bidirectional service across the entire CU rather than mixing
-              directional and non-directional devices.
-            </p>
-          </ConceptBlock>
-
-          <RegsCallout
-            source="BS 7671:2018+A4:2026 · Reg 530.3.201 — Bidirectional protective devices"
-            clause="Where a protective device is installed in a circuit in which current can flow in both directions during normal operation (for example, in a Prosumer Electrical Installation), the device shall be selected to operate correctly for the maximum prospective fault current in either direction of current flow."
-            meaning="A datasheet check, not a rule of thumb. The manufacturer must confirm the device is rated for bidirectional fault interruption — breaking capacity, magnetic-trip and arc-quench all verified in either direction. Mark this on the designer's circuit list and keep the datasheet reference."
-            cite="BS 7671:2018+A4:2026, Reg 530.3.201"
-          />
-
-          <InlineCheck {...inlineChecks[2]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>PNB — Protective Neutral Bonding (TN-C-S variant)</ContentEyebrow>
-
-          <ConceptBlock
-            title="PME vs PNB on the A4 cert form"
-            plainEnglish="Both are TN-C-S. PME has the neutral earthed at multiple points across the DNO LV network. PNB has a single point of earth connection — typically at the customer cut-out for a private transformer."
-            onSite="On the A4 cert form, the system-earthing dropdown now includes 'TN-C-S (PNB)' as a distinct option alongside 'TN-C-S (PME)', 'TN-S', 'TT' and 'IT'. Picking the right one is a designer's call after confirming with the DNO or the on-site infrastructure."
-          >
-            <p>
-              The reason A4 splits PME and PNB is that the open-PEN failure-mode profile differs. In
-              a PME network, multiple earth-connection points across the LV mains provide redundancy
-              — an open PEN at one point does not necessarily collapse the local earth reference,
-              because other earth points hold it. In a PNB arrangement (private transformer with a
-              single earth point at the cut-out), the earth reference is by definition non-redundant
-              — an open PEN there is the open PEN. The mitigations remain the same (Reg 461.2 — no
-              switching of the PEN; Reg 722.312.2.1 — no PEN in EV circuits) but the cert
-              classification reflects the network topology accurately.
-            </p>
-          </ConceptBlock>
-
-          <ConceptBlock
-            title="Why both PME and PNB still trigger Reg 722.312.2.1"
-            plainEnglish="The EV-circuit PEN prohibition applies to ALL TN-C-S supplies — it is about the consequence of an open PEN, not the topology that produced it."
-            onSite="When you fit an EV charger on either PME or PNB, you either (a) split N and PE upstream of the EV way and run the EV circuit as TN-S, or (b) apply an approved open-PEN protection device at the charge-point. Type AC RCDs are out either way; the upstream type depends on whether the charger is a 'PCE with simple separation'."
-          >
-            <p>
-              Reg 722.312.2.1 (NEW in A4) is unconditional: an EV-charging circuit on a TN system
-              shall not include a PEN conductor. The customer-side PNB single-point-earth case is
-              actually a slightly higher-risk variant of the rule — the open-PEN consequence is not
-              buffered by network redundancy. Designers commonly fit a CCS-style open-PEN detection
-              relay at the charge-point on TN-C-S supplies (PME or PNB) and split N / PE at the
-              consumer unit specifically for the EV way. The cert records the system as TN-C-S (PME)
-              or TN-C-S (PNB), and the EV-way arrangement separately as TN-S with the open-PEN
-              protective device noted.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...inlineChecks[3]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>PCE — Power Conversion Equipment</ContentEyebrow>
-
-          <ConceptBlock
-            title="The AC / DC interface inside the installation"
-            plainEnglish="A PCE is anything that converts AC to DC, DC to AC, or DC to a different DC voltage — inverters, EV chargers, rectifiers, DC-DC converters, bidirectional charge controllers."
-            onSite="Most domestic PEIs contain at least three: the PV inverter, the battery hybrid inverter (or the BMS-side charger), and the EV charger. Each PCE has its own DC and AC sides, its own residual-current footprint, and its own internal DC fault detection (or lack of it)."
-          >
-            <p>
-              The PCE term lets BS 7671 talk about the AC / DC interface without specifying every
-              device class. What matters for the upstream design is whether the PCE provides
-              <strong> simple separation</strong> between its DC and AC sides AND
-              <strong> internal DC residual-current detection</strong> at the 6 mA threshold per the
-              relevant product standard (BS EN 61851 for EV charging, the inverter standards for PV
-              / battery). A "PCE with simple separation" lets a Type A 30 mA RCD upstream suffice. A
-              PCE without it forces Type B upstream — because smooth DC residual would otherwise
-              pass through to the upstream RCD, and only Type B can see smooth DC.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...inlineChecks[4]} />
-
-          <ConceptBlock
-            title="Type AC, A, F and B — the residual-current waveform map"
-            plainEnglish="A2 added Type F awareness, A3 reinforced Type A as the domestic baseline, A4 confirms when Type B is mandatory. Pick the wrong type and the device is blind to the very fault it is meant to clear."
-            onSite="Type AC sees only sinusoidal AC residual — now obsolete domestically. Type A sees AC + pulsating DC (the modern domestic baseline). Type F adds composite high-frequency residual (single-phase VSDs, some heat pumps). Type B sees smooth DC residual on top of all of the above (three-phase VSDs, EV chargers without internal DC detection, larger PV / battery hybrids)."
-          >
-            <p>
-              Reg 531.3.3 requires the designer to match RCD waveform sensitivity to the actual
-              residual-current spectrum the load can produce. The mistake to avoid is treating "RCD"
-              as a single product. A 100 mA Type AC upstream RCD on a board feeding modern LED
-              lighting, an air-source heat pump and an EV charger may already be defeated: pulsating
-              DC from the lighting drivers and smooth DC from the EV charger fall outside its
-              detection window. Confirm against the equipment manufacturer's installation guidance —
-              and the PCE specification — before committing a type. This is product standard BS EN
-              62423 territory: Type F and Type B are both defined there; Type A and Type AC are
-              defined in BS EN 61008 / BS EN 61009.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...inlineChecks[5]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>Reg 411.3.4 — luminaire RCD (NEW in A4)</ContentEyebrow>
-
-          <ConceptBlock
-            title="The headline domestic A4 change"
-            plainEnglish="From 15 April 2026, every AC final circuit supplying luminaires within domestic premises must have 30 mA RCD additional protection."
-            onSite="On a CU upgrade or rewire, default to RCBOs across every way. The cost difference is small; the design defensibility is large. Lighting circuits on a Type B 6 A MCB without RCD are non-compliant from the in-force date — no risk-assessment exception applies."
-          />
-
-          <RegsCallout
-            source="BS 7671:2018+A4:2026 · Reg 411.3.4 — Additional requirements for circuits with luminaires (NEW IN A4)"
-            clause="Within domestic (household) premises, additional protection by an RCD with a rated residual operating current not exceeding 30 mA shall be provided for AC final circuits supplying luminaires."
-            meaning="Mandatory ('shall'), unconditional within scope, no risk-assessment exception. Applies to every AC final circuit feeding luminaires inside a private dwelling — kitchen, bedroom, hallway, loft, outside lights — not just bathroom or kitchen."
-            cite="BS 7671:2018+A4:2026, Reg 411.3.4 (in force 15 April 2026)"
-          />
-
-          <InlineCheck {...inlineChecks[6]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>Reg 419 group — alternatives where ADS not feasible</ContentEyebrow>
-
-          <ConceptBlock
-            title="When the loop impedance just will not behave"
-            plainEnglish="On very long circuits, certain agricultural / heritage installations and remote plant rooms, the measured Zs sometimes cannot be brought below the Section 411 maximum. Reg 419 lists what to do instead."
-            onSite="The 419 toolkit: double or reinforced insulation as the protective measure (Section 412), electrical separation (Section 413), non-conducting location, earth-free local equipotential bonding, or supplementary equipotential bonding sized so the touch voltage stays below 50 V during a fault. Each has narrow scope and a documentation burden — A4 sharpens the latter."
-          >
-            <p>
-              Reg 419.1 (the parent regulation in the group) sets the principle: where ADS per
-              Section 411 is not feasible, one of the alternative protective measures must be
-              applied AND documented. A4 makes the documentation requirement explicit — the
-              certificate must record which alternative is in use and why ADS could not be achieved.
-              This is not a fallback to be reached for casually; the designer carries the burden of
-              justification under Reg 120.3 if the route is challenged. In practice Reg 419 routes
-              show up on EVSE installations with very long sub-mains, agricultural feeds, and some
-              heritage work where rewiring the existing protective conductor is not possible.
-            </p>
-          </ConceptBlock>
-
-          <ConceptBlock
-            title="Open-PEN protection devices for EV charging on TN supplies"
-            plainEnglish="An open-PEN protection device is a relay at the EV charge-point that monitors line-to-earth voltage and disconnects the EV circuit if the PEN above the property fails."
-            onSite="Modern domestic chargers commonly bundle an integrated open-PEN protection function — but verify against the manufacturer datasheet, not the marketing copy. The device must comply with the EV-charging product standards (BS EN 61851 family) and be commissioned per the installation manual. Without the open-PEN device AND without splitting N / PE upstream as TN-S, the EV install is non-compliant on a TN-C-S supply."
-          >
-            <p>
-              The functional principle is simple: in a healthy TN-C-S supply, the line-to-earth
-              voltage at the charger sits at the nominal phase voltage (≈230 V) and the
-              neutral-to-earth voltage sits at near zero. If the PEN opens upstream, the load
-              current still flowing through the property pushes the earth reference up — neutral and
-              earth rise together, line-to-earth and line-to-neutral diverge from each other. The
-              open-PEN protection device monitors that divergence and trips before the touch voltage
-              on the vehicle becomes dangerous. It does not replace the BS 7671 requirements for
-              upstream RCD type, AFDD provision (where in scope), or the cert-form declarations — it
-              is an additional layer specific to the TN-C-S EV-charging risk that Reg 722.312.2.1
-              addresses directly.
-            </p>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <ContentEyebrow>Where it goes wrong</ContentEyebrow>
-
-          <CommonMistake
-            title="Issuing an EIC against the A3 model form after 15 April 2026"
-            whatHappens="Designer is mid-project on 10 March 2026, completes the install on 20 April 2026, and prints the EIC against the A3:2024 model form because that is what the certification software defaulted to. The cert is missing the Reg 411.3.4 luminaire-RCD declaration row, the AFDD declaration row, and the TN-C-S (PNB) classification option."
-            doInstead="Once A4 is in force, the cert must be issued against the in-force edition. Update the certification software to the A4 model form before 15 April 2026. If the design genuinely predates A4 and only meets A3, the route is a documented Reg 120.3 departure — not silently using the obsolete model form. Burden of justification sits with the designer."
-          />
-
-          <CommonMistake
-            title="Fitting Type AC RCDs on a modern domestic CU upgrade"
-            whatHappens="Installer fits Type AC 30 mA RCBOs throughout because they are cheaper and 'an RCD is an RCD'. The board feeds LED lighting, phone chargers, an induction hob and a heat pump — all of which produce some pulsating DC residual. The Type AC devices are blind to it; the additional-protection function is not reliably delivered. EICR coding is typically C2 — potentially dangerous."
-            doInstead="Type A is the 2026 domestic baseline (Reg 531.3.3). Specify Type A 30 mA RCBOs as standard, Type F where single-phase VSD-driven loads dominate (some heat pumps, some appliance circuits), Type B where smooth DC residual can occur and is not handled by an upstream PCE (some EV ways, some PV / battery ways). Type AC has no place on a 2026 domestic install."
-          />
-
-          <CommonMistake
-            title="Calling a PEI 'just a domestic with PV bolted on'"
-            whatHappens="Customer adds a 4 kW PV array, a 5 kWh battery and later a V2G EV charger. The original certifying engineer treats each addition as a minor works and never re-classifies the installation as a PEI. Reg 530.3.201 (bidirectional devices) is not assessed; the existing CU contains directional MCBs marked line/load that are not approved for parallel-source service; the cert form never declares parallel sources in the supply block."
-            doInstead="The moment an installation crosses the bidirectional-energy-flow threshold (typically the PV addition), it is a PEI. Re-classify on the cert. Verify every busbar protective device is rated for bidirectional service per Reg 530.3.201. Confirm the parallel-source declaration is on the cert (Reg 551.7.1). Issue an EIC for the upgraded installation as a whole, not a string of minor works."
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>Scenarios — applying it on the day</ContentEyebrow>
-
-          <Scenario
-            title="Designer using the A3 model form after 15 April 2026"
-            situation="A consultant designer issues a CU-upgrade EIC dated 20 April 2026. The certification software still defaults to the A3:2024 model form. The cert lists TN-C-S (PME) but the property is actually fed from a private farm transformer (single-customer earth point — PNB). The schedule of inspection has no row for AFDDs and no explicit Reg 411.3.4 declaration."
-            whatToDo="Stop. Do not issue the cert in this form. Update the certification software to the A4:2026 model form (or use a vendor's confirmed-A4 template). Re-classify the supply as TN-C-S (PNB). Add the Reg 411.3.4 declaration (mandatory on any AC final circuit supplying luminaires within the dwelling). Confirm the AFDD declaration — required if the premises falls into the Reg 421.1.7 mandatory category, otherwise recorded as 'considered, not provided' with a brief justification."
-            whyItMatters="An EIC is a legal record. Issuing it against the wrong edition at certification date undermines the documentary basis of the install. If a fire investigation later asks 'was the installation certified to the in-force edition of BS 7671?', the answer must be yes. The A3 form fails that question on a 20 April 2026 cert. Reg 120.3 lets you depart from a specific clause with documented justification — it does not let you certify against the wrong edition wholesale."
-          />
-
-          <Scenario
-            title="Installer fits Type AC RCBOs on a 2026 domestic CU"
-            situation="Customer asks for a like-for-like CU replacement on a 1990s 4-bedroom house. Installer reaches for a stock of Type AC 30 mA RCBOs because they are 30% cheaper than Type A and 'the existing board has worked fine for 30 years'. The new house contains LED lighting throughout, an induction hob, a heat pump (added 2024), and an EV charger socket added 2025."
-            whatToDo="Refuse the like-for-like Type AC route. The 2026 load profile is not the 1990s load profile — virtually every modern domestic load produces pulsating DC residual, and the EV charger produces smooth DC residual that the upstream RCD must handle (unless the charger is a PCE with simple separation and 6 mA DC detection — check the spec sheet). Specify Type A 30 mA RCBOs across the board as the baseline. Add a Type B 30 mA RCD on the EV way if the charger does not handle DC residual itself. Confirm AFDD requirement against Reg 421.1.7 for the specific premises type."
-            whyItMatters="Type AC RCBOs on a modern domestic load are an EICR observation waiting to happen — and an inspector's pen is not the worst-case outcome. The next-worst-case is a fire or an electric shock incident where the additional-protection device was specified but materially compromised. The cost difference between Type AC and Type A across a 12-way CU is small; the design defensibility difference is large."
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>Designer's quick reference — the A4 vocabulary</ContentEyebrow>
-
-          <ConceptBlock
-            title="One-line definitions to keep on the design log"
-            plainEnglish="A glossary cribsheet for the A4 vocabulary — the words that change how the cert form is filled in."
-            onSite="Pin this to the inside of the desk drawer. AFDD, PEI, prosumer, bidirectional, PNB, PCE, Type A / B, Reg 411.3.4, Reg 419, Reg 530.3.201 — the ten terms that define A4-era design."
-          >
-            <p>
-              <strong>AFDD</strong> — Arc Fault Detection Device, BS EN 62606. Fire-prevention via
-              series and parallel arc detection. Mandatory in higher-risk premises per Reg 421.1.7;
-              recommended elsewhere. <strong>PEI</strong> — Prosumer Electrical Installation. Any
-              installation where bidirectional energy flow is possible at the supply interface.{' '}
-              <strong>Prosumer</strong> — the consumer who is also a producer. Functional
-              definition; net annual import is irrelevant.{' '}
-              <strong>Bidirectional energy flow</strong> — net current can pass through the supply
-              interface in both directions over the operating cycle. <strong>PNB</strong> —
-              Protective Neutral Bonding. TN-C-S variant with a single point of earth connection
-              (private transformer); distinct from PME on the A4 cert form. <strong>PCE</strong> —
-              Power Conversion Equipment. Any inverter, converter, rectifier or DC-DC unit at the AC
-              / DC interface. A "PCE with simple separation" handles its own 6 mA DC fault detection
-              and lets a Type A upstream RCD suffice. <strong>Reg 411.3.4</strong> — 30 mA RCD
-              additional protection mandatory on AC luminaire final circuits within domestic
-              premises. <strong>Reg 419</strong> — alternatives where ADS cannot deliver the
-              disconnection time; documented design route. <strong>Reg 530.3.201</strong> —
-              bidirectional protective devices required where current can flow in both directions
-              during normal operation (PEI). <strong>Reg 551.7.1</strong> — parallel sources of
-              supply: the regulation that governs how PV, battery and grid coordinate.
-            </p>
-          </ConceptBlock>
-
-          <FAQ items={faqItems} />
-
-          <KeyTakeaways
-            points={[
-              'AFDDs (Reg 421.1.7, BS EN 62606) target series and parallel arc faults — fire ignition that an MCB or RCD will not see. Mandatory in specified higher-risk premises; recommended elsewhere.',
-              'PEI = Prosumer Electrical Installation. The moment bidirectional energy flow is possible, Reg 530.3.201 (bidirectional devices) and Reg 551.7.1 (parallel sources) apply.',
-              'A4 distinguishes TN-C-S (PME) from TN-C-S (PNB) on the cert form. Both still trigger Reg 722.312.2.1 — no PEN in EV circuits.',
-              'PCE (Power Conversion Equipment) with simple separation + 6 mA DC detection lets Type A 30 mA RCD upstream suffice. Without it, Type B is mandatory upstream (BS EN 62423).',
-              'Reg 411.3.4 (NEW) — 30 mA RCD additional protection on every AC luminaire final circuit within domestic premises. No exceptions.',
-              'Reg 419 — alternatives where ADS not feasible. A4 sharpens the documentation burden: record which alternative is in use and why ADS could not be achieved.',
-              'After 15 April 2026, certs must be issued against the A4 model form. Using the A3 form is not a Reg 120.3 departure — it is the wrong edition.',
-            ]}
-          />
-
-          <Quiz questions={quizQuestions} />
-
-          <div className="grid grid-cols-2 gap-3 pt-2">
-            <button
-              type="button"
-              onClick={() => navigate('/electrician/upskilling/bs7671-module-2')}
-              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
-                <ChevronLeft className="h-3 w-3" /> Module 2
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-white truncate">
-                Module overview
-              </div>
-            </button>
-            <button
-              type="button"
-              onClick={() => navigate('/electrician/upskilling/bs7671-module-2-section-4')}
-              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
-                Next section <ChevronRight className="h-3 w-3" />
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-black truncate">
-                2.4 Amendment 4 highlights
-              </div>
-            </button>
-          </div>
-        </PageFrame>
-      </div>
-    </div>
+            <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+              Next section <ChevronRight className="h-3 w-3" />
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-black truncate">
+              2.4 Amendment 4 highlights
+            </div>
+          </button>
+        </div>
+      </HubBody>
+    </HubPage>
   );
 };
 

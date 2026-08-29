@@ -2690,7 +2690,7 @@ export const module4QuestionBank: QuestionBank[] = [
     options: [
       '1200mm to top edge',
       '1500mm to base',
-      '1350mm to center',
+      '1350mm to centre',
       '1800mm to top',
     ],
     correctAnswer: 2,

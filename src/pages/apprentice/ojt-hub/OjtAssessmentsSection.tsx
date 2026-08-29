@@ -8,15 +8,9 @@
 import { useState } from 'react';
 import { Plus, Loader2, ClipboardCheck, Trash2, Check } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import {
-  useOJTAssessments,
-  type OJTAssessment,
-} from '@/hooks/time-tracking/useOJTAssessments';
+import { useOJTAssessments, type OJTAssessment } from '@/hooks/time-tracking/useOJTAssessments';
 import AddAssessmentDialog from '@/components/apprentice/ojt/AddAssessmentDialog';
-import {
-  Eyebrow,
-  SectionHeader,
-} from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
+import { Eyebrow, SectionHeader } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
 
 const STATUS_TONE: Record<OJTAssessment['status'], string> = {
   completed: 'border-elec-yellow/30 bg-elec-yellow/[0.06] text-elec-yellow',
@@ -117,8 +111,8 @@ export function OjtAssessmentsSection() {
         <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-6 text-center space-y-2">
           <ClipboardCheck className="h-7 w-7 text-white/25 mx-auto" />
           <p className="text-[13px] text-white/85 leading-relaxed">
-            No assessments tracked yet. Add upcoming practical, written or portfolio
-            assessments so nothing sneaks up on you.
+            No assessments tracked yet. Add upcoming practical, written or portfolio assessments so
+            nothing sneaks up on you.
           </p>
         </div>
       ) : (
@@ -160,9 +154,7 @@ export function OjtAssessmentsSection() {
                       {a.title}
                     </p>
                     {done && a.grade && (
-                      <p className="text-[11.5px] text-elec-yellow/85">
-                        Grade: {a.grade}
-                      </p>
+                      <p className="text-[11.5px] text-elec-yellow/85">Grade: {a.grade}</p>
                     )}
                     {a.feedback && (
                       <p className="text-[11.5px] text-white/55 italic leading-snug">
@@ -198,11 +190,7 @@ export function OjtAssessmentsSection() {
         </ul>
       )}
 
-      <AddAssessmentDialog
-        open={showAdd}
-        onOpenChange={setShowAdd}
-        onAddAssessment={handleAdd}
-      />
+      <AddAssessmentDialog open={showAdd} onOpenChange={setShowAdd} onAddAssessment={handleAdd} />
     </section>
   );
 }

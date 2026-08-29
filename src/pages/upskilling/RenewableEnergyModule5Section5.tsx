@@ -1,8 +1,8 @@
-import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { useNavigate } from 'react-router-dom';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
-import { PageFrame, PageHero } from '@/components/college/primitives';
 import {
   TLDR,
   ConceptBlock,
@@ -197,94 +197,95 @@ export default function RenewableEnergyModule5Section5() {
   });
 
   return (
-    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
-      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
-        <PageFrame>
-          <button
-            type="button"
-            onClick={() => navigate('../renewable-energy-module-5')}
-            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
-          >
-            <ArrowLeft className="h-4 w-4" /> Module 5
-          </button>
+    <HubPage>
+      <HubMasthead
+        section="Module 5 · Section 5 · BS 7671:2018+A4:2026 · Chapter 57 + Chapter 82"
+        title="BESS topologies & architectures"
+        backTo="../renewable-energy-module-5"
+      />
+      <HubBody>
+        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
+          DC-coupled, AC-coupled and hybrid — the three families that decide every downstream
+          protection, isolation and commissioning question. Reg 570.5.1(e) names the choice; Reg
+          570.6.5.201 sizes the isolators; Chapter 82 holds the PEI together when the supply
+          configuration changes.
+        </p>
 
-          <PageHero
-            eyebrow="Module 5 · Section 5 · BS 7671:2018+A4:2026 · Chapter 57 + Chapter 82"
-            title="BESS topologies & architectures"
-            description="DC-coupled, AC-coupled and hybrid — the three families that decide every downstream protection, isolation and commissioning question. Reg 570.5.1(e) names the choice; Reg 570.6.5.201 sizes the isolators; Chapter 82 holds the PEI together when the supply configuration changes."
-            tone="yellow"
-          />
+        <TLDR
+          points={[
+            'Topology = how the battery, the PCE (Power Conversion Equipment) and any PV array share buses. Three families: DC-coupled (battery + PV share DC bus), AC-coupled (battery + PV each have their own inverter on the AC bus), hybrid (single cabinet collapses charge controller + inverter into one).',
+            'Reg 570.5.1(e) — "power conversion equipment connection and coupling mode" — is one of the ten selection factors. The topology choice is a regulatory requirement, not just an engineering preference.',
+            'Reg 570.6.5.201 — every power port of the PCE that is not inside the battery assembly needs a means of isolation. Hybrid inverters often have 4 ports (DC PV, DC battery, AC grid, AC EPS) — that is four isolation provisions, not one.',
+            'Reg 551.7.2.1 — stationary battery is a generating set; connects on the supply side of protective devices. Topology decides WHERE that supply-side join happens.',
+            'Chapter 82 (PEI) — battery acts as both generator and load. Protective measures must continue across supply-config changes (grid → island). Reg 826.1.1.2.2 sets neutral handling in island mode.',
+            'Retrofit to an existing PV site → AC-coupled is almost always the answer. Greenfield → hybrid is the UK 2025–2026 default. Pure DC-coupled (separate charge controller + inverter) survives mainly in off-grid and large commercial.',
+            'EPS / backup is a topology VARIANT, not a setting. Standard grid-tied BESS trips on outage (Reg 551.7.5 anti-islanding). EPS topology adds a contactor + island-side neutral re-bond + voltage/frequency reference.',
+            'Single-port vs dual-port BESS — one bidirectional connection vs separate charge/discharge ports. Port count on the kit drives isolator count on the install per Reg 570.6.5.201.',
+          ]}
+        />
 
-          <TLDR
-            points={[
-              'Topology = how the battery, the PCE (Power Conversion Equipment) and any PV array share buses. Three families: DC-coupled (battery + PV share DC bus), AC-coupled (battery + PV each have their own inverter on the AC bus), hybrid (single cabinet collapses charge controller + inverter into one).',
-              'Reg 570.5.1(e) — "power conversion equipment connection and coupling mode" — is one of the ten selection factors. The topology choice is a regulatory requirement, not just an engineering preference.',
-              'Reg 570.6.5.201 — every power port of the PCE that is not inside the battery assembly needs a means of isolation. Hybrid inverters often have 4 ports (DC PV, DC battery, AC grid, AC EPS) — that is four isolation provisions, not one.',
-              'Reg 551.7.2.1 — stationary battery is a generating set; connects on the supply side of protective devices. Topology decides WHERE that supply-side join happens.',
-              'Chapter 82 (PEI) — battery acts as both generator and load. Protective measures must continue across supply-config changes (grid → island). Reg 826.1.1.2.2 sets neutral handling in island mode.',
-              'Retrofit to an existing PV site → AC-coupled is almost always the answer. Greenfield → hybrid is the UK 2025–2026 default. Pure DC-coupled (separate charge controller + inverter) survives mainly in off-grid and large commercial.',
-              'EPS / backup is a topology VARIANT, not a setting. Standard grid-tied BESS trips on outage (Reg 551.7.5 anti-islanding). EPS topology adds a contactor + island-side neutral re-bond + voltage/frequency reference.',
-              'Single-port vs dual-port BESS — one bidirectional connection vs separate charge/discharge ports. Port count on the kit drives isolator count on the install per Reg 570.6.5.201.',
-            ]}
-          />
+        <LearningOutcomes
+          outcomes={[
+            'Identify DC-coupled, AC-coupled and hybrid topologies from a single-line diagram, naming the shared bus and the PCE port count in each case.',
+            'Apply Reg 570.5.1(e) coupling-mode factor and Reg 570.5.1(d) generation-profile factor to pick the right topology for a new-build vs a PV-retrofit scenario.',
+            'Apply Reg 570.6.5.201 to count the required means of isolation on a given topology, distinguishing "PCE incorporated within battery assembly" from "PCE not incorporated".',
+            'Apply Reg 551.7.2.1 (battery-as-generating-set) to place the BESS contribution upstream of final-circuit OCPDs on each topology.',
+            'Map a topology choice to the Chapter 82 PEI requirements — Reg 826.1.1.2.2 neutral handling, Reg 551.7.5 anti-islanding, and the obligation that protective measures persist across config changes.',
+            'Distinguish single-port from dual-port BESS units and translate the port count into the installation isolator count.',
+            'Decide when an EPS topology variant is needed and what extra hardware it implies (contactor, island-side neutral re-bond, voltage/frequency reference).',
+          ]}
+          initialVisibleCount={3}
+        />
 
-          <LearningOutcomes
-            outcomes={[
-              'Identify DC-coupled, AC-coupled and hybrid topologies from a single-line diagram, naming the shared bus and the PCE port count in each case.',
-              'Apply Reg 570.5.1(e) coupling-mode factor and Reg 570.5.1(d) generation-profile factor to pick the right topology for a new-build vs a PV-retrofit scenario.',
-              'Apply Reg 570.6.5.201 to count the required means of isolation on a given topology, distinguishing "PCE incorporated within battery assembly" from "PCE not incorporated".',
-              'Apply Reg 551.7.2.1 (battery-as-generating-set) to place the BESS contribution upstream of final-circuit OCPDs on each topology.',
-              'Map a topology choice to the Chapter 82 PEI requirements — Reg 826.1.1.2.2 neutral handling, Reg 551.7.5 anti-islanding, and the obligation that protective measures persist across config changes.',
-              'Distinguish single-port from dual-port BESS units and translate the port count into the installation isolator count.',
-              'Decide when an EPS topology variant is needed and what extra hardware it implies (contactor, island-side neutral re-bond, voltage/frequency reference).',
-            ]}
-            initialVisibleCount={3}
-          />
+        <Pullquote>
+          Topology is a regulatory choice — Reg 570.5.1(e) names it. Everything else in Module 5 is
+          downstream of it.
+        </Pullquote>
 
-          <Pullquote>
-            Topology is a regulatory choice — Reg 570.5.1(e) names it. Everything else in Module 5 is downstream of it.
-          </Pullquote>
+        <ContentEyebrow>
+          The PEI frame — battery, PV, grid and loads as one installation
+        </ContentEyebrow>
 
-          <ContentEyebrow>The PEI frame — battery, PV, grid and loads as one installation</ContentEyebrow>
+        <ConceptBlock
+          title="A BESS does not live alone — it lives in a PEI"
+          plainEnglish="Chapter 82 of BS 7671:2018+A4:2026 frames any site with on-site generation and/or storage as a Prosumer's Electrical Installation (PEI). Inside the PEI, the battery is treated as both a generator (when discharging) AND a load (when charging). Topology is the layout that holds the PEI together."
+          onSite="Before drawing any topology, draw the PEI: what sources feed it (DNO, PV, BESS), what loads consume it (lighting, sockets, EV charger, heat pump), and where the boundaries sit (consumer unit, EPS sub-board, isolation points). Topology is the bus arrangement that turns the PEI diagram into a buildable single-line."
+        >
+          <p>The PEI viewpoint matters for three reasons:</p>
+          <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+            <li>
+              <strong className="text-white">The battery is dual-natured</strong> — Chapter 57 NOTE
+              explicitly reminds us "a battery can be considered as a generator and as a load". The
+              topology must accommodate energy in both directions
+            </li>
+            <li>
+              <strong className="text-white">
+                Protective measures must persist across config changes
+              </strong>{' '}
+              — Chapter 82 requires that when the supply configuration changes (grid available →
+              grid lost → island mode → grid restored), all protective measures continue to operate
+              or are automatically replaced by equivalent measures
+            </li>
+            <li>
+              <strong className="text-white">
+                Reg 826.1.1.2.2 — neutral conductor in island mode
+              </strong>{' '}
+              — when the BESS is the source (island), the neutral handling changes; the topology
+              must include the contactor and re-bond arrangement that makes this work
+            </li>
+            <li>
+              <strong className="text-white">Reg 570.5.1(e) coupling mode</strong> — naming the
+              topology is a Chapter 57 selection-factor obligation; the cert evidence bundle records
+              which mode was chosen and why
+            </li>
+          </ul>
+        </ConceptBlock>
 
-          <ConceptBlock
-            title="A BESS does not live alone — it lives in a PEI"
-            plainEnglish="Chapter 82 of BS 7671:2018+A4:2026 frames any site with on-site generation and/or storage as a Prosumer's Electrical Installation (PEI). Inside the PEI, the battery is treated as both a generator (when discharging) AND a load (when charging). Topology is the layout that holds the PEI together."
-            onSite="Before drawing any topology, draw the PEI: what sources feed it (DNO, PV, BESS), what loads consume it (lighting, sockets, EV charger, heat pump), and where the boundaries sit (consumer unit, EPS sub-board, isolation points). Topology is the bus arrangement that turns the PEI diagram into a buildable single-line."
-          >
-            <p>The PEI viewpoint matters for three reasons:</p>
-            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
-              <li>
-                <strong className="text-white">The battery is dual-natured</strong> — Chapter 57 NOTE
-                explicitly reminds us "a battery can be considered as a generator and as a load".
-                The topology must accommodate energy in both directions
-              </li>
-              <li>
-                <strong className="text-white">Protective measures must persist across config
-                  changes</strong> — Chapter 82 requires that when the supply configuration
-                changes (grid available → grid lost → island mode → grid restored), all
-                protective measures continue to operate or are automatically replaced by
-                equivalent measures
-              </li>
-              <li>
-                <strong className="text-white">Reg 826.1.1.2.2 — neutral conductor in island
-                  mode</strong> — when the BESS is the source (island), the neutral handling
-                changes; the topology must include the contactor and re-bond arrangement that
-                makes this work
-              </li>
-              <li>
-                <strong className="text-white">Reg 570.5.1(e) coupling mode</strong> — naming
-                the topology is a Chapter 57 selection-factor obligation; the cert evidence
-                bundle records which mode was chosen and why
-              </li>
-            </ul>
-          </ConceptBlock>
+        <BessTopologies caption="Modular LV, all-in-one HV and rack / commercial battery architectures." />
 
-          <BessTopologies caption="Modular LV, all-in-one HV and rack / commercial battery architectures." />
-
-          <RegsCallout
-            source="BS 7671:2018+A4:2026 · Reg 570.5.1 — Battery selection factors (the topology hook)"
-            clause={`Selection of battery type and capacity shall take account of the following factors:
+        <RegsCallout
+          source="BS 7671:2018+A4:2026 · Reg 570.5.1 — Battery selection factors (the topology hook)"
+          clause={`Selection of battery type and capacity shall take account of the following factors:
 (a) nature of demand;
 (b) battery voltage;
 (c) charge time and discharge time;
@@ -295,456 +296,444 @@ export default function RenewableEnergyModule5Section5() {
 (h) load profiles and cyclic operation capability;
 (i) suitability for fixed installation and connection;
 (j) the relevant external influences.`}
-            meaning="Reg 570.5.1 is the master battery-selection checklist. Factor (e) — coupling mode — is the explicit topology-naming hook. Factor (d) — locally connected generator profiles — is the topology-constraining hook: if a PV inverter is already on site, that profile pushes the new BESS toward AC-coupled retrofit; if greenfield, hybrid is on the table. Every BESS spec document and cert evidence bundle should walk through (a)–(j) and record the answers. Skip (e), and the topology decision is invisible and unaccountable."
-          />
+          meaning="Reg 570.5.1 is the master battery-selection checklist. Factor (e) — coupling mode — is the explicit topology-naming hook. Factor (d) — locally connected generator profiles — is the topology-constraining hook: if a PV inverter is already on site, that profile pushes the new BESS toward AC-coupled retrofit; if greenfield, hybrid is on the table. Every BESS spec document and cert evidence bundle should walk through (a)–(j) and record the answers. Skip (e), and the topology decision is invisible and unaccountable."
+        />
 
-          <InlineCheck {...inlineChecks[0]} />
+        <InlineCheck {...inlineChecks[0]} />
 
-          <SectionRule />
+        <SectionRule />
 
-          <ContentEyebrow>The three families — DC-coupled, AC-coupled, hybrid</ContentEyebrow>
+        <ContentEyebrow>The three families — DC-coupled, AC-coupled, hybrid</ContentEyebrow>
 
-          <Pullquote>
-            DC-coupled shares the DC bus. AC-coupled shares the AC bus. Hybrid puts the two together
-            in one cabinet.
-          </Pullquote>
+        <Pullquote>
+          DC-coupled shares the DC bus. AC-coupled shares the AC bus. Hybrid puts the two together
+          in one cabinet.
+        </Pullquote>
 
-          <ConceptBlock
-            title="DC-coupled topology"
-            plainEnglish="In a DC-coupled system, the PV array and the battery share the SAME DC bus through a charge controller (sometimes integrated into the inverter, sometimes separate). A single inverter then converts DC → AC for the loads and the grid. Energy from PV to battery never leaves DC — only one round-trip conversion penalty, not two."
-            onSite="DC-coupled with a SEPARATE charge controller is now rare at UK domestic scale; the role has been absorbed into hybrid inverters. Pure DC-coupled survives in: off-grid systems, large commercial PV+BESS, and legacy installs. Recognising it on an SLD: PV array and battery sit on the same DC bus, before the inverter."
+        <ConceptBlock
+          title="DC-coupled topology"
+          plainEnglish="In a DC-coupled system, the PV array and the battery share the SAME DC bus through a charge controller (sometimes integrated into the inverter, sometimes separate). A single inverter then converts DC → AC for the loads and the grid. Energy from PV to battery never leaves DC — only one round-trip conversion penalty, not two."
+          onSite="DC-coupled with a SEPARATE charge controller is now rare at UK domestic scale; the role has been absorbed into hybrid inverters. Pure DC-coupled survives in: off-grid systems, large commercial PV+BESS, and legacy installs. Recognising it on an SLD: PV array and battery sit on the same DC bus, before the inverter."
+        >
+          <p>What the DC bus shares:</p>
+          <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+            <li>
+              <strong className="text-white">One DC bus voltage</strong> — sized by both the PV
+              string voltage and the battery nominal voltage; the charge controller reconciles them
+            </li>
+            <li>
+              <strong className="text-white">One DC isolator per power port</strong> — Reg
+              570.6.5.201 demands isolation on each port; on DC-coupled with separate controller +
+              inverter, that means at least 3 isolation provisions (PV DC, battery DC, AC out)
+            </li>
+            <li>
+              <strong className="text-white">One round-trip conversion</strong> — PV → battery stays
+              DC; only the discharge to loads / grid pays the DC→AC conversion (~95–97% efficient at
+              modern hybrid scale)
+            </li>
+            <li>
+              <strong className="text-white">PV array re-engineering may be needed</strong>— DC bus
+              voltage must match what both the PV string and the battery want; retrofit onto an
+              existing string usually forces a re-stringing exercise
+            </li>
+            <li>
+              <strong className="text-white">Section 712 still applies</strong> to the PV side of
+              the DC bus — DC fuse selection (Reg 712.431.101 / .102), array cable protection (Reg
+              712.433.103), lightning loop minimisation (Reg 712.521.102)
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="AC-coupled topology"
+          plainEnglish="In an AC-coupled system, the PV array has its OWN inverter (PV → AC), and the battery has its OWN bidirectional inverter (battery DC ↔ AC). Both connect to the AC busbar — typically at the consumer unit via dedicated ways. Each can be specified, replaced, or expanded independently."
+          onSite="AC-coupled is the standard retrofit move on a UK domestic site that already has a PV string-inverter installed (typical post-2010 install). The existing PV inverter stays; a separate battery inverter goes alongside it; no roof access, no PV re-stringing. Recognising it on an SLD: PV array → PV inverter → AC bus; battery → battery inverter → same AC bus, two distinct paths to the consumer unit."
+        >
+          <p>Why retrofitters reach for AC-coupled:</p>
+          <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+            <li>
+              <strong className="text-white">No PV-side re-engineering</strong> — the existing PV
+              inverter is left in service; no re-stringing, no roof work
+            </li>
+            <li>
+              <strong className="text-white">Independent service and replacement</strong>— PV
+              inverter and battery inverter can be replaced separately at end-of-life; each is a
+              distinct PCE under Reg 570.6.5.201
+            </li>
+            <li>
+              <strong className="text-white">
+                Two round-trip conversions on PV→battery energy
+              </strong>{' '}
+              — DC→AC at the PV inverter, then AC→DC at the battery inverter. Round-trip efficiency
+              on cross-charging is therefore lower (~88– 92%) than DC-coupled (~95–97%) — the price
+              of the retrofit win
+            </li>
+            <li>
+              <strong className="text-white">Two AC OCPDs in the consumer unit</strong> — each
+              inverter has its own dedicated way with its own RCBO; Reg 712.433.104 sizes the PV way
+              against PV-inverter design current, Reg 570.x sizes the battery way against
+              battery-inverter design current
+            </li>
+            <li>
+              <strong className="text-white">EPS / backup is harder</strong> — getting both
+              inverters to coordinate during island mode is non-trivial; many AC-coupled installs
+              simply omit backup, or backup is the battery-inverter’s feature alone (PV inverter
+              trips on outage per Reg 551.7.5)
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="Hybrid (all-in-one) inverter topology"
+          plainEnglish="A hybrid inverter collapses the PV charge controller and the bidirectional battery inverter into ONE cabinet, sharing one DC bus internally. From the outside the install looks like a single PCE with multiple ports — MPPTs for the PV strings, a battery port, an AC grid port, and (usually) an EPS / backup port."
+          onSite="Hybrid is the UK 2025–2026 default for new-build PV+BESS installs. GivEnergy Gen3, Sigenergy SigenStor, FoxESS, Huawei LUNA — all hybrid by default. Recognising it on an SLD: one PCE box with 4 ports drawn — PV DC in, battery DC in, AC grid out, AC EPS out — instead of two separate boxes."
+        >
+          <p>The hybrid case — what it adds, what it costs:</p>
+          <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+            <li>
+              <strong className="text-white">One cabinet, one warranty, one comms surface</strong> —
+              the customer’s app shows PV, battery and grid in one place; installer has one piece of
+              kit to commission
+            </li>
+            <li>
+              <strong className="text-white">DC-coupled efficiency on PV→battery</strong>— internal
+              DC bus avoids the AC→DC→AC round-trip; round-trip PV→battery ~95–97%
+            </li>
+            <li>
+              <strong className="text-white">
+                Four power ports → four isolation provisions per Reg 570.6.5.201
+              </strong>{' '}
+              if the battery is a separate floor-stack from the hybrid cabinet. If the battery is
+              INCORPORATED inside the same sealed assembly (some "all-in-one BESS" SKUs), the rule’s
+              explicit "not incorporated" clause means the manufacturer’s internal arrangement is
+              taken as compliant and the installer focuses on external isolation only
+            </li>
+            <li>
+              <strong className="text-white">EPS port often built-in</strong> — many hybrids include
+              a dedicated EPS / backup port that energises a switched sub-board on outage. Reg
+              826.1.1.2.2 neutral handling is then internal to the inverter, with installer
+              responsibility for the EPS sub-board and the customer-facing labelling
+            </li>
+            <li>
+              <strong className="text-white">Single point of failure</strong> — the trade-off.
+              End-of-life replacement takes the whole site offline; service requires the
+              manufacturer’s engineer or a trained installer; spares policy matters
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <RegsCallout
+          source="BS 7671:2018+A4:2026 · Reg 570.6.5.201 — Means of isolation for PCE"
+          clause="To allow maintenance and replacement of PCE not incorporated in a battery assembly, a means of isolation shall be provided for all power ports of the PCE."
+          meaning="The topology determines the port count. DC-coupled with separate charge controller + inverter → 3 ports (PV DC, battery DC, AC out). AC-coupled → 4 ports across the two PCE (PV DC + PV AC + battery DC + battery AC). Hybrid → 4 ports on one PCE (PV DC + battery DC + AC grid + AC EPS). Each port needs its own means of isolation, sized for the worst-case design current at that port. The exception — PCE INCORPORATED in the battery assembly (sealed all-in-one BESS) — relies on the manufacturer’s internal arrangement; the installer’s duty drops to the EXTERNAL ports only. Cert evidence bundle records the port count and the isolator selection for each."
+        />
+
+        <InlineCheck {...inlineChecks[1]} />
+
+        <CommonMistake
+          title="Quoting DC-coupled retrofit onto an existing PV string-inverter site without checking compatibility"
+          whatHappens="Customer has a 4 kWp PV install from 2017 with a Solis string inverter. Installer quotes a DC-coupled BESS retrofit on the basis that DC-coupled is more efficient. The proposal requires the existing PV inverter to be replaced with a hybrid; the PV strings to be re-engineered onto the new hybrid’s MPPT voltage window; and the customer to pay for a perfectly serviceable PV inverter to come out mid-life. Customer pushes back when the quote arrives."
+          doInstead="On retrofit to an existing PV site, the default is AC-coupled: leave the working PV inverter in service, add a separate battery inverter on the AC side. No roof work, no re-stringing, no mid-life PV-inverter binning. The efficiency penalty (~5–8% on PV→battery cross-charging) is real but small in absolute kWh terms over a year. Reg 570.5.1(d) generation profile factor and (e) coupling mode factor justify the choice in the cert evidence bundle. Pure DC-coupled retrofit is justified only when the existing PV inverter is at end-of-life anyway."
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>Single-port vs dual-port, and the EPS variant</ContentEyebrow>
+
+        <ConceptBlock
+          title="Single-port vs dual-port BESS"
+          plainEnglish="A single-port BESS uses one bidirectional electrical connection to handle both charge and discharge. A dual-port BESS has physically separate charge and discharge connections. Almost every UK domestic LFP unit on the market in 2025–2026 is single-port; dual-port appears on commercial / industrial UPS topologies and some large hybrid installs."
+          onSite="Port count on the kit drives the installer’s isolator count. Single-port → one DC isolation provision between cells and PCE. Dual-port → two DC isolation provisions, one for the charge path and one for the discharge path. Reg 570.6.5.201 phrasing — “isolation… for all power ports of the PCE” — covers both cases by saying “all power ports”. The cert evidence bundle must list each port and its isolator."
+        >
+          <p>Why dual-port still exists:</p>
+          <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+            <li>
+              <strong className="text-white">Charge and discharge happen simultaneously</strong>— a
+              true online UPS topology keeps the inverter always running off the battery while a
+              separate rectifier keeps the battery charged from the supply; physically separate
+              ports make this efficient at scale
+            </li>
+            <li>
+              <strong className="text-white">Independent sizing</strong> — the charge port can be
+              sized to a slow tariff-window current; the discharge port to peak load; each port’s
+              OCPD is sized for ITS worst-case design current
+            </li>
+            <li>
+              <strong className="text-white">Service isolation</strong> — discharge path can be
+              isolated for service while the charge path keeps the pack topped up
+            </li>
+            <li>
+              <strong className="text-white">UK domestic relevance</strong> — low. Single-port
+              bidirectional inverters now do the job for under 15 kWh installs; dual-port appears
+              mainly in commercial / industrial / data-centre topologies
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <RegsCallout
+          source="BS 7671:2018+A4:2026 · Reg 551.7.2.1 — stationary battery treated as generating set"
+          clause="Generating sets shall be installed on the supply side of protective devices. Stationary batteries used for the storage and supply of electrical installations shall be considered as generating sets."
+          meaning="The BESS contribution joins the distribution UPSTREAM of the final-circuit OCPDs. On AC-coupled, that join is at the consumer-unit busbar via a dedicated way with its own RCBO. On hybrid, the same applies at the inverter’s AC grid port. The implication for topology: there must be enough busbar capacity at the join point, and the cumulative imported + generated fault contribution must be tolerable by the consumer unit’s installed devices. This is one of the first checks on any retrofit — a 1980s consumer unit may not be a competent destination for an additional source connection."
+        />
+
+        <ConceptBlock
+          title="EPS / island-mode — the topology variant"
+          plainEnglish="A standard grid-tied BESS does not provide backup. On grid loss, the inverter trips for anti-islanding (Reg 551.7.5). To provide power during an outage, you need an EPS (Emergency Power Supply) topology variant — a contactor that disconnects from the DNO supply, an island-side neutral re-bond, and a voltage / frequency reference held by the inverter itself."
+          onSite="EPS is a CONFIGURATION CHOICE, not a software setting. It needs hardware: the EPS-capable inverter SKU (not every hybrid is EPS-capable), the changeover contactor (often inside the inverter, sometimes external), the EPS sub-board for the essential circuits, and the warning labels. Customer expectations need managing: most domestic EPS systems energise a switched subset of circuits, not the whole house — the customer’s electric shower, EV charger and heat pump usually stay off in island mode."
+        >
+          <p>What EPS topology adds on top of the base topology:</p>
+          <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+            <li>
+              <strong className="text-white">A contactor that disconnects the DNO supply</strong>{' '}
+              from the EPS sub-board within milliseconds of outage detection — typically internal to
+              the inverter
+            </li>
+            <li>
+              <strong className="text-white">An island-side neutral re-bond</strong> — when the BESS
+              is the source, the N-PE bond on the DNO side is lost; the inverter re-establishes a
+              bond on the island side so that ADS still operates against local fault current (Reg
+              826.1.1.2.2)
+            </li>
+            <li>
+              <strong className="text-white">A voltage and frequency reference</strong>
+              held by the inverter — grid-forming behaviour rather than the grid-following behaviour
+              of a normal grid-tied inverter
+            </li>
+            <li>
+              <strong className="text-white">An EPS sub-board / labelled circuits</strong>—
+              typically a small consumer unit of "essentials": kitchen sockets, fridge, router,
+              lighting on a single floor. High-current loads (shower, EV charger) stay on the DNO
+              side and are inert during island mode
+            </li>
+            <li>
+              <strong className="text-white">Reg 551.7.5 anti-islanding remains satisfied</strong> —
+              the island is electrically separated from the DNO by the contactor; no current is
+              exported to the public network
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <InlineCheck {...inlineChecks[2]} />
+
+        <InlineCheck {...inlineChecks[3]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>Topology, install practice and the §5.3 protection picture</ContentEyebrow>
+
+        <ConceptBlock
+          title="Topology → protection picture map"
+          plainEnglish="Every topology lays out the Chapter 57 protective measures differently. The same regs apply — overcurrent, fault, basic protection, isolation, ADS — but WHERE each one lives on the SLD changes with the bus arrangement. Section 5.3 covers the protective measures in depth; this is the map that connects topology choice to where the measures land."
+          onSite="When you draw the SLD, draw the protection markers on the same sheet. Each DC port gets its own DC OCPD (fuse / breaker / built-in) and DC isolator. Each AC port gets its OCPD (RCBO type per the inverter manufacturer), its AC isolator, and is bonded to the CU MET. The protection sheet becomes the spine of the cert evidence bundle."
+        >
+          <p>How each topology lays out the Chapter 57 protective measures:</p>
+          <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+            <li>
+              <strong className="text-white">DC-coupled (separate controller + inverter)</strong>—
+              DC fuses on the PV string side per Section 712 (Reg 712.431.101 / 712.431.102), DC
+              OCPD on the battery side per Chapter 57, AC OCPD on the inverter output. Three OCPD
+              sets in three different regulatory homes — the cert evidence bundle has to walk
+              through each
+            </li>
+            <li>
+              <strong className="text-white">AC-coupled</strong> — DC fuses on PV array side
+              (Section 712), DC OCPD on battery side (Chapter 57), two AC RCBOs in the consumer unit
+              (one per inverter), each sized per Reg 712.433.104 for PV and per Reg 570.x for
+              battery. The protection map has more boxes but each box is independently traceable
+            </li>
+            <li>
+              <strong className="text-white">Hybrid (all-in-one)</strong> — most internal OCPDs are
+              inside the manufacturer&rsquo;s cabinet and are taken as compliant per the spec sheet.
+              External duties: PV DC isolator + battery DC isolator + AC RCBO on the grid port + AC
+              OCPD on the EPS port. The protection map shrinks but the manufacturer&rsquo;s evidence
+              pack grows
+            </li>
+            <li>
+              <strong className="text-white">EPS variant</strong> — adds an island-side ADS check
+              (does the inverter&rsquo;s short-circuit contribution operate the EPS
+              sub-board&rsquo;s RCBO inside the disconnection time?) and a neutral re-bond label.
+              Section 5.7 covers the commissioning evidence for the EPS ADS check
+            </li>
+            <li>
+              <strong className="text-white">Basic protection</strong> — Reg 570.6.2.1.201 bites
+              wherever the touchable d.c. potential difference exceeds 120 V. HV LFP packs (200 V+
+              nominal) need basic protection by insulation or enclosure on every connection —
+              including the DC isolator handle, the cable glands, the bus bar terminations
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <RegsCallout
+          source="BS 7671:2018+A4:2026 · Reg 570.6.2.1.201 — Basic protection on battery connections"
+          clause="Battery connections shall have basic protection by insulation or enclosures or shall be arranged so that conductive parts having between them a potential difference exceeding 120 volts cannot be inadvertently touched simultaneously."
+          meaning="The 120 V threshold is on the d.c. p.d. between conductive parts that could be touched at the same time. UK domestic LFP HV packs (typical 200–400 V nominal) blow through the threshold easily; LV LFP packs (48 V nominal) usually do not. Topology drives which side of the threshold you land on: high-voltage hybrid topologies typically pick a 200–400 V battery nominal voltage to match the inverter&rsquo;s DC bus, putting every DC terminal above the 120 V threshold and into basic-protection territory. Cert evidence bundle records the bus voltage and the basic-protection arrangement on every accessible DC connection."
+        />
+
+        <ConceptBlock
+          title="DC vs AC routing and segregation"
+          plainEnglish="DC and AC cables live different lives. DC carries higher prospective fault energy at lower voltages, and on a BESS install can run hundreds of amps at 48–500 V DC. AC carries familiar 230 V single-phase domestic at much lower steady-state current. The topology decides where the DC stops and the AC starts — and the install practice follows."
+          onSite="Short, direct DC runs in conduit / trunking, segregated from AC. DC isolation point clearly labelled and within reach of the kit it isolates. Field practice: dedicated DC interconnect routes, segregated from AC in trunking; short direct runs with properly-rated cable; manufacturer torque setting on every termination."
+        >
+          <p>Topology decides where the DC lives:</p>
+          <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+            <li>
+              <strong className="text-white">DC-coupled / hybrid</strong> — DC bus between PV array
+              and PCE plus DC bus between battery and PCE. Two DC routes, separately isolated
+            </li>
+            <li>
+              <strong className="text-white">AC-coupled</strong> — DC bus between PV array and PV
+              inverter; DC bus between battery and battery inverter; PV inverter and battery
+              inverter then both speak AC into the consumer unit. Two DC routes, separately routed
+              and isolated
+            </li>
+            <li>
+              <strong className="text-white">All-in-one (PCE inside battery assembly)</strong> —
+              only the PV DC and AC sides are external; the battery-PCE DC bus is internal to the
+              sealed cabinet
+            </li>
+            <li>
+              <strong className="text-white">Segregation discipline</strong> — DC and AC in separate
+              conduits / trunking compartments; common install defect is co-routing DC and AC,
+              leading to mutual coupling and ambiguity during fault tracing
+            </li>
+            <li>
+              <strong className="text-white">Cable sizing on DC</strong> — string voltage and
+              battery nominal voltage both drive current; current drives sizing; common install
+              mistake is under-spec’d interconnect cross-section on the battery-to-PCE run
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <CommonMistake
+          title="Co-routing DC and AC in the same trunking compartment on a hybrid retrofit"
+          whatHappens="Installer rips out the old PV inverter, fits a hybrid, and reuses the original PV inverter’s AC trunking for the new hybrid’s AC grid port. Then runs the new battery DC cables in the same trunking back to the floor-stack BESS in the garage, because it’s the easiest route. EICR three years later flags mutual coupling, ambiguous fault tracing, and labelling that doesn’t match the kit."
+          doInstead="Plan DC and AC routes separately on the topology drawing before the install. Use separate trunking compartments or separate conduits. Label every cable at both ends with its function (PV DC, battery DC, AC grid, EPS). Reg 570.6.5.201 isolators sit at each port with clear labels that match the cable labels. Cert evidence bundle records the routing plan and the labelling scheme."
+        />
+
+        <RegsCallout
+          source="BS 7671:2018+A4:2026 · Chapter 82 (PEI) — protective measures across supply changes"
+          clause="The implementation of the requirements provided shall not impair the safety of the PEI. In case of change of any energy supply configuration (for example, from network supply to local power supplies) all protective measures shall continue to be operational or shall be automatically replaced by other protective measures providing an equivalent level of safety."
+          meaning="The chapter forces topology to anticipate the worst supply-config transitions on site: grid → island, island → grid, grid → grid+battery export, etc. Protective measures (ADS, RCD operation, equipotential bonding) must keep working through each transition. For EPS topology this is the regulatory teeth behind the island-side neutral re-bond. For non-EPS topology it is the basis on which Reg 551.7.5 anti-islanding is acceptable — protective measures continue to operate because the inverter has dropped the load, not because backup has appeared. The cert evidence bundle records the configurations considered and the protective behaviour in each."
+        />
+
+        <Scenario
+          title="UK suburban customer — new-build 5 kWp PV + 10 kWh BESS"
+          situation="Customer in midlands suburban detached house, 2024 new build. Wants PV + BESS for self-consumption + occasional outage backup. No existing PV on site. Garage with mains intake plus utility room for kit. Budget moderate, prefers UK-supported brand. Customer is curious about &lsquo;keeping the lights on&rsquo; during outages."
+          whatToDo="Hybrid topology with EPS variant. Recommend a GivEnergy Gen3 5 kW hybrid inverter + GivEnergy 9.5 kWh LFP floor-stack battery + dedicated EPS sub-board energising kitchen sockets, fridge, router and ground-floor lighting. Reg 570.5.1 selection rationale: (d) no existing generators → greenfield, (e) coupling mode = hybrid + EPS. Reg 570.6.5.201 isolators: PV DC, battery DC, AC grid, AC EPS — 4 external isolation provisions, since the battery is a separate floor-stack from the hybrid cabinet. Reg 551.7.2.1 places the AC grid port on a dedicated CU way upstream of final circuit OCPDs. Chapter 82 / Reg 826.1.1.2.2 — neutral re-bond handled internally by the GivEnergy hybrid on the EPS side, label the EPS sub-board accordingly. Cert evidence bundle: Section 712 PV pack + Chapter 57 BESS pack + Chapter 82 PEI pack + EPS topology drawing + customer essentials list signed off."
+          whyItMatters="The hybrid + EPS combination is the UK 2025–2026 new-build default — single cabinet, internal DC efficiency on PV→battery, integrated backup. Setting customer expectations is critical: explain that the EPS sub-board is a curated subset of circuits, not the whole house, and that the heat pump / EV charger / electric shower will stay off in island mode. Cert evidence bundle records the choice rationale per Reg 570.5.1(d)(e) and the EPS scope per Chapter 82."
+        />
+
+        <Scenario
+          title="UK retrofit — 4 kWp PV already installed in 2018, customer now wants 10 kWh BESS"
+          situation="Customer has a 4 kWp PV install commissioned 2018, Solis 4G string inverter on the garage wall, working fine, 10 years of warranty left. Wants to add 10 kWh BESS for self-consumption + tariff arbitrage on Octopus Flux. No backup requirement — customer is comfortable with grid-tied only."
+          whatToDo="AC-coupled topology. Leave the existing Solis PV inverter in service. Add a GivEnergy AC3 5 kW battery inverter alongside it on the garage wall, with a GivEnergy 9.5 kWh LFP battery. Two CU ways in the consumer unit — one for the existing PV inverter (already there), one new for the battery inverter. Reg 570.5.1 selection rationale: (d) existing PV inverter on site → AC-coupled retrofit, (e) coupling mode = AC-coupled, (a) demand = self-consumption + tariff arbitrage. Reg 570.6.5.201 isolators on the new install: battery DC + battery AC = 2 new external isolation provisions (the existing PV side already has its own). Reg 712.433.104 — the existing PV AC OCPD is already sized for the PV inverter; new battery AC OCPD sized for the new inverter’s design current. No EPS — customer accepts grid-tied only behaviour; standard Reg 551.7.5 anti-islanding applies on outage."
+          whyItMatters="AC-coupled retrofit is the right answer on this site — no roof work, no PV re-stringing, no mid-life PV inverter binning, no DC re-engineering. The ~5–8% efficiency penalty on PV→battery cross-charging is real but small in absolute kWh terms. Cert evidence bundle records the retrofit rationale and the two-PCE topology; the customer’s app shows two boxes (one PV monitoring, one battery monitoring) instead of one — acceptable trade-off for the no-disruption retrofit."
+        />
+
+        <Scenario
+          title="Off-grid LFP retrofit — rural Wales, replacing aged lead-acid bank"
+          situation="Customer with a 15-year-old off-grid PV install in rural Wales. Original lead-acid bank (24 × 2 V cells, ~30 kWh nameplate, 50% DoD limit = 15 kWh usable) is at end-of-life — capacity down ~70%, increasing maintenance burden, hydrogen evolution still requiring forced ventilation. No grid connection planned; site has a backup diesel generator for winter weeks. Customer wants to switch to LFP without changing the off-grid topology."
+          whatToDo="Off-grid DC-coupled topology with separate charge controller + bidirectional inverter (e.g. Victron MultiPlus-II 48/5000 + SmartSolar MPPT 250/100 + Pylontech US5000 LFP modules). Retain the existing PV array; replace the lead-acid bank with 4 × Pylontech US5000 (~19 kWh nameplate, 80% DoD = 15.2 kWh usable — matches existing usable capacity in a smaller cabinet). 48 V LFP nominal stays below the Reg 570.6.2.1.201 120 V threshold — basic protection by enclosure suffices. Reg 570.5.1 selection rationale: (a) demand = off-grid residence + occasional generator support, (b) voltage = 48 V LFP to match existing 48 V bus, (e) coupling mode = DC-coupled separate controller + inverter (legitimate off-grid topology), (j) external influences = rural Wales temp range and the generator on the AC bus. Reg 551.7.2.1 — the LFP is one generating set; the diesel generator is another; both on the supply side, both with their own protective devices and synchronisation arrangements. Reg 570.6.5.201 isolators: PV DC + battery DC + AC out + generator AC in = 4 external isolation provisions. No DNO connection → Reg 551.7.5 anti-islanding does not bite; the system is permanently island."
+          whyItMatters="Off-grid is a legitimate topology family that is NOT a special case of grid-tied. DC-coupled with separate controller + inverter is the Victron / Studer / OutBack pattern, still dominant in UK off-grid 2025–2026 because it scales (more PV, more battery, more generator) without ripping out the inverter. LFP makes the topology safer (no hydrogen, basic protection by enclosure at 48 V) and lower-maintenance (no equalisation, no specific gravity checks). Cert evidence bundle records the off-grid framing — Chapter 57 BESS pack + Chapter 82 PEI pack flagged as permanent-island, no grid sync requirement, no G99 application. Customer keeps the same operational pattern they are used to."
+        />
+
+        <CommonMistake
+          title="Swapping a working PV inverter for a hybrid mid-life because &lsquo;hybrid is more efficient&rsquo;"
+          whatHappens="Installer quotes a hybrid topology retrofit on a 6-year-old PV site, justifying the replacement of a perfectly serviceable PV string inverter on the basis of higher round-trip efficiency. Customer pays for a hybrid + battery + DC re-stringing of the existing PV array. The new hybrid’s MPPT voltage window forces the existing PV strings to be split and re-cabled; scaffolding goes up; roof tiles get cracked during the re-strapping; the old PV inverter goes to e-waste with 4 years of warranty remaining. Total cost ~£3,000 higher than AC-coupled retrofit."
+          doInstead="On a retrofit with a working PV inverter, the default is AC-coupled. The DC-coupled efficiency advantage on PV→battery is small (~5–8 percentage points) and only applies to the fraction of PV generation that goes to the battery; on a typical UK domestic install ~40% of PV goes to battery, ~60% goes direct to loads or export. Net annual loss from staying AC-coupled: typically £20–£40, dwarfed by the £3,000 cost of switching topology. Reg 570.5.1(d)(e) cert rationale records the choice. The hybrid swap is justified ONLY when the existing PV inverter is at end-of-life anyway, or when EPS / backup is a hard customer requirement that the existing inverter cannot satisfy."
+        />
+
+        <ConceptBlock
+          title="Three-phase & commercial topology variants"
+          plainEnglish="Domestic UK BESS is overwhelmingly single-phase 230 V. Commercial sites — workshops, small offices, agricultural — often have three-phase 400 V supplies, and the topology choices change with them. Three-phase hybrid inverters, three-phase AC-coupled battery inverters, and three-phase EPS variants all exist; sizing and balancing constraints replace the single-phase OCPD picture."
+          onSite="On commercial sites, confirm the supply arrangement before drafting the topology. TN-S vs TN-C-S vs TT changes the bonding picture; balanced vs unbalanced three-phase loads change the inverter selection; export limit per phase changes the G99 application. The Reg 570.5.1(b) voltage factor and (e) coupling mode factor both need to be answered in three-phase terms."
+        >
+          <p>What changes when the topology goes three-phase:</p>
+          <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+            <li>
+              <strong className="text-white">Three-phase hybrid inverters</strong> exist (GivEnergy
+              AIO, Sigenergy SigenStor 3-ph, Sungrow SH series). One PCE box, three AC phases out,
+              plus the usual PV / battery / EPS ports. Reg 570.6.5.201 isolator duty still applies
+              per port — but each AC port is now a three-pole isolator instead of single-pole +
+              neutral
+            </li>
+            <li>
+              <strong className="text-white">Phase balancing matters</strong> — a 5 kW single-phase
+              inverter on a three-phase supply pushes 5 kW down ONE phase and imbalances the supply.
+              DNOs apply per-phase G98/G99 thresholds; some require three-phase BESS above ~3.68 kW
+              per phase, others tolerate unbalance up to a limit. Confirm the DNO position before
+              signing off the topology
+            </li>
+            <li>
+              <strong className="text-white">EPS on three-phase</strong> is harder. Many three-phase
+              hybrids EPS only one phase (the inverter&rsquo;s designated EPS phase); some EPS all
+              three but at reduced power. Customer expectation management: the workshop CNC machine
+              on phase 2 may stay off during island mode while the lighting on phase 1 stays on
+            </li>
+            <li>
+              <strong className="text-white">Earthing arrangement</strong> drives Chapter 82 / Reg
+              826.1.1.2.2 neutral handling. TN-C-S sites with a PEN need the neutral re-bond on the
+              island side of the contactor; TT sites need a TT earth electrode arrangement that
+              survives both grid and island mode
+            </li>
+            <li>
+              <strong className="text-white">Section 5.6 sizing</strong> on three-phase involves
+              per-phase load profiles and per-phase export limits, not just aggregate kWh. The
+              topology decision and the sizing decision interact more tightly than they do at
+              domestic single-phase scale
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <KeyTakeaways
+          points={[
+            'Topology is one of the ten battery selection factors in Reg 570.5.1 — specifically factor (e) "power conversion equipment connection and coupling mode". Naming it is a regulatory obligation, not just an engineering preference.',
+            'Three families: DC-coupled (PV + battery share DC bus, single inverter), AC-coupled (PV + battery each have their own inverter, share AC bus), hybrid (charge controller + bidirectional inverter collapsed into one cabinet).',
+            'UK 2025–2026 defaults: new-build → hybrid; retrofit to existing PV site → AC-coupled; off-grid / large commercial → still some pure DC-coupled. Pure DC-coupled with separate controller is rare in UK domestic.',
+            'Reg 570.6.5.201 — every power port of the PCE needs a means of isolation, unless the PCE is incorporated within the battery assembly. Hybrid usually = 4 external ports (PV DC, battery DC, AC grid, AC EPS) = 4 isolators.',
+            'Reg 551.7.2.1 — stationary battery is treated as a generating set; connects on the supply side of protective devices. The CU busbar at the join point must be competent for the cumulative fault contribution.',
+            'Reg 712.433.104 still applies on the AC side wherever a PV inverter is involved — the OCPD must be sized against the inverter’s design current, which on a hybrid reflects PV + battery discharge combined.',
+            'EPS / backup is a topology VARIANT, not a setting. Standard grid-tied trips on outage per Reg 551.7.5 anti-islanding. EPS adds a contactor, island-side neutral re-bond (Reg 826.1.1.2.2), voltage/frequency reference, and a labelled essentials sub-board.',
+            'Chapter 82 (PEI) holds the topology accountable for protective-measure persistence across config changes (grid → island → grid). Protective measures must continue to operate or be automatically replaced by equivalent measures.',
+            'Single-port vs dual-port BESS — port count on the kit drives isolator count on the install. UK domestic is overwhelmingly single-port; dual-port appears in commercial / industrial UPS topologies.',
+            'DC and AC routing must be segregated (separate conduit / trunking compartments) and labelled. Common install defect: co-routing of DC and AC, leading to ambiguous fault tracing and mismatched labelling at EICR.',
+            'Cert evidence bundle records the topology choice, the Reg 570.5.1 selection rationale (especially (d) and (e)), the port count and isolator selection per Reg 570.6.5.201, and the EPS scope if EPS is in play.',
+          ]}
+        />
+
+        <FAQ items={faqs} />
+
+        <Quiz questions={quizQuestions} title="Section 5 · Knowledge check" />
+
+        <div className="grid grid-cols-2 gap-3 pt-2">
+          <button
+            type="button"
+            onClick={() => navigate('/electrician/upskilling/renewable-energy-module-5-section-4')}
+            className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
           >
-            <p>What the DC bus shares:</p>
-            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
-              <li>
-                <strong className="text-white">One DC bus voltage</strong> — sized by both the
-                PV string voltage and the battery nominal voltage; the charge controller
-                reconciles them
-              </li>
-              <li>
-                <strong className="text-white">One DC isolator per power port</strong> — Reg
-                570.6.5.201 demands isolation on each port; on DC-coupled with separate
-                controller + inverter, that means at least 3 isolation provisions (PV DC,
-                battery DC, AC out)
-              </li>
-              <li>
-                <strong className="text-white">One round-trip conversion</strong> — PV →
-                battery stays DC; only the discharge to loads / grid pays the DC→AC
-                conversion (~95–97% efficient at modern hybrid scale)
-              </li>
-              <li>
-                <strong className="text-white">PV array re-engineering may be needed</strong>
-                — DC bus voltage must match what both the PV string and the battery want;
-                retrofit onto an existing string usually forces a re-stringing exercise
-              </li>
-              <li>
-                <strong className="text-white">Section 712 still applies</strong> to the PV
-                side of the DC bus — DC fuse selection (Reg 712.431.101 / .102), array cable
-                protection (Reg 712.433.103), lightning loop minimisation (Reg 712.521.102)
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <ConceptBlock
-            title="AC-coupled topology"
-            plainEnglish="In an AC-coupled system, the PV array has its OWN inverter (PV → AC), and the battery has its OWN bidirectional inverter (battery DC ↔ AC). Both connect to the AC busbar — typically at the consumer unit via dedicated ways. Each can be specified, replaced, or expanded independently."
-            onSite="AC-coupled is the standard retrofit move on a UK domestic site that already has a PV string-inverter installed (typical post-2010 install). The existing PV inverter stays; a separate battery inverter goes alongside it; no roof access, no PV re-stringing. Recognising it on an SLD: PV array → PV inverter → AC bus; battery → battery inverter → same AC bus, two distinct paths to the consumer unit."
+            <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+              <ChevronLeft className="h-3 w-3" /> Section 4
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-white truncate">
+              BS EN IEC 62485 + PAS 63100
+            </div>
+          </button>
+          <button
+            type="button"
+            onClick={() => navigate('/electrician/upskilling/renewable-energy-module-5-section-6')}
+            className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
           >
-            <p>Why retrofitters reach for AC-coupled:</p>
-            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
-              <li>
-                <strong className="text-white">No PV-side re-engineering</strong> — the
-                existing PV inverter is left in service; no re-stringing, no roof work
-              </li>
-              <li>
-                <strong className="text-white">Independent service and replacement</strong>
-                — PV inverter and battery inverter can be replaced separately at end-of-life;
-                each is a distinct PCE under Reg 570.6.5.201
-              </li>
-              <li>
-                <strong className="text-white">Two round-trip conversions on PV→battery
-                  energy</strong> — DC→AC at the PV inverter, then AC→DC at the battery
-                inverter. Round-trip efficiency on cross-charging is therefore lower (~88–
-                92%) than DC-coupled (~95–97%) — the price of the retrofit win
-              </li>
-              <li>
-                <strong className="text-white">Two AC OCPDs in the consumer unit</strong> —
-                each inverter has its own dedicated way with its own RCBO; Reg 712.433.104
-                sizes the PV way against PV-inverter design current, Reg 570.x sizes the
-                battery way against battery-inverter design current
-              </li>
-              <li>
-                <strong className="text-white">EPS / backup is harder</strong> — getting both
-                inverters to coordinate during island mode is non-trivial; many AC-coupled
-                installs simply omit backup, or backup is the battery-inverter’s
-                feature alone (PV inverter trips on outage per Reg 551.7.5)
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <ConceptBlock
-            title="Hybrid (all-in-one) inverter topology"
-            plainEnglish="A hybrid inverter collapses the PV charge controller and the bidirectional battery inverter into ONE cabinet, sharing one DC bus internally. From the outside the install looks like a single PCE with multiple ports — MPPTs for the PV strings, a battery port, an AC grid port, and (usually) an EPS / backup port."
-            onSite="Hybrid is the UK 2025–2026 default for new-build PV+BESS installs. GivEnergy Gen3, Sigenergy SigenStor, FoxESS, Huawei LUNA — all hybrid by default. Recognising it on an SLD: one PCE box with 4 ports drawn — PV DC in, battery DC in, AC grid out, AC EPS out — instead of two separate boxes."
-          >
-            <p>The hybrid case — what it adds, what it costs:</p>
-            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
-              <li>
-                <strong className="text-white">One cabinet, one warranty, one comms
-                  surface</strong> — the customer’s app shows PV, battery and grid in
-                one place; installer has one piece of kit to commission
-              </li>
-              <li>
-                <strong className="text-white">DC-coupled efficiency on PV→battery</strong>
-                — internal DC bus avoids the AC→DC→AC round-trip; round-trip PV→battery
-                ~95–97%
-              </li>
-              <li>
-                <strong className="text-white">Four power ports → four isolation provisions
-                  per Reg 570.6.5.201</strong> if the battery is a separate floor-stack from
-                the hybrid cabinet. If the battery is INCORPORATED inside the same sealed
-                assembly (some "all-in-one BESS" SKUs), the rule’s explicit "not
-                incorporated" clause means the manufacturer’s internal arrangement is
-                taken as compliant and the installer focuses on external isolation only
-              </li>
-              <li>
-                <strong className="text-white">EPS port often built-in</strong> — many
-                hybrids include a dedicated EPS / backup port that energises a switched
-                sub-board on outage. Reg 826.1.1.2.2 neutral handling is then internal to
-                the inverter, with installer responsibility for the EPS sub-board and the
-                customer-facing labelling
-              </li>
-              <li>
-                <strong className="text-white">Single point of failure</strong> — the
-                trade-off. End-of-life replacement takes the whole site offline; service
-                requires the manufacturer’s engineer or a trained installer; spares
-                policy matters
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <RegsCallout
-            source="BS 7671:2018+A4:2026 · Reg 570.6.5.201 — Means of isolation for PCE"
-            clause="To allow maintenance and replacement of PCE not incorporated in a battery assembly, a means of isolation shall be provided for all power ports of the PCE."
-            meaning="The topology determines the port count. DC-coupled with separate charge controller + inverter → 3 ports (PV DC, battery DC, AC out). AC-coupled → 4 ports across the two PCE (PV DC + PV AC + battery DC + battery AC). Hybrid → 4 ports on one PCE (PV DC + battery DC + AC grid + AC EPS). Each port needs its own means of isolation, sized for the worst-case design current at that port. The exception — PCE INCORPORATED in the battery assembly (sealed all-in-one BESS) — relies on the manufacturer’s internal arrangement; the installer’s duty drops to the EXTERNAL ports only. Cert evidence bundle records the port count and the isolator selection for each."
-          />
-
-          <InlineCheck {...inlineChecks[1]} />
-
-          <CommonMistake
-            title="Quoting DC-coupled retrofit onto an existing PV string-inverter site without checking compatibility"
-            whatHappens="Customer has a 4 kWp PV install from 2017 with a Solis string inverter. Installer quotes a DC-coupled BESS retrofit on the basis that DC-coupled is more efficient. The proposal requires the existing PV inverter to be replaced with a hybrid; the PV strings to be re-engineered onto the new hybrid’s MPPT voltage window; and the customer to pay for a perfectly serviceable PV inverter to come out mid-life. Customer pushes back when the quote arrives."
-            doInstead="On retrofit to an existing PV site, the default is AC-coupled: leave the working PV inverter in service, add a separate battery inverter on the AC side. No roof work, no re-stringing, no mid-life PV-inverter binning. The efficiency penalty (~5–8% on PV→battery cross-charging) is real but small in absolute kWh terms over a year. Reg 570.5.1(d) generation profile factor and (e) coupling mode factor justify the choice in the cert evidence bundle. Pure DC-coupled retrofit is justified only when the existing PV inverter is at end-of-life anyway."
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>Single-port vs dual-port, and the EPS variant</ContentEyebrow>
-
-          <ConceptBlock
-            title="Single-port vs dual-port BESS"
-            plainEnglish="A single-port BESS uses one bidirectional electrical connection to handle both charge and discharge. A dual-port BESS has physically separate charge and discharge connections. Almost every UK domestic LFP unit on the market in 2025–2026 is single-port; dual-port appears on commercial / industrial UPS topologies and some large hybrid installs."
-            onSite="Port count on the kit drives the installer’s isolator count. Single-port → one DC isolation provision between cells and PCE. Dual-port → two DC isolation provisions, one for the charge path and one for the discharge path. Reg 570.6.5.201 phrasing — “isolation… for all power ports of the PCE” — covers both cases by saying “all power ports”. The cert evidence bundle must list each port and its isolator."
-          >
-            <p>Why dual-port still exists:</p>
-            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
-              <li>
-                <strong className="text-white">Charge and discharge happen simultaneously</strong>
-                — a true online UPS topology keeps the inverter always running off the
-                battery while a separate rectifier keeps the battery charged from the
-                supply; physically separate ports make this efficient at scale
-              </li>
-              <li>
-                <strong className="text-white">Independent sizing</strong> — the charge port
-                can be sized to a slow tariff-window current; the discharge port to peak
-                load; each port’s OCPD is sized for ITS worst-case design current
-              </li>
-              <li>
-                <strong className="text-white">Service isolation</strong> — discharge path
-                can be isolated for service while the charge path keeps the pack topped up
-              </li>
-              <li>
-                <strong className="text-white">UK domestic relevance</strong> — low. Single-port
-                bidirectional inverters now do the job for under 15 kWh installs; dual-port
-                appears mainly in commercial / industrial / data-centre topologies
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <RegsCallout
-            source="BS 7671:2018+A4:2026 · Reg 551.7.2.1 — stationary battery treated as generating set"
-            clause="Generating sets shall be installed on the supply side of protective devices. Stationary batteries used for the storage and supply of electrical installations shall be considered as generating sets."
-            meaning="The BESS contribution joins the distribution UPSTREAM of the final-circuit OCPDs. On AC-coupled, that join is at the consumer-unit busbar via a dedicated way with its own RCBO. On hybrid, the same applies at the inverter’s AC grid port. The implication for topology: there must be enough busbar capacity at the join point, and the cumulative imported + generated fault contribution must be tolerable by the consumer unit’s installed devices. This is one of the first checks on any retrofit — a 1980s consumer unit may not be a competent destination for an additional source connection."
-          />
-
-          <ConceptBlock
-            title="EPS / island-mode — the topology variant"
-            plainEnglish="A standard grid-tied BESS does not provide backup. On grid loss, the inverter trips for anti-islanding (Reg 551.7.5). To provide power during an outage, you need an EPS (Emergency Power Supply) topology variant — a contactor that disconnects from the DNO supply, an island-side neutral re-bond, and a voltage / frequency reference held by the inverter itself."
-            onSite="EPS is a CONFIGURATION CHOICE, not a software setting. It needs hardware: the EPS-capable inverter SKU (not every hybrid is EPS-capable), the changeover contactor (often inside the inverter, sometimes external), the EPS sub-board for the essential circuits, and the warning labels. Customer expectations need managing: most domestic EPS systems energise a switched subset of circuits, not the whole house — the customer’s electric shower, EV charger and heat pump usually stay off in island mode."
-          >
-            <p>What EPS topology adds on top of the base topology:</p>
-            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
-              <li>
-                <strong className="text-white">A contactor that disconnects the DNO
-                  supply</strong> from the EPS sub-board within milliseconds of outage
-                detection — typically internal to the inverter
-              </li>
-              <li>
-                <strong className="text-white">An island-side neutral re-bond</strong> — when
-                the BESS is the source, the N-PE bond on the DNO side is lost; the inverter
-                re-establishes a bond on the island side so that ADS still operates against
-                local fault current (Reg 826.1.1.2.2)
-              </li>
-              <li>
-                <strong className="text-white">A voltage and frequency reference</strong>
-                held by the inverter — grid-forming behaviour rather than the grid-following
-                behaviour of a normal grid-tied inverter
-              </li>
-              <li>
-                <strong className="text-white">An EPS sub-board / labelled circuits</strong>
-                — typically a small consumer unit of "essentials": kitchen sockets, fridge,
-                router, lighting on a single floor. High-current loads (shower, EV charger)
-                stay on the DNO side and are inert during island mode
-              </li>
-              <li>
-                <strong className="text-white">Reg 551.7.5 anti-islanding remains
-                  satisfied</strong> — the island is electrically separated from the DNO by
-                the contactor; no current is exported to the public network
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <InlineCheck {...inlineChecks[2]} />
-
-          <InlineCheck {...inlineChecks[3]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>Topology, install practice and the §5.3 protection picture</ContentEyebrow>
-
-          <ConceptBlock
-            title="Topology → protection picture map"
-            plainEnglish="Every topology lays out the Chapter 57 protective measures differently. The same regs apply — overcurrent, fault, basic protection, isolation, ADS — but WHERE each one lives on the SLD changes with the bus arrangement. Section 5.3 covers the protective measures in depth; this is the map that connects topology choice to where the measures land."
-            onSite="When you draw the SLD, draw the protection markers on the same sheet. Each DC port gets its own DC OCPD (fuse / breaker / built-in) and DC isolator. Each AC port gets its OCPD (RCBO type per the inverter manufacturer), its AC isolator, and is bonded to the CU MET. The protection sheet becomes the spine of the cert evidence bundle."
-          >
-            <p>How each topology lays out the Chapter 57 protective measures:</p>
-            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
-              <li>
-                <strong className="text-white">DC-coupled (separate controller + inverter)</strong>
-                — DC fuses on the PV string side per Section 712 (Reg 712.431.101 /
-                712.431.102), DC OCPD on the battery side per Chapter 57, AC OCPD on the
-                inverter output. Three OCPD sets in three different regulatory homes — the
-                cert evidence bundle has to walk through each
-              </li>
-              <li>
-                <strong className="text-white">AC-coupled</strong> — DC fuses on PV array
-                side (Section 712), DC OCPD on battery side (Chapter 57), two AC RCBOs in
-                the consumer unit (one per inverter), each sized per Reg 712.433.104 for PV
-                and per Reg 570.x for battery. The protection map has more boxes but each
-                box is independently traceable
-              </li>
-              <li>
-                <strong className="text-white">Hybrid (all-in-one)</strong> — most internal
-                OCPDs are inside the manufacturer&rsquo;s cabinet and are taken as compliant
-                per the spec sheet. External duties: PV DC isolator + battery DC isolator +
-                AC RCBO on the grid port + AC OCPD on the EPS port. The protection map
-                shrinks but the manufacturer&rsquo;s evidence pack grows
-              </li>
-              <li>
-                <strong className="text-white">EPS variant</strong> — adds an island-side
-                ADS check (does the inverter&rsquo;s short-circuit contribution operate the
-                EPS sub-board&rsquo;s RCBO inside the disconnection time?) and a neutral
-                re-bond label. Section 5.7 covers the commissioning evidence for the EPS
-                ADS check
-              </li>
-              <li>
-                <strong className="text-white">Basic protection</strong> — Reg 570.6.2.1.201
-                bites wherever the touchable d.c. potential difference exceeds 120 V. HV
-                LFP packs (200 V+ nominal) need basic protection by insulation or enclosure
-                on every connection — including the DC isolator handle, the cable glands,
-                the bus bar terminations
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <RegsCallout
-            source="BS 7671:2018+A4:2026 · Reg 570.6.2.1.201 — Basic protection on battery connections"
-            clause="Battery connections shall have basic protection by insulation or enclosures or shall be arranged so that conductive parts having between them a potential difference exceeding 120 volts cannot be inadvertently touched simultaneously."
-            meaning="The 120 V threshold is on the d.c. p.d. between conductive parts that could be touched at the same time. UK domestic LFP HV packs (typical 200–400 V nominal) blow through the threshold easily; LV LFP packs (48 V nominal) usually do not. Topology drives which side of the threshold you land on: high-voltage hybrid topologies typically pick a 200–400 V battery nominal voltage to match the inverter&rsquo;s DC bus, putting every DC terminal above the 120 V threshold and into basic-protection territory. Cert evidence bundle records the bus voltage and the basic-protection arrangement on every accessible DC connection."
-          />
-
-          <ConceptBlock
-            title="DC vs AC routing and segregation"
-            plainEnglish="DC and AC cables live different lives. DC carries higher prospective fault energy at lower voltages, and on a BESS install can run hundreds of amps at 48–500 V DC. AC carries familiar 230 V single-phase domestic at much lower steady-state current. The topology decides where the DC stops and the AC starts — and the install practice follows."
-            onSite="Short, direct DC runs in conduit / trunking, segregated from AC. DC isolation point clearly labelled and within reach of the kit it isolates. Field practice: dedicated DC interconnect routes, segregated from AC in trunking; short direct runs with properly-rated cable; manufacturer torque setting on every termination."
-          >
-            <p>Topology decides where the DC lives:</p>
-            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
-              <li>
-                <strong className="text-white">DC-coupled / hybrid</strong> — DC bus between
-                PV array and PCE plus DC bus between battery and PCE. Two DC routes,
-                separately isolated
-              </li>
-              <li>
-                <strong className="text-white">AC-coupled</strong> — DC bus between PV array
-                and PV inverter; DC bus between battery and battery inverter; PV inverter
-                and battery inverter then both speak AC into the consumer unit. Two DC
-                routes, separately routed and isolated
-              </li>
-              <li>
-                <strong className="text-white">All-in-one (PCE inside battery
-                  assembly)</strong> — only the PV DC and AC sides are external; the
-                battery-PCE DC bus is internal to the sealed cabinet
-              </li>
-              <li>
-                <strong className="text-white">Segregation discipline</strong> — DC and AC
-                in separate conduits / trunking compartments; common install defect is
-                co-routing DC and AC, leading to mutual coupling and ambiguity during fault
-                tracing
-              </li>
-              <li>
-                <strong className="text-white">Cable sizing on DC</strong> — string voltage
-                and battery nominal voltage both drive current; current drives sizing;
-                common install mistake is under-spec’d interconnect cross-section on the
-                battery-to-PCE run
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <CommonMistake
-            title="Co-routing DC and AC in the same trunking compartment on a hybrid retrofit"
-            whatHappens="Installer rips out the old PV inverter, fits a hybrid, and reuses the original PV inverter’s AC trunking for the new hybrid’s AC grid port. Then runs the new battery DC cables in the same trunking back to the floor-stack BESS in the garage, because it’s the easiest route. EICR three years later flags mutual coupling, ambiguous fault tracing, and labelling that doesn’t match the kit."
-            doInstead="Plan DC and AC routes separately on the topology drawing before the install. Use separate trunking compartments or separate conduits. Label every cable at both ends with its function (PV DC, battery DC, AC grid, EPS). Reg 570.6.5.201 isolators sit at each port with clear labels that match the cable labels. Cert evidence bundle records the routing plan and the labelling scheme."
-          />
-
-          <RegsCallout
-            source="BS 7671:2018+A4:2026 · Chapter 82 (PEI) — protective measures across supply changes"
-            clause="The implementation of the requirements provided shall not impair the safety of the PEI. In case of change of any energy supply configuration (for example, from network supply to local power supplies) all protective measures shall continue to be operational or shall be automatically replaced by other protective measures providing an equivalent level of safety."
-            meaning="The chapter forces topology to anticipate the worst supply-config transitions on site: grid → island, island → grid, grid → grid+battery export, etc. Protective measures (ADS, RCD operation, equipotential bonding) must keep working through each transition. For EPS topology this is the regulatory teeth behind the island-side neutral re-bond. For non-EPS topology it is the basis on which Reg 551.7.5 anti-islanding is acceptable — protective measures continue to operate because the inverter has dropped the load, not because backup has appeared. The cert evidence bundle records the configurations considered and the protective behaviour in each."
-          />
-
-          <Scenario
-            title="UK suburban customer — new-build 5 kWp PV + 10 kWh BESS"
-            situation="Customer in midlands suburban detached house, 2024 new build. Wants PV + BESS for self-consumption + occasional outage backup. No existing PV on site. Garage with mains intake plus utility room for kit. Budget moderate, prefers UK-supported brand. Customer is curious about &lsquo;keeping the lights on&rsquo; during outages."
-            whatToDo="Hybrid topology with EPS variant. Recommend a GivEnergy Gen3 5 kW hybrid inverter + GivEnergy 9.5 kWh LFP floor-stack battery + dedicated EPS sub-board energising kitchen sockets, fridge, router and ground-floor lighting. Reg 570.5.1 selection rationale: (d) no existing generators → greenfield, (e) coupling mode = hybrid + EPS. Reg 570.6.5.201 isolators: PV DC, battery DC, AC grid, AC EPS — 4 external isolation provisions, since the battery is a separate floor-stack from the hybrid cabinet. Reg 551.7.2.1 places the AC grid port on a dedicated CU way upstream of final circuit OCPDs. Chapter 82 / Reg 826.1.1.2.2 — neutral re-bond handled internally by the GivEnergy hybrid on the EPS side, label the EPS sub-board accordingly. Cert evidence bundle: Section 712 PV pack + Chapter 57 BESS pack + Chapter 82 PEI pack + EPS topology drawing + customer essentials list signed off."
-            whyItMatters="The hybrid + EPS combination is the UK 2025–2026 new-build default — single cabinet, internal DC efficiency on PV→battery, integrated backup. Setting customer expectations is critical: explain that the EPS sub-board is a curated subset of circuits, not the whole house, and that the heat pump / EV charger / electric shower will stay off in island mode. Cert evidence bundle records the choice rationale per Reg 570.5.1(d)(e) and the EPS scope per Chapter 82."
-          />
-
-          <Scenario
-            title="UK retrofit — 4 kWp PV already installed in 2018, customer now wants 10 kWh BESS"
-            situation="Customer has a 4 kWp PV install commissioned 2018, Solis 4G string inverter on the garage wall, working fine, 10 years of warranty left. Wants to add 10 kWh BESS for self-consumption + tariff arbitrage on Octopus Flux. No backup requirement — customer is comfortable with grid-tied only."
-            whatToDo="AC-coupled topology. Leave the existing Solis PV inverter in service. Add a GivEnergy AC3 5 kW battery inverter alongside it on the garage wall, with a GivEnergy 9.5 kWh LFP battery. Two CU ways in the consumer unit — one for the existing PV inverter (already there), one new for the battery inverter. Reg 570.5.1 selection rationale: (d) existing PV inverter on site → AC-coupled retrofit, (e) coupling mode = AC-coupled, (a) demand = self-consumption + tariff arbitrage. Reg 570.6.5.201 isolators on the new install: battery DC + battery AC = 2 new external isolation provisions (the existing PV side already has its own). Reg 712.433.104 — the existing PV AC OCPD is already sized for the PV inverter; new battery AC OCPD sized for the new inverter’s design current. No EPS — customer accepts grid-tied only behaviour; standard Reg 551.7.5 anti-islanding applies on outage."
-            whyItMatters="AC-coupled retrofit is the right answer on this site — no roof work, no PV re-stringing, no mid-life PV inverter binning, no DC re-engineering. The ~5–8% efficiency penalty on PV→battery cross-charging is real but small in absolute kWh terms. Cert evidence bundle records the retrofit rationale and the two-PCE topology; the customer’s app shows two boxes (one PV monitoring, one battery monitoring) instead of one — acceptable trade-off for the no-disruption retrofit."
-          />
-
-          <Scenario
-            title="Off-grid LFP retrofit — rural Wales, replacing aged lead-acid bank"
-            situation="Customer with a 15-year-old off-grid PV install in rural Wales. Original lead-acid bank (24 × 2 V cells, ~30 kWh nameplate, 50% DoD limit = 15 kWh usable) is at end-of-life — capacity down ~70%, increasing maintenance burden, hydrogen evolution still requiring forced ventilation. No grid connection planned; site has a backup diesel generator for winter weeks. Customer wants to switch to LFP without changing the off-grid topology."
-            whatToDo="Off-grid DC-coupled topology with separate charge controller + bidirectional inverter (e.g. Victron MultiPlus-II 48/5000 + SmartSolar MPPT 250/100 + Pylontech US5000 LFP modules). Retain the existing PV array; replace the lead-acid bank with 4 × Pylontech US5000 (~19 kWh nameplate, 80% DoD = 15.2 kWh usable — matches existing usable capacity in a smaller cabinet). 48 V LFP nominal stays below the Reg 570.6.2.1.201 120 V threshold — basic protection by enclosure suffices. Reg 570.5.1 selection rationale: (a) demand = off-grid residence + occasional generator support, (b) voltage = 48 V LFP to match existing 48 V bus, (e) coupling mode = DC-coupled separate controller + inverter (legitimate off-grid topology), (j) external influences = rural Wales temp range and the generator on the AC bus. Reg 551.7.2.1 — the LFP is one generating set; the diesel generator is another; both on the supply side, both with their own protective devices and synchronisation arrangements. Reg 570.6.5.201 isolators: PV DC + battery DC + AC out + generator AC in = 4 external isolation provisions. No DNO connection → Reg 551.7.5 anti-islanding does not bite; the system is permanently island."
-            whyItMatters="Off-grid is a legitimate topology family that is NOT a special case of grid-tied. DC-coupled with separate controller + inverter is the Victron / Studer / OutBack pattern, still dominant in UK off-grid 2025–2026 because it scales (more PV, more battery, more generator) without ripping out the inverter. LFP makes the topology safer (no hydrogen, basic protection by enclosure at 48 V) and lower-maintenance (no equalisation, no specific gravity checks). Cert evidence bundle records the off-grid framing — Chapter 57 BESS pack + Chapter 82 PEI pack flagged as permanent-island, no grid sync requirement, no G99 application. Customer keeps the same operational pattern they are used to."
-          />
-
-          <CommonMistake
-            title="Swapping a working PV inverter for a hybrid mid-life because &lsquo;hybrid is more efficient&rsquo;"
-            whatHappens="Installer quotes a hybrid topology retrofit on a 6-year-old PV site, justifying the replacement of a perfectly serviceable PV string inverter on the basis of higher round-trip efficiency. Customer pays for a hybrid + battery + DC re-stringing of the existing PV array. The new hybrid’s MPPT voltage window forces the existing PV strings to be split and re-cabled; scaffolding goes up; roof tiles get cracked during the re-strapping; the old PV inverter goes to e-waste with 4 years of warranty remaining. Total cost ~£3,000 higher than AC-coupled retrofit."
-            doInstead="On a retrofit with a working PV inverter, the default is AC-coupled. The DC-coupled efficiency advantage on PV→battery is small (~5–8 percentage points) and only applies to the fraction of PV generation that goes to the battery; on a typical UK domestic install ~40% of PV goes to battery, ~60% goes direct to loads or export. Net annual loss from staying AC-coupled: typically £20–£40, dwarfed by the £3,000 cost of switching topology. Reg 570.5.1(d)(e) cert rationale records the choice. The hybrid swap is justified ONLY when the existing PV inverter is at end-of-life anyway, or when EPS / backup is a hard customer requirement that the existing inverter cannot satisfy."
-          />
-
-          <ConceptBlock
-            title="Three-phase & commercial topology variants"
-            plainEnglish="Domestic UK BESS is overwhelmingly single-phase 230 V. Commercial sites — workshops, small offices, agricultural — often have three-phase 400 V supplies, and the topology choices change with them. Three-phase hybrid inverters, three-phase AC-coupled battery inverters, and three-phase EPS variants all exist; sizing and balancing constraints replace the single-phase OCPD picture."
-            onSite="On commercial sites, confirm the supply arrangement before drafting the topology. TN-S vs TN-C-S vs TT changes the bonding picture; balanced vs unbalanced three-phase loads change the inverter selection; export limit per phase changes the G99 application. The Reg 570.5.1(b) voltage factor and (e) coupling mode factor both need to be answered in three-phase terms."
-          >
-            <p>What changes when the topology goes three-phase:</p>
-            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
-              <li>
-                <strong className="text-white">Three-phase hybrid inverters</strong> exist
-                (GivEnergy AIO, Sigenergy SigenStor 3-ph, Sungrow SH series). One PCE box,
-                three AC phases out, plus the usual PV / battery / EPS ports. Reg 570.6.5.201
-                isolator duty still applies per port — but each AC port is now a three-pole
-                isolator instead of single-pole + neutral
-              </li>
-              <li>
-                <strong className="text-white">Phase balancing matters</strong> — a 5 kW
-                single-phase inverter on a three-phase supply pushes 5 kW down ONE phase and
-                imbalances the supply. DNOs apply per-phase G98/G99 thresholds; some require
-                three-phase BESS above ~3.68 kW per phase, others tolerate unbalance up to a
-                limit. Confirm the DNO position before signing off the topology
-              </li>
-              <li>
-                <strong className="text-white">EPS on three-phase</strong> is harder. Many
-                three-phase hybrids EPS only one phase (the inverter&rsquo;s designated
-                EPS phase); some EPS all three but at reduced power. Customer expectation
-                management: the workshop CNC machine on phase 2 may stay off during island
-                mode while the lighting on phase 1 stays on
-              </li>
-              <li>
-                <strong className="text-white">Earthing arrangement</strong> drives Chapter
-                82 / Reg 826.1.1.2.2 neutral handling. TN-C-S sites with a PEN need the
-                neutral re-bond on the island side of the contactor; TT sites need a TT
-                earth electrode arrangement that survives both grid and island mode
-              </li>
-              <li>
-                <strong className="text-white">Section 5.6 sizing</strong> on three-phase
-                involves per-phase load profiles and per-phase export limits, not just
-                aggregate kWh. The topology decision and the sizing decision interact more
-                tightly than they do at domestic single-phase scale
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <KeyTakeaways
-            points={[
-              'Topology is one of the ten battery selection factors in Reg 570.5.1 — specifically factor (e) "power conversion equipment connection and coupling mode". Naming it is a regulatory obligation, not just an engineering preference.',
-              'Three families: DC-coupled (PV + battery share DC bus, single inverter), AC-coupled (PV + battery each have their own inverter, share AC bus), hybrid (charge controller + bidirectional inverter collapsed into one cabinet).',
-              'UK 2025–2026 defaults: new-build → hybrid; retrofit to existing PV site → AC-coupled; off-grid / large commercial → still some pure DC-coupled. Pure DC-coupled with separate controller is rare in UK domestic.',
-              'Reg 570.6.5.201 — every power port of the PCE needs a means of isolation, unless the PCE is incorporated within the battery assembly. Hybrid usually = 4 external ports (PV DC, battery DC, AC grid, AC EPS) = 4 isolators.',
-              'Reg 551.7.2.1 — stationary battery is treated as a generating set; connects on the supply side of protective devices. The CU busbar at the join point must be competent for the cumulative fault contribution.',
-              'Reg 712.433.104 still applies on the AC side wherever a PV inverter is involved — the OCPD must be sized against the inverter’s design current, which on a hybrid reflects PV + battery discharge combined.',
-              'EPS / backup is a topology VARIANT, not a setting. Standard grid-tied trips on outage per Reg 551.7.5 anti-islanding. EPS adds a contactor, island-side neutral re-bond (Reg 826.1.1.2.2), voltage/frequency reference, and a labelled essentials sub-board.',
-              'Chapter 82 (PEI) holds the topology accountable for protective-measure persistence across config changes (grid → island → grid). Protective measures must continue to operate or be automatically replaced by equivalent measures.',
-              'Single-port vs dual-port BESS — port count on the kit drives isolator count on the install. UK domestic is overwhelmingly single-port; dual-port appears in commercial / industrial UPS topologies.',
-              'DC and AC routing must be segregated (separate conduit / trunking compartments) and labelled. Common install defect: co-routing of DC and AC, leading to ambiguous fault tracing and mismatched labelling at EICR.',
-              'Cert evidence bundle records the topology choice, the Reg 570.5.1 selection rationale (especially (d) and (e)), the port count and isolator selection per Reg 570.6.5.201, and the EPS scope if EPS is in play.',
-            ]}
-          />
-
-          <FAQ items={faqs} />
-
-          <Quiz questions={quizQuestions} title="Section 5 · Knowledge check" />
-
-          <div className="grid grid-cols-2 gap-3 pt-2">
-            <button
-              type="button"
-              onClick={() => navigate('/electrician/upskilling/renewable-energy-module-5-section-4')}
-              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
-                <ChevronLeft className="h-3 w-3" /> Section 4
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-white truncate">
-                BS EN IEC 62485 + PAS 63100
-              </div>
-            </button>
-            <button
-              type="button"
-              onClick={() =>
-                navigate('/electrician/upskilling/renewable-energy-module-5-section-6')
-              }
-              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
-                Next section <ChevronRight className="h-3 w-3" />
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-black truncate">
-                5.6 Sizing & energy modelling
-              </div>
-            </button>
-          </div>
-        </PageFrame>
-      </div>
-    </div>
+            <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+              Next section <ChevronRight className="h-3 w-3" />
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-black truncate">
+              5.6 Sizing & energy modelling
+            </div>
+          </button>
+        </div>
+      </HubBody>
+    </HubPage>
   );
 }

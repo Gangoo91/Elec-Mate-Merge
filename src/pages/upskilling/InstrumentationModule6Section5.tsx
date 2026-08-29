@@ -243,7 +243,7 @@ const InstrumentationModule6Section5 = () => {
 
         <InlineCheck
           question="What approach should you use for a safety-critical pressure sensor that directly affects product quality?"
-          answer="Risk-based scheduling with more frequent calibration intervals. Safety-critical instruments require shorter intervals because the consequence of measurement error is high. You would also implement interim verification checks between calibrations."
+          correctAnswer="Risk-based scheduling with more frequent calibration intervals. Safety-critical instruments require shorter intervals because the consequence of measurement error is high. You would also implement interim verification checks between calibrations."
         />
 
         {/* Section 02 - Calibration Certificate Interpretation */}
@@ -477,7 +477,7 @@ const InstrumentationModule6Section5 = () => {
 
         <InlineCheck
           question="What does UKAS accreditation guarantee about a calibration certificate?"
-          answer="UKAS accreditation guarantees that the laboratory has been independently assessed as competent to perform that specific type of calibration, that their results are traceable to national standards (NPL), and that they operate to ISO/IEC 17025 requirements. It does not guarantee the instrument is accurate - only that the calibration was performed competently."
+          correctAnswer="UKAS accreditation guarantees that the laboratory has been independently assessed as competent to perform that specific type of calibration, that their results are traceable to national standards (NPL), and that they operate to ISO/IEC 17025 requirements. It does not guarantee the instrument is accurate - only that the calibration was performed competently."
         />
 
         {/* Section 04 - When to Recalibrate */}
@@ -731,7 +731,7 @@ const InstrumentationModule6Section5 = () => {
 
         <InlineCheck
           question="Why is a complete instrument inventory the first step in building a calibration programme?"
-          answer="You cannot manage what you do not know exists. A complete inventory ensures every measuring instrument is identified, tracked, and included in the calibration schedule. Missing instruments from the inventory leads to uncalibrated equipment being used, risking measurement errors and audit failures."
+          correctAnswer="You cannot manage what you do not know exists. A complete inventory ensures every measuring instrument is identified, tracked, and included in the calibration schedule. Missing instruments from the inventory leads to uncalibrated equipment being used, risking measurement errors and audit failures."
         />
 
         {/* Real World Scenario */}

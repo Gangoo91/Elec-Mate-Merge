@@ -5,10 +5,10 @@
  */
 
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
-import { PageFrame, PageHero } from '@/components/college/primitives';
 import {
   CommonMistake,
   ConceptBlock,
@@ -111,12 +111,7 @@ const quizQuestions = [
   {
     id: 3,
     question: 'What is the recommended maximum number of decomposition levels in a WBS?',
-    options: [
-      '8-10 levels',
-      '3 levels',
-      'No limit',
-      '4-6 levels',
-    ],
+    options: ['8-10 levels', '3 levels', 'No limit', '4-6 levels'],
     correctAnswer: 3,
     explanation:
       'Best practice suggests 4-6 levels of decomposition. Fewer levels provide insufficient detail for control; more levels create excessive administrative overhead without proportionate benefit.',
@@ -204,12 +199,7 @@ const quizQuestions = [
     id: 10,
     question:
       "A building services project WBS shows 'Commissioning' as a Level 2 element. This approach is called:",
-    options: [
-      'Deliverable-oriented WBS',
-      'Hybrid WBS',
-      'Phase-oriented WBS',
-      'Organisational WBS',
-    ],
+    options: ['Deliverable-oriented WBS', 'Hybrid WBS', 'Phase-oriented WBS', 'Organisational WBS'],
     correctAnswer: 2,
     explanation:
       'A phase-oriented WBS organises work by project phases (Design, Procurement, Installation, Commissioning). A deliverable-oriented WBS would show systems/outputs. Both are valid approaches.',
@@ -281,532 +271,540 @@ const HNCModule5Section1_1 = () => {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
-      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
-        <PageFrame>
+    <HubPage>
+      <HubMasthead
+        section="Module 5 · Section 1 · Subsection 1"
+        title="Work Breakdown Structure"
+        backTo="/study-centre/apprentice/h-n-c-module5-section1"
+      />
+      <HubBody>
+        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
+          WBS development, coding systems, hierarchical decomposition, and scope definition for
+          building services projects.
+        </p>
+
+        <TLDR
+          points={[
+            'A WBS is a hierarchical decomposition of 100% of project scope into deliverables (nouns) — not activities, not a schedule.',
+            'Stop decomposing at the work-package level (8–80 hours / 1–2 reporting cycles) — finer is admin overhead, coarser is loss of control.',
+            'Code every element uniquely so cost, schedule, procurement, drawings and ITPs can all roll up against the same scope spine.',
+            'For MEP, organise by deliverable/system (Electrical, Mechanical, BMS, Fire) so subcontract packages, ITPs and O&M sections align cleanly.',
+            'Always create explicit interface work packages (BMS↔HVAC, Fire↔Mechanical) — that is where money and programme are lost.',
+          ]}
+        />
+
+        <RegsCallout
+          source="CDM 2015 — Regulation 8(1) (General duties)"
+          clause="A designer (including a principal designer) or contractor (including a principal contractor) appointed to work on a project must have the skills, knowledge and experience, and, if they are an organisation, the organisational capability, necessary to fulfil the role that they are appointed to undertake, in a manner that secures the health and safety of any person affected by the project."
+          meaning={
+            <>
+              The WBS is the route by which you demonstrate you have understood the scope and have
+              the capability to deliver it. A weak or incomplete WBS at tender stage exposes both
+              the contractor and the principal designer to a Reg 8 challenge — you cannot show you
+              understood the work, let alone resourced it safely.
+            </>
+          }
+          cite="Source: Construction (Design and Management) Regulations 2015 — legislation.gov.uk"
+        />
+
+        <LearningOutcomes
+          outcomes={[
+            'Define WBS purpose, principles, and the 100% rule',
+            'Apply hierarchical decomposition to building services projects',
+            'Develop WBS coding systems for cost and schedule integration',
+            'Create work packages with appropriate scope and detail',
+            'Structure MEP-specific WBS for electrical, mechanical, and controls',
+            'Use WBS dictionaries to define scope boundaries',
+          ]}
+        />
+
+        <SectionRule />
+
+        <ConceptBlock title="WBS Fundamentals">
+          <p>
+            The Work Breakdown Structure is the foundation of effective project management. It
+            provides a hierarchical decomposition of the total scope of work, organising
+            deliverables into manageable components that can be planned, estimated, scheduled, and
+            controlled.
+          </p>
+          <p>
+            <strong>Key WBS principles:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>100% rule:</strong> WBS must include 100% of project scope - no more, no less
+            </li>
+            <li>
+              <strong>Deliverable-focused:</strong> Elements represent outcomes (nouns), not
+              activities (verbs)
+            </li>
+            <li>
+              <strong>Mutually exclusive:</strong> No overlap between elements at the same level
+            </li>
+            <li>
+              <strong>Hierarchical:</strong> Parent elements summarise all child elements beneath
+            </li>
+          </ul>
+          <p>
+            <strong>WBS levels explained:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Level 0:</strong> Project title — Hospital MEP Installation
+            </li>
+            <li>
+              <strong>Level 1:</strong> Major deliverables or phases — Design, Procurement,
+              Installation, Commissioning
+            </li>
+            <li>
+              <strong>Level 2:</strong> Systems or sub-deliverables — Electrical, Mechanical, Public
+              Health, Fire, BMS
+            </li>
+            <li>
+              <strong>Level 3:</strong> Sub-systems or locations — HV, LV Distribution, Lighting,
+              Small Power
+            </li>
+            <li>
+              <strong>Level 4:</strong> Work packages — DB-G01 Installation, Submain to Level 2
+            </li>
+          </ul>
+          <p>
+            <strong>Design principle:</strong> The WBS answers "What will we deliver?" - not "What
+            will we do?" or "When will we do it?"
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...quickCheckQuestions[0]} />
+
+        <SectionRule />
+
+        <ConceptBlock title="Hierarchical Decomposition">
+          <p>
+            Decomposition is the process of breaking down project scope into progressively smaller,
+            more manageable components. Effective decomposition balances detail against
+            administrative overhead.
+          </p>
+          <p>
+            <strong>Top-down approach:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Start with major deliverables</li>
+            <li>Progressively subdivide</li>
+            <li>Stop at manageable level</li>
+            <li>Best for new projects</li>
+          </ul>
+          <p>
+            <strong>Bottom-up approach:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>List all deliverables first</li>
+            <li>Group into categories</li>
+            <li>Build hierarchy upward</li>
+            <li>Useful for familiar scope</li>
+          </ul>
+          <p>
+            <strong>Template-based:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Use standard MEP templates</li>
+            <li>Adapt to project specifics</li>
+            <li>Ensures completeness</li>
+            <li>Faster development</li>
+          </ul>
+          <p>
+            <strong>Decomposition guidelines:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>8/80 Rule:</strong> Work packages 8-80 hours — distribution board installation
+              (40 hrs)
+            </li>
+            <li>
+              <strong>Reporting period:</strong> Complete within 1-2 reporting cycles —
+              weekly/fortnightly progress reporting
+            </li>
+            <li>
+              <strong>Measurable:</strong> Clear completion criteria — cables installed, tested,
+              labelled
+            </li>
+            <li>
+              <strong>Single owner:</strong> One accountable person/team — electrical subcontractor
+              foreman
+            </li>
+            <li>
+              <strong>Independent:</strong> Minimal dependencies on other work — containment can
+              proceed while others cable
+            </li>
+          </ul>
+          <p>
+            <strong>Best practice:</strong> Stop decomposing when further breakdown adds
+            administrative burden without improving control capability.
+          </p>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <ConceptBlock title="Coding Systems and Integration">
+          <p>
+            Effective WBS coding enables tracking, cost collection, and integration with project
+            management systems. A well-designed coding structure supports both reporting
+            requirements and operational needs.
+          </p>
+          <p>
+            <strong>WBS code structure example:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Project 1:</strong> Hospital MEP
+            </li>
+            <li>
+              <strong>Phase 1.3:</strong> Installation
+            </li>
+            <li>
+              <strong>System 1.3.1:</strong> Electrical
+            </li>
+            <li>
+              <strong>Subsystem 1.3.1.2:</strong> LV Distribution
+            </li>
+            <li>
+              <strong>Work Package 1.3.1.2.05:</strong> DB-L2-01 Installation
+            </li>
+          </ul>
+          <p>
+            <strong>Coding system types:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Numeric hierarchical:</strong> 1.2.3.4 - Simple, shows structure clearly
+            </li>
+            <li>
+              <strong>Alphanumeric:</strong> E-LV-DB01 - More readable, less rigid hierarchy
+            </li>
+            <li>
+              <strong>Location-based:</strong> L2-E-001 - Floor, system, sequence
+            </li>
+            <li>
+              <strong>Hybrid:</strong> 1.3.E.LV.05 - Combines approaches
+            </li>
+          </ul>
+          <p>
+            <strong>Integration with other systems:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Cost accounts:</strong> Map WBS codes to cost codes — cost tracking by
+              deliverable
+            </li>
+            <li>
+              <strong>Schedule (Gantt):</strong> Work packages become activities — scope-schedule
+              alignment
+            </li>
+            <li>
+              <strong>Procurement:</strong> Material requirements by WBS — delivery aligned to need
+              dates
+            </li>
+            <li>
+              <strong>Document control:</strong> Drawings linked to WBS elements — complete document
+              sets per package
+            </li>
+            <li>
+              <strong>Quality/ITP:</strong> Inspection points per work package — QA coverage
+              verification
+            </li>
+          </ul>
+          <p>
+            <strong>Integration tip:</strong> Design the coding system at project start with all
+            stakeholders - changing codes mid-project creates significant rework.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...quickCheckQuestions[1]} />
+
+        <SectionRule />
+
+        <ConceptBlock title="MEP-Specific WBS Structures">
+          <p>
+            Building services projects require WBS structures that align with trade packages, enable
+            subcontractor management, and support the unique characteristics of MEP installation
+            including interfaces between systems.
+          </p>
+          <p>
+            <strong>1.0 Electrical Installation (typical Level 2-3):</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>1.1 HV Installation</li>
+            <li>1.2 LV Distribution</li>
+            <li>1.3 Lighting Systems</li>
+            <li>1.4 Small Power</li>
+            <li>1.5 Fire Alarm</li>
+            <li>1.6 Emergency Lighting</li>
+            <li>1.7 Lightning Protection</li>
+            <li>1.8 Earthing &amp; Bonding</li>
+          </ul>
+          <p>
+            <strong>2.0 Mechanical Installation (typical Level 2-3):</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>2.1 Heating Systems</li>
+            <li>2.2 Cooling Systems</li>
+            <li>2.3 Ventilation</li>
+            <li>2.4 Ductwork</li>
+            <li>2.5 Pipework</li>
+            <li>2.6 Plant Equipment</li>
+            <li>2.7 Insulation</li>
+            <li>2.8 Controls Interface</li>
+          </ul>
+          <p>
+            <strong>WBS organisation options:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>By system (E/M/P):</strong> Best for subcontractor packages — may miss
+              interface issues
+            </li>
+            <li>
+              <strong>By location/zone:</strong> Best for phased handover — complicates trade
+              tracking
+            </li>
+            <li>
+              <strong>By phase:</strong> Best for stage-gate projects — less suited to parallel work
+            </li>
+            <li>
+              <strong>Hybrid:</strong> Best for complex projects — requires careful design
+            </li>
+          </ul>
+          <p>
+            <strong>Work package example — Electrical Distribution:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>WBS Code:</strong> 1.3.1.2.05
+            </li>
+            <li>
+              <strong>Title:</strong> Level 2 Distribution Board DB-L2-01
+            </li>
+            <li>
+              <strong>Scope:</strong> Supply, install, and commission 400A TP+N distribution board
+              including all internal wiring, busbar connections, metering CT installation, and
+              labelling.
+            </li>
+            <li>
+              <strong>Deliverables:</strong> Installed and tested distribution board, completed test
+              certificates, as-built drawings, O&amp;M documentation section.
+            </li>
+            <li>
+              <strong>Acceptance criteria:</strong> Board energised, all circuits tested per BS
+              7671, labels complete, QA sign-off obtained.
+            </li>
+            <li>
+              <strong>Duration:</strong> 3 days (24 hours)
+            </li>
+            <li>
+              <strong>Owner:</strong> Electrical Subcontractor Supervisor
+            </li>
+          </ul>
+          <p>
+            <strong>Interface management:</strong> Create explicit work packages for system
+            interfaces (e.g., "BMS to HVAC control wiring") to ensure these critical connections are
+            not overlooked.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...quickCheckQuestions[2]} />
+
+        <SectionRule />
+
+        <ConceptBlock title="Worked Examples">
+          <p>
+            <strong>Example 1 — Office Building WBS Development:</strong> Develop Level 2-3 WBS for
+            a 5-storey office electrical installation.
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Level 1: Electrical Installation</li>
+            <li>1.1 Main Intake and HV (if applicable)</li>
+            <li>1.2 LV Distribution</li>
+            <li>1.3 General Lighting</li>
+            <li>1.4 Emergency Lighting</li>
+            <li>1.5 Small Power</li>
+            <li>1.6 Data Infrastructure</li>
+            <li>1.7 Fire Alarm System</li>
+            <li>1.8 Security Systems</li>
+            <li>1.9 External Works</li>
+            <li>
+              Level 3 Example (1.2 LV Distribution): 1.2.1 Main LV Switchboard, 1.2.2 Submains and
+              Risers, 1.2.3 Floor Distribution Boards, 1.2.4 Metering Installation
+            </li>
+          </ul>
+          <p>
+            <strong>Example 2 — Cost Code Integration:</strong> Map WBS codes to company cost codes
+            for an MEP project.
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>1.2.1 → E-510-001 — Main switchboard supply &amp; install</li>
+            <li>1.2.2 → E-520-001 — Submain cables - labour</li>
+            <li>1.2.2 → E-520-002 — Submain cables - materials</li>
+            <li>1.2.3 → E-530-001 — Distribution boards - supply</li>
+            <li>1.2.3 → E-530-002 — Distribution boards - install</li>
+            <li>
+              Multiple cost codes can roll up to a single WBS, enabling cost analysis at both
+              detailed and summary levels.
+            </li>
+          </ul>
+          <p>
+            <strong>Example 3 — Applying the 100% Rule:</strong> Verify WBS completeness for
+            lighting installation scope (1.3 General Lighting against specification: LED luminaires
+            throughout, DALI control system, presence detection, daylight dimming).
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>1.3.1 Luminaire supply and install</li>
+            <li>1.3.2 Lighting control wiring</li>
+            <li>1.3.3 DALI drivers and addressing</li>
+            <li>1.3.4 Sensors and detectors</li>
+            <li>1.3.5 Commissioning and scene setting</li>
+            <li>
+              <strong>Result:</strong> 100% of lighting scope captured.
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <InlineCheck {...quickCheckQuestions[3]} />
+
+        <SectionRule />
+
+        <ConceptBlock title="Practical guidance">
+          <p>
+            <strong>WBS development checklist:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Review contract scope, specifications, and drawings thoroughly</li>
+            <li>Identify all major deliverables and systems</li>
+            <li>Decompose to work package level (8-80 hours)</li>
+            <li>Apply 100% rule - check nothing is missing or duplicated</li>
+            <li>Assign unique codes to all elements</li>
+            <li>Create WBS dictionary for key work packages</li>
+          </ul>
+          <p>
+            <strong>Key values to remember:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              Work package duration: <strong>8-80 hours</strong> (1-2 weeks)
+            </li>
+            <li>
+              Typical levels: <strong>4-6 levels</strong> of decomposition
+            </li>
+            <li>
+              100% rule: <strong>All scope</strong> must be captured
+            </li>
+            <li>
+              Each element: <strong>Mutually exclusive</strong> (no overlap)
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <CommonMistake
+          title="Common mistakes to avoid"
+          whatHappens={
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+              <li>
+                <strong>Confusing WBS with schedule</strong> - WBS shows deliverables, not
+                activities
+              </li>
+              <li>
+                <strong>Inconsistent decomposition</strong> - Similar items should be at similar
+                levels
+              </li>
+              <li>
+                <strong>Missing interfaces</strong> - System boundaries need explicit work packages
+              </li>
+              <li>
+                <strong>Overlapping elements</strong> - Violates 100% rule, causes double-counting
+              </li>
+            </ul>
+          }
+          doInstead="Treat the WBS as a deliverable map (nouns), keep similar items at similar levels, create explicit interface packages for boundaries between systems, and audit against the 100% rule before baselining."
+        />
+
+        <SectionRule />
+
+        <Scenario
+          title="Hospital MEP — discovering missing scope at month four"
+          situation={
+            <>
+              You inherit a £6m hospital MEP package as project manager. The original WBS shows
+              electrical, mechanical and public health at Level 2 but no separate element for
+              BMS-to-HVAC interface wiring. Four months in, the BMS subcontractor refuses to
+              commission until the controls cabling is installed — neither electrical nor mechanical
+              scope owns it.
+            </>
+          }
+          whatToDo={
+            <>
+              Issue an early warning under the contract. Convene a scope review with the design
+              team, the M&E subcontractors and the BMS specialist. Map the missing scope against the
+              original WBS — is it design intent that was always there (your risk) or a genuine
+              omission from the employer's requirements (a compensation event)? Update the WBS with
+              an explicit interface work package (e.g. 1.4.7 BMS Field Wiring &amp; Termination),
+              allocate it to a responsible party with a cost code, and revise the programme.
+            </>
+          }
+          whyItMatters={
+            <>
+              Missing interface scope is the single most common cause of MEP programme slip and
+              disputed final accounts. The 100% rule is not academic — it is the audit trail you
+              fall back on when the QS asks "who owns this?" at month eight. Catch it at WBS
+              sign-off, not at commissioning.
+            </>
+          }
+        />
+
+        <SectionRule />
+
+        <FAQ items={faqs} />
+
+        <SectionRule />
+
+        <KeyTakeaways
+          points={[
+            'WBS = scope baseline. 100% rule. Mutually exclusive elements. Deliverables not activities.',
+            'Decompose to work-package level (8–80 hours) — the 8/80 rule keeps things estimable and controllable.',
+            'Code every element uniquely and map to cost codes — earned value is impossible without coded scope.',
+            'For MEP projects, deliverable/system organisation aligns to subcontract packages, ITPs and O&M structure.',
+            'Interface work packages (BMS↔HVAC, Fire↔Mechanical) must be explicit — that is where scope gaps hide.',
+            'WBS dictionary defines boundaries, deliverables and acceptance criteria for each element.',
+            'WBS forms the scope baseline — change only via formal change control to keep cost and schedule baselines intact.',
+            'CDM Reg 8 capability test — the WBS is how you evidence you understand the scope you have been appointed to deliver.',
+          ]}
+        />
+
+        <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+
+        <div className="grid grid-cols-2 gap-3 pt-2">
           <button
             onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section1')}
-            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
           >
-            <ArrowLeft className="h-4 w-4" /> Back
+            <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+              <ChevronLeft className="h-3 w-3" /> Back to section
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-white truncate">
+              Project planning and programming
+            </div>
           </button>
-
-          <PageHero
-            eyebrow="Module 5 · Section 1 · Subsection 1"
-            title="Work Breakdown Structure"
-            description="WBS development, coding systems, hierarchical decomposition, and scope definition for building services projects."
-            tone="purple"
-          />
-
-          <TLDR
-            points={[
-              "A WBS is a hierarchical decomposition of 100% of project scope into deliverables (nouns) — not activities, not a schedule.",
-              "Stop decomposing at the work-package level (8–80 hours / 1–2 reporting cycles) — finer is admin overhead, coarser is loss of control.",
-              "Code every element uniquely so cost, schedule, procurement, drawings and ITPs can all roll up against the same scope spine.",
-              "For MEP, organise by deliverable/system (Electrical, Mechanical, BMS, Fire) so subcontract packages, ITPs and O&M sections align cleanly.",
-              "Always create explicit interface work packages (BMS↔HVAC, Fire↔Mechanical) — that is where money and programme are lost.",
-            ]}
-          />
-
-          <RegsCallout
-            source="CDM 2015 — Regulation 8(1) (General duties)"
-            clause="A designer (including a principal designer) or contractor (including a principal contractor) appointed to work on a project must have the skills, knowledge and experience, and, if they are an organisation, the organisational capability, necessary to fulfil the role that they are appointed to undertake, in a manner that secures the health and safety of any person affected by the project."
-            meaning={
-              <>
-                The WBS is the route by which you demonstrate you have understood the scope and have the capability to deliver it. A weak or incomplete WBS at tender stage exposes both the contractor and the principal designer to a Reg 8 challenge — you cannot show you understood the work, let alone resourced it safely.
-              </>
-            }
-            cite="Source: Construction (Design and Management) Regulations 2015 — legislation.gov.uk"
-          />
-
-
-          <LearningOutcomes
-            outcomes={[
-              'Define WBS purpose, principles, and the 100% rule',
-              'Apply hierarchical decomposition to building services projects',
-              'Develop WBS coding systems for cost and schedule integration',
-              'Create work packages with appropriate scope and detail',
-              'Structure MEP-specific WBS for electrical, mechanical, and controls',
-              'Use WBS dictionaries to define scope boundaries',
-            ]}
-          />
-
-          <SectionRule />
-
-          <ConceptBlock title="WBS Fundamentals">
-            <p>
-              The Work Breakdown Structure is the foundation of effective project management. It
-              provides a hierarchical decomposition of the total scope of work, organising
-              deliverables into manageable components that can be planned, estimated, scheduled, and
-              controlled.
-            </p>
-            <p>
-              <strong>Key WBS principles:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>100% rule:</strong> WBS must include 100% of project scope - no more, no
-                less
-              </li>
-              <li>
-                <strong>Deliverable-focused:</strong> Elements represent outcomes (nouns), not
-                activities (verbs)
-              </li>
-              <li>
-                <strong>Mutually exclusive:</strong> No overlap between elements at the same level
-              </li>
-              <li>
-                <strong>Hierarchical:</strong> Parent elements summarise all child elements beneath
-              </li>
-            </ul>
-            <p>
-              <strong>WBS levels explained:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Level 0:</strong> Project title — Hospital MEP Installation
-              </li>
-              <li>
-                <strong>Level 1:</strong> Major deliverables or phases — Design, Procurement,
-                Installation, Commissioning
-              </li>
-              <li>
-                <strong>Level 2:</strong> Systems or sub-deliverables — Electrical, Mechanical,
-                Public Health, Fire, BMS
-              </li>
-              <li>
-                <strong>Level 3:</strong> Sub-systems or locations — HV, LV Distribution, Lighting,
-                Small Power
-              </li>
-              <li>
-                <strong>Level 4:</strong> Work packages — DB-G01 Installation, Submain to Level 2
-              </li>
-            </ul>
-            <p>
-              <strong>Design principle:</strong> The WBS answers "What will we deliver?" - not "What
-              will we do?" or "When will we do it?"
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...quickCheckQuestions[0]} />
-
-          <SectionRule />
-
-          <ConceptBlock title="Hierarchical Decomposition">
-            <p>
-              Decomposition is the process of breaking down project scope into progressively
-              smaller, more manageable components. Effective decomposition balances detail against
-              administrative overhead.
-            </p>
-            <p>
-              <strong>Top-down approach:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Start with major deliverables</li>
-              <li>Progressively subdivide</li>
-              <li>Stop at manageable level</li>
-              <li>Best for new projects</li>
-            </ul>
-            <p>
-              <strong>Bottom-up approach:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>List all deliverables first</li>
-              <li>Group into categories</li>
-              <li>Build hierarchy upward</li>
-              <li>Useful for familiar scope</li>
-            </ul>
-            <p>
-              <strong>Template-based:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Use standard MEP templates</li>
-              <li>Adapt to project specifics</li>
-              <li>Ensures completeness</li>
-              <li>Faster development</li>
-            </ul>
-            <p>
-              <strong>Decomposition guidelines:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>8/80 Rule:</strong> Work packages 8-80 hours — distribution board
-                installation (40 hrs)
-              </li>
-              <li>
-                <strong>Reporting period:</strong> Complete within 1-2 reporting cycles —
-                weekly/fortnightly progress reporting
-              </li>
-              <li>
-                <strong>Measurable:</strong> Clear completion criteria — cables installed, tested,
-                labelled
-              </li>
-              <li>
-                <strong>Single owner:</strong> One accountable person/team — electrical
-                subcontractor foreman
-              </li>
-              <li>
-                <strong>Independent:</strong> Minimal dependencies on other work — containment can
-                proceed while others cable
-              </li>
-            </ul>
-            <p>
-              <strong>Best practice:</strong> Stop decomposing when further breakdown adds
-              administrative burden without improving control capability.
-            </p>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <ConceptBlock title="Coding Systems and Integration">
-            <p>
-              Effective WBS coding enables tracking, cost collection, and integration with project
-              management systems. A well-designed coding structure supports both reporting
-              requirements and operational needs.
-            </p>
-            <p>
-              <strong>WBS code structure example:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Project 1:</strong> Hospital MEP
-              </li>
-              <li>
-                <strong>Phase 1.3:</strong> Installation
-              </li>
-              <li>
-                <strong>System 1.3.1:</strong> Electrical
-              </li>
-              <li>
-                <strong>Subsystem 1.3.1.2:</strong> LV Distribution
-              </li>
-              <li>
-                <strong>Work Package 1.3.1.2.05:</strong> DB-L2-01 Installation
-              </li>
-            </ul>
-            <p>
-              <strong>Coding system types:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Numeric hierarchical:</strong> 1.2.3.4 - Simple, shows structure clearly
-              </li>
-              <li>
-                <strong>Alphanumeric:</strong> E-LV-DB01 - More readable, less rigid hierarchy
-              </li>
-              <li>
-                <strong>Location-based:</strong> L2-E-001 - Floor, system, sequence
-              </li>
-              <li>
-                <strong>Hybrid:</strong> 1.3.E.LV.05 - Combines approaches
-              </li>
-            </ul>
-            <p>
-              <strong>Integration with other systems:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Cost accounts:</strong> Map WBS codes to cost codes — cost tracking by
-                deliverable
-              </li>
-              <li>
-                <strong>Schedule (Gantt):</strong> Work packages become activities — scope-schedule
-                alignment
-              </li>
-              <li>
-                <strong>Procurement:</strong> Material requirements by WBS — delivery aligned to
-                need dates
-              </li>
-              <li>
-                <strong>Document control:</strong> Drawings linked to WBS elements — complete
-                document sets per package
-              </li>
-              <li>
-                <strong>Quality/ITP:</strong> Inspection points per work package — QA coverage
-                verification
-              </li>
-            </ul>
-            <p>
-              <strong>Integration tip:</strong> Design the coding system at project start with all
-              stakeholders - changing codes mid-project creates significant rework.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...quickCheckQuestions[1]} />
-
-          <SectionRule />
-
-          <ConceptBlock title="MEP-Specific WBS Structures">
-            <p>
-              Building services projects require WBS structures that align with trade packages,
-              enable subcontractor management, and support the unique characteristics of MEP
-              installation including interfaces between systems.
-            </p>
-            <p>
-              <strong>1.0 Electrical Installation (typical Level 2-3):</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>1.1 HV Installation</li>
-              <li>1.2 LV Distribution</li>
-              <li>1.3 Lighting Systems</li>
-              <li>1.4 Small Power</li>
-              <li>1.5 Fire Alarm</li>
-              <li>1.6 Emergency Lighting</li>
-              <li>1.7 Lightning Protection</li>
-              <li>1.8 Earthing &amp; Bonding</li>
-            </ul>
-            <p>
-              <strong>2.0 Mechanical Installation (typical Level 2-3):</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>2.1 Heating Systems</li>
-              <li>2.2 Cooling Systems</li>
-              <li>2.3 Ventilation</li>
-              <li>2.4 Ductwork</li>
-              <li>2.5 Pipework</li>
-              <li>2.6 Plant Equipment</li>
-              <li>2.7 Insulation</li>
-              <li>2.8 Controls Interface</li>
-            </ul>
-            <p>
-              <strong>WBS organisation options:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>By system (E/M/P):</strong> Best for subcontractor packages — may miss
-                interface issues
-              </li>
-              <li>
-                <strong>By location/zone:</strong> Best for phased handover — complicates trade
-                tracking
-              </li>
-              <li>
-                <strong>By phase:</strong> Best for stage-gate projects — less suited to parallel
-                work
-              </li>
-              <li>
-                <strong>Hybrid:</strong> Best for complex projects — requires careful design
-              </li>
-            </ul>
-            <p>
-              <strong>Work package example — Electrical Distribution:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>WBS Code:</strong> 1.3.1.2.05
-              </li>
-              <li>
-                <strong>Title:</strong> Level 2 Distribution Board DB-L2-01
-              </li>
-              <li>
-                <strong>Scope:</strong> Supply, install, and commission 400A TP+N distribution
-                board including all internal wiring, busbar connections, metering CT installation,
-                and labelling.
-              </li>
-              <li>
-                <strong>Deliverables:</strong> Installed and tested distribution board, completed
-                test certificates, as-built drawings, O&amp;M documentation section.
-              </li>
-              <li>
-                <strong>Acceptance criteria:</strong> Board energised, all circuits tested per BS
-                7671, labels complete, QA sign-off obtained.
-              </li>
-              <li>
-                <strong>Duration:</strong> 3 days (24 hours)
-              </li>
-              <li>
-                <strong>Owner:</strong> Electrical Subcontractor Supervisor
-              </li>
-            </ul>
-            <p>
-              <strong>Interface management:</strong> Create explicit work packages for system
-              interfaces (e.g., "BMS to HVAC control wiring") to ensure these critical connections
-              are not overlooked.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...quickCheckQuestions[2]} />
-
-          <SectionRule />
-
-          <ConceptBlock title="Worked Examples">
-            <p>
-              <strong>Example 1 — Office Building WBS Development:</strong> Develop Level 2-3 WBS
-              for a 5-storey office electrical installation.
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Level 1: Electrical Installation</li>
-              <li>1.1 Main Intake and HV (if applicable)</li>
-              <li>1.2 LV Distribution</li>
-              <li>1.3 General Lighting</li>
-              <li>1.4 Emergency Lighting</li>
-              <li>1.5 Small Power</li>
-              <li>1.6 Data Infrastructure</li>
-              <li>1.7 Fire Alarm System</li>
-              <li>1.8 Security Systems</li>
-              <li>1.9 External Works</li>
-              <li>Level 3 Example (1.2 LV Distribution): 1.2.1 Main LV Switchboard, 1.2.2
-                Submains and Risers, 1.2.3 Floor Distribution Boards, 1.2.4 Metering Installation</li>
-            </ul>
-            <p>
-              <strong>Example 2 — Cost Code Integration:</strong> Map WBS codes to company cost
-              codes for an MEP project.
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>1.2.1 → E-510-001 — Main switchboard supply &amp; install</li>
-              <li>1.2.2 → E-520-001 — Submain cables - labour</li>
-              <li>1.2.2 → E-520-002 — Submain cables - materials</li>
-              <li>1.2.3 → E-530-001 — Distribution boards - supply</li>
-              <li>1.2.3 → E-530-002 — Distribution boards - install</li>
-              <li>Multiple cost codes can roll up to a single WBS, enabling cost analysis at
-                both detailed and summary levels.</li>
-            </ul>
-            <p>
-              <strong>Example 3 — Applying the 100% Rule:</strong> Verify WBS completeness for
-              lighting installation scope (1.3 General Lighting against specification: LED
-              luminaires throughout, DALI control system, presence detection, daylight dimming).
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>1.3.1 Luminaire supply and install</li>
-              <li>1.3.2 Lighting control wiring</li>
-              <li>1.3.3 DALI drivers and addressing</li>
-              <li>1.3.4 Sensors and detectors</li>
-              <li>1.3.5 Commissioning and scene setting</li>
-              <li>
-                <strong>Result:</strong> 100% of lighting scope captured.
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <InlineCheck {...quickCheckQuestions[3]} />
-
-          <SectionRule />
-
-          <ConceptBlock title="Practical guidance">
-            <p>
-              <strong>WBS development checklist:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Review contract scope, specifications, and drawings thoroughly</li>
-              <li>Identify all major deliverables and systems</li>
-              <li>Decompose to work package level (8-80 hours)</li>
-              <li>Apply 100% rule - check nothing is missing or duplicated</li>
-              <li>Assign unique codes to all elements</li>
-              <li>Create WBS dictionary for key work packages</li>
-            </ul>
-            <p>
-              <strong>Key values to remember:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                Work package duration: <strong>8-80 hours</strong> (1-2 weeks)
-              </li>
-              <li>
-                Typical levels: <strong>4-6 levels</strong> of decomposition
-              </li>
-              <li>
-                100% rule: <strong>All scope</strong> must be captured
-              </li>
-              <li>
-                Each element: <strong>Mutually exclusive</strong> (no overlap)
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <CommonMistake
-            title="Common mistakes to avoid"
-            whatHappens={
-              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
-                <li>
-                  <strong>Confusing WBS with schedule</strong> - WBS shows deliverables, not
-                  activities
-                </li>
-                <li>
-                  <strong>Inconsistent decomposition</strong> - Similar items should be at similar
-                  levels
-                </li>
-                <li>
-                  <strong>Missing interfaces</strong> - System boundaries need explicit work
-                  packages
-                </li>
-                <li>
-                  <strong>Overlapping elements</strong> - Violates 100% rule, causes double-counting
-                </li>
-              </ul>
-            }
-            doInstead="Treat the WBS as a deliverable map (nouns), keep similar items at similar levels, create explicit interface packages for boundaries between systems, and audit against the 100% rule before baselining."
-          />
-
-          <SectionRule />
-
-          <Scenario
-            title="Hospital MEP — discovering missing scope at month four"
-            situation={
-              <>
-                You inherit a £6m hospital MEP package as project manager. The original WBS shows electrical, mechanical and public health at Level 2 but no separate element for BMS-to-HVAC interface wiring. Four months in, the BMS subcontractor refuses to commission until the controls cabling is installed — neither electrical nor mechanical scope owns it.
-              </>
-            }
-            whatToDo={
-              <>
-                Issue an early warning under the contract. Convene a scope review with the design team, the M&E subcontractors and the BMS specialist. Map the missing scope against the original WBS — is it design intent that was always there (your risk) or a genuine omission from the employer's requirements (a compensation event)? Update the WBS with an explicit interface work package (e.g. 1.4.7 BMS Field Wiring &amp; Termination), allocate it to a responsible party with a cost code, and revise the programme.
-              </>
-            }
-            whyItMatters={
-              <>
-                Missing interface scope is the single most common cause of MEP programme slip and disputed final accounts. The 100% rule is not academic — it is the audit trail you fall back on when the QS asks "who owns this?" at month eight. Catch it at WBS sign-off, not at commissioning.
-              </>
-            }
-          />
-
-          <SectionRule />
-
-          <FAQ items={faqs} />
-
-          <SectionRule />
-
-                    <KeyTakeaways
-            points={[
-              "WBS = scope baseline. 100% rule. Mutually exclusive elements. Deliverables not activities.",
-              "Decompose to work-package level (8–80 hours) — the 8/80 rule keeps things estimable and controllable.",
-              "Code every element uniquely and map to cost codes — earned value is impossible without coded scope.",
-              "For MEP projects, deliverable/system organisation aligns to subcontract packages, ITPs and O&M structure.",
-              "Interface work packages (BMS↔HVAC, Fire↔Mechanical) must be explicit — that is where scope gaps hide.",
-              "WBS dictionary defines boundaries, deliverables and acceptance criteria for each element.",
-              "WBS forms the scope baseline — change only via formal change control to keep cost and schedule baselines intact.",
-              "CDM Reg 8 capability test — the WBS is how you evidence you understand the scope you have been appointed to deliver.",
-            ]}
-          />
-
-
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-
-          <div className="grid grid-cols-2 gap-3 pt-2">
-            <button
-              onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section1')}
-              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
-                <ChevronLeft className="h-3 w-3" /> Back to section
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-white truncate">
-                Project planning and programming
-              </div>
-            </button>
-            <button
-              onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section1-2')}
-              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
-                Next subsection <ChevronRight className="h-3 w-3" />
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-black truncate">
-                Programme development
-              </div>
-            </button>
-          </div>
-        </PageFrame>
-      </div>
-    </div>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section1-2')}
+            className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+          >
+            <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+              Next subsection <ChevronRight className="h-3 w-3" />
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-black truncate">
+              Programme development
+            </div>
+          </button>
+        </div>
+      </HubBody>
+    </HubPage>
   );
 };
 

@@ -5,10 +5,10 @@
  */
 
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
-import { PageFrame, PageHero } from '@/components/college/primitives';
 import {
   CommonMistake,
   ConceptBlock,
@@ -57,12 +57,7 @@ const quickCheckQuestions = [
     id: 'defects-liability',
     question:
       'What is the typical duration of a defects liability period in UK building contracts?',
-    options: [
-      '3 months',
-      '6 months',
-      '24 months',
-      '12 months',
-    ],
+    options: ['3 months', '6 months', '24 months', '12 months'],
     correctIndex: 3,
     explanation:
       'The defects liability period (also called rectification period) is typically 12 months from practical completion under most UK standard form contracts, though this can vary by contract.',
@@ -99,12 +94,7 @@ const quizQuestions = [
   {
     id: 2,
     question: 'What percentage is typically held as retention in building services contracts?',
-    options: [
-      '8-10%',
-      '1-2%',
-      '3-5%',
-      '15-20%',
-    ],
+    options: ['8-10%', '1-2%', '3-5%', '15-20%'],
     correctAnswer: 2,
     explanation:
       'Retention is typically 3-5% of the contract sum in UK building contracts, with 5% being common. Half is released at practical completion and half at the end of the defects liability period.',
@@ -180,12 +170,7 @@ const quizQuestions = [
     id: 8,
     question:
       'A £2.5m electrical installation contract has 5% retention. What is released at practical completion?',
-    options: [
-      '£62,500',
-      '£250,000',
-      '£25,000',
-      '£125,000',
-    ],
+    options: ['£62,500', '£250,000', '£25,000', '£125,000'],
     correctAnswer: 0,
     explanation:
       'Total retention is £2,500,000 x 5% = £125,000. Half is released at practical completion = £62,500. The remaining £62,500 is held until the end of the defects liability period.',
@@ -207,12 +192,7 @@ const quizQuestions = [
     id: 10,
     question:
       'The Final Certificate under JCT becomes conclusive evidence of certain matters after:',
-    options: [
-      '14 days',
-      '12 months',
-      '28 days',
-      '6 months',
-    ],
+    options: ['14 days', '12 months', '28 days', '6 months'],
     correctAnswer: 2,
     explanation:
       'Under JCT contracts, the Final Certificate becomes conclusive evidence of certain matters (including that the contractor has fulfilled obligations regarding materials and workmanship) after 28 days if neither party has raised disputes.',
@@ -285,566 +265,570 @@ const HNCModule5Section3_5 = () => {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
-      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
-        <PageFrame>
+    <HubPage>
+      <HubMasthead
+        section="Module 5 · Section 3 · Subsection 5"
+        title="Final Account"
+        backTo="/study-centre/apprentice/h-n-c-module5-section3"
+      />
+      <HubBody>
+        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
+          Final measurement, account agreement, retention release, defects liability period and
+          financial close-out.
+        </p>
+
+        <TLDR
+          points={[
+            'Final account = agreed total of all measured work + agreed variations + agreed loss and expense / CEs + release of retention.',
+            'Aim to close within 3–6 months of practical completion — drift past 12 months and recovery becomes harder.',
+            'Compile a final account file: contract sum, all variations (instructed, valued, disputed), loss and expense, day-works, retention, contra-charges.',
+            'Retention release: half at PC, half at end of DLP (typically 12 months) — track defects rectification to avoid retention erosion.',
+            'Defects Liability Period: rectify all defects notified within DLP; client may withhold retention to cover unresolved defects.',
+          ]}
+        />
+
+        <RegsCallout
+          source="JCT Standard Building Contract 2024 — Clause 4.26 (Final Statement)"
+          clause="The Architect/Contract Administrator shall, not later than 3 months after the date of issue of the Notice of Completion of Making Good, issue the Final Certificate. The Final Certificate is conclusive evidence (subject to any proceedings commenced) that the Contractor has properly completed the Works."
+          meaning={
+            <>
+              The Final Certificate under JCT closes the financial settlement and is conclusive
+              evidence (subject to contestation periods). Get the final account agreed in good time
+              before the FC is issued, otherwise disputed amounts can become un-recoverable. The
+              3-month window after Making Good is the active settlement period.
+            </>
+          }
+          cite="Source: JCT Standard Building Contract 2024 (refer to JCT published text for verbatim clauses)."
+        />
+
+        <LearningOutcomes
+          outcomes={[
+            'Understand final measurement processes for re-measurement and lump sum contracts',
+            'Prepare and negotiate final account submissions',
+            'Manage retention release procedures and requirements',
+            'Administer the defects liability period effectively',
+            'Process financial close-out and Final Certificate',
+            'Maintain records to support final account claims',
+          ]}
+        />
+
+        <SectionRule />
+
+        <ConceptBlock title="Final Measurement Process">
+          <p>
+            Final measurement is the process of establishing the true extent of work executed on
+            site, forming the basis for calculating the final contract sum. The approach differs
+            significantly between re-measurement and lump sum contracts.
+          </p>
+          <p>
+            <strong>
+              Re-measurement vs Lump Sum Contracts (Aspect — Re-measurement — Lump Sum):
+            </strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Contract sum:</strong> Provisional, based on estimated quantities — Fixed,
+              unless varied
+            </li>
+            <li>
+              <strong>Final account basis:</strong> Full measurement of all work executed — Contract
+              sum plus/minus adjustments
+            </li>
+            <li>
+              <strong>Quantity risk:</strong> Employer bears quantity risk — Contractor bears
+              quantity risk
+            </li>
+            <li>
+              <strong>Common use:</strong> Refurbishment, incomplete design — New build, complete
+              design
+            </li>
+            <li>
+              <strong>Valuation method:</strong> Measured quantities x bill rates — Contract rates
+              for similar work
+            </li>
+          </ul>
+          <p>
+            <strong>Building Services Final Measurement Considerations:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Cable runs:</strong> Actual installed lengths often differ from tender
+              allowances due to routing changes
+            </li>
+            <li>
+              <strong>Containment:</strong> Re-measure cable tray, trunking and conduit against
+              as-built drawings
+            </li>
+            <li>
+              <strong>Distribution boards:</strong> Verify final circuit configurations against
+              specification
+            </li>
+            <li>
+              <strong>Luminaires:</strong> Count against lighting layouts, noting any substitutions
+            </li>
+            <li>
+              <strong>Control wiring:</strong> Often requires detailed measurement due to late
+              coordination
+            </li>
+          </ul>
+          <p>
+            <strong>Practical tip:</strong> Take photographs during installation to support
+            measurements, particularly for concealed services that cannot be verified once covered.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...quickCheckQuestions[0]} />
+
+        <SectionRule />
+
+        <ConceptBlock title="Variations Settlement and Account Agreement">
+          <p>
+            The final account must reconcile all variations issued during the contract. Proper
+            valuation and agreement of variations is often the most contentious aspect of final
+            account negotiation.
+          </p>
+          <p>
+            <strong>Variation Valuation Hierarchy:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Contract rates where work is of similar character</li>
+            <li>Pro-rata contract rates where similar but different conditions</li>
+            <li>Fair rates and prices where contract rates not applicable</li>
+            <li>Daywork as last resort (with proper records)</li>
+          </ul>
+          <p>
+            <strong>Final Account Adjustments:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Measured variations (additions/omissions)</li>
+            <li>Provisional sum expenditure reconciliation</li>
+            <li>Prime cost sum adjustments</li>
+            <li>Fluctuations (if contract allows)</li>
+            <li>Loss and expense claims</li>
+          </ul>
+          <p>
+            <strong>Final Account Statement Structure (Item — Amount):</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Original contract sum:</strong> £2,500,000
+            </li>
+            <li>
+              <strong>Add: Measured variations (net):</strong> £185,000
+            </li>
+            <li>
+              <strong>Omit: Provisional sums allowed:</strong> (£150,000)
+            </li>
+            <li>
+              <strong>Add: Provisional sum expenditure:</strong> £142,000
+            </li>
+            <li>
+              <strong>Add: Loss and expense (agreed):</strong> £45,000
+            </li>
+            <li>
+              <strong>Final Contract Sum:</strong> £2,722,000
+            </li>
+          </ul>
+          <p>
+            <strong>Common Dispute Areas in M&E Final Accounts:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Coordination changes:</strong> Who instructed the change and was it a
+              variation?
+            </li>
+            <li>
+              <strong>Specification interpretation:</strong> Was the specified product or equivalent
+              installed?
+            </li>
+            <li>
+              <strong>Daywork rates:</strong> Application of percentage additions for overheads
+            </li>
+            <li>
+              <strong>Prolongation costs:</strong> Linking delays to specific variations
+            </li>
+            <li>
+              <strong>Design development:</strong> Distinguishing design changes from detail
+              development
+            </li>
+          </ul>
+          <p>
+            <strong>Negotiation approach:</strong> Agree undisputed items first to establish
+            momentum, then focus on disputed items with supporting evidence.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...quickCheckQuestions[1]} />
+
+        <SectionRule />
+
+        <ConceptBlock title="Retention Release and Defects Liability Period">
+          <p>
+            Retention is money held back from interim payments as security for proper completion of
+            the works and rectification of defects. Understanding the release mechanism and defects
+            liability obligations is essential for financial planning.
+          </p>
+          <p>
+            <strong>Retention Release Schedule (Stage — Held — Released):</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>During construction:</strong> Full retention (typically 5%) — None
+            </li>
+            <li>
+              <strong>Practical completion:</strong> 2.5% — 2.5% (first moiety)
+            </li>
+            <li>
+              <strong>During DLP:</strong> 2.5% — None
+            </li>
+            <li>
+              <strong>End of DLP / Making Good:</strong> None — 2.5% (second moiety)
+            </li>
+          </ul>
+          <p>
+            <strong>Defects Liability Obligations:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Rectify defects notified by contract administrator</li>
+            <li>Attend site within reasonable time</li>
+            <li>Complete remedial work at own cost</li>
+            <li>Maintain adequate insurance cover</li>
+            <li>Provide access for employer's operations</li>
+          </ul>
+          <p>
+            <strong>Retention Bond Alternative:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Bank or surety guarantee replaces cash retention</li>
+            <li>Contractor receives full payment</li>
+            <li>Improves contractor cash flow significantly</li>
+            <li>Employer has same security level</li>
+            <li>Bond cost typically 1-2% of retention value</li>
+          </ul>
+          <p>
+            <strong>Retention Calculation Example:</strong> Contract sum £1,800,000; Retention 5%;
+            Total retention £90,000. Released at PC: £45,000. Released at end of DLP: £45,000. Cash
+            flow impact: £90,000 held for 12+ months post-PC.
+          </p>
+          <p>
+            <strong>Common Building Services Defects:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Electrical:</strong> Earth fault loop impedance failures, RCD nuisance
+              tripping, labelling errors
+            </li>
+            <li>
+              <strong>Lighting:</strong> Incorrect colour temperature, control system programming
+              issues
+            </li>
+            <li>
+              <strong>Fire alarm:</strong> False alarm patterns, detector positioning issues
+            </li>
+            <li>
+              <strong>Data:</strong> Network testing failures, fibre attenuation issues
+            </li>
+            <li>
+              <strong>BMS:</strong> Control strategy deficiencies, sensor calibration drift
+            </li>
+          </ul>
+          <p>
+            <strong>Best practice:</strong> Conduct a pre-DLP walkthrough before the defects period
+            expires to identify any outstanding issues before Making Good certificate is due.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...quickCheckQuestions[2]} />
+
+        <SectionRule />
+
+        <ConceptBlock title="Final Certificate and Financial Close-out">
+          <p>
+            The Final Certificate represents the conclusive financial settlement of the contract,
+            releasing remaining retention and confirming the adjusted contract sum. Understanding
+            the certification process and its legal implications is crucial.
+          </p>
+          <p>
+            <strong>Pre-conditions for Final Certificate:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Practical Completion certificate issued</li>
+            <li>Defects liability period completed</li>
+            <li>Making Good certificate issued (all defects rectified)</li>
+            <li>Final account documentation submitted by contractor</li>
+            <li>Final account agreed or determined by contract administrator</li>
+            <li>As-built drawings and O&M manuals provided</li>
+          </ul>
+          <p>
+            <strong>JCT Final Certificate Timeline:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Practical Completion:</strong> Day 0
+            </li>
+            <li>
+              <strong>Contractor submits final account docs:</strong> Within 6 months of PC
+            </li>
+            <li>
+              <strong>End of Defects Liability Period:</strong> 12 months from PC
+            </li>
+            <li>
+              <strong>Making Good Certificate issued:</strong> When all defects rectified
+            </li>
+            <li>
+              <strong>Final Certificate issued:</strong> Within 2 months of final account agreement
+            </li>
+            <li>
+              <strong>Final payment due:</strong> 14 days from Final Certificate
+            </li>
+          </ul>
+          <p>
+            <strong>Final Certificate Content (Element — Description):</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Final contract sum:</strong> Agreed adjusted contract sum
+            </li>
+            <li>
+              <strong>Total previously certified:</strong> Sum of all interim certificates
+            </li>
+            <li>
+              <strong>Balance due:</strong> Final sum minus previously certified
+            </li>
+            <li>
+              <strong>Retention release:</strong> Remaining retention held
+            </li>
+            <li>
+              <strong>Net payment due:</strong> Final payment to contractor
+            </li>
+          </ul>
+          <p>
+            <strong>Legal Effect of Final Certificate:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Becomes conclusive evidence after 28 days (unless disputed)</li>
+            <li>Confirms contractor fulfilled material/workmanship obligations</li>
+            <li>Settles all financial claims under the contract</li>
+            <li>Does not affect common law rights for latent defects</li>
+            <li>Limitation periods for claims continue to run separately</li>
+          </ul>
+          <p>
+            <strong>Financial Close-out Checklist:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>All variations agreed and valued</li>
+            <li>Provisional and prime cost sums reconciled</li>
+            <li>Daywork accounts agreed</li>
+            <li>Loss and expense claims settled</li>
+            <li>Contra charges reconciled</li>
+            <li>Subcontractor final accounts closed</li>
+            <li>Retention bonds returned (if applicable)</li>
+            <li>Performance bond released</li>
+          </ul>
+          <p>
+            <strong>Commercial reality:</strong> Final accounts often take 12-24 months to agree on
+            complex projects. Maintaining good records and professional relationships speeds this
+            process considerably.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...quickCheckQuestions[3]} />
+
+        <SectionRule />
+
+        <ConceptBlock title="Worked Examples">
+          <p>
+            <strong>Example 1 — Retention Calculation and Release:</strong> An electrical
+            subcontract has a final account value of £850,000 with 5% retention. Calculate the
+            retention release amounts.
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Final account value: £850,000</li>
+            <li>
+              Total retention: £850,000 x 5% = <strong>£42,500</strong>
+            </li>
+            <li>
+              First moiety released: £42,500 ÷ 2 = <strong>£21,250</strong>
+            </li>
+            <li>
+              Second moiety released: <strong>£21,250</strong>
+            </li>
+            <li>
+              <strong>Cash flow impact:</strong> £42,500 held during construction.
+            </li>
+          </ul>
+          <p>
+            <strong>Example 2 — Provisional Sum Adjustment:</strong> A contract allowed £75,000
+            provisional sum for BMS. Actual expenditure was £82,500. Calculate the adjustment.
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Provisional sum allowed: £75,000</li>
+            <li>Actual BMS expenditure: £82,500</li>
+            <li>Omit provisional sum: (£75,000)</li>
+            <li>Add actual expenditure: £82,500</li>
+            <li>
+              Net adjustment: £82,500 - £75,000 = <strong>+£7,500</strong>
+            </li>
+            <li>This £7,500 addition is included in the final account.</li>
+          </ul>
+          <p>
+            <strong>Example 3 — Final Account Summary:</strong> Prepare a final account summary for
+            an electrical installation contract.
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Original contract sum: £1,250,000</li>
+            <li>Variation instructions (16 no.) +£127,450</li>
+            <li>Provisional sum expenditure (net of allowance) +£8,200</li>
+            <li>Agreed loss and expense +£34,000</li>
+            <li>Omitted works (VI-003, VI-008) -£18,750</li>
+            <li>Liquidated damages (2 weeks) -£14,000</li>
+            <li>
+              <strong>Final contract sum: £1,386,900</strong>
+            </li>
+            <li>Previously certified: £1,315,555</li>
+            <li>
+              <strong>Balance due (including retention): £71,345</strong>
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <ConceptBlock title="Practical guidance">
+          <p>
+            <strong>Final account preparation checklist:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Collate all variation instructions chronologically</li>
+            <li>Prepare detailed measurement of each variation</li>
+            <li>Assemble supporting records (daywork sheets, delivery notes)</li>
+            <li>Calculate provisional sum expenditure against allowances</li>
+            <li>Document any claims with evidence and calculations</li>
+            <li>Cross-reference interim valuations for consistency</li>
+          </ul>
+          <p>
+            <strong>Key values to remember:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              Standard retention: <strong>5%</strong> (3% on some contracts)
+            </li>
+            <li>
+              Defects liability period: <strong>12 months</strong> (typically)
+            </li>
+            <li>
+              Final account submission: <strong>6 months from PC</strong> (JCT)
+            </li>
+            <li>
+              Final Certificate becomes conclusive: <strong>28 days</strong>
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <CommonMistake
+          title="Common mistakes to avoid"
+          whatHappens={
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+              <li>
+                <strong>Poor records</strong> — Cannot substantiate claims without contemporaneous
+                evidence
+              </li>
+              <li>
+                <strong>Late submission</strong> — Missing contractual deadlines weakens position
+              </li>
+              <li>
+                <strong>Underclaiming</strong> — Failing to identify all entitled variations
+              </li>
+              <li>
+                <strong>Ignoring preliminaries</strong> — Prolongation affects time-related costs
+              </li>
+              <li>
+                <strong>Subcontractor oversights</strong> — Ensure sub-final accounts are captured
+              </li>
+            </ul>
+          }
+          doInstead="Maintain contemporaneous records throughout, submit the final account within the contractual window, audit every variation entitlement, value prolongation against time-related preliminaries, and close out subcontractor final accounts in parallel."
+        />
+
+        <SectionRule />
+
+        <Scenario
+          title="Final account drifts past 18 months — retention at risk"
+          situation={
+            <>
+              Your project achieved PC 18 months ago. The end of DLP was six months ago. The final
+              account remains unagreed: £140k of disputed variations, £50k retention outstanding.
+              The client claims defects worth £80k against retention. Your QS resigned after PC;
+              nobody picked up the closure.
+            </>
+          }
+          whatToDo={
+            <>
+              Audit the open account immediately. Compile contemporaneous records for the £140k
+              variations — adjudicate any that are well-supported, settle the rest at best
+              commercial outcome. Inspect alleged defects with the client; rectify legitimate ones,
+              dispute illegitimate ones with photographs and as-built records. Aim to close within
+              three months. Lessons learned: appoint a final account QS at PC, track to closure as a
+              project deliverable, never rely on individual continuity for commercial close.
+            </>
+          }
+          whyItMatters={
+            <>
+              Final accounts left to drift become losses — retention is eroded by alleged defects,
+              memories fade, records are misplaced, key people leave. The project margin you booked
+              at PC is not real until the FA is settled and retention is paid. Treat closure as a
+              programme deliverable, not an afterthought.
+            </>
+          }
+        />
+
+        <SectionRule />
+
+        <FAQ items={faqs} />
+
+        <SectionRule />
+
+        <KeyTakeaways
+          points={[
+            'Final account = measured work + variations + L&E/CEs + retention release.',
+            'Close within 3–6 months of PC — drift past 12 months means lost recovery.',
+            'Compile FA file: contract sum, variations, L&E, day-works, retention, contra-charges.',
+            'Half retention at PC, half at end of DLP — typically 12 months.',
+            'DLP: rectify all notified defects; unresolved defects justify retention withholding.',
+            'JCT Final Certificate is conclusive evidence — settle disputes before issue.',
+            'Treat closure as a programme deliverable — appoint a closure QS, track to completion.',
+            'Lessons learned and project closeout report inform future tenders and benchmarks.',
+          ]}
+        />
+
+        <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+
+        <div className="grid grid-cols-2 gap-3 pt-2">
           <button
-            onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section3')}
-            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section3-4')}
+            className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
           >
-            <ArrowLeft className="h-4 w-4" /> Back
+            <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+              <ChevronLeft className="h-3 w-3" /> Previous subsection
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-white truncate">
+              Variations and claims
+            </div>
           </button>
-
-          <PageHero
-            eyebrow="Module 5 · Section 3 · Subsection 5"
-            title="Final Account"
-            description="Final measurement, account agreement, retention release, defects liability period and financial close-out."
-            tone="purple"
-          />
-
-          <TLDR
-            points={[
-              "Final account = agreed total of all measured work + agreed variations + agreed loss and expense / CEs + release of retention.",
-              "Aim to close within 3–6 months of practical completion — drift past 12 months and recovery becomes harder.",
-              "Compile a final account file: contract sum, all variations (instructed, valued, disputed), loss and expense, day-works, retention, contra-charges.",
-              "Retention release: half at PC, half at end of DLP (typically 12 months) — track defects rectification to avoid retention erosion.",
-              "Defects Liability Period: rectify all defects notified within DLP; client may withhold retention to cover unresolved defects.",
-            ]}
-          />
-
-          <RegsCallout
-            source="JCT Standard Building Contract 2024 — Clause 4.26 (Final Statement)"
-            clause="The Architect/Contract Administrator shall, not later than 3 months after the date of issue of the Notice of Completion of Making Good, issue the Final Certificate. The Final Certificate is conclusive evidence (subject to any proceedings commenced) that the Contractor has properly completed the Works."
-            meaning={
-              <>
-                The Final Certificate under JCT closes the financial settlement and is conclusive evidence (subject to contestation periods). Get the final account agreed in good time before the FC is issued, otherwise disputed amounts can become un-recoverable. The 3-month window after Making Good is the active settlement period.
-              </>
-            }
-            cite="Source: JCT Standard Building Contract 2024 (refer to JCT published text for verbatim clauses)."
-          />
-
-
-          <LearningOutcomes
-            outcomes={[
-              'Understand final measurement processes for re-measurement and lump sum contracts',
-              'Prepare and negotiate final account submissions',
-              'Manage retention release procedures and requirements',
-              'Administer the defects liability period effectively',
-              'Process financial close-out and Final Certificate',
-              'Maintain records to support final account claims',
-            ]}
-          />
-
-          <SectionRule />
-
-          <ConceptBlock title="Final Measurement Process">
-            <p>
-              Final measurement is the process of establishing the true extent of work executed on
-              site, forming the basis for calculating the final contract sum. The approach differs
-              significantly between re-measurement and lump sum contracts.
-            </p>
-            <p>
-              <strong>Re-measurement vs Lump Sum Contracts (Aspect — Re-measurement — Lump Sum):</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Contract sum:</strong> Provisional, based on estimated quantities — Fixed,
-                unless varied
-              </li>
-              <li>
-                <strong>Final account basis:</strong> Full measurement of all work executed —
-                Contract sum plus/minus adjustments
-              </li>
-              <li>
-                <strong>Quantity risk:</strong> Employer bears quantity risk — Contractor bears
-                quantity risk
-              </li>
-              <li>
-                <strong>Common use:</strong> Refurbishment, incomplete design — New build, complete
-                design
-              </li>
-              <li>
-                <strong>Valuation method:</strong> Measured quantities x bill rates — Contract rates
-                for similar work
-              </li>
-            </ul>
-            <p>
-              <strong>Building Services Final Measurement Considerations:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Cable runs:</strong> Actual installed lengths often differ from tender
-                allowances due to routing changes
-              </li>
-              <li>
-                <strong>Containment:</strong> Re-measure cable tray, trunking and conduit against
-                as-built drawings
-              </li>
-              <li>
-                <strong>Distribution boards:</strong> Verify final circuit configurations against
-                specification
-              </li>
-              <li>
-                <strong>Luminaires:</strong> Count against lighting layouts, noting any
-                substitutions
-              </li>
-              <li>
-                <strong>Control wiring:</strong> Often requires detailed measurement due to late
-                coordination
-              </li>
-            </ul>
-            <p>
-              <strong>Practical tip:</strong> Take photographs during installation to support
-              measurements, particularly for concealed services that cannot be verified once
-              covered.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...quickCheckQuestions[0]} />
-
-          <SectionRule />
-
-          <ConceptBlock title="Variations Settlement and Account Agreement">
-            <p>
-              The final account must reconcile all variations issued during the contract. Proper
-              valuation and agreement of variations is often the most contentious aspect of final
-              account negotiation.
-            </p>
-            <p>
-              <strong>Variation Valuation Hierarchy:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Contract rates where work is of similar character</li>
-              <li>Pro-rata contract rates where similar but different conditions</li>
-              <li>Fair rates and prices where contract rates not applicable</li>
-              <li>Daywork as last resort (with proper records)</li>
-            </ul>
-            <p>
-              <strong>Final Account Adjustments:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Measured variations (additions/omissions)</li>
-              <li>Provisional sum expenditure reconciliation</li>
-              <li>Prime cost sum adjustments</li>
-              <li>Fluctuations (if contract allows)</li>
-              <li>Loss and expense claims</li>
-            </ul>
-            <p>
-              <strong>Final Account Statement Structure (Item — Amount):</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Original contract sum:</strong> £2,500,000
-              </li>
-              <li>
-                <strong>Add: Measured variations (net):</strong> £185,000
-              </li>
-              <li>
-                <strong>Omit: Provisional sums allowed:</strong> (£150,000)
-              </li>
-              <li>
-                <strong>Add: Provisional sum expenditure:</strong> £142,000
-              </li>
-              <li>
-                <strong>Add: Loss and expense (agreed):</strong> £45,000
-              </li>
-              <li>
-                <strong>Final Contract Sum:</strong> £2,722,000
-              </li>
-            </ul>
-            <p>
-              <strong>Common Dispute Areas in M&E Final Accounts:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Coordination changes:</strong> Who instructed the change and was it a
-                variation?
-              </li>
-              <li>
-                <strong>Specification interpretation:</strong> Was the specified product or
-                equivalent installed?
-              </li>
-              <li>
-                <strong>Daywork rates:</strong> Application of percentage additions for overheads
-              </li>
-              <li>
-                <strong>Prolongation costs:</strong> Linking delays to specific variations
-              </li>
-              <li>
-                <strong>Design development:</strong> Distinguishing design changes from detail
-                development
-              </li>
-            </ul>
-            <p>
-              <strong>Negotiation approach:</strong> Agree undisputed items first to establish
-              momentum, then focus on disputed items with supporting evidence.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...quickCheckQuestions[1]} />
-
-          <SectionRule />
-
-          <ConceptBlock title="Retention Release and Defects Liability Period">
-            <p>
-              Retention is money held back from interim payments as security for proper completion
-              of the works and rectification of defects. Understanding the release mechanism and
-              defects liability obligations is essential for financial planning.
-            </p>
-            <p>
-              <strong>Retention Release Schedule (Stage — Held — Released):</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>During construction:</strong> Full retention (typically 5%) — None
-              </li>
-              <li>
-                <strong>Practical completion:</strong> 2.5% — 2.5% (first moiety)
-              </li>
-              <li>
-                <strong>During DLP:</strong> 2.5% — None
-              </li>
-              <li>
-                <strong>End of DLP / Making Good:</strong> None — 2.5% (second moiety)
-              </li>
-            </ul>
-            <p>
-              <strong>Defects Liability Obligations:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Rectify defects notified by contract administrator</li>
-              <li>Attend site within reasonable time</li>
-              <li>Complete remedial work at own cost</li>
-              <li>Maintain adequate insurance cover</li>
-              <li>Provide access for employer's operations</li>
-            </ul>
-            <p>
-              <strong>Retention Bond Alternative:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Bank or surety guarantee replaces cash retention</li>
-              <li>Contractor receives full payment</li>
-              <li>Improves contractor cash flow significantly</li>
-              <li>Employer has same security level</li>
-              <li>Bond cost typically 1-2% of retention value</li>
-            </ul>
-            <p>
-              <strong>Retention Calculation Example:</strong> Contract sum £1,800,000; Retention 5%;
-              Total retention £90,000. Released at PC: £45,000. Released at end of DLP: £45,000.
-              Cash flow impact: £90,000 held for 12+ months post-PC.
-            </p>
-            <p>
-              <strong>Common Building Services Defects:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Electrical:</strong> Earth fault loop impedance failures, RCD nuisance
-                tripping, labelling errors
-              </li>
-              <li>
-                <strong>Lighting:</strong> Incorrect colour temperature, control system programming
-                issues
-              </li>
-              <li>
-                <strong>Fire alarm:</strong> False alarm patterns, detector positioning issues
-              </li>
-              <li>
-                <strong>Data:</strong> Network testing failures, fibre attenuation issues
-              </li>
-              <li>
-                <strong>BMS:</strong> Control strategy deficiencies, sensor calibration drift
-              </li>
-            </ul>
-            <p>
-              <strong>Best practice:</strong> Conduct a pre-DLP walkthrough before the defects
-              period expires to identify any outstanding issues before Making Good certificate is
-              due.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...quickCheckQuestions[2]} />
-
-          <SectionRule />
-
-          <ConceptBlock title="Final Certificate and Financial Close-out">
-            <p>
-              The Final Certificate represents the conclusive financial settlement of the contract,
-              releasing remaining retention and confirming the adjusted contract sum. Understanding
-              the certification process and its legal implications is crucial.
-            </p>
-            <p>
-              <strong>Pre-conditions for Final Certificate:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Practical Completion certificate issued</li>
-              <li>Defects liability period completed</li>
-              <li>Making Good certificate issued (all defects rectified)</li>
-              <li>Final account documentation submitted by contractor</li>
-              <li>Final account agreed or determined by contract administrator</li>
-              <li>As-built drawings and O&M manuals provided</li>
-            </ul>
-            <p>
-              <strong>JCT Final Certificate Timeline:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Practical Completion:</strong> Day 0
-              </li>
-              <li>
-                <strong>Contractor submits final account docs:</strong> Within 6 months of PC
-              </li>
-              <li>
-                <strong>End of Defects Liability Period:</strong> 12 months from PC
-              </li>
-              <li>
-                <strong>Making Good Certificate issued:</strong> When all defects rectified
-              </li>
-              <li>
-                <strong>Final Certificate issued:</strong> Within 2 months of final account
-                agreement
-              </li>
-              <li>
-                <strong>Final payment due:</strong> 14 days from Final Certificate
-              </li>
-            </ul>
-            <p>
-              <strong>Final Certificate Content (Element — Description):</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Final contract sum:</strong> Agreed adjusted contract sum
-              </li>
-              <li>
-                <strong>Total previously certified:</strong> Sum of all interim certificates
-              </li>
-              <li>
-                <strong>Balance due:</strong> Final sum minus previously certified
-              </li>
-              <li>
-                <strong>Retention release:</strong> Remaining retention held
-              </li>
-              <li>
-                <strong>Net payment due:</strong> Final payment to contractor
-              </li>
-            </ul>
-            <p>
-              <strong>Legal Effect of Final Certificate:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Becomes conclusive evidence after 28 days (unless disputed)</li>
-              <li>Confirms contractor fulfilled material/workmanship obligations</li>
-              <li>Settles all financial claims under the contract</li>
-              <li>Does not affect common law rights for latent defects</li>
-              <li>Limitation periods for claims continue to run separately</li>
-            </ul>
-            <p>
-              <strong>Financial Close-out Checklist:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>All variations agreed and valued</li>
-              <li>Provisional and prime cost sums reconciled</li>
-              <li>Daywork accounts agreed</li>
-              <li>Loss and expense claims settled</li>
-              <li>Contra charges reconciled</li>
-              <li>Subcontractor final accounts closed</li>
-              <li>Retention bonds returned (if applicable)</li>
-              <li>Performance bond released</li>
-            </ul>
-            <p>
-              <strong>Commercial reality:</strong> Final accounts often take 12-24 months to agree
-              on complex projects. Maintaining good records and professional relationships speeds
-              this process considerably.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...quickCheckQuestions[3]} />
-
-          <SectionRule />
-
-          <ConceptBlock title="Worked Examples">
-            <p>
-              <strong>Example 1 — Retention Calculation and Release:</strong> An electrical
-              subcontract has a final account value of £850,000 with 5% retention. Calculate the
-              retention release amounts.
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Final account value: £850,000</li>
-              <li>
-                Total retention: £850,000 x 5% = <strong>£42,500</strong>
-              </li>
-              <li>
-                First moiety released: £42,500 ÷ 2 = <strong>£21,250</strong>
-              </li>
-              <li>
-                Second moiety released: <strong>£21,250</strong>
-              </li>
-              <li>
-                <strong>Cash flow impact:</strong> £42,500 held during construction.
-              </li>
-            </ul>
-            <p>
-              <strong>Example 2 — Provisional Sum Adjustment:</strong> A contract allowed £75,000
-              provisional sum for BMS. Actual expenditure was £82,500. Calculate the adjustment.
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Provisional sum allowed: £75,000</li>
-              <li>Actual BMS expenditure: £82,500</li>
-              <li>Omit provisional sum: (£75,000)</li>
-              <li>Add actual expenditure: £82,500</li>
-              <li>
-                Net adjustment: £82,500 - £75,000 = <strong>+£7,500</strong>
-              </li>
-              <li>This £7,500 addition is included in the final account.</li>
-            </ul>
-            <p>
-              <strong>Example 3 — Final Account Summary:</strong> Prepare a final account summary
-              for an electrical installation contract.
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Original contract sum: £1,250,000</li>
-              <li>Variation instructions (16 no.) +£127,450</li>
-              <li>Provisional sum expenditure (net of allowance) +£8,200</li>
-              <li>Agreed loss and expense +£34,000</li>
-              <li>Omitted works (VI-003, VI-008) -£18,750</li>
-              <li>Liquidated damages (2 weeks) -£14,000</li>
-              <li>
-                <strong>Final contract sum: £1,386,900</strong>
-              </li>
-              <li>Previously certified: £1,315,555</li>
-              <li>
-                <strong>Balance due (including retention): £71,345</strong>
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <ConceptBlock title="Practical guidance">
-            <p>
-              <strong>Final account preparation checklist:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Collate all variation instructions chronologically</li>
-              <li>Prepare detailed measurement of each variation</li>
-              <li>Assemble supporting records (daywork sheets, delivery notes)</li>
-              <li>Calculate provisional sum expenditure against allowances</li>
-              <li>Document any claims with evidence and calculations</li>
-              <li>Cross-reference interim valuations for consistency</li>
-            </ul>
-            <p>
-              <strong>Key values to remember:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                Standard retention: <strong>5%</strong> (3% on some contracts)
-              </li>
-              <li>
-                Defects liability period: <strong>12 months</strong> (typically)
-              </li>
-              <li>
-                Final account submission: <strong>6 months from PC</strong> (JCT)
-              </li>
-              <li>
-                Final Certificate becomes conclusive: <strong>28 days</strong>
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <CommonMistake
-            title="Common mistakes to avoid"
-            whatHappens={
-              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
-                <li>
-                  <strong>Poor records</strong> — Cannot substantiate claims without contemporaneous
-                  evidence
-                </li>
-                <li>
-                  <strong>Late submission</strong> — Missing contractual deadlines weakens position
-                </li>
-                <li>
-                  <strong>Underclaiming</strong> — Failing to identify all entitled variations
-                </li>
-                <li>
-                  <strong>Ignoring preliminaries</strong> — Prolongation affects time-related costs
-                </li>
-                <li>
-                  <strong>Subcontractor oversights</strong> — Ensure sub-final accounts are captured
-                </li>
-              </ul>
-            }
-            doInstead="Maintain contemporaneous records throughout, submit the final account within the contractual window, audit every variation entitlement, value prolongation against time-related preliminaries, and close out subcontractor final accounts in parallel."
-          />
-
-          <SectionRule />
-
-          <Scenario
-            title="Final account drifts past 18 months — retention at risk"
-            situation={
-              <>
-                Your project achieved PC 18 months ago. The end of DLP was six months ago. The final account remains unagreed: £140k of disputed variations, £50k retention outstanding. The client claims defects worth £80k against retention. Your QS resigned after PC; nobody picked up the closure.
-              </>
-            }
-            whatToDo={
-              <>
-                Audit the open account immediately. Compile contemporaneous records for the £140k variations — adjudicate any that are well-supported, settle the rest at best commercial outcome. Inspect alleged defects with the client; rectify legitimate ones, dispute illegitimate ones with photographs and as-built records. Aim to close within three months. Lessons learned: appoint a final account QS at PC, track to closure as a project deliverable, never rely on individual continuity for commercial close.
-              </>
-            }
-            whyItMatters={
-              <>
-                Final accounts left to drift become losses — retention is eroded by alleged defects, memories fade, records are misplaced, key people leave. The project margin you booked at PC is not real until the FA is settled and retention is paid. Treat closure as a programme deliverable, not an afterthought.
-              </>
-            }
-          />
-
-          <SectionRule />
-
-          <FAQ items={faqs} />
-
-          <SectionRule />
-
-                    <KeyTakeaways
-            points={[
-              "Final account = measured work + variations + L&E/CEs + retention release.",
-              "Close within 3–6 months of PC — drift past 12 months means lost recovery.",
-              "Compile FA file: contract sum, variations, L&E, day-works, retention, contra-charges.",
-              "Half retention at PC, half at end of DLP — typically 12 months.",
-              "DLP: rectify all notified defects; unresolved defects justify retention withholding.",
-              "JCT Final Certificate is conclusive evidence — settle disputes before issue.",
-              "Treat closure as a programme deliverable — appoint a closure QS, track to completion.",
-              "Lessons learned and project closeout report inform future tenders and benchmarks.",
-            ]}
-          />
-
-
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-
-          <div className="grid grid-cols-2 gap-3 pt-2">
-            <button
-              onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section3-4')}
-              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
-                <ChevronLeft className="h-3 w-3" /> Previous subsection
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-white truncate">
-                Variations and claims
-              </div>
-            </button>
-            <button
-              onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section3-6')}
-              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
-                Next subsection <ChevronRight className="h-3 w-3" />
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-black truncate">
-                Value engineering
-              </div>
-            </button>
-          </div>
-        </PageFrame>
-      </div>
-    </div>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section3-6')}
+            className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+          >
+            <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+              Next subsection <ChevronRight className="h-3 w-3" />
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-black truncate">
+              Value engineering
+            </div>
+          </button>
+        </div>
+      </HubBody>
+    </HubPage>
   );
 };
 

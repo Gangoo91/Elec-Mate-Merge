@@ -647,11 +647,23 @@ export const QuoteWizard = ({
 
         <DocumentStepPanel isDesktop={isDesktop} active={step === 1} title={STEPS[1].title} sub={STEPS[1].sub}>
           <JobDetailsStep jobDetails={quote.jobDetails} onUpdate={updateJobDetails} />
-          <MarketBenchmarkHint
-            jobText={benchmarkJobText}
-            postcode={quote.client?.postcode}
-            className="mt-5"
-          />
+          {/*
+           * Mobile only — on desktop this is a DUPLICATE.
+           *
+           * Every step is on screen at once on a desktop, so this card and the
+           * richer one on "Build the price" sat one above the other saying the
+           * same thing. On a phone you see one step at a time, so the rate is
+           * useful here while you are naming the job and again when you price
+           * it. The pricing copy is the one that survives because it also knows
+           * the quote total and says where it sits in the range.
+           */}
+          {!isDesktop && (
+            <MarketBenchmarkHint
+              jobText={benchmarkJobText}
+              postcode={quote.client?.postcode}
+              className="mt-5"
+            />
+          )}
         </DocumentStepPanel>
 
         <DocumentStepPanel isDesktop={isDesktop} active={step === 2} wide title={STEPS[2].title} sub={STEPS[2].sub}>

@@ -14,6 +14,7 @@ import { BulkActionsBar } from './reports/BulkActionsBar';
 import { reportCloud, CloudReport, ReportsResponse, LibraryScope } from '@/utils/reportCloud';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
+import { openOrDownloadPdf } from '@/utils/pdf-download';
 // ELE-1443 — needed at render time to decide whether to OFFER the duplicate
 // action. The heavy duplicateCertificate() stays lazily imported below.
 import { isDuplicable } from '@/utils/duplicateCertificate';
@@ -117,6 +118,17 @@ const TYPE_GROUPS: { label: string; types: { value: string; label: string }[] }[
       { value: 'emergency-lighting', label: 'EM LTG' },
       { value: 'pat-testing', label: 'PAT' },
       { value: 'smoke-co-alarm', label: 'Smoke/CO' },
+      /*
+       * The two condition-and-maintenance reports. Both were shipped without an
+       * entry here, so once a user had a few of them there was no way to filter
+       * them out of the list — and no label for the active-filter chip either.
+       *
+       * Safe to add unconditionally: the filter above hides any non-core type
+       * with a zero count, so neither chip appears until the user has one.
+       */
+      { value: 'visual-condition', label: 'Visual' },
+      { value: 'routine-inspection', label: 'Routine' },
+      { value: 'pre-purchase-survey', label: 'Survey' },
     ],
   },
   {
@@ -200,6 +212,16 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
   // Action sheet state
   const [actionSheetOpen, setActionSheetOpen] = useState(false);
   const [selectedCertificate, setSelectedCertificate] = useState<CloudReport | null>(null);
+  /*
+   * ELE-1616 — the scheme's returned certificate for the cert in the action
+   * sheet. Fetched ON DEMAND for one report rather than joined into the list
+   * query: almost no certificate has one, and the list already carries enough.
+   */
+  const [schemeCert, setSchemeCert] = useState<{
+    url: string;
+    name: string | null;
+    ref: string | null;
+  } | null>(null);
 
   // Customer linking state
   const [linkCustomerDialogOpen, setLinkCustomerDialogOpen] = useState(false);
@@ -672,6 +694,35 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
   // Certificate card tap handler - opens action sheet
   const handleCardTap = (report: CloudReport) => {
     setSelectedCertificate(report);
+    /* Clear first — otherwise the previous cert's scheme PDF flashes up on this one. */
+    setSchemeCert(null);
+    void (async () => {
+      /*
+       * ⚠️ `select('*')` and cast, rather than naming the columns.
+       *
+       * The generated `types.ts` predates the ELE-1616 `scheme_certificate_*`
+       * columns, and PostgREST's typing validates the column list in `.select()`
+       * against it — so naming them fails to compile even though they exist.
+       * Regenerating types.ts wholesale would drag in unrelated schema drift.
+       */
+      const { data } = await supabase
+        .from('part_p_notifications')
+        .select('*')
+        .eq('report_id', report.report_id)
+        .maybeSingle();
+      const row = data as {
+        scheme_certificate_url?: string | null;
+        scheme_certificate_name?: string | null;
+        scheme_certificate_ref?: string | null;
+      } | null;
+      if (row?.scheme_certificate_url) {
+        setSchemeCert({
+          url: row.scheme_certificate_url,
+          name: row.scheme_certificate_name ?? null,
+          ref: row.scheme_certificate_ref ?? null,
+        });
+      }
+    })();
     setActionSheetOpen(true);
   };
 
@@ -2216,6 +2267,12 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
             handleDownloadPdf(selectedCertificate.report_id);
           }
         }}
+        schemeCertificate={schemeCert}
+        onOpenSchemeCertificate={
+          schemeCert
+            ? () => openOrDownloadPdf(schemeCert.url, schemeCert.name || 'scheme-certificate.pdf')
+            : undefined
+        }
         onShare={
           selectedCertificate?.status === 'completed'
             ? () => handleSharePdf(selectedCertificate)

@@ -1,749 +1,799 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * Module 2 · Section 6 — Choosing the right sensor
+ *
+ * Rewritten 2026-08-29 against the Module 1 Section 1 exemplar. Closes Module 2.
+ *
+ * 🔴 THE ARGUMENT. The old page was a selection checklist — range, accuracy,
+ * environment, cost — which is fine as far as it goes and teaches nobody how to
+ * think. This version is built on the sentence the source arrives at after an
+ * entire chapter of flow technologies:
+ *
+ *   "What matters most is that you thoroughly understand the physical
+ *    principles upon which each flowmeter depends. If the 'first principles' of
+ *    each technology are understood, the appropriate applications and potential
+ *    problems become much easier [to identify]."
+ *
+ * That is the whole module in one line, and it is why Section 2.4 was allowed to
+ * end by naming the pattern rather than listing more devices. Selection is not a
+ * lookup table; it is knowing what each principle leans on and therefore what
+ * will break it.
+ *
+ * The section also carries the honest admission the source makes, which the old
+ * page did not: flow is "arguably the single most complex type of process
+ * variable measurement in all of industrial instrumentation", the word itself
+ * lacks a singular definition, and most technologies cannot stay linear from
+ * maximum rated flow down to zero no matter how well matched they are.
+ * Instrumentation is not a discipline where a table gives you the answer.
+ *
+ * Sources: Kuphaldt, *Lessons In Industrial Instrumentation* v2.32 (CC BY),
+ * ch.21-22; Endress+Hauser selection guidance. Both in
+ * ~/Desktop/hav/instrumentation. Sections 2.2-2.5 of this course supply the
+ * device-level detail this section synthesises.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  TLDR,
+  ConceptBlock,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+  Pullquote,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
-const TITLE = 'Choosing the Right Sensor - Instrumentation Module 2 Section 6';
+const TITLE = 'Choosing the right sensor | Instrumentation Module 2.6 | Elec-Mate';
 const DESCRIPTION =
-  'Learn systematic sensor selection methods balancing technical requirements, environmental conditions, and economic factors for optimal instrumentation.';
+  'Sensor selection as a way of thinking rather than a lookup table. What each measuring principle depends on and therefore what breaks it, why installation decides more than the datasheet, and why the specification a sensor cannot meet is usually turndown rather than accuracy.';
 
-const quickCheckQuestions = [
-  {
-    id: 'selection-factors',
-    question: 'What are the three most critical factors when selecting a sensor?',
-    options: [
-      'Brand, colour, and size',
-      'Environment, accuracy requirements, and measured variable',
-      'Price, availability, and warranty',
-      'Weight, appearance, and packaging',
-    ],
-    correctIndex: 1,
-    explanation:
-      'The three critical factors are environmental conditions (temperature, humidity, chemicals), accuracy requirements (precision and resolution), and the measured variable (what parameter needs measuring).',
-  },
-  {
-    id: 'rugged-vs-accurate',
-    question: 'When should you prioritise ruggedness over accuracy?',
-    options: [
-      'Always - rugged sensors are better',
-      'In harsh environments where reliability matters more than precision',
-      'Never - accuracy is always most important',
-      'Only in laboratory settings',
-    ],
-    correctIndex: 1,
-    explanation:
-      'In harsh industrial environments, a sensor that operates reliably with good accuracy is preferable to a highly accurate sensor that fails frequently due to environmental stress.',
-  },
-  {
-    id: 'redundancy-meaning',
-    question: 'What does sensor redundancy mean in safety-critical applications?',
-    options: [
-      'Using expensive sensors',
-      'Installing backup sensors to maintain operation if primary fails',
-      'Having spare sensors in storage',
-      'Using sensors from multiple brands',
-    ],
-    correctIndex: 1,
-    explanation:
-      'Sensor redundancy means installing multiple sensors (typically 2 or 3) to measure the same parameter, ensuring continued operation and safety if one sensor fails.',
-  },
+const outcomes = [
+  'Explain why understanding first principles matters more than memorising device types',
+  'Name, for any instrument, the property it depends on and the condition that would defeat it',
+  'Work through a selection in the order the constraints actually eliminate options',
+  'Explain why installation frequently decides measurement quality more than instrument choice',
+  'Recognise that "flow" has more than one definition, and say why that matters at selection',
+  'Judge when a simpler or cheaper measurement is the correct engineering answer',
+  'Say what should be recorded about a selection so the next person understands it',
+  'Read an accuracy specification properly — what it is a percentage of, and under what conditions it holds',
 ];
 
 const quizQuestions = [
   {
     id: 1,
-    question: 'Name three critical factors when selecting a sensor.',
+    question:
+      'The source describes flow as arguably the most complex process variable to measure. One reason given is that:',
     options: [
-      'Environmental conditions, accuracy requirements, and measured variable',
-      'Cost, colour, and brand name',
-      'Size, weight, and appearance',
-      'Manufacturer location, warranty, and packaging',
+      'Flowmeters are more expensive than other instruments',
+      'The variable itself lacks a singular definition — volumetric, mass and standardised volumetric flow are different quantities',
+      'Flow can only be measured in liquids',
+      'Flow measurement always requires a control system',
     ],
-    correctAnswer: 0,
+    correctIndex: 1,
     explanation:
-      'The three critical factors are environmental conditions (temperature, humidity, chemicals), accuracy requirements (precision and resolution), and the measured variable (what parameter you are measuring).',
+      '"Flow" may mean volumetric flow, mass flow, or standardised volumetric flow — the number of gas volumes flowing supposing different pressure and temperature values than the line actually operates at. Agreeing which one is wanted is part of the selection, not a detail to settle afterwards.',
   },
   {
     id: 2,
-    question: 'Why would you choose a rugged sensor over a more accurate one?',
+    question:
+      'A magnetic flowmeter, a Coriolis meter and a DP set are all technically capable for a duty. What should decide?',
     options: [
-      'Rugged sensors are always cheaper to buy',
-      'They consume noticeably less power',
-      'In harsh environments, reliability matters more than absolute accuracy',
-      'They require less maintenance documentation',
+      'Whichever is cheapest',
+      'Which constraint dominates — fluid properties, permitted pressure loss, available straight run, flow range and what the fluid does to the instrument',
+      'Whichever the manufacturer recommends',
+      'Whichever has the highest quoted accuracy',
     ],
-    correctAnswer: 2,
+    correctIndex: 1,
     explanation:
-      'In harsh industrial environments, a sensor that continues to operate reliably with good accuracy is better than a highly accurate sensor that fails frequently.',
+      'Quoted accuracy is achieved under reference conditions that a real installation rarely reproduces. The constraints — conductivity, pressure loss, straight run, range, and wear — eliminate options far more decisively, and they are what an instrument has to live with for its whole service life.',
   },
   {
     id: 3,
-    question: 'What is the risk of ignoring sensor datasheets?',
+    question: 'Why do most flow technologies struggle to stay linear down to zero flow?',
     options: [
-      'Sensor failure, safety hazards, and system malfunction',
-      'Legal liability issues only',
-      'Higher insurance premiums only',
-      'A voided manufacturer warranty only',
+      'Because the electronics switch off at low signal',
+      'Because the dynamic properties of the fluids themselves change with flow rate, and most technologies cannot achieve respectable linearity from maximum rated flow to zero',
+      'Because low flow is always laminar',
+      'Because transmitters cannot output below 4 mA',
     ],
-    correctAnswer: 0,
+    correctIndex: 1,
     explanation:
-      'Ignoring datasheets can lead to sensors operating outside their specifications, causing premature failure, safety hazards, inaccurate measurements, and system malfunction.',
+      'The source is explicit: the dynamic properties of fluids change with flow rate, and most flow measurement technologies cannot achieve respectable measurement linearity from the maximum rated flow all the way to zero, no matter how well matched they are to the application.',
   },
   {
     id: 4,
-    question: 'What role does environment play in sensor choice?',
+    question:
+      'Why is flowmeter installation described as a constant source of friction between piping and instrumentation engineers?',
     options: [
-      'Environment only affects the sensor appearance',
-      'It only matters for outdoor installations',
-      'Environmental factors are less important than cost',
-      'It determines sensor survival, accuracy, and reliability',
+      'Because instruments are expensive',
+      'Because what is excellent piping layout for process function and economy is often poor for good flow measurement, and vice versa',
+      'Because flowmeters require their own power supply',
+      'Because piping engineers do not read datasheets',
     ],
-    correctAnswer: 3,
+    correctIndex: 1,
     explanation:
-      'Environmental conditions (temperature, humidity, vibration, chemicals) directly affect sensor survival, measurement accuracy, and long-term reliability.',
+      'The two disciplines optimise for different things. Good measurement wants straight run and a developed flow profile; good piping layout wants short runs and economy. The result is often a flowmeter installed improperly, leaving instrument technicians to deal with the measurement problems at start-up.',
   },
   {
     id: 5,
-    question: 'What does sensor redundancy mean?',
+    question:
+      'A duty needs a single instrument to read reliably from 5% to 100% of range. Which consideration is most likely to eliminate a DP flow measurement?',
     options: [
-      'Using the same sensor brand throughout the system',
-      'Installing backup sensors to maintain operation if the primary fails',
-      'Keeping spare sensors in storage',
-      'Using sensors with multiple output signals',
+      'Its accuracy specification',
+      'Its rangeability — DP falls with the square of flow, so at 5% flow the differential is only 0.25% of span',
+      'Its cost',
+      'Its physical size',
     ],
-    correctAnswer: 1,
+    correctIndex: 1,
     explanation:
-      'Sensor redundancy means installing multiple sensors to measure the same parameter, so if one fails, the system can continue operating using backup sensors.',
+      'The square law collapses the differential at low flow into the region where the instrument’s own error lives. It is not that the DP instrument is inaccurate; it is that the measurement principle has run out of usable range. This is why turndown, rather than accuracy, is usually the specification a sensor cannot meet.',
   },
   {
     id: 6,
-    question: 'What is a 2oo3 voting configuration?',
+    question: 'Which question best captures the habit this module has been building towards?',
     options: [
-      'Two of three sensors must be physically installed',
-      'The system uses the value from two agreeing sensors out of three',
-      'Two sensors are primary and one is a cold spare',
-      'Three sensors each measure two separate parameters',
+      'Which instrument has the best specification?',
+      'What property does this measurement depend on, and what condition would make it lie?',
+      'Which manufacturer does the site prefer?',
+      'How much does it cost to install?',
     ],
-    correctAnswer: 1,
+    correctIndex: 1,
     explanation:
-      'In 2oo3 (2 out of 3) voting, three sensors measure the same variable and the system uses the value from the two that agree, providing high safety integrity and fault tolerance.',
-  },
-  {
-    id: 7,
-    question: 'Why consider total cost of ownership rather than purchase price?',
-    options: [
-      'To justify buying expensive equipment',
-      'Because maintenance, downtime, and reliability affect overall costs',
-      'For accounting record-keeping only',
-      'Because total cost is always lower than the purchase price',
-    ],
-    correctAnswer: 1,
-    explanation:
-      'Total cost of ownership includes purchase price, installation, maintenance, calibration, replacement, and downtime costs - a cheap sensor that fails frequently may cost more overall.',
-  },
-  {
-    id: 8,
-    question: 'What is a fail-safe sensor output?',
-    options: [
-      'A sensor that is designed never to fail',
-      'A built-in backup power supply',
-      'An output that goes to a predetermined safe state when the sensor fails',
-      'A redundant communication path to the controller',
-    ],
-    correctAnswer: 2,
-    explanation:
-      'Fail-safe output means the sensor drives a predetermined safe state (such as 0mA or a high alarm) when it fails, allowing the control system to take appropriate safety action.',
-  },
-  {
-    id: 9,
-    question: 'When should you use intrinsically safe sensors?',
-    options: [
-      'In every industrial application as standard',
-      'Only in wet or humid environments',
-      'In explosive atmospheres where electrical sparks must be prevented',
-      'Whenever the sensors happen to be expensive',
-    ],
-    correctAnswer: 2,
-    explanation:
-      'Intrinsically safe (IS) sensors are required in hazardous areas where explosive gases, vapours, or dusts may be present, to prevent electrical energy from causing ignition.',
-  },
-  {
-    id: 10,
-    question: 'What information should be documented for each sensor installation?',
-    options: [
-      'Only the purchase price',
-      'Just the manufacturer name',
-      'Only the warranty information',
-      'Tag number, location, range, output type, calibration data, and maintenance schedule',
-    ],
-    correctAnswer: 3,
-    explanation:
-      'Complete documentation including tag number, location, measurement range, output type, calibration data, and maintenance schedule is essential for ongoing operation and troubleshooting.',
-  },
-];
-
-const faqs = [
-  {
-    question: 'How do I determine the required sensor accuracy?',
-    answer:
-      'Start with the process requirements - what accuracy does the control system or quality specification need? Then consider measurement uncertainty contributors (sensor, wiring, ADC). Generally, select a sensor 3-4 times more accurate than the required measurement accuracy to allow for installation and environmental effects.',
-  },
-  {
-    question: 'What IP rating do I need for my application?',
-    answer:
-      'IP65 is typically minimum for industrial environments (dust-tight, protected against water jets). IP67 is needed for temporary immersion, IP68 for continuous submersion. For food/pharma washdown, specify IP69K. Always verify temperature ratings alongside IP ratings.',
-  },
-  {
-    question: 'How do I justify the cost of premium sensors to management?',
-    answer:
-      'Calculate total cost of ownership including downtime costs, maintenance frequency, calibration intervals, and replacement parts. Premium sensors often have longer life, better stability, and lower maintenance needs. Include safety and compliance benefits in regulated industries.',
-  },
-  {
-    question: 'When is sensor redundancy required versus optional?',
-    answer:
-      'Redundancy is typically required for safety-critical measurements (SIL-rated systems), custody transfer, and process-critical variables where failure causes significant production loss. It is optional but recommended for important measurements where temporary loss is acceptable.',
-  },
-  {
-    question: 'How do I select sensors for hazardous areas?',
-    answer:
-      'First, determine the hazardous area classification (Zone 0, 1, 2 for gas; Zone 20, 21, 22 for dust). Then select sensors with appropriate protection methods (Ex ia intrinsic safety, Ex d flameproof, etc.) and temperature class. Always verify certifications match your specific hazardous substance and installation requirements.',
-  },
-  {
-    question: 'What should I check when replacing sensors with different brands?',
-    answer:
-      "Verify identical measurement range, output signal type, accuracy class, environmental ratings, physical dimensions, and process connections. Check that response time and stability meet requirements. Update calibration procedures and documentation to reflect the new manufacturer's specifications.",
+      'Every failure in this module — lead resistance, alpha mismatch, a double square-root extraction, a density change, aliasing — was an instrument working exactly as designed while a condition it quietly depended on stopped being true. Naming that dependency in advance is what selection and fault-finding both rest on.',
   },
 ];
 
 const InstrumentationModule2Section6 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/electrician/upskilling/instrumentation-module-2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+    <HubPage>
+      <HubMasthead
+        section="Module 2 · Section 6"
+        title="Choosing the right sensor"
+        backTo="/electrician/upskilling/instrumentation-module-2"
+      />
+      <HubBody>
+        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
+          Not a lookup table. A way of thinking that works on instruments this course has never
+          mentioned.
+        </p>
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centered Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 2 Section 6</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Choosing the Right Sensor
-          </h1>
-          <p className="text-white">
-            Systematic sensor selection for optimal system performance
+        <TLDR
+          points={[
+            'Selection is not a table. Understand the physical principle a device depends on and both the right applications and the likely problems become obvious.',
+            'For any instrument, name two things: the property it leans on, and the condition that would defeat it. That single habit covers selection and fault-finding at once.',
+            'Constraints eliminate; specifications only rank. Work through what the fluid, the pipework and the vessel forbid before comparing datasheets.',
+            'Installation frequently decides measurement quality more than instrument choice — and good piping layout and good measurement often want opposite things.',
+            '🔴 The specification most often unmet is turndown, not accuracy. Most technologies cannot stay linear from full rate down to zero however well matched they are.',
+            'Cheaper and simpler is often the right engineering answer. A switch that answers the actual question beats a transmitter that answers a grander one.',
+          ]}
+        />
+
+        <LearningOutcomes outcomes={outcomes} />
+
+        <SectionRule />
+        <ContentEyebrow>Why a table will not save you</ContentEyebrow>
+
+        <ConceptBlock
+          title="Understand the principle and the applications follow"
+          plainEnglish="Nobody can memorise every instrument. But if you know what a device is physically doing, you can work out where it will succeed and where it will embarrass you."
+          onSite="You will meet instruments this course has never mentioned. The principle is transferable; the catalogue is not."
+        >
+          <p>
+            The source arrives at this conclusion after working through an entire chapter of flow
+            technologies, and it is worth taking seriously:
           </p>
-        </header>
+          <p>
+            <strong>
+              What matters most is that you thoroughly understand the physical principles upon which
+              each flowmeter depends. If the &ldquo;first principles&rdquo; of each technology are
+              understood, the appropriate applications and potential problems become much easier to
+              see.
+            </strong>
+          </p>
+          <p>
+            That is why this module has spent its time on mechanisms rather than model numbers. An
+            electromagnetic flowmeter is not &ldquo;for conductive liquids&rdquo; as an arbitrary
+            rule to memorise — it induces a voltage as charged particles cross a magnetic field, and{' '}
+            <em>therefore</em> a non-conductive fluid gives it nothing to work with. Learn the
+            mechanism and the limitation is not a separate fact.
+          </p>
+          <p>Run the same test across the module:</p>
+          <ul>
+            <li>
+              <strong>An RTD</strong> measures resistance, so anything else adding resistance —
+              cable, terminations — enters the reading.
+            </li>
+            <li>
+              <strong>A thermocouple</strong> measures a difference between two junctions, so
+              something must supply the other half of the sum.
+            </li>
+            <li>
+              <strong>A DP flow set</strong> senses a pressure drop that goes with the square of
+              flow, so it is weakest exactly where the flow is smallest.
+            </li>
+            <li>
+              <strong>A hydrostatic level</strong> weighs a column, so it needs to know what the
+              product weighs.
+            </li>
+            <li>
+              <strong>A time-of-flight instrument</strong> times a reflection, so it needs a clear
+              path and a surface that reflects.
+            </li>
+          </ul>
+          <p>
+            None of those limitations had to be memorised separately. Each one falls out of what the
+            device is physically doing.
+          </p>
+        </ConceptBlock>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1">
-              <li>
-                <strong>Define:</strong> Measurement requirements and range
-              </li>
-              <li>
-                <strong>Assess:</strong> Environmental and installation conditions
-              </li>
-              <li>
-                <strong>Match:</strong> Signal output to control system
-              </li>
-              <li>
-                <strong>Balance:</strong> Performance, cost, and reliability
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
-            <ul className="text-sm text-white space-y-1">
-              <li>
-                <strong>Spot:</strong> Datasheets, spec sheets, certification marks
-              </li>
-              <li>
-                <strong>Use:</strong> Selection checklists, comparison tables
-              </li>
-              <li>
-                <strong>Apply:</strong> Total cost analysis, redundancy planning
-              </li>
-            </ul>
-          </div>
+        <Pullquote>
+          Every limitation in this module is the mechanism seen from the other side. Learn what the
+          instrument is doing and you have learned what will stop it.
+        </Pullquote>
+
+        <InlineCheck
+          id="ins-2-6-principle"
+          question="You meet an unfamiliar instrument that measures level by weighing the entire vessel on load cells. Without knowing anything else, what will defeat it?"
+          options={[
+            'A change in product density',
+            'Anything that adds or removes weight that is not product — build-up on the walls, ice, someone standing on the platform, pipework strain',
+            'A change in ambient temperature',
+            'Nothing — weighing is an absolute measurement',
+          ]}
+          correctIndex={1}
+          explanation="The principle is weight, so the vulnerability is anything contributing weight that is not the product you want to measure. Note this method is immune to density in the way a hydrostatic instrument is not — it genuinely weighs contents rather than inferring height. You worked that out from the mechanism without ever having been taught this device."
+        />
+
+        <SectionRule />
+        <ContentEyebrow>The order that actually works</ContentEyebrow>
+
+        <ConceptBlock
+          title="Constraints eliminate; specifications only rank"
+          plainEnglish="Start with what the job forbids, not with what the datasheets promise. Constraints usually leave you with one or two candidates, and then the comparison is easy."
+          onSite="If a selection discussion starts with accuracy figures, it has started in the wrong place."
+        >
+          <p>
+            The sections before this each ended with selection guidance for their own devices. The
+            common shape is worth stating once:
+          </p>
+          <p>
+            <strong>1. What is being measured, exactly?</strong> Not &ldquo;flow&rdquo; but which
+            flow. The source is blunt that the variable lacks a singular definition —{' '}
+            <strong>volumetric</strong> flow, <strong>mass</strong> flow, or{' '}
+            <strong>standardised volumetric</strong> flow, meaning gas volumes supposing different
+            pressure and temperature values than the line actually runs at. These are different
+            quantities and a measurement of one is not a measurement of another.
+          </p>
+          <p>
+            <strong>2. What does the process forbid?</strong> Conductivity, permitted pressure loss,
+            temperature and pressure limits, whether anything may intrude, whether the vessel can be
+            opened. Each answer removes technologies outright.
+          </p>
+          <p>
+            <strong>3. What range must it cover?</strong> Usually the hardest requirement, and the
+            one addressed below.
+          </p>
+          <p>
+            <strong>4. What will the process do to it?</strong> Abrasion, coating, corrosion,
+            crystallisation. The source notes that flowmeters are subject to far more wear and tear
+            than most other primary sensing elements, because the sensing element must lie directly
+            in the path of a potentially abrasive stream.
+          </p>
+          <p>
+            <strong>5. Can it be installed properly?</strong> Straight run, orientation, access.
+            Covered below, because it deserves its own argument.
+          </p>
+          <p>
+            <strong>6. Can it be proved and maintained?</strong> An instrument that cannot be
+            checked without shutting the plant down will, in practice, not be checked.
+          </p>
+          <p>
+            <strong>7. What happens if it is wrong?</strong> The consequence sets the budget. A
+            reading feeding a safety function deserves more than one feeding a trend nobody reads.
+          </p>
+          <p>
+            Only now is it worth comparing accuracy figures — and by this point there are usually
+            only one or two candidates left to compare.
+          </p>
+        </ConceptBlock>
+
+        <SectionRule />
+        <ContentEyebrow>The specification nobody meets</ContentEyebrow>
+
+        <ConceptBlock
+          title="Turndown is the requirement that actually bites"
+          plainEnglish="Almost every instrument is accurate enough somewhere in its range. The hard part is being accurate across the whole range the process actually uses."
+          onSite="When a measurement is trusted at full rate and disbelieved at low rate, nobody has done anything wrong. The principle has simply run out."
+        >
+          <p>
+            Accuracy is the specification people argue about and rangeability is the one that
+            defeats them. The source states it plainly for flow:{' '}
+            <strong>
+              most flow measurement technologies cannot achieve respectable measurement linearity
+              from the maximum rated flow all the way to zero flow, no matter how well matched they
+              might be to the process application
+            </strong>
+            . Part of the reason is that the dynamic properties of the fluids themselves change with
+            flow rate — the physics is not the same at 5% as at 95%.
+          </p>
+          <p>The same shape has appeared repeatedly in this module:</p>
+          <ul>
+            <li>
+              <strong>DP flow</strong> — the square law leaves 1% differential at 10% flow, and the
+              instrument&rsquo;s own error does not shrink to match.
+            </li>
+            <li>
+              <strong>Transmitter turndown</strong> — Section 2.1 covered the ratio of maximum to
+              minimum allowable span, and why ranging near the narrow end degrades accuracy in
+              engineering units.
+            </li>
+            <li>
+              <strong>Converter resolution</strong> — Section 2.5 showed each count is worth more
+              engineering units on a wider range, so widening the range coarsens everything.
+            </li>
+          </ul>
+          <p>
+            Three different mechanisms, one recurring lesson: <strong>range is not free</strong>.
+            Asking a single instrument to cover an enormous span means accepting it will be poor
+            somewhere in that span.
+          </p>
+          <p>
+            The honest engineering answers are to narrow the range if the process allows, to accept
+            a low-flow cut-off and stop pretending, to choose a technology with genuine rangeability
+            and pay for it, or — occasionally — to fit two instruments covering different parts of
+            the range. What does not work is specifying wide range and high accuracy together and
+            hoping.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck
+          id="ins-2-6-turndown"
+          question="A specification asks for ±0.5% accuracy from 2% to 100% of range on a single flow instrument. What is the honest response?"
+          options={[
+            'Find the manufacturer whose datasheet claims it',
+            'Challenge the requirement — most technologies cannot stay linear to near-zero, so either the range narrows, a high-rangeability technology is paid for, or the low end is excluded',
+            'Fit a DP set and add damping',
+            'Accept it and calibrate more often',
+          ]}
+          correctIndex={1}
+          explanation="A datasheet figure quoted under reference conditions at a favourable point in the range does not mean the instrument holds that accuracy at 2% of span. The professional response is to surface the conflict at specification time rather than discover it at commissioning, when the options have narrowed to arguing about whose fault it is."
+        />
+
+        <SectionRule />
+        <ContentEyebrow>Where the measurement is really decided</ContentEyebrow>
+
+        <ConceptBlock
+          title="Installation decides more than selection does"
+          plainEnglish="You cannot hang an instrument anywhere convenient and expect it to work as designed. Where it goes is part of choosing it."
+          onSite="If a measurement has never been right since the day it was installed, stop suspecting the instrument and go and look at how it is fitted."
+        >
+          <p>
+            The source is direct about this, and about the organisational reason it keeps happening:
+          </p>
+          <p>
+            <strong>
+              The performance of most flowmeter technologies critically depends on proper
+              installation. One cannot simply hang a flowmeter at any location in a piping system
+              and expect it to function as designed.
+            </strong>
+          </p>
+          <p>
+            It then names the cause, which is not technical:{' '}
+            <strong>
+              this is a constant source of friction between piping (mechanical) engineers and
+              instrumentation (controls) engineers on large industrial projects
+            </strong>
+            . What counts as excellent piping layout for process function and economy is often poor
+            for good flow measurement, and the reverse. In many cases the flowmeter gets installed
+            improperly and{' '}
+            <strong>
+              the instrument technicians have to deal with the resulting measurement problems during
+              start-up
+            </strong>
+            .
+          </p>
+          <p>
+            That is worth knowing before you arrive at your first commissioning. A measurement that
+            has never worked properly is frequently not a faulty instrument but a compromise made on
+            a drawing months earlier by someone optimising for something else entirely.
+          </p>
+          <p>The practical consequences for you:</p>
+          <ul>
+            <li>
+              <strong>Raise installation requirements early</strong>, while the layout can still
+              change. After the pipework is fabricated, the conversation is about mitigation rather
+              than correction.
+            </li>
+            <li>
+              <strong>Record what was compromised.</strong> If an instrument went in with less
+              straight run than specified, that fact should live with the loop documentation — so
+              the next person does not spend a week hunting an instrument fault.
+            </li>
+            <li>
+              <strong>Judge the reading in light of it.</strong> An instrument in a poor location
+              may be repeatable and consistently wrong, which is often still useful for control even
+              though it should not be trusted as an absolute value.
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="Worked selection — three duties, three different winners"
+          plainEnglish="Run the constraints on three real jobs and watch the answer come out different each time, for reasons that have nothing to do with which instrument is best."
+          onSite="Notice that in none of these does accuracy decide. It never gets that far."
+        >
+          <p>
+            <strong>Duty one — cooling water flow to a heat exchanger.</strong> Clean water, wide
+            flow range as demand varies, a long straight run available, and pressure loss matters
+            because the system is pumped continuously.
+          </p>
+          <p>
+            Water conducts, so electromagnetic is open. Wide range rules DP out on the square law.
+            Pressure loss argues against any obstruction. Magnetic wins on the second and third
+            constraints before accuracy is discussed at all.
+          </p>
+          <p>
+            <strong>Duty two — fuel oil to a burner, billed by mass.</strong> Non-conductive, so
+            electromagnetic is eliminated by the first question. Mass is what is wanted, so a
+            volumetric measurement would need density compensation — another measurement and another
+            failure mode. Coriolis measures mass directly and needs no straight run. Expensive, and
+            the right answer.
+          </p>
+          <p>
+            <strong>Duty three — steam flow to a process, indication only.</strong> Steam rules out
+            most contact methods on temperature. Nobody controls on the reading; it is used to check
+            consumption weekly. DP is well understood, cheap, robust and entirely adequate — and the
+            fact that it is poor below 20% flow does not matter, because nothing is decided at low
+            rates.
+          </p>
+          <p>
+            Three duties, three technologies, and in every case the choice was made by a constraint
+            rather than by a specification. Note especially the third: the <em>least</em> capable
+            instrument was correct, because the question being asked was modest and DP answers it
+            for a fraction of the money.
+          </p>
+        </ConceptBlock>
+
+        <Scenario
+          title="The specification that was met and the measurement that failed"
+          situation="A flow measurement is specified for a new skid: the required accuracy is stated, a suitable meter is selected, and the datasheet comfortably exceeds the requirement. At commissioning, the reading is unstable at low rates and reads several percent high compared with a downstream check. Every component is within specification and the loop checks perfectly."
+          whatToDo="Work the chain rather than the instrument. Confirm what quantity was actually specified — volumetric or mass — and what the receiving system assumes. Check the installed straight run against the manufacturer's requirement, because that is the most common gap between a specification and an installation. Then look at where the operating range sits relative to the instrument's usable range: a meter selected on full-rate accuracy may be running mostly at 15% of span."
+          whyItMatters="Nothing here was done incompetently. The specification was met as written, the instrument performs as advertised, and the installation looked reasonable to the person who drew it. The failure is in the gaps between those three activities — which is exactly why an instrument person needs to understand selection, installation and the measurement principle together rather than owning only the box."
+        />
+
+        <SectionRule />
+        <ContentEyebrow>Reading a datasheet honestly</ContentEyebrow>
+
+        <ConceptBlock
+          title="What an accuracy figure is actually promising"
+          plainEnglish="A quoted accuracy is a claim made under stated conditions. Change the conditions and the claim does not travel with you."
+          onSite="Two numbers that look comparable often are not. Check what each is a percentage OF before believing either."
+        >
+          <p>
+            Section 1.3 separated accuracy, precision, resolution and repeatability. Selection is
+            where that distinction earns its keep, because a datasheet compresses a great deal into
+            one figure.
+          </p>
+          <p>Three questions to ask of any accuracy specification:</p>
+          <ul>
+            <li>
+              <strong>A percentage of what?</strong> Of span, or of reading. These diverge sharply
+              away from full scale — a percentage-of-span figure represents a fixed quantity that
+              becomes a larger share of a small reading, while a percentage-of-reading figure
+              shrinks with the reading. Two instruments quoting the same number can behave very
+              differently at 20% of range.
+            </li>
+            <li>
+              <strong>Under what conditions?</strong> Reference accuracy is measured under stated
+              laboratory conditions. A real installation adds ambient temperature effects, supply
+              variation, static pressure effects and mounting position — each usually specified
+              separately, and each additive.
+            </li>
+            <li>
+              <strong>Over what range?</strong> A figure may hold across a stated portion of the
+              range and degrade outside it, which is precisely the turndown problem above wearing a
+              different hat.
+            </li>
+          </ul>
+          <p>
+            None of that makes datasheets dishonest. They are precise documents that get read
+            imprecisely — usually by comparing the largest number on the front page of one against
+            the largest number on the front page of another.
+          </p>
+          <p>
+            The practical habit: compare instruments{' '}
+            <strong>
+              at the conditions and the point in the range where they will actually work
+            </strong>
+            , not at the point where each looks best.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck
+          id="ins-2-6-datasheet"
+          question="Instrument A is quoted at ±0.1% of span; instrument B at ±0.1% of reading. Both are ranged 0–100 bar. Which is more accurate at 20 bar?"
+          options={[
+            'They are identical',
+            'Instrument B — 0.1% of 20 bar is 0.02 bar, where A is 0.1% of the 100 bar span, or 0.1 bar',
+            'Instrument A',
+            'It cannot be determined',
+          ]}
+          correctIndex={1}
+          explanation="Percentage of span fixes the error at 0.1 bar regardless of where you are reading; percentage of reading scales it down to 0.02 bar at 20 bar. At full scale they are equal — which is exactly why comparing headline figures without reading what they refer to is misleading."
+        />
+
+        <SectionRule />
+        <ContentEyebrow>Knowing when less is more</ContentEyebrow>
+
+        <ConceptBlock
+          title="The cheapest instrument that answers the question is the right one"
+          plainEnglish="A better instrument that answers a question nobody asked is not better. Match the measurement to the decision it serves."
+          onSite="Ask what will be done differently depending on the reading. If the answer is nothing, you may not need the reading."
+        >
+          <p>
+            There is a persistent tendency to specify upward — more accuracy, more variables, more
+            diagnostics — because it feels like the safe direction. It is not always.
+          </p>
+          <p>
+            Module 1 Section 1 made the argument in its simplest form: a switch reports a threshold,
+            a transmitter reports a value, and{' '}
+            <strong>if the question is genuinely binary the switch is the better answer</strong> —
+            fewer failure modes, nothing to re-range, and a definite state.
+          </p>
+          <p>The same reasoning scales up:</p>
+          <ul>
+            <li>
+              <strong>A multivariable transmitter reduced to one 4&ndash;20 mA output</strong> is
+              being paid for and not used.
+            </li>
+            <li>
+              <strong>Diagnostics that report to nobody</strong> — Section 2.5 — are a cost without
+              a benefit.
+            </li>
+            <li>
+              <strong>Accuracy beyond what the process can act on</strong> is decoration. If the
+              control valve resolves 1%, a measurement resolving 0.01% changes no decision.
+            </li>
+          </ul>
+          <p>
+            The test is simple and worth applying out loud:{' '}
+            <strong>what will be done differently because of this reading?</strong> That question
+            settles specification arguments faster than any comparison of datasheets, and it
+            occasionally reveals that the honest answer is a local gauge and somebody walking past
+            it once a shift.
+          </p>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="Write down why, not just what"
+          plainEnglish="The reasoning behind a choice is worth more than the choice. Without it, the next person has to redo the thinking or guess."
+          onSite="Six months later, 'why is it this type?' has no answer unless somebody wrote one. Be the person who wrote one."
+        >
+          <p>
+            Selection decisions are usually recorded as an outcome — a model number on a datasheet —
+            and almost never as reasoning. That is a loss, because the reasoning is what the next
+            person needs:
+          </p>
+          <ul>
+            <li>
+              <strong>What was assumed</strong> — the density used for a hydrostatic level, the
+              alpha of an RTD, the fluid the meter was sized for. Section 2.4 showed how invisible
+              those assumptions are once they are only in a configuration.
+            </li>
+            <li>
+              <strong>What was compromised</strong> — straight run cut short, a location accepted
+              under protest, a range wider than ideal.
+            </li>
+            <li>
+              <strong>What was rejected and why</strong> — so the same option is not re-proposed
+              annually.
+            </li>
+            <li>
+              <strong>Where the measurement is trustworthy</strong> — the range over which it should
+              be believed, and where it should not.
+            </li>
+          </ul>
+          <p>
+            This is the same instinct as recording as-found and as-left values in calibration, which
+            Module 6 covers: the number matters less than the evidence of how it came about.
+          </p>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="What Module 2 has actually been teaching"
+          plainEnglish="Six sections of devices, and one idea underneath all of them."
+          onSite="If you remember one thing from this module, make it the question rather than any of the devices."
+        >
+          <p>
+            This module opened by separating a primary sensing element from a transmitter and from
+            the word &ldquo;transducer&rdquo; as a plant uses it. It then worked through
+            temperature, pressure, flow, level, position and the signals that carry them. Underneath
+            every one of those was the same lesson, arrived at from a different direction each time:
+          </p>
+          <ul>
+            <li>
+              <strong>2.1</strong> — a transmitter&rsquo;s output means nothing until you know what
+              its 4 mA and 20 mA represent.
+            </li>
+            <li>
+              <strong>2.2</strong> — an RTD reading includes its own cable; a thermocouple reports a
+              difference and needs the other half supplied.
+            </li>
+            <li>
+              <strong>2.3</strong> — DP flow follows a square law, and the extraction must happen
+              exactly once.
+            </li>
+            <li>
+              <strong>2.4</strong> — a hydrostatic level is a weight converted using an assumed
+              density.
+            </li>
+            <li>
+              <strong>2.5</strong> — a digital system can only see what its resolution allows and
+              only when it happens to be looking.
+            </li>
+          </ul>
+          <p>
+            In not one of those cases was anything broken. Each was an instrument performing exactly
+            as designed while a condition it quietly depended on had changed — or had never been
+            true in the first place.
+          </p>
+          <p>
+            That is why the useful question is not &ldquo;is this instrument working?&rdquo; but{' '}
+            <strong>
+              &ldquo;what does this measurement depend on, and is that still true?&rdquo;
+            </strong>{' '}
+            Module 3 takes the signal onward from the transmitter, Module 6 proves instruments
+            against a reference, and Module 8 turns this question into a systematic method. The
+            question itself is the thing to carry forward.
+          </p>
+        </ConceptBlock>
+
+        <CommonMistake
+          title="Selecting on the headline accuracy figure"
+          whatHappens="Two instruments are compared on quoted accuracy and the better figure wins. In service it is worse — because the figure was achieved under reference conditions, at a favourable point in the range, and the installation cannot reproduce any of that."
+          doInstead="Read what the accuracy figure is referenced to and over what range it holds, then compare it against the conditions the instrument will actually live in. An instrument quoted as a percentage of span behaves very differently from one quoted as a percentage of reading once you are working at 20% of range — and that difference usually outweighs the headline number."
+        />
+
+        <CommonMistake
+          title="Specifying a like-for-like replacement without revisiting the original reasoning"
+          whatHappens="An instrument fails and is replaced with the same model, because that is what was there. Nobody asks whether the process has changed since it was chosen — a new product, a different throughput, a modified line — and the replacement inherits a selection that no longer fits."
+          doInstead="Treat a failure as a prompt to re-run the constraints briefly. Same fluid? Same range? Same duty? Usually the answer is yes and the replacement is correct — but the times it is not are exactly the times a repeat failure is trying to tell you something, and fitting the same part again guarantees the same outcome."
+        />
+
+        <ConceptBlock
+          title="Who decides, and what an instrument person contributes"
+          plainEnglish="Selection is rarely one person's call. Knowing where your judgement is the valuable one saves a lot of wasted argument."
+          onSite="You will more often be inheriting a selection than making one. Understanding it is what lets you say something useful about it."
+        >
+          <p>
+            On a new project, sensor selection typically involves a process engineer who knows what
+            the plant must do, a project or design engineer working to a budget and a schedule, a
+            piping engineer optimising layout, and an instrument person who will have to live with
+            the result.
+          </p>
+          <p>The instrument contribution is specific, and it is worth knowing what it is:</p>
+          <ul>
+            <li>
+              <strong>Whether the measurement is achievable as specified.</strong> The range and
+              accuracy conflict described above is the commonest one, and it is far cheaper raised
+              early.
+            </li>
+            <li>
+              <strong>What the installation will do to it.</strong> Nobody else in that room is
+              thinking about straight run, impulse-line orientation or thermowell lag.
+            </li>
+            <li>
+              <strong>Whether it can be proved and maintained.</strong> Calibration access is
+              invisible on a P&amp;ID and decisive in service.
+            </li>
+            <li>
+              <strong>What the failure modes are, and which direction they fail in.</strong> Module
+              1 Section 5 and the burnout discussion in 2.2 both bear on this.
+            </li>
+          </ul>
+          <p>
+            On existing plant the position is different and more common: you are inheriting choices
+            made by people who have left, for reasons nobody recorded. The habit that helps is the
+            same one — reconstruct what the measurement depends on, and you will usually work out
+            both why it was chosen and what has since stopped being true about it.
+          </p>
+        </ConceptBlock>
+
+        <FAQ
+          items={[
+            {
+              question: 'Is there a selection table I can just use?',
+              answer:
+                'Manufacturers publish them and they are useful for narrowing a field quickly. What they cannot do is tell you which constraint dominates on your particular duty, or what your process will do to the instrument over five years. Use them to shorten the list, not to make the decision.',
+            },
+            {
+              question: 'How much should the existing site standard influence the choice?',
+              answer:
+                'More than a purist would like. A site with the spares, the calibration equipment and the familiarity for one type will maintain it better than a technically superior instrument that is the only one of its kind. That is a real engineering consideration, not a compromise — although it should not survive a genuine mismatch to the duty.',
+            },
+            {
+              question: 'What if the constraints leave nothing suitable?',
+              answer:
+                'Then a requirement has to move, and saying so early is the valuable contribution. Usually it is the range, sometimes the accuracy, occasionally the installation. Discovering the conflict at specification is a design decision; discovering it at commissioning is an argument.',
+            },
+            {
+              question: 'Should I always choose non-contact where I can?',
+              answer:
+                'No. Non-contact removes material compatibility problems and introduces line-of-sight ones — obstructions, foam, vapour, surface condition. Section 2.4 set out both sides. Neither category is safer in general; they fail differently, and you choose which failure mode you would rather manage.',
+            },
+            {
+              question: 'How do I judge whether an installation is acceptable?',
+              answer:
+                'Compare it against the manufacturer’s stated requirement for that element, expressed in pipe diameters or mounting conditions. Where it falls short, say so in writing and record it. A documented compromise is manageable; an undocumented one becomes somebody’s fault-finding exercise years later.',
+            },
+            {
+              question: 'How do I argue against a selection I think is wrong?',
+              answer:
+                'Name the constraint rather than the preference. "I would rather have a magmeter" invites a debate about taste; "this fluid is non-conductive, so a magmeter cannot work here" ends one. The same applies in reverse — if someone can name a constraint you had not considered, they are right and the conversation has done its job.',
+            },
+            {
+              question: 'Does any of this apply to instruments not covered in this module?',
+              answer:
+                'That is precisely the point. Analytical measurement, vibration, dimensional gauging and everything else obey the same discipline: identify the physical principle, name what it depends on, and work out what would defeat it. The method transfers even where the device is unfamiliar.',
+            },
+          ]}
+        />
+
+        <KeyTakeaways
+          points={[
+            'Understand the physical principle and both the right applications and the likely problems become much easier to see. That is worth more than any catalogue.',
+            'For any instrument, name the property it depends on and the condition that would defeat it. That habit serves selection and fault-finding equally.',
+            '"Flow" is not one quantity — volumetric, mass and standardised volumetric are different things, and agreeing which is wanted is part of the selection.',
+            'Constraints eliminate; specifications rank. Work through what the process forbids before comparing datasheets.',
+            'Most technologies cannot stay linear from maximum rated flow down to zero, however well matched they are. Turndown, not accuracy, is the requirement that usually cannot be met.',
+            'Installation frequently decides measurement quality more than instrument choice — and good piping layout and good measurement often want opposite things.',
+            'A poorly located instrument may be repeatable and consistently wrong, which can still be useful for control while being untrustworthy as an absolute value.',
+            'The cheapest instrument that answers the actual question is the right one. Ask what will be done differently because of the reading.',
+            'Read an accuracy figure properly: a percentage of what, under what conditions, and over what part of the range.',
+            'Name the constraint, not the preference. A constraint ends a selection argument; a preference prolongs one.',
+            'Record the reasoning, the assumptions and the compromises — not just the model number.',
+          ]}
+        />
+
+        <Quiz questions={quizQuestions} title="Check yourself — Module 2.6" />
+
+        <div className="grid grid-cols-2 gap-3 pt-2">
+          <button
+            onClick={() => navigate('/electrician/upskilling/instrumentation-module-2-section-5')}
+            className="flex flex-col rounded-2xl border border-elec-yellow/35 bg-gradient-to-br from-white/[0.19] via-white/[0.105] to-white/[0.065] p-4 text-left touch-manipulation lg:hover:-translate-y-0.5"
+          >
+            <span className="flex items-center gap-2 text-[10px] font-medium uppercase tracking-[0.14em] text-white">
+              <ChevronLeft className="h-3 w-3" /> Previous
+            </span>
+            <span className="mt-1 truncate text-[14px] font-semibold text-white">
+              Analogue and digital output
+            </span>
+          </button>
+          <button
+            onClick={() => navigate('/electrician/upskilling/instrumentation-module-2-section-7')}
+            className="flex flex-col rounded-2xl border border-elec-yellow/35 bg-gradient-to-br from-white/[0.19] via-white/[0.105] to-white/[0.065] p-4 text-right touch-manipulation lg:hover:-translate-y-0.5"
+          >
+            <span className="flex items-center justify-end gap-2 text-[10px] font-medium uppercase tracking-[0.14em] text-white">
+              Next section <ChevronRight className="h-3 w-3" />
+            </span>
+            <span className="mt-1 truncate text-[14px] font-semibold text-white">
+              Analytical measurement
+            </span>
+          </button>
         </div>
-
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Apply a systematic decision-making framework',
-              'Evaluate environmental and performance criteria',
-              'Prevent common sensor selection mistakes',
-              'Balance performance requirements with budget',
-              'Understand redundancy and fail-safe strategies',
-              'Document sensor selections properly',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
-
-        {/* Section 1: Selection Framework */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Systematic Selection Framework
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
-            <p>
-              A structured approach to sensor selection ensures all critical factors are considered.
-              This framework prevents oversight and enables consistent decision-making across
-              projects.
-            </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Step 1: Define Measurement Requirements
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div>
-                  <p className="text-sm font-medium text-white mb-1">Measured Variable</p>
-                  <ul className="text-sm text-white space-y-1 ml-4">
-                    <li>Parameter: What exactly needs measuring?</li>
-                    <li>Range: Minimum and maximum values</li>
-                    <li>Units: Engineering units required</li>
-                    <li>Media: Substance being measured</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-white mb-1">Performance Requirements</p>
-                  <ul className="text-sm text-white space-y-1 ml-4">
-                    <li>Accuracy: Required measurement precision</li>
-                    <li>Response time: Speed of updates needed</li>
-                    <li>Resolution: Smallest detectable change</li>
-                    <li>Repeatability: Consistency over time</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Step 2: Assess Environmental Conditions
-              </p>
-              <div className="grid sm:grid-cols-3 gap-4">
-                <div>
-                  <p className="text-sm font-medium text-white mb-1">Physical Environment</p>
-                  <ul className="text-sm text-white space-y-1 ml-4">
-                    <li>Temperature range</li>
-                    <li>Humidity levels</li>
-                    <li>Vibration and shock</li>
-                    <li>Dust and contamination</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-white mb-1">Chemical Environment</p>
-                  <ul className="text-sm text-white space-y-1 ml-4">
-                    <li>Corrosive substances</li>
-                    <li>Chemical compatibility</li>
-                    <li>Cleaning agents used</li>
-                    <li>Explosive atmospheres</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-white mb-1">Electrical Environment</p>
-                  <ul className="text-sm text-white space-y-1 ml-4">
-                    <li>Power supply availability</li>
-                    <li>EMI/RFI interference</li>
-                    <li>Grounding systems</li>
-                    <li>Safety classifications</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Step 3: Determine System Integration
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div>
-                  <p className="text-sm font-medium text-white mb-1">Signal Requirements</p>
-                  <ul className="text-sm text-white space-y-1 ml-4">
-                    <li>Output type: 4-20mA, 0-10V, digital</li>
-                    <li>Communication: HART, Modbus, Profibus</li>
-                    <li>Power: Loop-powered or separate supply</li>
-                    <li>Wiring: 2-wire, 3-wire, or 4-wire</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-white mb-1">Installation Constraints</p>
-                  <ul className="text-sm text-white space-y-1 ml-4">
-                    <li>Mounting space and orientation</li>
-                    <li>Maintenance accessibility</li>
-                    <li>Hazardous area classifications</li>
-                    <li>Required certifications</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[0]} />
-
-        {/* Section 2: Performance vs Budget */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Performance vs Budget Trade-offs
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
-            <p>
-              Real-world sensor selection requires balancing performance requirements against budget
-              constraints and availability. Understanding these trade-offs enables optimal
-              decisions.
-            </p>
-
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Cost Considerations</p>
-                <div className="space-y-3">
-                  <div>
-                    <p className="text-sm font-medium text-white mb-1">Initial Costs</p>
-                    <ul className="text-sm text-white space-y-1 ml-4">
-                      <li>Sensor purchase price</li>
-                      <li>Installation materials and labour</li>
-                      <li>Calibration equipment and setup</li>
-                      <li>Documentation and training</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-white mb-1">Operating Costs</p>
-                    <ul className="text-sm text-white space-y-1 ml-4">
-                      <li>Maintenance and calibration</li>
-                      <li>Replacement parts</li>
-                      <li>Energy consumption</li>
-                      <li>Downtime and lost production</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Performance Trade-offs
-                </p>
-                <div className="space-y-3">
-                  <div>
-                    <p className="text-sm font-medium text-white mb-1">Accuracy vs Cost</p>
-                    <p className="text-sm text-white">
-                      Higher accuracy costs more but may be essential for process control or
-                      regulatory compliance.
-                    </p>
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-white mb-1">Reliability vs Features</p>
-                    <p className="text-sm text-white">
-                      Simple, proven designs may be more reliable than feature-rich smart sensors in
-                      harsh environments.
-                    </p>
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-white mb-1">Response vs Stability</p>
-                    <p className="text-sm text-white">
-                      Fast-response sensors may be more sensitive to noise and require additional
-                      filtering.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-              <p className="text-sm text-white">
-                <strong>Economic Reality:</strong> The lowest-cost sensor is rarely the most
-                economical choice when total cost of ownership is considered. Factor in reliability,
-                maintenance, and downtime costs.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[1]} />
-
-        {/* Section 3: Redundancy and Fail-safes */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Redundancy and Fail-safe Strategies
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
-            <p>
-              Critical applications require redundancy and fail-safe strategies to maintain
-              operation and safety when sensors fail.
-            </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Redundancy Configurations
-              </p>
-              <div className="grid sm:grid-cols-3 gap-4">
-                <div className="p-4 rounded bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-                  <p className="text-sm font-medium text-white mb-2">1oo2 (1 out of 2)</p>
-                  <p className="text-sm text-white mb-2">
-                    Two sensors, system operates if one works. Good for availability.
-                  </p>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>High availability</li>
-                    <li>Moderate cost</li>
-                    <li>Voting logic required</li>
-                  </ul>
-                </div>
-                <div className="p-4 rounded bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-                  <p className="text-sm font-medium text-white mb-2">2oo3 (2 out of 3)</p>
-                  <p className="text-sm text-white mb-2">
-                    Three sensors, system uses two that agree. Best for safety.
-                  </p>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>Highest safety integrity</li>
-                    <li>Fault tolerance</li>
-                    <li>Higher cost</li>
-                  </ul>
-                </div>
-                <div className="p-4 rounded bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-                  <p className="text-sm font-medium text-white mb-2">Standby Redundancy</p>
-                  <p className="text-sm text-white mb-2">
-                    Backup sensor activates when primary fails. Lower cost option.
-                  </p>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>Cost-effective</li>
-                    <li>Automatic switchover</li>
-                    <li>Brief interruption possible</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Fail-safe Design Principles
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div>
-                  <p className="text-sm font-medium text-white mb-1">Fail-safe States</p>
-                  <ul className="text-sm text-white space-y-1 ml-4">
-                    <li>
-                      <strong>Fail-Open:</strong> Circuit opens on failure (de-energise to trip)
-                    </li>
-                    <li>
-                      <strong>Fail-Closed:</strong> Circuit closes on failure (energise to trip)
-                    </li>
-                    <li>
-                      <strong>Fail-Fixed:</strong> Output goes to predetermined safe value
-                    </li>
-                    <li>
-                      <strong>Fail-Last:</strong> Maintains last known good value
-                    </li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-white mb-1">Diagnostic Features</p>
-                  <ul className="text-sm text-white space-y-1 ml-4">
-                    <li>
-                      <strong>Self-diagnostics:</strong> Built-in tests detect internal faults
-                    </li>
-                    <li>
-                      <strong>Range checking:</strong> Detect out-of-range readings
-                    </li>
-                    <li>
-                      <strong>Rate of change:</strong> Detect unrealistic signal changes
-                    </li>
-                    <li>
-                      <strong>Cross-checking:</strong> Compare multiple sensor readings
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[2]} />
-
-        {/* Section 4: Documentation */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Documentation and Specification
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
-            <p>
-              Proper documentation ensures sensors are correctly specified, installed, and
-              maintained throughout their service life.
-            </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Essential Documentation:</p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div>
-                  <p className="text-sm font-medium text-elec-yellow/80 mb-1">
-                    Specification Sheet
-                  </p>
-                  <ul className="text-sm text-white space-y-1 ml-4">
-                    <li>Tag number and service description</li>
-                    <li>Measurement range and units</li>
-                    <li>Output signal type and range</li>
-                    <li>Accuracy and response time</li>
-                    <li>Environmental ratings (IP, temperature)</li>
-                    <li>Process connection details</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-elec-yellow/80 mb-1">
-                    Installation Records
-                  </p>
-                  <ul className="text-sm text-white space-y-1 ml-4">
-                    <li>Physical location and orientation</li>
-                    <li>Wiring and cable details</li>
-                    <li>Calibration data and certificates</li>
-                    <li>Commissioning test results</li>
-                    <li>Maintenance schedule</li>
-                    <li>Spare parts information</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                When Specifying Sensors
-              </h3>
-              <ul className="text-sm text-white space-y-1 ml-4">
-                <li>Always review manufacturer datasheets thoroughly</li>
-                <li>Verify environmental ratings match installation conditions</li>
-                <li>Consider future expansion and standardisation</li>
-                <li>Check lead times and availability before finalising</li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                When Evaluating Options
-              </h3>
-              <ul className="text-sm text-white space-y-1 ml-4">
-                <li>Create comparison tables for shortlisted sensors</li>
-                <li>Request samples for critical applications</li>
-                <li>Check references from similar installations</li>
-                <li>Evaluate supplier support and service capability</li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1 ml-4">
-                <li>
-                  <strong>Selecting on price alone</strong> — false economy when reliability is
-                  compromised
-                </li>
-                <li>
-                  <strong>Ignoring environmental conditions</strong> — sensors fail outside rated
-                  conditions
-                </li>
-                <li>
-                  <strong>Over-specifying accuracy</strong> — paying for precision that is not
-                  required
-                </li>
-                <li>
-                  <strong>Forgetting maintenance access</strong> — sensors that cannot be calibrated
-                  or replaced easily
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/electrician/upskilling/instrumentation-module-2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/electrician/upskilling/instrumentation-module-3">
-              Next Module
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+      </HubBody>
+    </HubPage>
   );
 };
 

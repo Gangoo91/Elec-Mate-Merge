@@ -1,8 +1,8 @@
 import { ArrowLeft, ChevronRight } from 'lucide-react';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { useNavigate } from 'react-router-dom';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
-import { PageFrame, PageHero } from '@/components/college/primitives';
 import {
   TLDR,
   LearningOutcomes,
@@ -313,800 +313,792 @@ const DataCablingModule3Section2 = () => {
   );
 
   return (
-    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
-      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
-        <PageFrame>
-          <button
-            type="button"
-            onClick={() => navigate('/electrician/upskilling/data-cabling-module-3')}
-            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+    <HubPage>
+      <HubMasthead
+        section="Module 3 · Section 2"
+        title="Connector Types and Polish Grades"
+        backTo="/electrician/upskilling/data-cabling-module-3"
+      />
+      <HubBody>
+        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
+          The fibre connector family — LC, SC, ST, FC, MTP/MPO — and the PC / UPC / APC polish
+          grades. Why LC is the modern in-building default, when APC is required, the colour-code
+          conventions that prevent miswires, and the IEC 61300-3-35 endface acceptance standard.
+        </p>
+
+        <TLDR
+          points={[
+            'LC (1.25 mm ferrule, latching, duplex clip) is the modern in-building default — twice the panel density of SC / ST / FC. SC (push-pull, 2.5 mm) is the legacy duplex norm. ST (bayonet) is older multimode. FC (threaded) is metrology / lab. MTP/MPO is parallel-optic for 40 / 100 / 400 G.',
+            'Polish grades: PC (~-35 dB return loss), UPC (~-50 dB, blue housings), APC (8° angled, ~-65 dB or better, green housings). Single-mode duplex is UPC default, APC for reflection-sensitive PON / RFoG / narrow-linewidth lasers. Multimode is PC or UPC — no APC variant in commercial use.',
+            'NEVER mate APC to UPC / PC. The angled endface will not seat against a perpendicular endface, insertion loss spikes, return loss collapses, and both endfaces are damaged. Colour code (green = APC, blue = UPC) exists for this reason — but always confirm before mating.',
+            'Endface cleanliness is the single most common fibre fault. Inspection per IEC 61300-3-35 (defined zones, defect-count thresholds), clean with IBC click cleaner or lint-free wipe + IPA, re-inspect, then mate. A single fingerprint can dominate the channel loss budget.',
+          ]}
+        />
+
+        <LearningOutcomes
+          outcomes={[
+            'Identify the principal fibre connector types (LC, SC, ST, FC, MTP/MPO) by ferrule diameter, latch action and typical application',
+            'Explain why LC has become the in-building default — small ferrule density, latch tab, duplex clip — and where SC / ST / FC remain in use',
+            'Distinguish PC, UPC and APC polish grades by return-loss specification and endface geometry, and explain when each is required',
+            'Read the colour-code convention (green = APC, blue = UPC / PC, beige = MM PC) and use it to prevent mis-mating',
+            'Explain why APC must never be mated to UPC or PC, and what damage occurs if it is',
+            'Apply IEC 61300-3-35 endface acceptance criteria — inspection zones, defect counts, pass / fail thresholds — to commission and maintain fibre channels',
+            'Choose the correct connector type and polish grade for a given application (in-building duplex, parallel-optic 100 G, PON access, long-haul SM)',
+            'State the cleanliness discipline (inspect, clean, re-inspect, mate) and the typical insertion-loss contribution of a clean connector pair',
+          ]}
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>The connector family</ContentEyebrow>
+
+        <ConceptBlock
+          title="LC, SC, ST, FC and MTP/MPO — what each one is for"
+          plainEnglish="Fibre connectors are the demountable interfaces that let an installer terminate a cable, plug it into a panel, and route the link through patch fields. Five connector types cover almost every commercial UK fibre installation. The choice is driven by application: density, vibration resistance, parallel-optic count, and field-termination tooling."
+          onSite="In a typical 2026 UK office fit-out you will see LC duplex on every floor-distributor panel, SC duplex on legacy patch fields, occasional ST on equipment that has not been modernised, and MTP/MPO at parallel-optic uplinks (100 G / 400 G to the data-centre or hyperscale wireless heads). FC is rare outside lab and broadcast — its threaded coupling resists vibration but is slow to patch."
+        >
+          <p>The five connectors, by application:</p>
+          <ul className="list-disc pl-5 space-y-2 text-[14px]">
+            <li>
+              <strong>LC (Lucent Connector).</strong> 1.25 mm ferrule, RJ-style latch, duplex clip
+              joins two for duplex applications. The modern in-building default since the early
+              2000s. Used for SM and MM, all polish grades. ~96 duplex ports per 1U panel.
+            </li>
+            <li>
+              <strong>SC (Subscriber / Square Connector).</strong> 2.5 mm ferrule, push-pull latch.
+              The 1990s in-building default; still very common in legacy installations, still fully
+              compliant. ~48 duplex ports per 1U panel. Easy to inspect and clean because the
+              ferrule is bigger.
+            </li>
+            <li>
+              <strong>ST (Straight Tip).</strong> 2.5 mm ferrule, bayonet twist-and-lock.
+              Predominantly multimode, predominantly legacy. Found on older campus and industrial
+              installations. Vibration-tolerant but slow to patch.
+            </li>
+            <li>
+              <strong>FC (Ferrule Connector / Fixed Connection).</strong> 2.5 mm ferrule, threaded
+              coupling. Niche commercial use; common in lab / metrology / broadcast where vibration
+              immunity matters. The threaded nut takes seconds longer per mate than push-pull or
+              latch.
+            </li>
+            <li>
+              <strong>MTP/MPO (Multi-fibre Push-On).</strong> Multi-fibre ferrule (8, 12 or 24
+              fibres in one connector), keyed for orientation. The standard for parallel-optic 40 /
+              100 / 400 GbE links. MTP is a brand name for a high-precision MPO; both are fully
+              interoperable when keys / polarity match.
+            </li>
+          </ul>
+          <p>
+            Hybrid patch leads (e.g. ST-to-LC, SC-to-LC) bridge mixed installations — both ends
+            terminate to the same fibre type and polish grade, the body bridges the format
+            difference. Mixing fibre types (MM-to-SM) across a hybrid lead does not work; mixing
+            polish grades (UPC-to-APC) destroys the link.
+          </p>
+        </ConceptBlock>
+
+        {/* Connector family diagram */}
+        <div className="bg-white/5 border border-white/10 rounded-2xl p-4 sm:p-6 my-6">
+          <p className="text-xs font-semibold text-elec-yellow/60 uppercase tracking-wider mb-3">
+            Diagram
+          </p>
+          <h4 className="text-sm font-bold text-white mb-4">
+            Fibre connector family — ferrule size, typical use, and polish-grade colour code
+          </h4>
+          <svg
+            viewBox="0 0 900 620"
+            className="w-full h-auto"
+            role="img"
+            aria-label="Five connector types in a row: LC, SC, ST, FC and MTP/MPO. Each connector sits in its own cell with the connector name above, a stylised body with its ferrule, and the form factor and typical use in dedicated rows below. A polish-grade legend at the bottom maps PC, UPC and APC to their housing colours: PC beige, UPC blue, APC green, with return-loss values."
           >
-            <ArrowLeft className="h-4 w-4" /> Module 3
-          </button>
+            {/* ===== Cell row — connector silhouettes ===== */}
+            {[
+              {
+                x: 25,
+                label: 'LC',
+                form: '1.25 mm ferrule · latch',
+                use: 'In-building default · duplex clip',
+              },
+              {
+                x: 200,
+                label: 'SC',
+                form: '2.5 mm ferrule · push-pull',
+                use: 'Legacy duplex · simple to clean',
+              },
+              {
+                x: 375,
+                label: 'ST',
+                form: '2.5 mm ferrule · bayonet',
+                use: 'Older multimode · campus',
+              },
+              {
+                x: 550,
+                label: 'FC',
+                form: '2.5 mm ferrule · threaded',
+                use: 'Lab · broadcast · vibration',
+              },
+              {
+                x: 725,
+                label: 'MTP/MPO',
+                form: '8 / 12 / 24 fibre · keyed',
+                use: 'Parallel optics 40/100/400 G',
+              },
+            ].map((c, i) => {
+              const cx = c.x + 75;
+              return (
+                <g key={'c-' + i}>
+                  {/* Cell border */}
+                  <rect
+                    x={c.x}
+                    y="50"
+                    width="150"
+                    height="240"
+                    rx="10"
+                    fill="rgba(255,255,255,0.03)"
+                    stroke="rgba(255,255,255,0.10)"
+                    strokeWidth="1"
+                  />
+                  {/* Connector name above body */}
+                  <text
+                    x={cx}
+                    y="38"
+                    textAnchor="middle"
+                    fill="#FDE68A"
+                    fontSize="13"
+                    fontWeight="700"
+                    fontFamily="system-ui"
+                  >
+                    {c.label}
+                  </text>
 
-          <PageHero
-            eyebrow="Module 3 · Section 2"
-            title="Connector Types and Polish Grades"
-            description="The fibre connector family — LC, SC, ST, FC, MTP/MPO — and the PC / UPC / APC polish grades. Why LC is the modern in-building default, when APC is required, the colour-code conventions that prevent miswires, and the IEC 61300-3-35 endface acceptance standard."
-            tone="yellow"
-          />
+                  {/* Connector body silhouette */}
+                  <rect
+                    x={c.x + 25}
+                    y="80"
+                    width="100"
+                    height="110"
+                    rx="8"
+                    fill="rgba(234,179,8,0.10)"
+                    stroke="#EAB308"
+                    strokeWidth="1.6"
+                  />
 
-          <TLDR
-            points={[
-              'LC (1.25 mm ferrule, latching, duplex clip) is the modern in-building default — twice the panel density of SC / ST / FC. SC (push-pull, 2.5 mm) is the legacy duplex norm. ST (bayonet) is older multimode. FC (threaded) is metrology / lab. MTP/MPO is parallel-optic for 40 / 100 / 400 G.',
-              'Polish grades: PC (~-35 dB return loss), UPC (~-50 dB, blue housings), APC (8° angled, ~-65 dB or better, green housings). Single-mode duplex is UPC default, APC for reflection-sensitive PON / RFoG / narrow-linewidth lasers. Multimode is PC or UPC — no APC variant in commercial use.',
-              'NEVER mate APC to UPC / PC. The angled endface will not seat against a perpendicular endface, insertion loss spikes, return loss collapses, and both endfaces are damaged. Colour code (green = APC, blue = UPC) exists for this reason — but always confirm before mating.',
-              'Endface cleanliness is the single most common fibre fault. Inspection per IEC 61300-3-35 (defined zones, defect-count thresholds), clean with IBC click cleaner or lint-free wipe + IPA, re-inspect, then mate. A single fingerprint can dominate the channel loss budget.',
-            ]}
-          />
-
-          <LearningOutcomes
-            outcomes={[
-              'Identify the principal fibre connector types (LC, SC, ST, FC, MTP/MPO) by ferrule diameter, latch action and typical application',
-              'Explain why LC has become the in-building default — small ferrule density, latch tab, duplex clip — and where SC / ST / FC remain in use',
-              'Distinguish PC, UPC and APC polish grades by return-loss specification and endface geometry, and explain when each is required',
-              'Read the colour-code convention (green = APC, blue = UPC / PC, beige = MM PC) and use it to prevent mis-mating',
-              'Explain why APC must never be mated to UPC or PC, and what damage occurs if it is',
-              'Apply IEC 61300-3-35 endface acceptance criteria — inspection zones, defect counts, pass / fail thresholds — to commission and maintain fibre channels',
-              'Choose the correct connector type and polish grade for a given application (in-building duplex, parallel-optic 100 G, PON access, long-haul SM)',
-              'State the cleanliness discipline (inspect, clean, re-inspect, mate) and the typical insertion-loss contribution of a clean connector pair',
-            ]}
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>The connector family</ContentEyebrow>
-
-          <ConceptBlock
-            title="LC, SC, ST, FC and MTP/MPO — what each one is for"
-            plainEnglish="Fibre connectors are the demountable interfaces that let an installer terminate a cable, plug it into a panel, and route the link through patch fields. Five connector types cover almost every commercial UK fibre installation. The choice is driven by application: density, vibration resistance, parallel-optic count, and field-termination tooling."
-            onSite="In a typical 2026 UK office fit-out you will see LC duplex on every floor-distributor panel, SC duplex on legacy patch fields, occasional ST on equipment that has not been modernised, and MTP/MPO at parallel-optic uplinks (100 G / 400 G to the data-centre or hyperscale wireless heads). FC is rare outside lab and broadcast — its threaded coupling resists vibration but is slow to patch."
-          >
-            <p>The five connectors, by application:</p>
-            <ul className="list-disc pl-5 space-y-2 text-[14px]">
-              <li>
-                <strong>LC (Lucent Connector).</strong> 1.25 mm ferrule, RJ-style latch, duplex clip
-                joins two for duplex applications. The modern in-building default since the early
-                2000s. Used for SM and MM, all polish grades. ~96 duplex ports per 1U panel.
-              </li>
-              <li>
-                <strong>SC (Subscriber / Square Connector).</strong> 2.5 mm ferrule, push-pull
-                latch. The 1990s in-building default; still very common in legacy installations,
-                still fully compliant. ~48 duplex ports per 1U panel. Easy to inspect and clean
-                because the ferrule is bigger.
-              </li>
-              <li>
-                <strong>ST (Straight Tip).</strong> 2.5 mm ferrule, bayonet twist-and-lock.
-                Predominantly multimode, predominantly legacy. Found on older campus and industrial
-                installations. Vibration-tolerant but slow to patch.
-              </li>
-              <li>
-                <strong>FC (Ferrule Connector / Fixed Connection).</strong> 2.5 mm ferrule, threaded
-                coupling. Niche commercial use; common in lab / metrology / broadcast where
-                vibration immunity matters. The threaded nut takes seconds longer per mate than
-                push-pull or latch.
-              </li>
-              <li>
-                <strong>MTP/MPO (Multi-fibre Push-On).</strong> Multi-fibre ferrule (8, 12 or 24
-                fibres in one connector), keyed for orientation. The standard for parallel-optic 40
-                / 100 / 400 GbE links. MTP is a brand name for a high-precision MPO; both are fully
-                interoperable when keys / polarity match.
-              </li>
-            </ul>
-            <p>
-              Hybrid patch leads (e.g. ST-to-LC, SC-to-LC) bridge mixed installations — both ends
-              terminate to the same fibre type and polish grade, the body bridges the format
-              difference. Mixing fibre types (MM-to-SM) across a hybrid lead does not work; mixing
-              polish grades (UPC-to-APC) destroys the link.
-            </p>
-          </ConceptBlock>
-
-          {/* Connector family diagram */}
-          <div className="bg-white/5 border border-white/10 rounded-2xl p-4 sm:p-6 my-6">
-            <p className="text-xs font-semibold text-elec-yellow/60 uppercase tracking-wider mb-3">
-              Diagram
-            </p>
-            <h4 className="text-sm font-bold text-white mb-4">
-              Fibre connector family — ferrule size, typical use, and polish-grade colour code
-            </h4>
-            <svg
-              viewBox="0 0 900 620"
-              className="w-full h-auto"
-              role="img"
-              aria-label="Five connector types in a row: LC, SC, ST, FC and MTP/MPO. Each connector sits in its own cell with the connector name above, a stylised body with its ferrule, and the form factor and typical use in dedicated rows below. A polish-grade legend at the bottom maps PC, UPC and APC to their housing colours: PC beige, UPC blue, APC green, with return-loss values."
-            >
-              {/* ===== Cell row — connector silhouettes ===== */}
-              {[
-                {
-                  x: 25,
-                  label: 'LC',
-                  form: '1.25 mm ferrule · latch',
-                  use: 'In-building default · duplex clip',
-                },
-                {
-                  x: 200,
-                  label: 'SC',
-                  form: '2.5 mm ferrule · push-pull',
-                  use: 'Legacy duplex · simple to clean',
-                },
-                {
-                  x: 375,
-                  label: 'ST',
-                  form: '2.5 mm ferrule · bayonet',
-                  use: 'Older multimode · campus',
-                },
-                {
-                  x: 550,
-                  label: 'FC',
-                  form: '2.5 mm ferrule · threaded',
-                  use: 'Lab · broadcast · vibration',
-                },
-                {
-                  x: 725,
-                  label: 'MTP/MPO',
-                  form: '8 / 12 / 24 fibre · keyed',
-                  use: 'Parallel optics 40/100/400 G',
-                },
-              ].map((c, i) => {
-                const cx = c.x + 75;
-                return (
-                  <g key={'c-' + i}>
-                    {/* Cell border */}
+                  {/* Ferrule — drawn to relative scale */}
+                  {c.label === 'MTP/MPO' ? (
                     <rect
-                      x={c.x}
-                      y="50"
-                      width="150"
-                      height="240"
-                      rx="10"
-                      fill="rgba(255,255,255,0.03)"
-                      stroke="rgba(255,255,255,0.10)"
+                      x={cx - 14}
+                      y="125"
+                      width="28"
+                      height="22"
+                      rx="2"
+                      fill="#FACC15"
+                      stroke="#FDE68A"
+                      strokeWidth="1.2"
+                    />
+                  ) : c.label === 'LC' ? (
+                    <circle
+                      cx={cx}
+                      cy="135"
+                      r="5"
+                      fill="#FACC15"
+                      stroke="#FDE68A"
+                      strokeWidth="1.2"
+                    />
+                  ) : (
+                    <circle
+                      cx={cx}
+                      cy="135"
+                      r="10"
+                      fill="#FACC15"
+                      stroke="#FDE68A"
+                      strokeWidth="1.2"
+                    />
+                  )}
+
+                  {/* Connector-specific feature decoration (kept inside body — body IS its container) */}
+                  {c.label === 'LC' && (
+                    <rect
+                      x={c.x + 60}
+                      y="80"
+                      width="30"
+                      height="14"
+                      rx="3"
+                      fill="rgba(234,179,8,0.30)"
+                      stroke="#FCD34D"
                       strokeWidth="1"
                     />
-                    {/* Connector name above body */}
-                    <text
-                      x={cx}
-                      y="38"
-                      textAnchor="middle"
-                      fill="#FDE68A"
-                      fontSize="13"
-                      fontWeight="700"
-                      fontFamily="system-ui"
-                    >
-                      {c.label}
-                    </text>
-
-                    {/* Connector body silhouette */}
+                  )}
+                  {c.label === 'ST' && (
                     <rect
-                      x={c.x + 25}
-                      y="80"
-                      width="100"
-                      height="110"
-                      rx="8"
-                      fill="rgba(234,179,8,0.10)"
-                      stroke="#EAB308"
-                      strokeWidth="1.6"
+                      x={c.x + 30}
+                      y="170"
+                      width="90"
+                      height="12"
+                      rx="3"
+                      fill="rgba(234,179,8,0.30)"
+                      stroke="#FCD34D"
+                      strokeWidth="1"
                     />
+                  )}
+                  {c.label === 'FC' && (
+                    <circle
+                      cx={cx}
+                      cy="178"
+                      r="14"
+                      fill="none"
+                      stroke="#FCD34D"
+                      strokeWidth="1"
+                      strokeDasharray="2 2"
+                    />
+                  )}
 
-                    {/* Ferrule — drawn to relative scale */}
-                    {c.label === 'MTP/MPO' ? (
-                      <rect
-                        x={cx - 14}
-                        y="125"
-                        width="28"
-                        height="22"
-                        rx="2"
-                        fill="#FACC15"
-                        stroke="#FDE68A"
-                        strokeWidth="1.2"
-                      />
-                    ) : c.label === 'LC' ? (
-                      <circle
-                        cx={cx}
-                        cy="135"
-                        r="5"
-                        fill="#FACC15"
-                        stroke="#FDE68A"
-                        strokeWidth="1.2"
-                      />
-                    ) : (
-                      <circle
-                        cx={cx}
-                        cy="135"
-                        r="10"
-                        fill="#FACC15"
-                        stroke="#FDE68A"
-                        strokeWidth="1.2"
-                      />
-                    )}
+                  {/* Form factor BELOW body — first label row */}
+                  <text
+                    x={cx}
+                    y="218"
+                    textAnchor="middle"
+                    fill="#E5E7EB"
+                    fontSize="10.5"
+                    fontWeight="600"
+                    fontFamily="system-ui"
+                  >
+                    {c.form}
+                  </text>
+                  {/* Use BELOW body — second label row */}
+                  <text
+                    x={cx}
+                    y="240"
+                    textAnchor="middle"
+                    fill="#9CA3AF"
+                    fontSize="10"
+                    fontFamily="system-ui"
+                  >
+                    {c.use.split(' · ')[0]}
+                  </text>
+                  <text
+                    x={cx}
+                    y="258"
+                    textAnchor="middle"
+                    fill="#9CA3AF"
+                    fontSize="10"
+                    fontFamily="system-ui"
+                  >
+                    {c.use.split(' · ')[1] || ''}
+                  </text>
+                </g>
+              );
+            })}
 
-                    {/* Connector-specific feature decoration (kept inside body — body IS its container) */}
-                    {c.label === 'LC' && (
-                      <rect
-                        x={c.x + 60}
-                        y="80"
-                        width="30"
-                        height="14"
-                        rx="3"
-                        fill="rgba(234,179,8,0.30)"
-                        stroke="#FCD34D"
-                        strokeWidth="1"
-                      />
-                    )}
-                    {c.label === 'ST' && (
-                      <rect
-                        x={c.x + 30}
-                        y="170"
-                        width="90"
-                        height="12"
-                        rx="3"
-                        fill="rgba(234,179,8,0.30)"
-                        stroke="#FCD34D"
-                        strokeWidth="1"
-                      />
-                    )}
-                    {c.label === 'FC' && (
-                      <circle
-                        cx={cx}
-                        cy="178"
-                        r="14"
-                        fill="none"
-                        stroke="#FCD34D"
-                        strokeWidth="1"
-                        strokeDasharray="2 2"
-                      />
-                    )}
+            {/* ===== Polish-grade legend (at bottom, own bordered panel) ===== */}
+            <rect
+              x="25"
+              y="320"
+              width="850"
+              height="280"
+              rx="10"
+              fill="rgba(255,255,255,0.04)"
+              stroke="rgba(255,255,255,0.10)"
+              strokeWidth="1"
+            />
 
-                    {/* Form factor BELOW body — first label row */}
-                    <text
-                      x={cx}
-                      y="218"
-                      textAnchor="middle"
-                      fill="#E5E7EB"
-                      fontSize="10.5"
-                      fontWeight="600"
-                      fontFamily="system-ui"
-                    >
-                      {c.form}
-                    </text>
-                    {/* Use BELOW body — second label row */}
-                    <text
-                      x={cx}
-                      y="240"
-                      textAnchor="middle"
-                      fill="#9CA3AF"
-                      fontSize="10"
-                      fontFamily="system-ui"
-                    >
-                      {c.use.split(' · ')[0]}
-                    </text>
-                    <text
-                      x={cx}
-                      y="258"
-                      textAnchor="middle"
-                      fill="#9CA3AF"
-                      fontSize="10"
-                      fontFamily="system-ui"
-                    >
-                      {c.use.split(' · ')[1] || ''}
-                    </text>
-                  </g>
-                );
-              })}
-
-              {/* ===== Polish-grade legend (at bottom, own bordered panel) ===== */}
-              <rect
-                x="25"
-                y="320"
-                width="850"
-                height="280"
-                rx="10"
-                fill="rgba(255,255,255,0.04)"
-                stroke="rgba(255,255,255,0.10)"
-                strokeWidth="1"
-              />
-
-              <text
-                x="45"
-                y="346"
-                fill="#E5E7EB"
-                fontSize="11"
-                fontWeight="700"
-                fontFamily="system-ui"
-                letterSpacing="0.08em"
-              >
-                POLISH GRADES (HOUSING COLOUR CODE)
-              </text>
-
-              {/* Three polish swatches in a row */}
-              {/* PC — beige */}
-              <rect
-                x="45"
-                y="368"
-                width="40"
-                height="40"
-                rx="6"
-                fill="rgba(234,179,8,0.20)"
-                stroke="#FCD34D"
-                strokeWidth="1.6"
-              />
-              <text
-                x="65"
-                y="392"
-                textAnchor="middle"
-                fill="#FEF3C7"
-                fontSize="11"
-                fontWeight="700"
-                fontFamily="system-ui"
-              >
-                PC
-              </text>
-              <text
-                x="100"
-                y="380"
-                fill="#FDE68A"
-                fontSize="11"
-                fontWeight="700"
-                fontFamily="system-ui"
-              >
-                Physical contact · beige / black
-              </text>
-              <text x="100" y="398" fill="#E5E7EB" fontSize="10" fontFamily="system-ui">
-                Return loss ~ −35 dB · legacy MM
-              </text>
-
-              {/* UPC — blue */}
-              <rect
-                x="45"
-                y="428"
-                width="40"
-                height="40"
-                rx="6"
-                fill="rgba(59,130,246,0.25)"
-                stroke="#3B82F6"
-                strokeWidth="1.6"
-              />
-              <text
-                x="65"
-                y="452"
-                textAnchor="middle"
-                fill="#DBEAFE"
-                fontSize="11"
-                fontWeight="700"
-                fontFamily="system-ui"
-              >
-                UPC
-              </text>
-              <text
-                x="100"
-                y="440"
-                fill="#93C5FD"
-                fontSize="11"
-                fontWeight="700"
-                fontFamily="system-ui"
-              >
-                Ultra physical contact · blue
-              </text>
-              <text x="100" y="458" fill="#E5E7EB" fontSize="10" fontFamily="system-ui">
-                Return loss ~ −50 dB · default SM duplex · MM
-              </text>
-
-              {/* APC — green */}
-              <rect
-                x="45"
-                y="488"
-                width="40"
-                height="40"
-                rx="6"
-                fill="rgba(34,197,94,0.25)"
-                stroke="#22C55E"
-                strokeWidth="1.6"
-              />
-              <text
-                x="65"
-                y="512"
-                textAnchor="middle"
-                fill="#DCFCE7"
-                fontSize="11"
-                fontWeight="700"
-                fontFamily="system-ui"
-              >
-                APC
-              </text>
-              <text
-                x="100"
-                y="500"
-                fill="#86EFAC"
-                fontSize="11"
-                fontWeight="700"
-                fontFamily="system-ui"
-              >
-                Angled physical contact · green · 8°
-              </text>
-              <text x="100" y="518" fill="#E5E7EB" fontSize="10" fontFamily="system-ui">
-                Return loss ~ −65 dB or better · PON / RFoG / coherent
-              </text>
-
-              {/* Right column — rules */}
-              <text
-                x="500"
-                y="368"
-                fill="#FDE68A"
-                fontSize="11"
-                fontWeight="700"
-                fontFamily="system-ui"
-                letterSpacing="0.08em"
-              >
-                MATING RULES
-              </text>
-
-              <rect
-                x="500"
-                y="380"
-                width="14"
-                height="14"
-                rx="3"
-                fill="rgba(34,197,94,0.25)"
-                stroke="#22C55E"
-                strokeWidth="1.4"
-              />
-              <text x="524" y="392" fill="#E5E7EB" fontSize="10.5" fontFamily="system-ui">
-                Two greens may mate (APC ↔ APC)
-              </text>
-
-              <rect
-                x="500"
-                y="404"
-                width="14"
-                height="14"
-                rx="3"
-                fill="rgba(59,130,246,0.25)"
-                stroke="#3B82F6"
-                strokeWidth="1.4"
-              />
-              <text x="524" y="416" fill="#E5E7EB" fontSize="10.5" fontFamily="system-ui">
-                Two blues may mate (UPC ↔ UPC)
-              </text>
-
-              <text
-                x="500"
-                y="442"
-                fill="#FCA5A5"
-                fontSize="10.5"
-                fontWeight="700"
-                fontFamily="system-ui"
-              >
-                NEVER mate APC to UPC / PC
-              </text>
-              <text x="500" y="460" fill="#E5E7EB" fontSize="10" fontFamily="system-ui">
-                8° angled face will not seat against
-              </text>
-              <text x="500" y="476" fill="#E5E7EB" fontSize="10" fontFamily="system-ui">
-                a perpendicular face — permanent damage.
-              </text>
-
-              <text
-                x="500"
-                y="504"
-                fill="#FDE68A"
-                fontSize="11"
-                fontWeight="700"
-                fontFamily="system-ui"
-                letterSpacing="0.08em"
-              >
-                STANDARDS
-              </text>
-              <text x="500" y="524" fill="#E5E7EB" fontSize="10" fontFamily="system-ui">
-                IEC 61754 series — mechanical interfaces
-              </text>
-              <text x="500" y="542" fill="#E5E7EB" fontSize="10" fontFamily="system-ui">
-                IEC 61300-3-35 — endface acceptance
-              </text>
-              <text x="500" y="560" fill="#E5E7EB" fontSize="10" fontFamily="system-ui">
-                IEC 61755-3-31 / -3-32 — polish geometry
-              </text>
-
-              {/* Density note (footer line, full-width below) */}
-              <line
-                x1="45"
-                y1="572"
-                x2="855"
-                y2="572"
-                stroke="rgba(255,255,255,0.08)"
-                strokeWidth="1"
-              />
-              <text
-                x="450"
-                y="590"
-                textAnchor="middle"
-                fill="#CBD5E1"
-                fontSize="10.5"
-                fontFamily="system-ui"
-              >
-                LC ~96 duplex / 1U panel · SC ~48 duplex / 1U · ST and FC similar to SC · MTP/MPO 12
-                fibres per ferrule
-              </text>
-            </svg>
-          </div>
-
-          <InlineCheck
-            id={inlineChecks[0].id}
-            question={inlineChecks[0].question}
-            options={inlineChecks[0].options}
-            correctIndex={inlineChecks[0].correctIndex}
-            explanation={inlineChecks[0].explanation}
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>Polish grades — PC, UPC, APC</ContentEyebrow>
-
-          <ConceptBlock
-            title="The three endface geometries — what they reflect and what they mean for the link"
-            plainEnglish="Polish grade is the geometry of the connector endface where the two ferrules meet. The geometry sets the proportion of incident light reflected back toward the source — return loss. Three conventions cover almost everything: PC (physical contact, simple flat-domed), UPC (ultra physical contact, tighter convex), and APC (angled physical contact, 8° angled). Higher return-loss number (more negative dB value) means less back-reflection and a cleaner upstream signal."
-            onSite="In a 2026 UK fit-out: multimode is PC or UPC, blue or beige housings; single-mode duplex is UPC blue; single-mode reflection-sensitive (PON, GPON, XGS-PON, RFoG, narrow-linewidth DFB / coherent) is APC green. The colour code is your fast on-site check. The print legend on the patch lead and the connector body should both confirm. Two greens mate. Two blues mate. Green to blue is a hardware-damaging error."
-          >
-            <p>The three polish grades:</p>
-            <ul className="list-disc pl-5 space-y-2 text-[14px]">
-              <li>
-                <strong>PC — physical contact.</strong> The original flat-domed polish. Return loss
-                typically -35 dB. Found on older multimode systems and budget patch leads. Adequate
-                for non-reflection-sensitive applications; superseded by UPC for new installations.
-              </li>
-              <li>
-                <strong>UPC — ultra physical contact.</strong> Tighter convex polish, return loss
-                typically -50 dB. Blue housings (industry convention). Default for general
-                single-mode duplex (10GBASE-LR, 25GBASE-LR Ethernet) and the default for modern
-                multimode in commercial use.
-              </li>
-              <li>
-                <strong>APC — angled physical contact.</strong> 8° angled endface, return loss
-                typically -65 dB or better. Green housings (industry convention). Mandatory for
-                reflection-sensitive applications: PON / GPON / XGS-PON access networks, RFoG /
-                CATV, analogue RF over fibre, narrow-linewidth DFB and coherent transceivers, OTDR
-                test ports. Single-mode only — no widespread multimode APC variant.
-              </li>
-            </ul>
-            <p>
-              Why does return loss matter for some services but not others? Reflection-sensitive
-              systems share a fibre or share an optical wavelength with their upstream / downstream
-              partner — back-reflections from connectors couple light into the wrong direction and
-              destabilise narrow-linewidth lasers. Robust digital Ethernet links (IM/DD with simple
-              receivers) tolerate -35 to -50 dB return loss without measurable degradation. Coherent
-              optical systems (DWDM, 100 G+ coherent) and analogue services see noise, modulation
-              instability or laser locking issues if return loss is poor — APC fixes that by design.
-            </p>
-          </ConceptBlock>
-
-          <RegsCallout
-            source="IEC 61755-3-31 / -3-32 — Optical interface, polish grade endface specification (paraphrased)"
-            clause={
-              <>
-                Single-mode connector endfaces shall conform to one of three principal polish
-                grades: PC (physical contact, return loss ≥ 35 dB), UPC (ultra physical contact,
-                return loss ≥ 50 dB), or APC (angled physical contact, 8° angled endface, return
-                loss ≥ 65 dB). Connectors of different polish grades shall not be mated; the
-                resulting endface geometry mismatch will damage the polished surfaces and introduce
-                excessive insertion loss.
-              </>
-            }
-            meaning="The three polish grades are not interchangeable. APC must mate to APC; UPC and PC may inter-mate at the cost of the lower return loss but only on the same fibre type. Connector colour code (green = APC, blue = UPC / PC, beige = MM PC) and panel layout discipline are how you keep them apart on a busy site. Mating an APC to a UPC is a permanent-damage event — both endfaces require re-termination or scrap."
-            cite="Paraphrased from the IEC 61755 connector-interface series — single-mode polish geometries and return-loss thresholds"
-          />
-
-          <InlineCheck
-            id={inlineChecks[1].id}
-            question={inlineChecks[1].question}
-            options={inlineChecks[1].options}
-            correctIndex={inlineChecks[1].correctIndex}
-            explanation={inlineChecks[1].explanation}
-          />
-
-          <AppendixTable
-            caption="Polish-grade quick reference"
-            source="IEC 61755 series / TIA-568.3-E"
-            headers={['Grade', 'Endface', 'Return loss', 'Housing colour', 'Typical application']}
-            rows={[
-              [
-                'PC',
-                'Flat / slightly domed',
-                '~-35 dB',
-                'Beige (MM) / black (legacy)',
-                'Legacy MM; simple non-critical SM',
-              ],
-              [
-                'UPC',
-                'Convex, tight polish',
-                '~-50 dB',
-                'Blue',
-                'Default SM duplex Ethernet · MM Cat5/6/6A counterpart standard',
-              ],
-              [
-                'APC',
-                '8° angled endface',
-                '~-65 dB or better',
-                'Green',
-                'PON / GPON / XGS-PON · RFoG · narrow-linewidth DFB / coherent · OTDR ports',
-              ],
-              [
-                'MTP/MPO PC',
-                'Flat multi-fibre',
-                '~-30 dB per fibre',
-                'Aqua (MM) / yellow (SM)',
-                'Parallel optics 40 / 100 / 400 G short reach',
-              ],
-              [
-                'MTP/MPO APC',
-                '8° angled multi-fibre',
-                '~-55 dB per fibre',
-                'Green',
-                'Parallel optics SM long-reach / PON parallel',
-              ],
-            ]}
-            notes="Colour conventions are TIA-598-D / industry practice — always confirm against the print legend. Never mate APC to UPC or PC: the angled endface will not seat correctly, and forcing the mate damages both connectors permanently."
-          />
-
-          <InlineCheck
-            id={inlineChecks[2].id}
-            question={inlineChecks[2].question}
-            options={inlineChecks[2].options}
-            correctIndex={inlineChecks[2].correctIndex}
-            explanation={inlineChecks[2].explanation}
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>Endface cleanliness — IEC 61300-3-35</ContentEyebrow>
-
-          <ConceptBlock
-            title="The single most common fibre fault, and the discipline that prevents it"
-            plainEnglish="Endface contamination is the leading cause of intermittent and degraded fibre links. A single dust particle, fingerprint, or oil residue on a 9 µm SM core dominates the loss budget at that connector — easily 1-3 dB at one mating, on a channel that may have a 2.6 dB total budget. The international standard IEC 61300-3-35 sets the visual acceptance criteria for fibre connector endfaces: defined inspection zones, allowable defect counts and sizes per zone, pass / fail thresholds. Modern fibre microscopes and video probes implement IEC 61300-3-35 in firmware and report a pass / fail per connector."
-            onSite='Discipline: inspect, clean, re-inspect, mate. Every time. The fibre microscope or video probe is in your kit, not optional. Click cleaners (one-shot mechanical wipe via internal tape) are the modern default for routine cleaning; a lint-free wipe with 99 % isopropyl alcohol is the alternative. Never blow on a connector ("you might be clearing dust" — you are adding moisture and saliva droplets), never wipe with clothing, never plug in a connector that has not been inspected since it was last open.'
-          >
-            <p>The IEC 61300-3-35 framework, briefly:</p>
-            <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
-              <li>
-                <strong>Inspection zones.</strong> The endface is segmented into concentric zones —
-                Core (centre, most critical), Cladding (immediate ring), Adhesive (ring around
-                cladding), and Contact / Outer (where two ferrules touch). Defects are tolerated
-                differently in each zone — most stringent in the core, more relaxed at the outer
-                ring where light is not propagating.
-              </li>
-              <li>
-                <strong>Defect classifications.</strong> Scratches (linear), pits and chips (defects
-                in the glass), and contamination (loose particles, oil, residue). Each is assessed
-                by zone, count and size.
-              </li>
-              <li>
-                <strong>Pass / fail criteria.</strong> The standard sets thresholds (e.g. zero
-                defects &gt; 5 µm in the core zone, limited counts of small defects in cladding,
-                etc.). The fibre microscope or video probe applies these automatically and prints a
-                pass / fail badge.
-              </li>
-              <li>
-                <strong>Cleaning protocol.</strong> Inspect → clean (click cleaner or lint-free wipe
-                + IPA) → re-inspect → mate. If a connector fails after two cleanings, it must be
-                re-terminated. Acceptance is the cleaned, inspected, re-inspected pass — not "looked
-                OK".
-              </li>
-            </ul>
-            <p>
-              A clean, inspected connector pair contributes typically 0.3-0.5 dB (multimode) or
-              0.2-0.4 dB (single-mode) of insertion loss — small enough to leave room for the other
-              connectors and fibre attenuation in the channel. A dirty connector pair contributes
-              1-3 dB or more — and that swing alone can break a link that was working yesterday.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck
-            id={inlineChecks[3].id}
-            question={inlineChecks[3].question}
-            options={inlineChecks[3].options}
-            correctIndex={inlineChecks[3].correctIndex}
-            explanation={inlineChecks[3].explanation}
-          />
-
-          <CommonMistake
-            title="Mating an APC patch lead into a UPC adapter because both are LC and both fit"
-            whatHappens={
-              <>
-                Engineer has a green-bodied APC LC patch lead and a blue-bodied UPC LC adapter.
-                Mechanically the LC bodies are the same size, the latch fits, and the connector
-                seats. But the 8° angled endface of the APC lead does not seat against the
-                perpendicular endface of the UPC ferrule on the other side — a small air gap forms,
-                insertion loss spikes 1-3 dB, return loss drops, and (worse) repeated mates scratch
-                and chip both endfaces. Within a few cycles, both connectors are irreparably
-                damaged.
-              </>
-            }
-            doInstead={
-              <>
-                Confirm housing colour AND polish grade BEFORE every mate. Green = APC, blue = UPC.
-                Two greens may mate; two blues may mate; green to blue is a hard stop. If the
-                project mixes APC and UPC patches (e.g. a PON access leg into a non-PON Ethernet
-                core), use a fibre conversion adapter / hybrid patch lead with APC on one end and
-                UPC on the other — bonded internally so the polish-grade transition is handled in a
-                controlled connector. Document the mixed-polish boundary on the patching record.
-              </>
-            }
-          />
-
-          <Scenario
-            title="The 'all yellow, all LC' assumption — and what it cost"
-            situation={
-              <>
-                A retrofit job. The new patches arrived from the supplier in mixed crates: some
-                green (APC) for an upcoming GPON migration, some blue (UPC) for the existing
-                Ethernet links. A junior installer, on a Friday afternoon, sees "yellow jackets, LC
-                connectors" and patches them onto the operational Ethernet panels without checking
-                polish grade. By Monday morning, six links are reporting elevated errors and two
-                have fallen over.
-              </>
-            }
-            whatToDo={
-              <>
-                Stop further patching, identify every newly-touched connector, and inspect each
-                endface with a fibre microscope per IEC 61300-3-35. Where APC connectors have been
-                mated to UPC adapters, both ferrules are likely damaged — re-terminate or replace.
-                Replace the green-bodied APC patches in the Ethernet panels with the correct
-                blue-bodied UPC patches. Document the remediation and the original mis-patching;
-                update the local labelling to colour-code panel ports clearly (PON-aligned panels
-                green-marked, Ethernet panels blue-marked). Brief the team on the rule: housing
-                colour is the fast check, the print legend is the truth, and APC never mates to UPC.
-              </>
-            }
-            whyItMatters={
-              <>
-                The colour code exists for exactly this scenario. A junior on a Friday afternoon
-                with a busy panel cannot read every print legend on every cable — but they can see
-                green vs blue at a glance. The mis-mate is a permanent-damage event, not a soft
-                error. The recovery is connector-by-connector, with re-terminations where ferrules
-                are scored. The lesson: process discipline (colour-code panels, brief the team on
-                the rule, inspect-before-mate) prevents the most expensive five minutes a fibre
-                installer can have.
-              </>
-            }
-          />
-
-          <SectionRule />
-
-          <KeyTakeaways
-            title="Worth remembering"
-            points={[
-              'LC (1.25 mm ferrule, latch, duplex clip) is the modern in-building default. SC, ST, FC are 2.5 mm legacy / niche. MTP/MPO is parallel-optic for 40 / 100 / 400 G.',
-              'Three polish grades: PC (~-35 dB return loss), UPC (~-50 dB, blue), APC (8° angled, ~-65 dB or better, green). UPC default for SM duplex; APC for reflection-sensitive PON / RFoG / coherent. Multimode is PC or UPC only.',
-              'NEVER mate APC to UPC or PC. The 8° angled endface destroys both ferrules. Colour code (green = APC, blue = UPC) is the fast check; always confirm before mating.',
-              'Endface cleanliness is the single most common fibre fault. IEC 61300-3-35 sets the visual acceptance criteria. Discipline: inspect, clean (IBC click cleaner or lint-free wipe + IPA), re-inspect, mate.',
-              'A clean inspected connector pair contributes 0.2-0.5 dB insertion loss; a contaminated pair contributes 1-3 dB or more. Cleanliness is part of the loss budget, not an extra.',
-            ]}
-          />
-
-          <FAQ items={faqs} />
-
-          <SectionRule />
-
-          <Quiz title="Knowledge check" questions={quizQuestions} />
-
-          {/* Bottom navigation */}
-          <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 mt-6 border-t border-white/10">
-            <button
-              type="button"
-              onClick={() => navigate('/electrician/upskilling/data-cabling-module-3-section-1')}
-              className="inline-flex items-center justify-center gap-2 w-full sm:w-auto h-12 px-5 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13.5px] font-medium touch-manipulation hover:bg-white/[0.1] active:scale-[0.98]"
+            <text
+              x="45"
+              y="346"
+              fill="#E5E7EB"
+              fontSize="11"
+              fontWeight="700"
+              fontFamily="system-ui"
+              letterSpacing="0.08em"
             >
-              <ArrowLeft className="h-4 w-4" /> Previous: Fibre types
-            </button>
-            <button
-              type="button"
-              onClick={() => navigate('/electrician/upskilling/data-cabling-module-3-section-3')}
-              className="inline-flex items-center justify-center gap-2 w-full sm:w-auto h-12 px-5 rounded-full bg-elec-yellow text-black text-[13.5px] font-semibold touch-manipulation hover:bg-elec-yellow/90 active:scale-[0.98]"
+              POLISH GRADES (HOUSING COLOUR CODE)
+            </text>
+
+            {/* Three polish swatches in a row */}
+            {/* PC — beige */}
+            <rect
+              x="45"
+              y="368"
+              width="40"
+              height="40"
+              rx="6"
+              fill="rgba(234,179,8,0.20)"
+              stroke="#FCD34D"
+              strokeWidth="1.6"
+            />
+            <text
+              x="65"
+              y="392"
+              textAnchor="middle"
+              fill="#FEF3C7"
+              fontSize="11"
+              fontWeight="700"
+              fontFamily="system-ui"
             >
-              Next section: Cleaving, splicing and connectorisation
-              <ChevronRight className="h-4 w-4" />
-            </button>
-          </nav>
-        </PageFrame>
-      </div>
-    </div>
+              PC
+            </text>
+            <text
+              x="100"
+              y="380"
+              fill="#FDE68A"
+              fontSize="11"
+              fontWeight="700"
+              fontFamily="system-ui"
+            >
+              Physical contact · beige / black
+            </text>
+            <text x="100" y="398" fill="#E5E7EB" fontSize="10" fontFamily="system-ui">
+              Return loss ~ −35 dB · legacy MM
+            </text>
+
+            {/* UPC — blue */}
+            <rect
+              x="45"
+              y="428"
+              width="40"
+              height="40"
+              rx="6"
+              fill="rgba(59,130,246,0.25)"
+              stroke="#3B82F6"
+              strokeWidth="1.6"
+            />
+            <text
+              x="65"
+              y="452"
+              textAnchor="middle"
+              fill="#DBEAFE"
+              fontSize="11"
+              fontWeight="700"
+              fontFamily="system-ui"
+            >
+              UPC
+            </text>
+            <text
+              x="100"
+              y="440"
+              fill="#93C5FD"
+              fontSize="11"
+              fontWeight="700"
+              fontFamily="system-ui"
+            >
+              Ultra physical contact · blue
+            </text>
+            <text x="100" y="458" fill="#E5E7EB" fontSize="10" fontFamily="system-ui">
+              Return loss ~ −50 dB · default SM duplex · MM
+            </text>
+
+            {/* APC — green */}
+            <rect
+              x="45"
+              y="488"
+              width="40"
+              height="40"
+              rx="6"
+              fill="rgba(34,197,94,0.25)"
+              stroke="#22C55E"
+              strokeWidth="1.6"
+            />
+            <text
+              x="65"
+              y="512"
+              textAnchor="middle"
+              fill="#DCFCE7"
+              fontSize="11"
+              fontWeight="700"
+              fontFamily="system-ui"
+            >
+              APC
+            </text>
+            <text
+              x="100"
+              y="500"
+              fill="#86EFAC"
+              fontSize="11"
+              fontWeight="700"
+              fontFamily="system-ui"
+            >
+              Angled physical contact · green · 8°
+            </text>
+            <text x="100" y="518" fill="#E5E7EB" fontSize="10" fontFamily="system-ui">
+              Return loss ~ −65 dB or better · PON / RFoG / coherent
+            </text>
+
+            {/* Right column — rules */}
+            <text
+              x="500"
+              y="368"
+              fill="#FDE68A"
+              fontSize="11"
+              fontWeight="700"
+              fontFamily="system-ui"
+              letterSpacing="0.08em"
+            >
+              MATING RULES
+            </text>
+
+            <rect
+              x="500"
+              y="380"
+              width="14"
+              height="14"
+              rx="3"
+              fill="rgba(34,197,94,0.25)"
+              stroke="#22C55E"
+              strokeWidth="1.4"
+            />
+            <text x="524" y="392" fill="#E5E7EB" fontSize="10.5" fontFamily="system-ui">
+              Two greens may mate (APC ↔ APC)
+            </text>
+
+            <rect
+              x="500"
+              y="404"
+              width="14"
+              height="14"
+              rx="3"
+              fill="rgba(59,130,246,0.25)"
+              stroke="#3B82F6"
+              strokeWidth="1.4"
+            />
+            <text x="524" y="416" fill="#E5E7EB" fontSize="10.5" fontFamily="system-ui">
+              Two blues may mate (UPC ↔ UPC)
+            </text>
+
+            <text
+              x="500"
+              y="442"
+              fill="#FCA5A5"
+              fontSize="10.5"
+              fontWeight="700"
+              fontFamily="system-ui"
+            >
+              NEVER mate APC to UPC / PC
+            </text>
+            <text x="500" y="460" fill="#E5E7EB" fontSize="10" fontFamily="system-ui">
+              8° angled face will not seat against
+            </text>
+            <text x="500" y="476" fill="#E5E7EB" fontSize="10" fontFamily="system-ui">
+              a perpendicular face — permanent damage.
+            </text>
+
+            <text
+              x="500"
+              y="504"
+              fill="#FDE68A"
+              fontSize="11"
+              fontWeight="700"
+              fontFamily="system-ui"
+              letterSpacing="0.08em"
+            >
+              STANDARDS
+            </text>
+            <text x="500" y="524" fill="#E5E7EB" fontSize="10" fontFamily="system-ui">
+              IEC 61754 series — mechanical interfaces
+            </text>
+            <text x="500" y="542" fill="#E5E7EB" fontSize="10" fontFamily="system-ui">
+              IEC 61300-3-35 — endface acceptance
+            </text>
+            <text x="500" y="560" fill="#E5E7EB" fontSize="10" fontFamily="system-ui">
+              IEC 61755-3-31 / -3-32 — polish geometry
+            </text>
+
+            {/* Density note (footer line, full-width below) */}
+            <line
+              x1="45"
+              y1="572"
+              x2="855"
+              y2="572"
+              stroke="rgba(255,255,255,0.08)"
+              strokeWidth="1"
+            />
+            <text
+              x="450"
+              y="590"
+              textAnchor="middle"
+              fill="#CBD5E1"
+              fontSize="10.5"
+              fontFamily="system-ui"
+            >
+              LC ~96 duplex / 1U panel · SC ~48 duplex / 1U · ST and FC similar to SC · MTP/MPO 12
+              fibres per ferrule
+            </text>
+          </svg>
+        </div>
+
+        <InlineCheck
+          id={inlineChecks[0].id}
+          question={inlineChecks[0].question}
+          options={inlineChecks[0].options}
+          correctIndex={inlineChecks[0].correctIndex}
+          explanation={inlineChecks[0].explanation}
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>Polish grades — PC, UPC, APC</ContentEyebrow>
+
+        <ConceptBlock
+          title="The three endface geometries — what they reflect and what they mean for the link"
+          plainEnglish="Polish grade is the geometry of the connector endface where the two ferrules meet. The geometry sets the proportion of incident light reflected back toward the source — return loss. Three conventions cover almost everything: PC (physical contact, simple flat-domed), UPC (ultra physical contact, tighter convex), and APC (angled physical contact, 8° angled). Higher return-loss number (more negative dB value) means less back-reflection and a cleaner upstream signal."
+          onSite="In a 2026 UK fit-out: multimode is PC or UPC, blue or beige housings; single-mode duplex is UPC blue; single-mode reflection-sensitive (PON, GPON, XGS-PON, RFoG, narrow-linewidth DFB / coherent) is APC green. The colour code is your fast on-site check. The print legend on the patch lead and the connector body should both confirm. Two greens mate. Two blues mate. Green to blue is a hardware-damaging error."
+        >
+          <p>The three polish grades:</p>
+          <ul className="list-disc pl-5 space-y-2 text-[14px]">
+            <li>
+              <strong>PC — physical contact.</strong> The original flat-domed polish. Return loss
+              typically -35 dB. Found on older multimode systems and budget patch leads. Adequate
+              for non-reflection-sensitive applications; superseded by UPC for new installations.
+            </li>
+            <li>
+              <strong>UPC — ultra physical contact.</strong> Tighter convex polish, return loss
+              typically -50 dB. Blue housings (industry convention). Default for general single-mode
+              duplex (10GBASE-LR, 25GBASE-LR Ethernet) and the default for modern multimode in
+              commercial use.
+            </li>
+            <li>
+              <strong>APC — angled physical contact.</strong> 8° angled endface, return loss
+              typically -65 dB or better. Green housings (industry convention). Mandatory for
+              reflection-sensitive applications: PON / GPON / XGS-PON access networks, RFoG / CATV,
+              analogue RF over fibre, narrow-linewidth DFB and coherent transceivers, OTDR test
+              ports. Single-mode only — no widespread multimode APC variant.
+            </li>
+          </ul>
+          <p>
+            Why does return loss matter for some services but not others? Reflection-sensitive
+            systems share a fibre or share an optical wavelength with their upstream / downstream
+            partner — back-reflections from connectors couple light into the wrong direction and
+            destabilise narrow-linewidth lasers. Robust digital Ethernet links (IM/DD with simple
+            receivers) tolerate -35 to -50 dB return loss without measurable degradation. Coherent
+            optical systems (DWDM, 100 G+ coherent) and analogue services see noise, modulation
+            instability or laser locking issues if return loss is poor — APC fixes that by design.
+          </p>
+        </ConceptBlock>
+
+        <RegsCallout
+          source="IEC 61755-3-31 / -3-32 — Optical interface, polish grade endface specification (paraphrased)"
+          clause={
+            <>
+              Single-mode connector endfaces shall conform to one of three principal polish grades:
+              PC (physical contact, return loss ≥ 35 dB), UPC (ultra physical contact, return loss ≥
+              50 dB), or APC (angled physical contact, 8° angled endface, return loss ≥ 65 dB).
+              Connectors of different polish grades shall not be mated; the resulting endface
+              geometry mismatch will damage the polished surfaces and introduce excessive insertion
+              loss.
+            </>
+          }
+          meaning="The three polish grades are not interchangeable. APC must mate to APC; UPC and PC may inter-mate at the cost of the lower return loss but only on the same fibre type. Connector colour code (green = APC, blue = UPC / PC, beige = MM PC) and panel layout discipline are how you keep them apart on a busy site. Mating an APC to a UPC is a permanent-damage event — both endfaces require re-termination or scrap."
+          cite="Paraphrased from the IEC 61755 connector-interface series — single-mode polish geometries and return-loss thresholds"
+        />
+
+        <InlineCheck
+          id={inlineChecks[1].id}
+          question={inlineChecks[1].question}
+          options={inlineChecks[1].options}
+          correctIndex={inlineChecks[1].correctIndex}
+          explanation={inlineChecks[1].explanation}
+        />
+
+        <AppendixTable
+          caption="Polish-grade quick reference"
+          source="IEC 61755 series / TIA-568.3-E"
+          headers={['Grade', 'Endface', 'Return loss', 'Housing colour', 'Typical application']}
+          rows={[
+            [
+              'PC',
+              'Flat / slightly domed',
+              '~-35 dB',
+              'Beige (MM) / black (legacy)',
+              'Legacy MM; simple non-critical SM',
+            ],
+            [
+              'UPC',
+              'Convex, tight polish',
+              '~-50 dB',
+              'Blue',
+              'Default SM duplex Ethernet · MM Cat5/6/6A counterpart standard',
+            ],
+            [
+              'APC',
+              '8° angled endface',
+              '~-65 dB or better',
+              'Green',
+              'PON / GPON / XGS-PON · RFoG · narrow-linewidth DFB / coherent · OTDR ports',
+            ],
+            [
+              'MTP/MPO PC',
+              'Flat multi-fibre',
+              '~-30 dB per fibre',
+              'Aqua (MM) / yellow (SM)',
+              'Parallel optics 40 / 100 / 400 G short reach',
+            ],
+            [
+              'MTP/MPO APC',
+              '8° angled multi-fibre',
+              '~-55 dB per fibre',
+              'Green',
+              'Parallel optics SM long-reach / PON parallel',
+            ],
+          ]}
+          notes="Colour conventions are TIA-598-D / industry practice — always confirm against the print legend. Never mate APC to UPC or PC: the angled endface will not seat correctly, and forcing the mate damages both connectors permanently."
+        />
+
+        <InlineCheck
+          id={inlineChecks[2].id}
+          question={inlineChecks[2].question}
+          options={inlineChecks[2].options}
+          correctIndex={inlineChecks[2].correctIndex}
+          explanation={inlineChecks[2].explanation}
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>Endface cleanliness — IEC 61300-3-35</ContentEyebrow>
+
+        <ConceptBlock
+          title="The single most common fibre fault, and the discipline that prevents it"
+          plainEnglish="Endface contamination is the leading cause of intermittent and degraded fibre links. A single dust particle, fingerprint, or oil residue on a 9 µm SM core dominates the loss budget at that connector — easily 1-3 dB at one mating, on a channel that may have a 2.6 dB total budget. The international standard IEC 61300-3-35 sets the visual acceptance criteria for fibre connector endfaces: defined inspection zones, allowable defect counts and sizes per zone, pass / fail thresholds. Modern fibre microscopes and video probes implement IEC 61300-3-35 in firmware and report a pass / fail per connector."
+          onSite='Discipline: inspect, clean, re-inspect, mate. Every time. The fibre microscope or video probe is in your kit, not optional. Click cleaners (one-shot mechanical wipe via internal tape) are the modern default for routine cleaning; a lint-free wipe with 99 % isopropyl alcohol is the alternative. Never blow on a connector ("you might be clearing dust" — you are adding moisture and saliva droplets), never wipe with clothing, never plug in a connector that has not been inspected since it was last open.'
+        >
+          <p>The IEC 61300-3-35 framework, briefly:</p>
+          <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
+            <li>
+              <strong>Inspection zones.</strong> The endface is segmented into concentric zones —
+              Core (centre, most critical), Cladding (immediate ring), Adhesive (ring around
+              cladding), and Contact / Outer (where two ferrules touch). Defects are tolerated
+              differently in each zone — most stringent in the core, more relaxed at the outer ring
+              where light is not propagating.
+            </li>
+            <li>
+              <strong>Defect classifications.</strong> Scratches (linear), pits and chips (defects
+              in the glass), and contamination (loose particles, oil, residue). Each is assessed by
+              zone, count and size.
+            </li>
+            <li>
+              <strong>Pass / fail criteria.</strong> The standard sets thresholds (e.g. zero defects
+              &gt; 5 µm in the core zone, limited counts of small defects in cladding, etc.). The
+              fibre microscope or video probe applies these automatically and prints a pass / fail
+              badge.
+            </li>
+            <li>
+              <strong>Cleaning protocol.</strong> Inspect → clean (click cleaner or lint-free wipe +
+              IPA) → re-inspect → mate. If a connector fails after two cleanings, it must be
+              re-terminated. Acceptance is the cleaned, inspected, re-inspected pass — not "looked
+              OK".
+            </li>
+          </ul>
+          <p>
+            A clean, inspected connector pair contributes typically 0.3-0.5 dB (multimode) or
+            0.2-0.4 dB (single-mode) of insertion loss — small enough to leave room for the other
+            connectors and fibre attenuation in the channel. A dirty connector pair contributes 1-3
+            dB or more — and that swing alone can break a link that was working yesterday.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck
+          id={inlineChecks[3].id}
+          question={inlineChecks[3].question}
+          options={inlineChecks[3].options}
+          correctIndex={inlineChecks[3].correctIndex}
+          explanation={inlineChecks[3].explanation}
+        />
+
+        <CommonMistake
+          title="Mating an APC patch lead into a UPC adapter because both are LC and both fit"
+          whatHappens={
+            <>
+              Engineer has a green-bodied APC LC patch lead and a blue-bodied UPC LC adapter.
+              Mechanically the LC bodies are the same size, the latch fits, and the connector seats.
+              But the 8° angled endface of the APC lead does not seat against the perpendicular
+              endface of the UPC ferrule on the other side — a small air gap forms, insertion loss
+              spikes 1-3 dB, return loss drops, and (worse) repeated mates scratch and chip both
+              endfaces. Within a few cycles, both connectors are irreparably damaged.
+            </>
+          }
+          doInstead={
+            <>
+              Confirm housing colour AND polish grade BEFORE every mate. Green = APC, blue = UPC.
+              Two greens may mate; two blues may mate; green to blue is a hard stop. If the project
+              mixes APC and UPC patches (e.g. a PON access leg into a non-PON Ethernet core), use a
+              fibre conversion adapter / hybrid patch lead with APC on one end and UPC on the other
+              — bonded internally so the polish-grade transition is handled in a controlled
+              connector. Document the mixed-polish boundary on the patching record.
+            </>
+          }
+        />
+
+        <Scenario
+          title="The 'all yellow, all LC' assumption — and what it cost"
+          situation={
+            <>
+              A retrofit job. The new patches arrived from the supplier in mixed crates: some green
+              (APC) for an upcoming GPON migration, some blue (UPC) for the existing Ethernet links.
+              A junior installer, on a Friday afternoon, sees "yellow jackets, LC connectors" and
+              patches them onto the operational Ethernet panels without checking polish grade. By
+              Monday morning, six links are reporting elevated errors and two have fallen over.
+            </>
+          }
+          whatToDo={
+            <>
+              Stop further patching, identify every newly-touched connector, and inspect each
+              endface with a fibre microscope per IEC 61300-3-35. Where APC connectors have been
+              mated to UPC adapters, both ferrules are likely damaged — re-terminate or replace.
+              Replace the green-bodied APC patches in the Ethernet panels with the correct
+              blue-bodied UPC patches. Document the remediation and the original mis-patching;
+              update the local labelling to colour-code panel ports clearly (PON-aligned panels
+              green-marked, Ethernet panels blue-marked). Brief the team on the rule: housing colour
+              is the fast check, the print legend is the truth, and APC never mates to UPC.
+            </>
+          }
+          whyItMatters={
+            <>
+              The colour code exists for exactly this scenario. A junior on a Friday afternoon with
+              a busy panel cannot read every print legend on every cable — but they can see green vs
+              blue at a glance. The mis-mate is a permanent-damage event, not a soft error. The
+              recovery is connector-by-connector, with re-terminations where ferrules are scored.
+              The lesson: process discipline (colour-code panels, brief the team on the rule,
+              inspect-before-mate) prevents the most expensive five minutes a fibre installer can
+              have.
+            </>
+          }
+        />
+
+        <SectionRule />
+
+        <KeyTakeaways
+          title="Worth remembering"
+          points={[
+            'LC (1.25 mm ferrule, latch, duplex clip) is the modern in-building default. SC, ST, FC are 2.5 mm legacy / niche. MTP/MPO is parallel-optic for 40 / 100 / 400 G.',
+            'Three polish grades: PC (~-35 dB return loss), UPC (~-50 dB, blue), APC (8° angled, ~-65 dB or better, green). UPC default for SM duplex; APC for reflection-sensitive PON / RFoG / coherent. Multimode is PC or UPC only.',
+            'NEVER mate APC to UPC or PC. The 8° angled endface destroys both ferrules. Colour code (green = APC, blue = UPC) is the fast check; always confirm before mating.',
+            'Endface cleanliness is the single most common fibre fault. IEC 61300-3-35 sets the visual acceptance criteria. Discipline: inspect, clean (IBC click cleaner or lint-free wipe + IPA), re-inspect, mate.',
+            'A clean inspected connector pair contributes 0.2-0.5 dB insertion loss; a contaminated pair contributes 1-3 dB or more. Cleanliness is part of the loss budget, not an extra.',
+          ]}
+        />
+
+        <FAQ items={faqs} />
+
+        <SectionRule />
+
+        <Quiz title="Knowledge check" questions={quizQuestions} />
+
+        {/* Bottom navigation */}
+        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 mt-6 border-t border-white/10">
+          <button
+            type="button"
+            onClick={() => navigate('/electrician/upskilling/data-cabling-module-3-section-1')}
+            className="inline-flex items-center justify-center gap-2 w-full sm:w-auto h-12 px-5 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13.5px] font-medium touch-manipulation hover:bg-white/[0.1] active:scale-[0.98]"
+          >
+            <ArrowLeft className="h-4 w-4" /> Previous: Fibre types
+          </button>
+          <button
+            type="button"
+            onClick={() => navigate('/electrician/upskilling/data-cabling-module-3-section-3')}
+            className="inline-flex items-center justify-center gap-2 w-full sm:w-auto h-12 px-5 rounded-full bg-elec-yellow text-black text-[13.5px] font-semibold touch-manipulation hover:bg-elec-yellow/90 active:scale-[0.98]"
+          >
+            Next section: Cleaving, splicing and connectorisation
+            <ChevronRight className="h-4 w-4" />
+          </button>
+        </nav>
+      </HubBody>
+    </HubPage>
   );
 };
 

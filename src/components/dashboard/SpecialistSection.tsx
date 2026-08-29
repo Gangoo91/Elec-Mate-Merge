@@ -31,6 +31,55 @@ interface CertDef {
 const specialistCerts: CertDef[] = [
   // Electrical
   {
+    /*
+     * ELE-1262. Listed here as well as with the core three, because the two
+     * moments a user reaches for it are different: on the core picker they are
+     * choosing between this and a Minor Works Certificate; here they are
+     * browsing what the app can produce.
+     *
+     * 🔴 `standard` is NOT "BS 7671". Part 6 specifies three model forms and
+     * this is not one of them.
+     */
+    id: 'visual-condition',
+    title: 'Visual Condition',
+    description: 'Visual inspection only, no testing',
+    standard: 'Visual only',
+    accentColor: 'from-sky-500 via-sky-400 to-cyan-400',
+    category: 'electrical',
+  },
+  {
+    /*
+     * ELE-1634. Sits next to Visual Condition on purpose — it is the same
+     * document with a different reader, and someone reaching for one should
+     * see the other.
+     *
+     * 🔴 `standard` is "Advisory", not "BS 7671" and not "Visual only". The
+     * reader here is a house-buyer rather than a tradesperson, and this badge
+     * is the first thing that tells them what they are being handed.
+     */
+    id: 'pre-purchase-survey',
+    title: 'Pre-Purchase Survey',
+    description: 'Photo-led advisory survey for a buyer',
+    standard: 'Advisory',
+    accentColor: 'from-violet-500 via-purple-400 to-fuchsia-400',
+    category: 'electrical',
+  },
+  {
+    /*
+     * ELE-1110. Planned maintenance with an optional thermographic survey.
+     *
+     * 🔴 `standard` is NOT "BS 7671" — Part 6 has no model form for this, and
+     * BS 7671 says nothing about thermography. The badge names the duty the
+     * report supports: EAWR Regulation 4(2).
+     */
+    id: 'routine-inspection',
+    title: 'Routine Inspection',
+    description: 'Maintenance visit with optional thermal survey',
+    standard: 'EAWR 1989',
+    accentColor: 'from-orange-500 via-amber-400 to-yellow-400',
+    category: 'electrical',
+  },
+  {
     id: 'ev-charging',
     title: 'EV Charging',
     description: 'Charge point installation',

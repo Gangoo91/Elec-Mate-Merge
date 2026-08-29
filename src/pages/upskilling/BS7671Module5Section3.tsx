@@ -1,8 +1,8 @@
-import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { useNavigate } from 'react-router-dom';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
-import { PageFrame, PageHero } from '@/components/college/primitives';
 import {
   TLDR,
   ConceptBlock,
@@ -300,459 +300,454 @@ const BS7671Module5Section3 = () => {
   });
 
   return (
-    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
-      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
-        <PageFrame>
+    <HubPage>
+      <HubMasthead
+        section="Module 5 · Section 3"
+        title="Containment systems and mechanical protection"
+        backTo="../bs7671-module-5"
+      />
+      <HubBody>
+        <div className="max-w-3xl text-[13px] leading-relaxed text-white">
+          {
+            'How BS 7671:2018+A4:2026 governs the metalwork, plastic-work and fixings around the cable — conduit and trunking sizing, tray vs ladder vs basket, SWA and MICC termination, mechanical impact, segregation between Bands, and fire-stopping at compartment penetrations.'
+          }
+        </div>
+
+        <div className="flex flex-wrap items-center gap-2">
+          {
+            <>
+              <RegBadge>521.10</RegBadge>
+              <RegBadge>522.6</RegBadge>
+              <RegBadge>522.8</RegBadge>
+              <AmendmentBadge regs={['521.10']} />
+            </>
+          }
+        </div>
+
+        <TLDR
+          points={[
+            'Section 521 selects the wiring system (cable type AND containment type); Section 522 covers external influences acting on it — mechanical impact (522.6), mechanical stress and supports (522.8), water, vibration, fauna.',
+            'Conduit fill is sized by cable factor / conduit factor tables (OSG); trunking by the equivalent ~45% space-factor approach. Bends, sets and run length all reduce the usable factor.',
+            'Where SWA armour or MICC sheath is used as the CPC (Reg 543.2.2), the gland-plate connection must be metal-to-metal (paint stripped, banjo / earth tag, conductor sized per 543.1) and Zs verified.',
+            'Reg 522.6 mechanical impact is graded by the AG external-influence code — match the equipment IK rating (BS EN 62262, IK00–IK10) to the environment.',
+            'Reg 528 segregation between Band I and Band II — fire alarm with mains lighting in the same uncompartmented trunking is non-compliant; Reg 527.2 requires every fire-compartment penetration to be sealed back to the rated fire resistance.',
+          ]}
+        />
+
+        <LearningOutcomes
+          outcomes={[
+            'Select the right containment for the loading, environment and routing — conduit, trunking, tray, ladder, basket, ducting or armoured cable — and justify it against Section 521 / 522.',
+            'Size a conduit run using the OSG cable factor / conduit factor tables, accounting for bends, sets and run length; size a trunking using the ~45% / cable-factor method.',
+            'Specify and verify the support of cables and SWA — clip vs saddle vs cable cleat (BS EN 61914) — against Reg 522.8 and the manufacturer load tables.',
+            'Apply Reg 522.6 mechanical impact protection — choose the right enclosure IK rating (BS EN 62262) for the AG external-influence code and call out additional barriers / cages where needed.',
+            'Apply Reg 528 segregation between Band I and Band II circuits, including the three permitted methods, and explain why a continuous earthed metallic barrier is the practical compliant answer in mixed installations.',
+            'Implement Reg 527.2 fire-stopping at compartment penetrations using a tested system rated to the fire resistance of the element, and record it on the EIC.',
+            'Terminate SWA, MICC and screened cables correctly so the metallic covering can be relied upon as both the CPC and the segregation barrier — banjo washers, sealing pots, gland selection, paint removal at the gland-plate.',
+          ]}
+          initialVisibleCount={3}
+        />
+
+        <ContentEyebrow>Conduit systems</ContentEyebrow>
+
+        <ConceptBlock
+          title="Steel and PVC conduit — what BS 7671 expects"
+          plainEnglish="Conduit is a closed-section cable enclosure. Steel conduit (BS EN 61386-21) gives mechanical protection AND can act as the CPC. PVC conduit (BS EN 61386-22) is lighter and easier to bend but cannot be a CPC and can soften at temperature."
+          onSite="Domestic surface-wiring routes in steel conduit are now rare; trunking and surface-clipped T+E dominate. Steel conduit still earns its place in workshops, plant rooms, escape routes (where Reg 521.10.202 needs metallic support) and where mechanical impact is high."
+        >
+          <p>
+            Reg 521.10 covers cable enclosures (conduits, trunking, ducts). The system shall be such
+            that cables can be drawn in or replaced without damage to the cable or to the enclosure
+            (Reg 522.8.3). Steel conduit, when used as a CPC, must be electrically continuous (Reg
+            543.3.6) — every coupling tight, every brass bush biting into the enclosure metal, every
+            flexible section bridged by a separate green/yellow CPC. Bends must respect the cable
+            bend radius (Reg 522.8.6) — typically 6× cable diameter for thermoplastic singles, more
+            for SWA. Where the conduit can collect water, Reg 522.8.11 demands drainage.
+          </p>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="Sizing conduit — cable factor vs conduit factor"
+          plainEnglish="Add up the cable factors of every cable you intend to draw in. Compare against the conduit factor for the run length and number of bends. If you exceed it, step up the conduit size — or split the run with a draw-in box."
+          onSite="The OSG tables give cable factors per conductor size and conduit factors per size and per bends-and-length combination. Always size the conduit BEFORE chopping the wall — retro-fitting an extra 1.5 mm² CPC into a stuffed 20 mm conduit is misery."
+        />
+
+        <RegsCallout
+          source="BS 7671:2018+A4:2026 · Reg 521.10.1 — Cable enclosures — drawing in"
+          clause="A wiring system shall be selected and erected so that no damage is caused by tension, compression or pulling forces during the drawing in or removal of cables, conductors or flexible cords. The radius of every bend in a wiring system shall be such that conductors and cables shall not suffer damage."
+          meaning="Conduit and trunking exist to let cables be drawn in NOW and replaced LATER — without damage either time. Overstuffed conduit, sharp bends, missing draw-boxes — they all breach Reg 521.10.1 and Reg 522.8."
+          cite="BS 7671:2018+A4:2026, Reg 521.10.1 (Section 521 — Selection of wiring systems)"
+        />
+
+        <InlineCheck {...inlineChecks[0]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>Trunking systems</ContentEyebrow>
+
+        <ConceptBlock
+          title="Steel trunking, PVC trunking, compartmented trunking"
+          plainEnglish="Trunking is a larger-section cable enclosure with a removable lid — much easier to wire than conduit. Steel trunking can be a CPC and a Reg 528 barrier; PVC trunking can be neither."
+          onSite="The 45% rule is the rule of thumb that drops out of the OSG cable factor / trunking factor approach. Aim well below 45% on any run that will see future additions — the cable factor approach already assumes a worst-case packing pattern."
+        >
+          <p>
+            Section 521 / OSG trunking sizing: for each cable size, look up the cable factor; sum
+            them; compare to the trunking factor for the trunking cross-section. The result
+            corresponds to roughly 45% area fill — the residual 55% area is the heat-dissipation and
+            pulling-clearance buffer. Reg 523.5 (grouping) then applies independently — even a
+            properly sized trunking that runs at 45% fill may need cable derating if grouped with
+            other circuits over long lengths. Reg 522.8.4 also applies — trunking must be installed
+            with provisions to prevent damage to cables at edges and corners (rounded edges,
+            grommets, bushes).
+          </p>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="Compartmented trunking — the segregation tool"
+          plainEnglish="A trunking with internal compartments separated by a continuous earthed metallic barrier lets you run Band I and Band II circuits in the same enclosure without breaching Reg 528.1."
+          onSite="The barrier must be continuous through every fitting — bends, tees, end-caps, expansion couplers. Inspect along the full length: a missing barrier insert at a tee converts a compliant install into a Reg 528.1 failure."
+        />
+
+        <InlineCheck {...inlineChecks[1]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>Cable tray, ladder and basket</ContentEyebrow>
+
+        <ConceptBlock
+          title="Tray vs ladder vs basket — pick by load and ventilation"
+          plainEnglish="Tray is light/medium. Ladder is heavy and ventilated. Basket is light, mainly comms / data / control."
+          onSite="Cable tray (perforated steel or GRP) — most common general-purpose containment. Cable ladder (open rungs) — large SWA over long spans; the open base also helps Appendix 4 grouping. Cable basket (welded mesh) — designed for low-weight cabling like data, comms, control. Don't run a 6 m span of large SWA on basket — it will sag and breach Reg 522.8.5 (mechanical strength)."
+        >
+          <p>
+            The relevant standard is BS EN 61537 (Cable tray and cable ladder systems for cable
+            management). Manufacturer load tables list the maximum uniformly-distributed load
+            between supports; the support intervals given in Appendix 4 / OSG are the BS 7671
+            defaults. For tray and ladder used as a CPC, Reg 543.2.2 lists metal cable management
+            systems as recognised protective conductors — but they must be electrically continuous
+            (every joint coupled, expansion joints bridged) and sized per Reg 543.1.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...inlineChecks[6]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>SWA — Steel-Wire Armoured cable</ContentEyebrow>
+
+        <ConceptBlock
+          title="SWA — the workhorse cable for sub-mains, externals and plant"
+          plainEnglish="A multi-core PVC- or XLPE-insulated cable with a layer of galvanised steel wires under an outer sheath. The armour is mechanical protection AND a recognised CPC."
+          onSite="Termination is where SWA jobs go right or wrong. CW gland with banjo washer or earth tag, paint stripped from the gland-plate, gland body cone biting into the armour, gland-plate threaded into the enclosure (or fitted with a serrated locknut)."
+        >
+          <p>
+            SWA is governed by BS 5467 (XLPE) or BS 6346 (PVC) for the cable, and BS 6121 for the
+            gland. Reg 543.2.2 lists steel-wire armour and the metallic sheaths of cables as
+            protective conductors. To rely on the armour as the CPC: the armour CSA must satisfy Reg
+            543.1 (adiabatic equation 543.1.3 or Table 54.7); the gland must be tightened to
+            manufacturer torque so the cone compresses the armour into a continuous metallic path;
+            paint at the gland-plate must be removed and a serrated washer or banjo earth tag fitted
+            to provide a low-resistance metal-to-metal joint; R1+R2 / Zs must be measured on
+            commissioning to confirm Reg 411.4.4.
+          </p>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="Cable cleats vs cable clips — Reg 522.8 + BS EN 61914"
+          plainEnglish="A clip (saddle) holds the cable against gravity. A cleat is engineered to hold the cable against the magnetic forces of a short-circuit fault."
+          onSite="Where prospective fault current is high (PSCC ≳ 10 kA peak) and SWA is on tray, ladder or in vertical risers, fit cable cleats tested to BS EN 61914 with a short-circuit rating that exceeds the calculated peak Ipk. Otherwise the fault forces can rip the cable off, dropping it onto plant or personnel."
+        />
+
+        <InlineCheck {...inlineChecks[2]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>MICC — mineral-insulated copper-cable</ContentEyebrow>
+
+        <ConceptBlock
+          title="MICC (Pyro) — the original fire-performance cable"
+          plainEnglish="Solid copper conductors, magnesium-oxide powder insulation, copper sheath. Withstands very high temperatures. Used where the cable must keep working in a fire."
+          onSite="Common applications: fire alarm risers, sprinkler pump circuits, kitchen extract motors, smoke-control fans, plant-room emergency circuits. Two grades: light-duty (500 V) and heavy-duty (750 V). Outer LSZH or LSF oversheath when needed for environment / mechanical / aesthetic reasons."
+        >
+          <p>
+            MICC is to BS EN 60702-1 / BS 6207 with BS 6207-2 covering the terminations. MgO is
+            hygroscopic — it absorbs moisture from the air within minutes of stripping the sheath.
+            Termination is therefore a single operation: strip, fit pot, fill with compound, fit
+            disc, fit gland — and IR-test immediately. Reg 543.2.2 lists the metal sheath as a
+            recognised protective conductor; in fire alarm and emergency circuits the sheath also
+            provides the Reg 528 metallic barrier function — so MICC can run alongside LV cabling
+            without compartmented trunking.
+          </p>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <ContentEyebrow>Fire-rated cables — FP200, FP400, BS 8434, BS EN 50200</ContentEyebrow>
+
+        <ConceptBlock
+          title="Standard vs enhanced fire-rated cable — picking the grade"
+          plainEnglish="Fire-rated cable is what carries fire alarm and emergency lighting circuits. Standard grade survives 30+ minutes; enhanced survives 120 minutes."
+          onSite="BS 5839-1 (fire alarm) and BS 5266-1 (emergency lighting) drive the cable grade. Cat L1 systems in single-stair sleeping-risk premises typically need enhanced fire-rated cable. Standard grade — FP200 family — is fine in most M and P category systems. Always read the system designer's specification, not just the BS 7671 minimum."
+        >
+          <p>
+            The fire-performance test standards are BS EN 50200 (basic — 30 min flame), BS 8434-2
+            (enhanced — 120 min flame + impact + water), and BS EN 50362 (large cable, 120 min).
+            FP200 / FP200 Gold and similar polymer-jacketed mineral-insulated cables meet BS EN
+            50200 PH30. FP PLUS, FP400 and similar enhanced cables meet BS 8434-2 PH120. MICC
+            exceeds both. Reg 521.10.202 (BS 7671) then sets the SUPPORT rule for these cables in
+            escape routes — metallic clips/saddles only, never plastic.
+          </p>
+        </ConceptBlock>
+
+        <RegsCallout
+          source="BS 7671:2018+A4:2026 · Reg 527.1 — Selection of materials to minimise fire spread"
+          clause="The risk of spread of fire shall be minimised by the selection of appropriate materials and erection. Wiring systems shall be selected and erected to minimise the spread of flame in accordance with Section 527."
+          meaning="The cable choice (fire performance), the support method (metallic vs non-metallic), and the penetration sealing (Reg 527.2) all sit together — pick the cable, support it with metal, fire-stop the holes."
+          cite="BS 7671:2018+A4:2026, Reg 527.1 (Chapter 52 — Selection and erection of wiring systems)"
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>Mechanical impact — Reg 522.6</ContentEyebrow>
+
+        <ConceptBlock
+          title="External influence AG and the IK code"
+          plainEnglish="Reg 522.6 says: assess how hard the equipment will get hit, and select equipment rated for it. AG1 / AG2 / AG3 graded by Appendix 5; IK00–IK10 the equipment rating."
+          onSite="Practical map. Domestic indoors (low impact) — AG1, IK02–IK04 typical. Light industrial — AG2, IK07–IK08. Heavy industrial / forklift / mechanical workshop — AG3, IK10 or barrier protection. Outdoors at low level — IK10 or kerb / steel cage."
+        >
+          <p>
+            IK is to BS EN 62262 — IK00 (no protection) through IK10 (20 J impact). It is
+            independent of IP (BS EN 60529) which covers ingress. In the EICR / EIC the
+            external-influence code from Appendix 5 should be the design input — AG1 / AG2 / AG3 —
+            and the equipment selection should respond to it. Where the rating cannot be met by the
+            equipment alone, additional mechanical protection (cage, kerb, barrier, relocation out
+            of the impact zone) closes the gap.
+          </p>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="Cables buried in walls less than 50 mm — Reg 522.6"
+          plainEnglish="Cables hidden in walls less than 50 mm deep are at risk from drilled fixings. BS 7671 forces one of: earthed metallic covering, earthed metal containment, true mechanical protection, or safe zones plus 30 mA RCD."
+          onSite="The default modern domestic answer is safe zones + 30 mA RCBO. Steel capping under plaster is for trowel protection only — not Reg 522.6 mechanical protection. For partitions containing metal parts, even safe zones + RCD is not enough on its own — the cables must be in earthed conduit / SWA / earthed metallic covering."
+        />
+
+        <InlineCheck {...inlineChecks[3]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>Cable supports — Reg 522.8</ContentEyebrow>
+
+        <ConceptBlock
+          title="Reg 522.8 — supports, fixings, mechanical stress"
+          plainEnglish="Cable shall be supported so its own weight, vibration, and any other mechanical stress does not damage it or the joint."
+          onSite="Domestic T+E: clip every 250 mm horizontal / 400 mm vertical (OSG). Singles in trunking: tied at intervals to prevent slumping at lid removal. SWA on tray: 600–1500 mm cleat spacing horizontal, 1200–1800 mm vertical, manufacturer load curves. SWA on a vertical riser: cleat at the top of every floor and at intermediate points to take the dead-weight + fault forces."
+        >
+          <p>
+            Reg 522.8.5 covers self-weight; 522.8.4 covers cables passing through holes / over edges
+            (rounded edges, grommets); 522.8.6 covers bend radius; 522.8.11 covers drainage of
+            moisture from enclosures. The support intervals are NOT in BS 7671 as numbers — they are
+            in Appendix 4 / OSG tables / cable manufacturer data, and the BS 7671 requirement is
+            that the support is sufficient to comply with 522.8.5.
+          </p>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="Reg 521.10.202 — supports for escape-route fire-resistant cables"
+          plainEnglish="In escape routes, fire-resistant cables must be installed using methods that resist premature collapse in a fire. Plastic ties / plastic-only clips are not acceptable."
+          onSite="Use metallic clips, metallic saddles, metallic cable management (tray, ladder, conduit, trunking) — anything that will hold the cable in place when the surrounding plastic has melted. The point of the rule is that a fire-rated cable that drops onto an escape route in a fire is a tripping hazard for occupants and a hose-snag for fire and rescue services."
+        />
+
+        <InlineCheck {...inlineChecks[4]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>Segregation — Reg 528</ContentEyebrow>
+
+        <ConceptBlock
+          title="Band I and Band II — three permitted methods"
+          plainEnglish="(i) insulate every Band I cable for the highest voltage present; (ii) separate compartments with a continuous earthed metallic barrier; or (iii) separate enclosures."
+          onSite="Real installations: fire alarm in dedicated metal trunking or galvanised conduit; data and comms in cable basket; LV in PVC trunking. Once you start mixing, compartmented metal trunking with a verified continuous metallic barrier is the only Reg 528.1 (ii) compliant route — and the barrier must be continuous through every fitting."
+        >
+          <p>
+            Reg 528.1 lists the three methods; Reg 528.2 deals with proximity to non-electrical
+            services (gas, water — keep clear or insulate). Reg 528.3 deals with equipotential
+            bonding requirements between metallic systems. The wider intent is to prevent a Band II
+            fault from injecting fault voltage into a Band I (signalling / fire / control) system,
+            and to prevent a fire alarm or data system from being dropped by a localised LV fault.
+          </p>
+        </ConceptBlock>
+
+        <RegsCallout
+          source="BS 7671:2018+A4:2026 · Reg 528.1 — Proximity of band I and band II circuits"
+          clause="Band I and Band II circuits shall not be contained in the same wiring system unless one of the following methods is adopted: (i) every cable is insulated for the highest voltage present, or (ii) the cables are run in separate compartments of a wiring system having a continuous partition between the bands which provides electrical separation, or (iii) each circuit is in a separate conduit / trunking / ducting / cable management system."
+          meaning="Mixing fire alarm with mains is allowed — but only via insulation up-rating, compartmented metal trunking, or separate enclosures. PVC dividers in plastic trunking do not satisfy (ii) — there is no metallic barrier."
+          cite="BS 7671:2018+A4:2026, Reg 528.1 (Chapter 52)"
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>Penetrations and fire-stopping — Reg 527.2</ContentEyebrow>
+
+        <ConceptBlock
+          title="Reg 527.2 — sealing wiring system penetrations"
+          plainEnglish="Where a cable, conduit or trunking passes through a fire-rated wall or floor, the penetration must be sealed back to the same fire resistance as the element. Both around AND inside the conduit / trunking."
+          onSite="Use a tested system — intumescent collars, intumescent pillows, fire-rated mortar, fire-rated foam, fire-rated putty — installed strictly per the manufacturer's tested specification. Mixing systems, or substituting general-purpose foam for fire-rated foam, breaks the test and the certificate."
+        >
+          <p>
+            Reg 527.2.1: where a wiring system passes through an element of building construction
+            having a specified fire resistance, the openings remaining shall be sealed to the same
+            degree of fire resistance. Reg 527.2.2: internal sealing of the wiring system itself
+            (i.e. inside the conduit or trunking) is required where its cross-sectional area exceeds
+            710 mm² to prevent the system itself becoming a chimney. The seal shall remain effective
+            against products of combustion when applied (527.2.3) and shall be compatible with the
+            cable and the building element (527.2.4).
+          </p>
+        </ConceptBlock>
+
+        <RegsCallout
+          source="BS 7671:2018+A4:2026 · Reg 527.2.1 — Sealing of wiring system penetrations"
+          clause="Where a wiring system passes through elements of building construction such as floors, walls, roofs, ceilings, partitions or cavity barriers, the openings remaining after passage of the wiring system shall be sealed according to the degree of fire resistance prescribed for the respective element of building construction (if any) before penetration."
+          meaning="Cables passing through compartment boundaries are an unsealed hole until you seal them. The fire-rated wall is only fire-rated again once the penetration is sealed back to the same rating with a tested system."
+          cite="BS 7671:2018+A4:2026, Reg 527.2.1 (Chapter 52)"
+        />
+
+        <InlineCheck {...inlineChecks[5]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>Where it goes wrong</ContentEyebrow>
+
+        <CommonMistake
+          title="Painted gland-plate killing the SWA earth"
+          whatHappens="A 4 × 6 mm² SWA terminates into a painted metal isolator. The CW gland tightens onto the painted plate; the brass body never touches bare metal. R1+R2 reads open or wildly high; Zs is unverifiable; ADS via the armour CPC is non-demonstrable."
+          doInstead="Always strip paint at the gland-plate down to bare metal in a ring around the gland hole, fit a serrated washer or banjo earth tag under the gland body, and bond the banjo (where used) to the local earth bar with a conductor sized per Reg 543.1. Re-test R1+R2 and Zs after termination — never trust visual inspection alone."
+        />
+
+        <CommonMistake
+          title="Plastic cable ties on fire alarm cable in an escape route"
+          whatHappens="A retro-fit fire alarm uses plastic cable ties to support FP200 cable along a corridor that forms part of the protected escape route. In a fire scenario the ties melt, the cable falls, and the BS 5839 system fails its support criterion. Reg 521.10.202 explicitly forbids non-metallic supports for fire-resistant cable in escape routes."
+          doInstead="Use metallic clips, metallic saddles, or metallic cable containment (tray, conduit, trunking). Even where the cable itself is fire-rated, the supports must survive the fire too. P-clips with metal-banded or steel inserts are the simplest correct retrofit; for new-build, dedicated fire-alarm metal trunking is cleaner."
+        />
+
+        <CommonMistake
+          title="Mixing Band I and Band II in plastic trunking with a plastic divider"
+          whatHappens="A site installer puts a fire-alarm cable and a 230 V lighting circuit in the same PVC trunking, on opposite sides of a moulded plastic divider. Reg 528.1 (ii) requires a CONTINUOUS EARTHED METALLIC barrier — a plastic divider isn't one. The compliance fails on inspection; the fire alarm certifier rejects the routing; the work is ripped out."
+          doInstead="Either re-route into separate trunkings (Reg 528.1 (iii)), use compartmented metal trunking with the barrier bonded to the MET (Reg 528.1 (ii)), or insulate every Band I cable for the highest voltage present (Reg 528.1 (i) — usually impractical for fire-alarm cable). On any mixed installation, segregation is a design call that has to be made BEFORE the trunking is bought."
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>Worked example — sub-main from intake to remote workshop</ContentEyebrow>
+
+        <ConceptBlock
+          title="Designing a 100 A SWA sub-main on cable ladder, through a fire-rated wall"
+          plainEnglish="A 100 A TP+N SWA from a main switchroom to a workshop 60 m away. Cable ladder for the bulk of the run, through a 60-minute fire-rated compartment wall, into a metal-clad isolator at the workshop end."
+          onSite="This pulls together every regulation in this section: containment selection, support spacing, mechanical impact, segregation from other services, fire-stop, gland termination and CPC verification. Get one wrong and the inspection fails — get them all right and it sails through."
+        >
+          <p>
+            <strong>1. Cable selection.</strong> 4 × 35 mm² XLPE/SWA/PVC to BS 5467, sized per
+            Appendix 4 for the 100 A design current with the route grouping factor and ambient.
+            <strong> 2. Containment.</strong> Cable ladder for the 60 m main run (heavy SWA, long
+            span, ventilated — better grouping); cable cleats per BS EN 61914 sized to the
+            calculated PSCC peak. <strong>3. Support intervals.</strong> Saddle / cleat at 1200 mm
+            horizontal max per manufacturer load table — Reg 522.8.5.{' '}
+            <strong>4. Penetration of the fire-rated wall.</strong> Drill clean hole, sleeve through
+            if needed, install a tested intumescent collar / pillow / fire-rated mortar system rated
+            to 60 minutes — Reg 527.2.1. Record the system make/model on the EIC.
+            <strong> 5. Mechanical impact.</strong> Where the SWA drops to the workshop isolator at
+            low level near vehicle traffic, fit a galvanised steel guard or kerb to AG3 / IK10 — Reg
+            522.6. <strong>6. Segregation.</strong> Other services in the route — gas, water — are
+            kept clear; any shared building voids respect Reg 528.2.{' '}
+            <strong>7. Termination.</strong> CW brass gland at each end, paint stripped from
+            gland-plates, banjo earth tags fitted, gland body torqued to manufacturer spec.{' '}
+            <strong>8. Verification.</strong> Continuity of armour CPC by R1+R2; insulation
+            resistance L/L, L/N, L/E and N/E ≥ 1 MΩ at 500 V; Zs measured at the workshop isolator
+            confirms ADS within Table 41.1 for the upstream OPD. <strong>9. EIC.</strong> All of the
+            above recorded — the schedule of inspection ticks Section 521 (selection of wiring
+            systems), 522 (external influences), 527 (fire spread), 528 (segregation), 543
+            (protective conductors).
+          </p>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <ContentEyebrow>Scenarios — applying it on the day</ContentEyebrow>
+
+        <Scenario
+          title="Light industrial unit — adding an EV charger feeder along a tray run"
+          situation="Existing 50 m cable tray runs at 4 m height through a light-industrial unit. You need to add a 32 A SWA feed for a wall-box EV charger on an end wall. The tray already carries six other cables — three Band II, three data."
+          whatToDo="Check Appendix 4 grouping factors — the new SWA pushes cable count to 7; Iz of the new SWA derates by the appropriate Cg from Table 4C1. Confirm the new sizing still meets In ≤ Iz. Mount the new SWA with proper tray cleats — not cable ties — to Reg 522.8 spacing per manufacturer. The Band I (data) cables remain segregated by their own twisted/screened construction, but check Reg 528.1 (i) — data cables are usually rated 30/50 V, NOT for the 230/400 V Band II voltage. If they share the same tray with no barrier, you may breach Reg 528.1. Either add a tray-divider with a continuous earthed metallic barrier (528.1 (ii)) or move data to a separate tray / basket (528.1 (iii))."
+          whyItMatters="Tray cable runs accumulate over the years — every project adds a few more cables. The original Reg 528 / 522 / 521 design eventually drifts out of compliance. An EV charger addition is a fresh design event under BS 7671 — the whole route has to be re-evaluated, not just the new cable. The EIC for the new circuit should record the as-tested grouping derating and the segregation arrangement."
+        />
+
+        <Scenario
+          title="Refurb of an office floor — fire alarm rewire through a 60-min compartment wall"
+          situation="A Cat L1 fire alarm is being installed across two floor compartments separated by a 60-minute fire-rated wall. The cable is enhanced fire-rated FP-PLUS to BS 8434-2. The route passes through two existing service penetrations that are unsealed."
+          whatToDo="Reg 521.10.202 forces metallic supports through escape routes — fit P-clips with metal bands, or run in galvanised conduit. Reg 528 (segregation from existing Band II circuits in the same ceiling void) — keep the FP-PLUS in its own tray or run separately at minimum 150 mm clear, OR insulate-rate-up the route, OR compartmented trunking. At the wall penetration, DO NOT just push the cable through — the existing hole needs reinstatement to 60 min using a tested system (intumescent collar + fire-rated mortar). Both AROUND the cable and INSIDE any conduit / trunking that exceeds 710 mm² — Reg 527.2.2. Record the make / model of fire-stop used on the EIC and on the BS 5839 commissioning certificate."
+          whyItMatters="A Cat L1 system is what protects sleeping occupants in an evacuating building. The fire-rated cable, the metallic supports, and the fire-stop at the compartment wall ALL have to survive the 60 minutes the wall is rated for. Failure of any one of the three drops the whole compartmentation strategy. BS 7671 Reg 527.2 and BS 5839-1 read together — and both must be on the certificate."
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>Designer's quick reference</ContentEyebrow>
+
+        <ConceptBlock
+          title="Containment decision tree"
+          plainEnglish="(1) What's the cable type / weight? (2) What's the run environment (mechanical impact, vibration, water, fire compartments)? (3) Do you need the containment to be the CPC? (4) Is there segregation between Band I and Band II?"
+          onSite="(1) Light singles / data / control — basket, light tray, PVC trunking. T+E or larger SWA — saddle clips, cable tray, ladder. (2) AG1 — most metal/plastic. AG2 — steel, sturdy plastic. AG3 — steel only, IK08+, possibly with cage/kerb. (3) CPC needed — steel conduit, steel trunking, SWA armour, MICC sheath. Plastic NOT a CPC. (4) Mixed bands — compartmented metal trunking with continuous earthed barrier, OR separate enclosures, OR insulation up-rating."
+        >
+          <p>
+            The decision tree pulls Section 521 (system selection), Section 522 (external influences
+            — 522.6 mechanical impact, 522.8 mechanical stress), Section 527 (fire spread + 527.2
+            sealing), Section 528 (segregation) and Section 543 (CPC requirements) into a single
+            design pass. Every cert should be defensible against all five — and the inspection
+            schedule on the EIC has tick-boxes that map directly to each.
+          </p>
+        </ConceptBlock>
+
+        <FAQ items={faqItems} />
+
+        <KeyTakeaways
+          points={[
+            'Section 521 selects the wiring system; Section 522 governs external influences (522.6 mechanical impact, 522.8 mechanical stress and supports); Section 527 covers fire spread and penetrations; Section 528 covers segregation between Bands.',
+            'Conduit fill via cable factor / conduit factor (OSG); trunking via the equivalent ~45% space-factor approach. Bends and run length reduce the usable factor.',
+            'Where SWA armour or MICC sheath is the CPC (Reg 543.2.2), termination quality is everything — paint stripped, banjo earth tag, manufacturer torque, verified R1+R2.',
+            'Reg 522.6 mechanical impact is graded by the AG external-influence code; equipment IK rating to BS EN 62262 (IK00–IK10) is the response. Cables in walls less than 50 mm — earthed metallic covering, earthed metal containment, mechanical protection or safe zones + 30 mA RCD.',
+            'Reg 528.1 — three methods to mix Band I and Band II: insulation up-rating, continuous earthed metallic barrier, or separate enclosures. Plastic dividers do NOT satisfy (ii).',
+            'Reg 527.2 — every penetration through a fire compartment is sealed to the same fire rating using a tested system. Record the system on the EIC.',
+            'Reg 521.10.202 — fire-resistant cables in escape routes must be supported by metallic methods; plastic ties / clips are not acceptable.',
+          ]}
+        />
+
+        <Quiz questions={quizQuestions} />
+
+        <div className="grid grid-cols-2 gap-3 pt-2">
           <button
             type="button"
-            onClick={() => navigate('../bs7671-module-5')}
-            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            onClick={() => navigate('/electrician/upskilling/bs7671-module-5')}
+            className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
           >
-            <ArrowLeft className="h-4 w-4" /> Module 5
+            <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+              <ChevronLeft className="h-3 w-3" /> Module 5
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-white truncate">
+              Module overview
+            </div>
           </button>
-
-          <PageHero
-            eyebrow="Module 5 · Section 3"
-            title="Containment systems and mechanical protection"
-            description="How BS 7671:2018+A4:2026 governs the metalwork, plastic-work and fixings around the cable — conduit and trunking sizing, tray vs ladder vs basket, SWA and MICC termination, mechanical impact, segregation between Bands, and fire-stopping at compartment penetrations."
-            actions={
-              <>
-                <RegBadge>521.10</RegBadge>
-                <RegBadge>522.6</RegBadge>
-                <RegBadge>522.8</RegBadge>
-                <AmendmentBadge regs={['521.10']} />
-              </>
-            }
-            tone="yellow"
-          />
-
-          <TLDR
-            points={[
-              'Section 521 selects the wiring system (cable type AND containment type); Section 522 covers external influences acting on it — mechanical impact (522.6), mechanical stress and supports (522.8), water, vibration, fauna.',
-              'Conduit fill is sized by cable factor / conduit factor tables (OSG); trunking by the equivalent ~45% space-factor approach. Bends, sets and run length all reduce the usable factor.',
-              'Where SWA armour or MICC sheath is used as the CPC (Reg 543.2.2), the gland-plate connection must be metal-to-metal (paint stripped, banjo / earth tag, conductor sized per 543.1) and Zs verified.',
-              'Reg 522.6 mechanical impact is graded by the AG external-influence code — match the equipment IK rating (BS EN 62262, IK00–IK10) to the environment.',
-              'Reg 528 segregation between Band I and Band II — fire alarm with mains lighting in the same uncompartmented trunking is non-compliant; Reg 527.2 requires every fire-compartment penetration to be sealed back to the rated fire resistance.',
-            ]}
-          />
-
-          <LearningOutcomes
-            outcomes={[
-              'Select the right containment for the loading, environment and routing — conduit, trunking, tray, ladder, basket, ducting or armoured cable — and justify it against Section 521 / 522.',
-              'Size a conduit run using the OSG cable factor / conduit factor tables, accounting for bends, sets and run length; size a trunking using the ~45% / cable-factor method.',
-              'Specify and verify the support of cables and SWA — clip vs saddle vs cable cleat (BS EN 61914) — against Reg 522.8 and the manufacturer load tables.',
-              'Apply Reg 522.6 mechanical impact protection — choose the right enclosure IK rating (BS EN 62262) for the AG external-influence code and call out additional barriers / cages where needed.',
-              'Apply Reg 528 segregation between Band I and Band II circuits, including the three permitted methods, and explain why a continuous earthed metallic barrier is the practical compliant answer in mixed installations.',
-              'Implement Reg 527.2 fire-stopping at compartment penetrations using a tested system rated to the fire resistance of the element, and record it on the EIC.',
-              'Terminate SWA, MICC and screened cables correctly so the metallic covering can be relied upon as both the CPC and the segregation barrier — banjo washers, sealing pots, gland selection, paint removal at the gland-plate.',
-            ]}
-            initialVisibleCount={3}
-          />
-
-          <ContentEyebrow>Conduit systems</ContentEyebrow>
-
-          <ConceptBlock
-            title="Steel and PVC conduit — what BS 7671 expects"
-            plainEnglish="Conduit is a closed-section cable enclosure. Steel conduit (BS EN 61386-21) gives mechanical protection AND can act as the CPC. PVC conduit (BS EN 61386-22) is lighter and easier to bend but cannot be a CPC and can soften at temperature."
-            onSite="Domestic surface-wiring routes in steel conduit are now rare; trunking and surface-clipped T+E dominate. Steel conduit still earns its place in workshops, plant rooms, escape routes (where Reg 521.10.202 needs metallic support) and where mechanical impact is high."
+          <button
+            type="button"
+            onClick={() => navigate('/electrician/upskilling/bs7671-module-5-section-4')}
+            className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
           >
-            <p>
-              Reg 521.10 covers cable enclosures (conduits, trunking, ducts). The system shall be
-              such that cables can be drawn in or replaced without damage to the cable or to the
-              enclosure (Reg 522.8.3). Steel conduit, when used as a CPC, must be electrically
-              continuous (Reg 543.3.6) — every coupling tight, every brass bush biting into the
-              enclosure metal, every flexible section bridged by a separate green/yellow CPC. Bends
-              must respect the cable bend radius (Reg 522.8.6) — typically 6× cable diameter for
-              thermoplastic singles, more for SWA. Where the conduit can collect water, Reg 522.8.11
-              demands drainage.
-            </p>
-          </ConceptBlock>
-
-          <ConceptBlock
-            title="Sizing conduit — cable factor vs conduit factor"
-            plainEnglish="Add up the cable factors of every cable you intend to draw in. Compare against the conduit factor for the run length and number of bends. If you exceed it, step up the conduit size — or split the run with a draw-in box."
-            onSite="The OSG tables give cable factors per conductor size and conduit factors per size and per bends-and-length combination. Always size the conduit BEFORE chopping the wall — retro-fitting an extra 1.5 mm² CPC into a stuffed 20 mm conduit is misery."
-          />
-
-          <RegsCallout
-            source="BS 7671:2018+A4:2026 · Reg 521.10.1 — Cable enclosures — drawing in"
-            clause="A wiring system shall be selected and erected so that no damage is caused by tension, compression or pulling forces during the drawing in or removal of cables, conductors or flexible cords. The radius of every bend in a wiring system shall be such that conductors and cables shall not suffer damage."
-            meaning="Conduit and trunking exist to let cables be drawn in NOW and replaced LATER — without damage either time. Overstuffed conduit, sharp bends, missing draw-boxes — they all breach Reg 521.10.1 and Reg 522.8."
-            cite="BS 7671:2018+A4:2026, Reg 521.10.1 (Section 521 — Selection of wiring systems)"
-          />
-
-          <InlineCheck {...inlineChecks[0]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>Trunking systems</ContentEyebrow>
-
-          <ConceptBlock
-            title="Steel trunking, PVC trunking, compartmented trunking"
-            plainEnglish="Trunking is a larger-section cable enclosure with a removable lid — much easier to wire than conduit. Steel trunking can be a CPC and a Reg 528 barrier; PVC trunking can be neither."
-            onSite="The 45% rule is the rule of thumb that drops out of the OSG cable factor / trunking factor approach. Aim well below 45% on any run that will see future additions — the cable factor approach already assumes a worst-case packing pattern."
-          >
-            <p>
-              Section 521 / OSG trunking sizing: for each cable size, look up the cable factor; sum
-              them; compare to the trunking factor for the trunking cross-section. The result
-              corresponds to roughly 45% area fill — the residual 55% area is the heat-dissipation
-              and pulling-clearance buffer. Reg 523.5 (grouping) then applies independently — even a
-              properly sized trunking that runs at 45% fill may need cable derating if grouped with
-              other circuits over long lengths. Reg 522.8.4 also applies — trunking must be
-              installed with provisions to prevent damage to cables at edges and corners (rounded
-              edges, grommets, bushes).
-            </p>
-          </ConceptBlock>
-
-          <ConceptBlock
-            title="Compartmented trunking — the segregation tool"
-            plainEnglish="A trunking with internal compartments separated by a continuous earthed metallic barrier lets you run Band I and Band II circuits in the same enclosure without breaching Reg 528.1."
-            onSite="The barrier must be continuous through every fitting — bends, tees, end-caps, expansion couplers. Inspect along the full length: a missing barrier insert at a tee converts a compliant install into a Reg 528.1 failure."
-          />
-
-          <InlineCheck {...inlineChecks[1]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>Cable tray, ladder and basket</ContentEyebrow>
-
-          <ConceptBlock
-            title="Tray vs ladder vs basket — pick by load and ventilation"
-            plainEnglish="Tray is light/medium. Ladder is heavy and ventilated. Basket is light, mainly comms / data / control."
-            onSite="Cable tray (perforated steel or GRP) — most common general-purpose containment. Cable ladder (open rungs) — large SWA over long spans; the open base also helps Appendix 4 grouping. Cable basket (welded mesh) — designed for low-weight cabling like data, comms, control. Don't run a 6 m span of large SWA on basket — it will sag and breach Reg 522.8.5 (mechanical strength)."
-          >
-            <p>
-              The relevant standard is BS EN 61537 (Cable tray and cable ladder systems for cable
-              management). Manufacturer load tables list the maximum uniformly-distributed load
-              between supports; the support intervals given in Appendix 4 / OSG are the BS 7671
-              defaults. For tray and ladder used as a CPC, Reg 543.2.2 lists metal cable management
-              systems as recognised protective conductors — but they must be electrically continuous
-              (every joint coupled, expansion joints bridged) and sized per Reg 543.1.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...inlineChecks[6]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>SWA — Steel-Wire Armoured cable</ContentEyebrow>
-
-          <ConceptBlock
-            title="SWA — the workhorse cable for sub-mains, externals and plant"
-            plainEnglish="A multi-core PVC- or XLPE-insulated cable with a layer of galvanised steel wires under an outer sheath. The armour is mechanical protection AND a recognised CPC."
-            onSite="Termination is where SWA jobs go right or wrong. CW gland with banjo washer or earth tag, paint stripped from the gland-plate, gland body cone biting into the armour, gland-plate threaded into the enclosure (or fitted with a serrated locknut)."
-          >
-            <p>
-              SWA is governed by BS 5467 (XLPE) or BS 6346 (PVC) for the cable, and BS 6121 for the
-              gland. Reg 543.2.2 lists steel-wire armour and the metallic sheaths of cables as
-              protective conductors. To rely on the armour as the CPC: the armour CSA must satisfy
-              Reg 543.1 (adiabatic equation 543.1.3 or Table 54.7); the gland must be tightened to
-              manufacturer torque so the cone compresses the armour into a continuous metallic path;
-              paint at the gland-plate must be removed and a serrated washer or banjo earth tag
-              fitted to provide a low-resistance metal-to-metal joint; R1+R2 / Zs must be measured
-              on commissioning to confirm Reg 411.4.4.
-            </p>
-          </ConceptBlock>
-
-          <ConceptBlock
-            title="Cable cleats vs cable clips — Reg 522.8 + BS EN 61914"
-            plainEnglish="A clip (saddle) holds the cable against gravity. A cleat is engineered to hold the cable against the magnetic forces of a short-circuit fault."
-            onSite="Where prospective fault current is high (PSCC ≳ 10 kA peak) and SWA is on tray, ladder or in vertical risers, fit cable cleats tested to BS EN 61914 with a short-circuit rating that exceeds the calculated peak Ipk. Otherwise the fault forces can rip the cable off, dropping it onto plant or personnel."
-          />
-
-          <InlineCheck {...inlineChecks[2]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>MICC — mineral-insulated copper-cable</ContentEyebrow>
-
-          <ConceptBlock
-            title="MICC (Pyro) — the original fire-performance cable"
-            plainEnglish="Solid copper conductors, magnesium-oxide powder insulation, copper sheath. Withstands very high temperatures. Used where the cable must keep working in a fire."
-            onSite="Common applications: fire alarm risers, sprinkler pump circuits, kitchen extract motors, smoke-control fans, plant-room emergency circuits. Two grades: light-duty (500 V) and heavy-duty (750 V). Outer LSZH or LSF oversheath when needed for environment / mechanical / aesthetic reasons."
-          >
-            <p>
-              MICC is to BS EN 60702-1 / BS 6207 with BS 6207-2 covering the terminations. MgO is
-              hygroscopic — it absorbs moisture from the air within minutes of stripping the sheath.
-              Termination is therefore a single operation: strip, fit pot, fill with compound, fit
-              disc, fit gland — and IR-test immediately. Reg 543.2.2 lists the metal sheath as a
-              recognised protective conductor; in fire alarm and emergency circuits the sheath also
-              provides the Reg 528 metallic barrier function — so MICC can run alongside LV cabling
-              without compartmented trunking.
-            </p>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <ContentEyebrow>Fire-rated cables — FP200, FP400, BS 8434, BS EN 50200</ContentEyebrow>
-
-          <ConceptBlock
-            title="Standard vs enhanced fire-rated cable — picking the grade"
-            plainEnglish="Fire-rated cable is what carries fire alarm and emergency lighting circuits. Standard grade survives 30+ minutes; enhanced survives 120 minutes."
-            onSite="BS 5839-1 (fire alarm) and BS 5266-1 (emergency lighting) drive the cable grade. Cat L1 systems in single-stair sleeping-risk premises typically need enhanced fire-rated cable. Standard grade — FP200 family — is fine in most M and P category systems. Always read the system designer's specification, not just the BS 7671 minimum."
-          >
-            <p>
-              The fire-performance test standards are BS EN 50200 (basic — 30 min flame), BS 8434-2
-              (enhanced — 120 min flame + impact + water), and BS EN 50362 (large cable, 120 min).
-              FP200 / FP200 Gold and similar polymer-jacketed mineral-insulated cables meet BS EN
-              50200 PH30. FP PLUS, FP400 and similar enhanced cables meet BS 8434-2 PH120. MICC
-              exceeds both. Reg 521.10.202 (BS 7671) then sets the SUPPORT rule for these cables in
-              escape routes — metallic clips/saddles only, never plastic.
-            </p>
-          </ConceptBlock>
-
-          <RegsCallout
-            source="BS 7671:2018+A4:2026 · Reg 527.1 — Selection of materials to minimise fire spread"
-            clause="The risk of spread of fire shall be minimised by the selection of appropriate materials and erection. Wiring systems shall be selected and erected to minimise the spread of flame in accordance with Section 527."
-            meaning="The cable choice (fire performance), the support method (metallic vs non-metallic), and the penetration sealing (Reg 527.2) all sit together — pick the cable, support it with metal, fire-stop the holes."
-            cite="BS 7671:2018+A4:2026, Reg 527.1 (Chapter 52 — Selection and erection of wiring systems)"
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>Mechanical impact — Reg 522.6</ContentEyebrow>
-
-          <ConceptBlock
-            title="External influence AG and the IK code"
-            plainEnglish="Reg 522.6 says: assess how hard the equipment will get hit, and select equipment rated for it. AG1 / AG2 / AG3 graded by Appendix 5; IK00–IK10 the equipment rating."
-            onSite="Practical map. Domestic indoors (low impact) — AG1, IK02–IK04 typical. Light industrial — AG2, IK07–IK08. Heavy industrial / forklift / mechanical workshop — AG3, IK10 or barrier protection. Outdoors at low level — IK10 or kerb / steel cage."
-          >
-            <p>
-              IK is to BS EN 62262 — IK00 (no protection) through IK10 (20 J impact). It is
-              independent of IP (BS EN 60529) which covers ingress. In the EICR / EIC the
-              external-influence code from Appendix 5 should be the design input — AG1 / AG2 / AG3 —
-              and the equipment selection should respond to it. Where the rating cannot be met by
-              the equipment alone, additional mechanical protection (cage, kerb, barrier, relocation
-              out of the impact zone) closes the gap.
-            </p>
-          </ConceptBlock>
-
-          <ConceptBlock
-            title="Cables buried in walls less than 50 mm — Reg 522.6"
-            plainEnglish="Cables hidden in walls less than 50 mm deep are at risk from drilled fixings. BS 7671 forces one of: earthed metallic covering, earthed metal containment, true mechanical protection, or safe zones plus 30 mA RCD."
-            onSite="The default modern domestic answer is safe zones + 30 mA RCBO. Steel capping under plaster is for trowel protection only — not Reg 522.6 mechanical protection. For partitions containing metal parts, even safe zones + RCD is not enough on its own — the cables must be in earthed conduit / SWA / earthed metallic covering."
-          />
-
-          <InlineCheck {...inlineChecks[3]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>Cable supports — Reg 522.8</ContentEyebrow>
-
-          <ConceptBlock
-            title="Reg 522.8 — supports, fixings, mechanical stress"
-            plainEnglish="Cable shall be supported so its own weight, vibration, and any other mechanical stress does not damage it or the joint."
-            onSite="Domestic T+E: clip every 250 mm horizontal / 400 mm vertical (OSG). Singles in trunking: tied at intervals to prevent slumping at lid removal. SWA on tray: 600–1500 mm cleat spacing horizontal, 1200–1800 mm vertical, manufacturer load curves. SWA on a vertical riser: cleat at the top of every floor and at intermediate points to take the dead-weight + fault forces."
-          >
-            <p>
-              Reg 522.8.5 covers self-weight; 522.8.4 covers cables passing through holes / over
-              edges (rounded edges, grommets); 522.8.6 covers bend radius; 522.8.11 covers drainage
-              of moisture from enclosures. The support intervals are NOT in BS 7671 as numbers —
-              they are in Appendix 4 / OSG tables / cable manufacturer data, and the BS 7671
-              requirement is that the support is sufficient to comply with 522.8.5.
-            </p>
-          </ConceptBlock>
-
-          <ConceptBlock
-            title="Reg 521.10.202 — supports for escape-route fire-resistant cables"
-            plainEnglish="In escape routes, fire-resistant cables must be installed using methods that resist premature collapse in a fire. Plastic ties / plastic-only clips are not acceptable."
-            onSite="Use metallic clips, metallic saddles, metallic cable management (tray, ladder, conduit, trunking) — anything that will hold the cable in place when the surrounding plastic has melted. The point of the rule is that a fire-rated cable that drops onto an escape route in a fire is a tripping hazard for occupants and a hose-snag for fire and rescue services."
-          />
-
-          <InlineCheck {...inlineChecks[4]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>Segregation — Reg 528</ContentEyebrow>
-
-          <ConceptBlock
-            title="Band I and Band II — three permitted methods"
-            plainEnglish="(i) insulate every Band I cable for the highest voltage present; (ii) separate compartments with a continuous earthed metallic barrier; or (iii) separate enclosures."
-            onSite="Real installations: fire alarm in dedicated metal trunking or galvanised conduit; data and comms in cable basket; LV in PVC trunking. Once you start mixing, compartmented metal trunking with a verified continuous metallic barrier is the only Reg 528.1 (ii) compliant route — and the barrier must be continuous through every fitting."
-          >
-            <p>
-              Reg 528.1 lists the three methods; Reg 528.2 deals with proximity to non-electrical
-              services (gas, water — keep clear or insulate). Reg 528.3 deals with equipotential
-              bonding requirements between metallic systems. The wider intent is to prevent a Band
-              II fault from injecting fault voltage into a Band I (signalling / fire / control)
-              system, and to prevent a fire alarm or data system from being dropped by a localised
-              LV fault.
-            </p>
-          </ConceptBlock>
-
-          <RegsCallout
-            source="BS 7671:2018+A4:2026 · Reg 528.1 — Proximity of band I and band II circuits"
-            clause="Band I and Band II circuits shall not be contained in the same wiring system unless one of the following methods is adopted: (i) every cable is insulated for the highest voltage present, or (ii) the cables are run in separate compartments of a wiring system having a continuous partition between the bands which provides electrical separation, or (iii) each circuit is in a separate conduit / trunking / ducting / cable management system."
-            meaning="Mixing fire alarm with mains is allowed — but only via insulation up-rating, compartmented metal trunking, or separate enclosures. PVC dividers in plastic trunking do not satisfy (ii) — there is no metallic barrier."
-            cite="BS 7671:2018+A4:2026, Reg 528.1 (Chapter 52)"
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>Penetrations and fire-stopping — Reg 527.2</ContentEyebrow>
-
-          <ConceptBlock
-            title="Reg 527.2 — sealing wiring system penetrations"
-            plainEnglish="Where a cable, conduit or trunking passes through a fire-rated wall or floor, the penetration must be sealed back to the same fire resistance as the element. Both around AND inside the conduit / trunking."
-            onSite="Use a tested system — intumescent collars, intumescent pillows, fire-rated mortar, fire-rated foam, fire-rated putty — installed strictly per the manufacturer's tested specification. Mixing systems, or substituting general-purpose foam for fire-rated foam, breaks the test and the certificate."
-          >
-            <p>
-              Reg 527.2.1: where a wiring system passes through an element of building construction
-              having a specified fire resistance, the openings remaining shall be sealed to the same
-              degree of fire resistance. Reg 527.2.2: internal sealing of the wiring system itself
-              (i.e. inside the conduit or trunking) is required where its cross-sectional area
-              exceeds 710 mm² to prevent the system itself becoming a chimney. The seal shall remain
-              effective against products of combustion when applied (527.2.3) and shall be
-              compatible with the cable and the building element (527.2.4).
-            </p>
-          </ConceptBlock>
-
-          <RegsCallout
-            source="BS 7671:2018+A4:2026 · Reg 527.2.1 — Sealing of wiring system penetrations"
-            clause="Where a wiring system passes through elements of building construction such as floors, walls, roofs, ceilings, partitions or cavity barriers, the openings remaining after passage of the wiring system shall be sealed according to the degree of fire resistance prescribed for the respective element of building construction (if any) before penetration."
-            meaning="Cables passing through compartment boundaries are an unsealed hole until you seal them. The fire-rated wall is only fire-rated again once the penetration is sealed back to the same rating with a tested system."
-            cite="BS 7671:2018+A4:2026, Reg 527.2.1 (Chapter 52)"
-          />
-
-          <InlineCheck {...inlineChecks[5]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>Where it goes wrong</ContentEyebrow>
-
-          <CommonMistake
-            title="Painted gland-plate killing the SWA earth"
-            whatHappens="A 4 × 6 mm² SWA terminates into a painted metal isolator. The CW gland tightens onto the painted plate; the brass body never touches bare metal. R1+R2 reads open or wildly high; Zs is unverifiable; ADS via the armour CPC is non-demonstrable."
-            doInstead="Always strip paint at the gland-plate down to bare metal in a ring around the gland hole, fit a serrated washer or banjo earth tag under the gland body, and bond the banjo (where used) to the local earth bar with a conductor sized per Reg 543.1. Re-test R1+R2 and Zs after termination — never trust visual inspection alone."
-          />
-
-          <CommonMistake
-            title="Plastic cable ties on fire alarm cable in an escape route"
-            whatHappens="A retro-fit fire alarm uses plastic cable ties to support FP200 cable along a corridor that forms part of the protected escape route. In a fire scenario the ties melt, the cable falls, and the BS 5839 system fails its support criterion. Reg 521.10.202 explicitly forbids non-metallic supports for fire-resistant cable in escape routes."
-            doInstead="Use metallic clips, metallic saddles, or metallic cable containment (tray, conduit, trunking). Even where the cable itself is fire-rated, the supports must survive the fire too. P-clips with metal-banded or steel inserts are the simplest correct retrofit; for new-build, dedicated fire-alarm metal trunking is cleaner."
-          />
-
-          <CommonMistake
-            title="Mixing Band I and Band II in plastic trunking with a plastic divider"
-            whatHappens="A site installer puts a fire-alarm cable and a 230 V lighting circuit in the same PVC trunking, on opposite sides of a moulded plastic divider. Reg 528.1 (ii) requires a CONTINUOUS EARTHED METALLIC barrier — a plastic divider isn't one. The compliance fails on inspection; the fire alarm certifier rejects the routing; the work is ripped out."
-            doInstead="Either re-route into separate trunkings (Reg 528.1 (iii)), use compartmented metal trunking with the barrier bonded to the MET (Reg 528.1 (ii)), or insulate every Band I cable for the highest voltage present (Reg 528.1 (i) — usually impractical for fire-alarm cable). On any mixed installation, segregation is a design call that has to be made BEFORE the trunking is bought."
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>Worked example — sub-main from intake to remote workshop</ContentEyebrow>
-
-          <ConceptBlock
-            title="Designing a 100 A SWA sub-main on cable ladder, through a fire-rated wall"
-            plainEnglish="A 100 A TP+N SWA from a main switchroom to a workshop 60 m away. Cable ladder for the bulk of the run, through a 60-minute fire-rated compartment wall, into a metal-clad isolator at the workshop end."
-            onSite="This pulls together every regulation in this section: containment selection, support spacing, mechanical impact, segregation from other services, fire-stop, gland termination and CPC verification. Get one wrong and the inspection fails — get them all right and it sails through."
-          >
-            <p>
-              <strong>1. Cable selection.</strong> 4 × 35 mm² XLPE/SWA/PVC to BS 5467, sized per
-              Appendix 4 for the 100 A design current with the route grouping factor and ambient.
-              <strong> 2. Containment.</strong> Cable ladder for the 60 m main run (heavy SWA, long
-              span, ventilated — better grouping); cable cleats per BS EN 61914 sized to the
-              calculated PSCC peak. <strong>3. Support intervals.</strong> Saddle / cleat at 1200 mm
-              horizontal max per manufacturer load table — Reg 522.8.5.{' '}
-              <strong>4. Penetration of the fire-rated wall.</strong> Drill clean hole, sleeve
-              through if needed, install a tested intumescent collar / pillow / fire-rated mortar
-              system rated to 60 minutes — Reg 527.2.1. Record the system make/model on the EIC.
-              <strong> 5. Mechanical impact.</strong> Where the SWA drops to the workshop isolator
-              at low level near vehicle traffic, fit a galvanised steel guard or kerb to AG3 / IK10
-              — Reg 522.6. <strong>6. Segregation.</strong> Other services in the route — gas, water
-              — are kept clear; any shared building voids respect Reg 528.2.{' '}
-              <strong>7. Termination.</strong> CW brass gland at each end, paint stripped from
-              gland-plates, banjo earth tags fitted, gland body torqued to manufacturer spec.{' '}
-              <strong>8. Verification.</strong> Continuity of armour CPC by R1+R2; insulation
-              resistance L/L, L/N, L/E and N/E ≥ 1 MΩ at 500 V; Zs measured at the workshop isolator
-              confirms ADS within Table 41.1 for the upstream OPD. <strong>9. EIC.</strong> All of
-              the above recorded — the schedule of inspection ticks Section 521 (selection of wiring
-              systems), 522 (external influences), 527 (fire spread), 528 (segregation), 543
-              (protective conductors).
-            </p>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <ContentEyebrow>Scenarios — applying it on the day</ContentEyebrow>
-
-          <Scenario
-            title="Light industrial unit — adding an EV charger feeder along a tray run"
-            situation="Existing 50 m cable tray runs at 4 m height through a light-industrial unit. You need to add a 32 A SWA feed for a wall-box EV charger on an end wall. The tray already carries six other cables — three Band II, three data."
-            whatToDo="Check Appendix 4 grouping factors — the new SWA pushes cable count to 7; Iz of the new SWA derates by the appropriate Cg from Table 4C1. Confirm the new sizing still meets In ≤ Iz. Mount the new SWA with proper tray cleats — not cable ties — to Reg 522.8 spacing per manufacturer. The Band I (data) cables remain segregated by their own twisted/screened construction, but check Reg 528.1 (i) — data cables are usually rated 30/50 V, NOT for the 230/400 V Band II voltage. If they share the same tray with no barrier, you may breach Reg 528.1. Either add a tray-divider with a continuous earthed metallic barrier (528.1 (ii)) or move data to a separate tray / basket (528.1 (iii))."
-            whyItMatters="Tray cable runs accumulate over the years — every project adds a few more cables. The original Reg 528 / 522 / 521 design eventually drifts out of compliance. An EV charger addition is a fresh design event under BS 7671 — the whole route has to be re-evaluated, not just the new cable. The EIC for the new circuit should record the as-tested grouping derating and the segregation arrangement."
-          />
-
-          <Scenario
-            title="Refurb of an office floor — fire alarm rewire through a 60-min compartment wall"
-            situation="A Cat L1 fire alarm is being installed across two floor compartments separated by a 60-minute fire-rated wall. The cable is enhanced fire-rated FP-PLUS to BS 8434-2. The route passes through two existing service penetrations that are unsealed."
-            whatToDo="Reg 521.10.202 forces metallic supports through escape routes — fit P-clips with metal bands, or run in galvanised conduit. Reg 528 (segregation from existing Band II circuits in the same ceiling void) — keep the FP-PLUS in its own tray or run separately at minimum 150 mm clear, OR insulate-rate-up the route, OR compartmented trunking. At the wall penetration, DO NOT just push the cable through — the existing hole needs reinstatement to 60 min using a tested system (intumescent collar + fire-rated mortar). Both AROUND the cable and INSIDE any conduit / trunking that exceeds 710 mm² — Reg 527.2.2. Record the make / model of fire-stop used on the EIC and on the BS 5839 commissioning certificate."
-            whyItMatters="A Cat L1 system is what protects sleeping occupants in an evacuating building. The fire-rated cable, the metallic supports, and the fire-stop at the compartment wall ALL have to survive the 60 minutes the wall is rated for. Failure of any one of the three drops the whole compartmentation strategy. BS 7671 Reg 527.2 and BS 5839-1 read together — and both must be on the certificate."
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>Designer's quick reference</ContentEyebrow>
-
-          <ConceptBlock
-            title="Containment decision tree"
-            plainEnglish="(1) What's the cable type / weight? (2) What's the run environment (mechanical impact, vibration, water, fire compartments)? (3) Do you need the containment to be the CPC? (4) Is there segregation between Band I and Band II?"
-            onSite="(1) Light singles / data / control — basket, light tray, PVC trunking. T+E or larger SWA — saddle clips, cable tray, ladder. (2) AG1 — most metal/plastic. AG2 — steel, sturdy plastic. AG3 — steel only, IK08+, possibly with cage/kerb. (3) CPC needed — steel conduit, steel trunking, SWA armour, MICC sheath. Plastic NOT a CPC. (4) Mixed bands — compartmented metal trunking with continuous earthed barrier, OR separate enclosures, OR insulation up-rating."
-          >
-            <p>
-              The decision tree pulls Section 521 (system selection), Section 522 (external
-              influences — 522.6 mechanical impact, 522.8 mechanical stress), Section 527 (fire
-              spread + 527.2 sealing), Section 528 (segregation) and Section 543 (CPC requirements)
-              into a single design pass. Every cert should be defensible against all five — and the
-              inspection schedule on the EIC has tick-boxes that map directly to each.
-            </p>
-          </ConceptBlock>
-
-          <FAQ items={faqItems} />
-
-          <KeyTakeaways
-            points={[
-              'Section 521 selects the wiring system; Section 522 governs external influences (522.6 mechanical impact, 522.8 mechanical stress and supports); Section 527 covers fire spread and penetrations; Section 528 covers segregation between Bands.',
-              'Conduit fill via cable factor / conduit factor (OSG); trunking via the equivalent ~45% space-factor approach. Bends and run length reduce the usable factor.',
-              'Where SWA armour or MICC sheath is the CPC (Reg 543.2.2), termination quality is everything — paint stripped, banjo earth tag, manufacturer torque, verified R1+R2.',
-              'Reg 522.6 mechanical impact is graded by the AG external-influence code; equipment IK rating to BS EN 62262 (IK00–IK10) is the response. Cables in walls less than 50 mm — earthed metallic covering, earthed metal containment, mechanical protection or safe zones + 30 mA RCD.',
-              'Reg 528.1 — three methods to mix Band I and Band II: insulation up-rating, continuous earthed metallic barrier, or separate enclosures. Plastic dividers do NOT satisfy (ii).',
-              'Reg 527.2 — every penetration through a fire compartment is sealed to the same fire rating using a tested system. Record the system on the EIC.',
-              'Reg 521.10.202 — fire-resistant cables in escape routes must be supported by metallic methods; plastic ties / clips are not acceptable.',
-            ]}
-          />
-
-          <Quiz questions={quizQuestions} />
-
-          <div className="grid grid-cols-2 gap-3 pt-2">
-            <button
-              type="button"
-              onClick={() => navigate('/electrician/upskilling/bs7671-module-5')}
-              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
-                <ChevronLeft className="h-3 w-3" /> Module 5
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-white truncate">
-                Module overview
-              </div>
-            </button>
-            <button
-              type="button"
-              onClick={() => navigate('/electrician/upskilling/bs7671-module-5-section-4')}
-              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
-                Next section <ChevronRight className="h-3 w-3" />
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-black truncate">
-                5.4 Isolation, switching and emergency controls
-              </div>
-            </button>
-          </div>
-        </PageFrame>
-      </div>
-    </div>
+            <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+              Next section <ChevronRight className="h-3 w-3" />
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-black truncate">
+              5.4 Isolation, switching and emergency controls
+            </div>
+          </button>
+        </div>
+      </HubBody>
+    </HubPage>
   );
 };
 

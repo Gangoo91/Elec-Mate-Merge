@@ -1,8 +1,8 @@
-import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { useNavigate } from 'react-router-dom';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
-import { PageFrame, PageHero } from '@/components/college/primitives';
 import {
   TLDR,
   ConceptBlock,
@@ -295,410 +295,406 @@ const BS7671Module4Section7 = () => {
   });
 
   return (
-    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
-      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
-        <PageFrame>
+    <HubPage>
+      <HubMasthead
+        section="Module 4 · Section 7 · Updated for A4:2026"
+        title="Bidirectional protection (prosumer installations)"
+        backTo="../bs7671-module-4"
+      />
+      <HubBody>
+        <div className="max-w-3xl text-[13px] leading-relaxed text-white">
+          {
+            'How BS 7671:2018+A4:2026 protects installations where energy flows in both directions — solar PV, battery storage, V2H/V2G EV chargers. The new Reg 419 alternative-protective-measures group, bidirectional OCPDs (Reg 530.3.201), parallel-source rules (Reg 551.7.1), the EV charging PEN prohibition (Reg 722.312.2.1), and the PCE / RCD-type coordination.'
+          }
+        </div>
+
+        <div className="flex flex-wrap items-center gap-2">
+          {
+            <>
+              <RegBadge>419.1</RegBadge>
+              <RegBadge>551.7.1</RegBadge>
+              <RegBadge>722.312.2.1</RegBadge>
+              <AmendmentBadge regs={['419.1', '551.7.1', '722.312.2.1']} />
+            </>
+          }
+        </div>
+
+        <TLDR
+          points={[
+            'Prosumer = producer + consumer. An installation where energy flows in BOTH directions across the installation boundary or internally — typically PV, battery storage, V2H / V2G EV. GN3 abbreviates this as PEIs.',
+            'A4:2026 introduced a new Reg 419 group for cases where ADS is NOT FEASIBLE — typically inverter-fed circuits with limited short-circuit current. Reg 419.2 reduces the source voltage to band I within a defined time as the alternative protective measure.',
+            'Key A4 rule changes: Reg 551.7.1(d) prohibits sources on the load side of an RCD; Reg 722.312.2.1 prohibits PEN conductors in EV charging circuits on TN supplies; Reg 530.3.201 makes bidirectional protection device selection mandatory.',
+          ]}
+        />
+
+        <LearningOutcomes
+          outcomes={[
+            'Define a prosumer installation (PEI) and identify the bidirectional flow characteristics that trigger the BS 7671 prosumer requirements.',
+            'Apply the new A4 Reg 419 group — identify when ADS is not feasible and specify the appropriate alternative protective measure (typically Reg 419.2 voltage reduction).',
+            'Select bidirectional OCPDs on DC sides per Reg 530.3.201 and identify where unidirectional devices are unsafe.',
+            'Apply Reg 551.7.1 parallel-source rules — including the new (d) prohibition of sources on the load side of an RCD.',
+            'Select the correct RCD type for a power conversion equipment (PCE) based on whether it provides simple separation between AC and DC sides — Type A vs Type B trade-off.',
+            'Apply the A4 Reg 722.312.2.1 prohibition of PEN conductors in EV charging circuits on TN supplies, and design the alternative TN-S configuration or open-PEN protection.',
+          ]}
+          initialVisibleCount={3}
+        />
+
+        <ContentEyebrow>What is a prosumer installation</ContentEyebrow>
+
+        <ConceptBlock
+          title="The bidirectional energy-flow definition"
+          plainEnglish="A prosumer installation is one where energy can flow IN to the installation (from the grid, traditional consumption) AND OUT of the installation (to the grid, exporting from local PV / battery / V2G). It can also flow internally between sources and loads at different times of day. The bidirectional flow changes the protection design fundamentally."
+          onSite="Look for the giveaways: solar PV inverter, domestic battery storage system (Tesla Powerwall, Enphase, GivEnergy, etc.), bidirectional EV charger (V2H or V2G), local generator that can synchronise to the grid. Any of these makes the installation a PEI under GN3 / Reg 826."
+        >
+          <p>
+            The traditional unidirectional model assumes energy enters at the cut-out, flows through
+            the consumer unit's busbars, distributes through circuits to loads, and returns via the
+            neutral. Protection design — OCPD time-current curves, RCD imbalance detection, busbar
+            coordination — was all built on this assumption. Prosumer installations break the
+            assumption: an inverter mounted in the consumer unit can deliver fault current TO the
+            busbars; a battery can charge from one circuit and discharge to another; an EV can act
+            as a source rather than a load. BS 7671 has been progressively updated since A2:2022 to
+            recognise this, with A4:2026 consolidating the requirements into the protections covered
+            in this section.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...inlineChecks[0]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>The new A4 Reg 419 group — when ADS is not feasible</ContentEyebrow>
+
+        <ConceptBlock
+          title="When the inverter can't deliver enough fault current to trip the MCB"
+          plainEnglish="A standard MCB needs typically 5-10× rated current to operate magnetically within 0.4 s. A grid-tie inverter is typically current-limited at 1.0-1.1× rated output. On a fault, the inverter cannot deliver the multiple-of-rated needed to operate the MCB — ADS is not feasible by the standard route."
+          onSite="The new A4 Reg 419 group provides the alternative protective measures for these cases. Reg 419.2 — the most-used route — requires the source's output voltage to be reduced to within band I (≤ 50 V AC / 120 V DC ripple-free) within a specified time. The protective intent is identical to ADS — touch voltage limited to a safe level — but the mechanism is voltage reduction rather than disconnection."
+        >
+          <p>
+            Reg 419.1 lists the trigger conditions: (a) electronic equipment with limited
+            short-circuit current is installed (the typical inverter / converter case); or (b) the
+            required disconnection times cannot be achieved by a protective device (typical of long
+            inverter-fed feeders or grid-form generators). Reg 419.2 then prescribes the
+            voltage-reduction alternative for installations with PCEs where Up &gt; 50 V AC / 120 V
+            DC. Reg 419.3 covers further cases where the source's output voltage cannot be reduced —
+            alternative measures via supplementary equipotential bonding, double / reinforced
+            insulation or electrical separation.
+          </p>
+        </ConceptBlock>
+
+        <RegsCallout
+          source="BS 7671:2018+A4:2026 · Reg 419.1 — Where ADS not feasible"
+          clause="Where automatic disconnection is not feasible in circumstances where: (a) electronic equipment with limited short-circuit current is installed; or (b) the required disconnection times cannot be achieved by a protective device; the provisions of Regulations 419.2 to 419.3 are applicable."
+          meaning="The new A4 Reg 419 group is the regulatory home for protection of inverter-fed and converter-fed prosumer circuits where the traditional ADS-via-MCB / RCD model doesn't work. Designers reaching for 'increase MCB sensitivity' or 'shorter cable run' as workarounds should instead apply Reg 419's alternative measures — they're the technically correct route under A4:2026."
+          cite="BS 7671:2018+A4:2026, Reg 419.1"
+        />
+
+        <InlineCheck {...inlineChecks[1]} />
+        <InlineCheck {...inlineChecks[2]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>How an inverter actually limits its fault current</ContentEyebrow>
+
+        <ConceptBlock
+          title="The inverter's current-limit is not a safety feature, it's a survival feature"
+          plainEnglish="A grid-tie inverter's power electronics are made of IGBTs or MOSFETs that can survive only a fraction of a second of overcurrent before they fail. To protect themselves, inverters limit their output current to typically 1.0-1.1× rated — full stop. They cannot deliver the 5-10× rated current an MCB needs to operate magnetically; they will current-limit even into a dead short on their output."
+          onSite="This is why ADS via MCB doesn't work on inverter-fed circuits. The inverter sees the fault, current-limits, and either rides through the limit indefinitely (continuing to feed energy into the fault at rated current) or shuts itself down via firmware. Either way, the MCB is useless. Reg 419 is the regulatory recognition of this physics — alternative protective measures are needed."
+        >
+          <p>
+            The inverter's current-limit behaviour also explains why anti-islanding (loss of mains)
+            detection is critical. If the grid disappears and the inverter doesn't shut down within
+            ~200 ms, it continues to feed current into a portion of the public network that's now
+            isolated from the rest. Repair crews working on what they think is a dead line could be
+            working on a live line being fed by the inverter. G98 / G99 mandate the LoM detection
+            algorithm and timing; firmware updates to modern inverters typically address this. The
+            BS 7671 protection design assumes the LoM detection works — it covers the
+            installation-side faults.
+          </p>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <VideoCard
+          url={videos.inverter.url}
+          title={videos.inverter.title}
+          channel={videos.inverter.channel}
+          duration={videos.inverter.duration}
+          topic="Watch · What an inverter is doing inside"
+          caption="The Engineering Mindset opens up a grid-tie inverter and walks the IGBT bridge, switching logic and current-limit behaviour. That hard 1.0–1.1× rated output limit — built in to keep the power electronics alive — is exactly why an MCB cannot trip on an inverter-fed fault, and why A4:2026 needed the new Reg 419 alternative protective measures."
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>Bidirectional OCPDs — Reg 530.3.201</ContentEyebrow>
+
+        <ConceptBlock
+          title="Why direction matters in fault-current interruption"
+          plainEnglish="A unidirectional MCB or fuse is designed to interrupt current flowing in one specific direction. Its arc-quenching geometry, contact configuration and reset behaviour are all calibrated for that direction. Reverse the direction, and the device may not interrupt cleanly — contacts can weld, arcs can persist, the device may fail destructively."
+          onSite="On a PV array's DC side, fault current can come from the array under fault — the unit between the affected string and the rest of the installation. But it can ALSO come from a paralleled battery on a hybrid system charging from the array — through the SAME device, in the OPPOSITE direction. A unidirectional device clears one but not the other. Reg 530.3.201 mandates considering this in equipment selection."
+        >
+          <p>
+            The bidirectional consideration is now a mandatory part of equipment selection under Reg
+            530.3.201. For PV installations, the practical answer is bidirectional DC fuses (gPV
+            fuses to BS EN 60269-6 are bidirectional by design) or bidirectional DC MCBs (look for
+            the ↔ symbol or 'bidirectional' marking). For AC sides of parallel-source installations,
+            four-pole bidirectional MCBs / MCCBs are widely available. The cost premium over
+            unidirectional is usually 20-40% — small relative to the safety consequence of getting
+            it wrong.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...inlineChecks[3]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>Parallel sources — Reg 551.7.1</ContentEyebrow>
+
+        <ConceptBlock
+          title="The four indents that govern parallel-source installations"
+          plainEnglish="Reg 551.7.1 has been redrafted in recent amendments to handle the proliferation of parallel sources in prosumer installations. The four indents (a) to (d) cover the protection requirements for any installation where a generator / inverter / battery operates in parallel with another source, including the public grid."
+          onSite="The new (c) indent requires a suitable bidirectional protective device where energy flow can go either way — typically the four-pole MCCB or ATS at the source-to-board interface. The new (d) indent prohibits connecting a source to the LOAD SIDE of an RCD — because the RCD's residual-current detection model assumes line-to-load energy flow, and a source on the load side breaks that assumption."
+        >
+          <p>
+            Practical implementation of (d): the source connects to a dedicated busbar position
+            UPSTREAM of any whole-installation RCD. Domestic PV with battery: the AC connection of
+            the inverter goes to the line side of the consumer unit's main switch / isolator, NOT
+            into one of the RCBO ways downstream. Three-phase commercial PV with battery: the
+            inverter AC output goes to a dedicated source-side busbar with its own four-pole
+            isolation, upstream of any RCD-protected sub-circuits. Get the topology wrong and the
+            RCD additional protection on downstream final circuits is compromised — a real safety
+            issue, not a paperwork issue.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...inlineChecks[5]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>PCE separation and RCD type selection</ContentEyebrow>
+
+        <ConceptBlock
+          title="Why the inverter's internal topology drives the upstream RCD type"
+          plainEnglish="The inverter is the gateway between the DC side (PV strings, battery cells) and the AC side (consumer unit, grid). If it provides 'simple separation' — typically a transformer or galvanic-isolation barrier between AC and DC — smooth DC residual currents can't leak from DC to AC. Type A upstream is sufficient. If it doesn't — common on transformerless inverters used in domestic PV — smooth DC residual CAN leak through, blinding Type A and requiring Type B."
+          onSite="The data sheet is the binding spec. Modern inverter manuals state explicitly: 'Suitable for installation downstream of a Type A RCD (internal DC-fault detection provides separation)' OR 'Type B RCD required upstream'. Read it before specifying. Don't assume — the same model line may have transformer and transformerless variants with different requirements."
+        >
+          <p>
+            The smooth DC residual issue is physics, not regulation. A toroidal-core RCD detects
+            imbalance via the magnetic flux in the core; the core's relative permeability collapses
+            when DC saturates it, and the AC residual the RCD was looking for is then masked. Type A
+            and Type AC have no compensation for this effect. Type B uses compensation circuitry —
+            typically a hall-effect sensor or fluxgate sensor parallel to the toroidal core — that
+            maintains sensitivity even under DC saturation. The cost is 4-5× a Type A device, which
+            is why specifying Type B 'just to be safe' across the whole installation is overkill —
+            match the type to the load, per Reg 531.3.3.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...inlineChecks[4]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>The PCE warning notice — Reg 570.6.8.203</ContentEyebrow>
+
+        <ConceptBlock
+          title="Why every PCE needs the dual-isolation warning"
+          plainEnglish="Standard isolation logic — turn off the supply, prove dead, work safe — assumes one source. A PCE has TWO live sources: AC from the grid and DC from PV / battery. Isolating the AC side leaves the DC side live; isolating the DC side leaves the AC side live. The warning notice forces maintenance staff to isolate BOTH."
+          onSite="The notice text is specified by Reg 570.6.8.203: 'WARNING — Isolate both AC and DC sides before servicing' (or words to similar effect). It must be fixed to every PCE — typically a printed label on the side of the inverter or battery PCE housing. Most manufacturers ship the label in the box; if not, source one from a labeller or print on durable laminate. Check for it on every EICR — its absence is at best a code C3 (improvement recommended), at worst a contributory factor in any maintenance-incident investigation."
+        >
+          <p>
+            The dual-isolation requirement also drives the design of the isolation devices
+            themselves. Each PCE needs a clearly identified AC isolator AND a clearly identified DC
+            isolator (typically a DC switch-disconnector at the PCE itself for PV / battery
+            applications). Modern PCEs increasingly include both isolators integrated into the unit,
+            with the warning notice pre-fitted by the manufacturer. Older retrofit installs may have
+            AC isolation in the consumer unit and DC isolation as a separate roof-space switch —
+            both must be identifiable and labelled.
+          </p>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <ContentEyebrow>EV charging PEN prohibition — Reg 722.312.2.1</ContentEyebrow>
+
+        <ConceptBlock
+          title="The A4 EV charging rule that's caught a lot of installers out"
+          plainEnglish="In a TN system (TN-S, TN-C-S / PME, or TN-C), an EV charging circuit shall NOT include a PEN conductor. The reason is the open-PEN failure mode: if the PEN conductor breaks anywhere upstream of the property, every Class I exposed metal part of the property (including a charging vehicle's body) rises toward line voltage. Touching the vehicle and another bonded item simultaneously becomes the fault path."
+          onSite="Two compliant solutions. (1) Provide a TN-S configuration to the EV — split the PEN into separate N and PE before the EV charging circuit, typically at the consumer unit. The EV circuit is then fed by L + N + PE separately. (2) Apply alternative protective measures — the most common is an open-PEN detection device (commercial models like the Eaton ASW or Matt:e systems) that monitors the PEN conductor and disconnects the EV on PEN failure."
+        >
+          <p>
+            Reg 722.312.2.1 (A4:2026): a circuit supplying charging equipment for electric vehicles
+            in a TN system shall not include a PEN conductor. The regulation goes further than Reg
+            461.2's general prohibition of switching the PEN — for EV charging specifically, the PEN
+            is excluded from the circuit entirely. The implementation in a typical UK domestic
+            install (TN-C-S supply) is the open-PEN detection device — a dedicated unit installed
+            close to the EV charge point, monitoring voltage between the local PEN and a separate
+            earth electrode, triggering disconnection if the difference exceeds a defined threshold
+            (typically 50-70 V).
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...inlineChecks[6]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>Where it goes wrong</ContentEyebrow>
+
+        <CommonMistake
+          title="Connecting an inverter to a load-side busbar"
+          whatHappens="Domestic PV install. Installer connects the AC output of the inverter to a spare RCBO way in the consumer unit — line-side of that one circuit, but load-side of the whole-house RCD that sits between the main switch and the busbar. Reg 551.7.1(d) violation: source on load side of RCD. The RCD's residual-current detection is no longer reliable because energy flow can be bidirectional through it."
+          doInstead="Connect the inverter's AC output to a dedicated busbar position UPSTREAM of any RCD — typically via a separate line-side isolator near the main switch. For 17th-edition CUs without a clean line-side connection point, this often means CU replacement. Document the source-connection topology on the EIC as part of the prosumer compliance evidence."
+        />
+
+        <CommonMistake
+          title="Specifying Type AC for a transformerless inverter"
+          whatHappens="Installer fits a Type AC 30 mA RCBO on the AC circuit feeding a transformerless solar inverter — 'standard install practice'. The inverter's internal DC fault detection is fine; the inverter itself is fine; but on a real DC residual fault the smooth DC bleeds through to the AC side and saturates the Type AC RCBO's toroid. The RCBO becomes blind to ALL residual currents — including the AC ones it was supposed to detect."
+          doInstead="Read the inverter's installation manual. If it states 'Type A is sufficient because internal DC fault detection provides simple separation', use Type A. If it doesn't say that explicitly — or if the model is transformerless and the manual is silent on RCD type — default to Type B. The cost premium is real but the safety consequence of getting it wrong is real-er."
+        />
+
+        <CommonMistake
+          title="Adding an EV charger on a TN-C-S supply without addressing the PEN"
+          whatHappens="Customer requests a 7 kW EV charger. Installer adds a dedicated 32 A circuit from the consumer unit, runs L + N + CPC to the charge point. On the existing TN-C-S supply, the CPC is connected to the consumer unit's MET, which is bonded to the incoming PEN. The EV circuit therefore includes a (effective) PEN conductor — Reg 722.312.2.1 violation."
+          doInstead="Two compliant routes. (1) Configure TN-S to the EV: split PEN into separate N and PE at the CU, run L + N + PE separately to the EV, no PEN in the EV circuit. (2) Install an open-PEN detection device (Matt:e, Eaton ASW or similar) that monitors PEN integrity and disconnects the EV on PEN failure. Most modern EV chargers have this built in — check the spec sheet. Document the chosen route on the EIC as the EV-charging Reg 722.312.2.1 compliance evidence."
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>Scenarios — applying it on the day</ContentEyebrow>
+
+        <Scenario
+          title="Solar PV addition to a 17th-edition split-load CU"
+          situation="Standard 1990s TN-C-S domestic. Customer is having a 4 kW solar PV array installed. Existing consumer unit is a 17th-edition split-load with a single 30 mA Type AC RCD covering the bottom half (sockets) and a main switch for the top half (lighting / cooker). Inverter is transformerless, manufacturer's manual states 'Type A or higher RCD upstream is required' and lists no Type B requirement."
+          whatToDo="Three-step assessment. (1) Source-connection topology: the inverter must connect upstream of the existing 30 mA RCD, not on its load side. The 17th-edition CU's main switch is the only line-side option, but adding the inverter circuit there typically requires a fused isolator and a separate way — the existing CU cannot accommodate this cleanly. Recommendation: replace CU with a modern unit that has a dedicated source-side busbar position. (2) RCD type: manufacturer states Type A is sufficient. Existing Type AC needs replacement with Type A regardless of the PV addition (Reg 531.3.3 — Type AC restricted to no-DC-component fixed equipment). (3) Bidirectional protection: DC-side OCPDs in the inverter / DC combiner must be bidirectional gPV fuses to BS EN 60269-6 — verify on commissioning. Document the design choices on the EIC; the customer cert package should include the G98 connection certificate from the DNO."
+          whyItMatters="A 17th-edition CU is rarely capable of hosting an A4-compliant prosumer install without modification. Customers expect the PV install to slot in cheaply; the regulatory reality is often a CU replacement plus the PV. Quoting the install honestly — including the CU upgrade as part of the work — sets the customer expectation correctly and avoids the awkward conversation when building control inspects the install and flags the RCD type or the topology."
+        />
+
+        <Scenario
+          title="Hybrid PV + battery retrofit on a TN-C-S domestic"
+          situation="Customer has a 4 kW solar PV array installed 5 years ago with a transformerless inverter and an existing Type A 30 mA RCD on the AC circuit. They now want to add a 6 kWh battery. The battery's PCE is also transformerless and integrates with the existing inverter via DC coupling."
+          whatToDo="Three things to verify. (1) RCD type: Reg 531.3.3 / PCE separation — both inverter and battery PCE are transformerless without simple separation, and the manufacturer's manual is silent on RCD type. Default to Type B 30 mA — replace the existing Type A RCBO with a Type B. (2) Topology: Reg 551.7.1(d) — verify the inverter and battery's combined AC output connects upstream of any whole-installation RCD; if it currently connects load-side of a whole-house RCD, redesign the CU layout. (3) Bidirectional protection: Reg 530.3.201 — the DC side combiners must be bidirectional now that the battery can charge the array as well as discharge from it. Check the existing DC OCPDs and replace if unidirectional. Document all changes on the modified EIC."
+          whyItMatters="A retrofit that adds a battery transforms a unidirectional PV install into a bidirectional one. Every protection-design assumption from the original install needs revisiting. Treating the battery as 'just another box' without auditing the protection topology is the most common cause of A4-era prosumer non-compliance — the battery fits and works, but the protection no longer matches the new energy-flow model. Audit; redesign; replace; document."
+        />
+
+        <Scenario
+          title="Three-phase commercial PEI with V2G EV chargers"
+          situation="Light industrial unit on a 100 A TP&N TN-S supply. Existing 50 kW solar PV with battery storage. Adding 4 × 22 kW V2G EV charging points to allow staff vehicles to participate in grid-balancing services. Each V2G charger can operate as both load (charging the EV) and source (V2G export to the grid)."
+          whatToDo="The V2G addition turns a moderately-complex prosumer install into a multi-source PEI. Design checklist: (1) source-side busbar architecture — the existing PV busbar takes the EV chargers as well, with a four-pole bidirectional MCCB on each EV circuit (Reg 530.3.201). (2) Reg 551.7.1 compliance — the topology has FIVE sources now (PV inverter, battery PCE, four V2G chargers); each connects upstream of any RCD. (3) PCE separation per charger — V2G chargers typically do not provide simple separation, so Type B 30 mA per EV circuit. (4) Reg 722.312.2.1 — even on a TN-S supply, no PEN issue exists, but the EV circuit must still meet the standard EV-charging rules including 30 mA RCD additional protection. (5) Anti-islanding coordination — G99 spec covers each generator individually, but with multiple inverters / V2G chargers, parallel-operation behaviour needs the DNO's explicit acceptance per the connection agreement."
+          whyItMatters="Multi-source PEIs are the leading edge of A4:2026 design work. A clean compliance design prevents anti-islanding faults (where one inverter mistakes another's grid-form output for the public grid), prevents bidirectional protection mistakes, and sets up the cert documentation that a customer with regulator-grade compliance pressures can defend. Industrial / commercial V2G is where most of the BS 7671 prosumer regulations get most-strenuously tested in practice."
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>Designer's quick reference — every prosumer install</ContentEyebrow>
+
+        <ConceptBlock
+          title="The five questions to answer before you specify any device"
+          plainEnglish="Run this checklist on every PEI design. If you can answer all five with documented sources, the protection design is defensible. If any answer is 'not sure', stop and consult the source data sheet / regulation before continuing."
+          onSite="Print this and tape it to the bench. Most A4-era prosumer compliance failures come from skipping one of these five — typically question 3 (RCD type) or question 5 (EV PEN configuration)."
+        >
+          <p>
+            <strong>1. Is it a PEI?</strong> Bidirectional energy flow somewhere — PV, battery,
+            V2H/V2G EV. If yes → all of Section 4.7's regulations apply.{' '}
+            <strong>2. ADS-feasibility check.</strong> Can the inverter / converter deliver enough
+            fault current to operate the planned protective device within the required time? If no →
+            apply Reg 419 (typically Reg 419.2 voltage reduction).{' '}
+            <strong>3. PCE separation check.</strong> Does the inverter / battery PCE provide simple
+            separation between AC and DC? If no AND the manufacturer's manual is silent → Type B RCD
+            upstream. If yes OR the manual explicitly states Type A is sufficient → Type A.{' '}
+            <strong>4. Source-connection topology.</strong> Where does the source connect relative
+            to RCDs? Reg 551.7.1(d) — sources must be on the LINE side, not the load side, of any
+            RCD. Verify the consumer unit busbar layout supports this.{' '}
+            <strong>5. EV-specific (if EV charging is present).</strong> TN supply? Apply Reg
+            722.312.2.1 — no PEN in the EV circuit. Configure TN-S to the EV or use open-PEN
+            detection. Document the chosen route on the EIC.
+          </p>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="Cert-form additions for PEIs in A4:2026"
+          plainEnglish="The A4 model EIC and EICR forms have explicit prosumer-related entries that didn't exist in earlier editions. Make sure every install completes them — they're the audit trail that proves the prosumer compliance work was done."
+          onSite="Schedule of inspection: source / generator / battery details (manufacturer, model, ratings). Source-connection topology (line-side connection point identified). PCE warning notice present. RCD type per circuit. Bidirectional OCPDs identified. EV charging PEN configuration recorded (TN-S to EV / open-PEN device). Anti-islanding device certified per G98 / G99. The EIC is the customer's evidence that the install meets A4; the inspector's evidence on EICR is the same form's tickboxes 5 / 10 / 25 years later."
+        >
+          <p>
+            The model forms were updated in A4:2026 specifically to capture the bidirectional /
+            prosumer information that earlier editions didn't anticipate. Designers should treat
+            each entry as a check item — every blank field is a potential C3 / C2 on a future EICR.
+            Modern cert-management software (e.g. ElecCert, EasyCert and the compliance section of
+            certifying-bodies' platforms) typically have the A4 form templates baked in; if your
+            software is older, source the official IET model forms and use them. The cert is the
+            only durable record of design choices made during install — invest the time to fill it
+            properly.
+          </p>
+        </ConceptBlock>
+
+        <FAQ items={faqItems} />
+
+        <SectionRule />
+
+        <ConceptBlock
+          title="Future-proofing — what's coming after A4:2026"
+          plainEnglish="The bidirectional energy economy is moving faster than the regulations. V2G is now commercially deployed; large-scale battery storage is appearing in domestic and light commercial; the grid is moving from 'one-way distribution' to 'distributed two-way exchange'. The next BS 7671 amendment will likely tighten and expand the prosumer rules further."
+          onSite="Designs that comply only with the letter of A4 may be revisited at the next amendment. Designs that follow the SPIRIT of the regulations — bidirectional protection where flow is bidirectional, reading manufacturer manuals, documenting topology choices, designing for the load not the price — will scale forward to whatever comes next. The investment in proper prosumer design pays off across multiple regulatory generations."
+        >
+          <p>
+            Industry signals worth watching: the IET's ongoing work on energy storage and EV
+            charging, the BEAMA / IET joint guidance on V2G, ongoing G98 / G99 revisions for
+            advanced grid services. Most A4 changes had been signalled in IET guidance years before
+            they appeared in the regulations. Following the IET wiring matters / guidance notes
+            alongside the regulations gives you 18-24 months' notice on the direction. The current
+            IET Code of Practice for Electrical Energy Storage Systems (2nd edition) is the
+            practical companion to the BS 7671 prosumer regulations and is updated more frequently.
+          </p>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="The economics of getting prosumer compliance right"
+          plainEnglish="The cost premium for A4-compliant prosumer protection is typically £150-400 per install — Type B RCBO upgrade, bidirectional DC OCPDs, possibly an open-PEN detection device on EV. Against the cost of getting it wrong (CU replacement, PCE replacement, retrofit work, customer-loss-of-trust), the premium is small."
+          onSite="Build the prosumer compliance into the original quote. Don't try to absorb it as 'extras' or hide it as line items the customer might question. Customers who understand WHY the protection is more expensive (bidirectional energy, smooth DC residual, open-PEN consequence) accept the cost easily. Customers who get a low quote then see the costs added at install lose trust."
+        />
+
+        <KeyTakeaways
+          points={[
+            'Prosumer installation = bidirectional energy flow. PV, battery storage, V2H / V2G EV chargers all qualify. GN3 abbreviates as PEIs.',
+            'A4:2026 introduced Reg 419 group for cases where ADS is not feasible. Reg 419.2 — voltage reduction to band I within a defined time — is the most-used alternative protective measure for inverter-fed circuits.',
+            'Bidirectional OCPDs mandatory under Reg 530.3.201 wherever current can flow in either direction — DC side of PV arrays, parallel-source AC interfaces.',
+            'Reg 551.7.1(d) prohibits connecting a source to the load side of any RCD — sources must be on the line-side busbar upstream of all RCDs.',
+            "PCE separation drives RCD type selection. Transformerless inverter without simple separation = Type B RCD upstream. Read the manufacturer's manual every time.",
+            'Reg 722.312.2.1 (A4) prohibits PEN conductors in EV charging circuits on TN supplies. Implement TN-S configuration to the EV or use an open-PEN detection device.',
+            "Every PCE needs the dual-isolation warning notice (Reg 570.6.8.203) — 'Isolate both AC and DC sides before servicing'. Check for it on every EICR.",
+            'The A4 cert forms have explicit prosumer entries. Complete them on every EIC — they are the audit trail proving the prosumer compliance work was done.',
+          ]}
+        />
+
+        <Quiz questions={quizQuestions} />
+
+        <div className="grid grid-cols-2 gap-3 pt-2">
           <button
             type="button"
-            onClick={() => navigate('../bs7671-module-4')}
-            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            onClick={() => navigate('/electrician/upskilling/bs7671-module-4')}
+            className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
           >
-            <ArrowLeft className="h-4 w-4" /> Module 4
+            <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+              <ChevronLeft className="h-3 w-3" /> Module 4
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-white truncate">
+              Module overview
+            </div>
           </button>
-
-          <PageHero
-            eyebrow="Module 4 · Section 7 · Updated for A4:2026"
-            title="Bidirectional protection (prosumer installations)"
-            description="How BS 7671:2018+A4:2026 protects installations where energy flows in both directions — solar PV, battery storage, V2H/V2G EV chargers. The new Reg 419 alternative-protective-measures group, bidirectional OCPDs (Reg 530.3.201), parallel-source rules (Reg 551.7.1), the EV charging PEN prohibition (Reg 722.312.2.1), and the PCE / RCD-type coordination."
-            actions={
-              <>
-                <RegBadge>419.1</RegBadge>
-                <RegBadge>551.7.1</RegBadge>
-                <RegBadge>722.312.2.1</RegBadge>
-                <AmendmentBadge regs={['419.1', '551.7.1', '722.312.2.1']} />
-              </>
-            }
-            tone="yellow"
-          />
-
-          <TLDR
-            points={[
-              'Prosumer = producer + consumer. An installation where energy flows in BOTH directions across the installation boundary or internally — typically PV, battery storage, V2H / V2G EV. GN3 abbreviates this as PEIs.',
-              'A4:2026 introduced a new Reg 419 group for cases where ADS is NOT FEASIBLE — typically inverter-fed circuits with limited short-circuit current. Reg 419.2 reduces the source voltage to band I within a defined time as the alternative protective measure.',
-              'Key A4 rule changes: Reg 551.7.1(d) prohibits sources on the load side of an RCD; Reg 722.312.2.1 prohibits PEN conductors in EV charging circuits on TN supplies; Reg 530.3.201 makes bidirectional protection device selection mandatory.',
-            ]}
-          />
-
-          <LearningOutcomes
-            outcomes={[
-              'Define a prosumer installation (PEI) and identify the bidirectional flow characteristics that trigger the BS 7671 prosumer requirements.',
-              'Apply the new A4 Reg 419 group — identify when ADS is not feasible and specify the appropriate alternative protective measure (typically Reg 419.2 voltage reduction).',
-              'Select bidirectional OCPDs on DC sides per Reg 530.3.201 and identify where unidirectional devices are unsafe.',
-              'Apply Reg 551.7.1 parallel-source rules — including the new (d) prohibition of sources on the load side of an RCD.',
-              'Select the correct RCD type for a power conversion equipment (PCE) based on whether it provides simple separation between AC and DC sides — Type A vs Type B trade-off.',
-              'Apply the A4 Reg 722.312.2.1 prohibition of PEN conductors in EV charging circuits on TN supplies, and design the alternative TN-S configuration or open-PEN protection.',
-            ]}
-            initialVisibleCount={3}
-          />
-
-          <ContentEyebrow>What is a prosumer installation</ContentEyebrow>
-
-          <ConceptBlock
-            title="The bidirectional energy-flow definition"
-            plainEnglish="A prosumer installation is one where energy can flow IN to the installation (from the grid, traditional consumption) AND OUT of the installation (to the grid, exporting from local PV / battery / V2G). It can also flow internally between sources and loads at different times of day. The bidirectional flow changes the protection design fundamentally."
-            onSite="Look for the giveaways: solar PV inverter, domestic battery storage system (Tesla Powerwall, Enphase, GivEnergy, etc.), bidirectional EV charger (V2H or V2G), local generator that can synchronise to the grid. Any of these makes the installation a PEI under GN3 / Reg 826."
+          <button
+            type="button"
+            onClick={() => navigate('/electrician/upskilling/bs7671-module-5')}
+            className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
           >
-            <p>
-              The traditional unidirectional model assumes energy enters at the cut-out, flows
-              through the consumer unit's busbars, distributes through circuits to loads, and
-              returns via the neutral. Protection design — OCPD time-current curves, RCD imbalance
-              detection, busbar coordination — was all built on this assumption. Prosumer
-              installations break the assumption: an inverter mounted in the consumer unit can
-              deliver fault current TO the busbars; a battery can charge from one circuit and
-              discharge to another; an EV can act as a source rather than a load. BS 7671 has been
-              progressively updated since A2:2022 to recognise this, with A4:2026 consolidating the
-              requirements into the protections covered in this section.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...inlineChecks[0]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>The new A4 Reg 419 group — when ADS is not feasible</ContentEyebrow>
-
-          <ConceptBlock
-            title="When the inverter can't deliver enough fault current to trip the MCB"
-            plainEnglish="A standard MCB needs typically 5-10× rated current to operate magnetically within 0.4 s. A grid-tie inverter is typically current-limited at 1.0-1.1× rated output. On a fault, the inverter cannot deliver the multiple-of-rated needed to operate the MCB — ADS is not feasible by the standard route."
-            onSite="The new A4 Reg 419 group provides the alternative protective measures for these cases. Reg 419.2 — the most-used route — requires the source's output voltage to be reduced to within band I (≤ 50 V AC / 120 V DC ripple-free) within a specified time. The protective intent is identical to ADS — touch voltage limited to a safe level — but the mechanism is voltage reduction rather than disconnection."
-          >
-            <p>
-              Reg 419.1 lists the trigger conditions: (a) electronic equipment with limited
-              short-circuit current is installed (the typical inverter / converter case); or (b) the
-              required disconnection times cannot be achieved by a protective device (typical of
-              long inverter-fed feeders or grid-form generators). Reg 419.2 then prescribes the
-              voltage-reduction alternative for installations with PCEs where Up &gt; 50 V AC / 120
-              V DC. Reg 419.3 covers further cases where the source's output voltage cannot be
-              reduced — alternative measures via supplementary equipotential bonding, double /
-              reinforced insulation or electrical separation.
-            </p>
-          </ConceptBlock>
-
-          <RegsCallout
-            source="BS 7671:2018+A4:2026 · Reg 419.1 — Where ADS not feasible"
-            clause="Where automatic disconnection is not feasible in circumstances where: (a) electronic equipment with limited short-circuit current is installed; or (b) the required disconnection times cannot be achieved by a protective device; the provisions of Regulations 419.2 to 419.3 are applicable."
-            meaning="The new A4 Reg 419 group is the regulatory home for protection of inverter-fed and converter-fed prosumer circuits where the traditional ADS-via-MCB / RCD model doesn't work. Designers reaching for 'increase MCB sensitivity' or 'shorter cable run' as workarounds should instead apply Reg 419's alternative measures — they're the technically correct route under A4:2026."
-            cite="BS 7671:2018+A4:2026, Reg 419.1"
-          />
-
-          <InlineCheck {...inlineChecks[1]} />
-          <InlineCheck {...inlineChecks[2]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>How an inverter actually limits its fault current</ContentEyebrow>
-
-          <ConceptBlock
-            title="The inverter's current-limit is not a safety feature, it's a survival feature"
-            plainEnglish="A grid-tie inverter's power electronics are made of IGBTs or MOSFETs that can survive only a fraction of a second of overcurrent before they fail. To protect themselves, inverters limit their output current to typically 1.0-1.1× rated — full stop. They cannot deliver the 5-10× rated current an MCB needs to operate magnetically; they will current-limit even into a dead short on their output."
-            onSite="This is why ADS via MCB doesn't work on inverter-fed circuits. The inverter sees the fault, current-limits, and either rides through the limit indefinitely (continuing to feed energy into the fault at rated current) or shuts itself down via firmware. Either way, the MCB is useless. Reg 419 is the regulatory recognition of this physics — alternative protective measures are needed."
-          >
-            <p>
-              The inverter's current-limit behaviour also explains why anti-islanding (loss of
-              mains) detection is critical. If the grid disappears and the inverter doesn't shut
-              down within ~200 ms, it continues to feed current into a portion of the public network
-              that's now isolated from the rest. Repair crews working on what they think is a dead
-              line could be working on a live line being fed by the inverter. G98 / G99 mandate the
-              LoM detection algorithm and timing; firmware updates to modern inverters typically
-              address this. The BS 7671 protection design assumes the LoM detection works — it
-              covers the installation-side faults.
-            </p>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <VideoCard
-            url={videos.inverter.url}
-            title={videos.inverter.title}
-            channel={videos.inverter.channel}
-            duration={videos.inverter.duration}
-            topic="Watch · What an inverter is doing inside"
-            caption="The Engineering Mindset opens up a grid-tie inverter and walks the IGBT bridge, switching logic and current-limit behaviour. That hard 1.0–1.1× rated output limit — built in to keep the power electronics alive — is exactly why an MCB cannot trip on an inverter-fed fault, and why A4:2026 needed the new Reg 419 alternative protective measures."
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>Bidirectional OCPDs — Reg 530.3.201</ContentEyebrow>
-
-          <ConceptBlock
-            title="Why direction matters in fault-current interruption"
-            plainEnglish="A unidirectional MCB or fuse is designed to interrupt current flowing in one specific direction. Its arc-quenching geometry, contact configuration and reset behaviour are all calibrated for that direction. Reverse the direction, and the device may not interrupt cleanly — contacts can weld, arcs can persist, the device may fail destructively."
-            onSite="On a PV array's DC side, fault current can come from the array under fault — the unit between the affected string and the rest of the installation. But it can ALSO come from a paralleled battery on a hybrid system charging from the array — through the SAME device, in the OPPOSITE direction. A unidirectional device clears one but not the other. Reg 530.3.201 mandates considering this in equipment selection."
-          >
-            <p>
-              The bidirectional consideration is now a mandatory part of equipment selection under
-              Reg 530.3.201. For PV installations, the practical answer is bidirectional DC fuses
-              (gPV fuses to BS EN 60269-6 are bidirectional by design) or bidirectional DC MCBs
-              (look for the ↔ symbol or 'bidirectional' marking). For AC sides of parallel-source
-              installations, four-pole bidirectional MCBs / MCCBs are widely available. The cost
-              premium over unidirectional is usually 20-40% — small relative to the safety
-              consequence of getting it wrong.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...inlineChecks[3]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>Parallel sources — Reg 551.7.1</ContentEyebrow>
-
-          <ConceptBlock
-            title="The four indents that govern parallel-source installations"
-            plainEnglish="Reg 551.7.1 has been redrafted in recent amendments to handle the proliferation of parallel sources in prosumer installations. The four indents (a) to (d) cover the protection requirements for any installation where a generator / inverter / battery operates in parallel with another source, including the public grid."
-            onSite="The new (c) indent requires a suitable bidirectional protective device where energy flow can go either way — typically the four-pole MCCB or ATS at the source-to-board interface. The new (d) indent prohibits connecting a source to the LOAD SIDE of an RCD — because the RCD's residual-current detection model assumes line-to-load energy flow, and a source on the load side breaks that assumption."
-          >
-            <p>
-              Practical implementation of (d): the source connects to a dedicated busbar position
-              UPSTREAM of any whole-installation RCD. Domestic PV with battery: the AC connection of
-              the inverter goes to the line side of the consumer unit's main switch / isolator, NOT
-              into one of the RCBO ways downstream. Three-phase commercial PV with battery: the
-              inverter AC output goes to a dedicated source-side busbar with its own four-pole
-              isolation, upstream of any RCD-protected sub-circuits. Get the topology wrong and the
-              RCD additional protection on downstream final circuits is compromised — a real safety
-              issue, not a paperwork issue.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...inlineChecks[5]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>PCE separation and RCD type selection</ContentEyebrow>
-
-          <ConceptBlock
-            title="Why the inverter's internal topology drives the upstream RCD type"
-            plainEnglish="The inverter is the gateway between the DC side (PV strings, battery cells) and the AC side (consumer unit, grid). If it provides 'simple separation' — typically a transformer or galvanic-isolation barrier between AC and DC — smooth DC residual currents can't leak from DC to AC. Type A upstream is sufficient. If it doesn't — common on transformerless inverters used in domestic PV — smooth DC residual CAN leak through, blinding Type A and requiring Type B."
-            onSite="The data sheet is the binding spec. Modern inverter manuals state explicitly: 'Suitable for installation downstream of a Type A RCD (internal DC-fault detection provides separation)' OR 'Type B RCD required upstream'. Read it before specifying. Don't assume — the same model line may have transformer and transformerless variants with different requirements."
-          >
-            <p>
-              The smooth DC residual issue is physics, not regulation. A toroidal-core RCD detects
-              imbalance via the magnetic flux in the core; the core's relative permeability
-              collapses when DC saturates it, and the AC residual the RCD was looking for is then
-              masked. Type A and Type AC have no compensation for this effect. Type B uses
-              compensation circuitry — typically a hall-effect sensor or fluxgate sensor parallel to
-              the toroidal core — that maintains sensitivity even under DC saturation. The cost is
-              4-5× a Type A device, which is why specifying Type B 'just to be safe' across the
-              whole installation is overkill — match the type to the load, per Reg 531.3.3.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...inlineChecks[4]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>The PCE warning notice — Reg 570.6.8.203</ContentEyebrow>
-
-          <ConceptBlock
-            title="Why every PCE needs the dual-isolation warning"
-            plainEnglish="Standard isolation logic — turn off the supply, prove dead, work safe — assumes one source. A PCE has TWO live sources: AC from the grid and DC from PV / battery. Isolating the AC side leaves the DC side live; isolating the DC side leaves the AC side live. The warning notice forces maintenance staff to isolate BOTH."
-            onSite="The notice text is specified by Reg 570.6.8.203: 'WARNING — Isolate both AC and DC sides before servicing' (or words to similar effect). It must be fixed to every PCE — typically a printed label on the side of the inverter or battery PCE housing. Most manufacturers ship the label in the box; if not, source one from a labeller or print on durable laminate. Check for it on every EICR — its absence is at best a code C3 (improvement recommended), at worst a contributory factor in any maintenance-incident investigation."
-          >
-            <p>
-              The dual-isolation requirement also drives the design of the isolation devices
-              themselves. Each PCE needs a clearly identified AC isolator AND a clearly identified
-              DC isolator (typically a DC switch-disconnector at the PCE itself for PV / battery
-              applications). Modern PCEs increasingly include both isolators integrated into the
-              unit, with the warning notice pre-fitted by the manufacturer. Older retrofit installs
-              may have AC isolation in the consumer unit and DC isolation as a separate roof-space
-              switch — both must be identifiable and labelled.
-            </p>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <ContentEyebrow>EV charging PEN prohibition — Reg 722.312.2.1</ContentEyebrow>
-
-          <ConceptBlock
-            title="The A4 EV charging rule that's caught a lot of installers out"
-            plainEnglish="In a TN system (TN-S, TN-C-S / PME, or TN-C), an EV charging circuit shall NOT include a PEN conductor. The reason is the open-PEN failure mode: if the PEN conductor breaks anywhere upstream of the property, every Class I exposed metal part of the property (including a charging vehicle's body) rises toward line voltage. Touching the vehicle and another bonded item simultaneously becomes the fault path."
-            onSite="Two compliant solutions. (1) Provide a TN-S configuration to the EV — split the PEN into separate N and PE before the EV charging circuit, typically at the consumer unit. The EV circuit is then fed by L + N + PE separately. (2) Apply alternative protective measures — the most common is an open-PEN detection device (commercial models like the Eaton ASW or Matt:e systems) that monitors the PEN conductor and disconnects the EV on PEN failure."
-          >
-            <p>
-              Reg 722.312.2.1 (A4:2026): a circuit supplying charging equipment for electric
-              vehicles in a TN system shall not include a PEN conductor. The regulation goes further
-              than Reg 461.2's general prohibition of switching the PEN — for EV charging
-              specifically, the PEN is excluded from the circuit entirely. The implementation in a
-              typical UK domestic install (TN-C-S supply) is the open-PEN detection device — a
-              dedicated unit installed close to the EV charge point, monitoring voltage between the
-              local PEN and a separate earth electrode, triggering disconnection if the difference
-              exceeds a defined threshold (typically 50-70 V).
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...inlineChecks[6]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>Where it goes wrong</ContentEyebrow>
-
-          <CommonMistake
-            title="Connecting an inverter to a load-side busbar"
-            whatHappens="Domestic PV install. Installer connects the AC output of the inverter to a spare RCBO way in the consumer unit — line-side of that one circuit, but load-side of the whole-house RCD that sits between the main switch and the busbar. Reg 551.7.1(d) violation: source on load side of RCD. The RCD's residual-current detection is no longer reliable because energy flow can be bidirectional through it."
-            doInstead="Connect the inverter's AC output to a dedicated busbar position UPSTREAM of any RCD — typically via a separate line-side isolator near the main switch. For 17th-edition CUs without a clean line-side connection point, this often means CU replacement. Document the source-connection topology on the EIC as part of the prosumer compliance evidence."
-          />
-
-          <CommonMistake
-            title="Specifying Type AC for a transformerless inverter"
-            whatHappens="Installer fits a Type AC 30 mA RCBO on the AC circuit feeding a transformerless solar inverter — 'standard install practice'. The inverter's internal DC fault detection is fine; the inverter itself is fine; but on a real DC residual fault the smooth DC bleeds through to the AC side and saturates the Type AC RCBO's toroid. The RCBO becomes blind to ALL residual currents — including the AC ones it was supposed to detect."
-            doInstead="Read the inverter's installation manual. If it states 'Type A is sufficient because internal DC fault detection provides simple separation', use Type A. If it doesn't say that explicitly — or if the model is transformerless and the manual is silent on RCD type — default to Type B. The cost premium is real but the safety consequence of getting it wrong is real-er."
-          />
-
-          <CommonMistake
-            title="Adding an EV charger on a TN-C-S supply without addressing the PEN"
-            whatHappens="Customer requests a 7 kW EV charger. Installer adds a dedicated 32 A circuit from the consumer unit, runs L + N + CPC to the charge point. On the existing TN-C-S supply, the CPC is connected to the consumer unit's MET, which is bonded to the incoming PEN. The EV circuit therefore includes a (effective) PEN conductor — Reg 722.312.2.1 violation."
-            doInstead="Two compliant routes. (1) Configure TN-S to the EV: split PEN into separate N and PE at the CU, run L + N + PE separately to the EV, no PEN in the EV circuit. (2) Install an open-PEN detection device (Matt:e, Eaton ASW or similar) that monitors PEN integrity and disconnects the EV on PEN failure. Most modern EV chargers have this built in — check the spec sheet. Document the chosen route on the EIC as the EV-charging Reg 722.312.2.1 compliance evidence."
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>Scenarios — applying it on the day</ContentEyebrow>
-
-          <Scenario
-            title="Solar PV addition to a 17th-edition split-load CU"
-            situation="Standard 1990s TN-C-S domestic. Customer is having a 4 kW solar PV array installed. Existing consumer unit is a 17th-edition split-load with a single 30 mA Type AC RCD covering the bottom half (sockets) and a main switch for the top half (lighting / cooker). Inverter is transformerless, manufacturer's manual states 'Type A or higher RCD upstream is required' and lists no Type B requirement."
-            whatToDo="Three-step assessment. (1) Source-connection topology: the inverter must connect upstream of the existing 30 mA RCD, not on its load side. The 17th-edition CU's main switch is the only line-side option, but adding the inverter circuit there typically requires a fused isolator and a separate way — the existing CU cannot accommodate this cleanly. Recommendation: replace CU with a modern unit that has a dedicated source-side busbar position. (2) RCD type: manufacturer states Type A is sufficient. Existing Type AC needs replacement with Type A regardless of the PV addition (Reg 531.3.3 — Type AC restricted to no-DC-component fixed equipment). (3) Bidirectional protection: DC-side OCPDs in the inverter / DC combiner must be bidirectional gPV fuses to BS EN 60269-6 — verify on commissioning. Document the design choices on the EIC; the customer cert package should include the G98 connection certificate from the DNO."
-            whyItMatters="A 17th-edition CU is rarely capable of hosting an A4-compliant prosumer install without modification. Customers expect the PV install to slot in cheaply; the regulatory reality is often a CU replacement plus the PV. Quoting the install honestly — including the CU upgrade as part of the work — sets the customer expectation correctly and avoids the awkward conversation when building control inspects the install and flags the RCD type or the topology."
-          />
-
-          <Scenario
-            title="Hybrid PV + battery retrofit on a TN-C-S domestic"
-            situation="Customer has a 4 kW solar PV array installed 5 years ago with a transformerless inverter and an existing Type A 30 mA RCD on the AC circuit. They now want to add a 6 kWh battery. The battery's PCE is also transformerless and integrates with the existing inverter via DC coupling."
-            whatToDo="Three things to verify. (1) RCD type: Reg 531.3.3 / PCE separation — both inverter and battery PCE are transformerless without simple separation, and the manufacturer's manual is silent on RCD type. Default to Type B 30 mA — replace the existing Type A RCBO with a Type B. (2) Topology: Reg 551.7.1(d) — verify the inverter and battery's combined AC output connects upstream of any whole-installation RCD; if it currently connects load-side of a whole-house RCD, redesign the CU layout. (3) Bidirectional protection: Reg 530.3.201 — the DC side combiners must be bidirectional now that the battery can charge the array as well as discharge from it. Check the existing DC OCPDs and replace if unidirectional. Document all changes on the modified EIC."
-            whyItMatters="A retrofit that adds a battery transforms a unidirectional PV install into a bidirectional one. Every protection-design assumption from the original install needs revisiting. Treating the battery as 'just another box' without auditing the protection topology is the most common cause of A4-era prosumer non-compliance — the battery fits and works, but the protection no longer matches the new energy-flow model. Audit; redesign; replace; document."
-          />
-
-          <Scenario
-            title="Three-phase commercial PEI with V2G EV chargers"
-            situation="Light industrial unit on a 100 A TP&N TN-S supply. Existing 50 kW solar PV with battery storage. Adding 4 × 22 kW V2G EV charging points to allow staff vehicles to participate in grid-balancing services. Each V2G charger can operate as both load (charging the EV) and source (V2G export to the grid)."
-            whatToDo="The V2G addition turns a moderately-complex prosumer install into a multi-source PEI. Design checklist: (1) source-side busbar architecture — the existing PV busbar takes the EV chargers as well, with a four-pole bidirectional MCCB on each EV circuit (Reg 530.3.201). (2) Reg 551.7.1 compliance — the topology has FIVE sources now (PV inverter, battery PCE, four V2G chargers); each connects upstream of any RCD. (3) PCE separation per charger — V2G chargers typically do not provide simple separation, so Type B 30 mA per EV circuit. (4) Reg 722.312.2.1 — even on a TN-S supply, no PEN issue exists, but the EV circuit must still meet the standard EV-charging rules including 30 mA RCD additional protection. (5) Anti-islanding coordination — G99 spec covers each generator individually, but with multiple inverters / V2G chargers, parallel-operation behaviour needs the DNO's explicit acceptance per the connection agreement."
-            whyItMatters="Multi-source PEIs are the leading edge of A4:2026 design work. A clean compliance design prevents anti-islanding faults (where one inverter mistakes another's grid-form output for the public grid), prevents bidirectional protection mistakes, and sets up the cert documentation that a customer with regulator-grade compliance pressures can defend. Industrial / commercial V2G is where most of the BS 7671 prosumer regulations get most-strenuously tested in practice."
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>Designer's quick reference — every prosumer install</ContentEyebrow>
-
-          <ConceptBlock
-            title="The five questions to answer before you specify any device"
-            plainEnglish="Run this checklist on every PEI design. If you can answer all five with documented sources, the protection design is defensible. If any answer is 'not sure', stop and consult the source data sheet / regulation before continuing."
-            onSite="Print this and tape it to the bench. Most A4-era prosumer compliance failures come from skipping one of these five — typically question 3 (RCD type) or question 5 (EV PEN configuration)."
-          >
-            <p>
-              <strong>1. Is it a PEI?</strong> Bidirectional energy flow somewhere — PV, battery,
-              V2H/V2G EV. If yes → all of Section 4.7's regulations apply.{' '}
-              <strong>2. ADS-feasibility check.</strong> Can the inverter / converter deliver enough
-              fault current to operate the planned protective device within the required time? If no
-              → apply Reg 419 (typically Reg 419.2 voltage reduction).{' '}
-              <strong>3. PCE separation check.</strong> Does the inverter / battery PCE provide
-              simple separation between AC and DC? If no AND the manufacturer's manual is silent →
-              Type B RCD upstream. If yes OR the manual explicitly states Type A is sufficient →
-              Type A. <strong>4. Source-connection topology.</strong> Where does the source connect
-              relative to RCDs? Reg 551.7.1(d) — sources must be on the LINE side, not the load
-              side, of any RCD. Verify the consumer unit busbar layout supports this.{' '}
-              <strong>5. EV-specific (if EV charging is present).</strong> TN supply? Apply Reg
-              722.312.2.1 — no PEN in the EV circuit. Configure TN-S to the EV or use open-PEN
-              detection. Document the chosen route on the EIC.
-            </p>
-          </ConceptBlock>
-
-          <ConceptBlock
-            title="Cert-form additions for PEIs in A4:2026"
-            plainEnglish="The A4 model EIC and EICR forms have explicit prosumer-related entries that didn't exist in earlier editions. Make sure every install completes them — they're the audit trail that proves the prosumer compliance work was done."
-            onSite="Schedule of inspection: source / generator / battery details (manufacturer, model, ratings). Source-connection topology (line-side connection point identified). PCE warning notice present. RCD type per circuit. Bidirectional OCPDs identified. EV charging PEN configuration recorded (TN-S to EV / open-PEN device). Anti-islanding device certified per G98 / G99. The EIC is the customer's evidence that the install meets A4; the inspector's evidence on EICR is the same form's tickboxes 5 / 10 / 25 years later."
-          >
-            <p>
-              The model forms were updated in A4:2026 specifically to capture the bidirectional /
-              prosumer information that earlier editions didn't anticipate. Designers should treat
-              each entry as a check item — every blank field is a potential C3 / C2 on a future
-              EICR. Modern cert-management software (e.g. ElecCert, EasyCert and the compliance
-              section of certifying-bodies' platforms) typically have the A4 form templates baked
-              in; if your software is older, source the official IET model forms and use them. The
-              cert is the only durable record of design choices made during install — invest the
-              time to fill it properly.
-            </p>
-          </ConceptBlock>
-
-          <FAQ items={faqItems} />
-
-          <SectionRule />
-
-          <ConceptBlock
-            title="Future-proofing — what's coming after A4:2026"
-            plainEnglish="The bidirectional energy economy is moving faster than the regulations. V2G is now commercially deployed; large-scale battery storage is appearing in domestic and light commercial; the grid is moving from 'one-way distribution' to 'distributed two-way exchange'. The next BS 7671 amendment will likely tighten and expand the prosumer rules further."
-            onSite="Designs that comply only with the letter of A4 may be revisited at the next amendment. Designs that follow the SPIRIT of the regulations — bidirectional protection where flow is bidirectional, reading manufacturer manuals, documenting topology choices, designing for the load not the price — will scale forward to whatever comes next. The investment in proper prosumer design pays off across multiple regulatory generations."
-          >
-            <p>
-              Industry signals worth watching: the IET's ongoing work on energy storage and EV
-              charging, the BEAMA / IET joint guidance on V2G, ongoing G98 / G99 revisions for
-              advanced grid services. Most A4 changes had been signalled in IET guidance years
-              before they appeared in the regulations. Following the IET wiring matters / guidance
-              notes alongside the regulations gives you 18-24 months' notice on the direction. The
-              current IET Code of Practice for Electrical Energy Storage Systems (2nd edition) is
-              the practical companion to the BS 7671 prosumer regulations and is updated more
-              frequently.
-            </p>
-          </ConceptBlock>
-
-          <ConceptBlock
-            title="The economics of getting prosumer compliance right"
-            plainEnglish="The cost premium for A4-compliant prosumer protection is typically £150-400 per install — Type B RCBO upgrade, bidirectional DC OCPDs, possibly an open-PEN detection device on EV. Against the cost of getting it wrong (CU replacement, PCE replacement, retrofit work, customer-loss-of-trust), the premium is small."
-            onSite="Build the prosumer compliance into the original quote. Don't try to absorb it as 'extras' or hide it as line items the customer might question. Customers who understand WHY the protection is more expensive (bidirectional energy, smooth DC residual, open-PEN consequence) accept the cost easily. Customers who get a low quote then see the costs added at install lose trust."
-          />
-
-          <KeyTakeaways
-            points={[
-              'Prosumer installation = bidirectional energy flow. PV, battery storage, V2H / V2G EV chargers all qualify. GN3 abbreviates as PEIs.',
-              'A4:2026 introduced Reg 419 group for cases where ADS is not feasible. Reg 419.2 — voltage reduction to band I within a defined time — is the most-used alternative protective measure for inverter-fed circuits.',
-              'Bidirectional OCPDs mandatory under Reg 530.3.201 wherever current can flow in either direction — DC side of PV arrays, parallel-source AC interfaces.',
-              'Reg 551.7.1(d) prohibits connecting a source to the load side of any RCD — sources must be on the line-side busbar upstream of all RCDs.',
-              "PCE separation drives RCD type selection. Transformerless inverter without simple separation = Type B RCD upstream. Read the manufacturer's manual every time.",
-              'Reg 722.312.2.1 (A4) prohibits PEN conductors in EV charging circuits on TN supplies. Implement TN-S configuration to the EV or use an open-PEN detection device.',
-              "Every PCE needs the dual-isolation warning notice (Reg 570.6.8.203) — 'Isolate both AC and DC sides before servicing'. Check for it on every EICR.",
-              'The A4 cert forms have explicit prosumer entries. Complete them on every EIC — they are the audit trail proving the prosumer compliance work was done.',
-            ]}
-          />
-
-          <Quiz questions={quizQuestions} />
-
-          <div className="grid grid-cols-2 gap-3 pt-2">
-            <button
-              type="button"
-              onClick={() => navigate('/electrician/upskilling/bs7671-module-4')}
-              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
-                <ChevronLeft className="h-3 w-3" /> Module 4
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-white truncate">
-                Module overview
-              </div>
-            </button>
-            <button
-              type="button"
-              onClick={() => navigate('/electrician/upskilling/bs7671-module-5')}
-              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
-                Next module <ChevronRight className="h-3 w-3" />
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-black truncate">
-                Module 5 — Selection & erection
-              </div>
-            </button>
-          </div>
-        </PageFrame>
-      </div>
-    </div>
+            <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+              Next module <ChevronRight className="h-3 w-3" />
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-black truncate">
+              Module 5 — Selection & erection
+            </div>
+          </button>
+        </div>
+      </HubBody>
+    </HubPage>
   );
 };
 

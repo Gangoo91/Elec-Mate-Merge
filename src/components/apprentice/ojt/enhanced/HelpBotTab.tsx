@@ -28,6 +28,10 @@ interface ChatMessage {
   role: 'user' | 'assistant';
   timestamp: Date;
   imageUrl?: string;
+  /** Thumbs rating on this answer — written to elec_ai_feedback (agent 'dave'). */
+  feedback?: 'positive' | 'negative';
+  /** A "what went wrong" reason has been recorded for a negative vote. */
+  feedbackReasonGiven?: boolean;
 }
 
 /** Shape used by `useAIChatHistory` — superset of ChatMessage minus the
@@ -354,6 +358,69 @@ const HelpBotTab = () => {
     handleSendMessage(question);
   };
 
+  // Thumbs feedback → elec_ai_feedback with agent 'dave' — same table and
+  // weekly analysis as the Elec-AI chat, so apprentice-facing wrong answers
+  // surface through the same loop.
+  const [feedbackRows, setFeedbackRows] = useState<Record<string, string>>({});
+
+  const handleFeedback = useCallback(
+    async (messageId: string, rating: 'positive' | 'negative') => {
+      const idx = chatMessages.findIndex((m) => m.id === messageId);
+      const message = chatMessages[idx];
+      if (!message || message.role !== 'assistant' || message.feedback) return;
+
+      setChatMessages((prev) =>
+        prev.map((m) => (m.id === messageId ? { ...m, feedback: rating } : m))
+      );
+
+      try {
+        if (!user) throw new Error('not signed in');
+        const question =
+          [...chatMessages.slice(0, idx)].reverse().find((m) => m.role === 'user')?.content || '';
+        const { data, error } = await supabase
+          .from('elec_ai_feedback')
+          .insert({
+            user_id: user.id,
+            agent: 'dave',
+            question: question.slice(0, 2000),
+            answer: message.content.slice(0, 8000),
+            rating,
+          })
+          .select('id')
+          .single();
+        if (error) throw error;
+        setFeedbackRows((prev) => ({ ...prev, [messageId]: data.id }));
+      } catch (err) {
+        console.warn('[dave feedback] insert failed:', err);
+        setChatMessages((prev) =>
+          prev.map((m) => (m.id === messageId ? { ...m, feedback: undefined } : m))
+        );
+        toast.error("Couldn't save your rating", { description: 'Tap to try again.' });
+      }
+    },
+    [chatMessages, user]
+  );
+
+  const handleFeedbackReason = useCallback(
+    async (messageId: string, reason: string) => {
+      const rowId = feedbackRows[messageId];
+      setChatMessages((prev) =>
+        prev.map((m) => (m.id === messageId ? { ...m, feedbackReasonGiven: true } : m))
+      );
+      if (!rowId) return;
+      const { error } = await supabase
+        .from('elec_ai_feedback')
+        .update({ reasons: [reason] })
+        .eq('id', rowId);
+      if (error) {
+        console.warn('[dave feedback] reason update failed:', error);
+        return;
+      }
+      toast.message('Thanks — flagged for review');
+    },
+    [feedbackRows]
+  );
+
   /** Inline reg pill clicked — opens the regulation detail sheet with the
    *  full BS 7671 text. The inline-formatters pre-detect "Reg X.X.X.X"
    *  patterns automatically; we just route the tap to the sheet. */
@@ -593,6 +660,17 @@ const HelpBotTab = () => {
                     // avatar + "composing…" show instead of a bare dot indicator.
                     isStreaming={isCurrentlyStreaming}
                     onRegClick={handleInlineRegClick}
+                    onFeedback={
+                      message.role === 'assistant' && !isCurrentlyStreaming
+                        ? (rating) => handleFeedback(message.id, rating)
+                        : undefined
+                    }
+                    feedback={message.feedback}
+                    onFeedbackReason={
+                      !message.feedbackReasonGiven && feedbackRows[message.id]
+                        ? (reason) => handleFeedbackReason(message.id, reason)
+                        : undefined
+                    }
                   />
                 );
               })}

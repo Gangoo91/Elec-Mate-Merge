@@ -7,11 +7,11 @@
  */
 
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
-import { PageFrame, PageHero } from '@/components/college/primitives';
 import {
   TLDR,
   ConceptBlock,
@@ -144,12 +144,7 @@ const quizQuestions = [
     id: 5,
     question:
       "Which professional body's code of conduct specifically applies to electrical engineers in the UK?",
-    options: [
-      'RIBA',
-      'IET',
-      'CIOB',
-      'RICS',
-    ],
+    options: ['RIBA', 'IET', 'CIOB', 'RICS'],
     correctAnswer: 1,
     explanation:
       'The Institution of Engineering and Technology (IET) is the professional body for electrical, electronic, manufacturing, and IT engineers. Its Code of Conduct sets ethical standards for members working in the electrotechnical sector.',
@@ -261,576 +256,610 @@ const HNCModule1Section4_4 = () => {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
-      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
-        <PageFrame>
-          <button
-            onClick={() => navigate('../h-n-c-module1-section4')}
-            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
-          >
-            <ArrowLeft className="h-4 w-4" /> Section 4
-          </button>
+    <HubPage>
+      <HubMasthead
+        section="Module 1.4.4"
+        title="Ethical Responsibilities"
+        backTo="../h-n-c-module1-section4"
+      />
+      <HubBody>
+        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
+          Professional ethics, whistleblowing, conflicts of interest and codes of conduct in
+          building services
+        </p>
 
-          <PageHero
-            eyebrow="Module 1.4.4"
-            title="Ethical Responsibilities"
-            description="Professional ethics, whistleblowing, conflicts of interest and codes of conduct in building services"
-            tone="purple"
-          />
+        <TLDR
+          points={[
+            'You will operate against a recognised code of conduct (Engineering Council Statement of Ethical Principles, IET / CIBSE codes) and place public interest above commercial pressure.',
+            'You can identify and disclose conflicts of interest — financial, personal or professional — and step back where required.',
+            'You apply the Public Interest Disclosure Act 1998 (PIDA) and ERA 1996 s.43 protection when raising whistleblowing concerns.',
+            'You hold competence within scope and refer to better-qualified colleagues when the task exceeds your knowledge.',
+          ]}
+        />
 
-          <TLDR
-            points={[
-              'You will operate against a recognised code of conduct (Engineering Council Statement of Ethical Principles, IET / CIBSE codes) and place public interest above commercial pressure.',
-              'You can identify and disclose conflicts of interest — financial, personal or professional — and step back where required.',
-              'You apply the Public Interest Disclosure Act 1998 (PIDA) and ERA 1996 s.43 protection when raising whistleblowing concerns.',
-              'You hold competence within scope and refer to better-qualified colleagues when the task exceeds your knowledge.',
-            ]}
-          />
+        <RegsCallout
+          source="Public Interest Disclosure Act 1998 — inserted into ERA 1996 s.43B(1)"
+          clause="In this Part a 'qualifying disclosure' means any disclosure of information which, in the reasonable belief of the worker making the disclosure, is made in the public interest and tends to show one or more of the following—(a) that a criminal offence has been committed, is being committed or is likely to be committed, (b) that a person has failed, is failing or is likely to fail to comply with any legal obligation to which he is subject, (c) that a miscarriage of justice has occurred, is occurring or is likely to occur, (d) that the health or safety of any individual has been, is being or is likely to be endangered, (e) that the environment has been, is being or is likely to be damaged, or (f) that information tending to show any matter falling within any one of the preceding paragraphs has been, is being or is likely to be deliberately concealed."
+          meaning={
+            <>
+              The Act gives you statutory protection from dismissal or detriment if you raise a
+              genuine safety concern in the public interest. Engineering professionalism rests on
+              the same foundation as the law — speak up when it matters.
+            </>
+          }
+          cite="Source: Employment Rights Act 1996, s.43B(1) (inserted by Public Interest Disclosure Act 1998) — legislation.gov.uk"
+        />
 
-          <RegsCallout
-            source="Public Interest Disclosure Act 1998 — inserted into ERA 1996 s.43B(1)"
-            clause="In this Part a 'qualifying disclosure' means any disclosure of information which, in the reasonable belief of the worker making the disclosure, is made in the public interest and tends to show one or more of the following—(a) that a criminal offence has been committed, is being committed or is likely to be committed, (b) that a person has failed, is failing or is likely to fail to comply with any legal obligation to which he is subject, (c) that a miscarriage of justice has occurred, is occurring or is likely to occur, (d) that the health or safety of any individual has been, is being or is likely to be endangered, (e) that the environment has been, is being or is likely to be damaged, or (f) that information tending to show any matter falling within any one of the preceding paragraphs has been, is being or is likely to be deliberately concealed."
-            meaning={
-              <>
-                The Act gives you statutory protection from dismissal or detriment if you raise
-                a genuine safety concern in the public interest. Engineering professionalism
-                rests on the same foundation as the law — speak up when it matters.
-              </>
-            }
-            cite="Source: Employment Rights Act 1996, s.43B(1) (inserted by Public Interest Disclosure Act 1998) — legislation.gov.uk"
-          />
+        <LearningOutcomes
+          outcomes={[
+            'Understand the role of professional ethics in building services engineering',
+            'Explain whistleblowing protections under the Public Interest Disclosure Act',
+            'Identify and manage conflicts of interest in professional practice',
+            'Apply the IET and ECA codes of conduct to workplace situations',
+            'Distinguish between legal compliance and ethical behaviour',
+            'Understand consequences of breaching professional codes',
+          ]}
+          initialVisibleCount={3}
+        />
 
-          <LearningOutcomes
-            outcomes={[
-              "Understand the role of professional ethics in building services engineering",
-              "Explain whistleblowing protections under the Public Interest Disclosure Act",
-              "Identify and manage conflicts of interest in professional practice",
-              "Apply the IET and ECA codes of conduct to workplace situations",
-              "Distinguish between legal compliance and ethical behaviour",
-              "Understand consequences of breaching professional codes",
-            ]}
-            initialVisibleCount={3}
-          />
+        <SectionRule />
 
-          <SectionRule />
+        <ContentEyebrow>Professional Ethics in Building Services</ContentEyebrow>
 
-          <ContentEyebrow>Professional Ethics in Building Services</ContentEyebrow>
+        <ConceptBlock title="Professional Ethics in Building Services">
+          <p>
+            Professional ethics provides a framework for making decisions that go beyond mere legal
+            compliance. While law sets minimum standards, ethics guides professionals to act with
+            integrity, protect the public interest, and maintain the reputation of their profession.
+          </p>
 
-          <ConceptBlock title="Professional Ethics in Building Services">
-            <p>
-            Professional ethics provides a framework for making decisions that go beyond mere
-            legal compliance. While law sets minimum standards, ethics guides professionals to act
-            with integrity, protect the public interest, and maintain the reputation of their
-            profession.
-            </p>
+          <p className="text-sm font-medium text-elec-yellow/80 mb-2">Ethics vs Law vs Morality</p>
 
-            
-            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-            Ethics vs Law vs Morality
-            </p>
-            
-            <div className="p-3 rounded bg-white/5 text-center">
+          <div className="p-3 rounded bg-white/5 text-center">
             <p className="font-bold text-blue-400 mb-1">Law</p>
             <p className="text-xs text-white">
-            Mandatory rules enforced by the state. Minimum standards.
+              Mandatory rules enforced by the state. Minimum standards.
             </p>
-            </div>
-            <div className="p-3 rounded bg-white/5 text-center">
+          </div>
+          <div className="p-3 rounded bg-white/5 text-center">
             <p className="font-bold text-elec-yellow mb-1">Ethics</p>
             <p className="text-xs text-white">
-            Professional standards of conduct. Often exceed law.
+              Professional standards of conduct. Often exceed law.
             </p>
-            </div>
-            <div className="p-3 rounded bg-white/5 text-center">
+          </div>
+          <div className="p-3 rounded bg-white/5 text-center">
             <p className="font-bold text-purple-400 mb-1">Morality</p>
             <p className="text-xs text-white">Personal beliefs about right and wrong.</p>
-            </div>
-            
-            
+          </div>
 
-            
-            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-            Core Ethical Principles
-            </p>
-            
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-            <li><strong>Integrity</strong> — Meaning: Honesty, fairness, transparency. Building Services Application: Accurate reporting of test results</li>
-            <li><strong>Competence</strong> — Meaning: Only doing work within capability. Building Services Application: Declining work beyond qualifications</li>
-            <li><strong>Responsibility</strong> — Meaning: Accountability for professional actions. Building Services Application: Taking responsibility for design decisions</li>
-            <li><strong>Public interest</strong> — Meaning: Prioritising safety and welfare. Building Services Application: Refusing to certify unsafe installations</li>
-            <li><strong>Objectivity</strong> — Meaning: Impartial professional judgement. Building Services Application: Specification based on merit, not inducements</li>
-            </ul>
-            
-            
+          <p className="text-sm font-medium text-elec-yellow/80 mb-2">Core Ethical Principles</p>
 
-            <CommonMistake
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Integrity</strong> — Meaning: Honesty, fairness, transparency. Building
+              Services Application: Accurate reporting of test results
+            </li>
+            <li>
+              <strong>Competence</strong> — Meaning: Only doing work within capability. Building
+              Services Application: Declining work beyond qualifications
+            </li>
+            <li>
+              <strong>Responsibility</strong> — Meaning: Accountability for professional actions.
+              Building Services Application: Taking responsibility for design decisions
+            </li>
+            <li>
+              <strong>Public interest</strong> — Meaning: Prioritising safety and welfare. Building
+              Services Application: Refusing to certify unsafe installations
+            </li>
+            <li>
+              <strong>Objectivity</strong> — Meaning: Impartial professional judgement. Building
+              Services Application: Specification based on merit, not inducements
+            </li>
+          </ul>
+
+          <CommonMistake
             title="The Ethics of Safety"
-            whatHappens={<><p className="text-sm text-white">
-            In building services, ethical considerations frequently involve safety. When
-            commercial pressures conflict with safety standards, professionals have an ethical
-            duty to prioritise safety. This may mean refusing to sign off work, raising concerns
-            with management, or - as a last resort - reporting to enforcement authorities.
-            </p></>}
-            doInstead={<>Follow the safe-system procedure: stop work, escalate, document, and only resume once controls are verified.</>}
-            />
+            whatHappens={
+              <>
+                <p className="text-sm text-white">
+                  In building services, ethical considerations frequently involve safety. When
+                  commercial pressures conflict with safety standards, professionals have an ethical
+                  duty to prioritise safety. This may mean refusing to sign off work, raising
+                  concerns with management, or - as a last resort - reporting to enforcement
+                  authorities.
+                </p>
+              </>
+            }
+            doInstead={
+              <>
+                Follow the safe-system procedure: stop work, escalate, document, and only resume
+                once controls are verified.
+              </>
+            }
+          />
 
-            <p className="text-sm text-elec-yellow/70">
+          <p className="text-sm text-elec-yellow/70">
             <strong>Key principle:</strong> "Is it legal?" is not the same as "Is it right?"
             Professional ethics demands the latter question.
-            </p>
-          </ConceptBlock>
+          </p>
+        </ConceptBlock>
 
-          <InlineCheck {...quickCheckQuestions[3]} />
+        <InlineCheck {...quickCheckQuestions[3]} />
 
-          <SectionRule />
+        <SectionRule />
 
-          <ContentEyebrow>Whistleblowing and Protected Disclosures</ContentEyebrow>
+        <ContentEyebrow>Whistleblowing and Protected Disclosures</ContentEyebrow>
 
-          <ConceptBlock title="Whistleblowing and Protected Disclosures">
-            <p>
-            Whistleblowing is the disclosure of information about wrongdoing in an organisation.
-            The Public Interest Disclosure Act 1998 (PIDA) protects workers who raise legitimate
+        <ConceptBlock title="Whistleblowing and Protected Disclosures">
+          <p>
+            Whistleblowing is the disclosure of information about wrongdoing in an organisation. The
+            Public Interest Disclosure Act 1998 (PIDA) protects workers who raise legitimate
             concerns about malpractice, including health and safety dangers.
-            </p>
+          </p>
 
-            
-            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+          <p className="text-sm font-medium text-elec-yellow/80 mb-2">
             Six Categories of Qualifying Disclosure
-            </p>
-            <p className="text-sm text-white mb-3">
+          </p>
+          <p className="text-sm text-white mb-3">
             To be protected, a disclosure must relate to one of these categories:
-            </p>
-            
-            <div className="p-2 rounded bg-white/5">
-            <p className="text-sm text-white">
-            <span className="text-elec-yellow">1.</span> A criminal offence
-            </p>
-            </div>
-            <div className="p-2 rounded bg-white/5">
-            <p className="text-sm text-white">
-            <span className="text-elec-yellow">2.</span> Breach of legal obligation
-            </p>
-            </div>
-            <div className="p-2 rounded bg-white/5">
-            <p className="text-sm text-white">
-            <span className="text-elec-yellow">3.</span> Miscarriage of justice
-            </p>
-            </div>
-            <div className="p-2 rounded bg-red-500/10">
-            <p className="text-sm text-white">
-            <span className="text-red-400">4.</span> Health and safety danger
-            </p>
-            </div>
-            <div className="p-2 rounded bg-white/5">
-            <p className="text-sm text-white">
-            <span className="text-elec-yellow">5.</span> Environmental damage
-            </p>
-            </div>
-            <div className="p-2 rounded bg-white/5">
-            <p className="text-sm text-white">
-            <span className="text-elec-yellow">6.</span> Concealment of any above
-            </p>
-            </div>
-            
-            
+          </p>
 
-            
-            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-            Hierarchy of Disclosure
+          <div className="p-2 rounded bg-white/5">
+            <p className="text-sm text-white">
+              <span className="text-elec-yellow">1.</span> A criminal offence
             </p>
-            
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-            <li><strong>1. Internal</strong> — Disclosure To: Employer. Protection Requirements: Good faith, reasonable belief</li>
-            <li><strong>2. Prescribed person</strong> — Disclosure To: HSE, regulator. Protection Requirements: Reasonable belief, relevant body</li>
-            <li><strong>3. External</strong> — Disclosure To: Media, MPs, others. Protection Requirements: Additional conditions apply*</li>
-            </ul>
-            
-            <p className="text-xs text-white mt-2">
+          </div>
+          <div className="p-2 rounded bg-white/5">
+            <p className="text-sm text-white">
+              <span className="text-elec-yellow">2.</span> Breach of legal obligation
+            </p>
+          </div>
+          <div className="p-2 rounded bg-white/5">
+            <p className="text-sm text-white">
+              <span className="text-elec-yellow">3.</span> Miscarriage of justice
+            </p>
+          </div>
+          <div className="p-2 rounded bg-red-500/10">
+            <p className="text-sm text-white">
+              <span className="text-red-400">4.</span> Health and safety danger
+            </p>
+          </div>
+          <div className="p-2 rounded bg-white/5">
+            <p className="text-sm text-white">
+              <span className="text-elec-yellow">5.</span> Environmental damage
+            </p>
+          </div>
+          <div className="p-2 rounded bg-white/5">
+            <p className="text-sm text-white">
+              <span className="text-elec-yellow">6.</span> Concealment of any above
+            </p>
+          </div>
+
+          <p className="text-sm font-medium text-elec-yellow/80 mb-2">Hierarchy of Disclosure</p>
+
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>1. Internal</strong> — Disclosure To: Employer. Protection Requirements: Good
+              faith, reasonable belief
+            </li>
+            <li>
+              <strong>2. Prescribed person</strong> — Disclosure To: HSE, regulator. Protection
+              Requirements: Reasonable belief, relevant body
+            </li>
+            <li>
+              <strong>3. External</strong> — Disclosure To: Media, MPs, others. Protection
+              Requirements: Additional conditions apply*
+            </li>
+          </ul>
+
+          <p className="text-xs text-white mt-2">
             *External disclosure is protected if internal/prescribed disclosure would be futile,
             risk victimisation, or evidence would be concealed.
-            </p>
-            
+          </p>
 
-            <div className="my-6 p-4 rounded-lg bg-green-500/10 border border-green-500/30">
+          <div className="my-6 p-4 rounded-lg bg-green-500/10 border border-green-500/30">
             <p className="text-sm font-medium text-green-400 mb-2">PIDA Protections</p>
             <p className="text-sm text-white mb-3">
-            Workers who make qualifying disclosures are protected from:
+              Workers who make qualifying disclosures are protected from:
             </p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-            <li>
-            <strong>Dismissal:</strong> Automatically unfair if for making a protected
-            disclosure
-            </li>
-            <li>
-            <strong>Detriment:</strong> Any detrimental treatment by the employer
-            </li>
-            <li>
-            <strong>Selection for redundancy:</strong> If based on protected disclosure
-            </li>
+              <li>
+                <strong>Dismissal:</strong> Automatically unfair if for making a protected
+                disclosure
+              </li>
+              <li>
+                <strong>Detriment:</strong> Any detrimental treatment by the employer
+              </li>
+              <li>
+                <strong>Selection for redundancy:</strong> If based on protected disclosure
+              </li>
             </ul>
             <p className="text-xs text-white mt-2">
-            Compensation for whistleblowing dismissal is uncapped.
+              Compensation for whistleblowing dismissal is uncapped.
             </p>
-            </div>
+          </div>
 
-            
-            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+          <p className="text-sm font-medium text-elec-yellow/80 mb-2">
             Making an Effective Disclosure
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
             <li>Document the concern with dates, facts, and evidence</li>
             <li>Use internal procedures first where they exist</li>
             <li>Put concerns in writing and keep copies</li>
             <li>Be factual, not emotional or accusatory</li>
             <li>Seek advice from union, ACAS, or Protect (charity)</li>
             <li>Be clear you are making a formal disclosure</li>
-            </ul>
-            
+          </ul>
 
-            <p className="text-sm text-elec-yellow/70">
+          <p className="text-sm text-elec-yellow/70">
             <strong>For H&S matters:</strong> The HSE is a prescribed person - disclosures about
             health and safety dangers can be made directly to them with protection.
-            </p>
-          </ConceptBlock>
+          </p>
+        </ConceptBlock>
 
-          <InlineCheck {...quickCheckQuestions[0]} />
+        <InlineCheck {...quickCheckQuestions[0]} />
 
-          <SectionRule />
+        <SectionRule />
 
-          <ContentEyebrow>Conflicts of Interest</ContentEyebrow>
+        <ContentEyebrow>Conflicts of Interest</ContentEyebrow>
 
-          <ConceptBlock title="Conflicts of Interest">
-            <p>
+        <ConceptBlock title="Conflicts of Interest">
+          <p>
             A conflict of interest occurs when personal interests, or the interests of those close
             to you, could influence - or could appear to influence - your professional judgement.
-            Managing conflicts is essential for maintaining professional integrity and client
-            trust.
-            </p>
+            Managing conflicts is essential for maintaining professional integrity and client trust.
+          </p>
 
-            
-            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+          <p className="text-sm font-medium text-elec-yellow/80 mb-2">
             Common Conflicts in Building Services
-            </p>
-            
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-            <li><strong>Financial interest</strong> — Example: Shares in a supplier company. Why It's a Problem: May favour that supplier's products</li>
-            <li><strong>Personal relationships</strong> — Example: Family member owns contracting firm. Why It's a Problem: May award contracts without fair competition</li>
-            <li><strong>Outside employment</strong> — Example: Consultancy competing with employer. Why It's a Problem: Divided loyalty, potential for misuse of info</li>
-            <li><strong>Gifts and hospitality</strong> — Example: Supplier offers expensive gifts. Why It's a Problem: Creates sense of obligation, may influence decisions</li>
-            <li><strong>Self-review</strong> — Example: Inspecting your own design work. Why It's a Problem: Unlikely to identify own errors objectively</li>
-            </ul>
-            
-            
+          </p>
 
-            
-            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Financial interest</strong> — Example: Shares in a supplier company. Why It's
+              a Problem: May favour that supplier's products
+            </li>
+            <li>
+              <strong>Personal relationships</strong> — Example: Family member owns contracting
+              firm. Why It's a Problem: May award contracts without fair competition
+            </li>
+            <li>
+              <strong>Outside employment</strong> — Example: Consultancy competing with employer.
+              Why It's a Problem: Divided loyalty, potential for misuse of info
+            </li>
+            <li>
+              <strong>Gifts and hospitality</strong> — Example: Supplier offers expensive gifts. Why
+              It's a Problem: Creates sense of obligation, may influence decisions
+            </li>
+            <li>
+              <strong>Self-review</strong> — Example: Inspecting your own design work. Why It's a
+              Problem: Unlikely to identify own errors objectively
+            </li>
+          </ul>
+
+          <p className="text-sm font-medium text-elec-yellow/80 mb-2">
             Managing Conflicts of Interest
-            </p>
-            
-            <div>
+          </p>
+
+          <div>
             <p className="text-sm font-medium text-white mb-2">Steps to Take</p>
             <ol className="text-sm text-white space-y-1.5 list-decimal list-outside ml-5">
-            <li>
-            <strong>Identify:</strong> Recognise potential conflicts
-            </li>
-            <li>
-            <strong>Declare:</strong> Disclose to employer/client
-            </li>
-            <li>
-            <strong>Assess:</strong> Evaluate significance
-            </li>
-            <li>
-            <strong>Manage:</strong> Put safeguards in place
-            </li>
-            <li>
-            <strong>Withdraw:</strong> If conflict cannot be managed
-            </li>
+              <li>
+                <strong>Identify:</strong> Recognise potential conflicts
+              </li>
+              <li>
+                <strong>Declare:</strong> Disclose to employer/client
+              </li>
+              <li>
+                <strong>Assess:</strong> Evaluate significance
+              </li>
+              <li>
+                <strong>Manage:</strong> Put safeguards in place
+              </li>
+              <li>
+                <strong>Withdraw:</strong> If conflict cannot be managed
+              </li>
             </ol>
-            </div>
-            <div>
+          </div>
+          <div>
             <p className="text-sm font-medium text-white mb-2">Safeguards</p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-            <li>Transparent decision-making processes</li>
-            <li>Independent review/second opinion</li>
-            <li>Removing yourself from decisions</li>
-            <li>Clear policies on gifts/hospitality</li>
-            <li>Register of interests</li>
+              <li>Transparent decision-making processes</li>
+              <li>Independent review/second opinion</li>
+              <li>Removing yourself from decisions</li>
+              <li>Clear policies on gifts/hospitality</li>
+              <li>Register of interests</li>
             </ul>
-            </div>
-            
-            
+          </div>
 
-            <CommonMistake
+          <CommonMistake
             title="The 'Perception' Test"
-            whatHappens={<><p className="text-sm text-white">
-            Even if you believe you can be objective, consider: "Would a reasonable observer
-            think there is a conflict?" If a third party could reasonably perceive a conflict
-            exists, you should treat it as a conflict and manage it appropriately. Perception
-            matters because it affects trust in professional judgement.
-            </p></>}
-            doInstead={<>Follow the safe-system procedure: stop work, escalate, document, and only resume once controls are verified.</>}
-            />
+            whatHappens={
+              <>
+                <p className="text-sm text-white">
+                  Even if you believe you can be objective, consider: "Would a reasonable observer
+                  think there is a conflict?" If a third party could reasonably perceive a conflict
+                  exists, you should treat it as a conflict and manage it appropriately. Perception
+                  matters because it affects trust in professional judgement.
+                </p>
+              </>
+            }
+            doInstead={
+              <>
+                Follow the safe-system procedure: stop work, escalate, document, and only resume
+                once controls are verified.
+              </>
+            }
+          />
 
-            <p className="text-sm text-elec-yellow/70">
-            <strong>Remember:</strong> It's not enough to act without bias - you must be seen to
-            act without bias.
-            </p>
-          </ConceptBlock>
+          <p className="text-sm text-elec-yellow/70">
+            <strong>Remember:</strong> It's not enough to act without bias - you must be seen to act
+            without bias.
+          </p>
+        </ConceptBlock>
 
-          <InlineCheck {...quickCheckQuestions[2]} />
+        <InlineCheck {...quickCheckQuestions[2]} />
 
-          <SectionRule />
+        <SectionRule />
 
-          <ContentEyebrow>Professional Codes of Conduct</ContentEyebrow>
+        <ContentEyebrow>Professional Codes of Conduct</ContentEyebrow>
 
-          <ConceptBlock title="Professional Codes of Conduct">
-            <p>
+        <ConceptBlock title="Professional Codes of Conduct">
+          <p>
             Professional bodies set codes of conduct that define the ethical standards expected of
             their members. In building services, the key bodies are the Institution of Engineering
-            and Technology (IET) and trade associations like the Electrical Contractors'
-            Association (ECA).
-            </p>
+            and Technology (IET) and trade associations like the Electrical Contractors' Association
+            (ECA).
+          </p>
 
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
+          <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
             <p className="text-sm font-medium text-blue-400 mb-2">
-            IET Code of Conduct - Key Principles
+              IET Code of Conduct - Key Principles
             </p>
             <p className="text-sm text-white mb-3">IET members shall at all times:</p>
             <ol className="text-sm text-white space-y-2 list-decimal list-outside ml-5">
-            <li>
-            <strong>Act with integrity</strong> - be honest and trustworthy, declare
-            conflicts, reject bribery and corruption
-            </li>
-            <li>
-            <strong>Exercise professional skill and judgement</strong> - to protect health,
-            safety and welfare of all
-            </li>
-            <li>
-            <strong>Undertake only work within competence</strong> - not misrepresent
-            capabilities
-            </li>
-            <li>
-            <strong>Show commitment to continuing professional development</strong> - maintain
-            and develop competence
-            </li>
-            <li>
-            <strong>Support and promote diversity</strong> - treat others fairly without
-            discrimination
-            </li>
-            <li>
-            <strong>Uphold the reputation of the profession</strong> - not bring it into
-            disrepute
-            </li>
+              <li>
+                <strong>Act with integrity</strong> - be honest and trustworthy, declare conflicts,
+                reject bribery and corruption
+              </li>
+              <li>
+                <strong>Exercise professional skill and judgement</strong> - to protect health,
+                safety and welfare of all
+              </li>
+              <li>
+                <strong>Undertake only work within competence</strong> - not misrepresent
+                capabilities
+              </li>
+              <li>
+                <strong>Show commitment to continuing professional development</strong> - maintain
+                and develop competence
+              </li>
+              <li>
+                <strong>Support and promote diversity</strong> - treat others fairly without
+                discrimination
+              </li>
+              <li>
+                <strong>Uphold the reputation of the profession</strong> - not bring it into
+                disrepute
+              </li>
             </ol>
-            </div>
+          </div>
 
-            <div className="my-6 p-4 rounded-lg bg-purple-500/10 border border-purple-500/30">
+          <div className="my-6 p-4 rounded-lg bg-purple-500/10 border border-purple-500/30">
             <p className="text-sm font-medium text-purple-400 mb-2">ECA Membership Obligations</p>
             <p className="text-sm text-white mb-3">ECA member companies commit to:</p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-            <li>
-            Maintaining high standards of workmanship and business ethics
-            </li>
-            <li>Employing competent, properly trained staff</li>
-            <li>Operating comprehensive health and safety systems</li>
-            <li>Complying with all relevant legislation and regulations</li>
-            <li>Dealing fairly with customers, suppliers, and employees</li>
-            <li>Providing warranties and addressing customer complaints</li>
+              <li>Maintaining high standards of workmanship and business ethics</li>
+              <li>Employing competent, properly trained staff</li>
+              <li>Operating comprehensive health and safety systems</li>
+              <li>Complying with all relevant legislation and regulations</li>
+              <li>Dealing fairly with customers, suppliers, and employees</li>
+              <li>Providing warranties and addressing customer complaints</li>
             </ul>
-            </div>
+          </div>
 
-            
-            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+          <p className="text-sm font-medium text-elec-yellow/80 mb-2">
             Consequences of Breaching Professional Codes
-            </p>
-            
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-            <li><strong>Advice</strong> — Description: Guidance on future conduct. Impact: No formal record, minor matters</li>
-            <li><strong>Reprimand</strong> — Description: Formal warning recorded. Impact: On file, considered if repeat issues</li>
-            <li><strong>Conditions</strong> — Description: Continued membership with conditions. Impact: May require training, supervision</li>
-            <li><strong>Suspension</strong> — Description: Temporary removal from membership. Impact: Cannot use membership title</li>
-            <li><strong>Expulsion</strong> — Description: Permanent removal from membership. Impact: Loss of professional status, reputation</li>
-            </ul>
-            
-            
+          </p>
 
-            
-            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Advice</strong> — Description: Guidance on future conduct. Impact: No formal
+              record, minor matters
+            </li>
+            <li>
+              <strong>Reprimand</strong> — Description: Formal warning recorded. Impact: On file,
+              considered if repeat issues
+            </li>
+            <li>
+              <strong>Conditions</strong> — Description: Continued membership with conditions.
+              Impact: May require training, supervision
+            </li>
+            <li>
+              <strong>Suspension</strong> — Description: Temporary removal from membership. Impact:
+              Cannot use membership title
+            </li>
+            <li>
+              <strong>Expulsion</strong> — Description: Permanent removal from membership. Impact:
+              Loss of professional status, reputation
+            </li>
+          </ul>
+
+          <p className="text-sm font-medium text-elec-yellow/80 mb-2">
             Why Professional Codes Matter
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
             <li>
-            <strong>Public protection:</strong> Ensures minimum standards of competence and
-            conduct
+              <strong>Public protection:</strong> Ensures minimum standards of competence and
+              conduct
             </li>
             <li>
-            <strong>Client confidence:</strong> Clients can trust members will act
-            professionally
+              <strong>Client confidence:</strong> Clients can trust members will act professionally
             </li>
             <li>
-            <strong>Professional reputation:</strong> Maintains the standing of the profession
+              <strong>Professional reputation:</strong> Maintains the standing of the profession
             </li>
             <li>
-            <strong>Self-regulation:</strong> Demonstrates profession can govern itself
-            responsibly
+              <strong>Self-regulation:</strong> Demonstrates profession can govern itself
+              responsibly
             </li>
             <li>
-            <strong>Career protection:</strong> Framework for handling disputes and misconduct
+              <strong>Career protection:</strong> Framework for handling disputes and misconduct
             </li>
-            </ul>
-            
+          </ul>
 
-            <p className="text-sm text-elec-yellow/70">
+          <p className="text-sm text-elec-yellow/70">
             <strong>Chartered status:</strong> Chartered Engineers (CEng) have additional
             obligations including maintaining CPD records and may face registration review.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...quickCheckQuestions[1]} />
+
+        <SectionRule />
+
+        <ConceptBlock title="Practical Guidance">
+          <div>
+            <p>
+              <strong>Ethical Decision-Making Framework</strong>
             </p>
-          </ConceptBlock>
-
-          <InlineCheck {...quickCheckQuestions[1]} />
-
-          <SectionRule />
-
-          <ConceptBlock title="Practical Guidance">
-            <div>
-            <p><strong>Ethical Decision-Making Framework</strong></p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-            <li>
-            <strong>Is it legal?</strong> Does it comply with all relevant laws and
-            regulations?
-            </li>
-            <li>
-            <strong>Is it ethical?</strong> Does it comply with professional codes and
-            principles?
-            </li>
-            <li>
-            <strong>Is it fair?</strong> Would all affected parties consider it reasonable?
-            </li>
-            <li>
-            <strong>Would it pass scrutiny?</strong> How would it look reported in the news?
-            </li>
-            <li>
-            <strong>Can you justify it?</strong> Could you explain your decision to a
-            disciplinary panel?
-            </li>
+              <li>
+                <strong>Is it legal?</strong> Does it comply with all relevant laws and regulations?
+              </li>
+              <li>
+                <strong>Is it ethical?</strong> Does it comply with professional codes and
+                principles?
+              </li>
+              <li>
+                <strong>Is it fair?</strong> Would all affected parties consider it reasonable?
+              </li>
+              <li>
+                <strong>Would it pass scrutiny?</strong> How would it look reported in the news?
+              </li>
+              <li>
+                <strong>Can you justify it?</strong> Could you explain your decision to a
+                disciplinary panel?
+              </li>
             </ul>
-            </div>
-
-            <div>
-            <p><strong>When to Seek Advice</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-            <li>When you're uncertain whether something is ethical</li>
-            <li>When asked to do something that feels wrong</li>
-            <li>When you identify a potential conflict of interest</li>
-            <li>When you observe others acting unethically</li>
-            <li>Before making significant disclosures about wrongdoing</li>
-            </ul>
-            </div>
-
-            <div>
-            <p><strong>Common Ethical Pitfalls</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-            <li>
-            <strong>"Everyone does it":</strong> Widespread practice does not make it ethical
-            </li>
-            <li>
-            <strong>"No one will know":</strong> Integrity means doing right even when
-            unobserved
-            </li>
-            <li>
-            <strong>"It's not illegal":</strong> Legal does not equal ethical
-            </li>
-            <li>
-            <strong>"I was just following orders":</strong> You remain personally accountable
-            </li>
-            <li>
-            <strong>"The client wanted it":</strong> Your professional duty may override
-            client wishes
-            </li>
-            </ul>
-            </div>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <Scenario
-            title="Asked to certify an installation that does not comply with BS 7671"
-            situation={
-              <>
-                Your firm completes a domestic rewire. The customer pressures the operations
-                manager to issue an EIC despite a missing supplementary bond on a bathroom
-                that should be tested per Section 701. The manager asks you to sign as the
-                designer, installer and inspector to close the project out.
-              </>
-            }
-            whatToDo={
-              <>
-                Refuse. EICs require an honest declaration; signing for absent or non-compliant
-                work breaches BS 7671, EAWR Reg 14/16, the Engineering Council&rsquo;s ethical
-                principles, the IET code of conduct and (potentially) the Fraud Act 2006. Offer
-                the proper resolution — go back, install the bond, test, then issue. Document
-                the refusal. If the manager insists, raise via the firm&rsquo;s whistleblowing
-                channel and to the certification scheme (NICEIC, NAPIT, ELECSA) — both have
-                anonymous routes.
-              </>
-            }
-            whyItMatters={
-              <>
-                Falsified certificates kill — they obscure the residual hazard for whoever
-                comes next. PIDA and ERA 1996 s.44 protect you for refusing and reporting.
-              </>
-            }
-          />
-
-          <SectionRule />
-
-          <FAQ items={faqs} />
-
-          <SectionRule />
-
-          <KeyTakeaways
-            points={[
-              'Engineering Council Statement of Ethical Principles, IET Rules of Conduct and CIBSE code provide the professional framework.',
-              'Four core ethical principles: honesty & integrity, respect for life/law/public good, accuracy & rigour, leadership & communication.',
-              'Conflicts of interest: financial, personal, professional — disclose early, recuse where required.',
-              'PIDA / ERA 1996 s.43 protect whistleblowers raising public-interest concerns through prescribed channels.',
-              'Refuse to certify, sign or report what you cannot honestly stand behind — Fraud Act 2006 s.2 (false representation) is in play for fraudulent certification.',
-              'Stay within your scope of competence — refer up to a more qualified colleague when the task exceeds your training.',
-              'Confidentiality has limits — public safety overrides commercial confidentiality.',
-              'Professional registration (EngTech, IEng, CEng) carries continuing ethical obligations — breach can lead to removal.',
-            ]}
-          />
-
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-
-          {/* ── Prev / next nav ─────────────────────────────────── */}
-
-          <div className="grid grid-cols-2 gap-3 pt-2">
-            <button
-              onClick={() => navigate('../h-n-c-module1-section4')}
-              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
-                <ChevronLeft className="h-3 w-3" /> Back to section
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-white truncate">
-                Section 4
-              </div>
-            </button>
-            <button
-              onClick={() => navigate('../h-n-c-module1-section4-5')}
-              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
-                Next <ChevronRight className="h-3 w-3" />
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-black truncate">
-                Continuous Professional Development
-              </div>
-            </button>
           </div>
-        </PageFrame>
-      </div>
-    </div>
+
+          <div>
+            <p>
+              <strong>When to Seek Advice</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>When you're uncertain whether something is ethical</li>
+              <li>When asked to do something that feels wrong</li>
+              <li>When you identify a potential conflict of interest</li>
+              <li>When you observe others acting unethically</li>
+              <li>Before making significant disclosures about wrongdoing</li>
+            </ul>
+          </div>
+
+          <div>
+            <p>
+              <strong>Common Ethical Pitfalls</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>"Everyone does it":</strong> Widespread practice does not make it ethical
+              </li>
+              <li>
+                <strong>"No one will know":</strong> Integrity means doing right even when
+                unobserved
+              </li>
+              <li>
+                <strong>"It's not illegal":</strong> Legal does not equal ethical
+              </li>
+              <li>
+                <strong>"I was just following orders":</strong> You remain personally accountable
+              </li>
+              <li>
+                <strong>"The client wanted it":</strong> Your professional duty may override client
+                wishes
+              </li>
+            </ul>
+          </div>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <Scenario
+          title="Asked to certify an installation that does not comply with BS 7671"
+          situation={
+            <>
+              Your firm completes a domestic rewire. The customer pressures the operations manager
+              to issue an EIC despite a missing supplementary bond on a bathroom that should be
+              tested per Section 701. The manager asks you to sign as the designer, installer and
+              inspector to close the project out.
+            </>
+          }
+          whatToDo={
+            <>
+              Refuse. EICs require an honest declaration; signing for absent or non-compliant work
+              breaches BS 7671, EAWR Reg 14/16, the Engineering Council&rsquo;s ethical principles,
+              the IET code of conduct and (potentially) the Fraud Act 2006. Offer the proper
+              resolution — go back, install the bond, test, then issue. Document the refusal. If the
+              manager insists, raise via the firm&rsquo;s whistleblowing channel and to the
+              certification scheme (NICEIC, NAPIT, ELECSA) — both have anonymous routes.
+            </>
+          }
+          whyItMatters={
+            <>
+              Falsified certificates kill — they obscure the residual hazard for whoever comes next.
+              PIDA and ERA 1996 s.44 protect you for refusing and reporting.
+            </>
+          }
+        />
+
+        <SectionRule />
+
+        <FAQ items={faqs} />
+
+        <SectionRule />
+
+        <KeyTakeaways
+          points={[
+            'Engineering Council Statement of Ethical Principles, IET Rules of Conduct and CIBSE code provide the professional framework.',
+            'Four core ethical principles: honesty & integrity, respect for life/law/public good, accuracy & rigour, leadership & communication.',
+            'Conflicts of interest: financial, personal, professional — disclose early, recuse where required.',
+            'PIDA / ERA 1996 s.43 protect whistleblowers raising public-interest concerns through prescribed channels.',
+            'Refuse to certify, sign or report what you cannot honestly stand behind — Fraud Act 2006 s.2 (false representation) is in play for fraudulent certification.',
+            'Stay within your scope of competence — refer up to a more qualified colleague when the task exceeds your training.',
+            'Confidentiality has limits — public safety overrides commercial confidentiality.',
+            'Professional registration (EngTech, IEng, CEng) carries continuing ethical obligations — breach can lead to removal.',
+          ]}
+        />
+
+        <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+
+        {/* ── Prev / next nav ─────────────────────────────────── */}
+
+        <div className="grid grid-cols-2 gap-3 pt-2">
+          <button
+            onClick={() => navigate('../h-n-c-module1-section4')}
+            className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+          >
+            <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+              <ChevronLeft className="h-3 w-3" /> Back to section
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-white truncate">Section 4</div>
+          </button>
+          <button
+            onClick={() => navigate('../h-n-c-module1-section4-5')}
+            className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+          >
+            <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+              Next <ChevronRight className="h-3 w-3" />
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-black truncate">
+              Continuous Professional Development
+            </div>
+          </button>
+        </div>
+      </HubBody>
+    </HubPage>
   );
 };
 

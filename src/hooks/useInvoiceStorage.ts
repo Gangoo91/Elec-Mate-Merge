@@ -113,6 +113,8 @@ export const useInvoiceStorage = () => {
       linked_certificate_type: row.linked_certificate_type,
       linked_certificate_reference: row.linked_certificate_reference,
       linked_certificate_pdf_url: row.linked_certificate_pdf_url,
+      certificate_release_mode: row.certificate_release_mode || 'with_invoice',
+      certificate_released_at: row.certificate_released_at || null,
     }),
     []
   );
@@ -443,6 +445,7 @@ export const useInvoiceStorage = () => {
               linked_certificate_type: invoice.linked_certificate_type || null,
               linked_certificate_reference: invoice.linked_certificate_reference || null,
               linked_certificate_pdf_url: invoice.linked_certificate_pdf_url || null,
+              certificate_release_mode: invoice.certificate_release_mode || 'with_invoice',
               // Project linking
               project_id: invoice.project_id || null,
             },
@@ -477,6 +480,14 @@ export const useInvoiceStorage = () => {
             vat_amount: parseNumber(invoice.vatAmount),
             total: parseNumber(invoice.total),
             pdf_version: (invoice.pdf_version || 0) + 1,
+            // Without these four, linking a certificate to an EXISTING invoice
+            // silently vanished on save — the insert branch had them, the
+            // update branch never did.
+            linked_certificate_id: invoice.linked_certificate_id || null,
+            linked_certificate_type: invoice.linked_certificate_type || null,
+            linked_certificate_reference: invoice.linked_certificate_reference || null,
+            linked_certificate_pdf_url: invoice.linked_certificate_pdf_url || null,
+            certificate_release_mode: invoice.certificate_release_mode || 'with_invoice',
             updated_at: new Date().toISOString(),
           })
           .eq('id', invoice.id)

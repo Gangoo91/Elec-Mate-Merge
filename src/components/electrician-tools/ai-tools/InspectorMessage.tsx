@@ -7,6 +7,9 @@ import {
   BookOpen,
   RotateCw,
   AlertTriangle,
+  ThumbsUp,
+  ThumbsDown,
+  ClipboardList,
 } from 'lucide-react';
 import { toast } from 'sonner';
 import ReactMarkdown from 'react-markdown';
@@ -14,6 +17,7 @@ import remarkGfm from 'remark-gfm';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { copyToClipboard } from '@/utils/clipboard';
+import { CARD_SURFACE, SURFACE_DEPTH } from '@/components/ui/card-recipe';
 import { TypingIndicator } from './chat';
 import { transformInlineChildren, extractVerdict } from './chat/inline-formatters';
 import { VerdictCallout, ProcedureList, ProcedureStep } from './chat/answer-blocks';
@@ -41,20 +45,50 @@ interface InspectorMessageProps {
   onOpenSources?: () => void;
   /** Re-submit the question that produced this answer. */
   onRegenerate?: () => void;
+  /**
+   * Open the add-as-EICR-observation sheet. Passed only when the answer
+   * actually commits to a classification code, so the pill stays contextual.
+   */
+  onAddToEicr?: () => void;
   /** Tap handler for inline regulation pills — opens the regulation detail sheet. */
   onRegClick?: (regNumber: string) => void;
   /** 'dave' adds a small avatar to assistant messages (apprentice tutor). */
   variant?: 'default' | 'dave';
+  /**
+   * Thumbs rating for this answer. When provided, the footer renders the
+   * up/down controls at the end of the actions row — they belong to the
+   * answer, not floating on the page beneath it.
+   */
+  onFeedback?: (rating: 'positive' | 'negative') => void;
+  /** Rating already given (disables further votes and marks the choice). */
+  feedback?: 'positive' | 'negative';
+  /**
+   * One-tap "what went wrong" after a thumbs-down. Chips render while this is
+   * set and the vote is negative; the parent hides them once a reason lands.
+   */
+  onFeedbackReason?: (reason: string) => void;
 }
 
+/** Why a thumbs-down — one tap, no typing. Order: most diagnosable first. */
+const FEEDBACK_REASONS = [
+  'Wrong regulation',
+  "Didn't answer the question",
+  'Out of date',
+  'Too long',
+] as const;
+
 /**
- * InspectorMessage — Editorial AI response block.
+ * InspectorMessage — the answer as a volt document.
  *
- * User messages: bright neutral pill, right-aligned. A yellow tint at 10%
- * over this background renders olive-brown.
- * Assistant messages: full-width prose, no chrome, no avatar tile.
- * Headings, lists, code and block-quotes are styled to feel like an article.
- * A small "Elec-AI · BS 7671 A4:2026" eyebrow sits above the prose.
+ * User messages: right-aligned pill on the shared card material (diagonal
+ * white ramp + inset highlight). No yellow tint — a translucent volt wash
+ * renders olive-brown on this ground.
+ *
+ * Assistant messages: a full-width answer card in the app's volt language —
+ * card-recipe surface, volt /35 edge with the 1px volt hairline catching the
+ * top, edge-to-edge on phones. The verdict leads in display weight; headings,
+ * lists, code and tables are styled to read as a document, and the actions
+ * live inside the card's own footer.
  */
 export const InspectorMessage = memo(
   function InspectorMessage({
@@ -63,8 +97,12 @@ export const InspectorMessage = memo(
     onSaveToJob,
     onOpenSources,
     onRegenerate,
+    onAddToEicr,
     onRegClick,
     variant = 'default',
+    onFeedback,
+    feedback,
+    onFeedbackReason,
   }: InspectorMessageProps) {
     const [copied, setCopied] = useState(false);
     const [showWorking, setShowWorking] = useState(false);
@@ -98,7 +136,13 @@ export const InspectorMessage = memo(
                 />
               </div>
             )}
-            <div className="rounded-2xl border border-white/[0.16] bg-white/[0.10] px-3.5 py-3 text-white sm:px-4">
+            <div
+              className={cn(
+                'rounded-2xl border border-white/[0.16] px-3.5 py-3 text-white sm:px-4',
+                'bg-gradient-to-br from-white/[0.14] via-white/[0.09] to-white/[0.06]',
+                SURFACE_DEPTH
+              )}
+            >
               <div
                 className="whitespace-pre-wrap text-[14.5px] leading-relaxed"
                 style={{ overflowWrap: 'anywhere', wordBreak: 'break-word' }}
@@ -156,10 +200,31 @@ export const InspectorMessage = memo(
 
     return (
       <div className="flex justify-start w-full text-left min-w-0">
+        {/* No max-w cap — the transcript column (and the sources rail beside
+            it) set the measure; a 4xl cap left dead space inside the column. */}
         <div
-          className="w-full max-w-4xl space-y-3 min-w-0"
+          className="w-full min-w-0"
           style={{ overflowWrap: 'anywhere', wordBreak: 'break-word' }}
         >
+          {/*
+            The answer document. Card-recipe material with the volt /35 edge and
+            the 1px volt hairline catching the top — the same object as a hub
+            card, because it is the same product. Edge-to-edge on phones
+            (border-y only), inset and rounded from sm: up. The -mx-4 relies on
+            the parent transcript column padding being px-4.
+          */}
+          <div
+            className={cn(
+              'relative overflow-hidden space-y-3',
+              '-mx-4 rounded-none border-y border-elec-yellow/35 px-4 py-4',
+              'sm:mx-0 sm:rounded-2xl sm:border-x sm:px-6 sm:py-5',
+              CARD_SURFACE
+            )}
+          >
+            <span
+              aria-hidden
+              className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/55 to-elec-yellow/0"
+            />
           {/* Eyebrow — editorial; Dave variant adds a small avatar for identity */}
           <div className="flex items-center gap-2.5">
             {variant === 'dave' && (
@@ -208,28 +273,58 @@ export const InspectorMessage = memo(
                   newly-appearing structure is animated.
                 */}
                 {keyFigures.length > 0 && (
+                  /*
+                    HubKpi's phone rule applies here too: phones get ROWS, not
+                    cards. A 2-col tile grid at 390px gave a single figure a
+                    half-width tile floating beside dead space, and a long
+                    source line ("Table 41.3 (Cmin = 0.95…)") stacked the tile
+                    three lines tall. One bordered strip, label left / figure
+                    right, reads in a glance one-handed. Tiles return from sm:
+                    where there is room for them.
+                  */
                   <motion.div
                     initial={{ opacity: 0, y: 4 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.22, ease: 'easeOut' }}
-                    className="not-prose my-4 grid grid-cols-2 gap-2 sm:grid-cols-4"
+                    className="not-prose my-4"
                   >
-                    {keyFigures.map((f) => (
-                      <div
-                        key={f.label}
-                        className="rounded-xl border border-white/[0.07] bg-white/[0.03] px-3.5 py-3"
-                      >
-                        <div className="text-[17px] font-semibold leading-tight text-white tabular-nums">
-                          {f.value}
+                    <div className="divide-y divide-white/[0.10] overflow-hidden rounded-xl border border-white/[0.12] bg-white/[0.06] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] sm:hidden">
+                      {keyFigures.map((f) => (
+                        <div key={f.label} className="flex items-center justify-between gap-3 px-3.5 py-2.5">
+                          <div className="min-w-0">
+                            <div className="text-[11px] font-medium uppercase tracking-[0.08em] text-white">
+                              {f.label}
+                            </div>
+                            {f.source && (
+                              <div className="mt-0.5 text-[10.5px] font-medium text-elec-yellow">
+                                {f.source}
+                              </div>
+                            )}
+                          </div>
+                          <div className="shrink-0 text-[19px] font-semibold leading-tight text-white tabular-nums tracking-tight">
+                            {f.value}
+                          </div>
                         </div>
-                        <div className="mt-1 text-[10.5px] font-medium uppercase tracking-[0.08em] text-white">
-                          {f.label}
+                      ))}
+                    </div>
+                    <div className="hidden gap-2 sm:grid sm:grid-cols-2 lg:grid-cols-4">
+                      {keyFigures.map((f) => (
+                        <div
+                          key={f.label}
+                          className="rounded-xl border border-white/[0.12] bg-white/[0.06] px-3.5 py-3 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)]"
+                        >
+                          <div className="text-[19px] font-semibold leading-tight text-white tabular-nums tracking-tight">
+                            {f.value}
+                          </div>
+                          <div className="mt-1 text-[10.5px] font-medium uppercase tracking-[0.08em] text-white">
+                            {f.label}
+                          </div>
+                          {f.source && (
+                            <div className="mt-0.5 text-[10.5px] font-medium text-elec-yellow">{f.source}</div>
+                          )}
                         </div>
-                        {f.source && (
-                          <div className="mt-0.5 text-[10.5px] text-elec-yellow">{f.source}</div>
-                        )}
-                      </div>
-                    ))}
+                      ))}
+                    </div>
                   </motion.div>
                 )}
                 <ReactMarkdown
@@ -240,8 +335,12 @@ export const InspectorMessage = memo(
                         {transformInlineChildren(children, inlineCtx, 'h1')}
                       </h1>
                     ),
+                    /* Hierarchy from type and a quiet rule, like every hub
+                       section — the old volt gradient stripe before every H2
+                       put five accent bars in one answer, which is exactly the
+                       decoration the design language dropped. */
                     h2: ({ children }) => (
-                      <h2 className="relative text-lg sm:text-xl font-semibold mt-7 pt-7 mb-3 first:mt-0 first:pt-0 text-white tracking-tight before:content-[''] before:absolute before:top-0 before:left-0 before:right-0 before:h-[2px] before:rounded-full before:bg-gradient-to-r before:from-elec-yellow before:via-elec-yellow/40 before:to-transparent first:before:hidden">
+                      <h2 className="border-t border-white/[0.10] text-lg sm:text-xl font-semibold mt-7 pt-5 mb-3 first:mt-0 first:pt-0 first:border-t-0 text-white tracking-tight">
                         {transformInlineChildren(children, inlineCtx, 'h2')}
                       </h2>
                     ),
@@ -309,7 +408,15 @@ export const InspectorMessage = memo(
                       const isInline = !className;
                       if (isInline) {
                         return (
-                          <code className="bg-white/[0.06] text-elec-yellow px-1.5 py-0.5 rounded text-[13px] font-mono border border-white/[0.08]">
+                          /* em, not px: this renders inside bullets, headings
+                             and the verdict, and a fixed 13px mono read LARGER
+                             than the 14.5px prose around it (mono glyphs are
+                             wider), which made every figure shout.
+                             NO whitespace-nowrap: the model sometimes puts a
+                             whole phrase in backticks, and an unwrappable chip
+                             stretched the card's content past its clip edge —
+                             every line to the right of it was cut off. */
+                          <code className="bg-white/[0.06] text-elec-yellow px-1 py-0.5 rounded text-[0.92em] font-mono border border-white/[0.08] [overflow-wrap:anywhere]">
                             {children}
                           </code>
                         );
@@ -317,7 +424,10 @@ export const InspectorMessage = memo(
                       return (
                         <code
                           className={cn(
-                            'block bg-[hsl(0_0%_9%)] rounded-xl p-4 my-3 text-[13px] font-mono overflow-x-auto',
+                            /* Recessed against the card's lit surface — a solid
+                               near-black block inside the gradient read as a
+                               hole punched in the card. */
+                            'block bg-black/35 rounded-xl p-4 my-3 text-[13px] font-mono overflow-x-auto',
                             'border border-white/[0.08] text-white',
                             className
                           )}
@@ -385,7 +495,7 @@ export const InspectorMessage = memo(
                       {showWorking ? 'Hide working' : 'Show working'}
                     </button>
                     {showWorking && (
-                      <div className="mt-3 rounded-xl border border-white/[0.06] bg-white/[0.02] px-4 py-3">
+                      <div className="mt-3 rounded-xl border border-white/[0.10] bg-black/25 px-4 py-3">
                         <ReactMarkdown
                           remarkPlugins={[remarkGfm]}
                           components={{
@@ -433,18 +543,18 @@ export const InspectorMessage = memo(
 
           {/* Footer actions — real tap targets, not text links (44px on mobile) */}
           {!isStreaming && message.content && (
-            <div className="mt-1 space-y-2.5 border-t border-white/[0.06] pt-3">
+            <div className="mt-1 space-y-2.5 border-t border-white/[0.10] pt-3">
               <div className="flex flex-wrap items-center gap-1.5">
                 <button
                   onClick={handleCopy}
                   aria-label={copied ? 'Copied to clipboard' : 'Copy answer'}
                   className={cn(
-                    'inline-flex h-11 items-center gap-1.5 rounded-xl px-3 text-[12.5px] font-medium',
-                    'touch-manipulation transition-colors active:scale-[0.97]',
+                    'inline-flex h-11 items-center gap-1.5 rounded-full border px-3.5 text-[12.5px] font-medium',
+                    'touch-manipulation transition-colors active:scale-[0.97] [-webkit-tap-highlight-color:transparent]',
                     'sm:h-9',
                     copied
-                      ? 'bg-emerald-400/15 text-emerald-300'
-                      : 'bg-white/[0.05] text-white hover:bg-white/[0.09]'
+                      ? 'border-emerald-400/30 bg-emerald-400/15 text-emerald-300'
+                      : 'border-white/[0.12] bg-white/[0.06] text-white hover:bg-white/[0.10] hover:border-white/[0.22]'
                   )}
                 >
                   {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
@@ -454,7 +564,7 @@ export const InspectorMessage = memo(
                   <button
                     onClick={onSaveToJob}
                     aria-label="Save answer to a job"
-                    className="inline-flex h-11 items-center gap-1.5 rounded-xl bg-white/[0.05] px-3 text-[12.5px] font-medium text-white touch-manipulation transition-colors hover:bg-white/[0.09] active:scale-[0.97] sm:h-9"
+                    className="inline-flex h-11 items-center gap-1.5 rounded-full border border-white/[0.12] bg-white/[0.06] px-3.5 text-[12.5px] font-medium text-white touch-manipulation transition-colors hover:bg-white/[0.10] hover:border-white/[0.22] active:scale-[0.97] [-webkit-tap-highlight-color:transparent] sm:h-9"
                   >
                     <BookmarkPlus className="h-3.5 w-3.5" />
                     Save to job
@@ -464,10 +574,20 @@ export const InspectorMessage = memo(
                   <button
                     onClick={onOpenSources}
                     aria-label="Open cited regulation sources"
-                    className="inline-flex h-11 items-center gap-1.5 rounded-xl bg-white/[0.05] px-3 text-[12.5px] font-medium text-white touch-manipulation transition-colors hover:bg-white/[0.09] active:scale-[0.97] sm:h-9"
+                    className="inline-flex h-11 items-center gap-1.5 rounded-full border border-white/[0.12] bg-white/[0.06] px-3.5 text-[12.5px] font-medium text-white touch-manipulation transition-colors hover:bg-white/[0.10] hover:border-white/[0.22] active:scale-[0.97] [-webkit-tap-highlight-color:transparent] sm:h-9"
                   >
                     <BookOpen className="h-3.5 w-3.5" />
                     Sources
+                  </button>
+                )}
+                {onAddToEicr && (
+                  <button
+                    onClick={onAddToEicr}
+                    aria-label="Add this finding to an EICR as an observation"
+                    className="inline-flex h-11 items-center gap-1.5 rounded-full border border-elec-yellow/40 bg-white/[0.06] px-3.5 text-[12.5px] font-medium text-white touch-manipulation transition-colors hover:bg-white/[0.10] hover:border-elec-yellow/70 active:scale-[0.97] [-webkit-tap-highlight-color:transparent] sm:h-9"
+                  >
+                    <ClipboardList className="h-3.5 w-3.5 text-elec-yellow" />
+                    Add to EICR
                   </button>
                 )}
                 {onRegenerate && (
@@ -475,18 +595,89 @@ export const InspectorMessage = memo(
                     onClick={onRegenerate}
                     aria-label={isError ? 'Try again' : 'Regenerate answer'}
                     className={cn(
-                      'inline-flex h-11 items-center gap-1.5 rounded-xl px-3 text-[12.5px] font-medium',
-                      'touch-manipulation transition-colors active:scale-[0.97] sm:h-9',
+                      'inline-flex h-11 items-center gap-1.5 rounded-full px-3.5 text-[12.5px] font-medium',
+                      'touch-manipulation transition-colors active:scale-[0.97] [-webkit-tap-highlight-color:transparent] sm:h-9',
                       isError
-                        ? 'bg-elec-yellow text-black hover:bg-elec-yellow/90'
-                        : 'bg-white/[0.05] text-white hover:bg-white/[0.09]'
+                        ? 'border border-elec-yellow bg-elec-yellow font-semibold text-black hover:bg-elec-yellow/90'
+                        : 'border border-white/[0.12] bg-white/[0.06] text-white hover:bg-white/[0.10] hover:border-white/[0.22]'
                     )}
                   >
                     <RotateCw className="h-3.5 w-3.5" />
                     {isError ? 'Try again' : 'Regenerate'}
                   </button>
                 )}
+
+                {/* Thumbs — part of the answer's own footer, end of the row.
+                    Full-strength icons on the same pill material as the other
+                    actions; the chosen thumb goes solid volt (or red for a
+                    flag), the other one steps back. */}
+                {onFeedback && !isError && (
+                  <div className="ml-auto flex items-center gap-1.5 pl-2">
+                    <button
+                      type="button"
+                      onClick={() => onFeedback('positive')}
+                      disabled={!!feedback}
+                      aria-label="Good answer"
+                      className={cn(
+                        'inline-flex h-11 w-11 items-center justify-center rounded-full border',
+                        'touch-manipulation transition-all active:scale-[0.94] [-webkit-tap-highlight-color:transparent] sm:h-9 sm:w-9',
+                        feedback === 'positive'
+                          ? 'border-elec-yellow bg-elec-yellow text-black'
+                          : 'border-white/[0.12] bg-white/[0.06] text-white hover:bg-white/[0.10] hover:border-white/[0.22]',
+                        feedback === 'negative' && 'opacity-35'
+                      )}
+                    >
+                      <ThumbsUp className="h-4 w-4" />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => onFeedback('negative')}
+                      disabled={!!feedback}
+                      aria-label="Wrong or unhelpful answer"
+                      className={cn(
+                        'inline-flex h-11 w-11 items-center justify-center rounded-full border',
+                        'touch-manipulation transition-all active:scale-[0.94] [-webkit-tap-highlight-color:transparent] sm:h-9 sm:w-9',
+                        feedback === 'negative'
+                          ? 'border-red-400/40 bg-red-400/15 text-red-300'
+                          : 'border-white/[0.12] bg-white/[0.06] text-white hover:bg-white/[0.10] hover:border-white/[0.22]',
+                        feedback === 'positive' && 'opacity-35'
+                      )}
+                    >
+                      <ThumbsDown className="h-4 w-4" />
+                    </button>
+                  </div>
+                )}
               </div>
+
+              {/* "What went wrong?" — appears only after a thumbs-down, and
+                  only until a reason lands. One tap; no typing on site. */}
+              <AnimatePresence>
+                {feedback === 'negative' && onFeedbackReason && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: 'auto' }}
+                    exit={{ opacity: 0, height: 0 }}
+                    transition={{ duration: 0.18, ease: 'easeOut' }}
+                    className="overflow-hidden"
+                  >
+                    <div className="flex flex-wrap items-center gap-1.5 pt-1">
+                      <span className="mr-1 text-[12.5px] font-medium text-white">
+                        What went wrong?
+                      </span>
+                      {FEEDBACK_REASONS.map((reason) => (
+                        <button
+                          key={reason}
+                          type="button"
+                          onClick={() => onFeedbackReason(reason)}
+                          className="inline-flex h-9 items-center rounded-full border border-white/[0.12] bg-white/[0.06] px-3 text-[12px] font-medium text-white transition-colors hover:border-elec-yellow/40 hover:bg-white/[0.10] active:scale-[0.97] touch-manipulation [-webkit-tap-highlight-color:transparent]"
+                        >
+                          {reason}
+                        </button>
+                      ))}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
 
               {/*
                 Provenance line. Three states, and the distinction matters:
@@ -509,6 +700,7 @@ export const InspectorMessage = memo(
                 ))}
             </div>
           )}
+          </div>
         </div>
       </div>
     );
@@ -522,7 +714,13 @@ export const InspectorMessage = memo(
       // Must be compared: the error flag lands in the same state update as the
       // final content, and if that content is unchanged the footer would keep
       // showing the verified badge on a failed answer.
-      prevProps.message.isError === nextProps.message.isError
+      prevProps.message.isError === nextProps.message.isError &&
+      // Same reason: a vote changes nothing but this prop, and without the
+      // comparison the thumb never lights up.
+      prevProps.feedback === nextProps.feedback &&
+      // Presence flip (fn → undefined) is how the parent dismisses the
+      // reason chips once a reason lands.
+      !!prevProps.onFeedbackReason === !!nextProps.onFeedbackReason
     );
   }
 );

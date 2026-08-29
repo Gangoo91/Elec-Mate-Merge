@@ -7,11 +7,11 @@
  */
 
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
-import { PageFrame, PageHero } from '@/components/college/primitives';
 import {
   TLDR,
   ConceptBlock,
@@ -282,528 +282,550 @@ const HNCModule1Section3_6 = () => {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
-      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
-        <PageFrame>
-          <button
-            onClick={() => navigate('../h-n-c-module1-section3')}
-            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
-          >
-            <ArrowLeft className="h-4 w-4" /> Section 3
-          </button>
+    <HubPage>
+      <HubMasthead
+        section="Module 1.3.6"
+        title="Contractor Management"
+        backTo="../h-n-c-module1-section3"
+      />
+      <HubBody>
+        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
+          Selecting, managing and coordinating contractors for safe building services projects
+        </p>
 
-          <PageHero
-            eyebrow="Module 1.3.6"
-            title="Contractor Management"
-            description="Selecting, managing and coordinating contractors for safe building services projects"
-            tone="purple"
-          />
+        <TLDR
+          points={[
+            'You will run pre-qualification, selection, induction, monitoring and review on every contractor — not just the principal contractor.',
+            'You can apply CDM 2015 Reg 8 (general duties) and Reg 13 (principal contractor) to allocate accountability across multi-contractor projects.',
+            'You apply HSWA s.3 (duties to non-employees) — your duty extends to the workforce of every contractor on your site.',
+            'You use SSIP-accredited schemes (CHAS, SafeContractor, Achilles) as the start of pre-qualification, not the end.',
+          ]}
+        />
 
-          <TLDR
-            points={[
-              'You will run pre-qualification, selection, induction, monitoring and review on every contractor — not just the principal contractor.',
-              'You can apply CDM 2015 Reg 8 (general duties) and Reg 13 (principal contractor) to allocate accountability across multi-contractor projects.',
-              'You apply HSWA s.3 (duties to non-employees) — your duty extends to the workforce of every contractor on your site.',
-              'You use SSIP-accredited schemes (CHAS, SafeContractor, Achilles) as the start of pre-qualification, not the end.',
-            ]}
-          />
+        <RegsCallout
+          source="HASAWA 1974 — Section 3(1)"
+          clause="It shall be the duty of every employer to conduct his undertaking in such a way as to ensure, so far as is reasonably practicable, that persons not in his employment who may be affected thereby are not exposed to risks to their health or safety."
+          meaning={
+            <>
+              Section 3 captures contractors&rsquo; employees, sub-contractors, visitors and the
+              public. As an HNC supervisor running a multi-contractor project the duty does not stop
+              at your own headcount.
+            </>
+          }
+          cite="Source: Health and Safety at Work etc. Act 1974, s.3(1) — legislation.gov.uk"
+        />
 
-          <RegsCallout
-            source="HASAWA 1974 — Section 3(1)"
-            clause="It shall be the duty of every employer to conduct his undertaking in such a way as to ensure, so far as is reasonably practicable, that persons not in his employment who may be affected thereby are not exposed to risks to their health or safety."
-            meaning={
-              <>
-                Section 3 captures contractors&rsquo; employees, sub-contractors, visitors and
-                the public. As an HNC supervisor running a multi-contractor project the duty
-                does not stop at your own headcount.
-              </>
-            }
-            cite="Source: Health and Safety at Work etc. Act 1974, s.3(1) — legislation.gov.uk"
-          />
+        <LearningOutcomes
+          outcomes={[
+            'Apply CDM 2015 requirements for contractor appointment',
+            'Implement effective contractor selection and pre-qualification',
+            'Develop and deliver contractor induction programmes',
+            'Monitor contractor safety performance on site',
+            'Coordinate multiple contractors and manage interfaces',
+            'Address contractor non-compliance effectively',
+          ]}
+          initialVisibleCount={3}
+        />
 
-          <LearningOutcomes
-            outcomes={[
-              "Apply CDM 2015 requirements for contractor appointment",
-              "Implement effective contractor selection and pre-qualification",
-              "Develop and deliver contractor induction programmes",
-              "Monitor contractor safety performance on site",
-              "Coordinate multiple contractors and manage interfaces",
-              "Address contractor non-compliance effectively",
-            ]}
-            initialVisibleCount={3}
-          />
+        <SectionRule />
 
-          <SectionRule />
+        <ContentEyebrow>Contractor Selection and Competence</ContentEyebrow>
 
-          <ContentEyebrow>Contractor Selection and Competence</ContentEyebrow>
-
-          <ConceptBlock title="Contractor Selection and Competence">
-            <p>
+        <ConceptBlock title="Contractor Selection and Competence">
+          <p>
             Under CDM 2015, clients must take reasonable steps to satisfy themselves that
             contractors have the skills, knowledge, experience, and organisational capability to
             carry out the work safely. This assessment should be proportionate to the risks
             involved.
-            </p>
+          </p>
 
-            
-            <p className="text-sm font-medium text-white mb-2">Competence assessment elements:</p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+          <p className="text-sm font-medium text-white mb-2">Competence assessment elements:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
             <li>
-            <strong>Experience:</strong> Relevant project history, similar scope and
-            complexity
+              <strong>Experience:</strong> Relevant project history, similar scope and complexity
             </li>
             <li>
-            <strong>Qualifications:</strong> Trade competence, management training, specific
-            certifications
+              <strong>Qualifications:</strong> Trade competence, management training, specific
+              certifications
             </li>
             <li>
-            <strong>Resources:</strong> Adequate workforce, equipment, supervision capacity
+              <strong>Resources:</strong> Adequate workforce, equipment, supervision capacity
             </li>
             <li>
-            <strong>Systems:</strong> Health and safety management, quality control, training
+              <strong>Systems:</strong> Health and safety management, quality control, training
             </li>
             <li>
-            <strong>Track record:</strong> Safety performance, references, enforcement history
+              <strong>Track record:</strong> Safety performance, references, enforcement history
             </li>
-            </ul>
-            
+          </ul>
 
-            
-            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+          <p className="text-sm font-medium text-elec-yellow/80 mb-2">
             Pre-Qualification Assessment Areas
-            </p>
-            
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-            <li><strong>H&S Policy</strong> — What to Check: Appropriate to activities, current, signed. Evidence: Copy of policy document</li>
-            <li><strong>Training</strong> — What to Check: Trade qualifications, CSCS/ECS cards, safety training. Evidence: Training matrix, card copies</li>
-            <li><strong>Experience</strong> — What to Check: Similar projects, specific expertise. Evidence: Project references, testimonials</li>
-            <li><strong>Insurance</strong> — What to Check: Employers liability, public liability, professional indemnity. Evidence: Current certificates</li>
-            <li><strong>Accreditations</strong> — What to Check: SSIP, ISO 45001, trade body membership. Evidence: Certificates, registration numbers</li>
-            <li><strong>Safety record</strong> — What to Check: Accident rates, enforcement action, improvements. Evidence: Statistics, declarations</li>
-            </ul>
-            
-            
+          </p>
 
-            <p className="text-sm text-elec-yellow/70">
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>H&S Policy</strong> — What to Check: Appropriate to activities, current,
+              signed. Evidence: Copy of policy document
+            </li>
+            <li>
+              <strong>Training</strong> — What to Check: Trade qualifications, CSCS/ECS cards,
+              safety training. Evidence: Training matrix, card copies
+            </li>
+            <li>
+              <strong>Experience</strong> — What to Check: Similar projects, specific expertise.
+              Evidence: Project references, testimonials
+            </li>
+            <li>
+              <strong>Insurance</strong> — What to Check: Employers liability, public liability,
+              professional indemnity. Evidence: Current certificates
+            </li>
+            <li>
+              <strong>Accreditations</strong> — What to Check: SSIP, ISO 45001, trade body
+              membership. Evidence: Certificates, registration numbers
+            </li>
+            <li>
+              <strong>Safety record</strong> — What to Check: Accident rates, enforcement action,
+              improvements. Evidence: Statistics, declarations
+            </li>
+          </ul>
+
+          <p className="text-sm text-elec-yellow/70">
             <strong>Proportionate approach:</strong> Assessment should be proportionate to risk.
             Low-risk routine work needs simpler checks; high-risk specialist work requires more
             detailed assessment.
-            </p>
-          </ConceptBlock>
+          </p>
+        </ConceptBlock>
 
-          <InlineCheck {...quickCheckQuestions[0]} />
+        <InlineCheck {...quickCheckQuestions[0]} />
 
-          <SectionRule />
+        <SectionRule />
 
-          <ContentEyebrow>CDM Roles and Principal Contractor Duties</ContentEyebrow>
+        <ContentEyebrow>CDM Roles and Principal Contractor Duties</ContentEyebrow>
 
-          <ConceptBlock title="CDM Roles and Principal Contractor Duties">
-            <p>
-            The Construction (Design and Management) Regulations 2015 establish clear duties for
-            all parties involved in construction work. For projects with multiple contractors, a
+        <ConceptBlock title="CDM Roles and Principal Contractor Duties">
+          <p>
+            The Construction (Design and Management) Regulations 2015 establish clear duties for all
+            parties involved in construction work. For projects with multiple contractors, a
             principal contractor must be appointed to coordinate the construction phase.
-            </p>
+          </p>
 
-            
-            <p className="text-sm font-medium text-elec-yellow/80 mb-2">CDM Duty Holders</p>
-            
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-            <li><strong>Client</strong> — Key Duties: Make suitable arrangements, ensure adequate time/resources, provide pre-construction information</li>
-            <li><strong>Principal Designer</strong> — Key Duties: Plan, manage, coordinate pre-construction phase, prepare health and safety file</li>
-            <li><strong>Principal Contractor</strong> — Key Duties: Plan, manage, coordinate construction phase, prepare construction phase plan</li>
-            <li><strong>Designers</strong> — Key Duties: Eliminate/reduce risks through design, provide information on remaining risks</li>
-            <li><strong>Contractors</strong> — Key Duties: Plan, manage, monitor own work, cooperate with others, provide information</li>
-            <li><strong>Workers</strong> — Key Duties: Cooperate with others, report unsafe conditions, follow instructions</li>
-            </ul>
-            
-            
+          <p className="text-sm font-medium text-elec-yellow/80 mb-2">CDM Duty Holders</p>
 
-            
-            <div>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Client</strong> — Key Duties: Make suitable arrangements, ensure adequate
+              time/resources, provide pre-construction information
+            </li>
+            <li>
+              <strong>Principal Designer</strong> — Key Duties: Plan, manage, coordinate
+              pre-construction phase, prepare health and safety file
+            </li>
+            <li>
+              <strong>Principal Contractor</strong> — Key Duties: Plan, manage, coordinate
+              construction phase, prepare construction phase plan
+            </li>
+            <li>
+              <strong>Designers</strong> — Key Duties: Eliminate/reduce risks through design,
+              provide information on remaining risks
+            </li>
+            <li>
+              <strong>Contractors</strong> — Key Duties: Plan, manage, monitor own work, cooperate
+              with others, provide information
+            </li>
+            <li>
+              <strong>Workers</strong> — Key Duties: Cooperate with others, report unsafe
+              conditions, follow instructions
+            </li>
+          </ul>
+
+          <div>
             <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-            Principal Contractor Duties
+              Principal Contractor Duties
             </p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-            <li>Prepare construction phase plan</li>
-            <li>Organise cooperation between contractors</li>
-            <li>Coordinate implementation of H&S principles</li>
-            <li>Ensure site induction for all workers</li>
-            <li>Take reasonable steps to prevent unauthorised access</li>
-            <li>Provide welfare facilities</li>
+              <li>Prepare construction phase plan</li>
+              <li>Organise cooperation between contractors</li>
+              <li>Coordinate implementation of H&S principles</li>
+              <li>Ensure site induction for all workers</li>
+              <li>Take reasonable steps to prevent unauthorised access</li>
+              <li>Provide welfare facilities</li>
             </ul>
-            </div>
-            <div>
+          </div>
+          <div>
             <p className="text-sm font-medium text-elec-yellow/80 mb-2">Contractor Duties</p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-            <li>Plan, manage and monitor own work safely</li>
-            <li>Comply with PC's site rules and directions</li>
-            <li>Provide information for construction phase plan</li>
-            <li>Inform PC of risks created by their work</li>
-            <li>Ensure workers have right skills and training</li>
-            <li>Consult and engage with workforce</li>
+              <li>Plan, manage and monitor own work safely</li>
+              <li>Comply with PC's site rules and directions</li>
+              <li>Provide information for construction phase plan</li>
+              <li>Inform PC of risks created by their work</li>
+              <li>Ensure workers have right skills and training</li>
+              <li>Consult and engage with workforce</li>
             </ul>
-            </div>
-            
+          </div>
 
-            <p className="text-sm text-elec-yellow/70">
+          <p className="text-sm text-elec-yellow/70">
             <strong>Single contractor:</strong> If there's only one contractor on a project, they
-            take on the principal contractor duties. The principal designer role may be taken by
-            the designer.
-            </p>
-          </ConceptBlock>
+            take on the principal contractor duties. The principal designer role may be taken by the
+            designer.
+          </p>
+        </ConceptBlock>
 
-          <InlineCheck {...quickCheckQuestions[1]} />
+        <InlineCheck {...quickCheckQuestions[1]} />
 
-          <SectionRule />
+        <SectionRule />
 
-          <ContentEyebrow>Induction and RAMS Review</ContentEyebrow>
+        <ContentEyebrow>Induction and RAMS Review</ContentEyebrow>
 
-          <ConceptBlock title="Induction and RAMS Review">
-            <p>
+        <ConceptBlock title="Induction and RAMS Review">
+          <p>
             Every person working on a construction site must receive suitable site-specific
-            induction before starting work. Additionally, contractors must provide risk
-            assessments and method statements (RAMS) for review before work begins.
-            </p>
+            induction before starting work. Additionally, contractors must provide risk assessments
+            and method statements (RAMS) for review before work begins.
+          </p>
 
-            
-            <p className="text-sm font-medium text-white mb-2">Site induction content:</p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+          <p className="text-sm font-medium text-white mb-2">Site induction content:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
             <li>
-            <strong>Site rules:</strong> Access, PPE, behaviour, prohibited activities
+              <strong>Site rules:</strong> Access, PPE, behaviour, prohibited activities
             </li>
             <li>
-            <strong>Known hazards:</strong> Asbestos, services, live systems, fragile areas
+              <strong>Known hazards:</strong> Asbestos, services, live systems, fragile areas
             </li>
             <li>
-            <strong>Emergency procedures:</strong> Alarms, assembly points, first aid,
-            contacts
+              <strong>Emergency procedures:</strong> Alarms, assembly points, first aid, contacts
             </li>
             <li>
-            <strong>Welfare:</strong> Toilets, rest areas, drinking water, drying facilities
+              <strong>Welfare:</strong> Toilets, rest areas, drinking water, drying facilities
             </li>
             <li>
-            <strong>Reporting:</strong> Accidents, near misses, hazards, toolbox talks
+              <strong>Reporting:</strong> Accidents, near misses, hazards, toolbox talks
             </li>
             <li>
-            <strong>Permits:</strong> When required, how to obtain, procedures
+              <strong>Permits:</strong> When required, how to obtain, procedures
             </li>
-            </ul>
-            
+          </ul>
 
-            
-            <p className="text-sm font-medium text-elec-yellow/80 mb-2">RAMS Review Checklist</p>
-            
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-            <li><strong>Scope</strong> — Questions to Ask: Does it cover all the work to be done? Specific to this site?</li>
-            <li><strong>Hazards</strong> — Questions to Ask: All significant hazards identified? Including site-specific ones?</li>
-            <li><strong>Controls</strong> — Questions to Ask: Controls proportionate and practical? Hierarchy of control followed?</li>
-            <li><strong>Sequence</strong> — Questions to Ask: Logical work sequence? Safe access/egress? Isolation points?</li>
-            <li><strong>Resources</strong> — Questions to Ask: Right equipment specified? Training requirements clear?</li>
-            <li><strong>Interfaces</strong> — Questions to Ask: Coordination with other trades? Impact on building users?</li>
-            </ul>
-            
-            
+          <p className="text-sm font-medium text-elec-yellow/80 mb-2">RAMS Review Checklist</p>
 
-            
-            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-            Pre-Start Meeting Agenda
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Scope</strong> — Questions to Ask: Does it cover all the work to be done?
+              Specific to this site?
+            </li>
+            <li>
+              <strong>Hazards</strong> — Questions to Ask: All significant hazards identified?
+              Including site-specific ones?
+            </li>
+            <li>
+              <strong>Controls</strong> — Questions to Ask: Controls proportionate and practical?
+              Hierarchy of control followed?
+            </li>
+            <li>
+              <strong>Sequence</strong> — Questions to Ask: Logical work sequence? Safe
+              access/egress? Isolation points?
+            </li>
+            <li>
+              <strong>Resources</strong> — Questions to Ask: Right equipment specified? Training
+              requirements clear?
+            </li>
+            <li>
+              <strong>Interfaces</strong> — Questions to Ask: Coordination with other trades? Impact
+              on building users?
+            </li>
+          </ul>
+
+          <p className="text-sm font-medium text-elec-yellow/80 mb-2">Pre-Start Meeting Agenda</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
             <li>Confirm scope and programme</li>
             <li>Review and accept RAMS</li>
             <li>Identify interfaces with other contractors</li>
             <li>Confirm permit requirements</li>
             <li>Agree communication and reporting procedures</li>
             <li>Resolve any outstanding issues</li>
-            </ul>
-            
+          </ul>
 
-            <p className="text-sm text-elec-yellow/70">
-            <strong>Generic RAMS:</strong> Beware of generic documents that haven't been tailored
-            to the specific site. Challenge and return documents that don't address actual site
+          <p className="text-sm text-elec-yellow/70">
+            <strong>Generic RAMS:</strong> Beware of generic documents that haven't been tailored to
+            the specific site. Challenge and return documents that don't address actual site
             conditions and hazards.
-            </p>
-          </ConceptBlock>
+          </p>
+        </ConceptBlock>
 
-          <InlineCheck {...quickCheckQuestions[2]} />
+        <InlineCheck {...quickCheckQuestions[2]} />
 
-          <SectionRule />
+        <SectionRule />
 
-          <ContentEyebrow>Monitoring and Coordination</ContentEyebrow>
+        <ContentEyebrow>Monitoring and Coordination</ContentEyebrow>
 
-          <ConceptBlock title="Monitoring and Coordination">
-            <p>
+        <ConceptBlock title="Monitoring and Coordination">
+          <p>
             Ongoing monitoring ensures contractors maintain standards throughout the project.
             Effective coordination prevents conflicts between trades and manages interface risks -
             particularly critical in building services where multiple systems interact.
-            </p>
+          </p>
 
-            
-            <div>
+          <div>
             <p className="text-sm font-medium text-elec-yellow/80 mb-2">Monitoring Methods</p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-            <li>Regular site inspections and tours</li>
-            <li>Behavioural safety observations</li>
-            <li>Review of permits and isolations</li>
-            <li>Verification of competence cards on site</li>
-            <li>Checking adherence to RAMS</li>
-            <li>Toolbox talk attendance</li>
+              <li>Regular site inspections and tours</li>
+              <li>Behavioural safety observations</li>
+              <li>Review of permits and isolations</li>
+              <li>Verification of competence cards on site</li>
+              <li>Checking adherence to RAMS</li>
+              <li>Toolbox talk attendance</li>
             </ul>
-            </div>
-            <div>
+          </div>
+          <div>
             <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-            Coordination Requirements
+              Coordination Requirements
             </p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-            <li>Daily activity coordination (busy areas)</li>
-            <li>Weekly contractor coordination meetings</li>
-            <li>Shared isolation registers</li>
-            <li>Permit coordination (no conflicts)</li>
-            <li>Interface risk management</li>
-            <li>Progress and look-ahead planning</li>
+              <li>Daily activity coordination (busy areas)</li>
+              <li>Weekly contractor coordination meetings</li>
+              <li>Shared isolation registers</li>
+              <li>Permit coordination (no conflicts)</li>
+              <li>Interface risk management</li>
+              <li>Progress and look-ahead planning</li>
             </ul>
-            </div>
-            
+          </div>
 
-            
-            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+          <p className="text-sm font-medium text-elec-yellow/80 mb-2">
             Escalation of Non-Compliance
-            </p>
-            
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-            <li><strong>1</strong> — Trigger: Minor non-compliance, first instance. Action: Verbal correction, coaching, record made</li>
-            <li><strong>2</strong> — Trigger: Repeat minor or moderate breach. Action: Written warning, meeting with supervisor</li>
-            <li><strong>3</strong> — Trigger: Serious breach or continued repeats. Action: Stop notice, formal meeting with management</li>
-            <li><strong>4</strong> — Trigger: Gross misconduct or refusal to comply. Action: Removal from site, contract review</li>
-            </ul>
-            
-            
+          </p>
 
-            
-            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-            M&E Coordination Specifics
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
             <li>
-            <strong>Electrical/mechanical interfaces:</strong> Motor connections, control
-            wiring, BMS integration
+              <strong>1</strong> — Trigger: Minor non-compliance, first instance. Action: Verbal
+              correction, coaching, record made
             </li>
             <li>
-            <strong>Service clashes:</strong> Containment routes, penetrations, access for
-            maintenance
+              <strong>2</strong> — Trigger: Repeat minor or moderate breach. Action: Written
+              warning, meeting with supervisor
             </li>
             <li>
-            <strong>Commissioning sequence:</strong> Power before controls, controls before
-            systems
+              <strong>3</strong> — Trigger: Serious breach or continued repeats. Action: Stop
+              notice, formal meeting with management
             </li>
             <li>
-            <strong>Isolation management:</strong> Shared registers, clear demarcation of
-            responsibility
+              <strong>4</strong> — Trigger: Gross misconduct or refusal to comply. Action: Removal
+              from site, contract review
             </li>
-            </ul>
-            
+          </ul>
 
-            <p className="text-sm text-white italic">
+          <p className="text-sm font-medium text-elec-yellow/80 mb-2">M&E Coordination Specifics</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Electrical/mechanical interfaces:</strong> Motor connections, control wiring,
+              BMS integration
+            </li>
+            <li>
+              <strong>Service clashes:</strong> Containment routes, penetrations, access for
+              maintenance
+            </li>
+            <li>
+              <strong>Commissioning sequence:</strong> Power before controls, controls before
+              systems
+            </li>
+            <li>
+              <strong>Isolation management:</strong> Shared registers, clear demarcation of
+              responsibility
+            </li>
+          </ul>
+
+          <p className="text-sm text-white italic">
             <strong>Record keeping:</strong> Document all monitoring activities, findings, and
             actions taken. These records demonstrate due diligence and provide evidence for
             contractor performance reviews.
-            </p>
-          </ConceptBlock>
+          </p>
+        </ConceptBlock>
 
-          <InlineCheck {...quickCheckQuestions[3]} />
+        <InlineCheck {...quickCheckQuestions[3]} />
 
-          <SectionRule />
+        <SectionRule />
 
-          <ConceptBlock title="Practical Application">
-            <p><strong>Example 1: Contractor Pre-Qualification</strong></p>
-            <p className="text-sm text-white mb-2">
+        <ConceptBlock title="Practical Application">
+          <p>
+            <strong>Example 1: Contractor Pre-Qualification</strong>
+          </p>
+          <p className="text-sm text-white mb-2">
             <strong>Scenario:</strong> Selecting electrical contractor for major commercial
             installation.
-            </p>
-            <div className="bg-black/30 p-3 rounded text-sm text-white">
+          </p>
+          <div className="bg-black/30 p-3 rounded text-sm text-white">
             <p>
-            <strong>Assessment Criteria:</strong>
+              <strong>Assessment Criteria:</strong>
             </p>
             <p className="ml-4">1. NICEIC Approved Contractor registration - verified</p>
             <p className="ml-4">2. ISO 45001 certification - current certificate reviewed</p>
+            <p className="ml-4">3. Similar project references - 3 comparable projects checked</p>
             <p className="ml-4">
-            3. Similar project references - 3 comparable projects checked
-            </p>
-            <p className="ml-4">
-            4. Training matrix - AM2, design, inspection & testing competence
+              4. Training matrix - AM2, design, inspection & testing competence
             </p>
             <p className="ml-4">5. Accident statistics - AFR below industry average</p>
             <p className="ml-4">6. Example RAMS - reviewed for quality and specificity</p>
             <p className="ml-4">7. Insurance - EL £10m, PL £5m, PI £2m confirmed</p>
             <p className="mt-2">
-            <strong>Outcome:</strong> Contractor meets criteria - included on approved list
+              <strong>Outcome:</strong> Contractor meets criteria - included on approved list
             </p>
-            </div>
-            
+          </div>
 
-            
-            <p><strong>Example 2: Multi-Contractor Coordination</strong></p>
-            <p className="text-sm text-white mb-2">
+          <p>
+            <strong>Example 2: Multi-Contractor Coordination</strong>
+          </p>
+          <p className="text-sm text-white mb-2">
             <strong>Scenario:</strong> Plant room with electrical, mechanical, and controls
             contractors.
-            </p>
-            <div className="bg-black/30 p-3 rounded text-sm text-white">
+          </p>
+          <div className="bg-black/30 p-3 rounded text-sm text-white">
             <p>
-            <strong>Coordination Measures:</strong>
+              <strong>Coordination Measures:</strong>
             </p>
             <p className="ml-4">
-            - Daily briefing: All supervisors 08:00 - today's activities, interfaces
+              - Daily briefing: All supervisors 08:00 - today's activities, interfaces
             </p>
-            <p className="ml-4">
-            - Shared isolation register: All isolations logged and visible
-            </p>
-            <p className="ml-4">
-            - Permit coordination: Hot work not during refrigerant pipe work
-            </p>
+            <p className="ml-4">- Shared isolation register: All isolations logged and visible</p>
+            <p className="ml-4">- Permit coordination: Hot work not during refrigerant pipe work</p>
             <p className="ml-4">- Work areas: Clear demarcation of each contractor's zone</p>
             <p className="ml-4">- Weekly coordination meeting: Programme, issues, look-ahead</p>
             <p className="ml-4">
-            - Commissioning sequence: Agreed and documented - electrical first
+              - Commissioning sequence: Agreed and documented - electrical first
             </p>
             <p className="mt-2">
-            <strong>Interface Risk:</strong> Controls wiring to be installed before panels
-            energised - sequenced in programme
+              <strong>Interface Risk:</strong> Controls wiring to be installed before panels
+              energised - sequenced in programme
             </p>
-            </div>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <ConceptBlock title="Key Points Summary">
-            <div>
-            <p><strong>Selection Essentials</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-            <li>Assess competence proportionate to risk before appointment</li>
-            <li>
-            Check experience, qualifications, systems, and track record
-            </li>
-            <li>Don't rely solely on accreditations - verify capability</li>
-            <li>Maintain approved contractor lists with regular review</li>
-            <li>Document selection decisions and evidence reviewed</li>
-            </ul>
-            </div>
-
-            <div>
-            <p><strong>Coordination Essentials</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-            <li>Principal contractor coordinates all contractors on site</li>
-            <li>
-            Regular coordination meetings - daily briefings for busy sites
-            </li>
-            <li>Shared isolation registers prevent conflicts</li>
-            <li>Clear work area demarcation and sequence</li>
-            <li>Address interface risks proactively</li>
-            </ul>
-            </div>
-
-            <div>
-            <p><strong>Common Failures</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-            <li>
-            <strong>Price over safety:</strong> Selecting on cost alone without competence
-            check
-            </li>
-            <li>
-            <strong>Generic RAMS:</strong> Accepting documents not specific to the site
-            </li>
-            <li>
-            <strong>Induction gaps:</strong> Workers starting before proper induction
-            </li>
-            <li>
-            <strong>Weak monitoring:</strong> Assuming contractors will self-manage
-            </li>
-            <li>
-            <strong>Poor coordination:</strong> Contractors working in isolation
-            </li>
-            </ul>
-            </div>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <Scenario
-            title="Vetting a fire-stopping sub-contractor for a hospital project"
-            situation={
-              <>
-                Your firm needs to sub-let fire-stopping reinstatement on a hospital
-                services upgrade. The proposed sub-contractor is the lowest price but holds
-                no third-party accreditation and has done no NHS work.
-              </>
-            }
-            whatToDo={
-              <>
-                Pre-qualify against the project requirements: SSIP membership, third-party
-                certification (e.g. ASFP/IFC FIRAS), references on healthcare projects, named
-                operatives with current CSCS and competence cards, evidence of insurance.
-                Reject if any leg fails. If accepted, induct against the site rules, brief on
-                the hospital&rsquo;s infection-control procedures, embed in the daily SSOW
-                briefings, sample-audit the work, sign off each penetration on a register.
-              </>
-            }
-            whyItMatters={
-              <>
-                Inadequate fire-stopping in healthcare can kill. A weak vetting process
-                transfers no liability — the principal contractor and HNC supervisor remain
-                accountable under HSWA s.3 and CDM 2015.
-              </>
-            }
-          />
-
-          <SectionRule />
-
-          <FAQ items={faqs} />
-
-          <SectionRule />
-
-          <KeyTakeaways
-            points={[
-              'HSWA s.3 — your duty to non-employees includes every contractor’s workforce on your site.',
-              'CDM 2015 Reg 8 (general duties) and Reg 13 (principal contractor) allocate accountability across multi-contractor projects.',
-              'Five-stage contractor lifecycle: pre-qualification → selection → induction → monitoring → review.',
-              'SSIP schemes (CHAS, SafeContractor, Achilles) are pre-qualification baselines — never the whole picture.',
-              'Site induction must cover site-specific rules, emergency procedures, RAMS sign-off and competence verification.',
-              'Monitor in proportion to risk — daily for high-risk, weekly for medium, monthly for low.',
-              'Post-project review feeds back into pre-qualification — failed contractors do not return without a reset.',
-              'Labour-only and self-employed contracts do not transfer duty — the engaging firm remains accountable.',
-            ]}
-          />
-
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-
-          {/* ── Prev / next nav ─────────────────────────────────── */}
-
-          <div className="grid grid-cols-2 gap-3 pt-2">
-            <button
-              onClick={() => navigate('../h-n-c-module1-section3')}
-              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
-                <ChevronLeft className="h-3 w-3" /> Back to section
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-white truncate">
-                Section 3
-              </div>
-            </button>
-            <button
-              onClick={() => navigate('../h-n-c-module1-section4')}
-              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
-                Next <ChevronRight className="h-3 w-3" />
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-black truncate">
-                Section 4
-              </div>
-            </button>
           </div>
-        </PageFrame>
-      </div>
-    </div>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <ConceptBlock title="Key Points Summary">
+          <div>
+            <p>
+              <strong>Selection Essentials</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Assess competence proportionate to risk before appointment</li>
+              <li>Check experience, qualifications, systems, and track record</li>
+              <li>Don't rely solely on accreditations - verify capability</li>
+              <li>Maintain approved contractor lists with regular review</li>
+              <li>Document selection decisions and evidence reviewed</li>
+            </ul>
+          </div>
+
+          <div>
+            <p>
+              <strong>Coordination Essentials</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Principal contractor coordinates all contractors on site</li>
+              <li>Regular coordination meetings - daily briefings for busy sites</li>
+              <li>Shared isolation registers prevent conflicts</li>
+              <li>Clear work area demarcation and sequence</li>
+              <li>Address interface risks proactively</li>
+            </ul>
+          </div>
+
+          <div>
+            <p>
+              <strong>Common Failures</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Price over safety:</strong> Selecting on cost alone without competence check
+              </li>
+              <li>
+                <strong>Generic RAMS:</strong> Accepting documents not specific to the site
+              </li>
+              <li>
+                <strong>Induction gaps:</strong> Workers starting before proper induction
+              </li>
+              <li>
+                <strong>Weak monitoring:</strong> Assuming contractors will self-manage
+              </li>
+              <li>
+                <strong>Poor coordination:</strong> Contractors working in isolation
+              </li>
+            </ul>
+          </div>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <Scenario
+          title="Vetting a fire-stopping sub-contractor for a hospital project"
+          situation={
+            <>
+              Your firm needs to sub-let fire-stopping reinstatement on a hospital services upgrade.
+              The proposed sub-contractor is the lowest price but holds no third-party accreditation
+              and has done no NHS work.
+            </>
+          }
+          whatToDo={
+            <>
+              Pre-qualify against the project requirements: SSIP membership, third-party
+              certification (e.g. ASFP/IFC FIRAS), references on healthcare projects, named
+              operatives with current CSCS and competence cards, evidence of insurance. Reject if
+              any leg fails. If accepted, induct against the site rules, brief on the
+              hospital&rsquo;s infection-control procedures, embed in the daily SSOW briefings,
+              sample-audit the work, sign off each penetration on a register.
+            </>
+          }
+          whyItMatters={
+            <>
+              Inadequate fire-stopping in healthcare can kill. A weak vetting process transfers no
+              liability — the principal contractor and HNC supervisor remain accountable under HSWA
+              s.3 and CDM 2015.
+            </>
+          }
+        />
+
+        <SectionRule />
+
+        <FAQ items={faqs} />
+
+        <SectionRule />
+
+        <KeyTakeaways
+          points={[
+            'HSWA s.3 — your duty to non-employees includes every contractor’s workforce on your site.',
+            'CDM 2015 Reg 8 (general duties) and Reg 13 (principal contractor) allocate accountability across multi-contractor projects.',
+            'Five-stage contractor lifecycle: pre-qualification → selection → induction → monitoring → review.',
+            'SSIP schemes (CHAS, SafeContractor, Achilles) are pre-qualification baselines — never the whole picture.',
+            'Site induction must cover site-specific rules, emergency procedures, RAMS sign-off and competence verification.',
+            'Monitor in proportion to risk — daily for high-risk, weekly for medium, monthly for low.',
+            'Post-project review feeds back into pre-qualification — failed contractors do not return without a reset.',
+            'Labour-only and self-employed contracts do not transfer duty — the engaging firm remains accountable.',
+          ]}
+        />
+
+        <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+
+        {/* ── Prev / next nav ─────────────────────────────────── */}
+
+        <div className="grid grid-cols-2 gap-3 pt-2">
+          <button
+            onClick={() => navigate('../h-n-c-module1-section3')}
+            className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+          >
+            <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+              <ChevronLeft className="h-3 w-3" /> Back to section
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-white truncate">Section 3</div>
+          </button>
+          <button
+            onClick={() => navigate('../h-n-c-module1-section4')}
+            className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+          >
+            <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+              Next <ChevronRight className="h-3 w-3" />
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-black truncate">Section 4</div>
+          </button>
+        </div>
+      </HubBody>
+    </HubPage>
   );
 };
 

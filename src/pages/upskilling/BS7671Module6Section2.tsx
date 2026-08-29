@@ -1,8 +1,8 @@
-import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { useNavigate } from 'react-router-dom';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
-import { PageFrame, PageHero } from '@/components/college/primitives';
 import {
   AmendmentBadge,
   CommonMistake,
@@ -288,438 +288,431 @@ const BS7671Module6Section2 = () => {
   });
 
   return (
-    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
-      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
-        <PageFrame>
+    <HubPage>
+      <HubMasthead
+        section="Module 6 · Section 2 · Updated for A4:2026"
+        title="Visual inspection and testing responsibilities"
+        backTo="../bs7671-module-6"
+      />
+      <HubBody>
+        <div className="max-w-3xl text-[13px] leading-relaxed text-white">
+          {
+            "Section 642 places visual inspection BEFORE testing for a reason. The Schedule of Inspection in Appendix 6 is the inspector's professional signature on every applicable regulation — this section walks the items 1.0 through 17.0+ and what each one really checks, including the new AFDD item 4.23."
+          }
+        </div>
+
+        <div className="flex flex-wrap items-center gap-2">
+          {
+            <>
+              <RegBadge>642.1</RegBadge>
+              <RegBadge>642.2</RegBadge>
+              <RegBadge>643.1</RegBadge>
+              <AmendmentBadge regs={['421.1.7']} />
+            </>
+          }
+        </div>
+
+        <TLDR
+          points={[
+            'Reg 642.2 fixes the order: visual inspection FIRST (de-energised wherever possible), then testing per Reg 643. The visual catches half the defects before any instrument is connected.',
+            'The Schedule of Inspection in Appendix 6 contains 17+ numbered groups of items — every applicable item must have a positive entry (tick / cross / N/A). Blank fields invalidate the cert.',
+            'A4:2026 introduced item 4.23 (AFDD presence per Reg 421.1.7), explicit TN-C-S (PNB) options, refined Section 514 identification items and tightened EV / SPD items.',
+          ]}
+        />
+
+        <LearningOutcomes
+          outcomes={[
+            'State the correct sequence of initial verification per Reg 642.2 / 643 and explain why visual inspection precedes testing.',
+            'Walk the Schedule of Inspection items 1.0 through 17.0+ and identify which BS 7671 sections each item evidences — including the new A4 item 4.23 (AFDD).',
+            'Apply Section 514 identification requirements (circuit chart 514.9, warning notices 514.14, equipment labels 514.1.1) on a real EICR and code mislabelling correctly.',
+            'Distinguish a main protective bonding requirement (Reg 411.3.1.2 / 544.1.1) from a supplementary bonding requirement (Reg 415.2.1) and use the Reg 643.2.2 23 kΩ test to decide whether a metal part is extraneous.',
+            'Verify cable colour identification against Table 51 (harmonised colours since 2004) and apply Reg 514.14 warning notices where pre-harmonised colours appear.',
+            'Apply Reg 642.5 — collect manufacturer declarations of conformity, equipment certificates and installation instructions before completing the schedule of inspection.',
+            'Define skilled person (electrically) per Part 2 and explain how that competence requirement maps to the EIC declaration signatures under Reg 644.',
+          ]}
+          initialVisibleCount={4}
+        />
+
+        <ContentEyebrow>Sequence — visual then test (Reg 642.2)</ContentEyebrow>
+
+        <ConceptBlock
+          title="Why visual must precede testing"
+          plainEnglish="A visual inspection is faster, safer and catches defects that would either fail a test anyway or could damage a test instrument. BS 7671 fixes this order in Reg 642.2 — it is not a recommendation, it is a requirement."
+          onSite="Imagine plugging an MFT into a socket that is wired with line and earth swapped, with the breaker in the neutral. The visual would have caught the wrong cable colours at the CU; running an Ra test live first instead might have put 230 V onto the case of your instrument."
+        >
+          <p>
+            Reg 642.2 reads: the visual inspection shall normally be carried out PRIOR to testing
+            and shall normally be done with the installation disconnected from the supply. The
+            ordering protects the inspector and prevents instrument damage; the disconnection
+            requirement reflects that most schedule-of-inspection items can be checked dead and
+            should be. After the visual is complete and any defects rectified, the testing sequence
+            in Reg 643 takes over: continuity of CPCs and bonding (643.2), insulation resistance
+            (643.3), polarity (643.4), Ze and Zs (643.7), RCD operation (643.8) — in an order
+            designed to fail benignly before stressing a circuit.
+          </p>
+        </ConceptBlock>
+
+        <RegsCallout
+          source="BS 7671:2018+A4:2026 · Reg 642.2 — Visual inspection"
+          clause="The visual inspection shall be made to confirm that the electrical equipment which is part of the fixed installation is: (i) in compliance with the safety requirements of the relevant equipment standards (e.g. CE / UKCA marking, BS / BS EN compliance and accompanied where required by the relevant DoC), (ii) correctly selected and erected in accordance with this Standard, (iii) not visibly damaged or defective so as to impair safety. The visual inspection shall normally be done prior to testing and normally with the installation disconnected from the supply."
+          meaning="Three pillars: equipment standards (right product), application (right install per BS 7671), condition (no damage). All three must be visually evidenced before a single test is run. The phrase 'normally disconnected' permits energised live-feed checks (e.g. presence of supply at origin, voltage measurement before isolation) but the bulk of the inspection is dead."
+          cite="BS 7671:2018+A4:2026, Reg 642.2 (p.184)"
+        />
+
+        <InlineCheck {...inlineChecks[0]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>The Schedule of Inspection — items 1.0 through 17.0+</ContentEyebrow>
+
+        <VideoCard
+          url={videos.scheduleOfInspections.url}
+          title={videos.scheduleOfInspections.title}
+          channel={videos.scheduleOfInspections.channel}
+          duration={videos.scheduleOfInspections.duration}
+          topic="Watch · Schedule of Inspection walkthrough"
+          caption="Craig Wiltshire walks the items 1.0 to 17.0+ that the inspector ticks during initial verification, with practical examples drawn from real installations — exactly the schedule structure unpacked below."
+        />
+
+        <SectionRule />
+
+        <ConceptBlock
+          title="What the schedule actually is"
+          plainEnglish="Appendix 6 of BS 7671 contains the model forms for the EIC and the Minor Works cert. Every model form has a Schedule of Inspection — a numbered list of items grouped by topic, where the inspector ticks compliance, crosses non-compliance, or marks N/A."
+          onSite="The structure (in summary): 1.0 condition of consumer unit / distribution board, 2.0 service position items, 3.0 supply parameters, 4.0 distribution-board level items (RCDs, AFDDs, devices), 5.0 origin / installation main earthing, 6.0 selection of circuit conductors, 7.0 identification, 8.0 cables and conductors fixed wiring, 9.0 isolation and switching, 10.0 onwards covers the rest — protective conductors, bonding, accessories, special locations etc. through to declarations 17.0+."
+        >
+          <p>
+            The schedule is the legal record that the inspector applied their mind to every
+            applicable area of BS 7671 covered by Section 642. Some items repeat the same regulation
+            in different contexts (e.g. RCD additional protection appears under both
+            dwelling-final-circuit items and special-location items) because the cert needs to
+            record where the regulation is being relied on. The numbering is not arbitrary — it
+            corresponds to the order an inspector physically walks an installation: from the service
+            position inwards.
+          </p>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="Item 4.23 — AFDD presence (NEW in A4)"
+          plainEnglish="Reg 421.1.7 (A4) makes AFDDs mandatory in higher-risk premises — purpose-built blocks of flats over 18 m / 7 storeys (HRRBs), care homes, HMOs and similar — for AC final circuits supplying socket-outlets up to 32 A. Item 4.23 is the explicit tick-box for that compliance."
+          onSite="On a typical single-family dwelling EICR the entry is N/A (with a note 'not in scope of Reg 421.1.7 — recommended only'). On an HRRB EICR the entry MUST be a tick (or a cross if absent — and a cross at item 4.23 typically codes C2 because the install does not meet a current statutory standard for an at-risk occupancy). A4 has not made AFDDs universal; it has made them mandatory in fire-vulnerable buildings where arc-fault ignition risk is high."
+        >
+          <p>
+            Reg 421.1.7 has its own NOTE that recommends AFDDs in other premises but stops short of
+            mandating. Item 4.23 of the schedule of inspection mirrors that distinction — tick /
+            cross is reserved for in-scope premises; N/A is the correct entry elsewhere with a note
+            explaining why the regulation is not engaged. A common error is to leave 4.23 blank on a
+            domestic EIC because the inspector is unsure — N/A is the right answer, supported by a
+            one-line note about premises type.
+          </p>
+        </ConceptBlock>
+
+        <RegsCallout
+          source="BS 7671:2018+A4:2026 · Reg 421.1.7 — AFDD provision (UPDATED IN A4)"
+          clause="Arc fault detection devices (AFDDs) conforming to BS EN 62606 shall be provided in single-phase AC final circuits supplying socket-outlets with a rated current not exceeding 32 A in (i) higher-risk residential buildings, (ii) houses in multiple occupation, (iii) purpose-built student accommodation, (iv) care homes. NOTE: AFDDs are recommended in other premises."
+          meaning="The 'shall' applies to the four scoped premises types only. Item 4.23 of the schedule of inspection records compliance for those premises. For ordinary single-family dwellings the entry is N/A with a note — the recommendation in the NOTE does not generate a non-compliance."
+          cite="BS 7671:2018+A4:2026, Reg 421.1.7 (in force from 15 April 2026)"
+        />
+
+        <InlineCheck {...inlineChecks[2]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>Identification — Section 514 in detail</ContentEyebrow>
+
+        <ConceptBlock
+          title="Reg 514.9 — circuit charts and schedules at every distribution board"
+          plainEnglish="Every DB or CU must have, at the origin or inside the cover, a chart / table / schedule listing each circuit, the type and rating of its protective device, and the means of identifying that device. The model EIC printed by an MFT does NOT replace this — both are required."
+          onSite="On a CU change: a printed circuit list inside the inner cover, laminated, listing way 1, way 2, way 3 etc. with circuit description, MCB / RCBO type and rating, cable size, protected length. On a 3-phase DB: a fold-out schematic plus circuit table. Reg 514.9 is item 7.1 on the schedule of inspection."
+        >
+          <p>
+            Reg 514.9.1 lists what the chart must contain: number and type of circuits, types and
+            rated currents of protective devices, type and composition of circuits, means of
+            identification, results of fault loop impedance / RCD test where required, plus a
+            schematic where the layout is complex. Reg 514.9.2 requires a durable copy of the
+            certificate to be kept at the origin where reasonable. In practice that means a clear
+            pocket inside the consumer unit door, or a folder in the meter box.
+          </p>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="Reg 514.14 — warning notices for non-standard colours"
+          plainEnglish="Where harmonised (post-2004) and pre-harmonised colours coexist in the same installation — typical on any property altered after 2004 — durable warning notices shall be fitted at the origin AND at every distribution board affected."
+          onSite="Required wording (BS 7671 Annex A): 'CAUTION — This installation has wiring colours to two versions of BS 7671. Great care should be taken before undertaking extension, alteration or repair that all conductors are correctly identified.' Engraved plastic, drilled and screwed; printed paper labels are not durable enough. Item 7.4 on the schedule of inspection ticks this."
+        >
+          <p>
+            The spirit of 514.14 is foreseeable safety: an electrician arrives on a property
+            expecting brown / black / grey, finds red / yellow / blue inside a part-rewired floor,
+            and the warning notice triggers verification before any work proceeds. Absence of the
+            notice on an installation with mixed colours is typically C2 on an EICR — the risk is
+            misidentification leading to incorrect isolation. The notice is required even if the
+            installation has only one circuit of legacy colours mixed in.
+          </p>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="Reg 514.1 — equipment / circuit / device identification"
+          plainEnglish="Every device for protection, isolation and switching shall be identified to enable safe operation. That is the basis for circuit labels, MCB labels at the way, switch labels, isolator labels, contactor labels."
+          onSite="A consumer unit way labelled 'cooker' but actually feeding the shower is a Reg 514.1.1 failure — the next person to isolate will do it wrong. GN3 typically codes C2 for incorrect labelling because the foreseeable harm is shock to the next worker. Item 7.1 on the schedule of inspection cannot be ticked. Same applies to MET labels, bond labels, and emergency-stop labels in commercial work."
+        />
+
+        <InlineCheck {...inlineChecks[3]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>Cable colours — Table 51 and the 23 kΩ test</ContentEyebrow>
+
+        <ConceptBlock
+          title="Reg 514.3 / Table 51 — harmonised cable colours"
+          plainEnglish="Brown (L1), black (L2), grey (L3), blue (N), green-and-yellow (CPC). These have been the BS 7671 colours since 31 March 2004 (transitional) and 1 April 2006 (mandatory). Anything else on a 2026 install is a non-compliance unless explained by alteration of an older system."
+          onSite="A4:2026 has clarified rather than rewritten Table 51 — the table now expresses identification at terminations as the binding requirement, allowing single-core sleeves where multi-core cores need re-identifying (e.g. blue used as a switched line in a 3-core flex must be over-sleeved brown at both ends; black used as a phase in 6491X likewise)."
+        >
+          <p>
+            Reg 514.6 covers conductor identification at terminations: where colour-coding is not
+            feasible (e.g. SY / SWA armoured cables with numbered cores) the cores are identified by
+            sleeves or numbered ferrules at every termination. The schedule of inspection asks the
+            inspector to verify identification AT terminations (item 7.3) — not just along the run.
+            This is why a quick visual at each accessible point is part of the schedule of
+            inspection in addition to the headline cable colour.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...inlineChecks[4]} />
+
+        <ConceptBlock
+          title="Bonding inspection — main vs supplementary"
+          plainEnglish="Main protective bonding (Reg 411.3.1.2, sized per Reg 544.1.1) ties extraneous-conductive-parts entering the building (gas, water, structural metalwork, oil) to the MET. Supplementary bonding (Reg 415.2.1) ties together exposed and extraneous parts within a location to keep touch voltage safe under fault."
+          onSite="The decision tree on every EICR: (1) is the pipe at the boundary metal? if no, no main bond required for it. (2) is it extraneous? — Reg 643.2.2 / GN3 23 kΩ test: measure resistance to MET, if it is at or above 23 kΩ at 230 V it is not extraneous. (3) if extraneous, fit main bond per Reg 544.1.1 sizing (typically 10 mm² for standard domestic; check fault-current calc for larger services). For supplementary in bathrooms, Reg 701.415.2 lets you OMIT if all three: disconnection times met, 30 mA RCD on every circuit, extraneous parts reliably bonded back to MET."
+        >
+          <p>
+            The schedule of inspection groups bonding under item 4.5 (main protective bonding), item
+            4.5.1 / 4.5.2 / 4.5.3 (water / gas / oil / structural / lightning protection), and item
+            5.0 (supplementary equipotential bonding where required). The inspector records the size
+            of each bond, the connection method (clamp to BS 951), and the continuity test result
+            (Reg 643.2.1 R2 measurement). A bond that physically exists but reads above 0.05 Ω at
+            the clamp is functionally non-existent — connection quality under Reg 526 is the gating
+            concern.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...inlineChecks[5]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>Equipment ratings, connections and Reg 526</ContentEyebrow>
+
+        <ConceptBlock
+          title="Reg 526 — connections of conductors"
+          plainEnglish="Every connection between conductors and other equipment shall provide durable electrical continuity AND adequate mechanical strength AND protection. Loose, mis-clamped or oversized terminations fail this regulation."
+          onSite="Items 7.5 and 7.6 of the schedule of inspection ('connections of live conductors' / 'connections of protective conductors') are the most-failed items on EICRs in domestic stock. Look for: terminal screws not torqued, conductors not fully inserted, two cores into a single-conductor terminal, ferrules used where unsuitable, conductor strands clipped to fit, evidence of arcing / discolouration. Each is an audit failure of Reg 526."
+        >
+          <p>
+            Reg 526.5 (accessibility) requires that every connection, except those in
+            factory-encapsulated joints, must be accessible for inspection, testing and maintenance.
+            A buried junction box (single skin of plasterboard, no access cover) fails this test.
+            Reg 526.6 forbids appreciable mechanical strain on terminations. Reg 526.9 requires
+            conductor preparation (strip length, insertion depth) to meet the terminal
+            manufacturer's design — too short and the clamp grips insulation; too long and the bare
+            conductor extends beyond the protective enclosure.
+          </p>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="Equipment ratings — design vs as-installed"
+          plainEnglish="The design specifies cable size, protective device type and rating, conductor temperature rating. The inspector verifies the installed equipment matches. Mismatches (Type C MCB where Type B was designed, oversized fuse swapped in for convenience, RCBO type wrong for load) are non-compliances under Reg 643."
+          onSite="Item 6.0 (selection of equipment) on the schedule of inspection cross-checks the protective device against the cable size and load. A 32 A Type B on 1.5 mm² T&E is wrong: 1.5 mm² has Iz around 18-20 A on Reference Method C. The wrong device blew the design out of compliance. A common audit-trap: someone replaced an RCBO with a same-rating MCB and lost the RCD additional protection on the circuit."
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>
+          Reg 642.5 — equipment certificates and manufacturer's instructions
+        </ContentEyebrow>
+
+        <ConceptBlock
+          title="The information pack the inspector needs before signing"
+          plainEnglish="Reg 642.5 places a duty on the designer / contractor to provide the inspector with the information necessary to complete the inspection. That includes equipment DoCs, BS / BS EN standard markings, manufacturer's installation instructions, system parameters and circuit chart."
+          onSite="On a typical 2026 domestic CU change with EV: gather (a) consumer unit DoC to BS EN 61439-3, (b) RCBO / AFDD product DoCs to BS EN 61009 / 62606, (c) EV charger product DoC + installation manual confirming Section 722 compliance and DC fault detection method, (d) SPD product DoC to BS EN 61643-11 if fitted. File a copy with the EIC. Without this pack item 6.0 on the schedule cannot be ticked and Reg 642.5 is not met."
+        >
+          <p>
+            Reg 642.5 is often skipped on small jobs because the contractor and inspector are the
+            same person. The duty still applies — the contractor self provides the information pack
+            in a folder for the customer at handover. On notified work (Part P / BPG schemes) this
+            pack feeds the BPG documentation. On a commercial install with separate designer /
+            contractor / inspector the pack is the literal handover.
+          </p>
+        </ConceptBlock>
+
+        <RegsCallout
+          source="BS 7671:2018+A4:2026 · Reg 642.5 — Information for inspection and testing"
+          clause="The person responsible for the design of the installation shall make available to the person carrying out the inspection and testing the information required by Regulation 642.1, together with the names and addresses of those persons responsible. Manufacturer's instructions for any equipment incorporated in the installation, where these contain information necessary for the safety of installation, inspection or testing, shall also be made available."
+          meaning="Two duties: design data (642.1) and manufacturer's instructions (642.5). The phrase 'shall also be made available' means physically available to the inspector at the time of inspection. A handwritten note 'see manual on supplier's website' does not satisfy the regulation; the relevant pages must be accessible on site."
+          cite="BS 7671:2018+A4:2026, Reg 642.5 (p.185)"
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>Competence — who can inspect</ContentEyebrow>
+
+        <ConceptBlock
+          title="Skilled person (electrically) — Part 2 definition"
+          plainEnglish="A skilled person electrically, per BS 7671 Part 2, possesses the technical knowledge or sufficient experience appropriate to the work being undertaken to enable them to AVOID DANGERS that electricity may create. The bar is competence-for-scope, not a generic certificate."
+          onSite="A 2391-certified inspector with 10 years' domestic EICR experience is skilled for domestic EICRs. Put them on a 480 V three-phase industrial inspection with VSDs and they may be an instructed person under supervision, not skilled, for that scope. The signing inspector takes responsibility for being skilled FOR THE ACTUAL WORK declared on the cert. Reg 644 makes this explicit through the declarations panel — three signatures (designer / constructor / inspector) any of which can be the same person provided they are competent for that role."
+        >
+          <p>
+            EAWR 1989 Reg 16 (and the supporting HSE memorandum) extends the BS 7671 competence
+            requirement into law: 'no person shall be engaged in any work activity where technical
+            knowledge or experience is necessary to prevent danger or, where appropriate, injury,
+            unless he possesses such knowledge or experience'. A wrong signature on an EIC — by
+            someone not competent for the scope — is not just a BS 7671 issue; it is potentially a
+            criminal offence under EAWR Reg 16 if injury results.
+          </p>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="The instructed person — the apprentice / trainee role"
+          plainEnglish="Part 2 also defines an instructed person: someone advised or supervised by a skilled person to enable them to avoid dangers electricity may create. Apprentices, trainees and recently-qualified electricians may carry out tests under supervision but the signature on the cert is the supervising inspector's."
+          onSite="On a typical domestic EICR run by a small firm: senior electrician arrives, runs the visual, supervises the apprentice on Ze / Zs / IR / RCD tests, reviews the readings, makes the coding calls, signs the cert. The apprentice has 'carried out tests' — which is fine — but has not 'completed the verification' which remains the senior's professional act. The apprentice's name does not go on the cert as inspector."
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>Where it goes wrong</ContentEyebrow>
+
+        <CommonMistake
+          title="Skipping the visual to save time"
+          whatHappens="Inspector arrives, plugs the MFT in, runs Ze / Zs / IR straight off the bat to 'get the numbers'. Misses a pre-harmonised cable colour run that no warning notice covers, misses a missing CPC at a downlight (the test passes because the existing R1+R2 path is via metal trunking), misses three loose RCBO terminations. EICR comes back 'satisfactory'. Six months later one of the loose terminations causes a kitchen fire."
+          doInstead="Reg 642.2 sequence is non-negotiable. Do the visual FIRST, dead, with the consumer unit cover off. Tick the schedule of inspection from item 1.0 down. Only AFTER the visual is complete, defects identified and rectified or recorded, do you go to instruments. The visual catches half the defects on most properties — that is the regulation's whole point."
+        />
+
+        <CommonMistake
+          title="Leaving schedule items blank rather than writing N/A"
+          whatHappens="Inspector ticks items they know apply, leaves the rest blank because 'we don't have an IT system / RLV / sauna / fountain'. Audit reveals 12 blank entries on the schedule. Cert is rejected; insurer challenges the inspection in a later claim because the inspector cannot demonstrate the items were considered."
+          doInstead="Every applicable item is tick / cross. Every NON-applicable item is N/A with a brief note ('no IT system on site', 'no special locations beyond bathroom', 'AFDDs not in scope of Reg 421.1.7 — domestic single-family dwelling'). N/A is a positive declaration that the inspector considered the regulation and concluded it does not apply — that is what the model form expects."
+        />
+
+        <CommonMistake
+          title="Missing or wrong cable-colour warning notice"
+          whatHappens="Property has been part-rewired in 2010; bedrooms are post-harmonisation brown / black, downstairs is still red / yellow / black with red sleeving on neutrals. There is no warning notice anywhere. Subsequent electrician isolates 'the brown' at a junction expecting it to be a phase, gets a shock from a still-live red conductor that the tester did not flag because there was no notice to alert anyone to the dual scheme."
+          doInstead="Reg 514.14 requires durable warning notices at the origin AND at every affected DB whenever harmonised and pre-harmonised colours coexist. Engraved plastic, screwed in place, BS 7671 Annex A wording. Item 7.4 of the schedule of inspection cannot be ticked without it. Code C2 if missing on EICR — the foreseeable harm is shock from misidentification. Fix the notices before issuing the cert."
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>Scenarios — applying it on the day</ContentEyebrow>
+
+        <Scenario
+          title="EICR of a 1990s 4-bed semi with two later alterations"
+          situation="Property: 1990s build with a 1996 CU, kitchen rewired in 2008 (post-harmonisation), bathroom rewired in 2018 with RCBOs and modern accessories. Customer wants an EICR for a re-mortgage. You arrive and the existing electrician's last cert is from 2014, marked satisfactory."
+          whatToDo="Run the visual FIRST (Reg 642.2). Expect to find: pre-harmonised colours upstairs in original-build circuits, post-harmonised in kitchen/bath. CHECK for warning notices at origin AND at the CU (Reg 514.14) — likely missing. Verify circuit chart at CU is current and matches actual layout (Reg 514.9). Confirm main bonding to gas and water at the meter positions, with conductors sized per Reg 544.1.1 (10 mm² typical for standard domestic). Confirm RCD additional protection scope: Reg 411.3.3 sockets, Reg 411.3.4 (A4) lighting circuits in dwelling. Schedule of inspection item 4.23 — N/A (not HRRB / HMO / care home)."
+          whyItMatters="An EICR on a property with mixed cable colours and incomplete identification is a documentation exercise as much as a testing exercise. Most C2 codes on this kind of property come from the visual / schedule-of-inspection side — missing notices, missing circuit charts, mislabelled ways — not from instrument readings. Get the visual right and the cert is defensible."
+        />
+
+        <Scenario
+          title="Initial verification of a new-build flat in a 22-storey HRRB"
+          situation="New-build apartment, 22-storey purpose-built block (HRRB). EIC required for handover. Consumer unit is fully RCBO-protected, EV charging point in basement parking is on a separate dedicated supply, AFDD-protected ring final and lighting circuits per developer spec."
+          whatToDo="Schedule of inspection items: 4.23 (AFDD presence) MUST be ticked — Reg 421.1.7 mandates AFDDs in HRRBs on socket-outlet circuits up to 32 A. Confirm BS EN 62606 marking on each AFDD device. Verify Reg 411.3.4 (A4) on lighting circuits — every dwelling lighting circuit on 30 mA RCD (RCBO is the normal route). Identification (Section 514) — full circuit chart, all RCBOs labelled, warning notices fitted (post-harmonised colours throughout but warning notices for non-electricians per Reg 514.10 still required). Reg 642.5 information pack — collect AFDD product DoCs, RCBO DoCs, CU DoC, hand to building owner with EIC."
+          whyItMatters="HRRBs are the highest-stakes A4 inspection scenario. Item 4.23 absent or wrong on this kind of cert is a serious finding — the regulation was created in response to fire-vulnerable building risk, and an inspector who waved through an HRRB without AFDDs has signed off non-compliance that could be quoted in a coroner's inquest. The schedule of inspection is the inspector's primary defensive document — every tick traceable to a regulation, every N/A explained."
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>
+          Worked example — walking the schedule on a typical CU change
+        </ContentEyebrow>
+
+        <ConceptBlock
+          title="From cover off to cert signed in twelve checks"
+          plainEnglish="A standard CU change inspection ticks roughly 50-60 items on the schedule. The good news is most are quick — many are visible the moment the cover comes off. Walking the items in order matches the order an inspector physically moves around the equipment."
+          onSite="The 12-step schedule walkthrough most domestic inspectors use as a mental checklist: (1) origin / cut-out condition, (2) meter and tails, (3) main switch / RCD layout, (4) labels and circuit chart, (5) RCBO / MCB selection per circuit, (6) AFDDs item 4.23 (N/A on dwelling), (7) main bonds gas / water / structural — sizes and clamps, (8) supplementary bonding in bathroom (omit-or-fit decision), (9) cable colours and identification, (10) accessory connections sample (Reg 526), (11) special locations Section 701 / 702 / 703 / 705 / 711 / 717 / 722 etc as applicable, (12) declarations and equipment certificates pack per Reg 642.5."
+        >
+          <p>
+            <strong>1. Origin condition (item 1.0).</strong> Cut-out fuse intact, cover sealed,
+            tails sized correctly (typically 25 mm² for 100 A). <strong>2. Meter and tails.</strong>
+            Smart meter or analogue, tails brown / blue at meter, henley block configuration if
+            present. <strong>3. Main switch / RCD layout (item 4.x).</strong> RCBOs on every way
+            (modern domestic), correct ratings vs designed cable sizes.{' '}
+            <strong>4. Labels and chart (item 7.x).</strong> Circuit chart inside cover, all RCBOs
+            labelled, cross-check against actual circuits.{' '}
+            <strong>5. RCBO selection (item 6.0).</strong>
+            Right type for the load (Type A standard, Type B for EV-without-internal-DC-detection).
+            <strong>6. AFDDs (item 4.23).</strong> For a single-family dwelling: N/A with note. For
+            HRRB / HMO / care home: tick if present. <strong>7. Main bonds (item 4.5).</strong>
+            10 mm² G/Y to gas meter inlet (within 600 mm), 10 mm² G/Y to water service entry, clamps
+            to BS 951. <strong>8. Supplementary bonding (item 5.x).</strong> Apply Reg 701.415.2
+            omit-or-fit decision in bathroom. <strong>9. Cable colours (item 7.3 / 7.4).</strong>{' '}
+            Verify Table 51 colours, fit warning notices if mixed.{' '}
+            <strong>10. Accessory connections (item 7.5 / 7.6).</strong> Sample sockets, switches,
+            JBs; torque, insertion depth, no strain. <strong>11. Special locations.</strong>{' '}
+            Bathroom zones, kitchen, garden socket, outbuildings — apply Section 701 onwards.
+            <strong>12. Reg 642.5 pack.</strong> File DoCs, manufacturer instructions, hand pack to
+            customer with EIC.
+          </p>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <ContentEyebrow>Inspector's quick reference</ContentEyebrow>
+
+        <ConceptBlock
+          title="The four pillars of inspection compliance"
+          plainEnglish="Sequence (Reg 642.2 — visual first), Coverage (every applicable schedule item ticked, crossed or N/A — never blank), Evidence (Reg 642.5 information pack to hand), Competence (skilled person electrically per Part 2, signature under Reg 644)."
+          onSite="If a customer / auditor / insurer challenges the cert, your defence sits on those four pillars. The Schedule of Inspection itself is the visible record of pillars 1-3; the signatory's competence is pillar 4. Get any one wrong and the cert is structurally weak even if the underlying installation is sound. Get all four right and you have a document that stands up to challenge."
+        >
+          <p>
+            The schedule of inspection is not paperwork bureaucracy — it is the audit-trail record
+            of the inspector's professional act. Every tick is a statement under Reg 644 that the
+            regulation in question was checked and met. Every cross is a recorded non-compliance
+            demanding correction or coding (EICR). Every N/A is a positive declaration that the
+            regulation does not apply. The inspector who walks the items in order, supports each
+            tick with evidence, and uses N/A explicitly where applicable produces certs that hold up
+            at audit, in court, and on follow-up inspections years later.
+          </p>
+        </ConceptBlock>
+
+        <FAQ items={faqItems} />
+
+        <KeyTakeaways
+          points={[
+            'Reg 642.2: visual inspection BEFORE testing, normally with the installation disconnected. Reg 643 then orders the testing sequence (continuity, IR, polarity, Zs, RCD).',
+            'Schedule of Inspection (Appendix 6) — items 1.0 through 17.0+ — every applicable item must have a positive entry (tick / cross / N/A). Blank fields invalidate the cert.',
+            'A4:2026 introduced item 4.23 — AFDD presence per Reg 421.1.7 in HRRBs, HMOs, care homes and PBSA. Single-family dwellings are N/A with a note.',
+            'Section 514 identification: circuit charts (Reg 514.9), warning notices for mixed colours (Reg 514.14), accurate device labels (Reg 514.1.1) — items 7.x on the schedule.',
+            'Bonding inspection: main per Reg 411.3.1.2 / 544.1.1, supplementary per Reg 415.2.1, with the Reg 643.2.2 23 kΩ test deciding extraneous status.',
+            'Reg 642.5 — equipment DoCs and manufacturer instructions must be available to the inspector. Reg 644 — signatures by skilled persons (Part 2 definition) competent for the scope declared.',
+          ]}
+        />
+
+        <Quiz questions={quizQuestions} />
+
+        <div className="grid grid-cols-2 gap-3 pt-2">
           <button
             type="button"
-            onClick={() => navigate('../bs7671-module-6')}
-            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            onClick={() => navigate('/electrician/upskilling/bs7671-module-6')}
+            className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
           >
-            <ArrowLeft className="h-4 w-4" /> Module 6
+            <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+              <ChevronLeft className="h-3 w-3" /> Module 6
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-white truncate">
+              Module overview
+            </div>
           </button>
-
-          <PageHero
-            eyebrow="Module 6 · Section 2 · Updated for A4:2026"
-            title="Visual inspection and testing responsibilities"
-            description="Section 642 places visual inspection BEFORE testing for a reason. The Schedule of Inspection in Appendix 6 is the inspector's professional signature on every applicable regulation — this section walks the items 1.0 through 17.0+ and what each one really checks, including the new AFDD item 4.23."
-            actions={
-              <>
-                <RegBadge>642.1</RegBadge>
-                <RegBadge>642.2</RegBadge>
-                <RegBadge>643.1</RegBadge>
-                <AmendmentBadge regs={['421.1.7']} />
-              </>
-            }
-            tone="yellow"
-          />
-
-          <TLDR
-            points={[
-              'Reg 642.2 fixes the order: visual inspection FIRST (de-energised wherever possible), then testing per Reg 643. The visual catches half the defects before any instrument is connected.',
-              'The Schedule of Inspection in Appendix 6 contains 17+ numbered groups of items — every applicable item must have a positive entry (tick / cross / N/A). Blank fields invalidate the cert.',
-              'A4:2026 introduced item 4.23 (AFDD presence per Reg 421.1.7), explicit TN-C-S (PNB) options, refined Section 514 identification items and tightened EV / SPD items.',
-            ]}
-          />
-
-          <LearningOutcomes
-            outcomes={[
-              'State the correct sequence of initial verification per Reg 642.2 / 643 and explain why visual inspection precedes testing.',
-              'Walk the Schedule of Inspection items 1.0 through 17.0+ and identify which BS 7671 sections each item evidences — including the new A4 item 4.23 (AFDD).',
-              'Apply Section 514 identification requirements (circuit chart 514.9, warning notices 514.14, equipment labels 514.1.1) on a real EICR and code mislabelling correctly.',
-              'Distinguish a main protective bonding requirement (Reg 411.3.1.2 / 544.1.1) from a supplementary bonding requirement (Reg 415.2.1) and use the Reg 643.2.2 23 kΩ test to decide whether a metal part is extraneous.',
-              'Verify cable colour identification against Table 51 (harmonised colours since 2004) and apply Reg 514.14 warning notices where pre-harmonised colours appear.',
-              'Apply Reg 642.5 — collect manufacturer declarations of conformity, equipment certificates and installation instructions before completing the schedule of inspection.',
-              'Define skilled person (electrically) per Part 2 and explain how that competence requirement maps to the EIC declaration signatures under Reg 644.',
-            ]}
-            initialVisibleCount={4}
-          />
-
-          <ContentEyebrow>Sequence — visual then test (Reg 642.2)</ContentEyebrow>
-
-          <ConceptBlock
-            title="Why visual must precede testing"
-            plainEnglish="A visual inspection is faster, safer and catches defects that would either fail a test anyway or could damage a test instrument. BS 7671 fixes this order in Reg 642.2 — it is not a recommendation, it is a requirement."
-            onSite="Imagine plugging an MFT into a socket that is wired with line and earth swapped, with the breaker in the neutral. The visual would have caught the wrong cable colours at the CU; running an Ra test live first instead might have put 230 V onto the case of your instrument."
+          <button
+            type="button"
+            onClick={() => navigate('/electrician/upskilling/bs7671-module-6-section-3')}
+            className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
           >
-            <p>
-              Reg 642.2 reads: the visual inspection shall normally be carried out PRIOR to testing
-              and shall normally be done with the installation disconnected from the supply. The
-              ordering protects the inspector and prevents instrument damage; the disconnection
-              requirement reflects that most schedule-of-inspection items can be checked dead and
-              should be. After the visual is complete and any defects rectified, the testing
-              sequence in Reg 643 takes over: continuity of CPCs and bonding (643.2), insulation
-              resistance (643.3), polarity (643.4), Ze and Zs (643.7), RCD operation (643.8) — in an
-              order designed to fail benignly before stressing a circuit.
-            </p>
-          </ConceptBlock>
-
-          <RegsCallout
-            source="BS 7671:2018+A4:2026 · Reg 642.2 — Visual inspection"
-            clause="The visual inspection shall be made to confirm that the electrical equipment which is part of the fixed installation is: (i) in compliance with the safety requirements of the relevant equipment standards (e.g. CE / UKCA marking, BS / BS EN compliance and accompanied where required by the relevant DoC), (ii) correctly selected and erected in accordance with this Standard, (iii) not visibly damaged or defective so as to impair safety. The visual inspection shall normally be done prior to testing and normally with the installation disconnected from the supply."
-            meaning="Three pillars: equipment standards (right product), application (right install per BS 7671), condition (no damage). All three must be visually evidenced before a single test is run. The phrase 'normally disconnected' permits energised live-feed checks (e.g. presence of supply at origin, voltage measurement before isolation) but the bulk of the inspection is dead."
-            cite="BS 7671:2018+A4:2026, Reg 642.2 (p.184)"
-          />
-
-          <InlineCheck {...inlineChecks[0]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>The Schedule of Inspection — items 1.0 through 17.0+</ContentEyebrow>
-
-          <VideoCard
-            url={videos.scheduleOfInspections.url}
-            title={videos.scheduleOfInspections.title}
-            channel={videos.scheduleOfInspections.channel}
-            duration={videos.scheduleOfInspections.duration}
-            topic="Watch · Schedule of Inspection walkthrough"
-            caption="Craig Wiltshire walks the items 1.0 to 17.0+ that the inspector ticks during initial verification, with practical examples drawn from real installations — exactly the schedule structure unpacked below."
-          />
-
-          <SectionRule />
-
-          <ConceptBlock
-            title="What the schedule actually is"
-            plainEnglish="Appendix 6 of BS 7671 contains the model forms for the EIC and the Minor Works cert. Every model form has a Schedule of Inspection — a numbered list of items grouped by topic, where the inspector ticks compliance, crosses non-compliance, or marks N/A."
-            onSite="The structure (in summary): 1.0 condition of consumer unit / distribution board, 2.0 service position items, 3.0 supply parameters, 4.0 distribution-board level items (RCDs, AFDDs, devices), 5.0 origin / installation main earthing, 6.0 selection of circuit conductors, 7.0 identification, 8.0 cables and conductors fixed wiring, 9.0 isolation and switching, 10.0 onwards covers the rest — protective conductors, bonding, accessories, special locations etc. through to declarations 17.0+."
-          >
-            <p>
-              The schedule is the legal record that the inspector applied their mind to every
-              applicable area of BS 7671 covered by Section 642. Some items repeat the same
-              regulation in different contexts (e.g. RCD additional protection appears under both
-              dwelling-final-circuit items and special-location items) because the cert needs to
-              record where the regulation is being relied on. The numbering is not arbitrary — it
-              corresponds to the order an inspector physically walks an installation: from the
-              service position inwards.
-            </p>
-          </ConceptBlock>
-
-          <ConceptBlock
-            title="Item 4.23 — AFDD presence (NEW in A4)"
-            plainEnglish="Reg 421.1.7 (A4) makes AFDDs mandatory in higher-risk premises — purpose-built blocks of flats over 18 m / 7 storeys (HRRBs), care homes, HMOs and similar — for AC final circuits supplying socket-outlets up to 32 A. Item 4.23 is the explicit tick-box for that compliance."
-            onSite="On a typical single-family dwelling EICR the entry is N/A (with a note 'not in scope of Reg 421.1.7 — recommended only'). On an HRRB EICR the entry MUST be a tick (or a cross if absent — and a cross at item 4.23 typically codes C2 because the install does not meet a current statutory standard for an at-risk occupancy). A4 has not made AFDDs universal; it has made them mandatory in fire-vulnerable buildings where arc-fault ignition risk is high."
-          >
-            <p>
-              Reg 421.1.7 has its own NOTE that recommends AFDDs in other premises but stops short
-              of mandating. Item 4.23 of the schedule of inspection mirrors that distinction — tick
-              / cross is reserved for in-scope premises; N/A is the correct entry elsewhere with a
-              note explaining why the regulation is not engaged. A common error is to leave 4.23
-              blank on a domestic EIC because the inspector is unsure — N/A is the right answer,
-              supported by a one-line note about premises type.
-            </p>
-          </ConceptBlock>
-
-          <RegsCallout
-            source="BS 7671:2018+A4:2026 · Reg 421.1.7 — AFDD provision (UPDATED IN A4)"
-            clause="Arc fault detection devices (AFDDs) conforming to BS EN 62606 shall be provided in single-phase AC final circuits supplying socket-outlets with a rated current not exceeding 32 A in (i) higher-risk residential buildings, (ii) houses in multiple occupation, (iii) purpose-built student accommodation, (iv) care homes. NOTE: AFDDs are recommended in other premises."
-            meaning="The 'shall' applies to the four scoped premises types only. Item 4.23 of the schedule of inspection records compliance for those premises. For ordinary single-family dwellings the entry is N/A with a note — the recommendation in the NOTE does not generate a non-compliance."
-            cite="BS 7671:2018+A4:2026, Reg 421.1.7 (in force from 15 April 2026)"
-          />
-
-          <InlineCheck {...inlineChecks[2]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>Identification — Section 514 in detail</ContentEyebrow>
-
-          <ConceptBlock
-            title="Reg 514.9 — circuit charts and schedules at every distribution board"
-            plainEnglish="Every DB or CU must have, at the origin or inside the cover, a chart / table / schedule listing each circuit, the type and rating of its protective device, and the means of identifying that device. The model EIC printed by an MFT does NOT replace this — both are required."
-            onSite="On a CU change: a printed circuit list inside the inner cover, laminated, listing way 1, way 2, way 3 etc. with circuit description, MCB / RCBO type and rating, cable size, protected length. On a 3-phase DB: a fold-out schematic plus circuit table. Reg 514.9 is item 7.1 on the schedule of inspection."
-          >
-            <p>
-              Reg 514.9.1 lists what the chart must contain: number and type of circuits, types and
-              rated currents of protective devices, type and composition of circuits, means of
-              identification, results of fault loop impedance / RCD test where required, plus a
-              schematic where the layout is complex. Reg 514.9.2 requires a durable copy of the
-              certificate to be kept at the origin where reasonable. In practice that means a clear
-              pocket inside the consumer unit door, or a folder in the meter box.
-            </p>
-          </ConceptBlock>
-
-          <ConceptBlock
-            title="Reg 514.14 — warning notices for non-standard colours"
-            plainEnglish="Where harmonised (post-2004) and pre-harmonised colours coexist in the same installation — typical on any property altered after 2004 — durable warning notices shall be fitted at the origin AND at every distribution board affected."
-            onSite="Required wording (BS 7671 Annex A): 'CAUTION — This installation has wiring colours to two versions of BS 7671. Great care should be taken before undertaking extension, alteration or repair that all conductors are correctly identified.' Engraved plastic, drilled and screwed; printed paper labels are not durable enough. Item 7.4 on the schedule of inspection ticks this."
-          >
-            <p>
-              The spirit of 514.14 is foreseeable safety: an electrician arrives on a property
-              expecting brown / black / grey, finds red / yellow / blue inside a part-rewired floor,
-              and the warning notice triggers verification before any work proceeds. Absence of the
-              notice on an installation with mixed colours is typically C2 on an EICR — the risk is
-              misidentification leading to incorrect isolation. The notice is required even if the
-              installation has only one circuit of legacy colours mixed in.
-            </p>
-          </ConceptBlock>
-
-          <ConceptBlock
-            title="Reg 514.1 — equipment / circuit / device identification"
-            plainEnglish="Every device for protection, isolation and switching shall be identified to enable safe operation. That is the basis for circuit labels, MCB labels at the way, switch labels, isolator labels, contactor labels."
-            onSite="A consumer unit way labelled 'cooker' but actually feeding the shower is a Reg 514.1.1 failure — the next person to isolate will do it wrong. GN3 typically codes C2 for incorrect labelling because the foreseeable harm is shock to the next worker. Item 7.1 on the schedule of inspection cannot be ticked. Same applies to MET labels, bond labels, and emergency-stop labels in commercial work."
-          />
-
-          <InlineCheck {...inlineChecks[3]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>Cable colours — Table 51 and the 23 kΩ test</ContentEyebrow>
-
-          <ConceptBlock
-            title="Reg 514.3 / Table 51 — harmonised cable colours"
-            plainEnglish="Brown (L1), black (L2), grey (L3), blue (N), green-and-yellow (CPC). These have been the BS 7671 colours since 31 March 2004 (transitional) and 1 April 2006 (mandatory). Anything else on a 2026 install is a non-compliance unless explained by alteration of an older system."
-            onSite="A4:2026 has clarified rather than rewritten Table 51 — the table now expresses identification at terminations as the binding requirement, allowing single-core sleeves where multi-core cores need re-identifying (e.g. blue used as a switched line in a 3-core flex must be over-sleeved brown at both ends; black used as a phase in 6491X likewise)."
-          >
-            <p>
-              Reg 514.6 covers conductor identification at terminations: where colour-coding is not
-              feasible (e.g. SY / SWA armoured cables with numbered cores) the cores are identified
-              by sleeves or numbered ferrules at every termination. The schedule of inspection asks
-              the inspector to verify identification AT terminations (item 7.3) — not just along the
-              run. This is why a quick visual at each accessible point is part of the schedule of
-              inspection in addition to the headline cable colour.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...inlineChecks[4]} />
-
-          <ConceptBlock
-            title="Bonding inspection — main vs supplementary"
-            plainEnglish="Main protective bonding (Reg 411.3.1.2, sized per Reg 544.1.1) ties extraneous-conductive-parts entering the building (gas, water, structural metalwork, oil) to the MET. Supplementary bonding (Reg 415.2.1) ties together exposed and extraneous parts within a location to keep touch voltage safe under fault."
-            onSite="The decision tree on every EICR: (1) is the pipe at the boundary metal? if no, no main bond required for it. (2) is it extraneous? — Reg 643.2.2 / GN3 23 kΩ test: measure resistance to MET, if it is at or above 23 kΩ at 230 V it is not extraneous. (3) if extraneous, fit main bond per Reg 544.1.1 sizing (typically 10 mm² for standard domestic; check fault-current calc for larger services). For supplementary in bathrooms, Reg 701.415.2 lets you OMIT if all three: disconnection times met, 30 mA RCD on every circuit, extraneous parts reliably bonded back to MET."
-          >
-            <p>
-              The schedule of inspection groups bonding under item 4.5 (main protective bonding),
-              item 4.5.1 / 4.5.2 / 4.5.3 (water / gas / oil / structural / lightning protection),
-              and item 5.0 (supplementary equipotential bonding where required). The inspector
-              records the size of each bond, the connection method (clamp to BS 951), and the
-              continuity test result (Reg 643.2.1 R2 measurement). A bond that physically exists but
-              reads above 0.05 Ω at the clamp is functionally non-existent — connection quality
-              under Reg 526 is the gating concern.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...inlineChecks[5]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>Equipment ratings, connections and Reg 526</ContentEyebrow>
-
-          <ConceptBlock
-            title="Reg 526 — connections of conductors"
-            plainEnglish="Every connection between conductors and other equipment shall provide durable electrical continuity AND adequate mechanical strength AND protection. Loose, mis-clamped or oversized terminations fail this regulation."
-            onSite="Items 7.5 and 7.6 of the schedule of inspection ('connections of live conductors' / 'connections of protective conductors') are the most-failed items on EICRs in domestic stock. Look for: terminal screws not torqued, conductors not fully inserted, two cores into a single-conductor terminal, ferrules used where unsuitable, conductor strands clipped to fit, evidence of arcing / discolouration. Each is an audit failure of Reg 526."
-          >
-            <p>
-              Reg 526.5 (accessibility) requires that every connection, except those in
-              factory-encapsulated joints, must be accessible for inspection, testing and
-              maintenance. A buried junction box (single skin of plasterboard, no access cover)
-              fails this test. Reg 526.6 forbids appreciable mechanical strain on terminations. Reg
-              526.9 requires conductor preparation (strip length, insertion depth) to meet the
-              terminal manufacturer's design — too short and the clamp grips insulation; too long
-              and the bare conductor extends beyond the protective enclosure.
-            </p>
-          </ConceptBlock>
-
-          <ConceptBlock
-            title="Equipment ratings — design vs as-installed"
-            plainEnglish="The design specifies cable size, protective device type and rating, conductor temperature rating. The inspector verifies the installed equipment matches. Mismatches (Type C MCB where Type B was designed, oversized fuse swapped in for convenience, RCBO type wrong for load) are non-compliances under Reg 643."
-            onSite="Item 6.0 (selection of equipment) on the schedule of inspection cross-checks the protective device against the cable size and load. A 32 A Type B on 1.5 mm² T&E is wrong: 1.5 mm² has Iz around 18-20 A on Reference Method C. The wrong device blew the design out of compliance. A common audit-trap: someone replaced an RCBO with a same-rating MCB and lost the RCD additional protection on the circuit."
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>
-            Reg 642.5 — equipment certificates and manufacturer's instructions
-          </ContentEyebrow>
-
-          <ConceptBlock
-            title="The information pack the inspector needs before signing"
-            plainEnglish="Reg 642.5 places a duty on the designer / contractor to provide the inspector with the information necessary to complete the inspection. That includes equipment DoCs, BS / BS EN standard markings, manufacturer's installation instructions, system parameters and circuit chart."
-            onSite="On a typical 2026 domestic CU change with EV: gather (a) consumer unit DoC to BS EN 61439-3, (b) RCBO / AFDD product DoCs to BS EN 61009 / 62606, (c) EV charger product DoC + installation manual confirming Section 722 compliance and DC fault detection method, (d) SPD product DoC to BS EN 61643-11 if fitted. File a copy with the EIC. Without this pack item 6.0 on the schedule cannot be ticked and Reg 642.5 is not met."
-          >
-            <p>
-              Reg 642.5 is often skipped on small jobs because the contractor and inspector are the
-              same person. The duty still applies — the contractor self provides the information
-              pack in a folder for the customer at handover. On notified work (Part P / BPG schemes)
-              this pack feeds the BPG documentation. On a commercial install with separate designer
-              / contractor / inspector the pack is the literal handover.
-            </p>
-          </ConceptBlock>
-
-          <RegsCallout
-            source="BS 7671:2018+A4:2026 · Reg 642.5 — Information for inspection and testing"
-            clause="The person responsible for the design of the installation shall make available to the person carrying out the inspection and testing the information required by Regulation 642.1, together with the names and addresses of those persons responsible. Manufacturer's instructions for any equipment incorporated in the installation, where these contain information necessary for the safety of installation, inspection or testing, shall also be made available."
-            meaning="Two duties: design data (642.1) and manufacturer's instructions (642.5). The phrase 'shall also be made available' means physically available to the inspector at the time of inspection. A handwritten note 'see manual on supplier's website' does not satisfy the regulation; the relevant pages must be accessible on site."
-            cite="BS 7671:2018+A4:2026, Reg 642.5 (p.185)"
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>Competence — who can inspect</ContentEyebrow>
-
-          <ConceptBlock
-            title="Skilled person (electrically) — Part 2 definition"
-            plainEnglish="A skilled person electrically, per BS 7671 Part 2, possesses the technical knowledge or sufficient experience appropriate to the work being undertaken to enable them to AVOID DANGERS that electricity may create. The bar is competence-for-scope, not a generic certificate."
-            onSite="A 2391-certified inspector with 10 years' domestic EICR experience is skilled for domestic EICRs. Put them on a 480 V three-phase industrial inspection with VSDs and they may be an instructed person under supervision, not skilled, for that scope. The signing inspector takes responsibility for being skilled FOR THE ACTUAL WORK declared on the cert. Reg 644 makes this explicit through the declarations panel — three signatures (designer / constructor / inspector) any of which can be the same person provided they are competent for that role."
-          >
-            <p>
-              EAWR 1989 Reg 16 (and the supporting HSE memorandum) extends the BS 7671 competence
-              requirement into law: 'no person shall be engaged in any work activity where technical
-              knowledge or experience is necessary to prevent danger or, where appropriate, injury,
-              unless he possesses such knowledge or experience'. A wrong signature on an EIC — by
-              someone not competent for the scope — is not just a BS 7671 issue; it is potentially a
-              criminal offence under EAWR Reg 16 if injury results.
-            </p>
-          </ConceptBlock>
-
-          <ConceptBlock
-            title="The instructed person — the apprentice / trainee role"
-            plainEnglish="Part 2 also defines an instructed person: someone advised or supervised by a skilled person to enable them to avoid dangers electricity may create. Apprentices, trainees and recently-qualified electricians may carry out tests under supervision but the signature on the cert is the supervising inspector's."
-            onSite="On a typical domestic EICR run by a small firm: senior electrician arrives, runs the visual, supervises the apprentice on Ze / Zs / IR / RCD tests, reviews the readings, makes the coding calls, signs the cert. The apprentice has 'carried out tests' — which is fine — but has not 'completed the verification' which remains the senior's professional act. The apprentice's name does not go on the cert as inspector."
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>Where it goes wrong</ContentEyebrow>
-
-          <CommonMistake
-            title="Skipping the visual to save time"
-            whatHappens="Inspector arrives, plugs the MFT in, runs Ze / Zs / IR straight off the bat to 'get the numbers'. Misses a pre-harmonised cable colour run that no warning notice covers, misses a missing CPC at a downlight (the test passes because the existing R1+R2 path is via metal trunking), misses three loose RCBO terminations. EICR comes back 'satisfactory'. Six months later one of the loose terminations causes a kitchen fire."
-            doInstead="Reg 642.2 sequence is non-negotiable. Do the visual FIRST, dead, with the consumer unit cover off. Tick the schedule of inspection from item 1.0 down. Only AFTER the visual is complete, defects identified and rectified or recorded, do you go to instruments. The visual catches half the defects on most properties — that is the regulation's whole point."
-          />
-
-          <CommonMistake
-            title="Leaving schedule items blank rather than writing N/A"
-            whatHappens="Inspector ticks items they know apply, leaves the rest blank because 'we don't have an IT system / RLV / sauna / fountain'. Audit reveals 12 blank entries on the schedule. Cert is rejected; insurer challenges the inspection in a later claim because the inspector cannot demonstrate the items were considered."
-            doInstead="Every applicable item is tick / cross. Every NON-applicable item is N/A with a brief note ('no IT system on site', 'no special locations beyond bathroom', 'AFDDs not in scope of Reg 421.1.7 — domestic single-family dwelling'). N/A is a positive declaration that the inspector considered the regulation and concluded it does not apply — that is what the model form expects."
-          />
-
-          <CommonMistake
-            title="Missing or wrong cable-colour warning notice"
-            whatHappens="Property has been part-rewired in 2010; bedrooms are post-harmonisation brown / black, downstairs is still red / yellow / black with red sleeving on neutrals. There is no warning notice anywhere. Subsequent electrician isolates 'the brown' at a junction expecting it to be a phase, gets a shock from a still-live red conductor that the tester did not flag because there was no notice to alert anyone to the dual scheme."
-            doInstead="Reg 514.14 requires durable warning notices at the origin AND at every affected DB whenever harmonised and pre-harmonised colours coexist. Engraved plastic, screwed in place, BS 7671 Annex A wording. Item 7.4 of the schedule of inspection cannot be ticked without it. Code C2 if missing on EICR — the foreseeable harm is shock from misidentification. Fix the notices before issuing the cert."
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>Scenarios — applying it on the day</ContentEyebrow>
-
-          <Scenario
-            title="EICR of a 1990s 4-bed semi with two later alterations"
-            situation="Property: 1990s build with a 1996 CU, kitchen rewired in 2008 (post-harmonisation), bathroom rewired in 2018 with RCBOs and modern accessories. Customer wants an EICR for a re-mortgage. You arrive and the existing electrician's last cert is from 2014, marked satisfactory."
-            whatToDo="Run the visual FIRST (Reg 642.2). Expect to find: pre-harmonised colours upstairs in original-build circuits, post-harmonised in kitchen/bath. CHECK for warning notices at origin AND at the CU (Reg 514.14) — likely missing. Verify circuit chart at CU is current and matches actual layout (Reg 514.9). Confirm main bonding to gas and water at the meter positions, with conductors sized per Reg 544.1.1 (10 mm² typical for standard domestic). Confirm RCD additional protection scope: Reg 411.3.3 sockets, Reg 411.3.4 (A4) lighting circuits in dwelling. Schedule of inspection item 4.23 — N/A (not HRRB / HMO / care home)."
-            whyItMatters="An EICR on a property with mixed cable colours and incomplete identification is a documentation exercise as much as a testing exercise. Most C2 codes on this kind of property come from the visual / schedule-of-inspection side — missing notices, missing circuit charts, mislabelled ways — not from instrument readings. Get the visual right and the cert is defensible."
-          />
-
-          <Scenario
-            title="Initial verification of a new-build flat in a 22-storey HRRB"
-            situation="New-build apartment, 22-storey purpose-built block (HRRB). EIC required for handover. Consumer unit is fully RCBO-protected, EV charging point in basement parking is on a separate dedicated supply, AFDD-protected ring final and lighting circuits per developer spec."
-            whatToDo="Schedule of inspection items: 4.23 (AFDD presence) MUST be ticked — Reg 421.1.7 mandates AFDDs in HRRBs on socket-outlet circuits up to 32 A. Confirm BS EN 62606 marking on each AFDD device. Verify Reg 411.3.4 (A4) on lighting circuits — every dwelling lighting circuit on 30 mA RCD (RCBO is the normal route). Identification (Section 514) — full circuit chart, all RCBOs labelled, warning notices fitted (post-harmonised colours throughout but warning notices for non-electricians per Reg 514.10 still required). Reg 642.5 information pack — collect AFDD product DoCs, RCBO DoCs, CU DoC, hand to building owner with EIC."
-            whyItMatters="HRRBs are the highest-stakes A4 inspection scenario. Item 4.23 absent or wrong on this kind of cert is a serious finding — the regulation was created in response to fire-vulnerable building risk, and an inspector who waved through an HRRB without AFDDs has signed off non-compliance that could be quoted in a coroner's inquest. The schedule of inspection is the inspector's primary defensive document — every tick traceable to a regulation, every N/A explained."
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>
-            Worked example — walking the schedule on a typical CU change
-          </ContentEyebrow>
-
-          <ConceptBlock
-            title="From cover off to cert signed in twelve checks"
-            plainEnglish="A standard CU change inspection ticks roughly 50-60 items on the schedule. The good news is most are quick — many are visible the moment the cover comes off. Walking the items in order matches the order an inspector physically moves around the equipment."
-            onSite="The 12-step schedule walkthrough most domestic inspectors use as a mental checklist: (1) origin / cut-out condition, (2) meter and tails, (3) main switch / RCD layout, (4) labels and circuit chart, (5) RCBO / MCB selection per circuit, (6) AFDDs item 4.23 (N/A on dwelling), (7) main bonds gas / water / structural — sizes and clamps, (8) supplementary bonding in bathroom (omit-or-fit decision), (9) cable colours and identification, (10) accessory connections sample (Reg 526), (11) special locations Section 701 / 702 / 703 / 705 / 711 / 717 / 722 etc as applicable, (12) declarations and equipment certificates pack per Reg 642.5."
-          >
-            <p>
-              <strong>1. Origin condition (item 1.0).</strong> Cut-out fuse intact, cover sealed,
-              tails sized correctly (typically 25 mm² for 100 A).{' '}
-              <strong>2. Meter and tails.</strong>
-              Smart meter or analogue, tails brown / blue at meter, henley block configuration if
-              present. <strong>3. Main switch / RCD layout (item 4.x).</strong> RCBOs on every way
-              (modern domestic), correct ratings vs designed cable sizes.{' '}
-              <strong>4. Labels and chart (item 7.x).</strong> Circuit chart inside cover, all RCBOs
-              labelled, cross-check against actual circuits.{' '}
-              <strong>5. RCBO selection (item 6.0).</strong>
-              Right type for the load (Type A standard, Type B for
-              EV-without-internal-DC-detection).
-              <strong>6. AFDDs (item 4.23).</strong> For a single-family dwelling: N/A with note.
-              For HRRB / HMO / care home: tick if present.{' '}
-              <strong>7. Main bonds (item 4.5).</strong>
-              10 mm² G/Y to gas meter inlet (within 600 mm), 10 mm² G/Y to water service entry,
-              clamps to BS 951. <strong>8. Supplementary bonding (item 5.x).</strong> Apply Reg
-              701.415.2 omit-or-fit decision in bathroom.{' '}
-              <strong>9. Cable colours (item 7.3 / 7.4).</strong> Verify Table 51 colours, fit
-              warning notices if mixed. <strong>10. Accessory connections (item 7.5 / 7.6).</strong>{' '}
-              Sample sockets, switches, JBs; torque, insertion depth, no strain.{' '}
-              <strong>11. Special locations.</strong> Bathroom zones, kitchen, garden socket,
-              outbuildings — apply Section 701 onwards.
-              <strong>12. Reg 642.5 pack.</strong> File DoCs, manufacturer instructions, hand pack
-              to customer with EIC.
-            </p>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <ContentEyebrow>Inspector's quick reference</ContentEyebrow>
-
-          <ConceptBlock
-            title="The four pillars of inspection compliance"
-            plainEnglish="Sequence (Reg 642.2 — visual first), Coverage (every applicable schedule item ticked, crossed or N/A — never blank), Evidence (Reg 642.5 information pack to hand), Competence (skilled person electrically per Part 2, signature under Reg 644)."
-            onSite="If a customer / auditor / insurer challenges the cert, your defence sits on those four pillars. The Schedule of Inspection itself is the visible record of pillars 1-3; the signatory's competence is pillar 4. Get any one wrong and the cert is structurally weak even if the underlying installation is sound. Get all four right and you have a document that stands up to challenge."
-          >
-            <p>
-              The schedule of inspection is not paperwork bureaucracy — it is the audit-trail record
-              of the inspector's professional act. Every tick is a statement under Reg 644 that the
-              regulation in question was checked and met. Every cross is a recorded non-compliance
-              demanding correction or coding (EICR). Every N/A is a positive declaration that the
-              regulation does not apply. The inspector who walks the items in order, supports each
-              tick with evidence, and uses N/A explicitly where applicable produces certs that hold
-              up at audit, in court, and on follow-up inspections years later.
-            </p>
-          </ConceptBlock>
-
-          <FAQ items={faqItems} />
-
-          <KeyTakeaways
-            points={[
-              'Reg 642.2: visual inspection BEFORE testing, normally with the installation disconnected. Reg 643 then orders the testing sequence (continuity, IR, polarity, Zs, RCD).',
-              'Schedule of Inspection (Appendix 6) — items 1.0 through 17.0+ — every applicable item must have a positive entry (tick / cross / N/A). Blank fields invalidate the cert.',
-              'A4:2026 introduced item 4.23 — AFDD presence per Reg 421.1.7 in HRRBs, HMOs, care homes and PBSA. Single-family dwellings are N/A with a note.',
-              'Section 514 identification: circuit charts (Reg 514.9), warning notices for mixed colours (Reg 514.14), accurate device labels (Reg 514.1.1) — items 7.x on the schedule.',
-              'Bonding inspection: main per Reg 411.3.1.2 / 544.1.1, supplementary per Reg 415.2.1, with the Reg 643.2.2 23 kΩ test deciding extraneous status.',
-              'Reg 642.5 — equipment DoCs and manufacturer instructions must be available to the inspector. Reg 644 — signatures by skilled persons (Part 2 definition) competent for the scope declared.',
-            ]}
-          />
-
-          <Quiz questions={quizQuestions} />
-
-          <div className="grid grid-cols-2 gap-3 pt-2">
-            <button
-              type="button"
-              onClick={() => navigate('/electrician/upskilling/bs7671-module-6')}
-              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
-                <ChevronLeft className="h-3 w-3" /> Module 6
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-white truncate">
-                Module overview
-              </div>
-            </button>
-            <button
-              type="button"
-              onClick={() => navigate('/electrician/upskilling/bs7671-module-6-section-3')}
-              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
-                Next section <ChevronRight className="h-3 w-3" />
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-black truncate">
-                6.3 Sequence of tests
-              </div>
-            </button>
-          </div>
-        </PageFrame>
-      </div>
-    </div>
+            <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+              Next section <ChevronRight className="h-3 w-3" />
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-black truncate">
+              6.3 Sequence of tests
+            </div>
+          </button>
+        </div>
+      </HubBody>
+    </HubPage>
   );
 };
 

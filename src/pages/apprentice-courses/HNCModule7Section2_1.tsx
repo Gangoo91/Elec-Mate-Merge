@@ -5,10 +5,10 @@
  */
 
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
-import { PageFrame, PageHero } from '@/components/college/primitives';
 import {
   ConceptBlock,
   CommonMistake,
@@ -40,12 +40,7 @@ const quickCheckQuestions = [
     id: 'escape-route-lux',
     question:
       'What is the minimum illuminance required across the full width of an escape route up to 2m wide?',
-    options: [
-      '1 lux',
-      '0.5 lux',
-      '5 lux',
-      '10 lux',
-    ],
+    options: ['1 lux', '0.5 lux', '5 lux', '10 lux'],
     correctIndex: 0,
     explanation:
       'BS EN 1838:2024 requires a minimum of 1 lux at floor level across the FULL WIDTH of a defined escape route. The 2013 edition required it only along the centre line, with a lower level at the edges; the 2024 revision extended the 1 lux to the whole width, excluding borders (a quarter of the width on routes of 2 m or less).',
@@ -67,12 +62,7 @@ const quickCheckQuestions = [
     id: 'high-risk-task',
     question:
       'What percentage of normal task illuminance is required for high-risk task areas during emergency lighting operation?',
-    options: [
-      '1%',
-      '5%',
-      '50%',
-      '10%',
-    ],
+    options: ['1%', '5%', '50%', '10%'],
     correctIndex: 3,
     explanation:
       'High-risk task areas require emergency lighting to provide at least 10% of the normal task illuminance, with a minimum of 15 lux. This ensures potentially dangerous activities can be safely terminated.',
@@ -84,12 +74,7 @@ const quizQuestions = [
     id: 1,
     question:
       'According to BS 5266-1, what is the minimum duration for emergency lighting in most premises?',
-    options: [
-      '30 minutes',
-      '2 hours',
-      '1 hour',
-      '3 hours',
-    ],
+    options: ['30 minutes', '2 hours', '1 hour', '3 hours'],
     correctAnswer: 1,
     explanation:
       'BS 5266-1 specifies a minimum 1-hour duration for most premises. However, 3 hours is required for sleeping accommodation, premises not evacuated immediately, or where recharge may take longer than normal working hours.',
@@ -97,12 +82,7 @@ const quizQuestions = [
   {
     id: 2,
     question: 'What illuminance is required in open areas greater than 60m2?',
-    options: [
-      '1 lux',
-      '0.2 lux',
-      '0.5 lux',
-      '5 lux',
-    ],
+    options: ['1 lux', '0.2 lux', '0.5 lux', '5 lux'],
     correctAnswer: 2,
     explanation:
       'Open areas (anti-panic areas) greater than 60m2 require a minimum of 0.5 lux at floor level across the core area, excluding a 0.5m border around the perimeter.',
@@ -151,12 +131,7 @@ const quizQuestions = [
   {
     id: 6,
     question: 'What is the uniformity ratio requirement for open area (anti-panic) lighting?',
-    options: [
-      '10:1 maximum',
-      '20:1 maximum',
-      '40:1 maximum',
-      'No requirement',
-    ],
+    options: ['10:1 maximum', '20:1 maximum', '40:1 maximum', 'No requirement'],
     correctAnswer: 2,
     explanation:
       'The ratio of maximum to minimum illuminance in open areas must not exceed 40:1. This prevents dark spots that could cause panic or falls during evacuation.',
@@ -218,12 +193,7 @@ const quizQuestions = [
     id: 11,
     question:
       'What is the minimum recharge period before a subsequent emergency must not result in a duration below specification?',
-    options: [
-      '4 hours',
-      '12 hours',
-      '48 hours',
-      '24 hours',
-    ],
+    options: ['4 hours', '12 hours', '48 hours', '24 hours'],
     correctAnswer: 3,
     explanation:
       'BS 5266-1 requires that after a full rated discharge, the system must be capable of providing rated duration again after a maximum 24-hour recharge period.',
@@ -232,12 +202,7 @@ const quizQuestions = [
     id: 12,
     question:
       'For a high-risk task area with normal illumination of 500 lux, what minimum emergency illuminance is required?',
-    options: [
-      '50 lux',
-      '100 lux',
-      '5 lux',
-      '15 lux',
-    ],
+    options: ['50 lux', '100 lux', '5 lux', '15 lux'],
     correctAnswer: 0,
     explanation:
       'High-risk task areas require 10% of normal task illuminance, which would be 50 lux (10% of 500 lux). Since this exceeds the minimum requirement of 15 lux, the 50 lux figure applies.',
@@ -283,297 +248,466 @@ const HNCModule7Section2_1 = () => {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
-      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
-        <PageFrame>
+    <HubPage>
+      <HubMasthead
+        section="Module 7 · Section 2 · Subsection 1"
+        title="Emergency Lighting Design"
+        backTo="/study-centre/apprentice/h-n-c-module7-section2"
+      />
+      <HubBody>
+        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
+          BS 5266 requirements, lux levels, duration, escape routes, open areas, and high-risk task
+          areas
+        </p>
+
+        <LearningOutcomes
+          outcomes={[
+            'Apply BS 5266-1 requirements to emergency lighting design',
+            'Calculate illuminance levels for escape routes and open areas',
+            'Distinguish between maintained and non-maintained systems',
+            'Design high-risk task area emergency lighting',
+            'Determine appropriate emergency lighting duration',
+            'Apply luminaire spacing rules for adequate coverage',
+          ]}
+        />
+
+        <SectionRule />
+
+        <ConceptBlock title="BS 5266-1 Fundamentals">
+          <p>
+            BS 5266-1 is the British Standard that provides recommendations for the emergency escape
+            lighting of premises. It forms the basis for designing, installing, and maintaining
+            emergency lighting systems that enable safe evacuation during mains power failure.
+          </p>
+          <p>
+            <strong>Emergency lighting categories:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Emergency escape lighting:</strong> Enables safe evacuation from premises
+              during power failure
+            </li>
+            <li>
+              <strong>Escape route lighting:</strong> Identifies and illuminates escape routes to
+              final exits
+            </li>
+            <li>
+              <strong>Open area lighting:</strong> Provides illumination in large areas to prevent
+              panic
+            </li>
+            <li>
+              <strong>High-risk task area lighting:</strong> Enables safe shutdown of dangerous
+              activities
+            </li>
+            <li>
+              <strong>Standby lighting:</strong> Enables normal activities to continue (not part of
+              emergency escape lighting)
+            </li>
+          </ul>
+          <p>
+            <strong>Luminaire Classification</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Non-maintained:</strong> Lamp off, battery charging — Lamp illuminated from
+              battery
+            </li>
+            <li>
+              <strong>Maintained:</strong> Lamp on from mains — Lamp remains on from battery
+            </li>
+            <li>
+              <strong>Combined:</strong> Normal lamp on, emergency lamp off/on — Emergency lamp from
+              battery
+            </li>
+            <li>
+              <strong>Self-contained:</strong> Battery within luminaire — Individual battery powers
+              lamp
+            </li>
+            <li>
+              <strong>Central battery:</strong> Remote battery system — Central battery powers all
+              luminaires
+            </li>
+          </ul>
+          <p>
+            <strong>Key principle:</strong> Emergency lighting must provide sufficient illumination
+            for occupants to identify escape routes and evacuate safely, even if they are unfamiliar
+            with the building layout.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...quickCheckQuestions[0]} />
+
+        <SectionRule />
+
+        <ConceptBlock title="Illuminance Requirements">
+          <p>
+            BS 5266-1 specifies minimum illuminance levels for different areas based on the risk and
+            nature of evacuation. These levels must be achieved at floor level and maintained
+            throughout the rated duration.
+          </p>
+          <p>
+            <strong>Escape Routes</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>1 lux minimum</strong> full width
+            </li>
+            <li>0.5 lux at edges</li>
+            <li>Routes up to 2m wide</li>
+            <li>Central band &gt; half width</li>
+          </ul>
+          <p>
+            <strong>Open Areas (&gt;60m2)</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>0.5 lux minimum</strong> floor level
+            </li>
+            <li>Anti-panic lighting</li>
+            <li>Exclude 0.5m border</li>
+            <li>40:1 max uniformity</li>
+          </ul>
+          <p>
+            <strong>High-Risk Task Areas</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>10% task illuminance</strong>
+            </li>
+            <li>Minimum 15 lux</li>
+            <li>Enable safe shutdown</li>
+            <li>Risk assessment required</li>
+          </ul>
+          <p>
+            <strong>Illuminance Values Summary</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Escape route centre:</strong> 1 lux — 40:1 max — Measured at floor level
+            </li>
+            <li>
+              <strong>Escape route edges:</strong> 0.5 lux — - — Within central band
+            </li>
+            <li>
+              <strong>Open areas:</strong> 0.5 lux — 40:1 max — Core area, 0.5m border excluded
+            </li>
+            <li>
+              <strong>High-risk task:</strong> 10% or 15 lux — - — Whichever is greater
+            </li>
+            <li>
+              <strong>Safety signs:</strong> 2 cd/m2 — - — Luminance, not illuminance
+            </li>
+          </ul>
+          <p>
+            <strong>Critical timing:</strong> Emergency lighting must reach 50% of required
+            illuminance within 5 seconds and full illuminance within 60 seconds of mains failure.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...quickCheckQuestions[1]} />
+
+        <SectionRule />
+
+        <ConceptBlock title="Duration and Response Requirements">
+          <p>
+            Emergency lighting must operate for a specified duration to ensure occupants have
+            adequate time to evacuate safely. The required duration depends on the building type,
+            occupancy, and evacuation characteristics.
+          </p>
+          <p>
+            <strong>Duration Requirements</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>1 hour minimum:</strong> Most premises where evacuation is immediate and
+              recharge occurs during normal working hours
+            </li>
+            <li>
+              <strong>3 hours required:</strong> Sleeping accommodation, premises not evacuated
+              immediately, areas where recharge period exceeds normal working hours
+            </li>
+          </ul>
+          <p>
+            <strong>Response Time Requirements</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Within 0.5 seconds:</strong> Emergency lighting circuit must activate
+            </li>
+            <li>
+              <strong>Within 5 seconds:</strong> 50% of required illuminance must be achieved
+            </li>
+            <li>
+              <strong>Within 60 seconds:</strong> Full required illuminance must be achieved
+            </li>
+            <li>
+              <strong>Throughout duration:</strong> Minimum illuminance must be maintained
+            </li>
+          </ul>
+          <p>
+            <strong>Duration Selection Guide</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Offices (day use):</strong> 1 hour — Immediate evacuation, daytime recharge
+            </li>
+            <li>
+              <strong>Hotels:</strong> 3 hours — Sleeping accommodation
+            </li>
+            <li>
+              <strong>Hospitals:</strong> 3 hours — Sleeping risk, slow evacuation
+            </li>
+            <li>
+              <strong>Entertainment venues:</strong> 3 hours — Often not evacuated immediately
+            </li>
+            <li>
+              <strong>Industrial (24-hour):</strong> 3 hours — Recharge may exceed shift patterns
+            </li>
+          </ul>
+          <p>
+            <strong>Recharge requirement:</strong> Following a full rated discharge, the system must
+            be capable of providing rated duration again after a maximum 24-hour recharge period.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...quickCheckQuestions[2]} />
+
+        <SectionRule />
+
+        <ConceptBlock title="Luminaire Spacing and Positioning">
+          <p>
+            Correct positioning of emergency luminaires is essential to achieve required illuminance
+            levels with adequate uniformity. BS 5266-1 provides general guidance, but specific
+            spacing must be verified using manufacturer photometric data.
+          </p>
+          <p>
+            <strong>Mandatory Luminaire Locations</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Near each exit door and at final exit doors</li>
+            <li>On or near stairs so each tread receives direct light</li>
+            <li>At each change of direction along escape routes</li>
+            <li>At each intersection of corridors</li>
+            <li>At each change of floor level</li>
+            <li>Outside and near each final exit</li>
+            <li>At each first aid post</li>
+            <li>At each piece of fire-fighting equipment and call point</li>
+            <li>At all fire safety signs</li>
+            <li>Near disabled refuges and call points</li>
+          </ul>
+          <p>
+            <strong>Escape Route Spacing</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Maximum 4x mounting height</li>
+            <li>Verify with photometric data</li>
+            <li>Consider beam angle</li>
+            <li>Account for obstructions</li>
+          </ul>
+          <p>
+            <strong>Open Area Spacing</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Based on photometric layout</li>
+            <li>Achieve 0.5 lux minimum</li>
+            <li>40:1 uniformity ratio</li>
+            <li>Exclude 0.5m perimeter</li>
+          </ul>
+          <p>
+            <strong>Spacing Calculation Example</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>2.5m:</strong> 10m maximum — 6-8m (luminaire dependent)
+            </li>
+            <li>
+              <strong>3.0m:</strong> 12m maximum — 8-10m (luminaire dependent)
+            </li>
+            <li>
+              <strong>4.0m:</strong> 16m maximum — 10-14m (luminaire dependent)
+            </li>
+          </ul>
+          <p>
+            <strong>Sign Visibility Requirements</strong>
+          </p>
+          <p>
+            <strong>Viewing distance:</strong> Maximum viewing distance = 200 x sign height (for
+            externally illuminated signs)
+          </p>
+          <p>
+            <strong>Internally illuminated:</strong> Maximum viewing distance = sign height x
+            distance factor (typically 100-200)
+          </p>
+          <p>
+            <strong>Minimum luminance:</strong> 2 cd/m2 for internally illuminated signs
+          </p>
+          <p>
+            <strong>Sign illumination:</strong> Externally illuminated signs require at least 5 lux
+            on the sign face
+          </p>
+          <p>
+            <strong>Design verification:</strong> Always verify spacing using manufacturer
+            photometric data and lighting design software. The 4x mounting height rule is a starting
+            point, not a guaranteed solution.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...quickCheckQuestions[3]} />
+
+        <SectionRule />
+
+        <ConceptBlock title="Worked Examples">
+          <p>
+            <strong>Example 1: Escape Route Design</strong>
+          </p>
+          <p>
+            <strong>Scenario:</strong> Design emergency lighting for a 1.5m wide corridor, 30m long,
+            with 2.8m ceiling height.
+          </p>
+          <p>Step 1: Determine requirements</p>
+          <p>Route width: 1.5m (&lt;2m, so standard escape route requirements)</p>
+          <p>Minimum illuminance: 1 lux across the full width, excluding borders</p>
+          <p>Step 2: Calculate maximum spacing</p>
+          <p>Mounting height: 2.8m</p>
+          <p>Maximum spacing = 4 x 2.8m = 11.2m</p>
+          <p>Step 3: Apply to corridor length</p>
+          <p>Corridor length: 30m</p>
+          <p>Luminaires required: 30m / 11.2m = 2.68, round up to 3</p>
+          <p>Plus luminaires at each end = 5 minimum positions</p>
+          <p>Step 4: Verify with photometric data</p>
+          <p>Check actual luminaire output achieves 1 lux at calculated spacing</p>
+          <p>
+            <strong>Example 2: High-Risk Task Area</strong>
+          </p>
+          <p>
+            <strong>Scenario:</strong> Determine emergency lighting for a machine workshop with 400
+            lux task lighting.
+          </p>
+          <p>Step 1: Calculate 10% requirement</p>
+          <p>Normal task illuminance: 400 lux</p>
+          <p>10% = 40 lux</p>
+          <p>Step 2: Check against minimum</p>
+          <p>Minimum for high-risk: 15 lux</p>
+          <p>40 lux &gt; 15 lux, so 40 lux applies</p>
+          <p>Result: Emergency lighting must provide 40 lux at task level</p>
+          <p>Design luminaires to achieve this at the machinery positions</p>
+          <p>
+            <strong>Example 3: Open Area Calculation</strong>
+          </p>
+          <p>
+            <strong>Scenario:</strong> Design anti-panic lighting for a 15m x 12m open plan office
+            (180m2).
+          </p>
+          <p>Step 1: Verify open area classification</p>
+          <p>Area: 180m2 (&gt;60m2, qualifies as open area)</p>
+          <p>Minimum illuminance: 0.5 lux</p>
+          <p>Step 2: Define core area (exclude 0.5m border)</p>
+          <p>Core area: (15-1) x (12-1) = 14m x 11m = 154m2</p>
+          <p>Step 3: Uniformity requirement</p>
+          <p>Maximum:minimum ratio must not exceed 40:1</p>
+          <p>Step 4: Lighting layout</p>
+          <p>Use photometric software to design grid achieving 0.5 lux minimum</p>
+          <p>with adequate uniformity across the 154m2 core area</p>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <ConceptBlock title="Practical guidance">
+          <p>
+            <strong>Design Checklist:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Identify all escape routes, exits, and high-risk areas</li>
+            <li>Determine maintained or non-maintained requirement</li>
+            <li>Calculate required illuminance levels for each area type</li>
+            <li>Select appropriate duration (1 hour or 3 hours)</li>
+            <li>Position luminaires at mandatory locations first</li>
+            <li>Calculate spacing using 4x rule as starting point</li>
+            <li>Verify design with photometric calculations</li>
+            <li>Ensure sign visibility distances are adequate</li>
+          </ul>
+          <p>
+            <strong>Key Values to Remember:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              Escape route full width: <strong>1 lux minimum</strong>
+            </li>
+            <li>
+              Open areas: <strong>0.5 lux minimum</strong>
+            </li>
+            <li>
+              High-risk task: <strong>10% of task illuminance, minimum 15 lux</strong>
+            </li>
+            <li>
+              Response time: <strong>50% within 5 seconds, 100% within 60 seconds</strong>
+            </li>
+            <li>
+              Uniformity: <strong>40:1 maximum ratio</strong>
+            </li>
+            <li>
+              Sign luminance: <strong>2 cd/m2 minimum</strong>
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <CommonMistake
+          title="Common mistakes to avoid"
+          whatHappens={
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+              <li>
+                <strong>Using 4x rule without verification</strong> - Always check with photometric
+                data
+              </li>
+              <li>
+                <strong>Forgetting mandatory locations</strong> - Changes of direction, fire
+                equipment, signs
+              </li>
+              <li>
+                <strong>Wrong duration selection</strong> - Check sleeping risk and evacuation time
+              </li>
+              <li>
+                <strong>Ignoring uniformity</strong> - Dark spots cause panic and accidents
+              </li>
+            </ul>
+          }
+          doInstead="Cross-check assumptions against published guidance, validate measured values against design intent, and engage the wider team early when interface issues emerge."
+        />
+
+        <SectionRule />
+
+        <FAQ items={faqs} />
+
+        <SectionRule />
+
+        <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+
+        <div className="grid grid-cols-2 gap-3 pt-2">
           <button
-            onClick={() => navigate("/study-centre/apprentice/h-n-c-module7-section2")}
-            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module7-section2')}
+            className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
           >
-            <ArrowLeft className="h-4 w-4" /> Back
+            <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+              <ChevronLeft className="h-3 w-3" /> Back to section
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-white truncate">
+              Emergency systems
+            </div>
           </button>
-
-          <PageHero
-            eyebrow="Module 7 · Section 2 · Subsection 1"
-            title="Emergency Lighting Design"
-            description="BS 5266 requirements, lux levels, duration, escape routes, open areas, and high-risk task areas"
-            tone="purple"
-          />
-
-          <LearningOutcomes
-            outcomes={[
-              "Apply BS 5266-1 requirements to emergency lighting design",
-              "Calculate illuminance levels for escape routes and open areas",
-              "Distinguish between maintained and non-maintained systems",
-              "Design high-risk task area emergency lighting",
-              "Determine appropriate emergency lighting duration",
-              "Apply luminaire spacing rules for adequate coverage",
-            ]}
-          />
-
-          <SectionRule />
-
-          <ConceptBlock title="BS 5266-1 Fundamentals">
-            <p>BS 5266-1 is the British Standard that provides recommendations for the emergency escape lighting of premises. It forms the basis for designing, installing, and maintaining emergency lighting systems that enable safe evacuation during mains power failure.</p>
-            <p><strong>Emergency lighting categories:</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Emergency escape lighting:</strong> Enables safe evacuation from premises during power failure</li>
-              <li><strong>Escape route lighting:</strong> Identifies and illuminates escape routes to final exits</li>
-              <li><strong>Open area lighting:</strong> Provides illumination in large areas to prevent panic</li>
-              <li><strong>High-risk task area lighting:</strong> Enables safe shutdown of dangerous activities</li>
-              <li><strong>Standby lighting:</strong> Enables normal activities to continue (not part of emergency escape lighting)</li>
-            </ul>
-            <p><strong>Luminaire Classification</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Non-maintained:</strong> Lamp off, battery charging — Lamp illuminated from battery</li>
-              <li><strong>Maintained:</strong> Lamp on from mains — Lamp remains on from battery</li>
-              <li><strong>Combined:</strong> Normal lamp on, emergency lamp off/on — Emergency lamp from battery</li>
-              <li><strong>Self-contained:</strong> Battery within luminaire — Individual battery powers lamp</li>
-              <li><strong>Central battery:</strong> Remote battery system — Central battery powers all luminaires</li>
-            </ul>
-            <p><strong>Key principle:</strong> Emergency lighting must provide sufficient illumination for occupants to identify escape routes and evacuate safely, even if they are unfamiliar with the building layout.</p>
-          </ConceptBlock>
-
-          <InlineCheck {...quickCheckQuestions[0]} />
-
-          <SectionRule />
-
-          <ConceptBlock title="Illuminance Requirements">
-            <p>BS 5266-1 specifies minimum illuminance levels for different areas based on the risk and nature of evacuation. These levels must be achieved at floor level and maintained throughout the rated duration.</p>
-            <p><strong>Escape Routes</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>1 lux minimum</strong> full width</li>
-              <li>0.5 lux at edges</li>
-              <li>Routes up to 2m wide</li>
-              <li>Central band &gt; half width</li>
-            </ul>
-            <p><strong>Open Areas (&gt;60m2)</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>0.5 lux minimum</strong> floor level</li>
-              <li>Anti-panic lighting</li>
-              <li>Exclude 0.5m border</li>
-              <li>40:1 max uniformity</li>
-            </ul>
-            <p><strong>High-Risk Task Areas</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>10% task illuminance</strong></li>
-              <li>Minimum 15 lux</li>
-              <li>Enable safe shutdown</li>
-              <li>Risk assessment required</li>
-            </ul>
-            <p><strong>Illuminance Values Summary</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Escape route centre:</strong> 1 lux — 40:1 max — Measured at floor level</li>
-              <li><strong>Escape route edges:</strong> 0.5 lux — - — Within central band</li>
-              <li><strong>Open areas:</strong> 0.5 lux — 40:1 max — Core area, 0.5m border excluded</li>
-              <li><strong>High-risk task:</strong> 10% or 15 lux — - — Whichever is greater</li>
-              <li><strong>Safety signs:</strong> 2 cd/m2 — - — Luminance, not illuminance</li>
-            </ul>
-            <p><strong>Critical timing:</strong> Emergency lighting must reach 50% of required illuminance within 5 seconds and full illuminance within 60 seconds of mains failure.</p>
-          </ConceptBlock>
-
-          <InlineCheck {...quickCheckQuestions[1]} />
-
-          <SectionRule />
-
-          <ConceptBlock title="Duration and Response Requirements">
-            <p>Emergency lighting must operate for a specified duration to ensure occupants have adequate time to evacuate safely. The required duration depends on the building type, occupancy, and evacuation characteristics.</p>
-            <p><strong>Duration Requirements</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>1 hour minimum:</strong> Most premises where evacuation is immediate and recharge occurs during normal working hours</li>
-              <li><strong>3 hours required:</strong> Sleeping accommodation, premises not evacuated immediately, areas where recharge period exceeds normal working hours</li>
-            </ul>
-            <p><strong>Response Time Requirements</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Within 0.5 seconds:</strong> Emergency lighting circuit must activate</li>
-              <li><strong>Within 5 seconds:</strong> 50% of required illuminance must be achieved</li>
-              <li><strong>Within 60 seconds:</strong> Full required illuminance must be achieved</li>
-              <li><strong>Throughout duration:</strong> Minimum illuminance must be maintained</li>
-            </ul>
-            <p><strong>Duration Selection Guide</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Offices (day use):</strong> 1 hour — Immediate evacuation, daytime recharge</li>
-              <li><strong>Hotels:</strong> 3 hours — Sleeping accommodation</li>
-              <li><strong>Hospitals:</strong> 3 hours — Sleeping risk, slow evacuation</li>
-              <li><strong>Entertainment venues:</strong> 3 hours — Often not evacuated immediately</li>
-              <li><strong>Industrial (24-hour):</strong> 3 hours — Recharge may exceed shift patterns</li>
-            </ul>
-            <p><strong>Recharge requirement:</strong> Following a full rated discharge, the system must be capable of providing rated duration again after a maximum 24-hour recharge period.</p>
-          </ConceptBlock>
-
-          <InlineCheck {...quickCheckQuestions[2]} />
-
-          <SectionRule />
-
-          <ConceptBlock title="Luminaire Spacing and Positioning">
-            <p>Correct positioning of emergency luminaires is essential to achieve required illuminance levels with adequate uniformity. BS 5266-1 provides general guidance, but specific spacing must be verified using manufacturer photometric data.</p>
-            <p><strong>Mandatory Luminaire Locations</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Near each exit door and at final exit doors</li>
-              <li>On or near stairs so each tread receives direct light</li>
-              <li>At each change of direction along escape routes</li>
-              <li>At each intersection of corridors</li>
-              <li>At each change of floor level</li>
-              <li>Outside and near each final exit</li>
-              <li>At each first aid post</li>
-              <li>At each piece of fire-fighting equipment and call point</li>
-              <li>At all fire safety signs</li>
-              <li>Near disabled refuges and call points</li>
-            </ul>
-            <p><strong>Escape Route Spacing</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Maximum 4x mounting height</li>
-              <li>Verify with photometric data</li>
-              <li>Consider beam angle</li>
-              <li>Account for obstructions</li>
-            </ul>
-            <p><strong>Open Area Spacing</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Based on photometric layout</li>
-              <li>Achieve 0.5 lux minimum</li>
-              <li>40:1 uniformity ratio</li>
-              <li>Exclude 0.5m perimeter</li>
-            </ul>
-            <p><strong>Spacing Calculation Example</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>2.5m:</strong> 10m maximum — 6-8m (luminaire dependent)</li>
-              <li><strong>3.0m:</strong> 12m maximum — 8-10m (luminaire dependent)</li>
-              <li><strong>4.0m:</strong> 16m maximum — 10-14m (luminaire dependent)</li>
-            </ul>
-            <p><strong>Sign Visibility Requirements</strong></p>
-            <p><strong>Viewing distance:</strong> Maximum viewing distance = 200 x sign height (for externally illuminated signs)</p>
-            <p><strong>Internally illuminated:</strong> Maximum viewing distance = sign height x distance factor (typically 100-200)</p>
-            <p><strong>Minimum luminance:</strong> 2 cd/m2 for internally illuminated signs</p>
-            <p><strong>Sign illumination:</strong> Externally illuminated signs require at least 5 lux on the sign face</p>
-            <p><strong>Design verification:</strong> Always verify spacing using manufacturer photometric data and lighting design software. The 4x mounting height rule is a starting point, not a guaranteed solution.</p>
-          </ConceptBlock>
-
-          <InlineCheck {...quickCheckQuestions[3]} />
-
-          <SectionRule />
-
-          <ConceptBlock title="Worked Examples">
-            <p>
-              <strong>Example 1: Escape Route Design</strong>
-            </p>
-            <p><strong>Scenario:</strong> Design emergency lighting for a 1.5m wide corridor, 30m long, with 2.8m ceiling height.</p>
-            <p>Step 1: Determine requirements</p>
-            <p>Route width: 1.5m (&lt;2m, so standard escape route requirements)</p>
-            <p>Minimum illuminance: 1 lux across the full width, excluding borders</p>
-            <p>Step 2: Calculate maximum spacing</p>
-            <p>Mounting height: 2.8m</p>
-            <p>Maximum spacing = 4 x 2.8m = 11.2m</p>
-            <p>Step 3: Apply to corridor length</p>
-            <p>Corridor length: 30m</p>
-            <p>Luminaires required: 30m / 11.2m = 2.68, round up to 3</p>
-            <p>Plus luminaires at each end = 5 minimum positions</p>
-            <p>Step 4: Verify with photometric data</p>
-            <p>Check actual luminaire output achieves 1 lux at calculated spacing</p>
-            <p>
-              <strong>Example 2: High-Risk Task Area</strong>
-            </p>
-            <p><strong>Scenario:</strong> Determine emergency lighting for a machine workshop with 400 lux task lighting.</p>
-            <p>Step 1: Calculate 10% requirement</p>
-            <p>Normal task illuminance: 400 lux</p>
-            <p>10% = 40 lux</p>
-            <p>Step 2: Check against minimum</p>
-            <p>Minimum for high-risk: 15 lux</p>
-            <p>40 lux &gt; 15 lux, so 40 lux applies</p>
-            <p>Result: Emergency lighting must provide 40 lux at task level</p>
-            <p>Design luminaires to achieve this at the machinery positions</p>
-            <p>
-              <strong>Example 3: Open Area Calculation</strong>
-            </p>
-            <p><strong>Scenario:</strong> Design anti-panic lighting for a 15m x 12m open plan office (180m2).</p>
-            <p>Step 1: Verify open area classification</p>
-            <p>Area: 180m2 (&gt;60m2, qualifies as open area)</p>
-            <p>Minimum illuminance: 0.5 lux</p>
-            <p>Step 2: Define core area (exclude 0.5m border)</p>
-            <p>Core area: (15-1) x (12-1) = 14m x 11m = 154m2</p>
-            <p>Step 3: Uniformity requirement</p>
-            <p>Maximum:minimum ratio must not exceed 40:1</p>
-            <p>Step 4: Lighting layout</p>
-            <p>Use photometric software to design grid achieving 0.5 lux minimum</p>
-            <p>with adequate uniformity across the 154m2 core area</p>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <ConceptBlock title="Practical guidance">
-            <p>
-              <strong>Design Checklist:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Identify all escape routes, exits, and high-risk areas</li>
-              <li>Determine maintained or non-maintained requirement</li>
-              <li>Calculate required illuminance levels for each area type</li>
-              <li>Select appropriate duration (1 hour or 3 hours)</li>
-              <li>Position luminaires at mandatory locations first</li>
-              <li>Calculate spacing using 4x rule as starting point</li>
-              <li>Verify design with photometric calculations</li>
-              <li>Ensure sign visibility distances are adequate</li>
-            </ul>
-            <p>
-              <strong>Key Values to Remember:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Escape route full width: <strong>1 lux minimum</strong></li>
-              <li>Open areas: <strong>0.5 lux minimum</strong></li>
-              <li>High-risk task: <strong>10% of task illuminance, minimum 15 lux</strong></li>
-              <li>Response time: <strong>50% within 5 seconds, 100% within 60 seconds</strong></li>
-              <li>Uniformity: <strong>40:1 maximum ratio</strong></li>
-              <li>Sign luminance: <strong>2 cd/m2 minimum</strong></li>
-            </ul>
-          </ConceptBlock>
-
-          <CommonMistake
-            title="Common mistakes to avoid"
-            whatHappens={
-              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
-                <li><strong>Using 4x rule without verification</strong> - Always check with photometric data</li>
-                <li><strong>Forgetting mandatory locations</strong> - Changes of direction, fire equipment, signs</li>
-                <li><strong>Wrong duration selection</strong> - Check sleeping risk and evacuation time</li>
-                <li><strong>Ignoring uniformity</strong> - Dark spots cause panic and accidents</li>
-              </ul>
-            }
-            doInstead="Cross-check assumptions against published guidance, validate measured values against design intent, and engage the wider team early when interface issues emerge."
-          />
-
-          <SectionRule />
-
-          <FAQ items={faqs} />
-
-          <SectionRule />
-
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-
-          <div className="grid grid-cols-2 gap-3 pt-2">
-            <button
-              onClick={() => navigate("/study-centre/apprentice/h-n-c-module7-section2")}
-              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
-                <ChevronLeft className="h-3 w-3" /> Back to section
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-white truncate">
-                Emergency systems
-              </div>
-            </button>
-            <button
-              onClick={() => navigate("/study-centre/apprentice/h-n-c-module7-section2-2")}
-              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
-                Next subsection <ChevronRight className="h-3 w-3" />
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-black truncate">
-                Fire alarm systems
-              </div>
-            </button>
-          </div>
-        </PageFrame>
-      </div>
-    </div>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module7-section2-2')}
+            className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+          >
+            <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+              Next subsection <ChevronRight className="h-3 w-3" />
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-black truncate">
+              Fire alarm systems
+            </div>
+          </button>
+        </div>
+      </HubBody>
+    </HubPage>
   );
 };
 

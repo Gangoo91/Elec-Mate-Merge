@@ -1,8 +1,8 @@
-import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { useNavigate } from 'react-router-dom';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
-import { PageFrame, PageHero } from '@/components/college/primitives';
 import {
   TLDR,
   ConceptBlock,
@@ -37,7 +37,7 @@ const inlineChecks = [
   {
     id: 'm5s3-570-6-1-1-2',
     question:
-      'Reg 570.6.1.1.2 — battery terminal voltage shall be assumed to be ALWAYS PRESENT. What\'s the practical implication for installers and maintenance work?',
+      "Reg 570.6.1.1.2 — battery terminal voltage shall be assumed to be ALWAYS PRESENT. What's the practical implication for installers and maintenance work?",
     options: [
       'None — opening the PCE AC isolator makes the whole battery system dead',
       'The DC side stays live after isolation; treat the cells as energised throughout',
@@ -142,7 +142,7 @@ const quizQuestions = [
     options: [
       'A single isolator at the consumer unit covers the whole BESS',
       'Isolation at both ends of each power circuit and at all power ports of a separate PCE',
-      'Isolation is left to the installer\'s discretion for domestic BESS installs',
+      "Isolation is left to the installer's discretion for domestic BESS installs",
       'No isolation is needed because the BMS disconnects the pack internally',
     ],
     correctAnswer: 1,
@@ -166,7 +166,7 @@ const quizQuestions = [
   {
     id: 3,
     question:
-      'Reg 570.6.7.201 — fuses for DC circuits of batteries. What\'s the access restriction, and why?',
+      "Reg 570.6.7.201 — fuses for DC circuits of batteries. What's the access restriction, and why?",
     options: [
       'Fuses must be left freely removable by hand for fast emergency access',
       'Accessible only by key/tool, or removable only after opening an on-load DC isolator',
@@ -182,7 +182,7 @@ const quizQuestions = [
     question:
       'Reg 570.6.7.202 + 570.6.7.203 — where can a stationary secondary battery be located? And what UK-specific spec applies to dwellings?',
     options: [
-      'A ventilated position per the manufacturer\'s instructions; in dwellings the location must also follow PAS 63100',
+      "A ventilated position per the manufacturer's instructions; in dwellings the location must also follow PAS 63100",
       'Anywhere convenient, as modern LFP packs need no special siting',
       'Wherever the customer prefers, with no real regulatory constraint',
       'Outdoors only, never inside any part of a dwelling',
@@ -221,12 +221,11 @@ const quizQuestions = [
   },
   {
     id: 7,
-    question:
-      'Reg 570.6.8.203 — what warning notice gets fixed to the PCE, and why?',
+    question: 'Reg 570.6.8.203 — what warning notice gets fixed to the PCE, and why?',
     options: [
       'No warning notice is needed on the PCE itself at all',
       'A notice to isolate both AC and DC sides before servicing the PCE',
-      'A notice giving only the PCE\'s rated power and serial number',
+      "A notice giving only the PCE's rated power and serial number",
       'A notice stating that AC isolation alone makes the whole unit safe',
     ],
     correctAnswer: 1,
@@ -256,9 +255,10 @@ const faqs = [
       'Three independent reasons: (1) the install&rsquo;s ELECTRICAL ARCHITECTURE has multiple entry points — origin, metering, distribution — each needs to inform future inspectors / electricians that a BESS is present (Reg 570.6.8.201); (2) the BATTERY ENCLOSURE itself contains live parts that don&rsquo;t de-energise on isolation — physical access points need the warning (Reg 570.6.8.202); (3) the PCE has BOTH AC and DC live sides — service personnel need to isolate both (Reg 570.6.8.203). Different audiences (future installers, emergency responders, service engineers, customer) each need different information. The three regs together form a comprehensive signage strategy.',
   },
   {
-    question: 'How does Reg 570.6.4 fault current interact with Reg 826.1.2.1 (Chapter 82) for hybrid PV+BESS?',
+    question:
+      'How does Reg 570.6.4 fault current interact with Reg 826.1.2.1 (Chapter 82) for hybrid PV+BESS?',
     answer:
-      'Chapter 57\'s Reg 570.6.4 covers the BESS fault contribution specifically (battery + PCE). Chapter 82\'s Reg 826.1.2.1 covers PEI-level fault current — &ldquo;overload and short-circuit currents shall be determined at every point of the PEI where a protective device is installed: (a) for all possible configurations of each type of PEI; and (b) for situations corresponding to the minimum and maximum current magnitudes&rdquo;. Translation: the PEI designer combines the BESS contribution (570.6.4) with the PV contribution (712.x) and the DNO contribution to determine total fault current at every protective device. Cert evidence bundle records the integrated fault analysis.',
+      "Chapter 57's Reg 570.6.4 covers the BESS fault contribution specifically (battery + PCE). Chapter 82's Reg 826.1.2.1 covers PEI-level fault current — &ldquo;overload and short-circuit currents shall be determined at every point of the PEI where a protective device is installed: (a) for all possible configurations of each type of PEI; and (b) for situations corresponding to the minimum and maximum current magnitudes&rdquo;. Translation: the PEI designer combines the BESS contribution (570.6.4) with the PV contribution (712.x) and the DNO contribution to determine total fault current at every protective device. Cert evidence bundle records the integrated fault analysis.",
   },
   {
     question: 'For UK domestic LFP, do I need Type B RCD per Reg 570.6.2.2?',
@@ -271,17 +271,20 @@ const faqs = [
       'Simple separation = galvanic separation between two circuits provided by basic insulation (e.g. transformer winding separation). Not as strong as protective separation (which adds an earthed screen), but sufficient to prevent DC currents migrating between circuits. In BESS context: the PCE provides simple separation between AC side and DC battery side if it includes a transformer or equivalent isolated topology. The PCE manufacturer datasheet confirms. Some &ldquo;transformerless&rdquo; inverter topologies skip the transformer (lighter, cheaper, more efficient) but lose simple separation — those need Type B RCD + special earthing considerations.',
   },
   {
-    question: 'Does the &ldquo;always live&rdquo; rule for BESS terminals (Reg 570.6.1.1.2) mean I can\'t safely work on a BESS?',
+    question:
+      "Does the &ldquo;always live&rdquo; rule for BESS terminals (Reg 570.6.1.1.2) mean I can't safely work on a BESS?",
     answer:
-      'You can work safely — but with the right discipline. The rule means the cells / monoblocs remain at terminal V regardless of isolation; you can\'t make them dead by switching. Safe work practice: (1) isolate at the battery DC isolator nearest the cells; (2) apply lock-out / tag-out per the manufacturer; (3) use insulated tools rated for the battery V; (4) test for absence of voltage at the cabling AFTER the isolator (not at the battery terminals — they&rsquo;re still live); (5) only access cells / terminals where the manufacturer&rsquo;s safe-work procedure permits (typically only manufacturer-certified engineers). UK domestic LFP customer-side maintenance is essentially nil; service is via manufacturer-trained engineers.',
+      "You can work safely — but with the right discipline. The rule means the cells / monoblocs remain at terminal V regardless of isolation; you can't make them dead by switching. Safe work practice: (1) isolate at the battery DC isolator nearest the cells; (2) apply lock-out / tag-out per the manufacturer; (3) use insulated tools rated for the battery V; (4) test for absence of voltage at the cabling AFTER the isolator (not at the battery terminals — they&rsquo;re still live); (5) only access cells / terminals where the manufacturer&rsquo;s safe-work procedure permits (typically only manufacturer-certified engineers). UK domestic LFP customer-side maintenance is essentially nil; service is via manufacturer-trained engineers.",
   },
   {
-    question: 'Reg 570.6.4.202 mentions &ldquo;inherently short-circuit and earth fault proof&rdquo; wiring. When does this apply?',
+    question:
+      'Reg 570.6.4.202 mentions &ldquo;inherently short-circuit and earth fault proof&rdquo; wiring. When does this apply?',
     answer:
       'Specific scenario: (a) the PCE does NOT include at least simple separation between battery DC and other sources; AND (b) the DC side is UNEARTHED. Both conditions together. In this case the DC wiring must be inherently fault-proof — single-core non-metallic-sheath cables, OR insulated conductors in individually-insulated conduit / trunking, OR equivalent. BS EN 50618 (the PV DC cable standard) is referenced as appropriate. Most UK domestic LFP BESS PCE provides simple separation, so this stricter wiring rule rarely binds — but where it does (specific transformerless / unearthed designs), the cabling spec changes materially.',
   },
   {
-    question: 'How do the BESS warning notices interact with the PV system notices (Reg 712.514.101)?',
+    question:
+      'How do the BESS warning notices interact with the PV system notices (Reg 712.514.101)?',
     answer:
       'The PV install gets its own notices per Reg 712.514.101 (PV PRESENT at origin / metering / CU). The BESS install gets its own notices per Reg 570.6.8.201 (BESS PRESENT at origin / metering / CU). For a hybrid PV+BESS install: both sets of notices required. They can be combined onto one notice (covering both PV + BESS) where space permits, but the information for both must be present. Plus Reg 826.1.1.4 (Chapter 82) multi-source isolation warning. Cert evidence bundle records all notice locations + contents.',
   },
@@ -291,7 +294,8 @@ const faqs = [
       'Chapter 57 is the BS 7671 framework — regulatory authority. PAS 63100:2024 is the UK domestic-specific install specification — operational guidance. Reg 570.6.7.203 explicitly cross-references PAS 63100 for batteries in dwellings: &ldquo;Stationary secondary batteries in dwellings shall be installed in a suitable location taking account of manufacturer&rsquo;s instructions and PAS 63100.&rdquo; PAS 63100 covers: location (no habitable spaces, clearances, escape routes); fire detection requirements; ventilation specifics for UK climate; signage details; commissioning workflow. The competent UK domestic BESS install complies with BOTH — Chapter 57 sets the framework, PAS 63100 sets the install detail. Cert evidence bundle records compliance against both.',
   },
   {
-    question: 'A customer asks if their existing pre-A4 install needs to be retrofitted to Chapter 57. What\'s the answer?',
+    question:
+      "A customer asks if their existing pre-A4 install needs to be retrofitted to Chapter 57. What's the answer?",
     answer:
       'No retrospective compliance required. Existing installs commissioned under A3:2024 or earlier comply with the regs in force at commission — they don&rsquo;t become non-compliant when A4:2026 takes effect (15 April 2026). HOWEVER: any addition / alteration / replacement after the effective date triggers Chapter 57 compliance for the new work. EICR-style periodic inspection may flag the lack of Chapter 57 features (e.g. missing warning notices, single-isolator architecture) as informational findings — not immediate danger but informing the customer + the installer. Cert evidence bundle records the BS 7671 edition / amendment applied at commission + any subsequent updates.',
   },
@@ -307,337 +311,544 @@ export default function RenewableEnergyModule5Section3() {
   });
 
   return (
-    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
-      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
-        <PageFrame>
+    <HubPage>
+      <HubMasthead
+        section="Module 5 · Section 3 · BS 7671:2018+A4:2026 · Chapter 57"
+        title="Chapter 57 protection deep dive"
+        backTo="../renewable-energy-module-5"
+      />
+      <HubBody>
+        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
+          Every Reg 570.6.x sub-clause in full. BS EN IEC 62485 conformance, always-live cells, PE
+          bonding, DC earthing + single-point rule, Type B RCD logic, ventilation, fault current,
+          isolation, hazards, warning notices.
+        </p>
+
+        <TLDR
+          points={[
+            'Reg 570.6.1.1.1 — BS EN IEC 62485 series conformance + bidirectional protective devices where appropriate. Anchors UK BESS install safety to the international standard family.',
+            'Reg 570.6.1.1.2 — battery TERMINAL VOLTAGE always present; safe maintenance per BS EN IEC 62485. The cell side cannot be &ldquo;turned off&rdquo;; isolation is for safe-work separation only.',
+            'Reg 570.6.1.1.3 — conductive battery racks / cabinets bonded to PE where ADS or PELV are protective measures; live parts accessible only to skilled / instructed persons.',
+            'Reg 570.6.1.2.1 — DC live-conductor earthing permitted with simple separation between AC and DC. Reg 570.6.1.2.2 — TN-S + TT systems earthed at one point only (prevent circulating currents + amplified corrosion).',
+            'Reg 570.6.2.1.201 — battery connections have basic protection (insulation / enclosure) where touch-V &gt;120V. Reg 570.6.2.2 — Type B RCD for AC supply UNLESS PCE provides simple separation OR manufacturer states otherwise.',
+            'Reg 570.6.3 — ventilation per manufacturer instructions. LFP: heat removal + thermal-runaway clearances. Pb-acid: hydrogen-evolution ventilation per BS EN IEC 62485-2 Annex A.',
+            'Reg 570.6.4 — DC fault current = battery contribution + PCE contribution. Reg 570.6.4.202 — inherently fault-proof wiring where PCE lacks simple separation AND DC side unearthed.',
+            'Reg 570.6.5 — isolation per Section 462; both ends of every BESS power circuit. Reg 570.6.5.201 — all PCE power ports get isolators. Reg 570.6.7 — hazards (arcing/explosion + control-impairment-safety). Reg 570.6.7.201-203 — DC fuse access, location + ventilation, dwellings + PAS 63100.',
+            'Reg 570.6.8.201-203 — three warning notices: BESS presence + location (origin, metering, CU); battery enclosure access (always-live warning); PCE (isolate both AC and DC).',
+          ]}
+        />
+
+        <LearningOutcomes
+          outcomes={[
+            'Apply Reg 570.6.1.1.1 BS EN IEC 62485 series conformance + bidirectional protective device principle.',
+            'Apply Reg 570.6.1.1.2 always-live cells + safe maintenance procedure + Reg 570.6.8.202 warning notice.',
+            'Apply Reg 570.6.1.1.3 PE bonding + skilled-persons-only access rule.',
+            'Apply Reg 570.6.1.2.1 DC live-conductor earthing rule + Reg 570.6.1.2.2 single-point earthing for TN-S / TT.',
+            'Apply Reg 570.6.2.2 Type B RCD rule + the three exceptions (PCE simple separation, transformer separation, manufacturer exemption).',
+            'Apply Reg 570.6.3 ventilation per manufacturer instructions; recognise the LFP vs Pb-acid difference.',
+            'Apply Reg 570.6.4 fault current = battery + PCE contributions; Reg 570.6.4.202 inherently fault-proof wiring condition.',
+            'Apply Reg 570.6.5 + .5.201 isolation discipline; Reg 570.6.7 + .7.201-203 hazard protection + location + ventilation + PAS 63100.',
+            'Apply Reg 570.6.8.201-203 three warning notice locations + content.',
+          ]}
+          initialVisibleCount={3}
+        />
+
+        <Pullquote>
+          Chapter 57 protection: BS EN IEC 62485 conformance + always-live cells + bidirectional
+          OCPDs + three warning notices. Every sub-clause matters.
+        </Pullquote>
+
+        <ContentEyebrow>Reg 570.6.1.1.x — Foundational safety</ContentEyebrow>
+
+        <ConceptBlock
+          title="Reg 570.6.1.1.1 + 570.6.1.1.2 + 570.6.1.1.3 — three foundational regs"
+          plainEnglish="The 570.6.1.1.x family sets the foundational safety principles: BS EN IEC 62485 conformance, always-live cell terminals, conductive-enclosure PE bonding + restricted access."
+          onSite="UK domestic LFP BESS install: the BS EN IEC 62485 conformance comes via the manufacturer&rsquo;s product certification; the always-live cell terminal V is a hard physical reality; the PE bonding + restricted access is ensured by the manufacturer&rsquo;s enclosure design + the installer&rsquo;s correct connection."
+        >
+          <p>The three sub-regs together:</p>
+          <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+            <li>
+              <strong className="text-white">Reg 570.6.1.1.1</strong> — Stationary secondary battery
+              installations shall conform to the relevant parts of the BS EN IEC 62485 series. Where
+              appropriate, bidirectional protective devices shall be selected. Five parts in the
+              62485 family; -5 covers Li-ion stationary (the UK domestic reference)
+            </li>
+            <li>
+              <strong className="text-white">Reg 570.6.1.1.2</strong> — Voltage at the terminals of
+              cells or monobloc batteries shall be assumed to be always present, and appropriate
+              provisions for safe maintenance shall be provided in accordance with the BS EN IEC
+              62485 series
+            </li>
+            <li>
+              <strong className="text-white">Reg 570.6.1.1.3</strong> — Where ADS or PELV are
+              protective measures, battery racks or battery cabinets made from conductive materials
+              shall be connected to the protective conductor. Live parts only accessible to skilled
+              and/or instructed persons
+            </li>
+            <li>
+              <strong className="text-white">Bidirectional protective device link</strong> — pairs
+              with Reg 826.1.2.2 (Chapter 82): every OCPD at the BESS interface must operate on
+              overcurrent regardless of direction (charge OR discharge)
+            </li>
+            <li>
+              <strong className="text-white">Always-live consequence</strong> — the battery cannot
+              be &ldquo;de-energised&rdquo;; safe maintenance practices treat cells as live
+              throughout
+            </li>
+            <li>
+              <strong className="text-white">Restricted access</strong> — the enclosure ensures
+              casual touch cannot reach live cells; only competent persons access the cells;
+              achieved via product design (sealed, tool-required access)
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <Chapter57Protection caption="BESS protection is bidirectional — devices must handle fault current from the battery and the grid side." />
+
+        <RegsCallout
+          source="BS 7671:2018+A4:2026 · Reg 570.6.1.1.1, .1.1.2, .1.1.3 — Foundational safety"
+          clause="570.6.1.1.1: Stationary secondary battery installations shall conform to the relevant parts of the BS EN IEC 62485 series. Where appropriate, bidirectional protective devices shall be selected. 570.6.1.1.2: Voltage at the terminals of cells or monobloc batteries shall be assumed to be always present, and appropriate provisions for safe maintenance shall be provided in accordance with the BS EN IEC 62485 series. 570.6.1.1.3: Where the protective measures of automatic disconnection of supply or extra-low voltage provided by PELV are used, battery racks or battery cabinets made from conductive materials shall be connected to the protective conductor. Irrespective of the nominal voltage, live parts of batteries, cells, monoblocs and related connections shall only be accessible to skilled and/or instructed persons."
+          meaning="Three regs together set the foundational safety floor for any UK BESS install. .1.1.1 ties to BS EN IEC 62485 series (international standard for battery safety); UK domestic LFP refers primarily to Part -5. The bidirectional OCPD line is the cross-reference to Chapter 82&rsquo;s bidirectional protection principle (Reg 826.1.2.2). .1.1.2 reflects the physical reality of cells: terminal V is always present regardless of isolation; safe maintenance procedures account for this (insulated tools, lock-out, sequence). .1.1.3 requires PE bonding of conductive enclosures + restricted access to live cells. Cert evidence bundle records the BS EN IEC 62485 conformance declaration + the PE bonding test result + the enclosure access provisions."
+        />
+
+        <InlineCheck {...inlineChecks[0]} />
+
+        <InlineCheck {...inlineChecks[1]} />
+
+        <InlineCheck {...inlineChecks[2]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>Reg 570.6.1.2.x — Earthing</ContentEyebrow>
+
+        <Pullquote>
+          DC earthing permitted with simple separation. TN-S + TT: single-point earthing.
+        </Pullquote>
+
+        <ConceptBlock
+          title="Reg 570.6.1.2.1 + 570.6.1.2.2 — DC earthing arrangement"
+          plainEnglish="Two complementary regs covering battery DC earthing. .1.2.1 permits earthing of one of the live DC conductors IF simple separation exists between AC and DC. .1.2.2 mandates single-point earthing for TN-S and TT systems to prevent circulating currents."
+          onSite="UK domestic LFP BESS: simple separation comes from the PCE/hybrid inverter&rsquo;s output transformer or isolated topology. The manufacturer specifies the DC earthing point (typically internal to the PCE). Installer doesn&rsquo;t add field earth connections to the DC side — single-point principle preserved."
+        >
+          <p>The two earthing regs in detail:</p>
+          <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+            <li>
+              <strong className="text-white">Reg 570.6.1.2.1</strong> — Earthing of one of the live
+              conductors of the DC side is permitted, if there is at least simple separation between
+              the AC side and the DC side. Mirrors Reg 712.312.2 for PV — same principle
+            </li>
+            <li>
+              <strong className="text-white">Simple separation</strong> — typically provided by the
+              PCE&rsquo;s output transformer or isolated topology. &ldquo;Transformerless&rdquo; PCE
+              doesn&rsquo;t provide simple separation; cannot use this earthing path
+            </li>
+            <li>
+              <strong className="text-white">Reg 570.6.1.2.2</strong> — To prevent circulating
+              currents, TN-S and TT systems shall be earthed at one point only. The point of
+              earthing shall take into account correct OCPD operation for final circuits
+            </li>
+            <li>
+              <strong className="text-white">NOTE 1</strong> — Connections with Earth on the DC side
+              should avoid corrosion (BS EN 13636 + BS EN 15112)
+            </li>
+            <li>
+              <strong className="text-white">NOTE 2</strong> — Earthing might not be required if
+              system other than TN or TT is used (e.g. IT — rare for UK domestic)
+            </li>
+            <li>
+              <strong className="text-white">Practical implementation</strong> — manufacturer
+              specifies the single earth point (usually internal to PCE at DC midpoint or DC-);
+              installer doesn&rsquo;t add field earth connections; cert evidence bundle records the
+              earthing arrangement
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <InlineCheck {...inlineChecks[3]} />
+
+        <InlineCheck {...inlineChecks[4]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>Reg 570.6.2.x — Basic protection + RCD</ContentEyebrow>
+
+        <Pullquote>
+          Type B RCD by default — unless the PCE manufacturer says otherwise (most modern UK
+          domestic exempt).
+        </Pullquote>
+
+        <ConceptBlock
+          title="Reg 570.6.2.1.201 + 570.6.2.2 — basic protection and RCD"
+          plainEnglish="Two regs covering basic protection of battery connections and RCD type for the BESS AC supply circuit."
+          onSite="UK domestic LFP BESS: battery enclosures provide insulation/enclosure-based basic protection per design. The Type B RCD decision comes down to the PCE manufacturer&rsquo;s statement: most modern hybrid inverters state Type A or A+F adequate due to internal simple separation."
+        >
+          <p>The two regs in detail:</p>
+          <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+            <li>
+              <strong className="text-white">Reg 570.6.2.1.201</strong> — Battery connections shall
+              have basic protection by insulation or enclosures OR shall be arranged so that
+              conductive parts having a potential difference exceeding 120 volts cannot be
+              inadvertently touched simultaneously
+            </li>
+            <li>
+              <strong className="text-white">Practical for UK domestic LFP</strong> — battery
+              enclosure is sealed; insulation + tool-required access provides basic protection
+              automatically. Compliance is via the manufacturer&rsquo;s product certification
+            </li>
+            <li>
+              <strong className="text-white">Reg 570.6.2.2</strong> — Where an RCD is used for
+              protection of the AC supply circuit, the RCD shall be Type B (BS EN 62423 or BS EN
+              60947-2), UNLESS: (a) the PCE provides at least simple separation between AC and DC
+              sides; OR (b) at least simple separation provided between PCE and RCD via separate
+              transformer windings; OR (c) the PCE manufacturer states a Type B RCD is not required
+            </li>
+            <li>
+              <strong className="text-white">Modern UK practice</strong> — most hybrid inverters
+              specify Type A (or A+F) adequate via exception (a) or (c). Older transformerless /
+              non-isolated topologies may require Type B. Read the PCE datasheet
+            </li>
+            <li>
+              <strong className="text-white">Why Type B sometimes mandatory</strong> — Type A
+              detects AC residual + pulsating DC residual currents but not smooth DC. Smooth DC
+              residual current can &ldquo;blind&rdquo; a Type A RCD if it exceeds the saturation
+              threshold. Type B detects smooth DC residual too. Where the PCE could produce smooth
+              DC residual flowing through the RCD, Type B is needed
+            </li>
+            <li>
+              <strong className="text-white">Cert evidence bundle</strong> — records the PCE
+              manufacturer&rsquo;s RCD-type statement + the as-installed RCD type + the BS EN
+              certification
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <InlineCheck {...inlineChecks[5]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>Reg 570.6.3 + 570.6.4 — Ventilation + fault current</ContentEyebrow>
+
+        <Pullquote>
+          LFP: heat + clearances. Pb-acid: hydrogen ventilation. Fault current: battery + PCE.
+        </Pullquote>
+
+        <ConceptBlock
+          title="Reg 570.6.3 — Protection against thermal effects (ventilation)"
+          plainEnglish="The location or enclosure of stationary secondary batteries shall be adequately ventilated taking account of the manufacturer&rsquo;s instructions. The reg is technology-agnostic — the manufacturer instructions encode the technology-specific reality."
+          onSite="UK domestic LFP: no gas evolution under normal operation; ventilation is for heat removal + thermal-runaway clearances. Pb-acid: hydrogen evolution during charging (especially equalisation); ventilation calculated per BS EN IEC 62485-2 Annex A. Plus PAS 63100:2024 adds UK domestic-specific requirements."
+        >
+          <p>Reg 570.6.3 in practice by chemistry:</p>
+          <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+            <li>
+              <strong className="text-white">LFP normal operation</strong> — no gas evolution;
+              ventilation focused on heat removal (LFP self-heats slightly during high-rate
+              cycling). Manufacturer specifies clearances (typically 200-500 mm above + 100-200 mm
+              sides)
+            </li>
+            <li>
+              <strong className="text-white">LFP thermal runaway scenario</strong> — produces CO,
+              HF, flammable hydrocarbons; ventilation strategy is escape route + clearances from
+              ignition sources + fire detection (PAS 63100)
+            </li>
+            <li>
+              <strong className="text-white">Pb-acid normal operation</strong> — hydrogen evolution
+              during charging; full BS EN IEC 62485-2 Annex A calculation. Approx 2-3 mL H2 per Ah
+              per cell during equalisation; ventilation volume calculated to keep H2 concentration
+              below 4% lower explosive limit
+            </li>
+            <li>
+              <strong className="text-white">Pb-acid hazardous zone</strong> — typically 0.5 m
+              radius around vents; explosion-proof fittings within zone
+            </li>
+            <li>
+              <strong className="text-white">NOTE: heating / cooling may also be necessary</strong>{' '}
+              — battery temperature performance varies; some installs need active thermal management
+              (rare for UK domestic LFP)
+            </li>
+            <li>
+              <strong className="text-white">Cert evidence bundle</strong> — records the
+              manufacturer ventilation spec + clearances + PAS 63100 compliance (for UK dwellings)
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="Reg 570.6.4 — DC fault current = battery + PCE contributions"
+          plainEnglish="Determination of the battery prospective fault current shall take account of the contribution of the battery AND the PCE which charges it. The NOTE clarifies: where the fault current value is required for OCPD coordination, the LOWEST usable battery voltage should be taken into account."
+          onSite="The battery contribution is the headline number: a multi-kWh LFP pack delivers 10-30 kA prospective ISC for milliseconds. The PCE adds a smaller but non-zero contribution. DC OCPDs must have breaking capacity ≥ combined fault current. Manufacturer datasheets provide both values; design pack records the calculation."
+        >
+          <p>Reg 570.6.4 + .4.201 + .4.202 in practice:</p>
+          <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+            <li>
+              <strong className="text-white">Battery contribution</strong> — 10-30 kA prospective
+              ISC for typical multi-kWh LFP pack (specific to manufacturer + capacity)
+            </li>
+            <li>
+              <strong className="text-white">PCE contribution</strong> — current-limited at
+              ~1.1-1.5&times; I_n during fault; additive to battery contribution
+            </li>
+            <li>
+              <strong className="text-white">OCPD selection</strong> — DC fuses (NH-style gG / aR /
+              aM / gPV) or DC-rated MCBs (BS EN 60898-2 / BS IEC 60898-3) sized for combined
+              breaking capacity
+            </li>
+            <li>
+              <strong className="text-white">Reg 570.6.4.201</strong> — wiring systems selected +
+              erected to minimize earth-fault + short-circuit risk
+            </li>
+            <li>
+              <strong className="text-white">Reg 570.6.4.202</strong> — inherently short-circuit +
+              earth-fault-proof wiring required where (a) PCE lacks simple separation between
+              battery DC and other supplies AND (b) DC side unearthed. Single-core
+              non-metallic-sheath, OR insulated conductors in insulated conduit, OR equivalent. BS
+              EN 50618 (PV cable) appropriate
+            </li>
+            <li>
+              <strong className="text-white">Cert evidence bundle</strong> — records the fault
+              analysis + the OCPD selection + the wiring system spec
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <RegsCallout
+          source="BS 7671:2018+A4:2026 · Reg 570.6.3 + 570.6.4 — Thermal + fault current"
+          clause="570.6.3: The location or enclosure of stationary secondary batteries shall be adequately ventilated taking account of the manufacturer&rsquo;s instructions. NOTE: To prevent damage to batteries, provisions of heating or cooling might also be necessary to maintain battery temperatures within a range specified by the battery manufacturer. 570.6.4: Determination of the battery prospective fault current shall take account of the contribution of the battery and the PCE which charges it. NOTE: Where the prospective fault current value is required to coordinate the disconnection with a protective device, for thermal effects and/or automatic disconnection of supply, the lowest usable battery voltage should be taken into account."
+          meaning="Reg 570.6.3 mandates ventilation per manufacturer instructions — for LFP this is straightforward clearance compliance, for Pb-acid it&rsquo;s the BS EN IEC 62485-2 Annex A hydrogen calculation. Reg 570.6.4 sets the fault-current methodology: combined battery + PCE contributions. The NOTE on lowest usable V matters for OCPD coordination: as the battery discharges, the V drops; the fault current capability changes; the design analysis must consider the WORST case for the protective measure. UK domestic LFP: manufacturer datasheets provide both fault contributions; the competent designer calculates + records in cert evidence bundle."
+        />
+
+        <InlineCheck {...inlineChecks[6]} />
+
+        <InlineCheck {...inlineChecks[7]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>Reg 570.6.5 + 570.6.7 — Isolation + hazards</ContentEyebrow>
+
+        <Pullquote>
+          Isolation at both ends of every power circuit. All PCE power ports. DC fuse access
+          restricted. Location per PAS 63100 for dwellings.
+        </Pullquote>
+
+        <ConceptBlock
+          title="Reg 570.6.5 + 570.6.5.201 — Isolation discipline"
+          plainEnglish="Every power circuit connecting to a BESS shall be provided with isolation per Section 462. The NOTE clarifies isolation likely required at both ends. Reg 570.6.5.201 expands: where the PCE is a separate unit, isolation provided for ALL PCE POWER PORTS."
+          onSite="UK domestic LFP BESS install: typical isolators are (a) battery DC isolator (integral to battery or fitted close-coupled); (b) PCE AC output isolator (BS EN 60947-3 switch-disconnector at CU); (c) PCE DC input isolator (where battery + PCE separate units)."
+        >
+          <p>Reg 570.6.5 + 570.6.5.201 in detail:</p>
+          <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+            <li>
+              <strong className="text-white">Reg 570.6.5</strong> — Every power circuit connecting
+              to a stationary secondary battery shall be provided with appropriate means of
+              isolation conforming to Section 462
+            </li>
+            <li>
+              <strong className="text-white">NOTE both ends</strong> — Isolation likely required at
+              both ends of the power circuit; achieved via combination of isolators within /
+              external to manufacturer-supplied equipment
+            </li>
+            <li>
+              <strong className="text-white">Reg 570.6.5.201</strong> — To allow maintenance and
+              replacement of PCE not incorporated in a battery assembly, a means of isolation shall
+              be provided for all power ports of the PCE
+            </li>
+            <li>
+              <strong className="text-white">Practical UK install</strong> — battery DC isolator
+              close to battery (often integral); PCE AC isolator at CU; PCE DC isolator at PCE side
+              where battery + PCE separate units (modular HV stacks: battery has integral DC
+              isolator at master module, PCE-side may be combined or separate)
+            </li>
+            <li>
+              <strong className="text-white">Switch-disconnector spec</strong> — BS EN 60947-3 for
+              AC isolators; manufacturer-specific or BS EN 60947-3 DC-rated for DC isolators
+            </li>
+            <li>
+              <strong className="text-white">Cert evidence bundle</strong> — records each isolator
+              location, manufacturer, model, rating
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="Reg 570.6.7 + .7.201/.202/.203 — Protection against other hazards"
+          plainEnglish="Reg 570.6.7 mandates protection against (a) arcing + explosion and (b) automatic / remote controls impairing installation safety. Sub-regs cover DC fuse access, location + ventilation, and the UK-specific PAS 63100 dwelling reference."
+          onSite="UK domestic LFP BESS: manufacturer&rsquo;s product certification handles arcing/explosion mitigation through the enclosure design; the BMS handles control-logic safety. The location decision is the installer&rsquo;s responsibility per Reg 570.6.7.202 + .203 + PAS 63100."
+        >
+          <p>Reg 570.6.7 family in detail:</p>
+          <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+            <li>
+              <strong className="text-white">Reg 570.6.7</strong> — protection against (a) arcing +
+              explosion, (b) automatic or remote controls impairing safety. References IEC TS
+              62933-5-1, BS EN IEC 62485, BS EN IEC 62933-5-2
+            </li>
+            <li>
+              <strong className="text-white">Reg 570.6.7.201</strong> — Fuses for DC circuits:
+              accessible only by key/tool, OR fuses can only be removed after on-load DC isolator
+              opened. Fuses should not be removed on load or replaced onto a fault
+            </li>
+            <li>
+              <strong className="text-white">Reg 570.6.7.202</strong> — Stationary secondary
+              batteries located + ventilated per manufacturer instructions / safety data sheets.
+              Ventilation shall not create a hazard (may require outdoor venting). Gas-evolving
+              batteries at safe distance from arc/spark sources
+            </li>
+            <li>
+              <strong className="text-white">Reg 570.6.7.203</strong> — Stationary secondary
+              batteries IN DWELLINGS: location per manufacturer instructions AND PAS 63100. Other
+              premises: location + fire protection per fire strategy
+            </li>
+            <li>
+              <strong className="text-white">PAS 63100:2024 dwelling rules</strong> — no
+              installation in habitable spaces (bedroom / lounge); clearances from windows / doors /
+              escape routes; smoke / heat detector required; warning signage; fire strategy if
+              multi-occupancy
+            </li>
+            <li>
+              <strong className="text-white">UK domestic LFP location options</strong> — garage
+              (preferred), utility room, outbuilding, fire-rated external enclosure
+            </li>
+            <li>
+              <strong className="text-white">Cert evidence bundle</strong> — records the location
+              decision + PAS 63100 compliance evidence + fire detection + signage
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <ContentEyebrow>Reg 570.6.8.x — Warning notices</ContentEyebrow>
+
+        <Pullquote>
+          Three notices: BESS presence (origin/metering/CU); battery enclosure always-live; PCE
+          both-sides isolation.
+        </Pullquote>
+
+        <ConceptBlock
+          title="Reg 570.6.8.201 + .202 + .203 — three mandatory warning notices"
+          plainEnglish="Three warning-notice regs covering different audiences: .201 informs future inspectors that a BESS is present at the install; .202 informs personnel accessing the battery enclosure that cells remain live after isolation; .203 informs PCE service personnel to isolate both AC and DC sides before servicing."
+          onSite="Cert evidence bundle photo-records each as-installed notice. The three notices are mandatory for any UK BESS install — missing notices = EICR / MCS finding."
+        >
+          <p>The three notice regs in detail:</p>
+          <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+            <li>
+              <strong className="text-white">Reg 570.6.8.201</strong> — Warning notice indicating
+              the PRESENCE AND LOCATION of a BESS, fixed at: (a) origin of installation; (b)
+              metering position (if remote); (c) consumer unit / distribution board connected to the
+              BESS. Exception for fire-strategy installs: location can be omitted if plans available
+              to fire+rescue. Example: Figure 57.1
+            </li>
+            <li>
+              <strong className="text-white">Reg 570.6.8.202</strong> — Permanent warning notice at
+              each battery room / enclosure access point: live parts may be still energized after
+              isolation. Example text: &ldquo;BATTERY - Live parts can remain energized after
+              isolation&rdquo;. Yellow background, black text, warning triangle, Figure 57.3
+            </li>
+            <li>
+              <strong className="text-white">Reg 570.6.8.203</strong> — Warning notice fixed to all
+              PCE: &ldquo;WARNING - Isolate both AC and DC sides before servicing&rdquo;
+            </li>
+            <li>
+              <strong className="text-white">Combined notices acceptable</strong> — for hybrid
+              PV+BESS installs the PV notice (Reg 712.514.101) + BESS notice (570.6.8.201) can be
+              combined onto one notice where space permits, provided both information sets present
+            </li>
+            <li>
+              <strong className="text-white">Photo evidence</strong> — cert evidence bundle includes
+              photos of each as-installed notice; the install date + location annotated
+            </li>
+            <li>
+              <strong className="text-white">Common EICR finding</strong> — missing notices on
+              retrofit installs is a typical EICR observation; remediation straightforward (fit
+              notices + update bundle)
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <RegsCallout
+          source="BS 7671:2018+A4:2026 · Reg 570.6.8.201, .202, .203 — Warning notices"
+          clause="570.6.8.201: A warning notice indicating the presence and location of a stationary secondary battery system, shall be fixed: (a) at the origin of each electrical installation; (b) at each metering position, if remote from the origin; (c) at each consumer unit or distribution board to which a supply from a stationary secondary battery is connected. The location of stationary secondary batteries need not be provided on warning notices according to this regulation in installations covered by a fire strategy where plans, indicating the presence and location of each battery, are readily available to fire and rescue services and relevant operational personnel. 570.6.8.202: Each point of access to a battery room or each battery enclosure shall have a permanent warning notice indicating that live parts may be still energized after isolation, for example, by the text, &lsquo;BATTERY - Live parts can remain energized after isolation&rsquo;. 570.6.8.203: A warning notice shall be fixed to all PCE with words similar to the following: &lsquo;WARNING - Isolate both AC and DC sides before servicing&rsquo;."
+          meaning="Three independent warning notice requirements covering three different audiences: (a) .201 informs future inspectors, emergency responders, and electricians arriving at the install that a BESS is present — at the origin, the metering position, and the consumer unit. The location of the battery is included unless a fire strategy + plans are available. (b) .202 informs personnel about to access the battery enclosure that cells remain live after isolation — pairs with Reg 570.6.1.1.2 always-live principle. (c) .203 informs PCE service personnel that BOTH AC and DC must be isolated before servicing — pairs with the DC side being the always-live battery. The three together form the BESS signage strategy. Cert evidence bundle records each as-installed notice."
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>What it looks like in the wild</ContentEyebrow>
+
+        <Scenario
+          title="Comprehensive UK domestic BESS install — full Chapter 57 compliance"
+          situation="Customer wants 10 kWh GivEnergy LFP BESS fitted alongside existing 5 kWp PV (existing Solis hybrid inverter, retrofitted by adding GivEnergy AC battery + AC isolator). Install in indoor utility room — 12-22°C year-round."
+          whatToDo="Full Chapter 57 compliance package: (1) Reg 570.6.1.1.1 — verify GivEnergy BS EN IEC 62485 series conformance via product certification; (2) Reg 570.6.1.1.2 — recognise battery DC always live; install GivEnergy battery with integral DC isolator close to cells; (3) Reg 570.6.1.1.3 — verify battery enclosure PE bonded + sealed (no casual access to cells); (4) Reg 570.6.1.2.1 — DC earthing per GivEnergy spec (single point in PCE); (5) Reg 570.6.2.2 — RCD per GivEnergy spec (Type A adequate via simple separation exception); (6) Reg 570.6.3 — utility room ventilation per GivEnergy spec (manufacturer clearances respected); (7) Reg 570.6.4 — DC OCPDs sized for battery + PCE combined fault current (GivEnergy datasheet); (8) Reg 570.6.5 — battery DC isolator + PCE AC isolator at CU + PCE DC isolator at PCE; (9) Reg 570.6.7.203 — utility room satisfies PAS 63100:2024 dwelling location rules; (10) Reg 570.6.8.201 — warning notices at origin, metering, CU; (11) Reg 570.6.8.202 — &ldquo;BATTERY - Live parts can remain energized after isolation&rdquo; on battery enclosure; (12) Reg 570.6.8.203 — &ldquo;WARNING - Isolate both AC and DC sides before servicing&rdquo; on PCE. Cert evidence bundle: 12 photos covering all notices + isolator locations + manufacturer certificates + compliance statements."
+          whyItMatters="Chapter 57 is a comprehensive framework — every install requires every sub-reg considered. The competent install isn&rsquo;t just &ldquo;fit the battery&rdquo; — it&rsquo;s a systematic Chapter 57 compliance package. UK domestic LFP makes this manageable (manufacturer products handle most physical implementation); the installer&rsquo;s job is verification + documentation. Cert evidence bundle is the install&rsquo;s long-term legibility."
+        />
+
+        <Scenario
+          title="EICR finding — retrofit BESS missing all three warning notice sets"
+          situation="EICR-style review of a 2-year-old BESS retrofit. Battery itself fitted correctly with PE bonding, isolators, and PCE notice — but the Reg 570.6.8.201 origin / metering / CU notices are all missing. Customer asks if the install is safe."
+          whatToDo="Confirm safety: the install operates safely with isolation + protective measures in place; the warning notices are operational safeguards, not life-safety devices. EICR finding: typically C3 (improvement recommended) — install operates safely but lacks the future-information signage required by Reg 570.6.8.201. Remediation: fit three notices per Figure 57.1; update cert evidence bundle. Customer informed; install retrospectively compliant. Total remediation cost ~£20-50 for the notice labels + ~30 minutes installer time."
+          whyItMatters="Warning notice compliance is THE most common EICR finding for BESS installs (especially retrofits). Easy to fix; high audit-trail impact. The competent installer treats notices as part of every BESS install commissioning checklist. The compliant install signals to future inspectors / electricians / emergency responders that the BESS is present + where + how to safely interact with it."
+        />
+
+        <CommonMistake
+          title="Working on PCE DC terminals assuming the battery is &ldquo;dead&rdquo; after AC isolation"
+          whatHappens="An electrician opens the PCE AC isolator (standard PV-style isolation) then opens the PCE casing to investigate a fault. They touch the DC terminals expecting them to be dead — but the battery DC is ALWAYS LIVE per Reg 570.6.1.1.2. Risk of significant shock (battery V can be 200-500V DC for HV LFP packs). Possible arc / injury if a short-circuit occurs."
+          doInstead="Per Reg 570.6.1.1.2 + Reg 570.6.8.203 warning notice: always isolate BOTH AC AND DC before servicing the PCE. Sequence: (1) PCE off via app/control; (2) open battery DC isolator at the battery (or PCE-side DC isolator); (3) open PCE AC isolator at CU; (4) verify zero voltage at PCE terminals with approved voltage detector; (5) only then access PCE internals. Manufacturer-trained engineers follow this discipline; the warning notice on the PCE is the reminder. Cert evidence bundle documents the procedure for the customer information pack."
+        />
+
+        <CommonMistake
+          title="Fitting BESS in habitable space (bedroom adjoining utility room)"
+          whatHappens="Installer fits a 10 kWh LFP BESS in a customer&rsquo;s &ldquo;utility room&rdquo; — but the room shares a wall with a bedroom + has a door direct to a habitable space. PAS 63100:2024 rules: no installation in habitable spaces; clearances from sleeping areas. The install is non-compliant; EICR finding C2 (potentially dangerous) or even C1 (immediate danger) depending on the proximity + fire risk."
+          doInstead="Per Reg 570.6.7.203 + PAS 63100:2024 — verify the install location BEFORE quoting. PAS 63100 rules for UK dwellings: no habitable spaces (bedroom, lounge, dining, kitchen typical); clearances from windows / doors / escape routes; smoke / heat detector in the BESS location, interconnected with dwelling alarm where present; fire-rated location or separation for multi-occupancy. Acceptable locations: garage, dedicated plant room, outbuilding, fire-rated external enclosure. The competent surveyor confirms location compliance at survey; cert evidence bundle records the location + the PAS 63100 compliance evidence."
+        />
+
+        <SectionRule />
+
+        <KeyTakeaways
+          points={[
+            'Reg 570.6.1.1.1 — BS EN IEC 62485 series conformance + bidirectional protective devices where appropriate. Anchors UK BESS install safety to the international standard family.',
+            'Reg 570.6.1.1.2 — battery terminal V always present; safe maintenance per BS EN IEC 62485 series; cells cannot be &ldquo;turned off&rdquo;.',
+            'Reg 570.6.1.1.3 — conductive battery racks / cabinets bonded to PE; live parts accessible only to skilled / instructed persons.',
+            'Reg 570.6.1.2.1 — DC live-conductor earthing permitted with simple separation between AC and DC. Mirrors Reg 712.312.2 for PV.',
+            'Reg 570.6.1.2.2 — TN-S + TT systems earthed at one point only. NOTE 1 references BS EN 13636 / BS EN 15112 for corrosion prevention.',
+            'Reg 570.6.2.1.201 — battery connections basic protection (insulation / enclosure) where touch-V &gt;120V.',
+            'Reg 570.6.2.2 — Type B RCD for AC supply UNLESS PCE provides simple separation (a), external transformer separation (b), or manufacturer states otherwise (c). Modern UK hybrid inverters typically Type A adequate.',
+            'Reg 570.6.3 — ventilation per manufacturer instructions. LFP: heat removal + clearances. Pb-acid: BS EN IEC 62485-2 Annex A hydrogen calculation.',
+            'Reg 570.6.4 — DC fault current = battery contribution + PCE contribution. Reg 570.6.4.202 — inherently fault-proof wiring where PCE lacks simple separation AND DC side unearthed.',
+            'Reg 570.6.5 + .5.201 — isolation per Section 462 at both ends of every power circuit + all PCE power ports get isolators.',
+            'Reg 570.6.7 + .7.201/.202/.203 — protection against arcing/explosion + control-impairment + DC fuse access + location/ventilation + dwellings per PAS 63100.',
+            'Reg 570.6.8.201 — three warning notices for BESS presence (origin, metering, CU). 570.6.8.202 — battery enclosure always-live notice. 570.6.8.203 — PCE both-sides-isolation notice.',
+          ]}
+        />
+
+        <FAQ items={faqs} />
+
+        <Quiz questions={quizQuestions} title="Section 3 · Knowledge check" />
+
+        <div className="grid grid-cols-2 gap-3 pt-2">
           <button
             type="button"
-            onClick={() => navigate('../renewable-energy-module-5')}
-            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            onClick={() => navigate('/electrician/upskilling/renewable-energy-module-5-section-2')}
+            className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
           >
-            <ArrowLeft className="h-4 w-4" /> Module 5
+            <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+              <ChevronLeft className="h-3 w-3" /> Section 2
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-white truncate">
+              BMS, balancing, SoC/SoH
+            </div>
           </button>
-
-          <PageHero
-            eyebrow="Module 5 · Section 3 · BS 7671:2018+A4:2026 · Chapter 57"
-            title="Chapter 57 protection deep dive"
-            description="Every Reg 570.6.x sub-clause in full. BS EN IEC 62485 conformance, always-live cells, PE bonding, DC earthing + single-point rule, Type B RCD logic, ventilation, fault current, isolation, hazards, warning notices."
-            tone="yellow"
-          />
-
-          <TLDR
-            points={[
-              'Reg 570.6.1.1.1 — BS EN IEC 62485 series conformance + bidirectional protective devices where appropriate. Anchors UK BESS install safety to the international standard family.',
-              'Reg 570.6.1.1.2 — battery TERMINAL VOLTAGE always present; safe maintenance per BS EN IEC 62485. The cell side cannot be &ldquo;turned off&rdquo;; isolation is for safe-work separation only.',
-              'Reg 570.6.1.1.3 — conductive battery racks / cabinets bonded to PE where ADS or PELV are protective measures; live parts accessible only to skilled / instructed persons.',
-              'Reg 570.6.1.2.1 — DC live-conductor earthing permitted with simple separation between AC and DC. Reg 570.6.1.2.2 — TN-S + TT systems earthed at one point only (prevent circulating currents + amplified corrosion).',
-              'Reg 570.6.2.1.201 — battery connections have basic protection (insulation / enclosure) where touch-V &gt;120V. Reg 570.6.2.2 — Type B RCD for AC supply UNLESS PCE provides simple separation OR manufacturer states otherwise.',
-              'Reg 570.6.3 — ventilation per manufacturer instructions. LFP: heat removal + thermal-runaway clearances. Pb-acid: hydrogen-evolution ventilation per BS EN IEC 62485-2 Annex A.',
-              'Reg 570.6.4 — DC fault current = battery contribution + PCE contribution. Reg 570.6.4.202 — inherently fault-proof wiring where PCE lacks simple separation AND DC side unearthed.',
-              'Reg 570.6.5 — isolation per Section 462; both ends of every BESS power circuit. Reg 570.6.5.201 — all PCE power ports get isolators. Reg 570.6.7 — hazards (arcing/explosion + control-impairment-safety). Reg 570.6.7.201-203 — DC fuse access, location + ventilation, dwellings + PAS 63100.',
-              'Reg 570.6.8.201-203 — three warning notices: BESS presence + location (origin, metering, CU); battery enclosure access (always-live warning); PCE (isolate both AC and DC).',
-            ]}
-          />
-
-          <LearningOutcomes
-            outcomes={[
-              'Apply Reg 570.6.1.1.1 BS EN IEC 62485 series conformance + bidirectional protective device principle.',
-              'Apply Reg 570.6.1.1.2 always-live cells + safe maintenance procedure + Reg 570.6.8.202 warning notice.',
-              'Apply Reg 570.6.1.1.3 PE bonding + skilled-persons-only access rule.',
-              'Apply Reg 570.6.1.2.1 DC live-conductor earthing rule + Reg 570.6.1.2.2 single-point earthing for TN-S / TT.',
-              'Apply Reg 570.6.2.2 Type B RCD rule + the three exceptions (PCE simple separation, transformer separation, manufacturer exemption).',
-              'Apply Reg 570.6.3 ventilation per manufacturer instructions; recognise the LFP vs Pb-acid difference.',
-              'Apply Reg 570.6.4 fault current = battery + PCE contributions; Reg 570.6.4.202 inherently fault-proof wiring condition.',
-              'Apply Reg 570.6.5 + .5.201 isolation discipline; Reg 570.6.7 + .7.201-203 hazard protection + location + ventilation + PAS 63100.',
-              'Apply Reg 570.6.8.201-203 three warning notice locations + content.',
-            ]}
-            initialVisibleCount={3}
-          />
-
-          <Pullquote>Chapter 57 protection: BS EN IEC 62485 conformance + always-live cells + bidirectional OCPDs + three warning notices. Every sub-clause matters.</Pullquote>
-
-          <ContentEyebrow>Reg 570.6.1.1.x — Foundational safety</ContentEyebrow>
-
-          <ConceptBlock
-            title="Reg 570.6.1.1.1 + 570.6.1.1.2 + 570.6.1.1.3 — three foundational regs"
-            plainEnglish="The 570.6.1.1.x family sets the foundational safety principles: BS EN IEC 62485 conformance, always-live cell terminals, conductive-enclosure PE bonding + restricted access."
-            onSite="UK domestic LFP BESS install: the BS EN IEC 62485 conformance comes via the manufacturer&rsquo;s product certification; the always-live cell terminal V is a hard physical reality; the PE bonding + restricted access is ensured by the manufacturer&rsquo;s enclosure design + the installer&rsquo;s correct connection."
+          <button
+            type="button"
+            onClick={() => navigate('/electrician/upskilling/renewable-energy-module-5-section-4')}
+            className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
           >
-            <p>The three sub-regs together:</p>
-            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
-              <li><strong className="text-white">Reg 570.6.1.1.1</strong> — Stationary secondary battery installations shall conform to the relevant parts of the BS EN IEC 62485 series. Where appropriate, bidirectional protective devices shall be selected. Five parts in the 62485 family; -5 covers Li-ion stationary (the UK domestic reference)</li>
-              <li><strong className="text-white">Reg 570.6.1.1.2</strong> — Voltage at the terminals of cells or monobloc batteries shall be assumed to be always present, and appropriate provisions for safe maintenance shall be provided in accordance with the BS EN IEC 62485 series</li>
-              <li><strong className="text-white">Reg 570.6.1.1.3</strong> — Where ADS or PELV are protective measures, battery racks or battery cabinets made from conductive materials shall be connected to the protective conductor. Live parts only accessible to skilled and/or instructed persons</li>
-              <li><strong className="text-white">Bidirectional protective device link</strong> — pairs with Reg 826.1.2.2 (Chapter 82): every OCPD at the BESS interface must operate on overcurrent regardless of direction (charge OR discharge)</li>
-              <li><strong className="text-white">Always-live consequence</strong> — the battery cannot be &ldquo;de-energised&rdquo;; safe maintenance practices treat cells as live throughout</li>
-              <li><strong className="text-white">Restricted access</strong> — the enclosure ensures casual touch cannot reach live cells; only competent persons access the cells; achieved via product design (sealed, tool-required access)</li>
-            </ul>
-          </ConceptBlock>
-
-          <Chapter57Protection caption="BESS protection is bidirectional — devices must handle fault current from the battery and the grid side." />
-
-          <RegsCallout
-            source="BS 7671:2018+A4:2026 · Reg 570.6.1.1.1, .1.1.2, .1.1.3 — Foundational safety"
-            clause="570.6.1.1.1: Stationary secondary battery installations shall conform to the relevant parts of the BS EN IEC 62485 series. Where appropriate, bidirectional protective devices shall be selected. 570.6.1.1.2: Voltage at the terminals of cells or monobloc batteries shall be assumed to be always present, and appropriate provisions for safe maintenance shall be provided in accordance with the BS EN IEC 62485 series. 570.6.1.1.3: Where the protective measures of automatic disconnection of supply or extra-low voltage provided by PELV are used, battery racks or battery cabinets made from conductive materials shall be connected to the protective conductor. Irrespective of the nominal voltage, live parts of batteries, cells, monoblocs and related connections shall only be accessible to skilled and/or instructed persons."
-            meaning="Three regs together set the foundational safety floor for any UK BESS install. .1.1.1 ties to BS EN IEC 62485 series (international standard for battery safety); UK domestic LFP refers primarily to Part -5. The bidirectional OCPD line is the cross-reference to Chapter 82&rsquo;s bidirectional protection principle (Reg 826.1.2.2). .1.1.2 reflects the physical reality of cells: terminal V is always present regardless of isolation; safe maintenance procedures account for this (insulated tools, lock-out, sequence). .1.1.3 requires PE bonding of conductive enclosures + restricted access to live cells. Cert evidence bundle records the BS EN IEC 62485 conformance declaration + the PE bonding test result + the enclosure access provisions."
-          />
-
-          <InlineCheck {...inlineChecks[0]} />
-
-          <InlineCheck {...inlineChecks[1]} />
-
-          <InlineCheck {...inlineChecks[2]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>Reg 570.6.1.2.x — Earthing</ContentEyebrow>
-
-          <Pullquote>DC earthing permitted with simple separation. TN-S + TT: single-point earthing.</Pullquote>
-
-          <ConceptBlock
-            title="Reg 570.6.1.2.1 + 570.6.1.2.2 — DC earthing arrangement"
-            plainEnglish="Two complementary regs covering battery DC earthing. .1.2.1 permits earthing of one of the live DC conductors IF simple separation exists between AC and DC. .1.2.2 mandates single-point earthing for TN-S and TT systems to prevent circulating currents."
-            onSite="UK domestic LFP BESS: simple separation comes from the PCE/hybrid inverter&rsquo;s output transformer or isolated topology. The manufacturer specifies the DC earthing point (typically internal to the PCE). Installer doesn&rsquo;t add field earth connections to the DC side — single-point principle preserved."
-          >
-            <p>The two earthing regs in detail:</p>
-            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
-              <li><strong className="text-white">Reg 570.6.1.2.1</strong> — Earthing of one of the live conductors of the DC side is permitted, if there is at least simple separation between the AC side and the DC side. Mirrors Reg 712.312.2 for PV — same principle</li>
-              <li><strong className="text-white">Simple separation</strong> — typically provided by the PCE&rsquo;s output transformer or isolated topology. &ldquo;Transformerless&rdquo; PCE doesn&rsquo;t provide simple separation; cannot use this earthing path</li>
-              <li><strong className="text-white">Reg 570.6.1.2.2</strong> — To prevent circulating currents, TN-S and TT systems shall be earthed at one point only. The point of earthing shall take into account correct OCPD operation for final circuits</li>
-              <li><strong className="text-white">NOTE 1</strong> — Connections with Earth on the DC side should avoid corrosion (BS EN 13636 + BS EN 15112)</li>
-              <li><strong className="text-white">NOTE 2</strong> — Earthing might not be required if system other than TN or TT is used (e.g. IT — rare for UK domestic)</li>
-              <li><strong className="text-white">Practical implementation</strong> — manufacturer specifies the single earth point (usually internal to PCE at DC midpoint or DC-); installer doesn&rsquo;t add field earth connections; cert evidence bundle records the earthing arrangement</li>
-            </ul>
-          </ConceptBlock>
-
-          <InlineCheck {...inlineChecks[3]} />
-
-          <InlineCheck {...inlineChecks[4]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>Reg 570.6.2.x — Basic protection + RCD</ContentEyebrow>
-
-          <Pullquote>Type B RCD by default — unless the PCE manufacturer says otherwise (most modern UK domestic exempt).</Pullquote>
-
-          <ConceptBlock
-            title="Reg 570.6.2.1.201 + 570.6.2.2 — basic protection and RCD"
-            plainEnglish="Two regs covering basic protection of battery connections and RCD type for the BESS AC supply circuit."
-            onSite="UK domestic LFP BESS: battery enclosures provide insulation/enclosure-based basic protection per design. The Type B RCD decision comes down to the PCE manufacturer&rsquo;s statement: most modern hybrid inverters state Type A or A+F adequate due to internal simple separation."
-          >
-            <p>The two regs in detail:</p>
-            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
-              <li><strong className="text-white">Reg 570.6.2.1.201</strong> — Battery connections shall have basic protection by insulation or enclosures OR shall be arranged so that conductive parts having a potential difference exceeding 120 volts cannot be inadvertently touched simultaneously</li>
-              <li><strong className="text-white">Practical for UK domestic LFP</strong> — battery enclosure is sealed; insulation + tool-required access provides basic protection automatically. Compliance is via the manufacturer&rsquo;s product certification</li>
-              <li><strong className="text-white">Reg 570.6.2.2</strong> — Where an RCD is used for protection of the AC supply circuit, the RCD shall be Type B (BS EN 62423 or BS EN 60947-2), UNLESS: (a) the PCE provides at least simple separation between AC and DC sides; OR (b) at least simple separation provided between PCE and RCD via separate transformer windings; OR (c) the PCE manufacturer states a Type B RCD is not required</li>
-              <li><strong className="text-white">Modern UK practice</strong> — most hybrid inverters specify Type A (or A+F) adequate via exception (a) or (c). Older transformerless / non-isolated topologies may require Type B. Read the PCE datasheet</li>
-              <li><strong className="text-white">Why Type B sometimes mandatory</strong> — Type A detects AC residual + pulsating DC residual currents but not smooth DC. Smooth DC residual current can &ldquo;blind&rdquo; a Type A RCD if it exceeds the saturation threshold. Type B detects smooth DC residual too. Where the PCE could produce smooth DC residual flowing through the RCD, Type B is needed</li>
-              <li><strong className="text-white">Cert evidence bundle</strong> — records the PCE manufacturer&rsquo;s RCD-type statement + the as-installed RCD type + the BS EN certification</li>
-            </ul>
-          </ConceptBlock>
-
-          <InlineCheck {...inlineChecks[5]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>Reg 570.6.3 + 570.6.4 — Ventilation + fault current</ContentEyebrow>
-
-          <Pullquote>LFP: heat + clearances. Pb-acid: hydrogen ventilation. Fault current: battery + PCE.</Pullquote>
-
-          <ConceptBlock
-            title="Reg 570.6.3 — Protection against thermal effects (ventilation)"
-            plainEnglish="The location or enclosure of stationary secondary batteries shall be adequately ventilated taking account of the manufacturer&rsquo;s instructions. The reg is technology-agnostic — the manufacturer instructions encode the technology-specific reality."
-            onSite="UK domestic LFP: no gas evolution under normal operation; ventilation is for heat removal + thermal-runaway clearances. Pb-acid: hydrogen evolution during charging (especially equalisation); ventilation calculated per BS EN IEC 62485-2 Annex A. Plus PAS 63100:2024 adds UK domestic-specific requirements."
-          >
-            <p>Reg 570.6.3 in practice by chemistry:</p>
-            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
-              <li><strong className="text-white">LFP normal operation</strong> — no gas evolution; ventilation focused on heat removal (LFP self-heats slightly during high-rate cycling). Manufacturer specifies clearances (typically 200-500 mm above + 100-200 mm sides)</li>
-              <li><strong className="text-white">LFP thermal runaway scenario</strong> — produces CO, HF, flammable hydrocarbons; ventilation strategy is escape route + clearances from ignition sources + fire detection (PAS 63100)</li>
-              <li><strong className="text-white">Pb-acid normal operation</strong> — hydrogen evolution during charging; full BS EN IEC 62485-2 Annex A calculation. Approx 2-3 mL H2 per Ah per cell during equalisation; ventilation volume calculated to keep H2 concentration below 4% lower explosive limit</li>
-              <li><strong className="text-white">Pb-acid hazardous zone</strong> — typically 0.5 m radius around vents; explosion-proof fittings within zone</li>
-              <li><strong className="text-white">NOTE: heating / cooling may also be necessary</strong> — battery temperature performance varies; some installs need active thermal management (rare for UK domestic LFP)</li>
-              <li><strong className="text-white">Cert evidence bundle</strong> — records the manufacturer ventilation spec + clearances + PAS 63100 compliance (for UK dwellings)</li>
-            </ul>
-          </ConceptBlock>
-
-          <ConceptBlock
-            title="Reg 570.6.4 — DC fault current = battery + PCE contributions"
-            plainEnglish="Determination of the battery prospective fault current shall take account of the contribution of the battery AND the PCE which charges it. The NOTE clarifies: where the fault current value is required for OCPD coordination, the LOWEST usable battery voltage should be taken into account."
-            onSite="The battery contribution is the headline number: a multi-kWh LFP pack delivers 10-30 kA prospective ISC for milliseconds. The PCE adds a smaller but non-zero contribution. DC OCPDs must have breaking capacity ≥ combined fault current. Manufacturer datasheets provide both values; design pack records the calculation."
-          >
-            <p>Reg 570.6.4 + .4.201 + .4.202 in practice:</p>
-            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
-              <li><strong className="text-white">Battery contribution</strong> — 10-30 kA prospective ISC for typical multi-kWh LFP pack (specific to manufacturer + capacity)</li>
-              <li><strong className="text-white">PCE contribution</strong> — current-limited at ~1.1-1.5&times; I_n during fault; additive to battery contribution</li>
-              <li><strong className="text-white">OCPD selection</strong> — DC fuses (NH-style gG / aR / aM / gPV) or DC-rated MCBs (BS EN 60898-2 / BS IEC 60898-3) sized for combined breaking capacity</li>
-              <li><strong className="text-white">Reg 570.6.4.201</strong> — wiring systems selected + erected to minimize earth-fault + short-circuit risk</li>
-              <li><strong className="text-white">Reg 570.6.4.202</strong> — inherently short-circuit + earth-fault-proof wiring required where (a) PCE lacks simple separation between battery DC and other supplies AND (b) DC side unearthed. Single-core non-metallic-sheath, OR insulated conductors in insulated conduit, OR equivalent. BS EN 50618 (PV cable) appropriate</li>
-              <li><strong className="text-white">Cert evidence bundle</strong> — records the fault analysis + the OCPD selection + the wiring system spec</li>
-            </ul>
-          </ConceptBlock>
-
-          <RegsCallout
-            source="BS 7671:2018+A4:2026 · Reg 570.6.3 + 570.6.4 — Thermal + fault current"
-            clause="570.6.3: The location or enclosure of stationary secondary batteries shall be adequately ventilated taking account of the manufacturer&rsquo;s instructions. NOTE: To prevent damage to batteries, provisions of heating or cooling might also be necessary to maintain battery temperatures within a range specified by the battery manufacturer. 570.6.4: Determination of the battery prospective fault current shall take account of the contribution of the battery and the PCE which charges it. NOTE: Where the prospective fault current value is required to coordinate the disconnection with a protective device, for thermal effects and/or automatic disconnection of supply, the lowest usable battery voltage should be taken into account."
-            meaning="Reg 570.6.3 mandates ventilation per manufacturer instructions — for LFP this is straightforward clearance compliance, for Pb-acid it&rsquo;s the BS EN IEC 62485-2 Annex A hydrogen calculation. Reg 570.6.4 sets the fault-current methodology: combined battery + PCE contributions. The NOTE on lowest usable V matters for OCPD coordination: as the battery discharges, the V drops; the fault current capability changes; the design analysis must consider the WORST case for the protective measure. UK domestic LFP: manufacturer datasheets provide both fault contributions; the competent designer calculates + records in cert evidence bundle."
-          />
-
-          <InlineCheck {...inlineChecks[6]} />
-
-          <InlineCheck {...inlineChecks[7]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>Reg 570.6.5 + 570.6.7 — Isolation + hazards</ContentEyebrow>
-
-          <Pullquote>Isolation at both ends of every power circuit. All PCE power ports. DC fuse access restricted. Location per PAS 63100 for dwellings.</Pullquote>
-
-          <ConceptBlock
-            title="Reg 570.6.5 + 570.6.5.201 — Isolation discipline"
-            plainEnglish="Every power circuit connecting to a BESS shall be provided with isolation per Section 462. The NOTE clarifies isolation likely required at both ends. Reg 570.6.5.201 expands: where the PCE is a separate unit, isolation provided for ALL PCE POWER PORTS."
-            onSite="UK domestic LFP BESS install: typical isolators are (a) battery DC isolator (integral to battery or fitted close-coupled); (b) PCE AC output isolator (BS EN 60947-3 switch-disconnector at CU); (c) PCE DC input isolator (where battery + PCE separate units)."
-          >
-            <p>Reg 570.6.5 + 570.6.5.201 in detail:</p>
-            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
-              <li><strong className="text-white">Reg 570.6.5</strong> — Every power circuit connecting to a stationary secondary battery shall be provided with appropriate means of isolation conforming to Section 462</li>
-              <li><strong className="text-white">NOTE both ends</strong> — Isolation likely required at both ends of the power circuit; achieved via combination of isolators within / external to manufacturer-supplied equipment</li>
-              <li><strong className="text-white">Reg 570.6.5.201</strong> — To allow maintenance and replacement of PCE not incorporated in a battery assembly, a means of isolation shall be provided for all power ports of the PCE</li>
-              <li><strong className="text-white">Practical UK install</strong> — battery DC isolator close to battery (often integral); PCE AC isolator at CU; PCE DC isolator at PCE side where battery + PCE separate units (modular HV stacks: battery has integral DC isolator at master module, PCE-side may be combined or separate)</li>
-              <li><strong className="text-white">Switch-disconnector spec</strong> — BS EN 60947-3 for AC isolators; manufacturer-specific or BS EN 60947-3 DC-rated for DC isolators</li>
-              <li><strong className="text-white">Cert evidence bundle</strong> — records each isolator location, manufacturer, model, rating</li>
-            </ul>
-          </ConceptBlock>
-
-          <ConceptBlock
-            title="Reg 570.6.7 + .7.201/.202/.203 — Protection against other hazards"
-            plainEnglish="Reg 570.6.7 mandates protection against (a) arcing + explosion and (b) automatic / remote controls impairing installation safety. Sub-regs cover DC fuse access, location + ventilation, and the UK-specific PAS 63100 dwelling reference."
-            onSite="UK domestic LFP BESS: manufacturer&rsquo;s product certification handles arcing/explosion mitigation through the enclosure design; the BMS handles control-logic safety. The location decision is the installer&rsquo;s responsibility per Reg 570.6.7.202 + .203 + PAS 63100."
-          >
-            <p>Reg 570.6.7 family in detail:</p>
-            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
-              <li><strong className="text-white">Reg 570.6.7</strong> — protection against (a) arcing + explosion, (b) automatic or remote controls impairing safety. References IEC TS 62933-5-1, BS EN IEC 62485, BS EN IEC 62933-5-2</li>
-              <li><strong className="text-white">Reg 570.6.7.201</strong> — Fuses for DC circuits: accessible only by key/tool, OR fuses can only be removed after on-load DC isolator opened. Fuses should not be removed on load or replaced onto a fault</li>
-              <li><strong className="text-white">Reg 570.6.7.202</strong> — Stationary secondary batteries located + ventilated per manufacturer instructions / safety data sheets. Ventilation shall not create a hazard (may require outdoor venting). Gas-evolving batteries at safe distance from arc/spark sources</li>
-              <li><strong className="text-white">Reg 570.6.7.203</strong> — Stationary secondary batteries IN DWELLINGS: location per manufacturer instructions AND PAS 63100. Other premises: location + fire protection per fire strategy</li>
-              <li><strong className="text-white">PAS 63100:2024 dwelling rules</strong> — no installation in habitable spaces (bedroom / lounge); clearances from windows / doors / escape routes; smoke / heat detector required; warning signage; fire strategy if multi-occupancy</li>
-              <li><strong className="text-white">UK domestic LFP location options</strong> — garage (preferred), utility room, outbuilding, fire-rated external enclosure</li>
-              <li><strong className="text-white">Cert evidence bundle</strong> — records the location decision + PAS 63100 compliance evidence + fire detection + signage</li>
-            </ul>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <ContentEyebrow>Reg 570.6.8.x — Warning notices</ContentEyebrow>
-
-          <Pullquote>Three notices: BESS presence (origin/metering/CU); battery enclosure always-live; PCE both-sides isolation.</Pullquote>
-
-          <ConceptBlock
-            title="Reg 570.6.8.201 + .202 + .203 — three mandatory warning notices"
-            plainEnglish="Three warning-notice regs covering different audiences: .201 informs future inspectors that a BESS is present at the install; .202 informs personnel accessing the battery enclosure that cells remain live after isolation; .203 informs PCE service personnel to isolate both AC and DC sides before servicing."
-            onSite="Cert evidence bundle photo-records each as-installed notice. The three notices are mandatory for any UK BESS install — missing notices = EICR / MCS finding."
-          >
-            <p>The three notice regs in detail:</p>
-            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
-              <li><strong className="text-white">Reg 570.6.8.201</strong> — Warning notice indicating the PRESENCE AND LOCATION of a BESS, fixed at: (a) origin of installation; (b) metering position (if remote); (c) consumer unit / distribution board connected to the BESS. Exception for fire-strategy installs: location can be omitted if plans available to fire+rescue. Example: Figure 57.1</li>
-              <li><strong className="text-white">Reg 570.6.8.202</strong> — Permanent warning notice at each battery room / enclosure access point: live parts may be still energized after isolation. Example text: &ldquo;BATTERY - Live parts can remain energized after isolation&rdquo;. Yellow background, black text, warning triangle, Figure 57.3</li>
-              <li><strong className="text-white">Reg 570.6.8.203</strong> — Warning notice fixed to all PCE: &ldquo;WARNING - Isolate both AC and DC sides before servicing&rdquo;</li>
-              <li><strong className="text-white">Combined notices acceptable</strong> — for hybrid PV+BESS installs the PV notice (Reg 712.514.101) + BESS notice (570.6.8.201) can be combined onto one notice where space permits, provided both information sets present</li>
-              <li><strong className="text-white">Photo evidence</strong> — cert evidence bundle includes photos of each as-installed notice; the install date + location annotated</li>
-              <li><strong className="text-white">Common EICR finding</strong> — missing notices on retrofit installs is a typical EICR observation; remediation straightforward (fit notices + update bundle)</li>
-            </ul>
-          </ConceptBlock>
-
-          <RegsCallout
-            source="BS 7671:2018+A4:2026 · Reg 570.6.8.201, .202, .203 — Warning notices"
-            clause="570.6.8.201: A warning notice indicating the presence and location of a stationary secondary battery system, shall be fixed: (a) at the origin of each electrical installation; (b) at each metering position, if remote from the origin; (c) at each consumer unit or distribution board to which a supply from a stationary secondary battery is connected. The location of stationary secondary batteries need not be provided on warning notices according to this regulation in installations covered by a fire strategy where plans, indicating the presence and location of each battery, are readily available to fire and rescue services and relevant operational personnel. 570.6.8.202: Each point of access to a battery room or each battery enclosure shall have a permanent warning notice indicating that live parts may be still energized after isolation, for example, by the text, &lsquo;BATTERY - Live parts can remain energized after isolation&rsquo;. 570.6.8.203: A warning notice shall be fixed to all PCE with words similar to the following: &lsquo;WARNING - Isolate both AC and DC sides before servicing&rsquo;."
-            meaning="Three independent warning notice requirements covering three different audiences: (a) .201 informs future inspectors, emergency responders, and electricians arriving at the install that a BESS is present — at the origin, the metering position, and the consumer unit. The location of the battery is included unless a fire strategy + plans are available. (b) .202 informs personnel about to access the battery enclosure that cells remain live after isolation — pairs with Reg 570.6.1.1.2 always-live principle. (c) .203 informs PCE service personnel that BOTH AC and DC must be isolated before servicing — pairs with the DC side being the always-live battery. The three together form the BESS signage strategy. Cert evidence bundle records each as-installed notice."
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>What it looks like in the wild</ContentEyebrow>
-
-          <Scenario
-            title="Comprehensive UK domestic BESS install — full Chapter 57 compliance"
-            situation="Customer wants 10 kWh GivEnergy LFP BESS fitted alongside existing 5 kWp PV (existing Solis hybrid inverter, retrofitted by adding GivEnergy AC battery + AC isolator). Install in indoor utility room — 12-22°C year-round."
-            whatToDo="Full Chapter 57 compliance package: (1) Reg 570.6.1.1.1 — verify GivEnergy BS EN IEC 62485 series conformance via product certification; (2) Reg 570.6.1.1.2 — recognise battery DC always live; install GivEnergy battery with integral DC isolator close to cells; (3) Reg 570.6.1.1.3 — verify battery enclosure PE bonded + sealed (no casual access to cells); (4) Reg 570.6.1.2.1 — DC earthing per GivEnergy spec (single point in PCE); (5) Reg 570.6.2.2 — RCD per GivEnergy spec (Type A adequate via simple separation exception); (6) Reg 570.6.3 — utility room ventilation per GivEnergy spec (manufacturer clearances respected); (7) Reg 570.6.4 — DC OCPDs sized for battery + PCE combined fault current (GivEnergy datasheet); (8) Reg 570.6.5 — battery DC isolator + PCE AC isolator at CU + PCE DC isolator at PCE; (9) Reg 570.6.7.203 — utility room satisfies PAS 63100:2024 dwelling location rules; (10) Reg 570.6.8.201 — warning notices at origin, metering, CU; (11) Reg 570.6.8.202 — &ldquo;BATTERY - Live parts can remain energized after isolation&rdquo; on battery enclosure; (12) Reg 570.6.8.203 — &ldquo;WARNING - Isolate both AC and DC sides before servicing&rdquo; on PCE. Cert evidence bundle: 12 photos covering all notices + isolator locations + manufacturer certificates + compliance statements."
-            whyItMatters="Chapter 57 is a comprehensive framework — every install requires every sub-reg considered. The competent install isn&rsquo;t just &ldquo;fit the battery&rdquo; — it&rsquo;s a systematic Chapter 57 compliance package. UK domestic LFP makes this manageable (manufacturer products handle most physical implementation); the installer&rsquo;s job is verification + documentation. Cert evidence bundle is the install&rsquo;s long-term legibility."
-          />
-
-          <Scenario
-            title="EICR finding — retrofit BESS missing all three warning notice sets"
-            situation="EICR-style review of a 2-year-old BESS retrofit. Battery itself fitted correctly with PE bonding, isolators, and PCE notice — but the Reg 570.6.8.201 origin / metering / CU notices are all missing. Customer asks if the install is safe."
-            whatToDo="Confirm safety: the install operates safely with isolation + protective measures in place; the warning notices are operational safeguards, not life-safety devices. EICR finding: typically C3 (improvement recommended) — install operates safely but lacks the future-information signage required by Reg 570.6.8.201. Remediation: fit three notices per Figure 57.1; update cert evidence bundle. Customer informed; install retrospectively compliant. Total remediation cost ~£20-50 for the notice labels + ~30 minutes installer time."
-            whyItMatters="Warning notice compliance is THE most common EICR finding for BESS installs (especially retrofits). Easy to fix; high audit-trail impact. The competent installer treats notices as part of every BESS install commissioning checklist. The compliant install signals to future inspectors / electricians / emergency responders that the BESS is present + where + how to safely interact with it."
-          />
-
-          <CommonMistake
-            title="Working on PCE DC terminals assuming the battery is &ldquo;dead&rdquo; after AC isolation"
-            whatHappens="An electrician opens the PCE AC isolator (standard PV-style isolation) then opens the PCE casing to investigate a fault. They touch the DC terminals expecting them to be dead — but the battery DC is ALWAYS LIVE per Reg 570.6.1.1.2. Risk of significant shock (battery V can be 200-500V DC for HV LFP packs). Possible arc / injury if a short-circuit occurs."
-            doInstead="Per Reg 570.6.1.1.2 + Reg 570.6.8.203 warning notice: always isolate BOTH AC AND DC before servicing the PCE. Sequence: (1) PCE off via app/control; (2) open battery DC isolator at the battery (or PCE-side DC isolator); (3) open PCE AC isolator at CU; (4) verify zero voltage at PCE terminals with approved voltage detector; (5) only then access PCE internals. Manufacturer-trained engineers follow this discipline; the warning notice on the PCE is the reminder. Cert evidence bundle documents the procedure for the customer information pack."
-          />
-
-          <CommonMistake
-            title="Fitting BESS in habitable space (bedroom adjoining utility room)"
-            whatHappens="Installer fits a 10 kWh LFP BESS in a customer&rsquo;s &ldquo;utility room&rdquo; — but the room shares a wall with a bedroom + has a door direct to a habitable space. PAS 63100:2024 rules: no installation in habitable spaces; clearances from sleeping areas. The install is non-compliant; EICR finding C2 (potentially dangerous) or even C1 (immediate danger) depending on the proximity + fire risk."
-            doInstead="Per Reg 570.6.7.203 + PAS 63100:2024 — verify the install location BEFORE quoting. PAS 63100 rules for UK dwellings: no habitable spaces (bedroom, lounge, dining, kitchen typical); clearances from windows / doors / escape routes; smoke / heat detector in the BESS location, interconnected with dwelling alarm where present; fire-rated location or separation for multi-occupancy. Acceptable locations: garage, dedicated plant room, outbuilding, fire-rated external enclosure. The competent surveyor confirms location compliance at survey; cert evidence bundle records the location + the PAS 63100 compliance evidence."
-          />
-
-          <SectionRule />
-
-          <KeyTakeaways
-            points={[
-              'Reg 570.6.1.1.1 — BS EN IEC 62485 series conformance + bidirectional protective devices where appropriate. Anchors UK BESS install safety to the international standard family.',
-              'Reg 570.6.1.1.2 — battery terminal V always present; safe maintenance per BS EN IEC 62485 series; cells cannot be &ldquo;turned off&rdquo;.',
-              'Reg 570.6.1.1.3 — conductive battery racks / cabinets bonded to PE; live parts accessible only to skilled / instructed persons.',
-              'Reg 570.6.1.2.1 — DC live-conductor earthing permitted with simple separation between AC and DC. Mirrors Reg 712.312.2 for PV.',
-              'Reg 570.6.1.2.2 — TN-S + TT systems earthed at one point only. NOTE 1 references BS EN 13636 / BS EN 15112 for corrosion prevention.',
-              'Reg 570.6.2.1.201 — battery connections basic protection (insulation / enclosure) where touch-V &gt;120V.',
-              'Reg 570.6.2.2 — Type B RCD for AC supply UNLESS PCE provides simple separation (a), external transformer separation (b), or manufacturer states otherwise (c). Modern UK hybrid inverters typically Type A adequate.',
-              'Reg 570.6.3 — ventilation per manufacturer instructions. LFP: heat removal + clearances. Pb-acid: BS EN IEC 62485-2 Annex A hydrogen calculation.',
-              'Reg 570.6.4 — DC fault current = battery contribution + PCE contribution. Reg 570.6.4.202 — inherently fault-proof wiring where PCE lacks simple separation AND DC side unearthed.',
-              'Reg 570.6.5 + .5.201 — isolation per Section 462 at both ends of every power circuit + all PCE power ports get isolators.',
-              'Reg 570.6.7 + .7.201/.202/.203 — protection against arcing/explosion + control-impairment + DC fuse access + location/ventilation + dwellings per PAS 63100.',
-              'Reg 570.6.8.201 — three warning notices for BESS presence (origin, metering, CU). 570.6.8.202 — battery enclosure always-live notice. 570.6.8.203 — PCE both-sides-isolation notice.',
-            ]}
-          />
-
-          <FAQ items={faqs} />
-
-          <Quiz questions={quizQuestions} title="Section 3 · Knowledge check" />
-
-          <div className="grid grid-cols-2 gap-3 pt-2">
-            <button
-              type="button"
-              onClick={() =>
-                navigate('/electrician/upskilling/renewable-energy-module-5-section-2')
-              }
-              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
-                <ChevronLeft className="h-3 w-3" /> Section 2
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-white truncate">
-                BMS, balancing, SoC/SoH
-              </div>
-            </button>
-            <button
-              type="button"
-              onClick={() =>
-                navigate('/electrician/upskilling/renewable-energy-module-5-section-4')
-              }
-              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
-                Next section <ChevronRight className="h-3 w-3" />
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-black truncate">
-                5.4 BS EN IEC 62485 + PAS 63100
-              </div>
-            </button>
-          </div>
-        </PageFrame>
-      </div>
-    </div>
+            <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+              Next section <ChevronRight className="h-3 w-3" />
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-black truncate">
+              5.4 BS EN IEC 62485 + PAS 63100
+            </div>
+          </button>
+        </div>
+      </HubBody>
+    </HubPage>
   );
 }

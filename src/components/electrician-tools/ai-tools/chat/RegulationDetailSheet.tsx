@@ -19,17 +19,151 @@ interface Regulation {
 }
 
 /**
- * The stored regulation text carries arbitrary line breaks from PDF
- * extraction — sometimes one word per line, sometimes a break mid-sentence.
- * Flatten all whitespace, then re-insert breaks only where the standard's
- * structure genuinely starts: lettered/roman enumerations and NOTEs.
+ * The stored regulation text is a rough PDF extraction, wrong in three ways
+ * that all reached the screen as one wall of text:
+ *
+ *   1. Arbitrary line breaks and glued tokens ("Ina TN system",
+ *      "exceeding5 s", "NOTE4").
+ *   2. A row frequently RUNS ON past its own regulation into the next ones —
+ *      411.4.4's stored text continues into 411.3.2.3, .4, .5 and 411.3.3,
+ *      so most of what renders isn't the regulation the user tapped.
+ *   3. Lettered enumerations and NOTEs are buried mid-paragraph.
+ *
+ * The parser below fixes all three at display time: clean the tokens, split
+ * the blob into per-regulation chunks at embedded reg-number boundaries
+ * (skipping numbers that are mere references — "see Regulation 411.3.2.2"),
+ * and mark list items and NOTEs so they can render as structure.
  */
+function cleanExtractedText(raw: string): string {
+  return raw
+    .replace(/\s+/g, ' ')
+    .replace(/\bNOTE(\d)/g, 'NOTE $1')
+    // Only un-glue digits from known connective words — a blanket
+    // letter/digit rule would damage genuine tokens like "mm2".
+    .replace(/\b(exceeding|than|of|to|within|least|and|by)(\d)/g, '$1 $2')
+    .replace(/\bIna\b/g, 'In a')
+    .trim();
+}
+
+interface RegPara {
+  kind: 'text' | 'note' | 'item';
+  /** Enumeration marker for items — "a", "b", "ii"… */
+  marker?: string;
+  text: string;
+}
+
+interface RegChunk {
+  /** null for the requested regulation's own text (the opening chunk). */
+  reg: string | null;
+  paras: RegPara[];
+}
+
+function parseBody(body: string): RegPara[] {
+  const marked = body
+    // NOTEs become their own paragraphs.
+    .replace(/\s*\bNOTE(\s*\d+)?\s*:\s*/g, (_m, d) => `\n§NOTE${(d || '').trim()}: `)
+    // Enumeration items — only after list-introducing punctuation, so inline
+    // references ("an exception to (b) but not (a)") stay in their sentence.
+    .replace(
+      /([:;.])\s*(?:and\s+|or\s+)?\(([a-z]|i{1,3}|iv|v|vi{1,3}|ix|x)\)\s+/g,
+      (_m, p, marker) => `${p}\n§ITEM(${marker}) `
+    );
+
+  return marked
+    .split('\n')
+    .map((line) => line.trim())
+    .filter(Boolean)
+    .map((line): RegPara => {
+      const note = line.match(/^§NOTE(\d*):\s*(.*)$/);
+      if (note) {
+        return { kind: 'note', text: `NOTE${note[1] ? ` ${note[1]}` : ''}: ${note[2]}` };
+      }
+      const item = line.match(/^§ITEM\(([a-z]+)\)\s*(.*)$/);
+      if (item) return { kind: 'item', marker: item[1], text: item[2] };
+      return { kind: 'text', text: line };
+    });
+}
+
+function segmentRegText(raw: string, requestedNumber: string | null): RegChunk[] {
+  let t = cleanExtractedText(raw);
+  if (requestedNumber) {
+    t = t.replace(new RegExp(`^${requestedNumber.replace(/\./g, '\\.')}\\.?\\s*`), '');
+  }
+
+  // A reg number starts a NEW regulation's text when a capital (or an
+  // enumeration bracket) follows AND it is not preceded by words that make it
+  // a reference to one.
+  const boundaries: Array<{ index: number; reg: string }> = [];
+  const re = /\b(\d{3}(?:\.\d{1,3}){1,3})(?=\s+[A-Z(])/g;
+  let m: RegExpExecArray | null;
+  while ((m = re.exec(t)) !== null) {
+    const lookback = t.slice(Math.max(0, m.index - 26), m.index);
+    if (/(regulations?|section|chapter|table|part|indent|see|to|and|or|by|of|in|with|,|\()\s*$/i.test(lookback)) {
+      continue;
+    }
+    boundaries.push({ index: m.index, reg: m[1] });
+  }
+
+  const chunks: RegChunk[] = [];
+  const firstEnd = boundaries.length > 0 ? boundaries[0].index : t.length;
+  const own = t.slice(0, firstEnd).trim();
+  if (own) chunks.push({ reg: null, paras: parseBody(own) });
+  boundaries.forEach((b, i) => {
+    const end = i + 1 < boundaries.length ? boundaries[i + 1].index : t.length;
+    const body = t
+      .slice(b.index, end)
+      .replace(new RegExp(`^${b.reg.replace(/\./g, '\\.')}\\.?\\s*`), '')
+      .trim();
+    if (body) chunks.push({ reg: b.reg, paras: parseBody(body) });
+  });
+  return chunks;
+}
+
+/** Flat single-paragraph fallback for the line-clamped sibling excerpts. */
 function normaliseRegText(raw: string): string {
-  const flat = raw.replace(/\s+/g, ' ').trim();
-  return flat
-    .replace(/\s(?=NOTE\s?\d?\s?:)/g, '\n\n')
-    .replace(/\s(?=\([a-z]\)\s)/g, '\n')
-    .replace(/\s(?=\((?:i{1,3}|iv|v|vi{1,3}|ix|x)\)\s)/g, '\n');
+  return cleanExtractedText(raw);
+}
+
+/** Renders one parsed chunk — paragraphs, enumeration rows, quieter NOTEs. */
+function RegChunkBlock({ chunk }: { chunk: RegChunk }) {
+  return (
+    <div className="min-w-0">
+      {chunk.reg && (
+        <div className="mb-1.5 text-[12.5px] font-semibold text-elec-yellow">
+          Reg {chunk.reg}
+        </div>
+      )}
+      {chunk.paras.map((p, i) => {
+        if (p.kind === 'item') {
+          return (
+            <div key={i} className="mt-1.5 flex gap-2.5 pl-1">
+              <span className="shrink-0 font-mono text-[13px] font-semibold text-elec-yellow">
+                ({p.marker})
+              </span>
+              <span className="min-w-0 flex-1 text-[14px] leading-relaxed text-white">
+                {p.text}
+              </span>
+            </div>
+          );
+        }
+        if (p.kind === 'note') {
+          return (
+            <p
+              key={i}
+              className="mt-2.5 border-l-2 border-white/[0.2] pl-3 text-[12.5px] italic leading-relaxed text-white"
+            >
+              {p.text}
+            </p>
+          );
+        }
+        return (
+          <p key={i} className="mt-2 text-[14px] leading-relaxed text-white first:mt-0">
+            {p.text}
+          </p>
+        );
+      })}
+    </div>
+  );
 }
 
 interface CrossRef {
@@ -199,46 +333,51 @@ export const RegulationDetailSheet = memo(function RegulationDetailSheet({
         side={isDesktop ? 'right' : 'bottom'}
         hideCloseButton
         className={cn(
-          'bg-[hsl(0_0%_8%)] border-white/[0.06] text-white p-0 flex flex-col',
+          'bg-elec-dark border-white/[0.08] text-white p-0 flex flex-col',
           isDesktop ? 'sm:max-w-md w-full' : 'h-[85vh] rounded-t-2xl'
         )}
       >
-        {/* Header */}
-        <div className="shrink-0 px-5 pt-5 pb-4 border-b border-white/[0.06]">
+        {/* Header — the reg number IS the identity, so it carries the volt,
+            same as the sources rail. Closed by the shared volt hairline. */}
+        <div className="relative shrink-0 px-5 pt-5 pb-4">
           <div className="flex items-start justify-between gap-4">
             <div className="min-w-0">
-              <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-white">
-                Regulation · {regulationNumber ?? '—'}
-              </div>
-              {sectionLabel && (
-                <div className="mt-1.5 text-[15px] font-semibold text-white tracking-tight leading-snug">
-                  {sectionLabel}
-                </div>
-              )}
-              {amendmentLabel && (
-                <div className="mt-2 inline-flex items-center gap-1.5">
+              <div className="flex items-center gap-2.5">
+                <h2 className="text-[17px] font-semibold tracking-tight text-elec-yellow">
+                  Reg {regulationNumber ?? '—'}
+                </h2>
+                {amendmentLabel && (
                   <span
                     className={cn(
-                      'text-[10px] font-medium uppercase tracking-[0.18em] px-2 py-0.5 rounded-full border',
+                      'text-[10px] font-semibold uppercase tracking-[0.14em] px-2 py-0.5 rounded-full border',
                       isA4
-                        ? 'bg-white/[0.08] border-white/[0.16] text-white'
-                        : 'bg-white/[0.04] border-white/[0.08] text-white'
+                        ? 'border-elec-yellow/40 text-elec-yellow'
+                        : 'border-white/[0.14] text-white'
                     )}
                   >
                     {amendmentLabel}
                   </span>
+                )}
+              </div>
+              {sectionLabel && (
+                <div className="mt-1 text-[14px] font-semibold text-white tracking-tight leading-snug">
+                  {sectionLabel}
                 </div>
               )}
             </div>
             <button
               type="button"
               onClick={onClose}
-              className="shrink-0 h-8 px-3 rounded-full text-[12px] font-medium text-white hover:text-white bg-white/[0.04] border border-white/[0.08] hover:bg-white/[0.08] transition-colors touch-manipulation"
+              className="shrink-0 h-9 px-3.5 rounded-full text-[12px] font-medium text-white bg-white/[0.05] border border-white/[0.12] hover:bg-white/[0.10] hover:border-white/[0.22] active:scale-[0.97] transition-all touch-manipulation [-webkit-tap-highlight-color:transparent]"
               aria-label="Close regulation detail"
             >
-              Close ×
+              Close
             </button>
           </div>
+          <span
+            aria-hidden
+            className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/40 to-elec-yellow/0"
+          />
         </div>
 
         {/* Body */}
@@ -253,7 +392,7 @@ export const RegulationDetailSheet = memo(function RegulationDetailSheet({
           )}
 
           {!isLoading && !reg && siblings.length === 0 && (
-            <div className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] px-4 py-6 text-center">
+            <div className="rounded-2xl border border-white/[0.12] bg-gradient-to-br from-white/[0.08] via-white/[0.05] to-white/[0.03] px-4 py-6 text-center shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)]">
               <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-white">
                 Not found
               </div>
@@ -269,9 +408,7 @@ export const RegulationDetailSheet = memo(function RegulationDetailSheet({
               those as a navigable list. */}
           {!isLoading && !reg && siblings.length > 0 && (
             <section>
-              <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-white mb-2">
-                Section {regulationNumber} — sub-regulations
-              </div>
+              <h3 className="text-[13px] font-semibold tracking-tight text-elec-yellow mb-2">Section {regulationNumber} — sub-regulations</h3>
               <p className="text-[12px] text-white leading-relaxed mb-3">
                 {regulationNumber} is a section heading. The actual regulations live
                 under it — listed below.
@@ -280,11 +417,9 @@ export const RegulationDetailSheet = memo(function RegulationDetailSheet({
                 {siblings.map((s) => (
                   <li
                     key={s.id}
-                    className="rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06] px-4 py-3"
+                    className="rounded-2xl border border-white/[0.12] bg-gradient-to-br from-white/[0.08] via-white/[0.05] to-white/[0.03] px-4 py-3 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)]"
                   >
-                    <div className="text-[11px] font-medium uppercase tracking-[0.18em] text-white">
-                      Reg {s.reg_number}
-                    </div>
+                    <div className="text-[12.5px] font-semibold text-elec-yellow">Reg {s.reg_number}</div>
                     {s.title && (
                       <div className="mt-1 text-[14px] font-semibold text-white leading-snug">
                         {s.title}
@@ -303,26 +438,46 @@ export const RegulationDetailSheet = memo(function RegulationDetailSheet({
 
           {!isLoading && reg && (
             <>
-              {/* Full text */}
+              {/* Full text — parsed into per-regulation chunks with labelled
+                  enumerations and NOTEs, not one undivided blob. */}
               <section>
-                <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-white mb-2">
-                  Full text
-                </div>
-                <div className="rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06] px-4 py-3">
-                  <p className="text-[14px] leading-relaxed text-white whitespace-pre-wrap">
-                    {reg.full_text
-                      ? normaliseRegText(reg.full_text)
-                      : 'No text recorded for this regulation.'}
-                  </p>
-                </div>
+                <h3 className="text-[13px] font-semibold tracking-tight text-elec-yellow mb-2">Full text</h3>
+                {(() => {
+                  if (!reg.full_text) {
+                    return (
+                      <div className="rounded-2xl border border-white/[0.12] bg-gradient-to-br from-white/[0.08] via-white/[0.05] to-white/[0.03] px-4 py-3 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)]">
+                        <p className="text-[14px] leading-relaxed text-white">
+                          No text recorded for this regulation.
+                        </p>
+                      </div>
+                    );
+                  }
+                  const chunks = segmentRegText(reg.full_text, reg.reg_number);
+                  return (
+                    <div className="space-y-2.5">
+                      {chunks.map((chunk, i) => (
+                        <div
+                          key={`${chunk.reg ?? 'own'}-${i}`}
+                          className="rounded-2xl border border-white/[0.12] bg-gradient-to-br from-white/[0.08] via-white/[0.05] to-white/[0.03] px-4 py-3 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)]"
+                        >
+                          <RegChunkBlock chunk={chunk} />
+                        </div>
+                      ))}
+                      {chunks.length > 1 && (
+                        <p className="px-1 text-[11.5px] leading-relaxed text-white">
+                          This extract runs on into the neighbouring regulations shown —
+                          each block is labelled with the regulation it belongs to.
+                        </p>
+                      )}
+                    </div>
+                  );
+                })()}
               </section>
 
               {/* Meta */}
               {(reg.part || reg.chapter) && (
                 <section className="space-y-1.5">
-                  <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-white">
-                    Where it lives
-                  </div>
+                  <h3 className="text-[13px] font-semibold tracking-tight text-elec-yellow">Where it lives</h3>
                   {reg.part && (
                     <div className="text-[13px] text-white">{reg.part}</div>
                   )}
@@ -334,9 +489,7 @@ export const RegulationDetailSheet = memo(function RegulationDetailSheet({
 
               {/* Related */}
               <section>
-                <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-white mb-2">
-                  Related regulations
-                </div>
+                <h3 className="text-[13px] font-semibold tracking-tight text-elec-yellow mb-2">Related regulations</h3>
                 {related.length === 0 ? (
                   <p className="text-[13px] text-white">None recorded.</p>
                 ) : (
@@ -344,9 +497,9 @@ export const RegulationDetailSheet = memo(function RegulationDetailSheet({
                     {related.map((ref) => (
                       <li
                         key={ref.id}
-                        className="rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06] px-4 py-3"
+                        className="rounded-2xl border border-white/[0.12] bg-gradient-to-br from-white/[0.08] via-white/[0.05] to-white/[0.03] px-4 py-3 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)]"
                       >
-                        <div className="text-[11px] font-medium uppercase tracking-[0.18em] text-white">
+                        <div className="text-[12.5px] font-semibold text-elec-yellow">
                           {ref.target_document_type === 'external'
                             ? ref.target_reg_number
                             : `Reg ${ref.target_reg_number}`}
@@ -367,11 +520,11 @@ export const RegulationDetailSheet = memo(function RegulationDetailSheet({
 
         {/* Footer actions */}
         {onAskFollowUp && reg && (
-          <div className="shrink-0 border-t border-white/[0.06] px-5 py-3 bg-[hsl(0_0%_8%)]">
+          <div className="shrink-0 border-t border-white/[0.08] px-5 py-3 bg-elec-dark pb-safe">
             <button
               type="button"
               onClick={handleAskFollowUp}
-              className="w-full h-11 rounded-full text-[13px] font-semibold bg-white text-black hover:bg-white/[0.08] active:scale-[0.99] transition-all touch-manipulation"
+              className="w-full h-11 rounded-full text-[13px] font-semibold text-black bg-gradient-to-b from-[hsl(47_100%_57%)] to-[hsl(47_100%_47%)] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.35)] hover:from-[hsl(47_100%_61%)] hover:to-[hsl(47_100%_50%)] active:from-[hsl(47_100%_52%)] active:to-[hsl(47_100%_44%)] active:scale-[0.99] transition-all touch-manipulation [-webkit-tap-highlight-color:transparent]"
             >
               Ask a follow-up about this reg
             </button>

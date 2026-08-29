@@ -16,7 +16,15 @@ import IRTestingTab from '@/components/apprentice/testing-procedures/testing-tab
 import ZsTestingTab from '@/components/apprentice/testing-procedures/testing-tabs/EarthFaultLoop/ZsTestingTab';
 import PolarityTestingTab from '@/components/apprentice/testing-procedures/testing-tabs/Polarity/PolarityTestingTab';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, BookmarkCheck, HelpCircle, Zap, Activity, GitBranch, Check } from 'lucide-react';
+import {
+  ArrowLeft,
+  BookmarkCheck,
+  HelpCircle,
+  Zap,
+  Activity,
+  GitBranch,
+  Check,
+} from 'lucide-react';
 import { PageFrame, PageHero, itemVariants } from '@/components/college/primitives';
 
 const TestingProcedures = () => {

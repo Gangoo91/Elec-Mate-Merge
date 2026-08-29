@@ -28,8 +28,8 @@ const RangeBar = ({ p25, median, p75, showLabels = true, className }: RangeBarPr
       </div>
       {showLabels && (
         <div className="flex justify-between mt-1.5">
-          <span className="text-[10px] text-white/80 tabular-nums">{gbp(p25)}</span>
-          <span className="text-[10px] text-white/80 tabular-nums">{gbp(p75)}</span>
+          <span className="text-[10px] text-white tabular-nums">{gbp(p25)}</span>
+          <span className="text-[10px] text-white tabular-nums">{gbp(p75)}</span>
         </div>
       )}
     </div>

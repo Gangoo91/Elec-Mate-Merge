@@ -6,10 +6,10 @@
  * with the editorial pattern shared across the apprentice hub.
  */
 
-import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft, CheckCircle2 } from 'lucide-react';
-import { PageFrame, PageHero, itemVariants } from '@/components/college/primitives';
+import { CheckCircle2 } from 'lucide-react';
+import { itemVariants } from '@/components/college/primitives';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { Eyebrow, SectionHeader } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
 
 interface CareerPath {
@@ -290,272 +290,265 @@ const demandTone: Record<CareerPath['demand'], string> = {
 };
 
 const CareerPathways = () => {
-  const navigate = useNavigate();
   return (
-    <PageFrame className="px-4 sm:px-6 lg:px-8">
-      <motion.div variants={itemVariants}>
-        <button
-          onClick={() => navigate('/apprentice/professional-development')}
-          className="inline-flex items-center gap-2 h-11 -ml-2 px-2 rounded-md text-[12px] uppercase tracking-[0.18em] text-white/55 hover:text-white/85 transition-colors touch-manipulation"
-        >
-          <ArrowLeft className="h-4 w-4" />
-          Back
-        </button>
-      </motion.div>
+    <HubPage>
+      <HubMasthead
+        section="Apprentice · Career"
+        title="Career pathways"
+        backTo="/apprentice/professional-development"
+      />
+      <HubBody>
+        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
+          {
+            'The UK electrical trade offers diverse paths with strong earning potential. Domestic, commercial, industrial, renewables — eight routes mapped out below.'
+          }
+        </p>
 
-      <motion.div variants={itemVariants}>
-        <PageHero
-          eyebrow="Apprentice · Career"
-          title="Career pathways"
-          description="The UK electrical trade offers diverse paths with strong earning potential. Domestic, commercial, industrial, renewables — eight routes mapped out below."
-          tone="yellow"
-        />
-      </motion.div>
-
-      {/* ── Career paths ─────────────────────────────────────────── */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <SectionHeader
-          eyebrow="Eight pathways"
-          title="Where the trade can take you"
-          meta="Daily reality, salary, and what each route asks of you"
-        />
-        <ul className="space-y-2.5">
-          {careerPaths.map((path) => (
-            <li
-              key={path.title}
-              className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-4"
-            >
-              <div className="flex items-baseline justify-between gap-3 flex-wrap">
-                <h3 className="text-[16px] sm:text-[17px] font-semibold text-white tracking-tight">
-                  {path.title}
-                </h3>
-                <span
-                  className={
-                    'text-[10px] font-medium uppercase tracking-[0.14em] px-2 py-0.5 rounded-md border ' +
-                    demandTone[path.demand]
-                  }
-                >
-                  {path.demand} demand
-                </span>
-              </div>
-
-              <p className="text-[13.5px] text-white/85 leading-relaxed">{path.description}</p>
-
-              {/* Mini KPI strip */}
-              <div className="grid grid-cols-3 gap-2 sm:gap-3 pt-1 border-t border-white/[0.04]">
-                <KpiTile label="Salary" value={path.salary} />
-                <KpiTile label="When" value={path.timeframe} />
-                <KpiTile label="Next" value={path.progression} />
-              </div>
-
-              {/* Daily activities */}
-              <div className="space-y-2 pt-1">
-                <Eyebrow>Typical day</Eyebrow>
-                <ul className="space-y-1.5">
-                  {path.dailyActivities.map((activity) => (
-                    <li
-                      key={activity}
-                      className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
-                    >
-                      <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
-                      <span>{activity}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              {/* Requirements */}
-              <div className="space-y-2 pt-1">
-                <Eyebrow>Requirements</Eyebrow>
-                <div className="flex flex-wrap gap-1.5">
-                  {path.requirements.map((req) => (
-                    <span
-                      key={req}
-                      className="inline-flex items-center h-7 px-2 rounded-md border border-white/[0.08] bg-white/[0.02] text-[11px] text-white/85"
-                    >
-                      {req}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </li>
-          ))}
-        </ul>
-      </motion.section>
-
-      {/* ── Progression timeline ──────────────────────────────────── */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <SectionHeader
-          eyebrow="Progression timeline"
-          title="From apprentice to specialist"
-          meta="The four stages most electricians move through"
-        />
-        <ol className="space-y-2">
-          {progressionStages.map((stage) => (
-            <li
-              key={stage.stage}
-              className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5"
-            >
-              <div className="flex items-start gap-3">
-                <div className="h-8 w-8 rounded-md border border-elec-yellow/30 bg-elec-yellow/[0.06] flex items-center justify-center flex-shrink-0">
-                  <span className="text-[13px] font-mono font-semibold text-elec-yellow tabular-nums">
-                    {stage.stage}
-                  </span>
-                </div>
-                <div className="flex-1 min-w-0 space-y-1.5">
-                  <div className="flex items-baseline justify-between gap-3 flex-wrap">
-                    <h3 className="text-[15px] font-semibold text-white tracking-tight">
-                      {stage.title}
-                    </h3>
-                    <span className="text-[11px] font-mono text-white/55 tabular-nums">
-                      {stage.salary}
-                    </span>
-                  </div>
-                  <span className="text-[10px] uppercase tracking-[0.14em] text-white/55 block">
-                    {stage.duration}
-                  </span>
-                  <p className="text-[13px] text-white/85 leading-relaxed pt-0.5">
-                    {stage.description}
-                  </p>
-                </div>
-              </div>
-            </li>
-          ))}
-        </ol>
-      </motion.section>
-
-      {/* ── JIB grade ladder ──────────────────────────────────────── */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <SectionHeader
-          eyebrow="JIB grades"
-          title="The pay ladder, by grade"
-          meta="JIB national standard rates (2026) — London and travel allowances are added on top"
-        />
-        <ol className="space-y-2">
-          {jibGrades.map((g) => (
-            <li
-              key={g.grade}
-              className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5"
-            >
-              <div className="flex items-baseline justify-between gap-3 flex-wrap">
-                <h3 className="text-[15px] font-semibold text-white tracking-tight">{g.grade}</h3>
-                <span className="text-[11px] font-mono text-elec-yellow tabular-nums">
-                  {g.rate}
-                </span>
-              </div>
-              <p className="text-[13px] text-white/85 leading-relaxed pt-1.5">{g.requires}</p>
-            </li>
-          ))}
-        </ol>
-        <div className="rounded-xl border border-elec-yellow/20 bg-elec-yellow/[0.04] p-4">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80">
-            The gateway
-          </span>
-          <p className="mt-1.5 text-[13px] text-white/80 leading-relaxed">
-            The gate onto the ladder is the{' '}
-            <span className="text-white font-medium">AM2S end-point assessment</span> — the 2½-day
-            practical at the end of your apprenticeship (standard ST0152). Pass it alongside your
-            Level 3 NVQ and the 18th Edition, and you qualify, earn your ECS Gold card, and step
-            onto the Electrician grade above.
-          </p>
-        </div>
-      </motion.section>
-
-      {/* ── Salary factors ────────────────────────────────────────── */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <SectionHeader
-          eyebrow="What moves the dial"
-          title="Five things that shift salary"
-          meta="Where the variance actually comes from"
-        />
-        <ul className="space-y-2">
-          {salaryFactors.map((item) => (
-            <li
-              key={item.factor}
-              className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-1.5"
-            >
-              <div className="flex items-baseline justify-between gap-3 flex-wrap">
-                <h3 className="text-[14px] font-semibold text-white">{item.factor}</h3>
-                <span
-                  className={
-                    'text-[10px] font-medium uppercase tracking-[0.14em] px-1.5 py-0.5 rounded-md border ' +
-                    (item.impact === 'High'
-                      ? 'border-elec-yellow/30 bg-elec-yellow/[0.06] text-elec-yellow'
-                      : 'border-white/[0.10] bg-white/[0.03] text-white/85')
-                  }
-                >
-                  {item.impact} impact
-                </span>
-              </div>
-              <p className="text-[13px] text-white/85 leading-relaxed">{item.detail}</p>
-            </li>
-          ))}
-        </ul>
-      </motion.section>
-
-      {/* ── Going self-employed ──────────────────────────────────── */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <SectionHeader
-          eyebrow="Working for yourself"
-          title="Going self-employed"
-          meta="The day-rate dream — and the bits nobody mentions"
-        />
-        <ul className="space-y-2">
-          {selfEmployedRoutes.map((r) => (
-            <li
-              key={r.title}
-              className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-1.5"
-            >
-              <h3 className="text-[14px] font-semibold text-white tracking-tight">{r.title}</h3>
-              <p className="text-[13px] text-white/85 leading-relaxed">{r.detail}</p>
-            </li>
-          ))}
-        </ul>
-      </motion.section>
-
-      {/* ── Planning prompts ──────────────────────────────────────── */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <SectionHeader
-          eyebrow="Planning your career"
-          title="Six things to revisit each year"
-          meta="Career planning isn't one-and-done — it evolves with the trade"
-        />
-        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5">
-          <ul className="space-y-2">
-            {planningTips.map((tip) => (
+        {/* ── Career paths ─────────────────────────────────────────── */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <SectionHeader
+            eyebrow="Eight pathways"
+            title="Where the trade can take you"
+            meta="Daily reality, salary, and what each route asks of you"
+          />
+          <ul className="space-y-2.5">
+            {careerPaths.map((path) => (
               <li
-                key={tip}
-                className="flex items-start gap-2 text-[13px] text-white/85 leading-relaxed"
+                key={path.title}
+                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-4"
               >
-                <CheckCircle2 className="h-4 w-4 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
-                <span>{tip}</span>
+                <div className="flex items-baseline justify-between gap-3 flex-wrap">
+                  <h3 className="text-[16px] sm:text-[17px] font-semibold text-white tracking-tight">
+                    {path.title}
+                  </h3>
+                  <span
+                    className={
+                      'text-[10px] font-medium uppercase tracking-[0.14em] px-2 py-0.5 rounded-md border ' +
+                      demandTone[path.demand]
+                    }
+                  >
+                    {path.demand} demand
+                  </span>
+                </div>
+
+                <p className="text-[13.5px] text-white/85 leading-relaxed">{path.description}</p>
+
+                {/* Mini KPI strip */}
+                <div className="grid grid-cols-3 gap-2 sm:gap-3 pt-1 border-t border-white/[0.04]">
+                  <KpiTile label="Salary" value={path.salary} />
+                  <KpiTile label="When" value={path.timeframe} />
+                  <KpiTile label="Next" value={path.progression} />
+                </div>
+
+                {/* Daily activities */}
+                <div className="space-y-2 pt-1">
+                  <Eyebrow>Typical day</Eyebrow>
+                  <ul className="space-y-1.5">
+                    {path.dailyActivities.map((activity) => (
+                      <li
+                        key={activity}
+                        className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                      >
+                        <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
+                        <span>{activity}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* Requirements */}
+                <div className="space-y-2 pt-1">
+                  <Eyebrow>Requirements</Eyebrow>
+                  <div className="flex flex-wrap gap-1.5">
+                    {path.requirements.map((req) => (
+                      <span
+                        key={req}
+                        className="inline-flex items-center h-7 px-2 rounded-md border border-white/[0.08] bg-white/[0.02] text-[11px] text-white/85"
+                      >
+                        {req}
+                      </span>
+                    ))}
+                  </div>
+                </div>
               </li>
             ))}
           </ul>
-        </div>
-      </motion.section>
+        </motion.section>
 
-      {/* ── Start this week ──────────────────────────────────────── */}
-      <motion.section variants={itemVariants}>
-        <div className="rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-2">
-          <Eyebrow className="text-elec-yellow/85">Start exploring this week</Eyebrow>
-          <p className="text-[13.5px] text-white/85 leading-relaxed">
-            Ask your supervisor or training officer which path they started on and how their career
-            has evolved. Shadow a colleague in a different specialism for a day if your employer
-            allows it. The more exposure you get early, the better your decisions land.
+        {/* ── Progression timeline ──────────────────────────────────── */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <SectionHeader
+            eyebrow="Progression timeline"
+            title="From apprentice to specialist"
+            meta="The four stages most electricians move through"
+          />
+          <ol className="space-y-2">
+            {progressionStages.map((stage) => (
+              <li
+                key={stage.stage}
+                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5"
+              >
+                <div className="flex items-start gap-3">
+                  <div className="h-8 w-8 rounded-md border border-elec-yellow/30 bg-elec-yellow/[0.06] flex items-center justify-center flex-shrink-0">
+                    <span className="text-[13px] font-mono font-semibold text-elec-yellow tabular-nums">
+                      {stage.stage}
+                    </span>
+                  </div>
+                  <div className="flex-1 min-w-0 space-y-1.5">
+                    <div className="flex items-baseline justify-between gap-3 flex-wrap">
+                      <h3 className="text-[15px] font-semibold text-white tracking-tight">
+                        {stage.title}
+                      </h3>
+                      <span className="text-[11px] font-mono text-white/55 tabular-nums">
+                        {stage.salary}
+                      </span>
+                    </div>
+                    <span className="text-[10px] uppercase tracking-[0.14em] text-white/55 block">
+                      {stage.duration}
+                    </span>
+                    <p className="text-[13px] text-white/85 leading-relaxed pt-0.5">
+                      {stage.description}
+                    </p>
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </motion.section>
+
+        {/* ── JIB grade ladder ──────────────────────────────────────── */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <SectionHeader
+            eyebrow="JIB grades"
+            title="The pay ladder, by grade"
+            meta="JIB national standard rates (2026) — London and travel allowances are added on top"
+          />
+          <ol className="space-y-2">
+            {jibGrades.map((g) => (
+              <li
+                key={g.grade}
+                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5"
+              >
+                <div className="flex items-baseline justify-between gap-3 flex-wrap">
+                  <h3 className="text-[15px] font-semibold text-white tracking-tight">{g.grade}</h3>
+                  <span className="text-[11px] font-mono text-elec-yellow tabular-nums">
+                    {g.rate}
+                  </span>
+                </div>
+                <p className="text-[13px] text-white/85 leading-relaxed pt-1.5">{g.requires}</p>
+              </li>
+            ))}
+          </ol>
+          <div className="rounded-xl border border-elec-yellow/20 bg-elec-yellow/[0.04] p-4">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80">
+              The gateway
+            </span>
+            <p className="mt-1.5 text-[13px] text-white/80 leading-relaxed">
+              The gate onto the ladder is the{' '}
+              <span className="text-white font-medium">AM2S end-point assessment</span> — the 2½-day
+              practical at the end of your apprenticeship (standard ST0152). Pass it alongside your
+              Level 3 NVQ and the 18th Edition, and you qualify, earn your ECS Gold card, and step
+              onto the Electrician grade above.
+            </p>
+          </div>
+        </motion.section>
+
+        {/* ── Salary factors ────────────────────────────────────────── */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <SectionHeader
+            eyebrow="What moves the dial"
+            title="Five things that shift salary"
+            meta="Where the variance actually comes from"
+          />
+          <ul className="space-y-2">
+            {salaryFactors.map((item) => (
+              <li
+                key={item.factor}
+                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-1.5"
+              >
+                <div className="flex items-baseline justify-between gap-3 flex-wrap">
+                  <h3 className="text-[14px] font-semibold text-white">{item.factor}</h3>
+                  <span
+                    className={
+                      'text-[10px] font-medium uppercase tracking-[0.14em] px-1.5 py-0.5 rounded-md border ' +
+                      (item.impact === 'High'
+                        ? 'border-elec-yellow/30 bg-elec-yellow/[0.06] text-elec-yellow'
+                        : 'border-white/[0.10] bg-white/[0.03] text-white/85')
+                    }
+                  >
+                    {item.impact} impact
+                  </span>
+                </div>
+                <p className="text-[13px] text-white/85 leading-relaxed">{item.detail}</p>
+              </li>
+            ))}
+          </ul>
+        </motion.section>
+
+        {/* ── Going self-employed ──────────────────────────────────── */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <SectionHeader
+            eyebrow="Working for yourself"
+            title="Going self-employed"
+            meta="The day-rate dream — and the bits nobody mentions"
+          />
+          <ul className="space-y-2">
+            {selfEmployedRoutes.map((r) => (
+              <li
+                key={r.title}
+                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-1.5"
+              >
+                <h3 className="text-[14px] font-semibold text-white tracking-tight">{r.title}</h3>
+                <p className="text-[13px] text-white/85 leading-relaxed">{r.detail}</p>
+              </li>
+            ))}
+          </ul>
+        </motion.section>
+
+        {/* ── Planning prompts ──────────────────────────────────────── */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <SectionHeader
+            eyebrow="Planning your career"
+            title="Six things to revisit each year"
+            meta="Career planning isn't one-and-done — it evolves with the trade"
+          />
+          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5">
+            <ul className="space-y-2">
+              {planningTips.map((tip) => (
+                <li
+                  key={tip}
+                  className="flex items-start gap-2 text-[13px] text-white/85 leading-relaxed"
+                >
+                  <CheckCircle2 className="h-4 w-4 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
+                  <span>{tip}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </motion.section>
+
+        {/* ── Start this week ──────────────────────────────────────── */}
+        <motion.section variants={itemVariants}>
+          <div className="rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-2">
+            <Eyebrow className="text-elec-yellow/85">Start exploring this week</Eyebrow>
+            <p className="text-[13.5px] text-white/85 leading-relaxed">
+              Ask your supervisor or training officer which path they started on and how their
+              career has evolved. Shadow a colleague in a different specialism for a day if your
+              employer allows it. The more exposure you get early, the better your decisions land.
+            </p>
+          </div>
+        </motion.section>
+
+        {/* ── Footnote ─────────────────────────────────────────────── */}
+        <motion.section variants={itemVariants}>
+          <p className="text-[11px] text-white/40 leading-relaxed">
+            Salary data based on current UK electrical industry averages from JIB grade rates,
+            recruitment data, and industry surveys. Actual salaries vary by region, employer, and
+            individual experience.
           </p>
-        </div>
-      </motion.section>
-
-      {/* ── Footnote ─────────────────────────────────────────────── */}
-      <motion.section variants={itemVariants}>
-        <p className="text-[11px] text-white/40 leading-relaxed">
-          Salary data based on current UK electrical industry averages from JIB grade rates,
-          recruitment data, and industry surveys. Actual salaries vary by region, employer, and
-          individual experience.
-        </p>
-      </motion.section>
-    </PageFrame>
+        </motion.section>
+      </HubBody>
+    </HubPage>
   );
 };
 

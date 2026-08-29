@@ -33,7 +33,24 @@ const pickerTriggerCn =
 const chipOn = 'bg-elec-yellow border border-elec-yellow text-black font-semibold';
 const chipOff = 'bg-white/[0.06] border border-white/[0.12] text-white font-medium';
 
-// Fields managed by this section (for memoization comparison)
+/*
+ * Fields managed by this section, for the React.memo comparison at the bottom.
+ *
+ * 🔴 EVERY FIELD THIS SECTION WRITES MUST BE LISTED HERE. A missing entry does
+ * not cause a subtle staleness bug — it makes the input look completely dead.
+ *
+ * ELE-1635 / Craig Soper: "doesn't let me type in it", pointing at *Intended
+ * use of the installation*. The input was fine — value, onChange, not disabled.
+ * But `installationUse` was absent from this list, so `React.memo` saw nothing
+ * it cared about change and skipped the re-render. The keystroke reached the
+ * form state and the box kept rendering the old value. From the outside that is
+ * indistinguishable from a broken field, which is why it was reported as one
+ * and why the first diagnosis went looking at disabled inputs instead.
+ *
+ * `reinspectOnOccupancyChange` was missing for the same reason and had the same
+ * fault. There is a guard below (`onUpdate` wrapper) that now warns in
+ * development if a field is written that is not listed here.
+ */
 const INSPECTION_SECTION_FIELDS = [
   'purposeOfInspection',
   'otherPurpose',
@@ -49,6 +66,8 @@ const INSPECTION_SECTION_FIELDS = [
   'description', // Referenced for recommended interval
   'propertyType', // Referenced for the rented-homes interval cap (PRS 2020)
   'duplicatedFrom', // Effect guard — must re-render when a duplicate lands
+  'installationUse', // ELE-1635 — omitted, so the field rendered as if dead
+  'reinspectOnOccupancyChange', // same omission, same fault
 ] as const;
 
 // Starting wording for the three section D free-text boxes. Surfaced via the
@@ -331,10 +350,80 @@ const PickerRow = ({
  *
  * Performance optimised with React.memo
  */
-const InspectionDetailsSectionInner = ({ formData, onUpdate }: InspectionDetailsSectionProps) => {
+const InspectionDetailsSectionInner = ({
+  formData,
+  onUpdate: rawOnUpdate,
+}: InspectionDetailsSectionProps) => {
   const isMobile = useIsMobile();
   const haptic = useHaptic();
   const { toast } = useToast();
+
+  /*
+   * ELE-1635 — a field set to N/A or LIM is locked, and that was invisible.
+   *
+   * Craig Soper: "Not letting you type in this box." He was right: setting the
+   * N/A / LIM badge swapped the textarea for a `disabled` input, so the field
+   * simply stopped accepting text with nothing on screen to say why or how to
+   * undo it. Intentional behaviour that looks exactly like a broken input is a
+   * bug — the user cannot tell the difference.
+   *
+   * The lock is still correct (a field marked N/A should not also hold prose),
+   * so instead of a dead input this is a BUTTON that says what it is and clears
+   * the marker on tap. One tap, and the field is typable again.
+   */
+  const MarkedField = ({
+    field,
+    value,
+  }: {
+    field: string;
+    value: string;
+  }) => (
+    <button
+      type="button"
+      onClick={() => {
+        haptic.light();
+        onUpdate(field, '');
+      }}
+      className="flex h-11 w-full items-center justify-between gap-3 rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-left transition-colors hover:border-white/[0.3] touch-manipulation"
+    >
+      <span className="text-base font-medium text-white">{value}</span>
+      <span className="flex-shrink-0 text-[11px] font-medium text-elec-yellow">
+        Tap to clear and type
+      </span>
+    </button>
+  );
+
+  /*
+   * Development guard for the memo list above.
+   *
+   * The failure mode it catches is silent and expensive: writing a field that
+   * `INSPECTION_SECTION_FIELDS` does not list means the section never
+   * re-renders, and the input appears dead to the user. That cost a customer
+   * report and a wrong first diagnosis. A console warning at the moment of the
+   * write makes the next one obvious.
+   */
+  /*
+   * ⚠️ `useCallback` is not optional here. An unmemoised wrapper changes
+   * identity on every render, which invalidates every `useCallback` below that
+   * depends on it — turning a diagnostic into a performance regression in the
+   * busiest form in the app.
+   */
+  const onUpdate = React.useCallback<typeof rawOnUpdate>(
+    (field, value) => {
+      if (
+        import.meta.env.DEV &&
+        !(INSPECTION_SECTION_FIELDS as readonly string[]).includes(field as string)
+      ) {
+        console.warn(
+          `[InspectionDetailsSection] "${String(field)}" is written here but is missing from ` +
+            'INSPECTION_SECTION_FIELDS — React.memo will skip the re-render and the input ' +
+            'will look dead. Add it to the list.'
+        );
+      }
+      rawOnUpdate(field, value);
+    },
+    [rawOnUpdate]
+  );
 
   // Auto-calculate next inspection date based on interval
   const calculateNextInspectionDate = () => {
@@ -945,11 +1034,7 @@ const InspectionDetailsSectionInner = ({ formData, onUpdate }: InspectionDetails
           }
         >
           {isFieldMarker(formData.intervalReasons) ? (
-            <Input
-              value={formData.intervalReasons}
-              disabled
-              className={cn(inputCn, 'opacity-60')}
-            />
+            <MarkedField field="intervalReasons" value={formData.intervalReasons} />
           ) : (
             <Textarea
               value={formData.intervalReasons || ''}
@@ -1016,13 +1101,16 @@ const InspectionDetailsSectionInner = ({ formData, onUpdate }: InspectionDetails
               />
             }
           >
-            <Input
-              value={formData.agreedWith || ''}
-              onChange={(e) => onUpdate('agreedWith', e.target.value)}
-              placeholder="Name of person"
-              disabled={isFieldMarker(formData.agreedWith)}
-              className={cn(inputCn, isFieldMarker(formData.agreedWith) && 'opacity-60')}
-            />
+            {isFieldMarker(formData.agreedWith) ? (
+              <MarkedField field="agreedWith" value={formData.agreedWith} />
+            ) : (
+              <Input
+                value={formData.agreedWith || ''}
+                onChange={(e) => onUpdate('agreedWith', e.target.value)}
+                placeholder="Name of person"
+                className={inputCn}
+              />
+            )}
           </FormField>
           <FormField label="BS 7671 edition">
             <FormSelectSheet
@@ -1181,11 +1269,7 @@ const InspectionDetailsSectionInner = ({ formData, onUpdate }: InspectionDetails
           }
         >
           {isFieldMarker(formData.extentOfInspection) ? (
-            <Input
-              value={formData.extentOfInspection}
-              disabled
-              className={cn(inputCn, 'opacity-60')}
-            />
+            <MarkedField field="extentOfInspection" value={formData.extentOfInspection} />
           ) : (
             <Textarea
               value={formData.extentOfInspection || ''}
@@ -1279,11 +1363,7 @@ const InspectionDetailsSectionInner = ({ formData, onUpdate }: InspectionDetails
             }
           >
             {isFieldMarker(formData.limitationsOfInspection) ? (
-              <Input
-                value={formData.limitationsOfInspection}
-                disabled
-                className={cn(inputCn, 'opacity-60')}
-              />
+              <MarkedField field="limitationsOfInspection" value={formData.limitationsOfInspection} />
             ) : (
               <Textarea
                 value={formData.limitationsOfInspection || ''}

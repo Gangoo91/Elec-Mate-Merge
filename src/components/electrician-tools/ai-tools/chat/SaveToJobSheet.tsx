@@ -156,7 +156,12 @@ export const SaveToJobSheet = memo(function SaveToJobSheet({
 
         const { error } = await supabase
           .from('spark_projects')
-          .update({ ai_notes: nextNotes, updated_at: new Date().toISOString() })
+          .update({
+            // SavedNote has no index signature, so it doesn't structurally
+            // satisfy the generated Json type — the shape is plain JSON.
+            ai_notes: JSON.parse(JSON.stringify(nextNotes)),
+            updated_at: new Date().toISOString(),
+          })
           .eq('id', project.id);
 
         if (error) throw error;
@@ -184,33 +189,34 @@ export const SaveToJobSheet = memo(function SaveToJobSheet({
         side="bottom"
         hideCloseButton
         className={cn(
-          'bg-[hsl(0_0%_8%)] border-white/[0.06] text-white p-0 flex flex-col',
-          'h-[75vh] rounded-t-2xl'
+          'bg-elec-dark border-white/[0.08] text-white p-0 flex flex-col',
+          'h-[85vh] rounded-t-2xl'
         )}
       >
-        {/* Header */}
-        <div className="shrink-0 px-5 pt-5 pb-4 border-b border-white/[0.06]">
+        {/* Header — closed by the shared volt hairline. */}
+        <div className="relative shrink-0 px-5 pt-5 pb-4">
           <div className="flex items-start justify-between gap-4">
             <div className="min-w-0">
-              <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-white">
+              <h2 className="text-[17px] font-semibold text-white tracking-tight">
                 Save to a project
-              </div>
-              <div className="mt-1.5 text-[15px] font-semibold text-white tracking-tight">
-                Save this Elec-AI answer
-              </div>
-              <p className="mt-1 text-[12px] text-white leading-relaxed">
-                Choose a project to save this answer to.
+              </h2>
+              <p className="mt-1 text-[12.5px] text-white leading-relaxed">
+                The answer is kept as a note on the project you choose.
               </p>
             </div>
             <button
               type="button"
               onClick={onClose}
-              className="shrink-0 h-8 px-3 rounded-full text-[12px] font-medium text-white hover:text-white bg-white/[0.04] border border-white/[0.08] hover:bg-white/[0.08] transition-colors touch-manipulation"
+              className="shrink-0 h-9 px-3.5 rounded-full text-[12px] font-medium text-white bg-white/[0.05] border border-white/[0.12] hover:bg-white/[0.10] hover:border-white/[0.22] active:scale-[0.97] transition-all touch-manipulation [-webkit-tap-highlight-color:transparent]"
               aria-label="Close"
             >
-              Close ×
+              Close
             </button>
           </div>
+          <span
+            aria-hidden
+            className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/40 to-elec-yellow/0"
+          />
         </div>
 
         {/* Body */}
@@ -220,17 +226,15 @@ export const SaveToJobSheet = memo(function SaveToJobSheet({
               {[0, 1, 2].map((i) => (
                 <div
                   key={i}
-                  className="h-16 rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06] animate-pulse"
+                  className="h-16 rounded-2xl border border-white/[0.12] bg-white/[0.05] animate-pulse"
                 />
               ))}
             </div>
           )}
 
           {!isLoading && projects.length === 0 && (
-            <div className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] px-4 py-6 text-center">
-              <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-white">
-                No active projects
-              </div>
+            <div className="rounded-2xl border border-white/[0.12] bg-gradient-to-br from-white/[0.08] via-white/[0.05] to-white/[0.03] px-4 py-6 text-center shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)]">
+              <div className="text-[14px] font-semibold text-white">No active projects</div>
               <p className="mt-2 text-[13px] text-white leading-relaxed">
                 Start a new project, then come back here to save this answer.
               </p>
@@ -253,16 +257,18 @@ export const SaveToJobSheet = memo(function SaveToJobSheet({
                   disabled={!!savingId}
                   onClick={() => handleSave(project)}
                   className={cn(
-                    'w-full text-left rounded-2xl px-4 py-3',
-                    'bg-[hsl(0_0%_12%)] border border-white/[0.06]',
-                    'hover:bg-[hsl(0_0%_15%)] transition-colors touch-manipulation',
-                    'disabled:opacity-60 disabled:cursor-not-allowed',
-                    'min-h-11'
+                    'w-full text-left rounded-2xl px-4 py-3 min-h-11',
+                    'border border-elec-yellow/35 bg-gradient-to-br from-white/[0.10] via-white/[0.06] to-white/[0.04]',
+                    'shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)]',
+                    'transition-[background-image,border-color,transform] duration-150 ease-out',
+                    'hover:border-elec-yellow/60 hover:from-white/[0.14] active:scale-[0.98]',
+                    'touch-manipulation [-webkit-tap-highlight-color:transparent]',
+                    'disabled:opacity-60 disabled:cursor-not-allowed'
                   )}
                 >
                   <div className="flex items-start justify-between gap-3">
                     <div className="min-w-0 flex-1">
-                      <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-white">
+                      <div className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white">
                         {titleCaseStatus(project.status)}
                       </div>
                       <div className="mt-0.5 text-[14px] font-semibold text-white truncate">
@@ -282,7 +288,7 @@ export const SaveToJobSheet = memo(function SaveToJobSheet({
                       <div className="text-[11px] text-white">
                         {formatUpdatedAgo(project.updated_at)}
                       </div>
-                      <div className="mt-1 text-[11px] font-medium text-white">
+                      <div className="mt-1 text-[12px] font-semibold text-elec-yellow">
                         {saving ? 'Saving…' : 'Save →'}
                       </div>
                     </div>

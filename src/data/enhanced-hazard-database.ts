@@ -57,7 +57,7 @@ export const enhancedRiskDatabase: EnhancedRiskConsequence[] = [
       'Ensure adequate lighting to see conductor colours and connections clearly',
     ],
     trainingRequired: [
-      'BS7671:2018+A3:2024 18th Edition Wiring Regulations',
+      'BS 7671:2018+A3:2024 18th Edition Wiring Regulations',
       'Safe Isolation Procedures (GS38)',
       'Emergency First Aid at Work with CPR/AED',
       'Electrical Safety Awareness Training',
@@ -85,7 +85,7 @@ export const enhancedRiskDatabase: EnhancedRiskConsequence[] = [
     riskRating: 8,
     controlMeasures: {
       engineering: [
-        'Main protective bonding to BS7671 Section 544',
+        'Main protective bonding to BS 7671 Section 544',
         'Installation of RCD protection (411.3.3)',
       ],
       administrative: [
@@ -122,7 +122,7 @@ export const enhancedRiskDatabase: EnhancedRiskConsequence[] = [
     ],
     trainingRequired: [
       'Electrical Installation Testing & Inspection (2391)',
-      'BS7671:2018+A3:2024 18th Edition',
+      'BS 7671:2018+A3:2024 18th Edition',
       'Special Locations (Bathrooms/Kitchens)',
     ],
     realWorldScenarios: [

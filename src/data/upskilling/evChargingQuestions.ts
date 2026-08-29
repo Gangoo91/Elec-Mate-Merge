@@ -37,7 +37,7 @@ export const evChargingQuestions: QuizQuestion[] = [
       "6mm²",
     ],
     correctAnswer: 3,
-    explanation: "For 32A charging, 6mm² cable is typically required to handle the current safely according to BS7671.",
+    explanation: "For 32A charging, 6mm² cable is typically required to handle the current safely according to BS 7671.",
     moduleId: 3
   },
   {

@@ -20,6 +20,9 @@ const InstrumentationModule1Section2 = React.lazy(
 const InstrumentationModule1Section3 = React.lazy(
   () => import('@/pages/upskilling/InstrumentationModule1Section3')
 );
+const InstrumentationModule1Section5 = React.lazy(
+  () => import('@/pages/upskilling/InstrumentationModule1Section5')
+);
 const InstrumentationModule1Section4 = React.lazy(
   () => import('@/pages/upskilling/InstrumentationModule1Section4')
 );
@@ -40,6 +43,9 @@ const InstrumentationModule2Section4 = React.lazy(
 );
 const InstrumentationModule2Section5 = React.lazy(
   () => import('@/pages/upskilling/InstrumentationModule2Section5')
+);
+const InstrumentationModule2Section7 = React.lazy(
+  () => import('@/pages/upskilling/InstrumentationModule2Section7')
 );
 const InstrumentationModule2Section6 = React.lazy(
   () => import('@/pages/upskilling/InstrumentationModule2Section6')
@@ -531,7 +537,8 @@ export const specialisedCoursesRoutes = (
     <Route path="instrumentation-module-1-section-3" element={<InstrumentationModule1Section3 />} />
     ,
     <Route path="instrumentation-module-1-section-4" element={<InstrumentationModule1Section4 />} />
-    ,
+    <Route path="instrumentation-module-1-section-5" element={<InstrumentationModule1Section5 />} />
+    , ,
     <Route path="instrumentation-module-2" element={<InstrumentationModule2 />} />,
     <Route path="instrumentation-module-2-section-1" element={<InstrumentationModule2Section1 />} />
     ,
@@ -544,7 +551,8 @@ export const specialisedCoursesRoutes = (
     <Route path="instrumentation-module-2-section-5" element={<InstrumentationModule2Section5 />} />
     ,
     <Route path="instrumentation-module-2-section-6" element={<InstrumentationModule2Section6 />} />
-    ,
+    <Route path="instrumentation-module-2-section-7" element={<InstrumentationModule2Section7 />} />
+    , ,
     <Route path="instrumentation-module-3" element={<InstrumentationModule3 />} />,
     <Route path="instrumentation-module-3-section-1" element={<InstrumentationModule3Section1 />} />
     ,

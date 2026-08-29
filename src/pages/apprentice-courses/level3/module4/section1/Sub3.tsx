@@ -14,11 +14,11 @@
  */
 
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
-import { PageFrame, PageHero } from '@/components/college/primitives';
 import {
   TLDR,
   ConceptBlock,
@@ -35,8 +35,7 @@ import {
 import { videos } from '@/data/study-centre/video-library';
 import useSEO from '@/hooks/useSEO';
 
-const TITLE =
-  'Safe isolation in fault diagnosis (1.3) | Level 3 Module 4.1.3 | Elec-Mate';
+const TITLE = 'Safe isolation in fault diagnosis (1.3) | Level 3 Module 4.1.3 | Elec-Mate';
 const DESCRIPTION =
   'Applying the JIB six-step safe isolation procedure to fault-diagnosis work — circuit, sub-main and full installation isolation, multi-source disconnection (PV / EV / generator) and weighing the customer-impact of loss-of-supply against the safety case.';
 
@@ -58,10 +57,10 @@ const checks = [
   {
     id: 'mod4-s1-sub3-fullisol',
     question:
-      "When is FULL INSTALLATION isolation (at the main switch) required for fault diagnosis, rather than just isolating the affected circuit?",
+      'When is FULL INSTALLATION isolation (at the main switch) required for fault diagnosis, rather than just isolating the affected circuit?',
     options: [
       "An Improvement Notice (s.21) is served when the inspector believes a Regulation has been breached and the duty-holder is given a period (minimum 21 days) to put it right. A Prohibition Notice (s.22) is served when the inspector believes there's a risk of SERIOUS PERSONAL INJURY from a specific activity — the activity must stop immediately or by a stated time. Failure to comply with either is a separate criminal offence; both appear on the public HSE Notices database.",
-      "F-Gas Regulations (assimilated EU Regulation 517/2014, retained in UK law post-Brexit, with some divergence) require any work on systems containing fluorinated greenhouse gases (the refrigerants used in heat pumps and air conditioning) to be done by F-Gas-certified personnel. Connecting refrigerant pipework, charging, recovering refrigerant, leak testing — all require certification. The Environment Agency enforces in England; equivalents in the devolved nations. Working without certification is a criminal offence and invalidates manufacturer warranties.",
+      'F-Gas Regulations (assimilated EU Regulation 517/2014, retained in UK law post-Brexit, with some divergence) require any work on systems containing fluorinated greenhouse gases (the refrigerants used in heat pumps and air conditioning) to be done by F-Gas-certified personnel. Connecting refrigerant pipework, charging, recovering refrigerant, leak testing — all require certification. The Environment Agency enforces in England; equivalents in the devolved nations. Working without certification is a criminal offence and invalidates manufacturer warranties.',
       "When (a) the fault is on the supply / cut-out / tails / main switch / busbar itself, OR (b) you can't reliably identify which circuit feeds the fault location, OR (c) the work involves removing or refitting the consumer unit cover where the busbar is exposed, OR (d) the fault has compromised the integrity of the CU (water ingress, burnt terminal block, melted enclosure). Full isolation has bigger customer impact (whole property loses supply) so weigh it against the alternative of working live or working with limited isolation — but if the safety case requires full isolation, the customer impact doesn't change the answer.",
       "You don't have to break the circuit — the clamp meter senses the magnetic field around the conductor and reads the current without electrical contact. Faster, safer (no need to disconnect), and possible on energised circuits without isolation. Standard for measuring load currents at distribution boards, on submains, on motor circuits, and for energy auditing. Most modern clamp meters also have voltage and continuity functions, making them effectively a multimeter + clamp in one.",
     ],
@@ -74,9 +73,9 @@ const checks = [
     question:
       "A small business runs a butcher's shop. The chest freezer holds £1500 of stock. You need to isolate the supply for 90 minutes to investigate a fault. What's the right way to handle the loss-of-supply impact?",
     options: [
-      "Heat pumps deliver heat at a lower flow temperature than a gas boiler — typically 35 to 50 °C versus 65 to 75 °C for a boiler. The lower the flow temperature the higher the SCOP. Underfloor heating runs at 35 to 40 °C and gives the highest SCOP. Oversized radiators (larger surface area than the original boiler-sized radiators) deliver the same heat output at the lower flow temperature, keeping SCOP high. Original boiler radiators sized for 70 °C flow forced to run at 50 °C will deliver too little heat output — the room never reaches setpoint, the heat pump runs constantly, the customer is cold and the SCOP is poor. The MCS heat-loss survey identifies which rooms need radiator upgrades; the customer often has to budget for new emitters as part of the install.",
+      'Heat pumps deliver heat at a lower flow temperature than a gas boiler — typically 35 to 50 °C versus 65 to 75 °C for a boiler. The lower the flow temperature the higher the SCOP. Underfloor heating runs at 35 to 40 °C and gives the highest SCOP. Oversized radiators (larger surface area than the original boiler-sized radiators) deliver the same heat output at the lower flow temperature, keeping SCOP high. Original boiler radiators sized for 70 °C flow forced to run at 50 °C will deliver too little heat output — the room never reaches setpoint, the heat pump runs constantly, the customer is cold and the SCOP is poor. The MCS heat-loss survey identifies which rooms need radiator upgrades; the customer often has to budget for new emitters as part of the install.',
       "Significantly. A repair that's exposed to harsh environment (outdoor, kitchen, plant room, washroom) may not last as long as the same repair in benign environment. The repair-vs-replace decision should consider: (a) what's the IP / environmental rating of the repaired vs replacement component? (b) Will the repair retain the original IP rating? (c) Is the new component IP-rated for the actual environment? Replacement often comes with current IP / environmental ratings; repair preserves the existing rating (which may have degraded). For harsh environments, replacement is usually the right call.",
-      "Three separate containers. New batteries in their original packaging or a dedicated lithium-safe storage box, separated from the others. Used but undamaged batteries in a metal container with terminals taped or with cell-tray separation to prevent short circuits. The damaged battery in a separate fire-resistant container (vermiculite, sand or a purpose-made Li-ion bag), stored away from the van interior and away from other batteries, and returned to a battery recycling collection point as soon as practical. Never stack damaged with undamaged.",
+      'Three separate containers. New batteries in their original packaging or a dedicated lithium-safe storage box, separated from the others. Used but undamaged batteries in a metal container with terminals taped or with cell-tray separation to prevent short circuits. The damaged battery in a separate fire-resistant container (vermiculite, sand or a purpose-made Li-ion bag), stored away from the van interior and away from other batteries, and returned to a battery recycling collection point as soon as practical. Never stack damaged with undamaged.',
       "(1) Inform the customer in writing of the planned outage, expected duration, and any contingency they need (move stock, brief staff, sign at door). (2) Check whether the affected circuit has any safety-critical loads — fire alarm sounders, emergency lighting central battery, intruder alarm — and if so, brief the customer to put out a 'system off' note and inform their alarm-receiving centre. (3) Plan the isolation window to minimise impact (early morning, lunchtime closure). (4) Document the conversation on the job sheet — customer agreed to isolation, accepted impact, etc. (5) ONLY THEN isolate. The customer's commercial loss is real and your firm carries professional liability for unannounced outages.",
     ],
     correctIndex: 3,
@@ -98,7 +97,7 @@ const quizQuestions = [
     ],
     correctAnswer: 1,
     explanation:
-      "The single-circuit isolation is the most-frequently tested practical skill on L3 assessments. The instruments are specific: GS38 two-pole tester (Martindale, Fluke T130, Kewtech KT1780) for the prove-dead steps; proving unit (Martindale GVD2 or equivalent) OR a known live socket for the prove-tester steps; lock-off device (Brady, Master Lock, Idesco) plus tag for the lock-off step. Multimeters and socket testers do NOT replace the two-pole. The end-of-job retest with the MFT (typically RCD trip-time test on the RCBO) confirms the protective device is still working before you sign off.",
+      'The single-circuit isolation is the most-frequently tested practical skill on L3 assessments. The instruments are specific: GS38 two-pole tester (Martindale, Fluke T130, Kewtech KT1780) for the prove-dead steps; proving unit (Martindale GVD2 or equivalent) OR a known live socket for the prove-tester steps; lock-off device (Brady, Master Lock, Idesco) plus tag for the lock-off step. Multimeters and socket testers do NOT replace the two-pole. The end-of-job retest with the MFT (typically RCD trip-time test on the RCBO) confirms the protective device is still working before you sign off.',
   },
   {
     id: 2,
@@ -108,7 +107,7 @@ const quizQuestions = [
       "Five conditions. (1) Cable type at end of life (rubber-insulated, VIR, lead-sheathed pre-1970s) — IR readings declining year-on-year, regular faults. (2) Multiple Code 1 / Code 2 EICR findings on the same installation that aren't economically repairable individually. (3) Repair would require destruction of significant building fabric (chasing whole rooms). (4) Customer planning a renovation — economical to rewire while building work is happening. (5) Property change-of-use (e.g. residential to HMO) requiring different specification. The L3 apprentice doesn't normally make this call — it's improver / Approved Electrician / consultant level — but should recognise the conditions and escalate.",
       "Stop them and verify they understand what's locked off and why. Show them your padlock and tag. Confirm they're not about to remove your lock or restore your circuit. If they need to do work that affects YOUR isolation (e.g. they're investigating the busbar), the work must coordinate — both operatives' locks stay on, both operatives complete their work, both operatives remove their own locks. The 'multi-lock hasp' (Brady 65681 takes 6 padlocks) is designed for this — multiple operatives, one device, no operative removes their lock until they're personally finished.",
       "(a) OTHER PERSONNEL — other trades on site lose lighting / power for tools, may need to stop work; the firm's lone-working procedure may need adjusting. (b) CUSTOMER/CLIENT — loss of business activity, freezer stock at risk, computers go down (data loss risk), contractual penalties on commercial sites, customer dissatisfaction. (c) PUBLIC — emergency exits may go dark, public-area lighting fails, accessible plant rooms become hazardous, security systems may shut down. (d) BUILDING SYSTEMS — fire alarm goes into fault (with audible alert), emergency lighting batteries enter discharge cycle, lift goes to ground floor and stops, BMS may fault and require manual reset, refrigeration cycles interrupt, motors may auto-restart on power restoration with safety implications.",
-      "Run the customer through: how the system operates (continuous low-temperature heating, not on-off cycles like a gas boiler); how to set the room thermostat (set and forget at desired temperature, modest setbacks only); how to use the hot water schedule (typically once or twice a day); when to expect higher running costs (cold spells push up consumption); what the smart controls do; what the warning lights / app notifications mean; who to call for support (warranty contact, manufacturer support, installer aftercare); annual service requirement. Five-to-ten minutes that prevents months of customer confusion.",
+      'Run the customer through: how the system operates (continuous low-temperature heating, not on-off cycles like a gas boiler); how to set the room thermostat (set and forget at desired temperature, modest setbacks only); how to use the hot water schedule (typically once or twice a day); when to expect higher running costs (cold spells push up consumption); what the smart controls do; what the warning lights / app notifications mean; who to call for support (warranty contact, manufacturer support, installer aftercare); annual service requirement. Five-to-ten minutes that prevents months of customer confusion.',
     ],
     correctAnswer: 2,
     explanation:
@@ -117,12 +116,12 @@ const quizQuestions = [
   {
     id: 3,
     question:
-      "Implications of NOT isolating — what dangers does failure to isolate present to (a) self, (b) other personnel, (c) customer/client, (d) public, (e) building systems?",
+      'Implications of NOT isolating — what dangers does failure to isolate present to (a) self, (b) other personnel, (c) customer/client, (d) public, (e) building systems?',
     options: [
       "Three reasons. (1) Density — many terminations in a small space; many opportunities for one to be wrong. (2) Heat — control electronics generate heat; cooling is often inadequate; thermal cycling stresses components. (3) Vibration — panels in plant rooms and on walls near equipment vibrate; vibration loosens terminations over time. Approach: always work on de-energised, isolated panels under permit-to-work where applicable; identify each component's function from the panel schedule; check terminations with thermal imaging while running; replace components by part number from the schedule; retest each output to verify correct operation.",
       "It depends on competence and supervision. An L3 apprentice typically signs the Constructor panel under supervision (the work was done under the supervisor's oversight). The Inspector panel requires verification competence — the supervisor or a JIB Approved Electrician usually signs that for an apprentice's work. The Designer panel requires design competence, normally a fully-qualified electrician or engineer, not an apprentice. The C&G 2391 / 2394 / 2395 inspection-and-testing qualifications are the typical step that lets a qualified electrician sign Inspector. EAWR Reg 16 (competence) is the underlying duty — sign only what you are competent to sign.",
-      "Carbon payback for typical UK PV is 1-3 years (the time taken for operating CO₂ savings to offset the manufacturing CO₂ cost). Financial payback depends on system cost, self-consumption, export tariff and electricity price — typically 6-12 years for a standalone PV install in 2026, often shorter if a battery is added (improves self-consumption from 25-40% to 70-90%). After payback the system continues for the rest of its 25-year warranted life essentially as free energy. The carbon case is much stronger than the financial case in isolation; together they make PV the dominant UK domestic environmental tech.",
-      "(a) SELF — direct shock, arc-flash burn, fall from a recoil reaction. (b) OTHER PERSONNEL — assistant or apprentice working with you may contact live conductor; bystanders may be in arc range. (c) CUSTOMER/CLIENT — equipment damage from accidental short, fire risk from compromised insulation, customer staff injury if they touch exposed live parts. (d) PUBLIC — collapse of structure if a fire results, contamination if hazardous materials escape (e.g. transformer oil), wider supply outage if a fault propagates upstream. (e) BUILDING SYSTEMS — cascade failures (a botched isolation can take out the wrong circuit, knocking out fire alarm AND lifts AND emergency lighting at once), data loss on IT systems, equipment damage on plant restart.",
+      'Carbon payback for typical UK PV is 1-3 years (the time taken for operating CO₂ savings to offset the manufacturing CO₂ cost). Financial payback depends on system cost, self-consumption, export tariff and electricity price — typically 6-12 years for a standalone PV install in 2026, often shorter if a battery is added (improves self-consumption from 25-40% to 70-90%). After payback the system continues for the rest of its 25-year warranted life essentially as free energy. The carbon case is much stronger than the financial case in isolation; together they make PV the dominant UK domestic environmental tech.',
+      '(a) SELF — direct shock, arc-flash burn, fall from a recoil reaction. (b) OTHER PERSONNEL — assistant or apprentice working with you may contact live conductor; bystanders may be in arc range. (c) CUSTOMER/CLIENT — equipment damage from accidental short, fire risk from compromised insulation, customer staff injury if they touch exposed live parts. (d) PUBLIC — collapse of structure if a fire results, contamination if hazardous materials escape (e.g. transformer oil), wider supply outage if a fault propagates upstream. (e) BUILDING SYSTEMS — cascade failures (a botched isolation can take out the wrong circuit, knocking out fire alarm AND lifts AND emergency lighting at once), data loss on IT systems, equipment damage on plant restart.',
     ],
     correctAnswer: 3,
     explanation:
@@ -134,9 +133,9 @@ const quizQuestions = [
       "A modern installation has a 7 kW EV charger, a 5 kWp solar PV array, a 9.6 kWh battery storage system AND a standby generator. You're investigating a fault on the main DB. How many isolation points do you operate?",
     options: [
       "All of them, plus the main switch. (1) Open main switch / DNO cut-out cap (DNO call only) for incoming supply. (2) Open the EV charger isolator AND verify EV is unplugged (the EVSE may have its own contactor that closes on demand). (3) Open the PV AC isolator at the inverter AND the PV DC isolator at the array. (4) Open the battery storage AC isolator AND the battery DC isolator. (5) Confirm standby generator changeover switch is in MAINS position and lock-off the generator manual start. Then prove dead at the work point with a GS38 two-pole, AND a DC-rated tester for the PV/battery DC sides if you'll be near them.",
-      "Micro-hydro can deliver excellent baseload renewable electricity if the site has the head (vertical drop) and flow rate to support it. Unlike wind and PV, hydro runs 24/7 and tracks demand reasonably well. Practical issues: Environment Agency / Natural Resources Wales abstraction licensing, fish protection requirements, weir and intake construction cost, and connection to the property (often hundreds of metres of buried cable). The right site is rare; where it exists, micro-hydro is one of the best-performing renewables per pound spent.",
-      "Annual visual inspection (panels secure, free of physical damage, free of significant soiling); array frame and connections check (no corrosion, no loose mountings); cable inspection (UV degradation, rodent damage, MC4 connector integrity); inverter inspection (error log review, ventilation clear, no overheating signs); meter / monitoring check (datalog producing readings, expected output for season); signage check (durable warning signs still in place at consumer unit / meter / inverter / DC isolators). Periodic 5-year EICR for the electrical condition. Soiling cleaning may be needed in dusty / urban / coastal locations — specialist PV cleaners use deionised water.",
-      "Protection against electric shock shall be provided by a device which electrically disconnects the vehicle from the live conductors of the supply and from protective earth in accordance with Regulation 543.3.3.101(b) within 5 s in the event of the utilisation voltage at the charging point, between the line and neutral conductors, being greater than 253 V RMS or less than 207 V RMS. The device shall provide isolation and be selected in accordance with Table 537.4.",
+      'Micro-hydro can deliver excellent baseload renewable electricity if the site has the head (vertical drop) and flow rate to support it. Unlike wind and PV, hydro runs 24/7 and tracks demand reasonably well. Practical issues: Environment Agency / Natural Resources Wales abstraction licensing, fish protection requirements, weir and intake construction cost, and connection to the property (often hundreds of metres of buried cable). The right site is rare; where it exists, micro-hydro is one of the best-performing renewables per pound spent.',
+      'Annual visual inspection (panels secure, free of physical damage, free of significant soiling); array frame and connections check (no corrosion, no loose mountings); cable inspection (UV degradation, rodent damage, MC4 connector integrity); inverter inspection (error log review, ventilation clear, no overheating signs); meter / monitoring check (datalog producing readings, expected output for season); signage check (durable warning signs still in place at consumer unit / meter / inverter / DC isolators). Periodic 5-year EICR for the electrical condition. Soiling cleaning may be needed in dusty / urban / coastal locations — specialist PV cleaners use deionised water.',
+      'Protection against electric shock shall be provided by a device which electrically disconnects the vehicle from the live conductors of the supply and from protective earth in accordance with Regulation 543.3.3.101(b) within 5 s in the event of the utilisation voltage at the charging point, between the line and neutral conductors, being greater than 253 V RMS or less than 207 V RMS. The device shall provide isolation and be selected in accordance with Table 537.4.',
     ],
     correctAnswer: 0,
     explanation:
@@ -147,9 +146,9 @@ const quizQuestions = [
     question:
       "What's the difference between 'isolation' and 'switching off for mechanical maintenance' in BS 7671 terms, and which applies to fault diagnosis?",
     options: [
-      "The F-Gas Regulation imposes a phased reduction in the tonnes-CO2-equivalent of HFCs placed on the EU/UK market each year and bans certain high-GWP refrigerants in new equipment categories. R-410A has a GWP of around 2,088. R-32 sits around 675 and is a single-component refrigerant making service easier. R-290 (propane) has a GWP of around 3 and is essentially climate-neutral on the F-Gas scale, but is A3 flammable and brings ATEX and minimum-room-volume rules with it.",
+      'The F-Gas Regulation imposes a phased reduction in the tonnes-CO2-equivalent of HFCs placed on the EU/UK market each year and bans certain high-GWP refrigerants in new equipment categories. R-410A has a GWP of around 2,088. R-32 sits around 675 and is a single-component refrigerant making service easier. R-290 (propane) has a GWP of around 3 and is essentially climate-neutral on the F-Gas scale, but is A3 flammable and brings ATEX and minimum-room-volume rules with it.',
       "BS 7671 Chapter 46 distinguishes four switching functions: ISOLATION (Reg 462) — all live conductors disconnected, lockable in OFF position, designed to prevent re-energisation; SWITCHING OFF FOR MECHANICAL MAINTENANCE (Reg 463) — hand-operable, lockable, prevents accidental re-energisation; EMERGENCY SWITCHING (Reg 464) — fast-acting, immediately accessible, removes danger from personnel; FUNCTIONAL SWITCHING (Reg 465) — normal operation. For fault diagnosis you use ISOLATION every time. The breaker label and the actual function of the device must match — many older switches that look like isolators are actually only functional switches and don't satisfy Reg 462.",
-      "MCS MIS 3005 is the Microgeneration Certification Scheme installer standard for heat pump systems — covering air-source, ground-source and water-source heat pumps. It sets competence requirements for the installing firm (design competence, installation competence, commissioning competence), defines the heat-loss calculation methodology, sets the SCOP estimation requirement, and defines the customer documentation pack. MCS MIS 3005 sits alongside BS 7671 (electrical install standard) and the F-Gas Regulations (refrigerant competence). The customer needs the MCS certificate to access the Boiler Upgrade Scheme grant and the heat pump SEG-equivalent payment routes.",
+      'MCS MIS 3005 is the Microgeneration Certification Scheme installer standard for heat pump systems — covering air-source, ground-source and water-source heat pumps. It sets competence requirements for the installing firm (design competence, installation competence, commissioning competence), defines the heat-loss calculation methodology, sets the SCOP estimation requirement, and defines the customer documentation pack. MCS MIS 3005 sits alongside BS 7671 (electrical install standard) and the F-Gas Regulations (refrigerant competence). The customer needs the MCS certificate to access the Boiler Upgrade Scheme grant and the heat pump SEG-equivalent payment routes.',
       "Speak directly to the customer, identify yourself by name when you arrive and when you leave a room, describe what you're doing and where ('I'm just going to the consumer unit by the front door now'), don't move furniture or leave tools where they could be a trip hazard for the guide dog or the customer, ask before touching the guide dog (don't pet a working guide dog without asking), and offer to provide written documentation in large print, audio or accessible PDF as required. Equality Act 2010 makes this a service-provider duty.",
     ],
     correctAnswer: 1,
@@ -162,7 +161,7 @@ const quizQuestions = [
       "You've isolated a circuit, locked off, proved dead. While you're working, another operative arrives at the DB and starts to remove a different breaker. What should you do?",
     options: [
       "Use the scheme's documented appeals process first — every CPS publishes a complaints / appeals procedure that members must exhaust before any external challenge. Decisions are typically reviewed by an independent panel within the scheme. After that, if the suspension is alleged to be unfair / wrongful, civil action can theoretically follow but is rarely successful — scheme membership is contractual, the rules were signed up to on enrolment, and courts are reluctant to second-guess scheme decisions on technical compliance. Better strategy: remediate, demonstrate corrective action and re-apply for membership.",
-      "Reduce → reuse → recycle → recover → dispose. Reduce: keep equipment in service longer (annual maintenance prevents premature replacement). Reuse: reusable batteries (some EV battery cells are repurposed for second-life storage), reusable mounting hardware. Recycle: copper cabling, aluminium frames, steel components — established waste streams. Recover: refrigerant recovery (mandated), some plastics. Dispose: hazardous components (lithium-ion batteries, refrigerants, electronic boards) via authorised waste carriers under the Hazardous Waste Regulations and WEEE Regulations. The hierarchy is set out in the Waste (England and Wales) Regulations 2011 implementing the EU Waste Framework Directive.",
+      'Reduce → reuse → recycle → recover → dispose. Reduce: keep equipment in service longer (annual maintenance prevents premature replacement). Reuse: reusable batteries (some EV battery cells are repurposed for second-life storage), reusable mounting hardware. Recycle: copper cabling, aluminium frames, steel components — established waste streams. Recover: refrigerant recovery (mandated), some plastics. Dispose: hazardous components (lithium-ion batteries, refrigerants, electronic boards) via authorised waste carriers under the Hazardous Waste Regulations and WEEE Regulations. The hierarchy is set out in the Waste (England and Wales) Regulations 2011 implementing the EU Waste Framework Directive.',
       "Stop them and verify they understand what's locked off and why. Show them your padlock and tag. Confirm they're not about to remove your lock or restore your circuit. If they need to do work that affects YOUR isolation (e.g. they're investigating the busbar), the work must coordinate — both operatives' locks stay on, both operatives complete their work, both operatives remove their own locks. The 'multi-lock hasp' (Brady 65681 takes 6 padlocks) is designed for this — multiple operatives, one device, no operative removes their lock until they're personally finished.",
       "Modern EV chargers can leak smooth DC current under fault conditions — and a Type AC RCD won't trip on smooth DC. So Section 722 requires either a Type B RCD (which detects AC, pulsating DC and smooth DC) OR a Type A RCD plus an RDC-DD (a separate device that adds smooth-DC detection to a Type A RCD). The RDC-DD route is often cheaper than fitting a Type B RCD because Type A RCDs are widely available and inexpensive. The certified installer chooses the architecture; the customer doesn't see the difference but the regulatory compliance requires one or the other.",
     ],
@@ -173,7 +172,7 @@ const quizQuestions = [
   {
     id: 7,
     question:
-      "A fault investigation requires you to isolate the lighting circuit feeding a stairwell in a multi-occupancy building. What additional steps cover the public-safety implications?",
+      'A fault investigation requires you to isolate the lighting circuit feeding a stairwell in a multi-occupancy building. What additional steps cover the public-safety implications?',
     options: [
       "On TN-C-S, the neutral and protective earth share the PEN conductor between transformer and cut-out. If the PEN breaks anywhere upstream, the customer's neutral floats relative to the transformer star point. Customer's bonded metalwork (kitchen taps, sinks, radiators, EV charger chassis, all bonded to the customer earth terminal) rises toward phase voltage relative to true earth. RCD doesn't see it (no residual current — the lifted-neutral voltage flows through bonding network as L–E volt-drop, not as imbalance). First sign: tingle on metal taps or 30+ V N–E reading at cut-out. A4:2026 added explicit Open PEN protection requirements (Reg 411.3.3, especially for EV chargers).",
       "BS 7671 522.6 + Approved Document B / Part P require: (1) Cables in walls within 50 mm of the surface must be in a 'safe zone' (above socket level, vertical from socket / switch position, within 150 mm of ceiling / wall edge) OR mechanically protected (steel conduit, capping / channel, RCD-protected supply). (2) Cables BELOW 50 mm depth — no zone restriction. (3) Cables in plastered chases — capping (PVC channel) over the cable before plastering OR steel conduit. The chase depth and the cable protection are inspected during EICR; non-compliance is Code 2 (Potentially Dangerous) typically.",
@@ -187,10 +186,10 @@ const quizQuestions = [
   {
     id: 8,
     question:
-      "After fault correction, you restore supply to a circuit that was isolated for 90 minutes. The circuit feeds a 7.5 kW three-phase induction motor on a workshop extractor. What restart precaution applies?",
+      'After fault correction, you restore supply to a circuit that was isolated for 90 minutes. The circuit feeds a 7.5 kW three-phase induction motor on a workshop extractor. What restart precaution applies?',
     options: [
       "Three-phase induction motors with no inherent restart protection will RESTART AUTOMATICALLY when supply is restored. If anyone is near the motor, the impeller, the belt drive or the driven plant, they're in immediate danger. The standard precaution: (1) Verify the local motor isolator is OFF before restoring the upstream supply. (2) Restore upstream supply, retest. (3) Walk to the motor location, brief anyone nearby that you're about to restart, visually check the area is clear. (4) Operate the local isolator. (5) Confirm correct operation and rotation. BS 7671 463.1 / 463.2 (mechanical maintenance switching) and PUWER 1998 Reg 19 (isolation from sources of energy) both apply.",
-      "Research suggests neurodivergence — dyslexia, ADHD, and autism — may be more common in trade roles than the general population. Some studies suggest dyslexia at materially higher rates in trade and creative industries (the visual-spatial reasoning associated with dyslexia is often a strength in hands-on work). ADHD and autism prevalence in the trade is also frequently reported as elevated. The Equality Act 2010 reasonable-adjustments duty (s.20) applies where the condition has a substantial and long-term effect, and Sub 5.2 covers the practical adjustments in detail.",
+      'Research suggests neurodivergence — dyslexia, ADHD, and autism — may be more common in trade roles than the general population. Some studies suggest dyslexia at materially higher rates in trade and creative industries (the visual-spatial reasoning associated with dyslexia is often a strength in hands-on work). ADHD and autism prevalence in the trade is also frequently reported as elevated. The Equality Act 2010 reasonable-adjustments duty (s.20) applies where the condition has a substantial and long-term effect, and Sub 5.2 covers the practical adjustments in detail.',
       "(a) OTHER PERSONNEL — other trades on site lose lighting / power for tools, may need to stop work; the firm's lone-working procedure may need adjusting. (b) CUSTOMER/CLIENT — loss of business activity, freezer stock at risk, computers go down (data loss risk), contractual penalties on commercial sites, customer dissatisfaction. (c) PUBLIC — emergency exits may go dark, public-area lighting fails, accessible plant rooms become hazardous, security systems may shut down. (d) BUILDING SYSTEMS — fire alarm goes into fault (with audible alert), emergency lighting batteries enter discharge cycle, lift goes to ground floor and stops, BMS may fault and require manual reset, refrigeration cycles interrupt, motors may auto-restart on power restoration with safety implications.",
       "Re-make the termination properly, don't just re-tighten. The darkened conductor at the joint has surface oxidation and possibly partially-annealed copper from the heat — both increase contact resistance. The correct technique: (1) Cut back the conductor by 10–15 mm to remove the heat-affected length; (2) Strip fresh insulation; (3) Inspect the back-box and the socket terminal for melt damage — if the plastic is melted or charred, replace the back-box and/or the socket; (4) Re-terminate to manufacturer torque (1.2 Nm typical for MK Logic Plus 2.5 mm²); (5) Visual check that the conductor sits cleanly under the screw with no strands escaping; (6) IR test 500 V; (7) R1+R2 across the affected leg of the ring; (8) Zs at the affected socket. The temptation to 'just tighten' leaves heat-affected copper in the joint; the proper re-make replaces the affected length.",
     ],
@@ -202,27 +201,32 @@ const quizQuestions = [
 
 const faqs = [
   {
-    question: "Can I isolate at the consumer-unit main switch instead of the individual breaker, just to be safe?",
+    question:
+      'Can I isolate at the consumer-unit main switch instead of the individual breaker, just to be safe?',
     answer:
       "You can — and for some faults you MUST — but you have to weigh the impact. Full installation isolation kills every circuit including the freezer, the boiler, the alarm, the broadband router, the smart meter (which then takes 5–15 minutes to re-handshake on restore). For a simple radial-circuit fault, individual breaker isolation with a personal lock is normally enough and is more proportionate. The decision is part of your RAMS — what's the safety case AND what's the customer impact, and which is the smaller compromise?",
   },
   {
-    question: "What if the breaker I want to isolate doesn't have a lock-off mechanism — it's an old re-wireable fuse holder?",
+    question:
+      "What if the breaker I want to isolate doesn't have a lock-off mechanism — it's an old re-wireable fuse holder?",
     answer:
       "Three options. (1) Remove the fuse-link entirely and put it in your pocket / your toolbox — no-one can re-energise without it. Some firms supply a 'dummy' fuse-link with a lock-off slot for exactly this. (2) Apply a Brady 'wedge' lock-off that fits inside the fuse-holder cavity. (3) If neither is possible, isolate further upstream at a device that does lock off — typically the main switch. Whatever you do, the principle is unchanged: the circuit must be PROVABLY in the off state with a defence against accidental re-energisation. A hand-written note that says 'do not switch on' is not a defence.",
   },
   {
-    question: "The customer wants to keep their freezer running. Can I leave it on a temporary supply while I isolate the rest?",
+    question:
+      'The customer wants to keep their freezer running. Can I leave it on a temporary supply while I isolate the rest?',
     answer:
       "Yes, if you can do it safely. Standard approach: connect the freezer to a known-live socket on a different circuit via an extension lead, mark the lead with tape and a 'TEMPORARY — DO NOT REMOVE' label, document on the job sheet. The temporary supply must satisfy the same protection requirements (RCD on the host circuit, adequate cable rating). Don't run the extension across walkways or under doors where it can be damaged. After the work, restore the freezer to its original circuit and remove the temporary lead.",
   },
   {
-    question: "Why does it matter who removes the lock-off — surely anyone can if the circuit needs to be back on?",
+    question:
+      'Why does it matter who removes the lock-off — surely anyone can if the circuit needs to be back on?',
     answer:
       "It matters for two reasons. First — accountability. If someone other than you removes your lock and re-energises a circuit you thought was still safe, and you take a shock as a result, the prosecution will ask 'whose lock was removed by whom and why?'. The answer 'somebody removed it, I don't know who' is not defensible. Second — communication. Your lock means YOU are working on the circuit. Removing it without telling you means you might be in the middle of a termination when the supply comes back. Personal lock + personal removal is the only safe rule. Industry term — LOTO (lock out, tag out) — and it's universal.",
   },
   {
-    question: "If a circuit has a CIRCUIT BREAKER LOCK at the DB, do I still need my own personal padlock on top?",
+    question:
+      'If a circuit has a CIRCUIT BREAKER LOCK at the DB, do I still need my own personal padlock on top?',
     answer:
       "Yes. A built-in breaker lock is a circuit-control device — it stops the breaker being toggled accidentally. Your personal padlock is a personal-safety device — it identifies that YOU specifically are working on the circuit and only YOU can re-energise. The two have different purposes and the LOTO discipline requires both: lock the device AND apply the personal padlock + tag. On a multi-trade site this matters even more — your tag tells the next sparks, the maintenance fitter and the fire alarm engineer that the circuit is being worked on by a named person who hasn't yet finished.",
   },
@@ -238,443 +242,583 @@ export default function Sub3() {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
-      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
-        <PageFrame>
+    <HubPage>
+      <HubMasthead
+        section="Module 4 · Section 1 · Subsection 3"
+        title="Safe isolation in fault diagnosis"
+        backTo="/study-centre/apprentice/level3-module4-section1"
+      />
+      <HubBody>
+        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
+          Applying the JIB six-step in fault-diagnosis context — circuit, sub-main and full
+          installation isolation, multi-source disconnection (PV, EV, battery, generator), the
+          four-category impact assessment of loss of supply, and the BS 7671 distinction between
+          isolation and switching off for mechanical maintenance.
+        </p>
+
+        <TLDR
+          points={[
+            'Modern installations have multiple energy sources — PV, EV, battery, generator. Each needs its own isolation step. AC isolation alone leaves DC sources live.',
+            'BS 7671 Chapter 46 distinguishes four switching functions. Only ISOLATION (Reg 462 — lockable, prevents re-energisation) is acceptable for fault diagnosis.',
+            'Loss of supply has impact across four categories: other personnel, customer, public, building systems. Document the impact briefing before isolation, not after.',
+          ]}
+        />
+
+        <LearningOutcomes
+          outcomes={[
+            'Apply the JIB six-step safe isolation procedure to single-circuit, sub-main and full-installation isolation in fault-diagnosis context.',
+            'Identify all energy sources in a multi-source installation (PV, EV, battery, generator) and specify the isolation point for each.',
+            'Distinguish ISOLATION (BS 7671 Reg 462), switching off for mechanical maintenance (Reg 463), emergency switching (Reg 464) and functional switching (Reg 465).',
+            'Assess the impact of loss-of-supply across four categories: other personnel, customer/client, public, building systems.',
+            'Apply group lock-off (multi-lock hasp) where multiple operatives are working on the same isolation point.',
+            'Recognise the auto-restart hazard for motors on supply restoration and apply PUWER Reg 19 isolation discipline.',
+          ]}
+          initialVisibleCount={3}
+        />
+
+        <ContentEyebrow>Single-circuit isolation — the eight-step in detail</ContentEyebrow>
+
+        <ConceptBlock
+          title="The L3 single-circuit isolation procedure"
+          plainEnglish="Sub 1.2 introduced the JIB six-step. In fault-diagnosis context the procedure has eight micro-steps when you include the lead-in (identify) and the lead-out (retest). Every L3 practical exam tests this sequence. Learn it as muscle memory."
+        >
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>1. Identify</strong> from schedule, labels, customer information. Hypothesis
+              only.
+            </li>
+            <li>
+              <strong>2. Switch off</strong> the circuit's protective device. Confirm visually that
+              it\'s in the OFF position.
+            </li>
+            <li>
+              <strong>3. Lock-off</strong> with personal padlock and tag. Use a multi-lock hasp if
+              multiple operatives are working.
+            </li>
+            <li>
+              <strong>4. Prove tester</strong> on a known live source — Martindale GVD2 proving unit
+              OR a known-live socket on a different circuit.
+            </li>
+            <li>
+              <strong>5. Test work-point</strong> at the accessory or junction box. L–N, L–E, N–E.
+              All three must read zero on the GS38 two-pole.
+            </li>
+            <li>
+              <strong>6. Re-prove tester</strong> on the same known live source. Catches a tester
+              that has failed during the test.
+            </li>
+            <li>
+              <strong>7. Carry out work.</strong> Stay within the scope of the isolation; if the
+              work expands, re-isolate accordingly.
+            </li>
+            <li>
+              <strong>8. Retest and restore.</strong> Continuity of CPC, ring continuity (if a
+              ring), insulation resistance, polarity, then RCD trip-time on the protective device.
+              Remove personal padlock, restore supply, document.
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <VideoCard
+          url={videos.safeIsolation.url}
+          title={videos.safeIsolation.title}
+          channel={videos.safeIsolation.channel}
+          duration={videos.safeIsolation.duration}
+          topic={videos.safeIsolation.topic}
+        />
+
+        <RegsCallout
+          source="BS 7671:2018+A4:2026 — Regulations 462.1 (Provisions for isolation) and 537.2.4 (Devices for isolation — prevention of unwanted closure)"
+          clause={
+            <>
+              "462.1 Each electrical installation shall have provisions for isolation from each
+              supply. 537.2.4 Devices for isolation shall be selected and/or installed so as to
+              prevent unwanted or unintentional closure (see Regulation 462.3). This may be achieved
+              by locating the device in a lockable space or lockable enclosure or by padlocking or
+              by other suitable means."
+            </>
+          }
+          meaning={
+            <>
+              Two requirements work together. First &mdash; Reg 462.1 says every installation must
+              have provisions for isolation from each supply. Second &mdash; Reg 537.2.4 says the
+              isolation device itself must be selected and installed so it can&apos;t be
+              unintentionally closed (lockable enclosure, padlock or equivalent). The L3 apprentice
+              needs to know that &lsquo;isolation&rsquo; isn&apos;t just turning a switch off
+              &mdash; it&apos;s using a device that&apos;s designed and installed to stay off.
+            </>
+          }
+          cite="Source: BS 7671:2018+A4:2026 Part 4, Chapter 46, Regulations 462.1 and 537.2.4."
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>Multi-source installations</ContentEyebrow>
+
+        <ConceptBlock
+          title="Modern installations have multiple energy sources — each needs its own isolation"
+          plainEnglish="A residential installation in 2026 may have grid supply (TN-C-S), solar PV (DC up to 600 V), battery storage (DC up to 800 V), EV charger (back-feed via V2G in some installations), microCHP (back-feed AC), and a standby generator. Each is an independent energy source and each has its own isolation point. Killing the main switch only kills the grid input — everything else stays live until you isolate it separately."
+          onSite="The growth of low-carbon technology means most domestic CUs you\'ll work on by mid-decade will have at least one supplementary source. Knowing where to isolate each one is part of the L3 fault-diagnosis competence. Inverter-DC isolators are usually rotary devices on the wall next to the inverter (Santon, Enwitec, BPV); battery DC isolators are often inside the battery housing; generator isolation is usually a changeover switch with a manual lockable position."
+        >
+          <p>Isolation points for common multi-source installations:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Solar PV</strong> — AC isolator at the inverter output (BS 7671 712.537.2.2.1)
+              AND DC isolator between array and inverter input (Reg 712.537.2.2). Cover the array if
+              working in daylight to reduce DC voltage. Verify with DC-rated tester (Fluke T6-1000,
+              Megger MFT1741 set to DC).
+            </li>
+            <li>
+              <strong>EV charger</strong> — local isolator at the charger AND verify the EV is
+              unplugged. Modern EVSEs (Zappi, Ohme, Pod Point) have internal contactors but the
+              local isolator is the lockable point.
+            </li>
+            <li>
+              <strong>Battery storage</strong> — AC isolator at the inverter AND battery DC isolator
+              (often inside the cabinet, Tesla Powerwall has it on the side, GivEnergy and Solax
+              have similar). Battery DC voltage can be 48–800 V depending on system.
+            </li>
+            <li>
+              <strong>Standby generator</strong> — changeover switch in the MAINS-OFF / GEN-OFF
+              position, lock-off the generator manual start, disconnect the start battery if
+              extended work.
+            </li>
+            <li>
+              <strong>microCHP / fuel cell</strong> — AC isolator at the unit; some units have an
+              internal contactor that re-closes on grid restoration so lock-off is essential.
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <InlineCheck
+          id={checks[0].id}
+          question={checks[0].question}
+          options={checks[0].options}
+          correctIndex={checks[0].correctIndex}
+          explanation={checks[0].explanation}
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>Full-installation isolation</ContentEyebrow>
+
+        <ConceptBlock
+          title="When the safety case requires the whole property goes off"
+          onSite="Full isolation has the biggest customer impact and is rightly used sparingly — but when it\'s the right answer, the customer impact doesn\'t change the answer. The decision is a Reg 14 risk assessment in real time."
+        >
+          <p>Full installation isolation is required when:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>The fault is on the supply / cut-out / tails / main switch / busbar itself.</li>
+            <li>
+              You can\'t reliably identify which circuit feeds the fault location (e.g. a
+              downlighter that takes power from one circuit\'s L and another circuit\'s N — borrowed
+              neutral).
+            </li>
+            <li>
+              The work involves removing or refitting the consumer unit cover where the busbar is
+              exposed.
+            </li>
+            <li>
+              The fault has compromised the integrity of the CU — water ingress, burnt terminal
+              block, melted enclosure, signs of arcing.
+            </li>
+            <li>
+              The DB is not labelled or the labels are demonstrably wrong (no reliable way to
+              isolate just the affected circuit).
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <InlineCheck
+          id={checks[1].id}
+          question={checks[1].question}
+          options={checks[1].options}
+          correctIndex={checks[1].correctIndex}
+          explanation={checks[1].explanation}
+        />
+
+        <RegsCallout
+          source="BS 7671:2018+A4:2026 — Reg 537.2.4"
+          clause={
+            <>
+              "Devices for isolation shall be selected and/or installed so as to prevent unwanted or
+              unintentional closure (see Regulation 462.3). This may be achieved by locating the
+              device in a lockable space or lockable enclosure or by padlocking or by other suitable
+              means."
+            </>
+          }
+          meaning={
+            <>
+              Lock-off is mandated by BS 7671, not just by good practice. A padlock through the MCB
+              hasp, a captive-key main switch, a Brady SafeKey lockout box across the consumer unit
+              &mdash; pick one and use it every isolation, every time. An &ldquo;I just popped the
+              breaker off&rdquo; isolation does not satisfy 537.2.4.
+            </>
+          }
+          cite="Source: BS 7671:2018+A4:2026 — Reg 537.2.4."
+        />
+
+        <RegsCallout
+          source="BS 7671:2018+A4:2026 — Reg 514.13.1"
+          clause={
+            <>
+              "A warning notice clearly and durably marked with the words ‘Safety Electrical
+              Connection — Do Not Remove’ shall be securely fixed in a visible position at or near:
+              (a) the point of connection of every earthing conductor to an earth electrode; and (b)
+              the point of connection of every bonding conductor to an extraneous-conductive-part;
+              and (c) the main earthing terminal, where separate from main switchgear."
+            </>
+          }
+          meaning={
+            <>
+              On any isolation that touches the MET or main bonding (boilers, gas / water cocks,
+              sub-main isolation), the safety-electrical-connection labels must remain in place when
+              you put the installation back. If you&apos;ve had to remove a label to access a
+              connection, replace it before you sign the job off &mdash; missing labels are a Code 3
+              on a future EICR and a real hazard for the next sparks.
+            </>
+          }
+          cite="Source: BS 7671:2018+A4:2026 — Reg 514.13.1."
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>The four-category impact assessment</ContentEyebrow>
+
+        <ConceptBlock
+          title="What does this isolation do, beyond the circuit being worked on?"
+          plainEnglish="Loss of supply has consequences. A simple isolation on a small site can cascade into customer impact, public safety issues and building-systems faults. The four-category assessment is the structured way to think about consequences before flipping the breaker."
+        >
+          <p>The four categories on the 2357 ELTK07 1.2 syllabus:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Other personnel</strong> — other trades on site lose lighting / power for
+              tools; lone-working procedures may need adjusting; supervision arrangements may need
+              updating.
+            </li>
+            <li>
+              <strong>Customer / client</strong> — loss of business activity, freezer stock at risk,
+              computers go down (data loss risk), contractual penalties on commercial sites,
+              customer dissatisfaction.
+            </li>
+            <li>
+              <strong>Public</strong> — emergency exits may go dark, public-area lighting fails,
+              accessible plant rooms become hazardous, security systems may shut down, fire-alarm
+              route compromised.
+            </li>
+            <li>
+              <strong>Building systems</strong> — fire alarm fault, emergency lighting batteries
+              enter discharge, lift goes to ground floor, BMS may fault, refrigeration cycles
+              interrupt, motors may auto-restart.
+            </li>
+          </ul>
+          <p>
+            The standard practice is to brief the customer in writing on each category that applies,
+            get their acknowledgement, and document on the job sheet before isolation.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck
+          id={checks[2].id}
+          question={checks[2].question}
+          options={checks[2].options}
+          correctIndex={checks[2].correctIndex}
+          explanation={checks[2].explanation}
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>Where it goes wrong</ContentEyebrow>
+
+        <CommonMistake
+          title="Isolating only the AC side of a PV-equipped CU"
+          whatHappens={
+            <>
+              Apprentice arrives at a domestic property with a 4&nbsp;kWp solar PV system to
+              investigate an earth-leakage fault. They isolate at the main switch and prove dead at
+              the affected circuit\'s accessory. They start cutting back to a junction box. Halfway
+              through the cut they hit the inverter\'s DC input cable that runs through the same
+              containment. The DC side is at 480&nbsp;V (it\'s noon in June); the cut arcs, the
+              apprentice gets a DC arc-flash burn, and the inverter is ruined. Diagnosis: AC
+              isolation didn\'t kill the DC side of the PV system, and the apprentice\'s AC-only
+              tester didn\'t see the DC voltage on the cable being cut.
+            </>
+          }
+          doInstead={
+            <>
+              Identify ALL energy sources before isolation. Isolate AC and DC separately. Confirm
+              with a DC-rated voltage tester (Fluke T6-1000, Megger MFT1741 in DC mode) on any cable
+              that might carry DC. If unsure whether a cable is AC or DC, treat as live until
+              verified with the appropriate tester. Cover the PV array with an opaque sheet to drop
+              DC voltage to near-zero if you\'ll be working near DC cables for an extended period.
+            </>
+          }
+        />
+
+        <CommonMistake
+          title="Restoring supply without checking what restarts"
+          whatHappens={
+            <>
+              Apprentice has isolated a workshop sub-main to investigate a fault. After repair they
+              restore at the main switch. A 7.5&nbsp;kW three-phase induction motor on the lathe
+              restarts automatically (the contactor was left in the run state when supply went off,
+              and the holding circuit re-energises on power return). An apprentice machinist
+              standing at the lathe has their hand inside the chuck guard; the spindle starts; the
+              machinist loses two fingers. Cause: no check that the motor\'s local isolator was OFF
+              before upstream restoration.
+            </>
+          }
+          doInstead={
+            <>
+              Before restoring upstream supply, walk the area, identify every motor / pump / fan /
+              heating element on the affected circuit, ensure local isolators are OFF, brief anyone
+              in the work area. Restore upstream, then deliberately restart each motor at its local
+              isolator after confirming the area is clear. PUWER Reg 19 makes this a legal duty
+              &mdash; isolation from sources of energy AND verification that restart will not cause
+              injury.
+            </>
+          }
+        />
+
+        <Scenario
+          title="Multi-source domestic CU fault investigation"
+          situation={
+            <>
+              Customer reports a 30 mA RCD trip on the kitchen radial that resets briefly then trips
+              again. The Hager CU has main switch incomer, 6 RCBOs feeding the circuits, AND a
+              dedicated way feeding a Solis 4&nbsp;kW solar PV inverter (with a Givenergy
+              9.6&nbsp;kWh battery on a separate way), AND a way feeding an Ohme 7&nbsp;kW EV
+              charger. You need to investigate the kitchen circuit fault. Sun is shining, EV is
+              plugged in, battery is charging.
+            </>
+          }
+          whatToDo={
+            <>
+              (1) Brief the customer on the four-category impact &mdash; their freezer is on the
+              affected circuit, they\'ll lose 60&ndash;90 minutes of supply. Agree the timing. (2)
+              Make a list of all the energy sources: grid, PV, battery, EV. (3) Isolate the kitchen
+              RCBO, lock-off, prove dead at the work point, start investigating. (4) For this fault
+              you do NOT need to isolate the PV / battery / EV &mdash; their feeds run via separate
+              ways and don\'t share conductors with the kitchen circuit. BUT check the kitchen
+              circuit doesn\'t have a borrowed neutral from the PV feed (older installations
+              sometimes do). If it does, escalate to multi-source isolation. (5) Find and rectify
+              the fault. Retest with an MFT &mdash; insulation resistance, RCD trip-time, polarity.
+              (6) Restore, document, brief the customer.
+            </>
+          }
+          whyItMatters={
+            <>
+              Multi-source CUs are the new normal. The L3 apprentice has to think through the
+              isolation for every energy source independently, decide which ones the fault
+              investigation actually touches, and isolate accordingly. Over-isolating wastes
+              customer time; under-isolating risks lethal contact with a source that\'s still live.
+              The structured approach &mdash; identify every source, decide which the work touches,
+              isolate those &mdash; is the L3 step-up from the L2 \'just flip the main switch'
+              habit.
+            </>
+          }
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>Sub-main isolation</ContentEyebrow>
+
+        <ConceptBlock
+          title="When the fault is on a sub-main feeding a downstream DB"
+          plainEnglish="Sub-mains feed sub-distribution boards from the main DB. A fault on a sub-main affects every circuit on the downstream board. Isolation point: the upstream DB's protective device for that sub-main, locked-off, then prove dead at the downstream DB's incomer terminals before any work."
+          onSite="On commercial sites the sub-main is typically a 4 mm² to 25 mm² SWA cable feeding a sub-DB on a different floor or in a different building. The upstream protective device might be an MCCB (e.g. Schneider NSX series, ABB Tmax XT) rather than an MCB — locking off an MCCB usually requires a manufacturer's lock-off kit (Schneider PADLK or ABB OTPL). Check the lock-off device fits before isolating; some legacy MCCBs need a third-party adaptor."
+        >
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Identify both ends</strong> — confirm the sub-main goes from upstream device A
+              to downstream DB B (cable labelling, drawings, continuity test if cables are
+              unmarked).
+            </li>
+            <li>
+              <strong>Isolate at upstream</strong> — operate the upstream MCCB / switch-fuse,
+              lock-off with the manufacturer's kit + personal padlock + tag.
+            </li>
+            <li>
+              <strong>Prove dead at downstream</strong> — open the downstream DB cover, prove the
+              GS38 two-pole on a known live source, test L-N / L-E / N-E at the downstream DB's
+              incomer terminals. All zero before work starts.
+            </li>
+            <li>
+              <strong>Beware back-feed</strong> — on installations with on-site generation (PV,
+              battery, generator) downstream of the sub-main, the downstream DB can back-feed even
+              with the upstream isolated. Multi-source isolation procedures apply.
+            </li>
+            <li>
+              <strong>Re-prove at the end</strong> — after retest and restoration, re-prove the
+              tester. The upstream device may have changed state during the work (someone may have
+              operated it).
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <ContentEyebrow>BS 7671 Chapter 46 — the four switching functions</ContentEyebrow>
+
+        <ConceptBlock
+          title="Isolation, mechanical maintenance, emergency, functional — four jobs, four devices"
+          plainEnglish="BS 7671 Chapter 46 was completely revised at A4:2026. It distinguishes four switching functions and the L3 apprentice needs to know which device is rated for which function. The MCB on the consumer unit is rated for isolation (Reg 462) AND functional switching (Reg 465), but a rotary functional switch on a piece of plant is NOT rated for isolation — using it for fault-diagnosis isolation is a Chapter 46 breach."
+          onSite="Read the device label and the manufacturer data sheet. Look for the lock-off mechanism (mandatory for isolation per Reg 462.3); look for the breaking capacity rating; look for the BS reference number. If the device cannot lock off and prevent unintentional closure, it is not rated for isolation regardless of what the customer thinks. Isolate further upstream at a device that does meet Reg 462."
+        >
+          <p>The four functions, in plain L3 terms:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Isolation (Reg 462)</strong> — disconnects every live conductor, designed to
+              prevent re-energisation. Lock-off mandatory per Reg 462.3. Used for fault diagnosis,
+              alteration, addition, periodic inspection. Examples: main switch, distribution board
+              incomer with lock-off, RCBO with lock-off accessory.
+            </li>
+            <li>
+              <strong>Switching off for mechanical maintenance (Reg 463)</strong> — hand-operable,
+              lockable in OFF, prevents accidental re-energisation. Used when a non-electrician
+              needs to work on plant (cleaning a fan, replacing a belt). Local plant isolators are
+              typical examples.
+            </li>
+            <li>
+              <strong>Emergency switching (Reg 464 / 465.1)</strong> — fast-acting, immediately
+              accessible, removes danger from personnel. Mushroom-head red stop button on a
+              workshop, kill switch on a hob, pump-stop at a refrigeration room.
+            </li>
+            <li>
+              <strong>Functional switching (Reg 465)</strong> — normal operation control. Light
+              switches, MCB toggle for everyday on / off, contactor control. Not rated for
+              isolation; using one for isolation work is a Chapter 46 breach.
+            </li>
+          </ul>
+          <p>
+            Practical L3 check: before locking off, confirm the device is rated for isolation by
+            reading the label and the manufacturer data sheet. If in doubt, isolate upstream at a
+            device you know is rated. Cheap, generic functional-only switches still appear on legacy
+            installations and they look identical to isolators from across the room.
+          </p>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <ContentEyebrow>Documentation and records</ContentEyebrow>
+
+        <ConceptBlock
+          title="The isolation certificate and the fault-diagnosis record"
+          plainEnglish="Every safe isolation in fault diagnosis should be recorded — what was isolated, by whom, at what time, by what means, and when supply was restored. On commercial sites this is typically a formal isolation certificate (a one-page form). On domestic it might be a section on the firm's fault-diagnosis job sheet."
+          onSite="The record matters for two reasons. First — if a third party is injured during your isolation window, the certificate is your defence (you can show what was isolated and what was not). Second — if you're called back to the same site weeks later for an unrelated issue, the previous record tells you the layout, the labels and any quirks. NICEIC, NAPIT and ELECSA audit isolation records during surveillance visits."
+        >
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Isolation certificate fields</strong> — date, time on, time off, operative
+              name, equipment isolated, isolation point, lock-off applied (yes/no, padlock serial),
+              tester used (make / model / cal date), proven on (proving unit / known live source).
+            </li>
+            <li>
+              <strong>Fault-diagnosis record</strong> — symptom reported, hypothesis, tests
+              performed, results, root cause identified, remedial action, retest results, customer
+              briefing.
+            </li>
+            <li>
+              <strong>Photo evidence</strong> — most firms now expect a photo of the isolation
+              (lock-off applied to the breaker, tester reading zero on the work-point) on the job
+              sheet. Use the firm's job-management app (ServiceM8, Tradify, simPRO) or just send to
+              the office WhatsApp.
+            </li>
+            <li>
+              <strong>Retention</strong> — fault-diagnosis records typically retained for 7 years
+              (matches the EICR retention recommendation). Keep digital copies; paper degrades.
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <ContentEyebrow>Restoration and proof of safe restoration</ContentEyebrow>
+
+        <ConceptBlock
+          title="Restoring supply isn't just flipping the breaker back on"
+          plainEnglish="Before restoring after fault correction, you have to prove the circuit is safe to re-energise — continuity of CPC, R1+R2, insulation resistance, polarity, RCD trip-time. BS 7671 643 sets the dead-test sequence; live-test sequence is Zs and RCD trip-time. The MFT (Megger MFT1741+, Kewtech KT64+, Fluke 1664FC) does all of these."
+          onSite="The post-correction retest is non-negotiable. A repaired cable that you've crimped back together has to demonstrate insulation resistance ≥1 MΩ at 500 V (typically you'll see 200+ MΩ on a healthy circuit), CPC continuity matching design, polarity correct (L on the line terminal, N on the neutral), RCD trip within BS EN 61008 / 61009 limits (300 ms at 1×IΔn, 40 ms at 1×IΔn for a Type AC 30 mA RCD)."
+        >
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Dead-test sequence (BS 7671 643)</strong> — continuity of CPC and ring;
+              insulation resistance L-L, L-E, N-E at 500 V (at 250 V if electronic loads can't be
+              disconnected); polarity.
+            </li>
+            <li>
+              <strong>Live-test sequence</strong> — Zs at the furthest accessory (compare to design
+              value); RCD trip-time at 1× and 5× rated trip current; RCD ramp test (verify trip
+              current within 50-100% of rated value); functional test of any control gear.
+            </li>
+            <li>
+              <strong>Recording</strong> — the MFT (Megger MFT1741+, Fluke 1664FC) records every
+              reading with timestamp; download via PowerSuite (Megger), FlukeView Forms (Fluke), or
+              Patguard (Seaward) to produce a printable retest record.
+            </li>
+            <li>
+              <strong>Customer briefing on restoration</strong> — explain what was done, what tests
+              passed, any follow-up needed (e.g. "the original fault was a damaged cable in the
+              loft; I've repaired it and tested; the circuit is safe to use; you may want to
+              consider a CU upgrade in the next 5 years because the existing one is from 1996").
+            </li>
+            <li>
+              <strong>Update certificates</strong> — if remedial work was done, issue a Minor Works
+              Certificate (MWC) for single-circuit work or an EICR for multi-circuit. Issue a copy
+              to the customer.
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <FAQ items={faqs} />
+
+        <SectionRule />
+
+        <KeyTakeaways
+          points={[
+            'Single-circuit isolation in fault diagnosis is the eight-step JIB sequence: identify, switch off, lock-off, prove tester, test work-point, re-prove tester, carry out work, retest and restore.',
+            'Multi-source installations have multiple isolation points — PV (AC + DC), EV, battery (AC + DC), generator. Each needs its own step. AC isolation alone leaves DC sources live.',
+            "BS 7671 Reg 462 (isolation) requires lockable, designed-to-prevent re-energisation. Some older switches don't satisfy Reg 462 and need upstream isolation instead.",
+            'Full installation isolation is needed when the fault is on the supply / cut-out / busbar, when circuit ID is unreliable, when the CU is compromised, or when removing the CU cover.',
+            'Loss of supply has impact across four categories — other personnel, customer/client, public, building systems. Document the briefing before isolation, not after.',
+            "Multi-operative isolation uses a multi-lock hasp (Brady 65681, Master Lock 421). Each operative attaches their own padlock; no operative removes anyone else's lock.",
+            'Auto-restart of motors on supply restoration is a major cause of post-fault injuries. PUWER Reg 19 requires local isolators OFF before upstream restoration.',
+            'Personal padlock + tag is a personal-safety device, not just a circuit-control device. Only the operative who applied the lock removes it. LOTO discipline is universal.',
+          ]}
+        />
+
+        <Quiz
+          title="Safe isolation in fault diagnosis — knowledge check"
+          questions={quizQuestions}
+        />
+
+        <div className="grid grid-cols-2 gap-3 pt-2">
           <button
-            onClick={() => navigate('/study-centre/apprentice/level3-module4-section1')}
-            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            onClick={() => navigate('/study-centre/apprentice/level3-module4-section1-2')}
+            className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
           >
-            <ArrowLeft className="h-4 w-4" /> Section 1
+            <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+              <ChevronLeft className="h-3 w-3" /> Previous
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-white truncate">
+              1.2 H&S framework
+            </div>
           </button>
-
-          <PageHero
-            eyebrow="Module 4 · Section 1 · Subsection 3"
-            title="Safe isolation in fault diagnosis"
-            description="Applying the JIB six-step in fault-diagnosis context — circuit, sub-main and full installation isolation, multi-source disconnection (PV, EV, battery, generator), the four-category impact assessment of loss of supply, and the BS 7671 distinction between isolation and switching off for mechanical maintenance."
-            tone="emerald"
-          />
-
-          <TLDR
-            points={[
-              "Modern installations have multiple energy sources — PV, EV, battery, generator. Each needs its own isolation step. AC isolation alone leaves DC sources live.",
-              "BS 7671 Chapter 46 distinguishes four switching functions. Only ISOLATION (Reg 462 — lockable, prevents re-energisation) is acceptable for fault diagnosis.",
-              "Loss of supply has impact across four categories: other personnel, customer, public, building systems. Document the impact briefing before isolation, not after.",
-            ]}
-          />
-
-          <LearningOutcomes
-            outcomes={[
-              "Apply the JIB six-step safe isolation procedure to single-circuit, sub-main and full-installation isolation in fault-diagnosis context.",
-              "Identify all energy sources in a multi-source installation (PV, EV, battery, generator) and specify the isolation point for each.",
-              "Distinguish ISOLATION (BS 7671 Reg 462), switching off for mechanical maintenance (Reg 463), emergency switching (Reg 464) and functional switching (Reg 465).",
-              "Assess the impact of loss-of-supply across four categories: other personnel, customer/client, public, building systems.",
-              "Apply group lock-off (multi-lock hasp) where multiple operatives are working on the same isolation point.",
-              "Recognise the auto-restart hazard for motors on supply restoration and apply PUWER Reg 19 isolation discipline.",
-            ]}
-            initialVisibleCount={3}
-          />
-
-          <ContentEyebrow>Single-circuit isolation — the eight-step in detail</ContentEyebrow>
-
-          <ConceptBlock
-            title="The L3 single-circuit isolation procedure"
-            plainEnglish="Sub 1.2 introduced the JIB six-step. In fault-diagnosis context the procedure has eight micro-steps when you include the lead-in (identify) and the lead-out (retest). Every L3 practical exam tests this sequence. Learn it as muscle memory."
+          <button
+            onClick={() => navigate('/study-centre/apprentice/level3-module4-section1-4')}
+            className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
           >
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>1. Identify</strong> from schedule, labels, customer information. Hypothesis only.</li>
-              <li><strong>2. Switch off</strong> the circuit's protective device. Confirm visually that it\'s in the OFF position.</li>
-              <li><strong>3. Lock-off</strong> with personal padlock and tag. Use a multi-lock hasp if multiple operatives are working.</li>
-              <li><strong>4. Prove tester</strong> on a known live source — Martindale GVD2 proving unit OR a known-live socket on a different circuit.</li>
-              <li><strong>5. Test work-point</strong> at the accessory or junction box. L–N, L–E, N–E. All three must read zero on the GS38 two-pole.</li>
-              <li><strong>6. Re-prove tester</strong> on the same known live source. Catches a tester that has failed during the test.</li>
-              <li><strong>7. Carry out work.</strong> Stay within the scope of the isolation; if the work expands, re-isolate accordingly.</li>
-              <li><strong>8. Retest and restore.</strong> Continuity of CPC, ring continuity (if a ring), insulation resistance, polarity, then RCD trip-time on the protective device. Remove personal padlock, restore supply, document.</li>
-            </ul>
-          </ConceptBlock>
-
-          <VideoCard
-            url={videos.safeIsolation.url}
-            title={videos.safeIsolation.title}
-            channel={videos.safeIsolation.channel}
-            duration={videos.safeIsolation.duration}
-            topic={videos.safeIsolation.topic}
-          />
-
-          <RegsCallout
-            source="BS 7671:2018+A4:2026 — Regulations 462.1 (Provisions for isolation) and 537.2.4 (Devices for isolation — prevention of unwanted closure)"
-            clause={
-              <>
-                "462.1 Each electrical installation shall have provisions for isolation from each supply. 537.2.4 Devices for isolation shall be selected and/or installed so as to prevent unwanted or unintentional closure (see Regulation 462.3). This may be achieved by locating the device in a lockable space or lockable enclosure or by padlocking or by other suitable means."
-              </>
-            }
-            meaning={
-              <>
-                Two requirements work together. First &mdash; Reg 462.1 says every installation must have provisions for isolation from each supply. Second &mdash; Reg 537.2.4 says the isolation device itself must be selected and installed so it can&apos;t be unintentionally closed (lockable enclosure, padlock or equivalent). The L3 apprentice needs to know that &lsquo;isolation&rsquo; isn&apos;t just turning a switch off &mdash; it&apos;s using a device that&apos;s designed and installed to stay off.
-              </>
-            }
-            cite="Source: BS 7671:2018+A4:2026 Part 4, Chapter 46, Regulations 462.1 and 537.2.4."
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>Multi-source installations</ContentEyebrow>
-
-          <ConceptBlock
-            title="Modern installations have multiple energy sources — each needs its own isolation"
-            plainEnglish="A residential installation in 2026 may have grid supply (TN-C-S), solar PV (DC up to 600 V), battery storage (DC up to 800 V), EV charger (back-feed via V2G in some installations), microCHP (back-feed AC), and a standby generator. Each is an independent energy source and each has its own isolation point. Killing the main switch only kills the grid input — everything else stays live until you isolate it separately."
-            onSite="The growth of low-carbon technology means most domestic CUs you\'ll work on by mid-decade will have at least one supplementary source. Knowing where to isolate each one is part of the L3 fault-diagnosis competence. Inverter-DC isolators are usually rotary devices on the wall next to the inverter (Santon, Enwitec, BPV); battery DC isolators are often inside the battery housing; generator isolation is usually a changeover switch with a manual lockable position."
-          >
-            <p>
-              Isolation points for common multi-source installations:
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Solar PV</strong> — AC isolator at the inverter output (BS 7671 712.537.2.2.1) AND DC isolator between array and inverter input (Reg 712.537.2.2). Cover the array if working in daylight to reduce DC voltage. Verify with DC-rated tester (Fluke T6-1000, Megger MFT1741 set to DC).</li>
-              <li><strong>EV charger</strong> — local isolator at the charger AND verify the EV is unplugged. Modern EVSEs (Zappi, Ohme, Pod Point) have internal contactors but the local isolator is the lockable point.</li>
-              <li><strong>Battery storage</strong> — AC isolator at the inverter AND battery DC isolator (often inside the cabinet, Tesla Powerwall has it on the side, GivEnergy and Solax have similar). Battery DC voltage can be 48–800 V depending on system.</li>
-              <li><strong>Standby generator</strong> — changeover switch in the MAINS-OFF / GEN-OFF position, lock-off the generator manual start, disconnect the start battery if extended work.</li>
-              <li><strong>microCHP / fuel cell</strong> — AC isolator at the unit; some units have an internal contactor that re-closes on grid restoration so lock-off is essential.</li>
-            </ul>
-          </ConceptBlock>
-
-          <InlineCheck
-            id={checks[0].id}
-            question={checks[0].question}
-            options={checks[0].options}
-            correctIndex={checks[0].correctIndex}
-            explanation={checks[0].explanation}
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>Full-installation isolation</ContentEyebrow>
-
-          <ConceptBlock
-            title="When the safety case requires the whole property goes off"
-            onSite="Full isolation has the biggest customer impact and is rightly used sparingly — but when it\'s the right answer, the customer impact doesn\'t change the answer. The decision is a Reg 14 risk assessment in real time."
-          >
-            <p>
-              Full installation isolation is required when:
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>The fault is on the supply / cut-out / tails / main switch / busbar itself.</li>
-              <li>You can\'t reliably identify which circuit feeds the fault location (e.g. a downlighter that takes power from one circuit\'s L and another circuit\'s N — borrowed neutral).</li>
-              <li>The work involves removing or refitting the consumer unit cover where the busbar is exposed.</li>
-              <li>The fault has compromised the integrity of the CU — water ingress, burnt terminal block, melted enclosure, signs of arcing.</li>
-              <li>The DB is not labelled or the labels are demonstrably wrong (no reliable way to isolate just the affected circuit).</li>
-            </ul>
-          </ConceptBlock>
-
-          <InlineCheck
-            id={checks[1].id}
-            question={checks[1].question}
-            options={checks[1].options}
-            correctIndex={checks[1].correctIndex}
-            explanation={checks[1].explanation}
-          />
-
-          <RegsCallout
-            source="BS 7671:2018+A4:2026 — Reg 537.2.4"
-            clause={
-              <>
-                "Devices for isolation shall be selected and/or installed so as to prevent unwanted or unintentional closure (see Regulation 462.3). This may be achieved by locating the device in a lockable space or lockable enclosure or by padlocking or by other suitable means."
-              </>
-            }
-            meaning={
-              <>
-                Lock-off is mandated by BS 7671, not just by good practice. A padlock through the MCB hasp, a captive-key main switch, a Brady SafeKey lockout box across the consumer unit &mdash; pick one and use it every isolation, every time. An &ldquo;I just popped the breaker off&rdquo; isolation does not satisfy 537.2.4.
-              </>
-            }
-            cite="Source: BS 7671:2018+A4:2026 — Reg 537.2.4."
-          />
-
-          <RegsCallout
-            source="BS 7671:2018+A4:2026 — Reg 514.13.1"
-            clause={
-              <>
-                "A warning notice clearly and durably marked with the words ‘Safety Electrical Connection — Do Not Remove’ shall be securely fixed in a visible position at or near: (a) the point of connection of every earthing conductor to an earth electrode; and (b) the point of connection of every bonding conductor to an extraneous-conductive-part; and (c) the main earthing terminal, where separate from main switchgear."
-              </>
-            }
-            meaning={
-              <>
-                On any isolation that touches the MET or main bonding (boilers, gas / water cocks, sub-main isolation), the safety-electrical-connection labels must remain in place when you put the installation back. If you&apos;ve had to remove a label to access a connection, replace it before you sign the job off &mdash; missing labels are a Code 3 on a future EICR and a real hazard for the next sparks.
-              </>
-            }
-            cite="Source: BS 7671:2018+A4:2026 — Reg 514.13.1."
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>The four-category impact assessment</ContentEyebrow>
-
-          <ConceptBlock
-            title="What does this isolation do, beyond the circuit being worked on?"
-            plainEnglish="Loss of supply has consequences. A simple isolation on a small site can cascade into customer impact, public safety issues and building-systems faults. The four-category assessment is the structured way to think about consequences before flipping the breaker."
-          >
-            <p>
-              The four categories on the 2357 ELTK07 1.2 syllabus:
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Other personnel</strong> — other trades on site lose lighting / power for tools; lone-working procedures may need adjusting; supervision arrangements may need updating.</li>
-              <li><strong>Customer / client</strong> — loss of business activity, freezer stock at risk, computers go down (data loss risk), contractual penalties on commercial sites, customer dissatisfaction.</li>
-              <li><strong>Public</strong> — emergency exits may go dark, public-area lighting fails, accessible plant rooms become hazardous, security systems may shut down, fire-alarm route compromised.</li>
-              <li><strong>Building systems</strong> — fire alarm fault, emergency lighting batteries enter discharge, lift goes to ground floor, BMS may fault, refrigeration cycles interrupt, motors may auto-restart.</li>
-            </ul>
-            <p>
-              The standard practice is to brief the customer in writing on each category that applies, get their acknowledgement, and document on the job sheet before isolation.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck
-            id={checks[2].id}
-            question={checks[2].question}
-            options={checks[2].options}
-            correctIndex={checks[2].correctIndex}
-            explanation={checks[2].explanation}
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>Where it goes wrong</ContentEyebrow>
-
-          <CommonMistake
-            title="Isolating only the AC side of a PV-equipped CU"
-            whatHappens={
-              <>
-                Apprentice arrives at a domestic property with a 4&nbsp;kWp solar PV system to
-                investigate an earth-leakage fault. They isolate at the main switch and prove dead
-                at the affected circuit\'s accessory. They start cutting back to a junction box.
-                Halfway through the cut they hit the inverter\'s DC input cable that runs through
-                the same containment. The DC side is at 480&nbsp;V (it\'s noon in June); the cut
-                arcs, the apprentice gets a DC arc-flash burn, and the inverter is ruined.
-                Diagnosis: AC isolation didn\'t kill the DC side of the PV system, and the
-                apprentice\'s AC-only tester didn\'t see the DC voltage on the cable being cut.
-              </>
-            }
-            doInstead={
-              <>
-                Identify ALL energy sources before isolation. Isolate AC and DC separately.
-                Confirm with a DC-rated voltage tester (Fluke T6-1000, Megger MFT1741 in DC mode)
-                on any cable that might carry DC. If unsure whether a cable is AC or DC, treat as
-                live until verified with the appropriate tester. Cover the PV array with an opaque
-                sheet to drop DC voltage to near-zero if you\'ll be working near DC cables for an
-                extended period.
-              </>
-            }
-          />
-
-          <CommonMistake
-            title="Restoring supply without checking what restarts"
-            whatHappens={
-              <>
-                Apprentice has isolated a workshop sub-main to investigate a fault. After repair
-                they restore at the main switch. A 7.5&nbsp;kW three-phase induction motor on the
-                lathe restarts automatically (the contactor was left in the run state when supply
-                went off, and the holding circuit re-energises on power return). An apprentice
-                machinist standing at the lathe has their hand inside the chuck guard; the
-                spindle starts; the machinist loses two fingers. Cause: no check that the motor\'s
-                local isolator was OFF before upstream restoration.
-              </>
-            }
-            doInstead={
-              <>
-                Before restoring upstream supply, walk the area, identify every motor / pump / fan
-                / heating element on the affected circuit, ensure local isolators are OFF, brief
-                anyone in the work area. Restore upstream, then deliberately restart each motor at
-                its local isolator after confirming the area is clear. PUWER Reg 19 makes this a
-                legal duty &mdash; isolation from sources of energy AND verification that restart
-                will not cause injury.
-              </>
-            }
-          />
-
-          <Scenario
-            title="Multi-source domestic CU fault investigation"
-            situation={
-              <>
-                Customer reports a 30 mA RCD trip on the kitchen radial that resets briefly then
-                trips again. The Hager CU has main switch incomer, 6 RCBOs feeding the circuits,
-                AND a dedicated way feeding a Solis 4&nbsp;kW solar PV inverter (with a Givenergy
-                9.6&nbsp;kWh battery on a separate way), AND a way feeding an Ohme 7&nbsp;kW EV
-                charger. You need to investigate the kitchen circuit fault. Sun is shining, EV is
-                plugged in, battery is charging.
-              </>
-            }
-            whatToDo={
-              <>
-                (1) Brief the customer on the four-category impact &mdash; their freezer is on the
-                affected circuit, they\'ll lose 60&ndash;90 minutes of supply. Agree the timing.
-                (2) Make a list of all the energy sources: grid, PV, battery, EV. (3) Isolate the
-                kitchen RCBO, lock-off, prove dead at the work point, start investigating. (4) For
-                this fault you do NOT need to isolate the PV / battery / EV &mdash; their feeds
-                run via separate ways and don\'t share conductors with the kitchen circuit. BUT
-                check the kitchen circuit doesn\'t have a borrowed neutral from the PV feed (older
-                installations sometimes do). If it does, escalate to multi-source isolation. (5)
-                Find and rectify the fault. Retest with an MFT &mdash; insulation resistance, RCD
-                trip-time, polarity. (6) Restore, document, brief the customer.
-              </>
-            }
-            whyItMatters={
-              <>
-                Multi-source CUs are the new normal. The L3 apprentice has to think through the
-                isolation for every energy source independently, decide which ones the fault
-                investigation actually touches, and isolate accordingly. Over-isolating wastes
-                customer time; under-isolating risks lethal contact with a source that\'s still
-                live. The structured approach &mdash; identify every source, decide which the
-                work touches, isolate those &mdash; is the L3 step-up from the L2 \'just flip the
-                main switch' habit.
-              </>
-            }
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>Sub-main isolation</ContentEyebrow>
-
-          <ConceptBlock
-            title="When the fault is on a sub-main feeding a downstream DB"
-            plainEnglish="Sub-mains feed sub-distribution boards from the main DB. A fault on a sub-main affects every circuit on the downstream board. Isolation point: the upstream DB's protective device for that sub-main, locked-off, then prove dead at the downstream DB's incomer terminals before any work."
-            onSite="On commercial sites the sub-main is typically a 4 mm² to 25 mm² SWA cable feeding a sub-DB on a different floor or in a different building. The upstream protective device might be an MCCB (e.g. Schneider NSX series, ABB Tmax XT) rather than an MCB — locking off an MCCB usually requires a manufacturer's lock-off kit (Schneider PADLK or ABB OTPL). Check the lock-off device fits before isolating; some legacy MCCBs need a third-party adaptor."
-          >
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Identify both ends</strong> — confirm the sub-main goes from upstream device A to downstream DB B (cable labelling, drawings, continuity test if cables are unmarked).</li>
-              <li><strong>Isolate at upstream</strong> — operate the upstream MCCB / switch-fuse, lock-off with the manufacturer's kit + personal padlock + tag.</li>
-              <li><strong>Prove dead at downstream</strong> — open the downstream DB cover, prove the GS38 two-pole on a known live source, test L-N / L-E / N-E at the downstream DB's incomer terminals. All zero before work starts.</li>
-              <li><strong>Beware back-feed</strong> — on installations with on-site generation (PV, battery, generator) downstream of the sub-main, the downstream DB can back-feed even with the upstream isolated. Multi-source isolation procedures apply.</li>
-              <li><strong>Re-prove at the end</strong> — after retest and restoration, re-prove the tester. The upstream device may have changed state during the work (someone may have operated it).</li>
-            </ul>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <ContentEyebrow>BS 7671 Chapter 46 — the four switching functions</ContentEyebrow>
-
-          <ConceptBlock
-            title="Isolation, mechanical maintenance, emergency, functional — four jobs, four devices"
-            plainEnglish="BS 7671 Chapter 46 was completely revised at A4:2026. It distinguishes four switching functions and the L3 apprentice needs to know which device is rated for which function. The MCB on the consumer unit is rated for isolation (Reg 462) AND functional switching (Reg 465), but a rotary functional switch on a piece of plant is NOT rated for isolation — using it for fault-diagnosis isolation is a Chapter 46 breach."
-            onSite="Read the device label and the manufacturer data sheet. Look for the lock-off mechanism (mandatory for isolation per Reg 462.3); look for the breaking capacity rating; look for the BS reference number. If the device cannot lock off and prevent unintentional closure, it is not rated for isolation regardless of what the customer thinks. Isolate further upstream at a device that does meet Reg 462."
-          >
-            <p>
-              The four functions, in plain L3 terms:
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Isolation (Reg 462)</strong> — disconnects every live conductor,
-                designed to prevent re-energisation. Lock-off mandatory per Reg 462.3.
-                Used for fault diagnosis, alteration, addition, periodic inspection.
-                Examples: main switch, distribution board incomer with lock-off, RCBO
-                with lock-off accessory.
-              </li>
-              <li>
-                <strong>Switching off for mechanical maintenance (Reg 463)</strong> —
-                hand-operable, lockable in OFF, prevents accidental re-energisation. Used
-                when a non-electrician needs to work on plant (cleaning a fan, replacing
-                a belt). Local plant isolators are typical examples.
-              </li>
-              <li>
-                <strong>Emergency switching (Reg 464 / 465.1)</strong> — fast-acting,
-                immediately accessible, removes danger from personnel. Mushroom-head red
-                stop button on a workshop, kill switch on a hob, pump-stop at a
-                refrigeration room.
-              </li>
-              <li>
-                <strong>Functional switching (Reg 465)</strong> — normal operation
-                control. Light switches, MCB toggle for everyday on / off, contactor
-                control. Not rated for isolation; using one for isolation work is a
-                Chapter 46 breach.
-              </li>
-            </ul>
-            <p>
-              Practical L3 check: before locking off, confirm the device is rated for
-              isolation by reading the label and the manufacturer data sheet. If in doubt,
-              isolate upstream at a device you know is rated. Cheap, generic
-              functional-only switches still appear on legacy installations and they look
-              identical to isolators from across the room.
-            </p>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <ContentEyebrow>Documentation and records</ContentEyebrow>
-
-          <ConceptBlock
-            title="The isolation certificate and the fault-diagnosis record"
-            plainEnglish="Every safe isolation in fault diagnosis should be recorded — what was isolated, by whom, at what time, by what means, and when supply was restored. On commercial sites this is typically a formal isolation certificate (a one-page form). On domestic it might be a section on the firm's fault-diagnosis job sheet."
-            onSite="The record matters for two reasons. First — if a third party is injured during your isolation window, the certificate is your defence (you can show what was isolated and what was not). Second — if you're called back to the same site weeks later for an unrelated issue, the previous record tells you the layout, the labels and any quirks. NICEIC, NAPIT and ELECSA audit isolation records during surveillance visits."
-          >
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Isolation certificate fields</strong> — date, time on, time off, operative name, equipment isolated, isolation point, lock-off applied (yes/no, padlock serial), tester used (make / model / cal date), proven on (proving unit / known live source).</li>
-              <li><strong>Fault-diagnosis record</strong> — symptom reported, hypothesis, tests performed, results, root cause identified, remedial action, retest results, customer briefing.</li>
-              <li><strong>Photo evidence</strong> — most firms now expect a photo of the isolation (lock-off applied to the breaker, tester reading zero on the work-point) on the job sheet. Use the firm's job-management app (ServiceM8, Tradify, simPRO) or just send to the office WhatsApp.</li>
-              <li><strong>Retention</strong> — fault-diagnosis records typically retained for 7 years (matches the EICR retention recommendation). Keep digital copies; paper degrades.</li>
-            </ul>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <ContentEyebrow>Restoration and proof of safe restoration</ContentEyebrow>
-
-          <ConceptBlock
-            title="Restoring supply isn't just flipping the breaker back on"
-            plainEnglish="Before restoring after fault correction, you have to prove the circuit is safe to re-energise — continuity of CPC, R1+R2, insulation resistance, polarity, RCD trip-time. BS 7671 643 sets the dead-test sequence; live-test sequence is Zs and RCD trip-time. The MFT (Megger MFT1741+, Kewtech KT64+, Fluke 1664FC) does all of these."
-            onSite="The post-correction retest is non-negotiable. A repaired cable that you've crimped back together has to demonstrate insulation resistance ≥1 MΩ at 500 V (typically you'll see 200+ MΩ on a healthy circuit), CPC continuity matching design, polarity correct (L on the line terminal, N on the neutral), RCD trip within BS EN 61008 / 61009 limits (300 ms at 1×IΔn, 40 ms at 1×IΔn for a Type AC 30 mA RCD)."
-          >
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Dead-test sequence (BS 7671 643)</strong> — continuity of CPC and ring; insulation resistance L-L, L-E, N-E at 500 V (at 250 V if electronic loads can't be disconnected); polarity.</li>
-              <li><strong>Live-test sequence</strong> — Zs at the furthest accessory (compare to design value); RCD trip-time at 1× and 5× rated trip current; RCD ramp test (verify trip current within 50-100% of rated value); functional test of any control gear.</li>
-              <li><strong>Recording</strong> — the MFT (Megger MFT1741+, Fluke 1664FC) records every reading with timestamp; download via PowerSuite (Megger), FlukeView Forms (Fluke), or Patguard (Seaward) to produce a printable retest record.</li>
-              <li><strong>Customer briefing on restoration</strong> — explain what was done, what tests passed, any follow-up needed (e.g. "the original fault was a damaged cable in the loft; I've repaired it and tested; the circuit is safe to use; you may want to consider a CU upgrade in the next 5 years because the existing one is from 1996").</li>
-              <li><strong>Update certificates</strong> — if remedial work was done, issue a Minor Works Certificate (MWC) for single-circuit work or an EICR for multi-circuit. Issue a copy to the customer.</li>
-            </ul>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <FAQ items={faqs} />
-
-          <SectionRule />
-
-          <KeyTakeaways
-            points={[
-              "Single-circuit isolation in fault diagnosis is the eight-step JIB sequence: identify, switch off, lock-off, prove tester, test work-point, re-prove tester, carry out work, retest and restore.",
-              "Multi-source installations have multiple isolation points — PV (AC + DC), EV, battery (AC + DC), generator. Each needs its own step. AC isolation alone leaves DC sources live.",
-              "BS 7671 Reg 462 (isolation) requires lockable, designed-to-prevent re-energisation. Some older switches don't satisfy Reg 462 and need upstream isolation instead.",
-              "Full installation isolation is needed when the fault is on the supply / cut-out / busbar, when circuit ID is unreliable, when the CU is compromised, or when removing the CU cover.",
-              "Loss of supply has impact across four categories — other personnel, customer/client, public, building systems. Document the briefing before isolation, not after.",
-              "Multi-operative isolation uses a multi-lock hasp (Brady 65681, Master Lock 421). Each operative attaches their own padlock; no operative removes anyone else's lock.",
-              "Auto-restart of motors on supply restoration is a major cause of post-fault injuries. PUWER Reg 19 requires local isolators OFF before upstream restoration.",
-              "Personal padlock + tag is a personal-safety device, not just a circuit-control device. Only the operative who applied the lock removes it. LOTO discipline is universal.",
-            ]}
-          />
-
-          <Quiz title="Safe isolation in fault diagnosis — knowledge check" questions={quizQuestions} />
-
-          <div className="grid grid-cols-2 gap-3 pt-2">
-            <button
-              onClick={() => navigate('/study-centre/apprentice/level3-module4-section1-2')}
-              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
-                <ChevronLeft className="h-3 w-3" /> Previous
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-white truncate">
-                1.2 H&S framework
-              </div>
-            </button>
-            <button
-              onClick={() => navigate('/study-centre/apprentice/level3-module4-section1-4')}
-              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
-                Next subsection <ChevronRight className="h-3 w-3" />
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-black truncate">
-                1.4 Safe working procedures
-              </div>
-            </button>
-          </div>
-        </PageFrame>
-      </div>
-    </div>
+            <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+              Next subsection <ChevronRight className="h-3 w-3" />
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-black truncate">
+              1.4 Safe working procedures
+            </div>
+          </button>
+        </div>
+      </HubBody>
+    </HubPage>
   );
 }

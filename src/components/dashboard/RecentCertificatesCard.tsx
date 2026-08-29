@@ -56,6 +56,12 @@ const getTypeLabel = (type: string, data?: Record<string, unknown>) => {
       return 'SAFE ISO';
     case 'board-schedule':
       return 'BOARD SCH';
+    case 'visual-condition':
+      return 'VISUAL';
+    case 'routine-inspection':
+      return 'ROUTINE';
+    case 'pre-purchase-survey':
+      return 'SURVEY';
     case 'limitation-notice':
       return 'LIMITATION';
     case 'non-compliance-notice':

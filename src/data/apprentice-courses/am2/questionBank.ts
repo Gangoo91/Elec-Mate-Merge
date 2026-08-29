@@ -13,9 +13,9 @@ export interface AM2Question {
   topic: string;
   category:
     | 'Health & Safety'
-    | 'BS7671 Fundamentals'
-    | 'BS7671 Selection & Erection'
-    | 'BS7671 Inspection & Testing'
+    | 'BS 7671 Fundamentals'
+    | 'BS 7671 Selection & Erection'
+    | 'BS 7671 Inspection & Testing'
     | 'Building Regulations'
     | 'Safe Isolation'
     | 'Fault Finding';
@@ -639,7 +639,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Scope',
     difficulty: 'basic',
     topic: 'Application',
-    category: 'BS7671 Fundamentals',
+    category: 'BS 7671 Fundamentals',
   },
   {
     id: 72,
@@ -656,7 +656,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Definitions',
     difficulty: 'intermediate',
     topic: 'Voltage Bands',
-    category: 'BS7671 Fundamentals',
+    category: 'BS 7671 Fundamentals',
   },
   {
     id: 73,
@@ -673,7 +673,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Definitions',
     difficulty: 'basic',
     topic: 'Protective Conductors',
-    category: 'BS7671 Fundamentals',
+    category: 'BS 7671 Fundamentals',
   },
   {
     id: 74,
@@ -690,7 +690,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Definitions',
     difficulty: 'advanced',
     topic: 'Conductive Parts',
-    category: 'BS7671 Fundamentals',
+    category: 'BS 7671 Fundamentals',
   },
   {
     id: 75,
@@ -707,7 +707,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Supply Systems',
     difficulty: 'basic',
     topic: 'Voltage Levels',
-    category: 'BS7671 Fundamentals',
+    category: 'BS 7671 Fundamentals',
   },
 
   // Protection Against Electric Shock (15 questions)
@@ -726,7 +726,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Electric Shock',
     difficulty: 'intermediate',
     topic: 'Protection Types',
-    category: 'BS7671 Fundamentals',
+    category: 'BS 7671 Fundamentals',
   },
   {
     id: 77,
@@ -743,7 +743,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Electric Shock',
     difficulty: 'basic',
     topic: 'ADS',
-    category: 'BS7671 Fundamentals',
+    category: 'BS 7671 Fundamentals',
   },
   {
     id: 78,
@@ -760,7 +760,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Electric Shock',
     difficulty: 'intermediate',
     topic: 'Disconnection Times',
-    category: 'BS7671 Fundamentals',
+    category: 'BS 7671 Fundamentals',
   },
   {
     id: 79,
@@ -777,7 +777,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Electric Shock',
     difficulty: 'advanced',
     topic: 'Disconnection Times',
-    category: 'BS7671 Fundamentals',
+    category: 'BS 7671 Fundamentals',
   },
   {
     id: 80,
@@ -794,7 +794,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Electric Shock',
     difficulty: 'intermediate',
     topic: 'Bonding',
-    category: 'BS7671 Fundamentals',
+    category: 'BS 7671 Fundamentals',
   },
 
   // Earthing Systems (15 questions)
@@ -813,7 +813,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Earthing Systems',
     difficulty: 'basic',
     topic: 'TN-S',
-    category: 'BS7671 Fundamentals',
+    category: 'BS 7671 Fundamentals',
   },
   {
     id: 82,
@@ -830,7 +830,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Earthing Systems',
     difficulty: 'basic',
     topic: 'TN-C-S',
-    category: 'BS7671 Fundamentals',
+    category: 'BS 7671 Fundamentals',
   },
   {
     id: 83,
@@ -847,7 +847,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Earthing Systems',
     difficulty: 'basic',
     topic: 'TT System',
-    category: 'BS7671 Fundamentals',
+    category: 'BS 7671 Fundamentals',
   },
   {
     id: 84,
@@ -864,7 +864,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Earthing Systems',
     difficulty: 'intermediate',
     topic: 'Ze Values',
-    category: 'BS7671 Fundamentals',
+    category: 'BS 7671 Fundamentals',
   },
   {
     id: 85,
@@ -881,7 +881,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Earthing Systems',
     difficulty: 'intermediate',
     topic: 'Ze Values',
-    category: 'BS7671 Fundamentals',
+    category: 'BS 7671 Fundamentals',
   },
 
   // Protection Against Overcurrent (10 questions)
@@ -900,7 +900,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Overcurrent',
     difficulty: 'basic',
     topic: 'Types',
-    category: 'BS7671 Fundamentals',
+    category: 'BS 7671 Fundamentals',
   },
   {
     id: 87,
@@ -917,7 +917,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Overcurrent',
     difficulty: 'intermediate',
     topic: 'Breaking Capacity',
-    category: 'BS7671 Fundamentals',
+    category: 'BS 7671 Fundamentals',
   },
   {
     id: 88,
@@ -934,7 +934,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Overcurrent',
     difficulty: 'intermediate',
     topic: 'Discrimination',
-    category: 'BS7671 Fundamentals',
+    category: 'BS 7671 Fundamentals',
   },
   {
     id: 89,
@@ -951,7 +951,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Overcurrent',
     difficulty: 'intermediate',
     topic: 'MCB Types',
-    category: 'BS7671 Fundamentals',
+    category: 'BS 7671 Fundamentals',
   },
   {
     id: 90,
@@ -968,7 +968,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Overcurrent',
     difficulty: 'intermediate',
     topic: 'MCB Types',
-    category: 'BS7671 Fundamentals',
+    category: 'BS 7671 Fundamentals',
   },
 
   // Fundamental Principles (10 questions)
@@ -987,7 +987,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Principles',
     difficulty: 'basic',
     topic: 'Workmanship',
-    category: 'BS7671 Fundamentals',
+    category: 'BS 7671 Fundamentals',
   },
   {
     id: 92,
@@ -1004,7 +1004,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Principles',
     difficulty: 'basic',
     topic: 'Certification',
-    category: 'BS7671 Fundamentals',
+    category: 'BS 7671 Fundamentals',
   },
 
   // ============================================================
@@ -1027,7 +1027,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Cable Selection',
     difficulty: 'basic',
     topic: 'Current Capacity',
-    category: 'BS7671 Selection & Erection',
+    category: 'BS 7671 Selection & Erection',
   },
   {
     id: 132,
@@ -1044,7 +1044,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Cable Selection',
     difficulty: 'basic',
     topic: 'Minimum Sizes',
-    category: 'BS7671 Selection & Erection',
+    category: 'BS 7671 Selection & Erection',
   },
   {
     id: 133,
@@ -1062,7 +1062,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Cable Selection',
     difficulty: 'basic',
     topic: 'Socket Circuits',
-    category: 'BS7671 Selection & Erection',
+    category: 'BS 7671 Selection & Erection',
   },
   {
     id: 134,
@@ -1079,7 +1079,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Cable Selection',
     difficulty: 'intermediate',
     topic: 'Voltage Drop',
-    category: 'BS7671 Selection & Erection',
+    category: 'BS 7671 Selection & Erection',
   },
   {
     id: 135,
@@ -1096,7 +1096,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Cable Selection',
     difficulty: 'intermediate',
     topic: 'Correction Factors',
-    category: 'BS7671 Selection & Erection',
+    category: 'BS 7671 Selection & Erection',
   },
   {
     id: 136,
@@ -1113,7 +1113,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Cable Selection',
     difficulty: 'intermediate',
     topic: 'Correction Factors',
-    category: 'BS7671 Selection & Erection',
+    category: 'BS 7671 Selection & Erection',
   },
   {
     id: 137,
@@ -1130,7 +1130,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Cable Selection',
     difficulty: 'intermediate',
     topic: 'Thermal Insulation',
-    category: 'BS7671 Selection & Erection',
+    category: 'BS 7671 Selection & Erection',
   },
 
   // Protective Devices (15 questions)
@@ -1149,7 +1149,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Protective Devices',
     difficulty: 'basic',
     topic: 'RCBOs',
-    category: 'BS7671 Selection & Erection',
+    category: 'BS 7671 Selection & Erection',
   },
   {
     id: 139,
@@ -1167,7 +1167,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Protective Devices',
     difficulty: 'intermediate',
     topic: 'RCD Rating',
-    category: 'BS7671 Selection & Erection',
+    category: 'BS 7671 Selection & Erection',
   },
   {
     id: 140,
@@ -1184,7 +1184,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Protective Devices',
     difficulty: 'basic',
     topic: 'Additional Protection',
-    category: 'BS7671 Selection & Erection',
+    category: 'BS 7671 Selection & Erection',
   },
   {
     id: 141,
@@ -1201,7 +1201,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Protective Devices',
     difficulty: 'intermediate',
     topic: 'RCD Types',
-    category: 'BS7671 Selection & Erection',
+    category: 'BS 7671 Selection & Erection',
   },
   {
     id: 142,
@@ -1218,7 +1218,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Protective Devices',
     difficulty: 'basic',
     topic: 'MCB Types',
-    category: 'BS7671 Selection & Erection',
+    category: 'BS 7671 Selection & Erection',
   },
 
   // Earthing and Bonding (15 questions)
@@ -1237,7 +1237,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Earthing',
     difficulty: 'basic',
     topic: 'Conductor Sizing',
-    category: 'BS7671 Selection & Erection',
+    category: 'BS 7671 Selection & Erection',
   },
   {
     id: 144,
@@ -1255,7 +1255,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Bonding',
     difficulty: 'advanced',
     topic: 'Bonding Size',
-    category: 'BS7671 Selection & Erection',
+    category: 'BS 7671 Selection & Erection',
   },
   {
     id: 145,
@@ -1272,7 +1272,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Bonding',
     difficulty: 'basic',
     topic: 'What to Bond',
-    category: 'BS7671 Selection & Erection',
+    category: 'BS 7671 Selection & Erection',
   },
   {
     id: 146,
@@ -1289,7 +1289,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Bonding',
     difficulty: 'intermediate',
     topic: 'Bonding Location',
-    category: 'BS7671 Selection & Erection',
+    category: 'BS 7671 Selection & Erection',
   },
   {
     id: 147,
@@ -1306,7 +1306,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Earthing',
     difficulty: 'basic',
     topic: 'Identification',
-    category: 'BS7671 Selection & Erection',
+    category: 'BS 7671 Selection & Erection',
   },
 
   // Special Locations (10 questions)
@@ -1325,7 +1325,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Special Locations',
     difficulty: 'intermediate',
     topic: 'Bathroom Zones',
-    category: 'BS7671 Selection & Erection',
+    category: 'BS 7671 Selection & Erection',
   },
   {
     id: 149,
@@ -1342,7 +1342,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Special Locations',
     difficulty: 'intermediate',
     topic: 'Bathroom Zones',
-    category: 'BS7671 Selection & Erection',
+    category: 'BS 7671 Selection & Erection',
   },
   {
     id: 150,
@@ -1359,7 +1359,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Special Locations',
     difficulty: 'intermediate',
     topic: 'IP Ratings',
-    category: 'BS7671 Selection & Erection',
+    category: 'BS 7671 Selection & Erection',
   },
 
   // ============================================================
@@ -1382,7 +1382,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Testing Sequence',
     difficulty: 'basic',
     topic: 'Test Order',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
   {
     id: 192,
@@ -1399,7 +1399,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Test Instruments',
     difficulty: 'basic',
     topic: 'Continuity Testing',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
   {
     id: 193,
@@ -1416,7 +1416,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Insulation Testing',
     difficulty: 'basic',
     topic: 'Test Voltage',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
   {
     id: 194,
@@ -1433,7 +1433,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Insulation Testing',
     difficulty: 'basic',
     topic: 'Minimum Values',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
   {
     id: 195,
@@ -1450,7 +1450,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Insulation Testing',
     difficulty: 'basic',
     topic: 'Safety Precautions',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
 
   // Earth Fault Loop Impedance (15 questions)
@@ -1469,7 +1469,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Loop Impedance',
     difficulty: 'basic',
     topic: 'Zs Formula',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
   {
     id: 197,
@@ -1486,7 +1486,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Loop Impedance',
     difficulty: 'intermediate',
     topic: 'Temperature Correction',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
   {
     id: 198,
@@ -1503,7 +1503,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Loop Impedance',
     difficulty: 'basic',
     topic: 'Zs Values',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
   {
     id: 199,
@@ -1520,7 +1520,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Loop Impedance',
     difficulty: 'basic',
     topic: 'R1+R2 Measurement',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
   {
     id: 200,
@@ -1537,7 +1537,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Loop Impedance',
     difficulty: 'basic',
     topic: 'Test Methods',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
 
   // RCD Testing (15 questions)
@@ -1556,7 +1556,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'RCD Testing',
     difficulty: 'basic',
     topic: 'Trip Current',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
   {
     id: 202,
@@ -1573,7 +1573,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'RCD Testing',
     difficulty: 'intermediate',
     topic: 'Trip Times',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
   {
     id: 203,
@@ -1591,7 +1591,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'RCD Testing',
     difficulty: 'advanced',
     topic: 'Additional Protection',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
   {
     id: 204,
@@ -1608,7 +1608,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'RCD Testing',
     difficulty: 'intermediate',
     topic: 'User Testing',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
   {
     id: 205,
@@ -1625,7 +1625,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'RCD Testing',
     difficulty: 'basic',
     topic: 'RCD Testers',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
 
   // Ring Final Circuit Testing (10 questions)
@@ -1644,7 +1644,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Ring Circuits',
     difficulty: 'basic',
     topic: 'Test Procedure',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
   {
     id: 207,
@@ -1662,7 +1662,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Ring Circuits',
     difficulty: 'basic',
     topic: 'Expected Values',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
   {
     id: 208,
@@ -1680,7 +1680,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Ring Circuits',
     difficulty: 'basic',
     topic: 'Conductor Sizes',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
   {
     id: 209,
@@ -1697,7 +1697,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Ring Circuits',
     difficulty: 'basic',
     topic: 'Cross-Connection',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
   {
     id: 210,
@@ -1714,7 +1714,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Ring Circuits',
     difficulty: 'intermediate',
     topic: 'Expected Values',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
 
   // Documentation (5 questions)
@@ -1733,7 +1733,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Documentation',
     difficulty: 'basic',
     topic: 'Certificates',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
   {
     id: 212,
@@ -1750,7 +1750,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Documentation',
     difficulty: 'intermediate',
     topic: 'Certificates',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
 
   // ============================================================
@@ -2570,7 +2570,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Supply',
     difficulty: 'intermediate',
     topic: 'Voltage',
-    category: 'BS7671 Fundamentals',
+    category: 'BS 7671 Fundamentals',
   },
   {
     id: 369,
@@ -2587,7 +2587,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Equipment',
     difficulty: 'basic',
     topic: 'Consumer Units',
-    category: 'BS7671 Selection & Erection',
+    category: 'BS 7671 Selection & Erection',
   },
   {
     id: 370,
@@ -2603,7 +2603,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Standards',
     difficulty: 'advanced',
     topic: 'Amendments',
-    category: 'BS7671 Fundamentals',
+    category: 'BS 7671 Fundamentals',
   },
   {
     id: 371,
@@ -2621,7 +2621,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Special Locations',
     difficulty: 'basic',
     topic: 'IP Ratings',
-    category: 'BS7671 Selection & Erection',
+    category: 'BS 7671 Selection & Erection',
   },
   {
     id: 372,
@@ -2638,7 +2638,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Protection',
     difficulty: 'basic',
     topic: 'RCD Purpose',
-    category: 'BS7671 Fundamentals',
+    category: 'BS 7671 Fundamentals',
   },
   {
     id: 373,
@@ -2655,7 +2655,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Verification',
     difficulty: 'basic',
     topic: 'Energisation',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
   {
     id: 374,
@@ -2672,7 +2672,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Identification',
     difficulty: 'basic',
     topic: 'Labelling',
-    category: 'BS7671 Selection & Erection',
+    category: 'BS 7671 Selection & Erection',
   },
   {
     id: 375,
@@ -2689,7 +2689,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Testing',
     difficulty: 'basic',
     topic: 'Functional Tests',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
   {
     id: 376,
@@ -2706,7 +2706,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Protection',
     difficulty: 'intermediate',
     topic: 'Class II',
-    category: 'BS7671 Fundamentals',
+    category: 'BS 7671 Fundamentals',
   },
   {
     id: 377,
@@ -2723,7 +2723,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Protection',
     difficulty: 'basic',
     topic: 'SELV',
-    category: 'BS7671 Fundamentals',
+    category: 'BS 7671 Fundamentals',
   },
   {
     id: 378,
@@ -2740,7 +2740,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Definitions',
     difficulty: 'intermediate',
     topic: 'ELV',
-    category: 'BS7671 Fundamentals',
+    category: 'BS 7671 Fundamentals',
   },
   {
     id: 379,
@@ -2757,7 +2757,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Notices',
     difficulty: 'basic',
     topic: 'Warning Notices',
-    category: 'BS7671 Selection & Erection',
+    category: 'BS 7671 Selection & Erection',
   },
   {
     id: 380,
@@ -2775,7 +2775,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Inspection',
     difficulty: 'advanced',
     topic: 'Periodic Inspection',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
 
   // Final questions 381-400
@@ -2811,7 +2811,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Consumer Units',
     difficulty: 'intermediate',
     topic: 'Fire Safety',
-    category: 'BS7671 Selection & Erection',
+    category: 'BS 7671 Selection & Erection',
   },
   {
     id: 383,
@@ -2828,7 +2828,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Bathrooms',
     difficulty: 'intermediate',
     topic: 'Supplementary Bonding',
-    category: 'BS7671 Selection & Erection',
+    category: 'BS 7671 Selection & Erection',
   },
   {
     id: 384,
@@ -2845,7 +2845,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Bathrooms',
     difficulty: 'intermediate',
     topic: 'Omission',
-    category: 'BS7671 Selection & Erection',
+    category: 'BS 7671 Selection & Erection',
   },
   {
     id: 385,
@@ -2862,7 +2862,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Periodic Inspection',
     difficulty: 'intermediate',
     topic: 'Inspection Intervals',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
   {
     id: 386,
@@ -2879,7 +2879,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Certification',
     difficulty: 'basic',
     topic: 'EIC Requirements',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
   {
     id: 387,
@@ -2895,7 +2895,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'EICR',
     difficulty: 'basic',
     topic: 'Classification Codes',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
   {
     id: 388,
@@ -2911,7 +2911,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'EICR',
     difficulty: 'intermediate',
     topic: 'Classification Codes',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
   {
     id: 389,
@@ -2927,7 +2927,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'EICR',
     difficulty: 'intermediate',
     topic: 'Classification Codes',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
   {
     id: 390,
@@ -2944,7 +2944,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'EICR',
     difficulty: 'basic',
     topic: 'Classification Codes',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
   {
     id: 391,
@@ -2961,7 +2961,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Testing',
     difficulty: 'basic',
     topic: 'PFC',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
   {
     id: 392,
@@ -2978,7 +2978,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Testing',
     difficulty: 'intermediate',
     topic: 'PFC Location',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
   {
     id: 393,
@@ -2995,7 +2995,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Testing',
     difficulty: 'basic',
     topic: 'Polarity',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
   {
     id: 394,
@@ -3012,7 +3012,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'RCD Testing',
     difficulty: 'basic',
     topic: 'Test Currents',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
   {
     id: 395,
@@ -3029,7 +3029,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'RCD Testing',
     difficulty: 'intermediate',
     topic: 'No-Trip Test',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
   {
     id: 396,
@@ -3046,7 +3046,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'RCD Testing',
     difficulty: 'intermediate',
     topic: 'RCD Failure',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
   {
     id: 397,
@@ -3063,7 +3063,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Identification',
     difficulty: 'basic',
     topic: 'Conductor Colours',
-    category: 'BS7671 Selection & Erection',
+    category: 'BS 7671 Selection & Erection',
   },
   {
     id: 398,
@@ -3079,7 +3079,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Identification',
     difficulty: 'basic',
     topic: 'Conductor Colours',
-    category: 'BS7671 Selection & Erection',
+    category: 'BS 7671 Selection & Erection',
   },
   {
     id: 399,
@@ -3096,7 +3096,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Labelling',
     difficulty: 'basic',
     topic: 'Consumer Unit Labels',
-    category: 'BS7671 Selection & Erection',
+    category: 'BS 7671 Selection & Erection',
   },
   {
     id: 400,
@@ -3113,7 +3113,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Terminations',
     difficulty: 'intermediate',
     topic: 'Temperature Limits',
-    category: 'BS7671 Selection & Erection',
+    category: 'BS 7671 Selection & Erection',
   },
   {
     id: 401,
@@ -3130,7 +3130,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Zs Verification',
     difficulty: 'advanced',
     topic: 'Earth Fault Loop Impedance',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
   {
     id: 402,
@@ -3147,7 +3147,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Ring Final Circuits',
     difficulty: 'advanced',
     topic: 'Continuity',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
   {
     id: 403,
@@ -3164,7 +3164,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'RCD Verification',
     difficulty: 'advanced',
     topic: 'RCD Testing',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
   {
     id: 404,
@@ -3181,7 +3181,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Insulation Resistance',
     difficulty: 'advanced',
     topic: 'Insulation Resistance',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
   {
     id: 405,
@@ -3198,7 +3198,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Disconnection Times',
     difficulty: 'advanced',
     topic: 'ADS',
-    category: 'BS7671 Fundamentals',
+    category: 'BS 7671 Fundamentals',
   },
   {
     id: 406,
@@ -3232,7 +3232,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Bidirectional Devices',
     difficulty: 'advanced',
     topic: 'Protective Devices',
-    category: 'BS7671 Selection & Erection',
+    category: 'BS 7671 Selection & Erection',
   },
   {
     id: 408,
@@ -3249,7 +3249,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'EICR Coding',
     difficulty: 'intermediate',
     topic: 'Observation Codes',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
   {
     id: 409,
@@ -3266,7 +3266,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'A4:2026 Changes',
     difficulty: 'advanced',
     topic: 'AFDDs',
-    category: 'BS7671 Fundamentals',
+    category: 'BS 7671 Fundamentals',
   },
   {
     id: 410,
@@ -3283,7 +3283,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Special Locations',
     difficulty: 'advanced',
     topic: 'Heating',
-    category: 'BS7671 Selection & Erection',
+    category: 'BS 7671 Selection & Erection',
   },
   {
     id: 411,
@@ -3300,7 +3300,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'RCD Selection',
     difficulty: 'advanced',
     topic: 'RCD Types',
-    category: 'BS7671 Selection & Erection',
+    category: 'BS 7671 Selection & Erection',
   },
   {
     id: 412,
@@ -3317,7 +3317,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Design Verification',
     difficulty: 'intermediate',
     topic: 'Voltage Drop',
-    category: 'BS7671 Selection & Erection',
+    category: 'BS 7671 Selection & Erection',
   },
   {
     id: 413,
@@ -3334,7 +3334,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Zs Verification',
     difficulty: 'advanced',
     topic: 'Earth Fault Loop Impedance',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
   {
     id: 414,
@@ -3351,7 +3351,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Test Sequence',
     difficulty: 'advanced',
     topic: 'Sequence',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
   {
     id: 415,
@@ -3368,7 +3368,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Insulation Resistance',
     difficulty: 'intermediate',
     topic: 'Insulation Resistance',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
   {
     id: 416,
@@ -3385,7 +3385,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Ze Measurement',
     difficulty: 'advanced',
     topic: 'Earth Fault Loop Impedance',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
   {
     id: 417,
@@ -3402,7 +3402,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'TT Systems',
     difficulty: 'advanced',
     topic: 'Earth Electrode',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
   {
     id: 418,
@@ -3419,7 +3419,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Polarity',
     difficulty: 'advanced',
     topic: 'Polarity',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
   {
     id: 419,
@@ -3470,7 +3470,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Cables in Walls',
     difficulty: 'intermediate',
     topic: 'Concealed Cables',
-    category: 'BS7671 Selection & Erection',
+    category: 'BS 7671 Selection & Erection',
   },
   {
     id: 422,
@@ -3487,7 +3487,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'RCD Selection',
     difficulty: 'advanced',
     topic: 'RCD Types',
-    category: 'BS7671 Selection & Erection',
+    category: 'BS 7671 Selection & Erection',
   },
   {
     id: 423,
@@ -3504,7 +3504,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Adiabatic',
     difficulty: 'advanced',
     topic: 'CPC Sizing',
-    category: 'BS7671 Selection & Erection',
+    category: 'BS 7671 Selection & Erection',
   },
   {
     id: 424,
@@ -3538,7 +3538,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'EV Charging',
     difficulty: 'intermediate',
     topic: 'PME',
-    category: 'BS7671 Selection & Erection',
+    category: 'BS 7671 Selection & Erection',
   },
   {
     id: 426,
@@ -3589,7 +3589,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'RCD Testing',
     difficulty: 'advanced',
     topic: 'RCD Testing',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
   {
     id: 429,
@@ -3606,7 +3606,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Certification',
     difficulty: 'advanced',
     topic: 'Certificates',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
   {
     id: 430,
@@ -3623,7 +3623,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Phase Sequence',
     difficulty: 'basic',
     topic: 'Functional Testing',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
 
   // ============================================================
@@ -3648,7 +3648,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Protection against fire',
     difficulty: 'advanced',
     topic: 'AFDD status under A4:2026',
-    category: 'BS7671 Fundamentals',
+    category: 'BS 7671 Fundamentals',
   },
   {
     id: 432,
@@ -3666,7 +3666,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Protection against fire',
     difficulty: 'advanced',
     topic: 'Scope of Reg 421.1.7',
-    category: 'BS7671 Fundamentals',
+    category: 'BS 7671 Fundamentals',
   },
   {
     id: 433,
@@ -3684,7 +3684,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Stationary secondary batteries',
     difficulty: 'advanced',
     topic: 'Chapter 57 exclusions',
-    category: 'BS7671 Selection & Erection',
+    category: 'BS 7671 Selection & Erection',
   },
   {
     id: 434,
@@ -3702,7 +3702,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Stationary secondary batteries',
     difficulty: 'advanced',
     topic: 'New Chapter 57 in A4:2026',
-    category: 'BS7671 Selection & Erection',
+    category: 'BS 7671 Selection & Erection',
   },
   {
     id: 435,
@@ -3720,7 +3720,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Additional protection',
     difficulty: 'advanced',
     topic: 'Reg 411.3.3 exception under A4:2026',
-    category: 'BS7671 Fundamentals',
+    category: 'BS 7671 Fundamentals',
   },
   {
     id: 436,
@@ -3738,7 +3738,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Additional protection',
     difficulty: 'advanced',
     topic: 'Reg 411.3.3 scope limit',
-    category: 'BS7671 Fundamentals',
+    category: 'BS 7671 Fundamentals',
   },
   {
     id: 437,
@@ -3756,7 +3756,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'RCD testing',
     difficulty: 'advanced',
     topic: 'RCD verification after Table 3A deletion',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
   {
     id: 438,
@@ -3774,7 +3774,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Wiring systems',
     difficulty: 'advanced',
     topic: 'Reg 521.10.202 scope',
-    category: 'BS7671 Selection & Erection',
+    category: 'BS 7671 Selection & Erection',
   },
   {
     id: 439,
@@ -3792,7 +3792,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Identification and notices',
     difficulty: 'advanced',
     topic: 'IEC 60617 vs withdrawn BS EN 60617',
-    category: 'BS7671 Selection & Erection',
+    category: 'BS 7671 Selection & Erection',
   },
   {
     id: 440,
@@ -3833,7 +3833,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Insulation resistance',
     difficulty: 'advanced',
     topic: 'Reg 643.3 redraft 250 V DC test',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
   {
     id: 442,
@@ -3850,7 +3850,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Test equipment',
     difficulty: 'intermediate',
     topic: 'GS38 leads for loop testing',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
   {
     id: 443,
@@ -3868,7 +3868,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Initial verification',
     difficulty: 'advanced',
     topic: 'Order of the pre-energisation test sequence',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
   {
     id: 444,
@@ -3886,7 +3886,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Initial verification',
     difficulty: 'advanced',
     topic: 'Defects found before energisation',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
   {
     id: 445,
@@ -3904,7 +3904,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Continuity testing',
     difficulty: 'advanced',
     topic: 'Interpreting R1 + R2 without parallel paths',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
   {
     id: 446,
@@ -3921,7 +3921,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Earth fault loop impedance',
     difficulty: 'intermediate',
     topic: 'Purpose of measuring Ze',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
   {
     id: 447,
@@ -3938,7 +3938,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Earth fault loop impedance',
     difficulty: 'advanced',
     topic: 'Parallel paths invalidating a Ze reading',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
   {
     id: 448,
@@ -3990,7 +3990,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Polarity',
     difficulty: 'intermediate',
     topic: 'What polarity verification proves',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
   {
     id: 451,
@@ -4008,7 +4008,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Earth electrode testing',
     difficulty: 'advanced',
     topic: 'Earth electrode test methods E1 to E3',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
   {
     id: 452,
@@ -4026,7 +4026,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Earth electrode testing',
     difficulty: 'advanced',
     topic: 'Four-terminal electrode tester',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
   {
     id: 453,
@@ -4044,7 +4044,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Earth electrode testing',
     difficulty: 'advanced',
     topic: 'Least favourable conditions for electrode testing',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
   {
     id: 454,
@@ -4062,7 +4062,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Prospective fault current',
     difficulty: 'advanced',
     topic: 'How PFC is derived from loop impedance',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
   {
     id: 455,
@@ -4080,7 +4080,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Prospective fault current',
     difficulty: 'advanced',
     topic: 'Accuracy limits of derived PFC readings',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
   {
     id: 456,
@@ -4097,7 +4097,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Functional testing',
     difficulty: 'intermediate',
     topic: 'Definition of functional testing',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
   {
     id: 457,
@@ -4115,7 +4115,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'RCD testing',
     difficulty: 'intermediate',
     topic: 'RCD integral test button criterion',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
   {
     id: 458,
@@ -4133,7 +4133,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Functional testing',
     difficulty: 'intermediate',
     topic: 'Functional check of the main switch',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
   {
     id: 459,
@@ -4150,7 +4150,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Continuity testing',
     difficulty: 'basic',
     topic: 'When continuity tests are performed',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
   {
     id: 460,
@@ -4168,7 +4168,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Inspection',
     difficulty: 'advanced',
     topic: 'Verifying electromagnetic disturbance measures',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
   {
     id: 461,
@@ -4186,7 +4186,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Ring final circuits',
     difficulty: 'advanced',
     topic: 'Expected step 2 reading on a ring',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
   {
     id: 462,
@@ -4204,7 +4204,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Ring final circuits',
     difficulty: 'advanced',
     topic: 'Order of ring end-to-end measurements',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
   {
     id: 463,
@@ -4222,7 +4222,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Ring final circuits',
     difficulty: 'advanced',
     topic: 'Purpose of the cross-connection method',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
   {
     id: 464,
@@ -4240,7 +4240,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Insulation resistance',
     difficulty: 'advanced',
     topic: 'SELV sharing insulation with LV conductors',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
   {
     id: 465,
@@ -4258,7 +4258,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Insulation resistance',
     difficulty: 'advanced',
     topic: 'Separation test minimum value',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
   {
     id: 466,
@@ -4294,7 +4294,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Documentation',
     difficulty: 'intermediate',
     topic: 'Purpose of inspection and test records',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
   {
     id: 468,
@@ -4312,7 +4312,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Documentation',
     difficulty: 'advanced',
     topic: 'Information needed for future testing',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
   {
     id: 469,
@@ -4329,7 +4329,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Ring final circuits',
     difficulty: 'basic',
     topic: 'Recording ring continuity results',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
   {
     id: 470,
@@ -4346,7 +4346,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Ring final circuits',
     difficulty: 'advanced',
     topic: 'Ring final circuit step 3 measurement',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
   {
     id: 471,
@@ -4364,7 +4364,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Certification',
     difficulty: 'advanced',
     topic: 'Multiple-signature EIC',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
   {
     id: 472,
@@ -4382,7 +4382,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Certification',
     difficulty: 'intermediate',
     topic: 'Who signs EIC Section C',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
   {
     id: 473,
@@ -4399,7 +4399,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Certification',
     difficulty: 'intermediate',
     topic: 'Purpose of the EIC',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
   {
     id: 474,
@@ -4417,7 +4417,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Test equipment',
     difficulty: 'advanced',
     topic: 'Pre-use checks on leads and probes',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
   {
     id: 475,
@@ -4435,7 +4435,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Wiring systems',
     difficulty: 'intermediate',
     topic: 'Practical content of the On-Site Guide',
-    category: 'BS7671 Selection & Erection',
+    category: 'BS 7671 Selection & Erection',
   },
   {
     id: 476,
@@ -4452,7 +4452,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Wiring systems',
     difficulty: 'intermediate',
     topic: 'Cable entries into enclosures',
-    category: 'BS7671 Selection & Erection',
+    category: 'BS 7671 Selection & Erection',
   },
   {
     id: 477,
@@ -4469,7 +4469,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Periodic inspection',
     difficulty: 'advanced',
     topic: 'What periodic inspection includes',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
   {
     id: 478,
@@ -4486,7 +4486,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Inspection',
     difficulty: 'basic',
     topic: 'Purpose of visual inspection',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
   {
     id: 479,
@@ -4504,7 +4504,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Inspection',
     difficulty: 'advanced',
     topic: 'Visual inspection where isolation is impractical',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
   },
   {
     id: 480,
@@ -4522,7 +4522,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Wiring systems',
     difficulty: 'intermediate',
     topic: 'Limits of On-Site Guide practical data',
-    category: 'BS7671 Selection & Erection',
+    category: 'BS 7671 Selection & Erection',
   },
   {
     id: 481,
@@ -4552,7 +4552,7 @@ export const am2QuestionBank: AM2Question[] = [
     correctAnswer: 2,
     explanation: 'Standard 2.5 mm² flat twin-and-earth carries a 1.5 mm² protective conductor, which is why the cpc end-to-end reading on a ring is about 1.67 times the line reading. A 2.5 mm² cpc would only be present if a cable with an equal-sized cpc had been specified.',
     section: 'Cable Selection',
-    category: 'BS7671 Selection & Erection',
+    category: 'BS 7671 Selection & Erection',
     difficulty: 'basic',
     topic: 'Socket Circuits',
   },
@@ -4600,7 +4600,7 @@ export const am2QuestionBank: AM2Question[] = [
     correctAnswer: 0,
     explanation: 'Step 1 establishes the end-to-end resistance of the line, the neutral and the cpc individually, with the ring opened at the board. Measuring at outlets comes later, once the ends have been cross-connected.',
     section: 'Ring final circuits',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
     difficulty: 'advanced',
     topic: 'Order of ring end-to-end measurements',
   },
@@ -4648,7 +4648,7 @@ export const am2QuestionBank: AM2Question[] = [
     correctAnswer: 0,
     explanation: 'Resistance is inversely proportional to cross-sectional area, so a 1.5 mm² cpc against a 2.5 mm² line gives a ratio of 2.5 divided by 1.5, or about 1.67. Expecting the two readings to match is what leads candidates to condemn a healthy ring.',
     section: 'Ring Circuits',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
     difficulty: 'advanced',
     topic: 'Conductor Sizes',
   },
@@ -4696,7 +4696,7 @@ export const am2QuestionBank: AM2Question[] = [
     correctAnswer: 3,
     explanation: 'Step 3 cross-connects the line and cpc ends so that R1 + R2 can be read at each socket-outlet. Cross-connecting line and neutral is step 2, which is why performing them in the wrong order gives readings that cannot be interpreted.',
     section: 'Ring final circuits',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
     difficulty: 'advanced',
     topic: 'Ring final circuit step 3 measurement',
   },
@@ -4744,7 +4744,7 @@ export const am2QuestionBank: AM2Question[] = [
     correctAnswer: 3,
     explanation: 'The parallel paths around an intact ring give a reading of roughly one quarter of the summed line and neutral loop resistances, and it should be substantially the same at every outlet. A reading well above that at one outlet points to a spur or a break.',
     section: 'Ring final circuits',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
     difficulty: 'advanced',
     topic: 'Expected step 2 reading on a ring',
   },
@@ -4792,7 +4792,7 @@ export const am2QuestionBank: AM2Question[] = [
     correctAnswer: 0,
     explanation: 'An outlet fed by a single leg cannot benefit from the parallel path, so it reads higher than the rest. A transposition at the board or a broken cpc would affect the whole circuit, not one outlet.',
     section: 'Ring Circuits',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
     difficulty: 'advanced',
     topic: 'Cross-Connection',
   },
@@ -4840,7 +4840,7 @@ export const am2QuestionBank: AM2Question[] = [
     correctAnswer: 0,
     explanation: 'For circuits up to and including 500 V, other than SELV and PELV, the test is at 500 V DC with a minimum of 1.0 MΩ. The 250 V DC row applies to SELV and PELV only.',
     section: 'Insulation Testing',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
     difficulty: 'basic',
     topic: 'Test Voltage',
   },
@@ -4888,7 +4888,7 @@ export const am2QuestionBank: AM2Question[] = [
     correctAnswer: 2,
     explanation: 'SELV and PELV circuits are tested at 250 V DC with a minimum of 0.5 MΩ. Applying the 500 V row to them is the common error and risks damaging the equipment the SELV circuit supplies.',
     section: 'Insulation Resistance',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
     difficulty: 'intermediate',
     topic: 'Insulation Resistance',
   },
@@ -4936,7 +4936,7 @@ export const am2QuestionBank: AM2Question[] = [
     correctAnswer: 0,
     explanation: 'Where connected equipment would influence the result or be damaged, a 250 V DC test may be made after connection, between live conductors and the protective conductor, with at least 1 MΩ required. The reason for using the reduced voltage must be recorded.',
     section: 'Insulation Resistance',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
     difficulty: 'advanced',
     topic: 'Reg 643.3 redraft 250 V DC test',
   },
@@ -4984,7 +4984,7 @@ export const am2QuestionBank: AM2Question[] = [
     correctAnswer: 3,
     explanation: 'Equipment that could influence the measurement or be damaged by it is disconnected before the test, as required before connection under Table 64. Leaving electronics connected either destroys them or returns a reading that says nothing about the cable.',
     section: 'Insulation Testing',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
     difficulty: 'advanced',
     topic: 'Safety Precautions',
   },
@@ -5016,7 +5016,7 @@ export const am2QuestionBank: AM2Question[] = [
     correctAnswer: 2,
     explanation: 'The customer must be given the certificate covering the work, and should keep it; a copy also reaches building control by the appropriate route. Quotations and warranties are commercial documents with no status under the Building Regulations.',
     section: 'Certification',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
     difficulty: 'basic',
     topic: 'Documentation',
   },
@@ -5032,7 +5032,7 @@ export const am2QuestionBank: AM2Question[] = [
     correctAnswer: 1,
     explanation: 'The minimum for a 230 V circuit is 1.0 MΩ, so 0.4 MΩ fails and the cause must be found, typically by splitting the circuit down. Dropping the test voltage to obtain a better number is not a permitted way of passing a circuit.',
     section: 'Insulation Testing',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
     difficulty: 'intermediate',
     topic: 'Minimum Values',
   },
@@ -5080,7 +5080,7 @@ export const am2QuestionBank: AM2Question[] = [
     correctAnswer: 2,
     explanation: 'With the earthing conductor connected, bonded metalwork provides parallel return paths that make the reading lower than the true external impedance. The measurement is only valid, and only safe to add to R1 + R2, when those paths are removed.',
     section: 'Ze Measurement',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
     difficulty: 'advanced',
     topic: 'Earth Fault Loop Impedance',
   },
@@ -5128,7 +5128,7 @@ export const am2QuestionBank: AM2Question[] = [
     correctAnswer: 3,
     explanation: 'Only a Ze measured with the earthing and extraneous paths properly separated represents the external loop, so only then does adding R1 + R2 give a meaningful Zs. Adding a contaminated Ze understates the loop impedance and can make a failing circuit look compliant.',
     section: 'Earth fault loop impedance',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
     difficulty: 'advanced',
     topic: 'Parallel paths invalidating a Ze reading',
   },
@@ -5176,7 +5176,7 @@ export const am2QuestionBank: AM2Question[] = [
     correctAnswer: 1,
     explanation: 'Because conductors are cold when tested but hot under fault, the measured value is compared against 0.8 of the tabulated figure. Comparing a cold reading directly against the table can pass a circuit that would fail at operating temperature.',
     section: 'Loop Impedance',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
     difficulty: 'advanced',
     topic: 'Temperature Correction',
   },
@@ -5224,7 +5224,7 @@ export const am2QuestionBank: AM2Question[] = [
     correctAnswer: 0,
     explanation: 'Cmin allows for voltage variation with time and place and for transformer tap changes, and is given the value 0.95 for a supply provided under the Electricity Safety, Quality and Continuity Regulations. The 0.8 figure is the separate rule-of-thumb applied to measured values.',
     section: 'Loop Impedance',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
     difficulty: 'advanced',
     topic: 'Zs Formula',
   },
@@ -5256,7 +5256,7 @@ export const am2QuestionBank: AM2Question[] = [
     correctAnswer: 0,
     explanation: 'A copy of the completed certificate, with all sections and test results filled in, goes to building control as well as to the customer. Countersigning by a scheme member is not a recognised route to compliance.',
     section: 'Certification',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
     difficulty: 'advanced',
     topic: 'Documentation',
   },
@@ -5272,7 +5272,7 @@ export const am2QuestionBank: AM2Question[] = [
     correctAnswer: 2,
     explanation: 'Distribution circuits may use the longer time where the stated conditions are met, whereas 230 V final circuits in a TN system require 0.4 s. Applying the final circuit time to a distribution circuit unnecessarily restricts the permitted loop impedance.',
     section: 'Electric Shock',
-    category: 'BS7671 Fundamentals',
+    category: 'BS 7671 Fundamentals',
     difficulty: 'advanced',
     topic: 'Disconnection Times',
   },
@@ -5320,7 +5320,7 @@ export const am2QuestionBank: AM2Question[] = [
     correctAnswer: 1,
     explanation: 'Any of calculation, measurement or enquiry of the distributor is acceptable, and the value must be determined at the origin and other relevant points. A device\'s breaking capacity is what the value is compared against, not a source of it.',
     section: 'Testing',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
     difficulty: 'intermediate',
     topic: 'PFC',
   },
@@ -5368,7 +5368,7 @@ export const am2QuestionBank: AM2Question[] = [
     correctAnswer: 3,
     explanation: 'The instrument measures impedance and calculates current from it, which is why the displayed figure is derived rather than observed. No instrument creates an actual fault to measure the current directly.',
     section: 'Prospective fault current',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
     difficulty: 'advanced',
     topic: 'How PFC is derived from loop impedance',
   },
@@ -5416,7 +5416,7 @@ export const am2QuestionBank: AM2Question[] = [
     correctAnswer: 2,
     explanation: 'Power-converting equipment can adversely affect a loop impedance instrument, so where that happens an alternative method of determining the fault current and loop impedance must be used. Accepting a corrupted reading would misinform the choice of protective device.',
     section: 'Testing',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
     difficulty: 'advanced',
     topic: 'PFC Location',
   },
@@ -5448,7 +5448,7 @@ export const am2QuestionBank: AM2Question[] = [
     correctAnswer: 0,
     explanation: 'The paperwork is how compliance is evidenced to building control and to future occupiers. It records that inspection and testing were done, rather than standing in place of them.',
     section: 'Certification',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
     difficulty: 'intermediate',
     topic: 'Documentation',
   },
@@ -5464,7 +5464,7 @@ export const am2QuestionBank: AM2Question[] = [
     correctAnswer: 0,
     explanation: 'For a general non-delay device the effectiveness is deemed verified where it disconnects within 300 ms at the rated residual operating current. The 40 ms figure belongs to the higher test current, where manufacturers\' declared characteristics also have to be considered.',
     section: 'RCD Testing',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
     difficulty: 'intermediate',
     topic: 'Trip Times',
   },
@@ -5512,7 +5512,7 @@ export const am2QuestionBank: AM2Question[] = [
     correctAnswer: 2,
     explanation: 'A type S device must not operate too quickly either, because its delay is what gives discrimination with downstream devices; the acceptable window is 130 ms to 500 ms. A type S device that trips in 40 ms has lost the discrimination it was fitted to provide.',
     section: 'RCD Testing',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
     difficulty: 'advanced',
     topic: 'Trip Times',
   },
@@ -5560,7 +5560,7 @@ export const am2QuestionBank: AM2Question[] = [
     correctAnswer: 2,
     explanation: 'The button proves only that the mechanism works, which is why it is a functional check rather than a measurement. Trip time and operating current still have to be established with an instrument.',
     section: 'RCD testing',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
     difficulty: 'basic',
     topic: 'RCD integral test button criterion',
   },
@@ -5608,7 +5608,7 @@ export const am2QuestionBank: AM2Question[] = [
     correctAnswer: 0,
     explanation: 'A drive produces residual currents with DC components that a Type AC device cannot sense, so it may fail to operate when needed. The type has to be chosen against the residual current the load can actually produce.',
     section: 'RCD Selection',
-    category: 'BS7671 Selection & Erection',
+    category: 'BS 7671 Selection & Erection',
     difficulty: 'advanced',
     topic: 'RCD Types',
   },
@@ -5656,7 +5656,7 @@ export const am2QuestionBank: AM2Question[] = [
     correctAnswer: 0,
     explanation: 'The revised regulation applies to socket-outlets with a rated current not exceeding 32 A, so a 63 A outlet must be considered against other requirements instead. Assuming it is simply exempt from all additional protection is equally wrong.',
     section: 'Additional protection',
-    category: 'BS7671 Fundamentals',
+    category: 'BS 7671 Fundamentals',
     difficulty: 'advanced',
     topic: 'Reg 411.3.3 scope limit',
   },
@@ -5704,7 +5704,7 @@ export const am2QuestionBank: AM2Question[] = [
     correctAnswer: 1,
     explanation: 'The exception rests on a documented risk assessment and is not available for dwellings. Labels and mounting heights are not recognised grounds for omitting additional protection.',
     section: 'Additional protection',
-    category: 'BS7671 Fundamentals',
+    category: 'BS 7671 Fundamentals',
     difficulty: 'advanced',
     topic: 'Reg 411.3.3 exception under A4:2026',
   },
@@ -5752,7 +5752,7 @@ export const am2QuestionBank: AM2Question[] = [
     correctAnswer: 2,
     explanation: 'Every fuse and single-pole control or protective device must be in the line conductor only, so that operating it makes the equipment safe. A switch in the neutral leaves the fitting live even when switched off.',
     section: 'Polarity',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
     difficulty: 'advanced',
     topic: 'What polarity verification proves',
   },
@@ -5800,7 +5800,7 @@ export const am2QuestionBank: AM2Question[] = [
     correctAnswer: 1,
     explanation: 'In circuits with an earthed neutral the outer screwed contact is connected to the neutral so the accessible metal is not live, subject to the exception for certain lampholders to their product standard. Reversing it leaves the exposed thread at line potential.',
     section: 'Polarity',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
     difficulty: 'intermediate',
     topic: 'Polarity',
   },
@@ -5848,7 +5848,7 @@ export const am2QuestionBank: AM2Question[] = [
     correctAnswer: 2,
     explanation: 'Polarity sits in the pre-energisation sequence, alongside continuity and insulation resistance, and is confirmed before the supply is brought on. Energising first and checking afterwards defeats the purpose of the sequence.',
     section: 'Polarity',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
     difficulty: 'intermediate',
     topic: 'Polarity',
   },
@@ -5896,7 +5896,7 @@ export const am2QuestionBank: AM2Question[] = [
     correctAnswer: 2,
     explanation: 'With no parallel path through the structure, the reading is the true R1 + R2 for that point. Where boxes are in contact with earthed fabric the reading is pulled lower and no longer represents the circuit conductors alone.',
     section: 'Continuity testing',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
     difficulty: 'advanced',
     topic: 'Interpreting R1 + R2 without parallel paths',
   },
@@ -5944,7 +5944,7 @@ export const am2QuestionBank: AM2Question[] = [
     correctAnswer: 2,
     explanation: 'Linking line and cpc at the board lets R1 + R2 be read directly at each point on the circuit. Test method 2 instead uses a long wandering lead from a fixed reference point, which is slower but avoids the temporary link.',
     section: 'Continuity testing',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
     difficulty: 'advanced',
     topic: 'When continuity tests are performed',
   },
@@ -5992,7 +5992,7 @@ export const am2QuestionBank: AM2Question[] = [
     correctAnswer: 3,
     explanation: 'A quantitative resistance measurement is required, so a buzzer that simply sounds is not enough. The value obtained is also what gets recorded and compared with the design figures.',
     section: 'Test Instruments',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
     difficulty: 'basic',
     topic: 'Continuity Testing',
   },
@@ -6024,7 +6024,7 @@ export const am2QuestionBank: AM2Question[] = [
     correctAnswer: 1,
     explanation: 'Defects materially affecting safety must be put right before energisation, because the point of the dead test sequence is to find them while the installation is safe to work on. Recording a dangerous defect and energising anyway inverts that logic.',
     section: 'Test Sequence',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
     difficulty: 'advanced',
     topic: 'Sequence',
   },
@@ -6040,7 +6040,7 @@ export const am2QuestionBank: AM2Question[] = [
     correctAnswer: 0,
     explanation: 'Evidence of compliance for notifiable work is the certificate plus the record that the work was notified or self-certified. This is exactly why the certificate must be kept safe by the householder.',
     section: 'Certification',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
     difficulty: 'advanced',
     topic: 'Documentation',
   },
@@ -6056,7 +6056,7 @@ export const am2QuestionBank: AM2Question[] = [
     correctAnswer: 2,
     explanation: 'Adequate precautions, typically mechanical interlocking, must prevent the normal and standby sources being paralleled, and the changeover has to be proved to work. Insulation resistance is a dead test already completed and proves nothing about changeover.',
     section: 'Verification',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
     difficulty: 'advanced',
     topic: 'Energisation',
   },
@@ -6088,7 +6088,7 @@ export const am2QuestionBank: AM2Question[] = [
     correctAnswer: 1,
     explanation: 'Active prevention is required, such as an interlock or control logic that inhibits starting; a device that only detects or announces the wrong sequence does not satisfy it. Phase sequence must also be verified as maintained at relevant points.',
     section: 'Phase Sequence',
-    category: 'BS7671 Inspection & Testing',
+    category: 'BS 7671 Inspection & Testing',
     difficulty: 'advanced',
     topic: 'Functional Testing',
   },
@@ -6156,9 +6156,9 @@ export const getRandomQuestions = (
 ): AM2Question[] => {
   const categories: AM2Question['category'][] = [
     'Health & Safety',
-    'BS7671 Fundamentals',
-    'BS7671 Selection & Erection',
-    'BS7671 Inspection & Testing',
+    'BS 7671 Fundamentals',
+    'BS 7671 Selection & Erection',
+    'BS 7671 Inspection & Testing',
     'Building Regulations',
     'Safe Isolation',
     'Fault Finding',

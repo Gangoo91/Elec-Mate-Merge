@@ -91,15 +91,21 @@ export const VoiceInputButton = memo(function VoiceInputButton({
       aria-label={listening ? 'Stop voice input' : 'Start voice input'}
       aria-pressed={listening}
       className={cn(
-        'text-[12px] font-medium px-3 py-1.5 rounded-full transition-colors touch-manipulation',
-        'border',
+        'inline-flex items-center gap-1.5 text-[12px] font-medium px-3 py-1.5 rounded-full',
+        'border transition-colors touch-manipulation [-webkit-tap-highlight-color:transparent]',
         listening
-          ? 'bg-white/[0.08] border-white/[0.16] text-white'
-          : 'bg-white/[0.04] border-white/[0.08] text-white hover:bg-white/[0.08]',
+          ? 'bg-white/[0.06] border-elec-yellow/60 text-elec-yellow'
+          : 'bg-white/[0.05] border-white/[0.12] text-white hover:bg-white/[0.10] hover:border-white/[0.22]',
         'disabled:opacity-40 disabled:cursor-not-allowed',
         className
       )}
     >
+      {listening && (
+        <span className="relative flex h-1.5 w-1.5">
+          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-elec-yellow/70" />
+          <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-elec-yellow" />
+        </span>
+      )}
       {listening ? 'Listening…' : 'Voice'}
     </button>
   );

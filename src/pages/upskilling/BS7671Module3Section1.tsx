@@ -1,8 +1,8 @@
-import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { useNavigate } from 'react-router-dom';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
-import { PageFrame, PageHero } from '@/components/college/primitives';
 import {
   TLDR,
   ConceptBlock,
@@ -286,431 +286,426 @@ const BS7671Module3Section1 = () => {
   });
 
   return (
-    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
-      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
-        <PageFrame>
+    <HubPage>
+      <HubMasthead
+        section="Module 3 · Section 1 · Updated for A4:2026"
+        title="Supply systems — TN-S, TN-C-S, TT, IT"
+        backTo="../bs7671-module-3"
+      />
+      <HubBody>
+        <div className="max-w-3xl text-[13px] leading-relaxed text-white">
+          {
+            'The earthing arrangement is the single most-load-bearing decision in any installation design — it dictates which Reg 411 sub-clauses apply, which disconnection times, which protective-measure routes, and how Section 7 special locations interact. A4:2026 added the explicit TN-C-S (PNB) cert option and the EV-circuit PEN ban (Reg 722.312.2.1).'
+          }
+        </div>
+
+        <div className="flex flex-wrap items-center gap-2">
+          {
+            <>
+              <RegBadge>312.1</RegBadge>
+              <RegBadge>411.4.4</RegBadge>
+              <RegBadge>411.5.3</RegBadge>
+              <RegBadge>461.2</RegBadge>
+              <AmendmentBadge regs={['722.312.2.1']} />
+            </>
+          }
+        </div>
+
+        <TLDR
+          points={[
+            'The four arrangements: TN-S (separate N + PE throughout), TN-C-S (combined PEN in supply network, split at cut-out — also known as PME, with PNB variant), TT (own earth electrode), IT (isolated source).',
+            "TN-C-S is the UK domestic majority. A4:2026 added 'TN-C-S (PNB)' as an explicit cert option to distinguish single-bonding-point PNB from multi-electrode PME.",
+            'Reg 461.2 prohibits isolating / switching the PEN. Reg 722.312.2.1 (A4) prohibits PEN conductors in EV charging circuits on TN supplies. Both rules exist because of open-PEN failure consequences.',
+          ]}
+        />
+
+        <LearningOutcomes
+          outcomes={[
+            'Distinguish the four BS 7671 system earthing arrangements (TN-S, TN-C-S with PME / PNB variants, TT, IT) and identify which is present on a typical UK supply.',
+            'Identify the A4:2026 cert-form changes — particularly the PME / PNB distinction under TN-C-S — and complete EIC entries correctly.',
+            'Apply Reg 461.2 (no PEN isolation) and Reg 722.312.2.1 (no PEN in EV circuits) to consumer-unit and EV-charging design.',
+            'Match the system earthing arrangement to the appropriate Reg 411 sub-clause for ADS verification — Reg 411.4 / 411.5 / 411.6 — and apply the right disconnection-time table.',
+            'Recognise where TT or IT is the right arrangement (caravans, agricultural, marinas; medical Group 2, continuity-essential industrial) and design accordingly.',
+          ]}
+          initialVisibleCount={3}
+        />
+
+        <ContentEyebrow>The four arrangements in plain English</ContentEyebrow>
+
+        <ConceptBlock
+          title="TN-S — separate N and PE throughout"
+          plainEnglish="The supply network has separate Neutral and Protective-Earth conductors all the way from the source transformer to the property. Three live conductors arrive at the cut-out on a single-phase install (L + N + PE); four on three-phase (L1 + L2 + L3 + N + PE)."
+          onSite="Look for a separate earth conductor at the cut-out — often a metal sheath or armour, or a dedicated separate cable. TN-S is becoming rarer in new UK domestic installs (TN-C-S is more economical for the DNO) but is common in older properties, in some commercial work, and where the DNO's network design predates the move to PME."
+        >
+          <p>
+            In TN-S, the protective conductor (PE) carries no current under normal operation — it's
+            purely a fault path. Earth-fault loop impedance Ze tends to be moderate (typical DNO max
+            0.8 Ω). All Class I exposed-conductive-parts in the installation are connected to the
+            supply PE via the consumer's MET. ADS is verified per Reg 411.4 with the standard Table
+            41.1 disconnection times.
+          </p>
+        </ConceptBlock>
+
+        <RegsCallout
+          source="BS 7671:2018+A4:2026 · TN-C-S system definition"
+          clause="A TN-C-S system has the neutral and protective functions combined in a single conductor (PEN) in a part of the system. The supply system PEN conductor is earthed at two or more points. All exposed-conductive-parts of an installation are connected to the PEN conductor via the main earthing terminal and the neutral terminal, with these terminals linked together."
+          meaning="TN-C-S compromises between the safety of TN-S and the economy of TN-C. The supply network uses a single PEN (combining N and PE — fewer conductors, lower cost) earthed at multiple points; the property splits PEN into separate N and PE at the cut-out. The 'multiple earthing' is what makes it PME — Protective Multiple Earthing — and what reduces (but doesn't eliminate) the open-PEN risk."
+          cite="BS 7671:2018+A4:2026"
+        />
+
+        <ConceptBlock
+          title="TN-C-S — combined PEN in supply, split at cut-out"
+          plainEnglish="The DNO's network from transformer to cut-out uses a combined PEN conductor — neutral and protective-earth in one cable. At the cut-out / meter position, the PEN splits: neutral goes to the consumer's neutral bar, earth goes to the consumer's MET. The CONSUMER'S installation is then effectively TN-S downstream of the MET."
+          onSite="The dominant UK domestic arrangement. Look for the cut-out's earth terminal connected to the same conductor as the neutral — typically a single earth terminal block at the meter / cut-out where the PE for the installation is taken. Two variants: PME (multiple earth bonding points along the DNO network) or PNB (single bonding point at the meter)."
+        >
+          <p>
+            TN-C-S characteristics: low Ze (typical DNO max 0.35 Ω due to multiple parallel earth
+            paths via PME electrodes), economical for the DNO (fewer conductors), and the dominant
+            UK arrangement. Risks: open-PEN failure (the PEN conductor breaking upstream of the
+            property under load drives local earth potential toward line voltage). Mitigations: Reg
+            461.2 (no PEN isolation), Reg 722.312.2.1 (no PEN in EV circuits — A4), and the bonding
+            requirements that link MET to all extraneous-conductive-parts.
+          </p>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="TT — own earth electrode"
+          plainEnglish="The installation provides its own earth via a local electrode (rod, mat, plate). NO protective conductor comes from the supply. The supply provides only line and neutral; the consumer's installation creates its own earth path entirely separately."
+          onSite="Common in: caravans (BS 7671 Section 708 mandates own electrode), agricultural buildings (Section 705), marinas (Section 709), some rural properties where the DNO will not provide an earth, retro-fitted PV / EV installations where TN-C-S exclusion criteria apply. Earth-electrode resistance Ra dominates Ze — typically 21-200 Ω depending on soil conditions and electrode quality."
+        >
+          <p>
+            Design implications of TT: ADS via OPD alone (Reg 411.5.4) requires very low Ra which is
+            rarely achievable with a single rod electrode — typical TT designs use RCD-led ADS per
+            Reg 411.5.3, with the additional limb (b) check Ra × IΔn ≤ 50 V limiting the touch
+            voltage during a residual fault. Disconnection times per Reg 411.3.2.4 (1 s for
+            distribution circuits in TT, vs 5 s for TN). Special-location regs (caravans,
+            agricultural, marinas) often impose tighter earth-electrode requirements.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...inlineChecks[0]} />
+
+        <SectionRule />
+
+        <VideoCard
+          url={videos.zeTest.url}
+          title={videos.zeTest.title}
+          channel={videos.zeTest.channel}
+          duration={videos.zeTest.duration}
+          topic="Watch · Ze measurement at the cut-out"
+          caption="Craig Wiltshire walks through a Ze test on a single-phase supply — the practical measurement that proves which earthing arrangement is in place. The Ze value you read at the cut-out is what cascades into every subsequent Zs / disconnection-time / Reg 411 check on the cert, so getting it right (and matching it to the declared TN-S / TN-C-S / TT system) is the qualifying-spark task that turns the theory in this section into evidence on the EIC."
+        />
+
+        <SectionRule />
+
+        <VideoCard
+          url={videos.transformerStepUpDown.url}
+          title={videos.transformerStepUpDown.title}
+          channel={videos.transformerStepUpDown.channel}
+          duration={videos.transformerStepUpDown.duration}
+          topic="Watch · The supply transformer that defines the system arrangement"
+          caption="The Engineering Mindset walks the distribution transformer secondary that sits at the heart of every TN, TT or IT supply. Whether the secondary star point is solidly earthed (TN), unearthed and you provide your own electrode (TT) or earthed via a high impedance (IT) is the single decision upstream that cascades into every Reg 411 design choice in the property's installation."
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>The A4 PME / PNB distinction</ContentEyebrow>
+
+        <ConceptBlock
+          title="What changed in the cert form for TN-C-S"
+          plainEnglish="Under earlier BS 7671 editions, the cert dropped down 'TN-C-S' as a single option. A4:2026 added the explicit sub-distinction: 'TN-C-S (PME)' for the conventional multi-electrode arrangement, and 'TN-C-S (PNB)' for the single-bonding-point variant. Same TN-C-S system family, different earthing topology, different cert recording."
+          onSite="The DNO supplies the property — they know which variant. Modern DNO documentation states the supply type explicitly; some bills mention it. If unsure, request a maximum-Ze quote from the DNO; the response often clarifies the arrangement. PNB is more common in newer / rural supplies; PME is the conventional UK majority. Recording the right variant on the cert is part of A4 compliance."
+        >
+          <p>
+            Why does the distinction matter? Because the open-PEN behaviour differs. PME's multiple
+            electrodes provide parallel paths that partially mitigate a single upstream PEN break —
+            the local installation's earth potential rises but is held down by other electrodes'
+            parallel connection to true earth. PNB has a single bonding point — open-PEN
+            consequences are sharper, with no parallel mitigation. Designers and inspectors need to
+            know which they're working with so the protective measures (in particular Reg
+            722.312.2.1 EV charging compliance) are appropriately specified.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...inlineChecks[1]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>
+          IT systems — when continuity matters more than disconnection
+        </ContentEyebrow>
+
+        <ConceptBlock
+          title="The fundamental IT principle"
+          plainEnglish="In TN and TT, an earth fault triggers immediate ADS — the supply disconnects to limit touch-voltage exposure. In IT, the supply is isolated from earth (or earthed via a high-impedance device); a single earth fault produces only a small current, the supply continues, an alarm signals the fault, and only a SECOND fault on a different live conductor triggers normal disconnection."
+          onSite="IT is rare in UK general installations but mandatory in some medical Group 2 locations (operating theatres, ICU isolation transformers) and used in continuity-essential industrial safety circuits. Recognition: an isolation transformer in the supply path with an Insulation Monitoring Device (IMD) wired to alarm panels. Local rules at the site dictate the maintenance and fault-response procedures."
+        >
+          <p>
+            Reg 411.6 governs IT system protection. Reg 411.6.1 covers the first-fault behaviour
+            (continuous monitoring, alarm, no automatic disconnection). Reg 411.6.5 covers the
+            second-fault disconnection — the second fault makes the system behave like a TN or TT
+            depending on topology, and standard ADS applies. Reg 411.6.3 lists the recognised
+            monitoring / protective devices: IMDs, RCMs, IFLS, OPDs, RCDs. In practice the IMD is
+            the primary first-fault detector; the OPDs / RCDs handle the second fault. Maintenance
+            staff must understand the alarm response procedure — leaving the first fault unaddressed
+            and waiting for the second is the path to a failed installation.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...inlineChecks[2]} />
+        <InlineCheck {...inlineChecks[3]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>The PEN — why two regulations protect it</ContentEyebrow>
+
+        <ConceptBlock
+          title="Reg 461.2 and Reg 722.312.2.1 — same hazard, different angles"
+          plainEnglish="Reg 461.2 prohibits isolating or switching the PEN anywhere in TN-C / TN-C-S. Reg 722.312.2.1 (A4:2026) goes further for EV charging — no PEN at all in the EV circuit on TN supplies. Both regulations exist because of the open-PEN failure mode."
+          onSite="Open-PEN happens when the PEN conductor breaks upstream of the property under load. Without a PEN, load current can't return to the source via neutral — it's forced to find a return path through earth via every CPC-connected exposed metal part in the installation. Local earth potential rises toward line voltage; every exposed metal part rises with it. Touching two such parts simultaneously becomes the fault path. The risk is invisible to a basic insulation test and only manifests under load."
+        >
+          <p>
+            Reg 461.2's general prohibition has been BS 7671 doctrine since 16th edition. The new A4
+            Reg 722.312.2.1 takes the rule one step further for EV charging because the vehicle's
+            body is a large conductive surface the user is in direct, prolonged contact with. An
+            open-PEN drives the vehicle body toward line voltage; touching the vehicle and any other
+            bonded item (a kerb-side metal handrail, a metallic gate, a building bonded to the same
+            earthing system) is potentially fatal. Compliance routes: TN-S configuration to the EV
+            (split N and PE before the EV circuit) or open-PEN detection device.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...inlineChecks[4]} />
+        <InlineCheck {...inlineChecks[5]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>Choosing the right design for an unfamiliar supply</ContentEyebrow>
+
+        <ConceptBlock
+          title="What to do when you arrive at a job and don't know the arrangement"
+          plainEnglish="Most domestic and small commercial work in the UK is TN-C-S. But assumptions are dangerous — verify before you design. The five-minute checklist saves the half-day of redesign that comes from getting the arrangement wrong."
+          onSite="(1) Look at the cut-out. Two conductors out + earth from a terminal block = TN-C-S. Three conductors out (with separate earth) = TN-S. No earth from cut-out = TT. (2) Ask the customer if they have any DNO documentation — supply contract, max-Ze quote, recent supply alteration paperwork. (3) Measure Ze. TN-S typical 0.5-0.8 Ω, TN-C-S typical 0.15-0.35 Ω, TT typical 21-200 Ω. (4) If unsure, contact the DNO via their network operator helpline; modern DNOs respond same-day to supply-arrangement queries. (5) Document the verified arrangement on the cert / design sheet before any further design work."
+        >
+          <p>
+            The cost of getting the arrangement wrong is real. Cable sizing assumes specific
+            fault-current behaviours that differ between TN and TT. Disconnection-time tables differ
+            between TN final / TN distribution / TT distribution. The Reg 722.312.2.1 EV-circuit ban
+            applies only to TN supplies. Cert-form entries are system-arrangement-specific. Five
+            minutes' verification at the start of a job prevents hours of redesign or — worse — a
+            non-compliant install that needs reworking after building control inspection.
+          </p>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <ContentEyebrow>How fault current actually flows in each arrangement</ContentEyebrow>
+
+        <ConceptBlock
+          title="The fault loop in TN-S"
+          plainEnglish="Source transformer secondary → line conductor → fault → CPC back through the installation → MET → separate PE conductor in the supply cable → back to the transformer star point. Two distinct conductors carry the fault current, line and PE — they don't share with the neutral."
+          onSite="TN-S earth-fault loops are the cleanest. The protective conductor is dedicated to fault-protection only; it carries no current under normal operation. Loop impedance is moderate (typical Ze ~0.5-0.8 Ω), Zs is dominated by the circuit's own R1 + R2. Compatible with both OPD-led and RCD-led ADS strategies."
+        >
+          <p>
+            The TN-S advantage is conceptual cleanliness — line and earth are functionally separate
+            throughout the system. The disadvantage is supply-network cost (more conductors). For
+            commercial / industrial work where the supply is being installed fresh, TN-S is
+            sometimes specified deliberately for the cleaner fault behaviour; for retrofit /
+            domestic work, the supply arrangement is what the DNO provides.
+          </p>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="The fault loop in TN-C-S"
+          plainEnglish="Source transformer secondary → line conductor → fault → CPC back through the installation → MET → bonded to the neutral terminal at the cut-out → combined PEN conductor in the supply cable → back to the transformer star point. The PEN carries BOTH normal neutral current AND fault current — the protective and neutral functions are physically combined upstream of the cut-out."
+          onSite="The combined PEN means the protective path and the neutral path share a conductor. Under normal operation the PEN carries the neutral current of every property on the supply network. An open-PEN failure at any point upstream interrupts ALL connected properties' neutral return paths simultaneously — which is why the multiple-electrode bonding (PME) exists, providing parallel paths to mitigate. Typical TN-C-S Ze is low (~0.15-0.35 Ω) because of the parallel earth paths."
+        >
+          <p>
+            This is also why Reg 461.2 is so absolute about not switching the PEN — switching one
+            property's PEN would inadvertently interrupt every other property on the same supply
+            branch's earth-fault path. The bonding to the MET is permanent, the PEN continuous.
+            Modern UK consumer units are designed so the main switch never interrupts the PEN — only
+            line and post-MET neutral are switched.
+          </p>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="The fault loop in TT"
+          plainEnglish="Source transformer secondary → line conductor → fault → CPC back through the installation → MET → local earth electrode → through the GROUND ITSELF → back to the transformer's earth electrode → back to the transformer star point. The fault path goes through soil, not through a conductor."
+          onSite="TT's fault loop is dominated by the earth-electrode resistances (Ra at the property + the source's earth resistance). Typical Ra of a single rod electrode in average UK soil: 50-200 Ω. Compared to TN's milliohm-scale loop impedance, TT's is two orders of magnitude higher. That's why OPD-led ADS rarely works on TT — the fault current is too low for the OPD's magnetic threshold to clip in the required time. RCD-led ADS is the standard answer."
+        >
+          <p>
+            The seasonal variation in soil resistance is real. A TT installation that meets Reg
+            411.5.3 in winter (wet ground, low Ra) may struggle in summer (dry ground, high Ra). The
+            maximum permitted Ra under Reg 411.5.3(b) is determined by the IΔn of the RCD: at 30 mA,
+            Ra ≤ 1666 Ω; at 100 mA, Ra ≤ 500 Ω; at 300 mA, Ra ≤ 166 Ω. Designers should aim well
+            below these limits to provide seasonal headroom — typical targets of Ra ≤ 200 Ω for 30
+            mA RCD-led TT, with one or two rod electrodes plus bonding to any available metallic
+            underground services.
+          </p>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <ContentEyebrow>Identifying the system on site</ContentEyebrow>
+
+        <ConceptBlock
+          title="What to look for at the cut-out"
+          plainEnglish="The cut-out (the DNO-installed sealed unit at the property's incoming supply) is where the supply arrangement is identifiable. Most have a label or stamp; if not, the conductor configuration tells you."
+          onSite="Single-phase supply: 3 conductors leaving the cut-out (line + neutral + earth) usually means TN-S. 2 conductors leaving (line + combined PEN) with the earth taken from a terminal block at the meter usually means TN-C-S. No earth from the cut-out — local electrode visible — means TT. Three-phase: same logic with extra phases. Where unsure, request the supply type from the DNO; modern DNOs respond to maximum-Ze queries with explicit arrangement information."
+        >
+          <p>
+            The cert recording is mandatory and load-bearing. EIC Section A captures the system
+            arrangement; getting it wrong invalidates every Zs / Reg 411.x check against the cert.
+            Schedule of test results' measured Ze should corroborate — TN-S typically 0.5-0.8 Ω,
+            TN-C-S typically 0.15-0.35 Ω, TT typically 21-200 Ω. Significant disagreement between
+            declared system and measured Ze is a flag for investigation — possibly a DNO supply
+            change since the last cert.
+          </p>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <ContentEyebrow>Where it goes wrong</ContentEyebrow>
+
+        <CommonMistake
+          title="Recording 'TN-C-S' on the cert without specifying PME or PNB"
+          whatHappens="Inspector ticks 'TN-C-S' on the EIC, doesn't fill the PME / PNB sub-distinction. The cert is technically incomplete under A4:2026 — building control or future inspector flags the missing detail. The actual supply type is genuinely PNB but the cert doesn't reflect it."
+          doInstead="A4:2026 added the PME / PNB cert-form distinction precisely because the two TN-C-S variants have different fault behaviours. Confirm with the DNO if unsure (a maximum-Ze quote response usually states the arrangement). Tick the right box. The five-second admin step keeps the cert defensible."
+        />
+
+        <CommonMistake
+          title="Treating the supply arrangement as fixed forever"
+          whatHappens="EICR on a property the engineer last visited five years ago. The engineer assumes the system arrangement on the previous cert is still correct, doesn't verify Ze independently, signs off the EICR. Two years later a fault investigation finds the DNO upgraded the supply network in the interim — the property is now on a different arrangement, the cert is wrong, and disconnection times that were pass under the old arrangement are fail under the new."
+          doInstead="Always remeasure Ze on every EICR. Always verify the system arrangement matches the previous cert (or update if not). DNO network reconfigurations happen — supply upgrades, transformer changes, network unbalancing fixes. The cert reflects conditions AT THE TIME of inspection; assuming nothing's changed without verification is a defensible cause for a future complaint when the assumption turns out to have been wrong."
+        />
+
+        <CommonMistake
+          title="Switching the PEN at a 'main switch' inside the consumer unit"
+          whatHappens="Installer replaces a CU on a TN-C-S property. The new CU's main switch breaks all incoming conductors — line, neutral AND the incoming PEN before it splits at the MET. Under load with a fault, opening the switch interrupts the PEN, driving the local earth potential up and creating an open-PEN hazard."
+          doInstead="Reg 461.2: PEN shall NOT be isolated or switched. The main switch may break line and (post-MET) neutral but never the incoming PEN. Modern UK consumer units are designed with this in mind — the PEN-to-MET connection is not interruptible by the main switch. Check the wiring carefully on retrofits and CU upgrades; the wrong wiring scheme is a serious fault that may not show on standard tests."
+        />
+
+        <CommonMistake
+          title="Adding an EV charger on TN-C-S without addressing the PEN ban"
+          whatHappens="Installer fits a 7 kW EV charger to a TN-C-S property by running L+N+CPC from the consumer unit. The CPC is bonded to the MET, which is bonded to the incoming PEN. The EV circuit therefore (effectively) includes a PEN — Reg 722.312.2.1 (A4) violation."
+          doInstead="Two compliant routes. (1) Configure TN-S to the EV: split PEN into separate N and PE at the consumer unit, run L+N+PE separately to the EV circuit, no PEN in the EV charging circuit. (2) Use an EV charger with integrated open-PEN protection (most modern UK chargers have this — Pod Point, Wallbox, EO, Andersen, Zappi etc.). Document the chosen route on the EIC."
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>Scenarios — applying it on the day</ContentEyebrow>
+
+        <Scenario
+          title="Agricultural barn with a TT supply — seasonal Ra issue"
+          situation="A small farm has a 100 A TT supply to its main barn. Earth electrode is a 1.2 m copper-clad rod outside the barn, installed 20 years ago. EICR in February: Ra measured at 75 Ω, all 30 mA RCBOs pass timing tests, cert clean. EICR in August: Ra measured at 290 Ω. Reg 411.5.3 limb (b) check: 290 × 0.03 = 8.7 V — still under 50 V. But the seasonal swing is a flag."
+          whatToDo="The Ra has nearly quadrupled between winter and summer. Soil resistivity rises sharply when dry — a single-rod electrode in clay soil can swing by 4-5× across seasons. The August reading is technically still compliant under Reg 411.5.3(b), but the trend suggests the electrode is approaching the limits of its design service. Recommendations: (1) install a second earth electrode (parallel rods reduce Ra significantly via geometric averaging), (2) bond to any available metallic underground services if present, (3) flag the property for more frequent EICR until the trend stabilises. Document the seasonal reading on the EICR observations."
+          whyItMatters="TT installations have a season-dependent Ra that TN systems don't. Designers and inspectors who treat Ra as a one-time measurement miss the dynamic — a system that's compliant at install can drift out of compliance over years as the electrode ages or as the local water table drops. Document baseline at install, remeasure at every EICR, watch the trend. The Reg 411.5.3 limb (b) check has built-in margin (50 V vs the 25 V band I lower limit) but that margin shouldn't be relied upon as a substitute for proper electrode design."
+        />
+
+        <Scenario
+          title="EICR on a 1980s property — system arrangement disagreement"
+          situation="EICR on a 1980s detached house. Original EIC (issued at install) ticks 'TN-S'. Current measured Ze: 0.18 Ω. Modern installer notes the cut-out has two conductors leaving (no separate earth visible) and the earth is taken from a terminal block at the meter — characteristic of TN-C-S. The system arrangement on the previous cert appears to be wrong."
+          whatToDo="Investigate: contact the DNO and request the supply arrangement plus maximum Ze. Likely answer: the supply was upgraded from TN-S to TN-C-S during a network reconfiguration sometime in the past 40 years, and the original cert reflects the install-time arrangement, not the current one. Update the EICR with the correct current arrangement (TN-C-S, with PME/PNB sub-detail), record measured Ze, and note the change from the historical cert as an observation. The installation's protection design needs reviewing — a TN-C-S supply has different open-PEN risks than the TN-S the original cert assumed."
+          whyItMatters="Supply arrangements can change over the lifetime of a property — DNO network reconfigurations, supply upgrades, local distribution rearrangements all happen. The cert at install reflects install-time conditions; EICRs must verify CURRENT conditions and update the recording. A property assumed to be TN-S that's actually TN-C-S has different consumer-unit design rules, different EV-charging compliance, different open-PEN risks. Get the current state right; update; document the change for future inspectors."
+        />
+
+        <Scenario
+          title="New EV charger on a TN-C-S domestic — design choice"
+          situation="Customer wants a 7 kW Zappi EV charger added to their TN-C-S property. Existing modern (2022) consumer unit with RCBOs throughout. Installer is choosing between TN-S configuration vs charger-integrated open-PEN protection."
+          whatToDo="The Zappi has integrated open-PEN protection (sells under the 'No earth-rod required' marketing). This is BS 7671 compliant per Reg 722.312.2.1 — the integrated detection circuit handles the PEN risk, and the EV circuit can run L+N+CPC from the consumer unit without separate TN-S configuration. Spec Type A 30 mA RCBO upstream (charger integrates 6 mA DC fault detection, so Type A is sufficient per the manual). Document on the EIC: 'EV charging circuit complies with Reg 722.312.2.1 via integrated open-PEN detection per charger specification.' Cert is clean."
+          whyItMatters="Modern EV chargers have done significant compliance work to make Reg 722.312.2.1 a non-issue for the installer. The simple route — let the charger handle it — is increasingly the default in UK domestic. Where the charger DOESN'T have integrated open-PEN protection (older models, some commercial-grade chargers), the installer falls back to TN-S configuration or external open-PEN detection device. Reading the charger's installation manual is the binding step; the design follows from what the manual allows."
+        />
+
+        <FAQ items={faqItems} />
+
+        <SectionRule />
+
+        <ContentEyebrow>Designer's quick reference</ContentEyebrow>
+
+        <ConceptBlock
+          title="System earthing decision points"
+          plainEnglish="Three questions answer most system-arrangement design choices. (1) What's the supply? (Determined by the DNO.) (2) Are there special-location overrides? (Caravans, marinas, agricultural, medical Group 2 may force a different arrangement.) (3) What design rules apply downstream?"
+          onSite="(1) DNO-provided: confirm the arrangement at install / EICR. (2) Special locations may force TT (caravans, marinas), or IT (medical Group 2). (3) Design rules: Reg 411.4 for TN, 411.5 for TT, 411.6 for IT — different disconnection times, different protective measures, different cert entries."
+        >
+          <p>
+            For typical UK domestic: TN-C-S supply confirmed via DNO, no special-location overrides,
+            design per Reg 411.4 (and within that, Reg 411.4.4 for OPD-led ADS or Reg 411.4.x for
+            RCD-led where applicable). For typical UK rural / agricultural: TT supply (own
+            electrode), Section 705 special-location requirements, design per Reg 411.5 with
+            particular attention to electrode resistance and the Ra × IΔn limit. For typical UK
+            industrial: TN-C-S or TN-S, occasional IT for safety circuits, design per Reg 411.4 /
+            411.6 as appropriate.
+          </p>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <ConceptBlock
+          title="When the customer asks 'what's wrong with my supply?'"
+          plainEnglish="Customers don't usually know — or care — what TN-C-S means. They notice when the supply behaves oddly: lights dimming under load, occasional brief outages, an EV charger refusing to start. Most are explained by supply-arrangement-related issues that the customer can't diagnose."
+          onSite="Common symptoms and likely causes. (1) Dimming lights under heavy load: Ze may be high (loose / corroded supply terminations, or the DNO's supply impedance is high). Measure Ze at the cut-out; flag to the DNO if outside their stated max. (2) EV charger 'no earth' errors: open-PEN protection in the charger detecting a real or false PEN issue; check actual PEN integrity, the charger's reference earth, and any local bonding changes. (3) RCD trips on damp days: TT-supply electrode resistance rising in wet conditions can shift leakage currents past the RCD trip threshold; check Ra and consider electrode improvement."
+        >
+          <p>
+            The qualified electrician's value is in connecting customer-visible symptoms to
+            supply-arrangement realities. Most customer complaints have a 'this is normal for
+            TN-C-S' or 'this needs a call to the DNO' answer that requires understanding the system
+            arrangement first. The cert recording and the periodic Ze measurement are the data trail
+            that supports those diagnostic conversations.
+          </p>
+        </ConceptBlock>
+
+        <KeyTakeaways
+          points={[
+            'Four BS 7671 system earthing arrangements: TN-S, TN-C-S (with PME / PNB variants — A4 distinction), TT, IT. The choice cascades into every subsequent protection-design decision.',
+            'TN-C-S is the UK domestic majority. Look at the cut-out: combined PEN with earth from a terminal block at the meter = TN-C-S.',
+            'A4:2026 added the explicit TN-C-S (PNB) cert-form option to distinguish single-bonding-point PNB from multi-electrode PME. Get it right on the cert — affects open-PEN risk modelling.',
+            "Reg 461.2: no isolating or switching of the PEN in TN-C / TN-C-S. The PEN must be continuous from the DNO transformer to the consumer's MET.",
+            'Reg 722.312.2.1 (A4): no PEN conductor in EV charging circuits on TN supplies. Compliance via TN-S configuration to the EV or charger-integrated open-PEN protection.',
+            'TT is for caravans, marinas, agricultural, properties without DNO earth. RCD-led ADS (Reg 411.5.3); Ra × IΔn ≤ 50 V is the second design check.',
+            'IT is rare — used in medical Group 2, continuity-essential industrial. First fault alarms (Reg 411.6.3 monitoring devices); second fault disconnects per Reg 411.6.5.',
+            'Identify the system at the cut-out: 3 conductors with separate earth = TN-S; 2 conductors with earth from terminal block = TN-C-S; no earth from cut-out, local electrode = TT.',
+            'TT systems have a season-dependent Ra. Single-rod electrodes can swing 4-5× between winter (wet) and summer (dry). Design for the dry-season Ra, monitor on EICR.',
+            "Always remeasure Ze on EICR — DNO network reconfigurations can change the supply arrangement or its characteristics over a property's lifetime.",
+            'Verify the supply arrangement before any design work. Five minutes at the cut-out + a Ze measurement saves hours of redesign or non-compliance later.',
+            "PEN faults are rare but consequential. Reg 461.2's strict prohibition on isolating the PEN exists because the failure mode is invisible to standard testing yet potentially fatal.",
+            'Three-phase domestic supplies are increasing — typically associated with EV / heat pump / solar PV demand. Same TN-C-S principles apply; same Reg 722.312.2.1 EV rules.',
+            'TT design check: Reg 411.5.3(b) — Ra × IΔn ≤ 50 V. At 30 mA, max Ra = 1666 Ω; at 100 mA, max Ra = 500 Ω. Aim well below for seasonal headroom.',
+            "Customer-facing diagnostic: dimming under load = high Ze; EV 'no earth' errors = open-PEN protection triggering; RCD trips on damp = TT seasonal Ra. Each connects to system-arrangement physics.",
+            "Fault loop in TT goes through SOIL — Ra dominates, not conductor resistance. That's why RCD-led ADS is the standard TT answer.",
+          ]}
+        />
+
+        <Quiz questions={quizQuestions} />
+
+        <div className="grid grid-cols-2 gap-3 pt-2">
           <button
             type="button"
-            onClick={() => navigate('../bs7671-module-3')}
-            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            onClick={() => navigate('/electrician/upskilling/bs7671-module-3')}
+            className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
           >
-            <ArrowLeft className="h-4 w-4" /> Module 3
+            <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+              <ChevronLeft className="h-3 w-3" /> Module 3
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-white truncate">
+              Module overview
+            </div>
           </button>
-
-          <PageHero
-            eyebrow="Module 3 · Section 1 · Updated for A4:2026"
-            title="Supply systems — TN-S, TN-C-S, TT, IT"
-            description="The earthing arrangement is the single most-load-bearing decision in any installation design — it dictates which Reg 411 sub-clauses apply, which disconnection times, which protective-measure routes, and how Section 7 special locations interact. A4:2026 added the explicit TN-C-S (PNB) cert option and the EV-circuit PEN ban (Reg 722.312.2.1)."
-            actions={
-              <>
-                <RegBadge>312.1</RegBadge>
-                <RegBadge>411.4.4</RegBadge>
-                <RegBadge>411.5.3</RegBadge>
-                <RegBadge>461.2</RegBadge>
-                <AmendmentBadge regs={['722.312.2.1']} />
-              </>
-            }
-            tone="yellow"
-          />
-
-          <TLDR
-            points={[
-              'The four arrangements: TN-S (separate N + PE throughout), TN-C-S (combined PEN in supply network, split at cut-out — also known as PME, with PNB variant), TT (own earth electrode), IT (isolated source).',
-              "TN-C-S is the UK domestic majority. A4:2026 added 'TN-C-S (PNB)' as an explicit cert option to distinguish single-bonding-point PNB from multi-electrode PME.",
-              'Reg 461.2 prohibits isolating / switching the PEN. Reg 722.312.2.1 (A4) prohibits PEN conductors in EV charging circuits on TN supplies. Both rules exist because of open-PEN failure consequences.',
-            ]}
-          />
-
-          <LearningOutcomes
-            outcomes={[
-              'Distinguish the four BS 7671 system earthing arrangements (TN-S, TN-C-S with PME / PNB variants, TT, IT) and identify which is present on a typical UK supply.',
-              'Identify the A4:2026 cert-form changes — particularly the PME / PNB distinction under TN-C-S — and complete EIC entries correctly.',
-              'Apply Reg 461.2 (no PEN isolation) and Reg 722.312.2.1 (no PEN in EV circuits) to consumer-unit and EV-charging design.',
-              'Match the system earthing arrangement to the appropriate Reg 411 sub-clause for ADS verification — Reg 411.4 / 411.5 / 411.6 — and apply the right disconnection-time table.',
-              'Recognise where TT or IT is the right arrangement (caravans, agricultural, marinas; medical Group 2, continuity-essential industrial) and design accordingly.',
-            ]}
-            initialVisibleCount={3}
-          />
-
-          <ContentEyebrow>The four arrangements in plain English</ContentEyebrow>
-
-          <ConceptBlock
-            title="TN-S — separate N and PE throughout"
-            plainEnglish="The supply network has separate Neutral and Protective-Earth conductors all the way from the source transformer to the property. Three live conductors arrive at the cut-out on a single-phase install (L + N + PE); four on three-phase (L1 + L2 + L3 + N + PE)."
-            onSite="Look for a separate earth conductor at the cut-out — often a metal sheath or armour, or a dedicated separate cable. TN-S is becoming rarer in new UK domestic installs (TN-C-S is more economical for the DNO) but is common in older properties, in some commercial work, and where the DNO's network design predates the move to PME."
+          <button
+            type="button"
+            onClick={() => navigate('/electrician/upskilling/bs7671-module-3-section-2')}
+            className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
           >
-            <p>
-              In TN-S, the protective conductor (PE) carries no current under normal operation —
-              it's purely a fault path. Earth-fault loop impedance Ze tends to be moderate (typical
-              DNO max 0.8 Ω). All Class I exposed-conductive-parts in the installation are connected
-              to the supply PE via the consumer's MET. ADS is verified per Reg 411.4 with the
-              standard Table 41.1 disconnection times.
-            </p>
-          </ConceptBlock>
-
-          <RegsCallout
-            source="BS 7671:2018+A4:2026 · TN-C-S system definition"
-            clause="A TN-C-S system has the neutral and protective functions combined in a single conductor (PEN) in a part of the system. The supply system PEN conductor is earthed at two or more points. All exposed-conductive-parts of an installation are connected to the PEN conductor via the main earthing terminal and the neutral terminal, with these terminals linked together."
-            meaning="TN-C-S compromises between the safety of TN-S and the economy of TN-C. The supply network uses a single PEN (combining N and PE — fewer conductors, lower cost) earthed at multiple points; the property splits PEN into separate N and PE at the cut-out. The 'multiple earthing' is what makes it PME — Protective Multiple Earthing — and what reduces (but doesn't eliminate) the open-PEN risk."
-            cite="BS 7671:2018+A4:2026"
-          />
-
-          <ConceptBlock
-            title="TN-C-S — combined PEN in supply, split at cut-out"
-            plainEnglish="The DNO's network from transformer to cut-out uses a combined PEN conductor — neutral and protective-earth in one cable. At the cut-out / meter position, the PEN splits: neutral goes to the consumer's neutral bar, earth goes to the consumer's MET. The CONSUMER'S installation is then effectively TN-S downstream of the MET."
-            onSite="The dominant UK domestic arrangement. Look for the cut-out's earth terminal connected to the same conductor as the neutral — typically a single earth terminal block at the meter / cut-out where the PE for the installation is taken. Two variants: PME (multiple earth bonding points along the DNO network) or PNB (single bonding point at the meter)."
-          >
-            <p>
-              TN-C-S characteristics: low Ze (typical DNO max 0.35 Ω due to multiple parallel earth
-              paths via PME electrodes), economical for the DNO (fewer conductors), and the dominant
-              UK arrangement. Risks: open-PEN failure (the PEN conductor breaking upstream of the
-              property under load drives local earth potential toward line voltage). Mitigations:
-              Reg 461.2 (no PEN isolation), Reg 722.312.2.1 (no PEN in EV circuits — A4), and the
-              bonding requirements that link MET to all extraneous-conductive-parts.
-            </p>
-          </ConceptBlock>
-
-          <ConceptBlock
-            title="TT — own earth electrode"
-            plainEnglish="The installation provides its own earth via a local electrode (rod, mat, plate). NO protective conductor comes from the supply. The supply provides only line and neutral; the consumer's installation creates its own earth path entirely separately."
-            onSite="Common in: caravans (BS 7671 Section 708 mandates own electrode), agricultural buildings (Section 705), marinas (Section 709), some rural properties where the DNO will not provide an earth, retro-fitted PV / EV installations where TN-C-S exclusion criteria apply. Earth-electrode resistance Ra dominates Ze — typically 21-200 Ω depending on soil conditions and electrode quality."
-          >
-            <p>
-              Design implications of TT: ADS via OPD alone (Reg 411.5.4) requires very low Ra which
-              is rarely achievable with a single rod electrode — typical TT designs use RCD-led ADS
-              per Reg 411.5.3, with the additional limb (b) check Ra × IΔn ≤ 50 V limiting the touch
-              voltage during a residual fault. Disconnection times per Reg 411.3.2.4 (1 s for
-              distribution circuits in TT, vs 5 s for TN). Special-location regs (caravans,
-              agricultural, marinas) often impose tighter earth-electrode requirements.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...inlineChecks[0]} />
-
-          <SectionRule />
-
-          <VideoCard
-            url={videos.zeTest.url}
-            title={videos.zeTest.title}
-            channel={videos.zeTest.channel}
-            duration={videos.zeTest.duration}
-            topic="Watch · Ze measurement at the cut-out"
-            caption="Craig Wiltshire walks through a Ze test on a single-phase supply — the practical measurement that proves which earthing arrangement is in place. The Ze value you read at the cut-out is what cascades into every subsequent Zs / disconnection-time / Reg 411 check on the cert, so getting it right (and matching it to the declared TN-S / TN-C-S / TT system) is the qualifying-spark task that turns the theory in this section into evidence on the EIC."
-          />
-
-          <SectionRule />
-
-          <VideoCard
-            url={videos.transformerStepUpDown.url}
-            title={videos.transformerStepUpDown.title}
-            channel={videos.transformerStepUpDown.channel}
-            duration={videos.transformerStepUpDown.duration}
-            topic="Watch · The supply transformer that defines the system arrangement"
-            caption="The Engineering Mindset walks the distribution transformer secondary that sits at the heart of every TN, TT or IT supply. Whether the secondary star point is solidly earthed (TN), unearthed and you provide your own electrode (TT) or earthed via a high impedance (IT) is the single decision upstream that cascades into every Reg 411 design choice in the property's installation."
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>The A4 PME / PNB distinction</ContentEyebrow>
-
-          <ConceptBlock
-            title="What changed in the cert form for TN-C-S"
-            plainEnglish="Under earlier BS 7671 editions, the cert dropped down 'TN-C-S' as a single option. A4:2026 added the explicit sub-distinction: 'TN-C-S (PME)' for the conventional multi-electrode arrangement, and 'TN-C-S (PNB)' for the single-bonding-point variant. Same TN-C-S system family, different earthing topology, different cert recording."
-            onSite="The DNO supplies the property — they know which variant. Modern DNO documentation states the supply type explicitly; some bills mention it. If unsure, request a maximum-Ze quote from the DNO; the response often clarifies the arrangement. PNB is more common in newer / rural supplies; PME is the conventional UK majority. Recording the right variant on the cert is part of A4 compliance."
-          >
-            <p>
-              Why does the distinction matter? Because the open-PEN behaviour differs. PME's
-              multiple electrodes provide parallel paths that partially mitigate a single upstream
-              PEN break — the local installation's earth potential rises but is held down by other
-              electrodes' parallel connection to true earth. PNB has a single bonding point —
-              open-PEN consequences are sharper, with no parallel mitigation. Designers and
-              inspectors need to know which they're working with so the protective measures (in
-              particular Reg 722.312.2.1 EV charging compliance) are appropriately specified.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...inlineChecks[1]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>
-            IT systems — when continuity matters more than disconnection
-          </ContentEyebrow>
-
-          <ConceptBlock
-            title="The fundamental IT principle"
-            plainEnglish="In TN and TT, an earth fault triggers immediate ADS — the supply disconnects to limit touch-voltage exposure. In IT, the supply is isolated from earth (or earthed via a high-impedance device); a single earth fault produces only a small current, the supply continues, an alarm signals the fault, and only a SECOND fault on a different live conductor triggers normal disconnection."
-            onSite="IT is rare in UK general installations but mandatory in some medical Group 2 locations (operating theatres, ICU isolation transformers) and used in continuity-essential industrial safety circuits. Recognition: an isolation transformer in the supply path with an Insulation Monitoring Device (IMD) wired to alarm panels. Local rules at the site dictate the maintenance and fault-response procedures."
-          >
-            <p>
-              Reg 411.6 governs IT system protection. Reg 411.6.1 covers the first-fault behaviour
-              (continuous monitoring, alarm, no automatic disconnection). Reg 411.6.5 covers the
-              second-fault disconnection — the second fault makes the system behave like a TN or TT
-              depending on topology, and standard ADS applies. Reg 411.6.3 lists the recognised
-              monitoring / protective devices: IMDs, RCMs, IFLS, OPDs, RCDs. In practice the IMD is
-              the primary first-fault detector; the OPDs / RCDs handle the second fault. Maintenance
-              staff must understand the alarm response procedure — leaving the first fault
-              unaddressed and waiting for the second is the path to a failed installation.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...inlineChecks[2]} />
-          <InlineCheck {...inlineChecks[3]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>The PEN — why two regulations protect it</ContentEyebrow>
-
-          <ConceptBlock
-            title="Reg 461.2 and Reg 722.312.2.1 — same hazard, different angles"
-            plainEnglish="Reg 461.2 prohibits isolating or switching the PEN anywhere in TN-C / TN-C-S. Reg 722.312.2.1 (A4:2026) goes further for EV charging — no PEN at all in the EV circuit on TN supplies. Both regulations exist because of the open-PEN failure mode."
-            onSite="Open-PEN happens when the PEN conductor breaks upstream of the property under load. Without a PEN, load current can't return to the source via neutral — it's forced to find a return path through earth via every CPC-connected exposed metal part in the installation. Local earth potential rises toward line voltage; every exposed metal part rises with it. Touching two such parts simultaneously becomes the fault path. The risk is invisible to a basic insulation test and only manifests under load."
-          >
-            <p>
-              Reg 461.2's general prohibition has been BS 7671 doctrine since 16th edition. The new
-              A4 Reg 722.312.2.1 takes the rule one step further for EV charging because the
-              vehicle's body is a large conductive surface the user is in direct, prolonged contact
-              with. An open-PEN drives the vehicle body toward line voltage; touching the vehicle
-              and any other bonded item (a kerb-side metal handrail, a metallic gate, a building
-              bonded to the same earthing system) is potentially fatal. Compliance routes: TN-S
-              configuration to the EV (split N and PE before the EV circuit) or open-PEN detection
-              device.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...inlineChecks[4]} />
-          <InlineCheck {...inlineChecks[5]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>Choosing the right design for an unfamiliar supply</ContentEyebrow>
-
-          <ConceptBlock
-            title="What to do when you arrive at a job and don't know the arrangement"
-            plainEnglish="Most domestic and small commercial work in the UK is TN-C-S. But assumptions are dangerous — verify before you design. The five-minute checklist saves the half-day of redesign that comes from getting the arrangement wrong."
-            onSite="(1) Look at the cut-out. Two conductors out + earth from a terminal block = TN-C-S. Three conductors out (with separate earth) = TN-S. No earth from cut-out = TT. (2) Ask the customer if they have any DNO documentation — supply contract, max-Ze quote, recent supply alteration paperwork. (3) Measure Ze. TN-S typical 0.5-0.8 Ω, TN-C-S typical 0.15-0.35 Ω, TT typical 21-200 Ω. (4) If unsure, contact the DNO via their network operator helpline; modern DNOs respond same-day to supply-arrangement queries. (5) Document the verified arrangement on the cert / design sheet before any further design work."
-          >
-            <p>
-              The cost of getting the arrangement wrong is real. Cable sizing assumes specific
-              fault-current behaviours that differ between TN and TT. Disconnection-time tables
-              differ between TN final / TN distribution / TT distribution. The Reg 722.312.2.1
-              EV-circuit ban applies only to TN supplies. Cert-form entries are
-              system-arrangement-specific. Five minutes' verification at the start of a job prevents
-              hours of redesign or — worse — a non-compliant install that needs reworking after
-              building control inspection.
-            </p>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <ContentEyebrow>How fault current actually flows in each arrangement</ContentEyebrow>
-
-          <ConceptBlock
-            title="The fault loop in TN-S"
-            plainEnglish="Source transformer secondary → line conductor → fault → CPC back through the installation → MET → separate PE conductor in the supply cable → back to the transformer star point. Two distinct conductors carry the fault current, line and PE — they don't share with the neutral."
-            onSite="TN-S earth-fault loops are the cleanest. The protective conductor is dedicated to fault-protection only; it carries no current under normal operation. Loop impedance is moderate (typical Ze ~0.5-0.8 Ω), Zs is dominated by the circuit's own R1 + R2. Compatible with both OPD-led and RCD-led ADS strategies."
-          >
-            <p>
-              The TN-S advantage is conceptual cleanliness — line and earth are functionally
-              separate throughout the system. The disadvantage is supply-network cost (more
-              conductors). For commercial / industrial work where the supply is being installed
-              fresh, TN-S is sometimes specified deliberately for the cleaner fault behaviour; for
-              retrofit / domestic work, the supply arrangement is what the DNO provides.
-            </p>
-          </ConceptBlock>
-
-          <ConceptBlock
-            title="The fault loop in TN-C-S"
-            plainEnglish="Source transformer secondary → line conductor → fault → CPC back through the installation → MET → bonded to the neutral terminal at the cut-out → combined PEN conductor in the supply cable → back to the transformer star point. The PEN carries BOTH normal neutral current AND fault current — the protective and neutral functions are physically combined upstream of the cut-out."
-            onSite="The combined PEN means the protective path and the neutral path share a conductor. Under normal operation the PEN carries the neutral current of every property on the supply network. An open-PEN failure at any point upstream interrupts ALL connected properties' neutral return paths simultaneously — which is why the multiple-electrode bonding (PME) exists, providing parallel paths to mitigate. Typical TN-C-S Ze is low (~0.15-0.35 Ω) because of the parallel earth paths."
-          >
-            <p>
-              This is also why Reg 461.2 is so absolute about not switching the PEN — switching one
-              property's PEN would inadvertently interrupt every other property on the same supply
-              branch's earth-fault path. The bonding to the MET is permanent, the PEN continuous.
-              Modern UK consumer units are designed so the main switch never interrupts the PEN —
-              only line and post-MET neutral are switched.
-            </p>
-          </ConceptBlock>
-
-          <ConceptBlock
-            title="The fault loop in TT"
-            plainEnglish="Source transformer secondary → line conductor → fault → CPC back through the installation → MET → local earth electrode → through the GROUND ITSELF → back to the transformer's earth electrode → back to the transformer star point. The fault path goes through soil, not through a conductor."
-            onSite="TT's fault loop is dominated by the earth-electrode resistances (Ra at the property + the source's earth resistance). Typical Ra of a single rod electrode in average UK soil: 50-200 Ω. Compared to TN's milliohm-scale loop impedance, TT's is two orders of magnitude higher. That's why OPD-led ADS rarely works on TT — the fault current is too low for the OPD's magnetic threshold to clip in the required time. RCD-led ADS is the standard answer."
-          >
-            <p>
-              The seasonal variation in soil resistance is real. A TT installation that meets Reg
-              411.5.3 in winter (wet ground, low Ra) may struggle in summer (dry ground, high Ra).
-              The maximum permitted Ra under Reg 411.5.3(b) is determined by the IΔn of the RCD: at
-              30 mA, Ra ≤ 1666 Ω; at 100 mA, Ra ≤ 500 Ω; at 300 mA, Ra ≤ 166 Ω. Designers should aim
-              well below these limits to provide seasonal headroom — typical targets of Ra ≤ 200 Ω
-              for 30 mA RCD-led TT, with one or two rod electrodes plus bonding to any available
-              metallic underground services.
-            </p>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <ContentEyebrow>Identifying the system on site</ContentEyebrow>
-
-          <ConceptBlock
-            title="What to look for at the cut-out"
-            plainEnglish="The cut-out (the DNO-installed sealed unit at the property's incoming supply) is where the supply arrangement is identifiable. Most have a label or stamp; if not, the conductor configuration tells you."
-            onSite="Single-phase supply: 3 conductors leaving the cut-out (line + neutral + earth) usually means TN-S. 2 conductors leaving (line + combined PEN) with the earth taken from a terminal block at the meter usually means TN-C-S. No earth from the cut-out — local electrode visible — means TT. Three-phase: same logic with extra phases. Where unsure, request the supply type from the DNO; modern DNOs respond to maximum-Ze queries with explicit arrangement information."
-          >
-            <p>
-              The cert recording is mandatory and load-bearing. EIC Section A captures the system
-              arrangement; getting it wrong invalidates every Zs / Reg 411.x check against the cert.
-              Schedule of test results' measured Ze should corroborate — TN-S typically 0.5-0.8 Ω,
-              TN-C-S typically 0.15-0.35 Ω, TT typically 21-200 Ω. Significant disagreement between
-              declared system and measured Ze is a flag for investigation — possibly a DNO supply
-              change since the last cert.
-            </p>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <ContentEyebrow>Where it goes wrong</ContentEyebrow>
-
-          <CommonMistake
-            title="Recording 'TN-C-S' on the cert without specifying PME or PNB"
-            whatHappens="Inspector ticks 'TN-C-S' on the EIC, doesn't fill the PME / PNB sub-distinction. The cert is technically incomplete under A4:2026 — building control or future inspector flags the missing detail. The actual supply type is genuinely PNB but the cert doesn't reflect it."
-            doInstead="A4:2026 added the PME / PNB cert-form distinction precisely because the two TN-C-S variants have different fault behaviours. Confirm with the DNO if unsure (a maximum-Ze quote response usually states the arrangement). Tick the right box. The five-second admin step keeps the cert defensible."
-          />
-
-          <CommonMistake
-            title="Treating the supply arrangement as fixed forever"
-            whatHappens="EICR on a property the engineer last visited five years ago. The engineer assumes the system arrangement on the previous cert is still correct, doesn't verify Ze independently, signs off the EICR. Two years later a fault investigation finds the DNO upgraded the supply network in the interim — the property is now on a different arrangement, the cert is wrong, and disconnection times that were pass under the old arrangement are fail under the new."
-            doInstead="Always remeasure Ze on every EICR. Always verify the system arrangement matches the previous cert (or update if not). DNO network reconfigurations happen — supply upgrades, transformer changes, network unbalancing fixes. The cert reflects conditions AT THE TIME of inspection; assuming nothing's changed without verification is a defensible cause for a future complaint when the assumption turns out to have been wrong."
-          />
-
-          <CommonMistake
-            title="Switching the PEN at a 'main switch' inside the consumer unit"
-            whatHappens="Installer replaces a CU on a TN-C-S property. The new CU's main switch breaks all incoming conductors — line, neutral AND the incoming PEN before it splits at the MET. Under load with a fault, opening the switch interrupts the PEN, driving the local earth potential up and creating an open-PEN hazard."
-            doInstead="Reg 461.2: PEN shall NOT be isolated or switched. The main switch may break line and (post-MET) neutral but never the incoming PEN. Modern UK consumer units are designed with this in mind — the PEN-to-MET connection is not interruptible by the main switch. Check the wiring carefully on retrofits and CU upgrades; the wrong wiring scheme is a serious fault that may not show on standard tests."
-          />
-
-          <CommonMistake
-            title="Adding an EV charger on TN-C-S without addressing the PEN ban"
-            whatHappens="Installer fits a 7 kW EV charger to a TN-C-S property by running L+N+CPC from the consumer unit. The CPC is bonded to the MET, which is bonded to the incoming PEN. The EV circuit therefore (effectively) includes a PEN — Reg 722.312.2.1 (A4) violation."
-            doInstead="Two compliant routes. (1) Configure TN-S to the EV: split PEN into separate N and PE at the consumer unit, run L+N+PE separately to the EV circuit, no PEN in the EV charging circuit. (2) Use an EV charger with integrated open-PEN protection (most modern UK chargers have this — Pod Point, Wallbox, EO, Andersen, Zappi etc.). Document the chosen route on the EIC."
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>Scenarios — applying it on the day</ContentEyebrow>
-
-          <Scenario
-            title="Agricultural barn with a TT supply — seasonal Ra issue"
-            situation="A small farm has a 100 A TT supply to its main barn. Earth electrode is a 1.2 m copper-clad rod outside the barn, installed 20 years ago. EICR in February: Ra measured at 75 Ω, all 30 mA RCBOs pass timing tests, cert clean. EICR in August: Ra measured at 290 Ω. Reg 411.5.3 limb (b) check: 290 × 0.03 = 8.7 V — still under 50 V. But the seasonal swing is a flag."
-            whatToDo="The Ra has nearly quadrupled between winter and summer. Soil resistivity rises sharply when dry — a single-rod electrode in clay soil can swing by 4-5× across seasons. The August reading is technically still compliant under Reg 411.5.3(b), but the trend suggests the electrode is approaching the limits of its design service. Recommendations: (1) install a second earth electrode (parallel rods reduce Ra significantly via geometric averaging), (2) bond to any available metallic underground services if present, (3) flag the property for more frequent EICR until the trend stabilises. Document the seasonal reading on the EICR observations."
-            whyItMatters="TT installations have a season-dependent Ra that TN systems don't. Designers and inspectors who treat Ra as a one-time measurement miss the dynamic — a system that's compliant at install can drift out of compliance over years as the electrode ages or as the local water table drops. Document baseline at install, remeasure at every EICR, watch the trend. The Reg 411.5.3 limb (b) check has built-in margin (50 V vs the 25 V band I lower limit) but that margin shouldn't be relied upon as a substitute for proper electrode design."
-          />
-
-          <Scenario
-            title="EICR on a 1980s property — system arrangement disagreement"
-            situation="EICR on a 1980s detached house. Original EIC (issued at install) ticks 'TN-S'. Current measured Ze: 0.18 Ω. Modern installer notes the cut-out has two conductors leaving (no separate earth visible) and the earth is taken from a terminal block at the meter — characteristic of TN-C-S. The system arrangement on the previous cert appears to be wrong."
-            whatToDo="Investigate: contact the DNO and request the supply arrangement plus maximum Ze. Likely answer: the supply was upgraded from TN-S to TN-C-S during a network reconfiguration sometime in the past 40 years, and the original cert reflects the install-time arrangement, not the current one. Update the EICR with the correct current arrangement (TN-C-S, with PME/PNB sub-detail), record measured Ze, and note the change from the historical cert as an observation. The installation's protection design needs reviewing — a TN-C-S supply has different open-PEN risks than the TN-S the original cert assumed."
-            whyItMatters="Supply arrangements can change over the lifetime of a property — DNO network reconfigurations, supply upgrades, local distribution rearrangements all happen. The cert at install reflects install-time conditions; EICRs must verify CURRENT conditions and update the recording. A property assumed to be TN-S that's actually TN-C-S has different consumer-unit design rules, different EV-charging compliance, different open-PEN risks. Get the current state right; update; document the change for future inspectors."
-          />
-
-          <Scenario
-            title="New EV charger on a TN-C-S domestic — design choice"
-            situation="Customer wants a 7 kW Zappi EV charger added to their TN-C-S property. Existing modern (2022) consumer unit with RCBOs throughout. Installer is choosing between TN-S configuration vs charger-integrated open-PEN protection."
-            whatToDo="The Zappi has integrated open-PEN protection (sells under the 'No earth-rod required' marketing). This is BS 7671 compliant per Reg 722.312.2.1 — the integrated detection circuit handles the PEN risk, and the EV circuit can run L+N+CPC from the consumer unit without separate TN-S configuration. Spec Type A 30 mA RCBO upstream (charger integrates 6 mA DC fault detection, so Type A is sufficient per the manual). Document on the EIC: 'EV charging circuit complies with Reg 722.312.2.1 via integrated open-PEN detection per charger specification.' Cert is clean."
-            whyItMatters="Modern EV chargers have done significant compliance work to make Reg 722.312.2.1 a non-issue for the installer. The simple route — let the charger handle it — is increasingly the default in UK domestic. Where the charger DOESN'T have integrated open-PEN protection (older models, some commercial-grade chargers), the installer falls back to TN-S configuration or external open-PEN detection device. Reading the charger's installation manual is the binding step; the design follows from what the manual allows."
-          />
-
-          <FAQ items={faqItems} />
-
-          <SectionRule />
-
-          <ContentEyebrow>Designer's quick reference</ContentEyebrow>
-
-          <ConceptBlock
-            title="System earthing decision points"
-            plainEnglish="Three questions answer most system-arrangement design choices. (1) What's the supply? (Determined by the DNO.) (2) Are there special-location overrides? (Caravans, marinas, agricultural, medical Group 2 may force a different arrangement.) (3) What design rules apply downstream?"
-            onSite="(1) DNO-provided: confirm the arrangement at install / EICR. (2) Special locations may force TT (caravans, marinas), or IT (medical Group 2). (3) Design rules: Reg 411.4 for TN, 411.5 for TT, 411.6 for IT — different disconnection times, different protective measures, different cert entries."
-          >
-            <p>
-              For typical UK domestic: TN-C-S supply confirmed via DNO, no special-location
-              overrides, design per Reg 411.4 (and within that, Reg 411.4.4 for OPD-led ADS or Reg
-              411.4.x for RCD-led where applicable). For typical UK rural / agricultural: TT supply
-              (own electrode), Section 705 special-location requirements, design per Reg 411.5 with
-              particular attention to electrode resistance and the Ra × IΔn limit. For typical UK
-              industrial: TN-C-S or TN-S, occasional IT for safety circuits, design per Reg 411.4 /
-              411.6 as appropriate.
-            </p>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <ConceptBlock
-            title="When the customer asks 'what's wrong with my supply?'"
-            plainEnglish="Customers don't usually know — or care — what TN-C-S means. They notice when the supply behaves oddly: lights dimming under load, occasional brief outages, an EV charger refusing to start. Most are explained by supply-arrangement-related issues that the customer can't diagnose."
-            onSite="Common symptoms and likely causes. (1) Dimming lights under heavy load: Ze may be high (loose / corroded supply terminations, or the DNO's supply impedance is high). Measure Ze at the cut-out; flag to the DNO if outside their stated max. (2) EV charger 'no earth' errors: open-PEN protection in the charger detecting a real or false PEN issue; check actual PEN integrity, the charger's reference earth, and any local bonding changes. (3) RCD trips on damp days: TT-supply electrode resistance rising in wet conditions can shift leakage currents past the RCD trip threshold; check Ra and consider electrode improvement."
-          >
-            <p>
-              The qualified electrician's value is in connecting customer-visible symptoms to
-              supply-arrangement realities. Most customer complaints have a 'this is normal for
-              TN-C-S' or 'this needs a call to the DNO' answer that requires understanding the
-              system arrangement first. The cert recording and the periodic Ze measurement are the
-              data trail that supports those diagnostic conversations.
-            </p>
-          </ConceptBlock>
-
-          <KeyTakeaways
-            points={[
-              'Four BS 7671 system earthing arrangements: TN-S, TN-C-S (with PME / PNB variants — A4 distinction), TT, IT. The choice cascades into every subsequent protection-design decision.',
-              'TN-C-S is the UK domestic majority. Look at the cut-out: combined PEN with earth from a terminal block at the meter = TN-C-S.',
-              'A4:2026 added the explicit TN-C-S (PNB) cert-form option to distinguish single-bonding-point PNB from multi-electrode PME. Get it right on the cert — affects open-PEN risk modelling.',
-              "Reg 461.2: no isolating or switching of the PEN in TN-C / TN-C-S. The PEN must be continuous from the DNO transformer to the consumer's MET.",
-              'Reg 722.312.2.1 (A4): no PEN conductor in EV charging circuits on TN supplies. Compliance via TN-S configuration to the EV or charger-integrated open-PEN protection.',
-              'TT is for caravans, marinas, agricultural, properties without DNO earth. RCD-led ADS (Reg 411.5.3); Ra × IΔn ≤ 50 V is the second design check.',
-              'IT is rare — used in medical Group 2, continuity-essential industrial. First fault alarms (Reg 411.6.3 monitoring devices); second fault disconnects per Reg 411.6.5.',
-              'Identify the system at the cut-out: 3 conductors with separate earth = TN-S; 2 conductors with earth from terminal block = TN-C-S; no earth from cut-out, local electrode = TT.',
-              'TT systems have a season-dependent Ra. Single-rod electrodes can swing 4-5× between winter (wet) and summer (dry). Design for the dry-season Ra, monitor on EICR.',
-              "Always remeasure Ze on EICR — DNO network reconfigurations can change the supply arrangement or its characteristics over a property's lifetime.",
-              'Verify the supply arrangement before any design work. Five minutes at the cut-out + a Ze measurement saves hours of redesign or non-compliance later.',
-              "PEN faults are rare but consequential. Reg 461.2's strict prohibition on isolating the PEN exists because the failure mode is invisible to standard testing yet potentially fatal.",
-              'Three-phase domestic supplies are increasing — typically associated with EV / heat pump / solar PV demand. Same TN-C-S principles apply; same Reg 722.312.2.1 EV rules.',
-              'TT design check: Reg 411.5.3(b) — Ra × IΔn ≤ 50 V. At 30 mA, max Ra = 1666 Ω; at 100 mA, max Ra = 500 Ω. Aim well below for seasonal headroom.',
-              "Customer-facing diagnostic: dimming under load = high Ze; EV 'no earth' errors = open-PEN protection triggering; RCD trips on damp = TT seasonal Ra. Each connects to system-arrangement physics.",
-              "Fault loop in TT goes through SOIL — Ra dominates, not conductor resistance. That's why RCD-led ADS is the standard TT answer.",
-            ]}
-          />
-
-          <Quiz questions={quizQuestions} />
-
-          <div className="grid grid-cols-2 gap-3 pt-2">
-            <button
-              type="button"
-              onClick={() => navigate('/electrician/upskilling/bs7671-module-3')}
-              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
-                <ChevronLeft className="h-3 w-3" /> Module 3
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-white truncate">
-                Module overview
-              </div>
-            </button>
-            <button
-              type="button"
-              onClick={() => navigate('/electrician/upskilling/bs7671-module-3-section-2')}
-              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
-                Next section <ChevronRight className="h-3 w-3" />
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-black truncate">
-                3.2 Maximum demand &amp; diversity
-              </div>
-            </button>
-          </div>
-        </PageFrame>
-      </div>
-    </div>
+            <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+              Next section <ChevronRight className="h-3 w-3" />
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-black truncate">
+              3.2 Maximum demand &amp; diversity
+            </div>
+          </button>
+        </div>
+      </HubBody>
+    </HubPage>
   );
 };
 

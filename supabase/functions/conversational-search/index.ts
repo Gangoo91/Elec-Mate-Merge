@@ -28,7 +28,8 @@ import {
   formatFacetsForPrompt,
   A4_2026_EDITION_ID,
 } from '../_shared/bs7671-facet-retrieval.ts';
-import { verifyCitations } from '../_shared/bs7671-citation-verifier.ts';
+import { verifyCitations, extractRegCitations } from '../_shared/bs7671-citation-verifier.ts';
+import { verifyFigures } from '../_shared/bs7671-figure-verifier.ts';
 import {
   BS7671_TOOL_SCHEMAS,
   executeBS7671ToolCall,
@@ -225,9 +226,9 @@ Examples of good verdicts:
 - **Verdict:** Yes — A4:2026 requires a 30 mA RCD on every final circuit up to 32A.
 - **Verdict:** Max Zs for a 32A Type B MCB is 1.37 Ω on a TN system (Table 41.3).
 
-When the answer contains computed or looked-up VALUES (sizes, Zs, currents, times, distances), add a "## Key figures" section directly after the verdict as a short bullet list, one figure per line, in this exact shape:
+When the answer contains computed or looked-up VALUES (sizes, Zs, currents, times, distances), you MUST add a "## Key figures" section directly after the verdict as a short bullet list, one figure per line, in this exact shape:
 - **<label>:** <value with unit> — <source, e.g. Table 41.3>
-Maximum 4 figures. Only include it when there are real numbers to show.
+Maximum 4 figures. This section is required whenever the answer contains any real number the user asked for — omit it only when the answer genuinely has no figures.
 
 Put any calculation derivation under a "## Working" section (after Key figures). On site, the number matters first — the working is for checking. Keep other explanatory sections as normal H2s.
 
@@ -929,6 +930,22 @@ serve(async (req: Request) => {
             retrieval.specialist ?? []
           );
 
+          // Early sources — the rail no longer waits for the stream to end.
+          // Explicit reg_number fields only exist on regulation-typed units,
+          // so supplement from the reg numbers present in the retrieved
+          // context itself; that is exactly the pool the model will cite from.
+          // The client swaps in the actually-cited set once the stream ends.
+          {
+            const fromUnits = [...retrieval.primary, ...retrieval.related]
+              .map((f) => f.reg_number)
+              .filter((n): n is string => !!n);
+            const fromContext = contextBlock ? extractRegCitations(contextBlock) : [];
+            const earlyRegs = Array.from(new Set([...fromUnits, ...fromContext])).slice(0, 8);
+            if (earlyRegs.length > 0) {
+              safeEnqueue(sseFrame({ type: 'sources', regNumbers: earlyRegs }));
+            }
+          }
+
           // ── Build messages for the model ──────────────────────────
           // Trim conversation history to keep context manageable.
           const MAX_HISTORY = 10;
@@ -1167,6 +1184,31 @@ serve(async (req: Request) => {
               }
             } catch {
               /* fail open — never block the answer on the checker */
+            }
+
+            // Figure check — quoted Table 41.3 / 64.1 values against the
+            // published tables. Pure text analysis, precision-first (see
+            // bs7671-figure-verifier.ts); a mismatch gets the same visible
+            // correction treatment as an invented citation, and the answer
+            // is never cached.
+            try {
+              const figures = verifyFigures(accumulated);
+              if (!figures.clean) {
+                citationClean = false;
+                console.warn(
+                  '[figure-check] mismatches:',
+                  figures.issues.map((i) => i.message)
+                );
+                safeEnqueue(
+                  contentFrame(
+                    `\n\n---\n⚠️ **Figure check:** ${figures.issues
+                      .map((i) => i.message)
+                      .join(' ')} Check the table directly before relying on the value quoted above.`
+                  )
+                );
+              }
+            } catch {
+              /* fail open here too */
             }
           }
 

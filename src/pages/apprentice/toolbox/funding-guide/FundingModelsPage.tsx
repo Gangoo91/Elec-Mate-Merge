@@ -6,10 +6,8 @@
  * upcoming Growth & Skills Levy changes.
  */
 
-import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
-  ArrowLeft,
   CheckCircle2,
   AlertTriangle,
   Workflow,
@@ -18,7 +16,8 @@ import {
   ArrowRightLeft,
   CalendarDays,
 } from 'lucide-react';
-import { PageFrame, PageHero, itemVariants } from '@/components/college/primitives';
+import { itemVariants } from '@/components/college/primitives';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { Eyebrow, SectionHeader } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
 
 const dasFlow = [
@@ -159,238 +158,268 @@ const keyDates = [
 ];
 
 const FundingModelsPage = () => {
-  const navigate = useNavigate();
   return (
-    <PageFrame className="px-4 sm:px-6 lg:px-8">
-      <motion.div variants={itemVariants}>
-        <button
-          onClick={() => navigate('/apprentice/toolbox/apprenticeship-funding')}
-          className="inline-flex items-center gap-2 h-11 -ml-2 px-2 rounded-md text-[12px] uppercase tracking-[0.18em] text-white/55 hover:text-white/85 transition-colors touch-manipulation"
-        >
-          <ArrowLeft className="h-4 w-4" />
-          Back
-        </button>
-      </motion.div>
-
-      <motion.div variants={itemVariants}>
-        <PageHero
-          eyebrow="Apprentice · Funding"
-          title="Funding models"
-          description="How apprenticeship training is paid for in England — the three funding models, the DAS flow, what the £23,000 covers, and the changes coming with the Growth & Skills Levy."
-          tone="yellow"
-        />
-      </motion.div>
-
-      {/* ── Intro ───────────────────────────────────────────────── */}
-      <motion.div variants={itemVariants}>
-        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-2">
-          <Eyebrow>How it works</Eyebrow>
-          <p className="text-[13.5px] text-white/85 leading-relaxed">
-            Apprenticeship training in England is funded by the Department for Education (DfE) —
-            which absorbed the former Education and Skills Funding Agency when it closed in March
-            2025. Skills England — which replaced IfATE in June 2025 — sets the standards and
-            funding bands. Three main models determine how training costs are paid.
-          </p>
-          <p className="text-[12px] text-white/65 leading-relaxed pt-2 border-t border-white/[0.06]">
-            This is the England system. Wales, Scotland and Northern Ireland fund apprenticeships
-            differently — there's no Digital Apprenticeship Service or £23,000 band, so check your
-            nation's scheme if you're outside England.
-          </p>
-        </div>
-      </motion.div>
-
-      {/* ── DAS flow ────────────────────────────────────────────── */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <SectionHeader
-          eyebrow="How DAS works"
-          title="The Digital Apprenticeship Service"
-          meta="All funding flows through apprenticeships.education.gov.uk"
-          action={
-            <span className="inline-flex items-center justify-center w-8 h-8 rounded-md border border-elec-yellow/25 bg-elec-yellow/[0.06]">
-              <Workflow className="h-4 w-4 text-elec-yellow" />
-            </span>
+    <HubPage>
+      <HubMasthead
+        section="Apprentice · Funding"
+        title="Funding models"
+        backTo="/apprentice/toolbox/apprenticeship-funding"
+      />
+      <HubBody>
+        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
+          {
+            'How apprenticeship training is paid for in England — the three funding models, the DAS flow, what the £23,000 covers, and the changes coming with the Growth & Skills Levy.'
           }
-        />
-        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3">
-          <ol className="space-y-2">
-            {dasFlow.map((step, i) => (
-              <li key={step} className="flex items-start gap-3">
-                <span className="inline-flex items-center justify-center w-6 h-6 rounded-md border border-elec-yellow/25 bg-elec-yellow/[0.06] text-[11px] font-mono font-semibold tabular-nums text-elec-yellow flex-shrink-0">
-                  {i + 1}
-                </span>
-                <span className="text-[12.5px] text-white/85 leading-relaxed">{step}</span>
-              </li>
-            ))}
-          </ol>
-          <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3">
-            <p className="text-[12.5px] text-white/85 leading-relaxed">
-              <span className="font-semibold text-elec-yellow">Key point:</span> money never passes
-              through the apprentice. The Department for Education pays the training provider
-              directly, and the employer pays any co-investment share directly to the provider.
+        </p>
+
+        {/* ── Intro ───────────────────────────────────────────────── */}
+        <motion.div variants={itemVariants}>
+          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-2">
+            <Eyebrow>How it works</Eyebrow>
+            <p className="text-[13.5px] text-white/85 leading-relaxed">
+              Apprenticeship training in England is funded by the Department for Education (DfE) —
+              which absorbed the former Education and Skills Funding Agency when it closed in March
+              2025. Skills England — which replaced IfATE in June 2025 — sets the standards and
+              funding bands. Three main models determine how training costs are paid.
+            </p>
+            <p className="text-[12px] text-white/65 leading-relaxed pt-2 border-t border-white/[0.06]">
+              This is the England system. Wales, Scotland and Northern Ireland fund apprenticeships
+              differently — there's no Digital Apprenticeship Service or £23,000 band, so check your
+              nation's scheme if you're outside England.
             </p>
           </div>
-        </div>
-      </motion.section>
+        </motion.div>
 
-      {/* ── Model 1: Apprenticeship Levy ────────────────────────── */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <SectionHeader
-          eyebrow="Model 1 — Apprenticeship Levy"
-          title="For large employers (>£3m payroll)"
-          meta="0.5% of payroll, sits in a DAS account, funds training"
-          action={
-            <span className="inline-flex items-center justify-center w-8 h-8 rounded-md border border-elec-yellow/25 bg-elec-yellow/[0.06]">
-              <Coins className="h-4 w-4 text-elec-yellow" />
-            </span>
-          }
-        />
-        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3">
-          <ul className="space-y-1.5">
-            {levyFacts.map((fact) => (
-              <li
-                key={fact}
-                className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
-              >
-                <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
-                <span>{fact}</span>
-              </li>
-            ))}
-          </ul>
-          <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3 space-y-1.5">
-            <Eyebrow className="text-elec-yellow/85">Worked example · £5m payroll</Eyebrow>
-            <ul className="space-y-0.5 text-[11.5px] sm:text-[12.5px] text-white/85 font-mono tabular-nums">
-              <li>Annual payroll: £5,000,000</li>
-              <li>Levy charge (0.5%): £25,000</li>
-              <li>− £15,000 allowance = £10,000 actual levy paid</li>
-              <li>+ 10% top-up = £1,000</li>
-              <li className="font-semibold text-elec-yellow pt-1 border-t border-elec-yellow/15">
-                Total available for training: £11,000/year
-              </li>
-            </ul>
-            <p className="text-[11.5px] text-white/70 leading-relaxed pt-1">
-              Enough to fund approximately one Level 3 electrical apprentice every two years at the
-              £23,000 band.
-            </p>
-          </div>
-        </div>
-      </motion.section>
-
-      {/* ── Model 2: Co-Investment ──────────────────────────────── */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <SectionHeader
-          eyebrow="Model 2 — Government co-investment"
-          title="For SMEs under £3m payroll"
-          meta="Most common model for small electrical contractors"
-          action={
-            <span className="inline-flex items-center justify-center w-8 h-8 rounded-md border border-elec-yellow/25 bg-elec-yellow/[0.06]">
-              <HandCoins className="h-4 w-4 text-elec-yellow" />
-            </span>
-          }
-        />
-        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3">
-          <ul className="space-y-1.5">
-            {coInvestmentFacts.map((fact) => (
-              <li
-                key={fact}
-                className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
-              >
-                <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
-                <span>{fact}</span>
-              </li>
-            ))}
-          </ul>
-          <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3 space-y-1.5">
-            <Eyebrow className="text-elec-yellow/85">
-              Worked example · SME taking on L3 apprentice
-            </Eyebrow>
-            <ul className="space-y-0.5 text-[11.5px] sm:text-[12.5px] text-white/85 font-mono tabular-nums">
-              <li>Agreed training price: £23,000 (full funding band)</li>
-              <li>Government pays (95%): £21,850</li>
-              <li>Employer pays (5%): £1,150</li>
-              <li>Spread over 4 years: ~£24/month</li>
-              <li className="font-semibold text-elec-yellow pt-1 border-t border-elec-yellow/15">
-                Apprentice pays: £0
-              </li>
-            </ul>
-            <p className="text-[11.5px] text-white/70 leading-relaxed pt-1">
-              The 25% co-investment coming in August 2026 applies to levy payers once their levy is
-              exhausted — most small electrical contractors are non-levy and stay at 5% (£1,150),
-              with under-25s 100% funded.
-            </p>
-          </div>
-        </div>
-      </motion.section>
-
-      {/* ── Model 3: Levy Transfer ──────────────────────────────── */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <SectionHeader
-          eyebrow="Model 3 — Levy transfer"
-          title="The best deal for small employers"
-          meta="100% funded — receiving employer pays nothing"
-          action={
-            <span className="inline-flex items-center justify-center w-8 h-8 rounded-md border border-elec-yellow/25 bg-elec-yellow/[0.06]">
-              <ArrowRightLeft className="h-4 w-4 text-elec-yellow" />
-            </span>
-          }
-        />
-        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3">
-          <ul className="space-y-1.5">
-            {levyTransferFacts.map((fact) => (
-              <li
-                key={fact}
-                className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
-              >
-                <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
-                <span>{fact}</span>
-              </li>
-            ))}
-          </ul>
-          <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3 space-y-2">
-            <Eyebrow className="text-elec-yellow/85">How to find a levy transfer</Eyebrow>
-            <ol className="space-y-1.5">
-              {findTransfer.map((tip, i) => (
-                <li
-                  key={tip}
-                  className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
-                >
-                  <span className="text-elec-yellow font-mono tabular-nums mt-0.5">{i + 1}.</span>
-                  <span>{tip}</span>
+        {/* ── DAS flow ────────────────────────────────────────────── */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <SectionHeader
+            eyebrow="How DAS works"
+            title="The Digital Apprenticeship Service"
+            meta="All funding flows through apprenticeships.education.gov.uk"
+            action={
+              <span className="inline-flex items-center justify-center w-8 h-8 rounded-md border border-elec-yellow/25 bg-elec-yellow/[0.06]">
+                <Workflow className="h-4 w-4 text-elec-yellow" />
+              </span>
+            }
+          />
+          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3">
+            <ol className="space-y-2">
+              {dasFlow.map((step, i) => (
+                <li key={step} className="flex items-start gap-3">
+                  <span className="inline-flex items-center justify-center w-6 h-6 rounded-md border border-elec-yellow/25 bg-elec-yellow/[0.06] text-[11px] font-mono font-semibold tabular-nums text-elec-yellow flex-shrink-0">
+                    {i + 1}
+                  </span>
+                  <span className="text-[12.5px] text-white/85 leading-relaxed">{step}</span>
                 </li>
               ))}
             </ol>
+            <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3">
+              <p className="text-[12.5px] text-white/85 leading-relaxed">
+                <span className="font-semibold text-elec-yellow">Key point:</span> money never
+                passes through the apprentice. The Department for Education pays the training
+                provider directly, and the employer pays any co-investment share directly to the
+                provider.
+              </p>
+            </div>
           </div>
-        </div>
-      </motion.section>
+        </motion.section>
 
-      {/* ── Funding band detail ─────────────────────────────────── */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <SectionHeader
-          eyebrow="Funding band detail"
-          title="£23,000 for Level 3"
-          meta="Increased from £21,000 on 20 July 2025"
-        />
-        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-4">
-          <div className="space-y-1">
-            <p className="text-[32px] sm:text-[36px] font-mono font-semibold tabular-nums text-elec-yellow leading-none">
-              £23,000
-            </p>
-            <p className="text-[12.5px] text-white/70 leading-relaxed">
-              Maximum funding for Level 3 Installation / Maintenance Electrician (ST0152 v1.2)
-            </p>
-          </div>
-          <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3 space-y-1">
-            <Eyebrow className="text-elec-yellow/85">What's a funding band?</Eyebrow>
-            <p className="text-[12.5px] text-white/85 leading-relaxed">
-              The maximum amount the government will contribute towards training. Employers and
-              providers can agree a price below the band, but never above. If a provider charges
-              more, the employer pays the difference from their own funds — rare for standard L3
-              electrical programmes.
-            </p>
-          </div>
-          <div className="space-y-2">
-            <Eyebrow>What funding covers</Eyebrow>
+        {/* ── Model 1: Apprenticeship Levy ────────────────────────── */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <SectionHeader
+            eyebrow="Model 1 — Apprenticeship Levy"
+            title="For large employers (>£3m payroll)"
+            meta="0.5% of payroll, sits in a DAS account, funds training"
+            action={
+              <span className="inline-flex items-center justify-center w-8 h-8 rounded-md border border-elec-yellow/25 bg-elec-yellow/[0.06]">
+                <Coins className="h-4 w-4 text-elec-yellow" />
+              </span>
+            }
+          />
+          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3">
             <ul className="space-y-1.5">
-              {fundingCovers.map((item) => (
+              {levyFacts.map((fact) => (
+                <li
+                  key={fact}
+                  className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                >
+                  <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
+                  <span>{fact}</span>
+                </li>
+              ))}
+            </ul>
+            <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3 space-y-1.5">
+              <Eyebrow className="text-elec-yellow/85">Worked example · £5m payroll</Eyebrow>
+              <ul className="space-y-0.5 text-[11.5px] sm:text-[12.5px] text-white/85 font-mono tabular-nums">
+                <li>Annual payroll: £5,000,000</li>
+                <li>Levy charge (0.5%): £25,000</li>
+                <li>− £15,000 allowance = £10,000 actual levy paid</li>
+                <li>+ 10% top-up = £1,000</li>
+                <li className="font-semibold text-elec-yellow pt-1 border-t border-elec-yellow/15">
+                  Total available for training: £11,000/year
+                </li>
+              </ul>
+              <p className="text-[11.5px] text-white/70 leading-relaxed pt-1">
+                Enough to fund approximately one Level 3 electrical apprentice every two years at
+                the £23,000 band.
+              </p>
+            </div>
+          </div>
+        </motion.section>
+
+        {/* ── Model 2: Co-Investment ──────────────────────────────── */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <SectionHeader
+            eyebrow="Model 2 — Government co-investment"
+            title="For SMEs under £3m payroll"
+            meta="Most common model for small electrical contractors"
+            action={
+              <span className="inline-flex items-center justify-center w-8 h-8 rounded-md border border-elec-yellow/25 bg-elec-yellow/[0.06]">
+                <HandCoins className="h-4 w-4 text-elec-yellow" />
+              </span>
+            }
+          />
+          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3">
+            <ul className="space-y-1.5">
+              {coInvestmentFacts.map((fact) => (
+                <li
+                  key={fact}
+                  className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                >
+                  <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
+                  <span>{fact}</span>
+                </li>
+              ))}
+            </ul>
+            <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3 space-y-1.5">
+              <Eyebrow className="text-elec-yellow/85">
+                Worked example · SME taking on L3 apprentice
+              </Eyebrow>
+              <ul className="space-y-0.5 text-[11.5px] sm:text-[12.5px] text-white/85 font-mono tabular-nums">
+                <li>Agreed training price: £23,000 (full funding band)</li>
+                <li>Government pays (95%): £21,850</li>
+                <li>Employer pays (5%): £1,150</li>
+                <li>Spread over 4 years: ~£24/month</li>
+                <li className="font-semibold text-elec-yellow pt-1 border-t border-elec-yellow/15">
+                  Apprentice pays: £0
+                </li>
+              </ul>
+              <p className="text-[11.5px] text-white/70 leading-relaxed pt-1">
+                The 25% co-investment coming in August 2026 applies to levy payers once their levy
+                is exhausted — most small electrical contractors are non-levy and stay at 5%
+                (£1,150), with under-25s 100% funded.
+              </p>
+            </div>
+          </div>
+        </motion.section>
+
+        {/* ── Model 3: Levy Transfer ──────────────────────────────── */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <SectionHeader
+            eyebrow="Model 3 — Levy transfer"
+            title="The best deal for small employers"
+            meta="100% funded — receiving employer pays nothing"
+            action={
+              <span className="inline-flex items-center justify-center w-8 h-8 rounded-md border border-elec-yellow/25 bg-elec-yellow/[0.06]">
+                <ArrowRightLeft className="h-4 w-4 text-elec-yellow" />
+              </span>
+            }
+          />
+          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3">
+            <ul className="space-y-1.5">
+              {levyTransferFacts.map((fact) => (
+                <li
+                  key={fact}
+                  className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                >
+                  <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
+                  <span>{fact}</span>
+                </li>
+              ))}
+            </ul>
+            <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3 space-y-2">
+              <Eyebrow className="text-elec-yellow/85">How to find a levy transfer</Eyebrow>
+              <ol className="space-y-1.5">
+                {findTransfer.map((tip, i) => (
+                  <li
+                    key={tip}
+                    className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                  >
+                    <span className="text-elec-yellow font-mono tabular-nums mt-0.5">{i + 1}.</span>
+                    <span>{tip}</span>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          </div>
+        </motion.section>
+
+        {/* ── Funding band detail ─────────────────────────────────── */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <SectionHeader
+            eyebrow="Funding band detail"
+            title="£23,000 for Level 3"
+            meta="Increased from £21,000 on 20 July 2025"
+          />
+          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-4">
+            <div className="space-y-1">
+              <p className="text-[32px] sm:text-[36px] font-mono font-semibold tabular-nums text-elec-yellow leading-none">
+                £23,000
+              </p>
+              <p className="text-[12.5px] text-white/70 leading-relaxed">
+                Maximum funding for Level 3 Installation / Maintenance Electrician (ST0152 v1.2)
+              </p>
+            </div>
+            <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3 space-y-1">
+              <Eyebrow className="text-elec-yellow/85">What's a funding band?</Eyebrow>
+              <p className="text-[12.5px] text-white/85 leading-relaxed">
+                The maximum amount the government will contribute towards training. Employers and
+                providers can agree a price below the band, but never above. If a provider charges
+                more, the employer pays the difference from their own funds — rare for standard L3
+                electrical programmes.
+              </p>
+            </div>
+            <div className="space-y-2">
+              <Eyebrow>What funding covers</Eyebrow>
+              <ul className="space-y-1.5">
+                {fundingCovers.map((item) => (
+                  <li
+                    key={item}
+                    className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                  >
+                    <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="space-y-2 pt-2 border-t border-white/[0.04]">
+              <Eyebrow>What funding doesn't cover</Eyebrow>
+              <ul className="space-y-1.5">
+                {fundingDoesntCover.map((item) => (
+                  <li
+                    key={item}
+                    className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                  >
+                    <AlertTriangle className="h-3.5 w-3.5 text-white/55 flex-shrink-0 mt-0.5" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </motion.section>
+
+        {/* ── Payment timeline ────────────────────────────────────── */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <SectionHeader
+            eyebrow="Payment timeline"
+            title="80 / 20 split, monthly in arrears"
+            meta="When and how funding is paid to your provider"
+          />
+          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5">
+            <ul className="space-y-1.5">
+              {paymentTimeline.map((item) => (
                 <li
                   key={item}
                   className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
@@ -401,118 +430,82 @@ const FundingModelsPage = () => {
               ))}
             </ul>
           </div>
-          <div className="space-y-2 pt-2 border-t border-white/[0.04]">
-            <Eyebrow>What funding doesn't cover</Eyebrow>
+        </motion.section>
+
+        {/* ── End of programme ────────────────────────────────────── */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <SectionHeader
+            eyebrow="End of programme"
+            title="Five steps from Gateway to certificate"
+            meta="What happens when you reach the end of your planned training"
+          />
+          <ol className="space-y-2">
+            {endOfProgramme.map((item) => (
+              <li
+                key={item.step}
+                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5"
+              >
+                <div className="flex items-start gap-3">
+                  <span className="inline-flex items-center justify-center w-7 h-7 rounded-md border border-elec-yellow/30 bg-elec-yellow/[0.06] text-[12px] font-mono font-semibold tabular-nums text-elec-yellow flex-shrink-0">
+                    {item.step}
+                  </span>
+                  <div className="space-y-1">
+                    <h3 className="text-[14px] font-semibold text-white tracking-tight">
+                      {item.title}
+                    </h3>
+                    <p className="text-[13px] text-white/85 leading-relaxed">{item.description}</p>
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ol>
+          <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3">
+            <p className="text-[12.5px] text-white/85 leading-relaxed">
+              <span className="font-semibold text-elec-yellow">Important:</span> If your
+              apprenticeship takes longer than planned (common for L3 electrical), funding continues
+              as long as you remain on programme. Total paid won't exceed the funding band, but
+              monthly payments may be recalculated over the extended period.
+            </p>
+          </div>
+        </motion.section>
+
+        {/* ── Growth & Skills Levy ────────────────────────────────── */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <SectionHeader
+            eyebrow="Upcoming changes"
+            title="Growth & Skills Levy — April 2026"
+            meta="Biggest change to apprenticeship funding in a decade"
+          />
+          <div className="rounded-xl border border-red-500/25 bg-red-500/[0.04] p-4 sm:p-5">
             <ul className="space-y-1.5">
-              {fundingDoesntCover.map((item) => (
+              {growthLevyChanges.map((item) => (
                 <li
                   key={item}
                   className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
                 >
-                  <AlertTriangle className="h-3.5 w-3.5 text-white/55 flex-shrink-0 mt-0.5" />
+                  <AlertTriangle className="h-3.5 w-3.5 text-red-300 flex-shrink-0 mt-0.5" />
                   <span>{item}</span>
                 </li>
               ))}
             </ul>
           </div>
-        </div>
-      </motion.section>
-
-      {/* ── Payment timeline ────────────────────────────────────── */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <SectionHeader
-          eyebrow="Payment timeline"
-          title="80 / 20 split, monthly in arrears"
-          meta="When and how funding is paid to your provider"
-        />
-        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5">
-          <ul className="space-y-1.5">
-            {paymentTimeline.map((item) => (
-              <li
-                key={item}
-                className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
-              >
-                <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
-                <span>{item}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </motion.section>
-
-      {/* ── End of programme ────────────────────────────────────── */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <SectionHeader
-          eyebrow="End of programme"
-          title="Five steps from Gateway to certificate"
-          meta="What happens when you reach the end of your planned training"
-        />
-        <ol className="space-y-2">
-          {endOfProgramme.map((item) => (
-            <li
-              key={item.step}
-              className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5"
-            >
-              <div className="flex items-start gap-3">
-                <span className="inline-flex items-center justify-center w-7 h-7 rounded-md border border-elec-yellow/30 bg-elec-yellow/[0.06] text-[12px] font-mono font-semibold tabular-nums text-elec-yellow flex-shrink-0">
-                  {item.step}
-                </span>
-                <div className="space-y-1">
-                  <h3 className="text-[14px] font-semibold text-white tracking-tight">
-                    {item.title}
-                  </h3>
-                  <p className="text-[13px] text-white/85 leading-relaxed">{item.description}</p>
-                </div>
-              </div>
-            </li>
-          ))}
-        </ol>
-        <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3">
-          <p className="text-[12.5px] text-white/85 leading-relaxed">
-            <span className="font-semibold text-elec-yellow">Important:</span> If your
-            apprenticeship takes longer than planned (common for L3 electrical), funding continues
-            as long as you remain on programme. Total paid won't exceed the funding band, but
-            monthly payments may be recalculated over the extended period.
-          </p>
-        </div>
-      </motion.section>
-
-      {/* ── Growth & Skills Levy ────────────────────────────────── */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <SectionHeader
-          eyebrow="Upcoming changes"
-          title="Growth & Skills Levy — April 2026"
-          meta="Biggest change to apprenticeship funding in a decade"
-        />
-        <div className="rounded-xl border border-red-500/25 bg-red-500/[0.04] p-4 sm:p-5">
-          <ul className="space-y-1.5">
-            {growthLevyChanges.map((item) => (
-              <li
-                key={item}
-                className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
-              >
-                <AlertTriangle className="h-3.5 w-3.5 text-red-300 flex-shrink-0 mt-0.5" />
-                <span>{item}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3">
-          <Eyebrow>Key dates to watch</Eyebrow>
-          <ul className="space-y-2">
-            {keyDates.map((item) => (
-              <li key={item.date} className="flex items-start gap-3">
-                <CalendarDays className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
-                <span className="text-[12px] font-mono uppercase tracking-[0.14em] text-elec-yellow min-w-[80px] flex-shrink-0">
-                  {item.date}
-                </span>
-                <span className="text-[12.5px] text-white/85 leading-relaxed">{item.event}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </motion.section>
-    </PageFrame>
+          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3">
+            <Eyebrow>Key dates to watch</Eyebrow>
+            <ul className="space-y-2">
+              {keyDates.map((item) => (
+                <li key={item.date} className="flex items-start gap-3">
+                  <CalendarDays className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
+                  <span className="text-[12px] font-mono uppercase tracking-[0.14em] text-elec-yellow min-w-[80px] flex-shrink-0">
+                    {item.date}
+                  </span>
+                  <span className="text-[12.5px] text-white/85 leading-relaxed">{item.event}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </motion.section>
+      </HubBody>
+    </HubPage>
   );
 };
 

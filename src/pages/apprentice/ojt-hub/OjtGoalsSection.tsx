@@ -12,10 +12,7 @@ import { Plus, Loader2, Target, Trash2, Minus, Check } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useOJTGoals, type OJTGoal } from '@/hooks/time-tracking/useOJTGoals';
 import AddGoalDialog from '@/components/apprentice/ojt/AddGoalDialog';
-import {
-  Eyebrow,
-  SectionHeader,
-} from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
+import { Eyebrow, SectionHeader } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
 
 const STATUS_TONE: Record<OJTGoal['status'], string> = {
   completed: 'border-elec-yellow/30 bg-elec-yellow/[0.06] text-elec-yellow',
@@ -107,8 +104,8 @@ export function OjtGoalsSection() {
         <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-6 text-center space-y-2">
           <Target className="h-7 w-7 text-white/25 mx-auto" />
           <p className="text-[13px] text-white/85 leading-relaxed">
-            No goals yet. Set a target — e.g. "20 portfolio entries this term" — and track it
-            here alongside your hours.
+            No goals yet. Set a target — e.g. "20 portfolio entries this term" — and track it here
+            alongside your hours.
           </p>
         </div>
       ) : (

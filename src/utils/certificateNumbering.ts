@@ -55,6 +55,14 @@ const PREFIX_MAP: Record<string, string> = {
   'g98-commissioning': 'G98',
   'g99-commissioning': 'G99',
   'smoke-co-alarm': 'SMOKE-CO',
+  // Not "VC" — VCR is what the trade calls a visual condition report.
+  'visual-condition': 'VCR',
+  // Not "RI" — RIR reads as a report reference and cannot be confused with an
+  // instrument reading on a job sheet.
+  'routine-inspection': 'RIR',
+  // "PPS", not "SURVEY" — it goes to a house-buyer alongside a mortgage
+  // valuation and a building survey, and must not read like an EICR reference.
+  'pre-purchase-survey': 'PPS',
 };
 
 export const certificatePrefixFor = (reportType: string): string =>

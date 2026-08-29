@@ -146,11 +146,13 @@ export function SourcesRail({ regNumbers, onOpenReg, isStreaming }: SourcesRailP
             [scrollbar-width:thin] [scrollbar-color:rgba(255,255,255,0.25)_transparent]"
         >
           {sources.map((s) => (
+            /* Card-recipe material at rail scale — volt /35 edge, brighter on
+               hover, same press feel as every other card in the app. */
             <button
               key={s.reg_number}
               type="button"
               onClick={() => onOpenReg(s.reg_number)}
-              className="group block w-full rounded-lg border border-white/[0.10] bg-white/[0.05] px-3 py-2.5 text-left touch-manipulation transition-colors hover:border-elec-yellow/40 hover:bg-white/[0.09]"
+              className="group block w-full rounded-xl border border-elec-yellow/35 bg-gradient-to-br from-white/[0.10] via-white/[0.06] to-white/[0.04] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] px-3 py-2.5 text-left touch-manipulation transition-[background-image,border-color,transform] duration-150 ease-out hover:border-elec-yellow/60 hover:from-white/[0.14] active:scale-[0.98] [-webkit-tap-highlight-color:transparent]"
             >
               <div className="text-[12.5px] leading-snug">
                 <span className="font-semibold text-elec-yellow">Reg {s.reg_number}</span>

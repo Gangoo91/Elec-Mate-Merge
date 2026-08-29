@@ -15,11 +15,11 @@
  */
 
 import { useNavigate } from 'react-router-dom';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { ArrowLeft, ChevronRight } from 'lucide-react';
 
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
-import { PageFrame, PageHero } from '@/components/college/primitives';
 import {
   TLDR,
   ConceptBlock,
@@ -36,12 +36,13 @@ import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'EICR coding — C1, C2, C3, FI | Level 3 Module 5.5.2 | Elec-Mate';
 const DESCRIPTION =
-  "The defensible coding framework for EICR observations — C1 immediate danger, C2 potentially dangerous, C3 improvement recommended, FI further investigation. Best Practice Guide 4 calls, GN3 verbatim, and the worked examples that turn theory into a sound report.";
+  'The defensible coding framework for EICR observations — C1 immediate danger, C2 potentially dangerous, C3 improvement recommended, FI further investigation. Best Practice Guide 4 calls, GN3 verbatim, and the worked examples that turn theory into a sound report.';
 
 const checks = [
   {
     id: 'm5-s5-sub2-c1-test',
-    question: 'You lift a socket front and find a basic-insulated line conductor exposed where the outer sheath has been stripped back too far inside the box, with the cable strain relief failing. Touchable on opening. The correct code is:',
+    question:
+      'You lift a socket front and find a basic-insulated line conductor exposed where the outer sheath has been stripped back too far inside the box, with the cable strain relief failing. Touchable on opening. The correct code is:',
     options: [
       'C2 — potentially dangerous. An exposed live conductor is only a risk if someone removes the accessory front, so the danger is potential rather than present and urgent rather than immediate.',
       'C3 — improvement recommended. The cable sheath has simply been stripped back a little too far, which is a workmanship issue to tidy up rather than a safety defect.',
@@ -50,11 +51,12 @@ const checks = [
     ],
     correctIndex: 3,
     explanation:
-      "BPG4 (Best Practice Guide 4 — Electrical Safety First) defines C1 as danger present, risk of injury, immediate remedial action required. Exposed live parts that a person could touch under reasonably foreseeable conditions sit squarely in C1. \"Reasonably foreseeable\" includes the next time anyone removes the accessory front — so don't argue \"the front was on, no one would touch it\". The right action on site is to make safe immediately (isolate the circuit, advise the duty holder, secure the location) before leaving — that obligation flows from EAWR Reg 4 plus your continuing duty as the inspector who found the danger.",
+      'BPG4 (Best Practice Guide 4 — Electrical Safety First) defines C1 as danger present, risk of injury, immediate remedial action required. Exposed live parts that a person could touch under reasonably foreseeable conditions sit squarely in C1. "Reasonably foreseeable" includes the next time anyone removes the accessory front — so don\'t argue "the front was on, no one would touch it". The right action on site is to make safe immediately (isolate the circuit, advise the duty holder, secure the location) before leaving — that obligation flows from EAWR Reg 4 plus your continuing duty as the inspector who found the danger.',
   },
   {
     id: 's5-sub2-c2-test',
-    question: 'A 30-year-old TN-S installation has no RCD protection on a downstairs ring final circuit feeding general-purpose sockets in habitable rooms. Bonding, ADS, Zs, IR all measure within limits. Coding under BPG4:',
+    question:
+      'A 30-year-old TN-S installation has no RCD protection on a downstairs ring final circuit feeding general-purpose sockets in habitable rooms. Bonding, ADS, Zs, IR all measure within limits. Coding under BPG4:',
     options: [
       'C1 — danger present. The absence of RCD protection on socket-outlets is an immediate danger because any appliance fault will energise the casing with no means of disconnection.',
       'C2 — potentially dangerous, urgent action required. The installation works as designed but lacks a safety layer that current BS 7671 (Reg 411.3.3) requires for socket-outlets up to 32 A intended for use by ordinary persons. Risk crystallises on an actual fault — potential, not imminent.',
@@ -63,16 +65,17 @@ const checks = [
     ],
     correctIndex: 1,
     explanation:
-      "BPG4 places \"absence of RCD on socket-outlet circuits intended for use by ordinary persons\" as a typical C2. Logic: the installation is not currently dangerous (ADS works, no live parts exposed) but a single fault — a damaged flex on a kettle, a child poking a paperclip into a socket, a worn appliance — that would have been caught by an RCD will not be. The risk is real and foreseeable, not theoretical. Important: there is no \"grandfather\" rule for safety. Pre-existing installations are coded against current BS 7671 risk assessment, not the standard at the time of installation. The Visual Inspection notes section can record the original install date for context but does not soften the code.",
+      'BPG4 places "absence of RCD on socket-outlet circuits intended for use by ordinary persons" as a typical C2. Logic: the installation is not currently dangerous (ADS works, no live parts exposed) but a single fault — a damaged flex on a kettle, a child poking a paperclip into a socket, a worn appliance — that would have been caught by an RCD will not be. The risk is real and foreseeable, not theoretical. Important: there is no "grandfather" rule for safety. Pre-existing installations are coded against current BS 7671 risk assessment, not the standard at the time of installation. The Visual Inspection notes section can record the original install date for context but does not soften the code.',
   },
   {
     id: 's5-sub2-fi-test',
-    question: 'On a commercial EICR you read a Zs of 1.85 Ω at the furthest point of a 32 A B-curve circuit. Your maximum permitted Zs (Table 41.3) for B32 is 1.37 Ω at 80 percent. The supply temperature correction does not bring it within limits. The reading was taken with the test instrument only — no second confirmatory test method. Best code:',
+    question:
+      'On a commercial EICR you read a Zs of 1.85 Ω at the furthest point of a 32 A B-curve circuit. Your maximum permitted Zs (Table 41.3) for B32 is 1.37 Ω at 80 percent. The supply temperature correction does not bring it within limits. The reading was taken with the test instrument only — no second confirmatory test method. Best code:',
     options: [
-      "FI — further investigation needed. The reading is over the permitted maximum but you have one method only and a single reading. Confirm with R1+R2 plus Ze, retest with a fresh battery and lead-resistance check, and if the high reading is confirmed then reclassify as C2 (or C1 if dangerous combination present).",
-      "C1 — danger present. A Zs above the permitted maximum means the protective device cannot disconnect in time, which is an immediate danger requiring the circuit to be isolated at once.",
-      "C3 — improvement recommended. A single high Zs reading is a minor quality point; the circuit still works, so it can be noted as an improvement and left for the next inspection.",
-      "No code — the 80 percent correction is a guideline only, so a measured Zs of 1.85 Omega against a 1.37 Omega table value is an acceptable pass once instrument tolerance is allowed.",
+      'FI — further investigation needed. The reading is over the permitted maximum but you have one method only and a single reading. Confirm with R1+R2 plus Ze, retest with a fresh battery and lead-resistance check, and if the high reading is confirmed then reclassify as C2 (or C1 if dangerous combination present).',
+      'C1 — danger present. A Zs above the permitted maximum means the protective device cannot disconnect in time, which is an immediate danger requiring the circuit to be isolated at once.',
+      'C3 — improvement recommended. A single high Zs reading is a minor quality point; the circuit still works, so it can be noted as an improvement and left for the next inspection.',
+      'No code — the 80 percent correction is a guideline only, so a measured Zs of 1.85 Omega against a 1.37 Omega table value is an acceptable pass once instrument tolerance is allowed.',
     ],
     correctIndex: 0,
     explanation:
@@ -85,10 +88,10 @@ const quizQuestions = [
     id: 1,
     question: 'BPG4 (Best Practice Guide 4 — Electrical Safety First) is:',
     options: [
-      "A statutory instrument made under the Electricity at Work Regulations 1989 that gives the C1/C2/C3/FI codes the force of law, so departing from its classifications is a criminal offence.",
-      "An industry consensus document published by Electrical Safety First giving worked examples and recommended classifications for EICR observations — non-statutory but widely accepted by scheme providers, insurers, and HSE as the industry standard for consistent coding.",
-      "A chapter of BS 7671 Part 6 that sets out the mandatory coding rubric for periodic reports, replacing the inspector judgement with fixed classifications for each type of defect.",
-      "A City and Guilds qualification syllabus that an inspector must hold before they are permitted to assign C1, C2 or C3 codes on an EICR.",
+      'A statutory instrument made under the Electricity at Work Regulations 1989 that gives the C1/C2/C3/FI codes the force of law, so departing from its classifications is a criminal offence.',
+      'An industry consensus document published by Electrical Safety First giving worked examples and recommended classifications for EICR observations — non-statutory but widely accepted by scheme providers, insurers, and HSE as the industry standard for consistent coding.',
+      'A chapter of BS 7671 Part 6 that sets out the mandatory coding rubric for periodic reports, replacing the inspector judgement with fixed classifications for each type of defect.',
+      'A City and Guilds qualification syllabus that an inspector must hold before they are permitted to assign C1, C2 or C3 codes on an EICR.',
     ],
     correctAnswer: 1,
     explanation:
@@ -96,20 +99,21 @@ const quizQuestions = [
   },
   {
     id: 2,
-    question: "C1 — \"Danger present\" — translates to which on-site action by the inspector?",
+    question: 'C1 — "Danger present" — translates to which on-site action by the inspector?',
     options: [
-      "Record the C1 on the report and recommend the duty holder arranges remedial work within 28 days, leaving the installation energised because the inspector has no authority to isolate it.",
-      "Issue an immediate Unsatisfactory report and refer the matter straight to the HSE, who will then attend to make the installation safe on the inspector behalf.",
-      "Make safe before leaving — typically isolate the circuit, lock off, label, and brief the duty holder verbally and in writing. The continuing duty under EAWR Reg 4 attaches to you as the person who identified the danger; leaving a known C1 unmitigated is potentially a criminal breach.",
-      "Note the C1 for action at the next periodic inspection, since the danger has existed for some time already and the re-inspection interval gives a reasonable window to address it.",
+      'Record the C1 on the report and recommend the duty holder arranges remedial work within 28 days, leaving the installation energised because the inspector has no authority to isolate it.',
+      'Issue an immediate Unsatisfactory report and refer the matter straight to the HSE, who will then attend to make the installation safe on the inspector behalf.',
+      'Make safe before leaving — typically isolate the circuit, lock off, label, and brief the duty holder verbally and in writing. The continuing duty under EAWR Reg 4 attaches to you as the person who identified the danger; leaving a known C1 unmitigated is potentially a criminal breach.',
+      'Note the C1 for action at the next periodic inspection, since the danger has existed for some time already and the re-inspection interval gives a reasonable window to address it.',
     ],
     correctAnswer: 2,
     explanation:
-      "BPG4 is explicit: a C1 finding is not just a paperwork code — it triggers an immediate-action obligation. Make safe before leaving site (isolation, lock-off, labelling), brief the duty holder, document what you did, and follow up in writing. Failure to make safe a known C1 leaves you exposed under EAWR Reg 4 (system in safe condition) plus your professional and contractual duties. Schemes can suspend registration for inspectors who walk away from a C1 without action.",
+      'BPG4 is explicit: a C1 finding is not just a paperwork code — it triggers an immediate-action obligation. Make safe before leaving site (isolation, lock-off, labelling), brief the duty holder, document what you did, and follow up in writing. Failure to make safe a known C1 leaves you exposed under EAWR Reg 4 (system in safe condition) plus your professional and contractual duties. Schemes can suspend registration for inspectors who walk away from a C1 without action.',
   },
   {
     id: 3,
-    question: 'A two-way switching arrangement is wired with the strapper conductors used as live and switched-live conductors but with the cores incorrectly identified — the brown is in the switched live position and the black is in the line position throughout. No insulation damage, terminals tight, ADS within limits. The coding is:',
+    question:
+      'A two-way switching arrangement is wired with the strapper conductors used as live and switched-live conductors but with the cores incorrectly identified — the brown is in the switched live position and the black is in the line position throughout. No insulation damage, terminals tight, ADS within limits. The coding is:',
     options: [
       'C1 — danger present. The reversed core identification means a live conductor is present where a dead one is expected, so anyone opening the switch is in immediate danger.',
       'C3 — improvement recommended. The colours are wrong but the circuit functions correctly and ADS is within limits, so re-identification is simply good practice rather than a safety matter.',
@@ -122,7 +126,8 @@ const quizQuestions = [
   },
   {
     id: 4,
-    question: 'During the inspection you note that the consumer unit is a metal-clad unit installed in 2017 with all RCBOs, located under wooden stairs, fully accessible and labelled correctly. No defects in operation. The coding for "consumer unit accessible to ordinary persons under wooden stairs" is:',
+    question:
+      'During the inspection you note that the consumer unit is a metal-clad unit installed in 2017 with all RCBOs, located under wooden stairs, fully accessible and labelled correctly. No defects in operation. The coding for "consumer unit accessible to ordinary persons under wooden stairs" is:',
     options: [
       'No code — a metal consumer unit installed after the 2016 amendment satisfies the current requirement on enclosure non-combustibility, and accessibility under the stairs is not in itself a coded defect provided escape is not impeded.',
       'C3 — improvement recommended. Although the metal enclosure meets the non-combustibility requirement, siting any consumer unit under wooden stairs is an improvement item because of the proximity to combustible material.',
@@ -131,16 +136,17 @@ const quizQuestions = [
     ],
     correctAnswer: 0,
     explanation:
-      "The 2016 amendment to BS 7671 (Reg 421.1.201) required consumer units in domestic premises to have a non-combustible enclosure or be enclosed in a non-combustible cabinet — driven by a series of CU fires identified by the LFB. A metal CU installed in 2017 meets that requirement. \"Located under stairs\" is a common siting that is not in itself a defect; the relevant question is whether a fire in the CU would compromise escape, and a metal-enclosed unit specifically addresses that risk. No code unless other findings exist (poor labelling, accessibility blocked by stored items, escape route compromised by the construction beyond the CU).",
+      'The 2016 amendment to BS 7671 (Reg 421.1.201) required consumer units in domestic premises to have a non-combustible enclosure or be enclosed in a non-combustible cabinet — driven by a series of CU fires identified by the LFB. A metal CU installed in 2017 meets that requirement. "Located under stairs" is a common siting that is not in itself a defect; the relevant question is whether a fire in the CU would compromise escape, and a metal-enclosed unit specifically addresses that risk. No code unless other findings exist (poor labelling, accessibility blocked by stored items, escape route compromised by the construction beyond the CU).',
   },
   {
     id: 5,
-    question: 'The EICR template you are using offers the inspector a choice between coding the overall installation as "Satisfactory" or "Unsatisfactory". Under BPG4 the report MUST be marked Unsatisfactory if:',
+    question:
+      'The EICR template you are using offers the inspector a choice between coding the overall installation as "Satisfactory" or "Unsatisfactory". Under BPG4 the report MUST be marked Unsatisfactory if:',
     options: [
-      "One or more C1 only. A single C1 makes a report Unsatisfactory, but C2 and FI items are recorded as observations without changing the overall Satisfactory outcome.",
-      "One or more C1 OR one or more C2 OR one or more FI is recorded. C3-only reports remain Satisfactory because C3 covers improvements that do not affect the overall safety status.",
-      "Any C1, C2, C3 or FI is recorded. Any coded observation at all makes the report Unsatisfactory, because every code represents a departure from the current standard.",
-      "More than three C2 items are recorded. A small number of C2 observations is tolerated as Satisfactory, and the report only fails once the count of urgent items passes the threshold.",
+      'One or more C1 only. A single C1 makes a report Unsatisfactory, but C2 and FI items are recorded as observations without changing the overall Satisfactory outcome.',
+      'One or more C1 OR one or more C2 OR one or more FI is recorded. C3-only reports remain Satisfactory because C3 covers improvements that do not affect the overall safety status.',
+      'Any C1, C2, C3 or FI is recorded. Any coded observation at all makes the report Unsatisfactory, because every code represents a departure from the current standard.',
+      'More than three C2 items are recorded. A small number of C2 observations is tolerated as Satisfactory, and the report only fails once the count of urgent items passes the threshold.',
     ],
     correctAnswer: 1,
     explanation:
@@ -148,12 +154,13 @@ const quizQuestions = [
   },
   {
     id: 6,
-    question: 'Under A4:2026, Reg 421.1.7 introduces an arc fault detection device (AFDD) recommendation for certain circuits. A pre-A4 installation without AFDDs on those circuits would be coded:',
+    question:
+      'Under A4:2026, Reg 421.1.7 introduces an arc fault detection device (AFDD) recommendation for certain circuits. A pre-A4 installation without AFDDs on those circuits would be coded:',
     options: [
-      "C1 — danger present. The absence of an AFDD leaves the circuit unprotected against arc-fault fire, which is an immediate danger requiring the circuit to be isolated.",
-      "C2 — potentially dangerous. Because A4:2026 introduced the AFDD recommendation, any existing circuit without one is potentially dangerous and must be upgraded within 28 days.",
-      "C3 — improvement recommended. Reg 421.1.7 uses the language of recommendation, not requirement, for the relevant categories. The absence of an AFDD on an existing circuit is not in itself a defect requiring urgent action — but it is an improvement that brings the installation closer to current best practice. Higher-Risk Residential Buildings under the Building Safety Act 2022 are a separate matter where AFDDs may be a hard requirement.",
-      "No code — Reg 421.1.7 applies only to new installations, so the absence of an AFDD on an existing circuit is never recorded on a periodic report.",
+      'C1 — danger present. The absence of an AFDD leaves the circuit unprotected against arc-fault fire, which is an immediate danger requiring the circuit to be isolated.',
+      'C2 — potentially dangerous. Because A4:2026 introduced the AFDD recommendation, any existing circuit without one is potentially dangerous and must be upgraded within 28 days.',
+      'C3 — improvement recommended. Reg 421.1.7 uses the language of recommendation, not requirement, for the relevant categories. The absence of an AFDD on an existing circuit is not in itself a defect requiring urgent action — but it is an improvement that brings the installation closer to current best practice. Higher-Risk Residential Buildings under the Building Safety Act 2022 are a separate matter where AFDDs may be a hard requirement.',
+      'No code — Reg 421.1.7 applies only to new installations, so the absence of an AFDD on an existing circuit is never recorded on a periodic report.',
     ],
     correctAnswer: 2,
     explanation:
@@ -161,29 +168,31 @@ const quizQuestions = [
   },
   {
     id: 7,
-    question: "An inspection identifies that the main protective bonding conductor to the gas service has been disconnected at the gas meter clamp end. Visual inspection only — no testing yet undertaken. Best initial action:",
+    question:
+      'An inspection identifies that the main protective bonding conductor to the gas service has been disconnected at the gas meter clamp end. Visual inspection only — no testing yet undertaken. Best initial action:',
     options: [
-      "Leave the bonding disconnected exactly as found so the as-found state is preserved as evidence, record a C3 improvement note, and recommend the duty holder arranges reconnection.",
-      "Code the finding C1 and isolate the entire installation immediately, because a disconnected main bond means every exposed-conductive-part in the building is live and dangerous to touch.",
-      "Take no action until the continuity testing stage is reached, since a bonding defect cannot be confirmed by visual inspection alone and must wait for a measured result.",
-      "Make safe by reinstating the bonding connection if competent and equipped to do so, then test continuity, then code based on the as-found evidence — typically C2 (potentially dangerous, urgent action) for absent main protective bonding to an extraneous-conductive-part. Document the as-found state and the corrective action.",
+      'Leave the bonding disconnected exactly as found so the as-found state is preserved as evidence, record a C3 improvement note, and recommend the duty holder arranges reconnection.',
+      'Code the finding C1 and isolate the entire installation immediately, because a disconnected main bond means every exposed-conductive-part in the building is live and dangerous to touch.',
+      'Take no action until the continuity testing stage is reached, since a bonding defect cannot be confirmed by visual inspection alone and must wait for a measured result.',
+      'Make safe by reinstating the bonding connection if competent and equipped to do so, then test continuity, then code based on the as-found evidence — typically C2 (potentially dangerous, urgent action) for absent main protective bonding to an extraneous-conductive-part. Document the as-found state and the corrective action.',
     ],
     correctAnswer: 3,
     explanation:
-      "Two duties apply here. First, the inspection duty — record the as-found state, code accordingly. Second, the EAWR Reg 4 duty as the person now aware of a danger — make safe if competent. Best practice on a missing bonding connection: photograph the as-found state, reinstate the connection if competent (it is a routine task within the scope of any electrician), test continuity, then code the as-found state on the EICR with a note that the defect was made safe at inspection. C2 reflects the as-found risk; the corrective action note reassures the duty holder the danger is no longer live but the defect is real and points to a wider problem (who removed it, why, and is the rest of the bonding intact).",
+      'Two duties apply here. First, the inspection duty — record the as-found state, code accordingly. Second, the EAWR Reg 4 duty as the person now aware of a danger — make safe if competent. Best practice on a missing bonding connection: photograph the as-found state, reinstate the connection if competent (it is a routine task within the scope of any electrician), test continuity, then code the as-found state on the EICR with a note that the defect was made safe at inspection. C2 reflects the as-found risk; the corrective action note reassures the duty holder the danger is no longer live but the defect is real and points to a wider problem (who removed it, why, and is the rest of the bonding intact).',
   },
   {
     id: 8,
-    question: "On a TN-C-S (PNB) supply you measure a Zs of 0.34 Ω at the DB on a B32 circuit. Table 41.3 gives a maximum permitted Zs for B32 of 1.37 Ω (corrected, A4:2026). The disconnection requirement under Reg 411.3.2.2 is satisfied with significant headroom. The coding action is:",
+    question:
+      'On a TN-C-S (PNB) supply you measure a Zs of 0.34 Ω at the DB on a B32 circuit. Table 41.3 gives a maximum permitted Zs for B32 of 1.37 Ω (corrected, A4:2026). The disconnection requirement under Reg 411.3.2.2 is satisfied with significant headroom. The coding action is:',
     options: [
-      "No code — Zs comfortably under the maximum permitted value, disconnection time will be met. Record the value and pass.",
-      "C3 — improvement recommended. A Zs this far below the maximum suggests an unusually low loop impedance that should be investigated and noted as an improvement on the report.",
-      "FI — further investigation. A Zs of 0.34 Omega is suspiciously low for a B32 circuit and should be flagged for further investigation to rule out a measurement error before passing.",
-      "C2 — potentially dangerous. A very low Zs indicates a parallel earth path that masks the true loop impedance, which is potentially dangerous and must be recorded as an urgent item.",
+      'No code — Zs comfortably under the maximum permitted value, disconnection time will be met. Record the value and pass.',
+      'C3 — improvement recommended. A Zs this far below the maximum suggests an unusually low loop impedance that should be investigated and noted as an improvement on the report.',
+      'FI — further investigation. A Zs of 0.34 Omega is suspiciously low for a B32 circuit and should be flagged for further investigation to rule out a measurement error before passing.',
+      'C2 — potentially dangerous. A very low Zs indicates a parallel earth path that masks the true loop impedance, which is potentially dangerous and must be recorded as an urgent item.',
     ],
     correctAnswer: 0,
     explanation:
-      "A low Zs is good. The Zs maximum is the worst-case value the protective device needs to disconnect within the required time. A Zs of 0.34 Ω on a B32 with a 1.37 Ω maximum is healthy. No code action — record the measurement on the Schedule of Test Results, mark the circuit as compliant, move on. Inspectors sometimes flag low values as suspicious — usually a confusion with the loop measurement on TN-C-S where the PEN provides a low-impedance return. As long as the test was conducted correctly and the reading is consistent across the circuit, low Zs is what you want.",
+      'A low Zs is good. The Zs maximum is the worst-case value the protective device needs to disconnect within the required time. A Zs of 0.34 Ω on a B32 with a 1.37 Ω maximum is healthy. No code action — record the measurement on the Schedule of Test Results, mark the circuit as compliant, move on. Inspectors sometimes flag low values as suspicious — usually a confusion with the loop measurement on TN-C-S where the PEN provides a low-impedance return. As long as the test was conducted correctly and the reading is consistent across the circuit, low Zs is what you want.',
   },
 ];
 
@@ -209,12 +218,13 @@ const faqs = [
       'No. C3 is "improvement recommended" — better than current state but the installation is safe to remain in service without remediation. A report with only C3 observations is Satisfactory overall. Any C1, any C2, or any FI tips the report to Unsatisfactory. This is critical for the Private Rented Sector Regulations — Unsatisfactory triggers a 28-day landlord remediation duty. Mis-coding a C3 as C2 imposes unnecessary cost on the landlord; mis-coding a C2 as C3 leaves a real risk unaddressed and an Unsatisfactory report incorrectly marked Satisfactory.',
   },
   {
-    question: 'How do I code an installation that complies with an older edition of BS 7671 but not the current one?',
+    question:
+      'How do I code an installation that complies with an older edition of BS 7671 but not the current one?',
     answer:
-      "There is no grandfather rule for safety. Code against current risk, not against the standard at the time of installation. An installation built to the 16th Edition with no RCD on socket circuits is coded against current standards — typically C2 for absence of RCD on socket-outlets used by ordinary persons. The Visual Inspection notes can record the install age and original-edition compliance for context, but the code reflects current risk. The Observations section is where you explain the reasoning so the duty holder understands the recommendation.",
+      'There is no grandfather rule for safety. Code against current risk, not against the standard at the time of installation. An installation built to the 16th Edition with no RCD on socket circuits is coded against current standards — typically C2 for absence of RCD on socket-outlets used by ordinary persons. The Visual Inspection notes can record the install age and original-edition compliance for context, but the code reflects current risk. The Observations section is where you explain the reasoning so the duty holder understands the recommendation.',
   },
   {
-    question: 'What if I disagree with another inspector\'s coding on the same installation?',
+    question: "What if I disagree with another inspector's coding on the same installation?",
     answer:
       'Coding is judgement-based within the BPG4 framework — disagreements happen. The right approach: examine the as-found evidence, apply BPG4 logic openly, document your reasoning in the Observations section. If the previous inspector coded a defect C3 and you read it as C2, your fresh report stands on its own evidence — you are not bound by the previous coding. Significant disagreements (one inspector says C1, another says No code) usually indicate a quality issue with one of the inspections; check measurements, take photos, and if necessary escalate to scheme provider technical helpline. Do not silently downgrade a previous C1/C2 unless your re-test evidence positively justifies it — that risks looking like a cover-up.',
   },
@@ -225,642 +235,644 @@ export default function Sub2() {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
-      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
-        <PageFrame>
+    <HubPage>
+      <HubMasthead
+        section="Module 5 · Section 5 · Subsection 2"
+        title="EICR coding — C1, C2, C3, FI"
+        backTo="/study-centre/apprentice/level3-module5-section5"
+      />
+      <HubBody>
+        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
+          The defensible coding rubric per BPG4 and GN3. Get the call right and the report does its
+          job; get it wrong and you either over-charge a landlord or leave a real danger in service.
+        </p>
+
+        <TLDR
+          points={[
+            'C1 — Danger present, action required immediately. Make safe before leaving site. Triggers Unsatisfactory overall.',
+            'C2 — Potentially dangerous, urgent remedial action needed. Single foreseeable fault scenario. Triggers Unsatisfactory.',
+            'C3 — Improvement recommended. Installation is safe to remain in service. Does not trigger Unsatisfactory.',
+            'FI — Further Investigation needed. Inspector cannot reach a confident classification with evidence on hand. Triggers Unsatisfactory pending investigation.',
+            'Best Practice Guide 4 (Electrical Safety First) is the industry consensus document for consistent coding decisions.',
+          ]}
+        />
+
+        <LearningOutcomes
+          outcomes={[
+            'Cite the four EICR classification codes — C1, C2, C3, FI — and the on-site action each triggers.',
+            'Apply BPG4 (Best Practice Guide 4) logic to allocate codes for common defects encountered on periodic inspection.',
+            'Distinguish C2 (potentially dangerous, urgent) from C3 (improvement recommended) using the foreseeable-fault test.',
+            'Use FI appropriately — as a planned next step, not a default for uncertainty.',
+            'Identify which findings tip an EICR overall classification to Unsatisfactory.',
+            "Explain the inspector's continuing EAWR Reg 4 duty when a C1 is identified, including the make-safe obligation.",
+            'Recognise A4:2026 changes that affect coding judgement — Reg 643.7.3 (single AC RCD test), Reg 421.1.7 (AFDD recommendation), Table 41.3 updated maximum Zs values.',
+          ]}
+          initialVisibleCount={4}
+        />
+
+        <ContentEyebrow>The four codes in detail</ContentEyebrow>
+
+        <ConceptBlock
+          title="C1 — Danger present, action required immediately"
+          plainEnglish="C1 means the danger is here, now, today. Anyone interacting with the installation in the way it is currently being used could be hurt. The classic example is exposed live parts that a person could touch under reasonably foreseeable conditions."
+          onSite="If you find a C1, you don't just code it — you make safe before you leave. Isolate, lock off, label, brief the duty holder. The EAWR Reg 4 duty attaches to you the moment you identify the danger. Walking away from a known C1 is potentially a criminal act."
+        >
+          <p>
+            BPG4 typical C1 examples — these come up regularly on periodic inspections of older
+            domestic and small commercial installations:
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Accessible live parts.</strong> Damaged accessory front exposing terminals,
+              broken socket faceplate with conductors visible, missing blanking plate on a CU with
+              live busbars exposed, broken light pendant with live conductors hanging.
+            </li>
+            <li>
+              <strong>Conductive part energised due to a fault.</strong> Class I metallic enclosure
+              measuring mains voltage to earth — a downstream insulation fault has energised the
+              casing because CPC is missing or open-circuit.
+            </li>
+            <li>
+              <strong>Incorrect polarity at incoming supply.</strong> Reversed line and neutral at
+              the cut-out or meter — switching opens the neutral, leaving the installation live with
+              no obvious indication. A real installer-induced danger that periodic inspections
+              occasionally catch.
+            </li>
+            <li>
+              <strong>Earthing arrangement absent or completely ineffective.</strong> Earthing
+              conductor disconnected at the MET, or main earth missing entirely. ADS cannot operate;
+              touch voltage hazard on any first fault.
+            </li>
+            <li>
+              <strong>Overheating evidence with damaged insulation.</strong> Burnt CU bus chamber
+              with melted insulation around live busbars — cannot leave that in service.
+            </li>
+          </ul>
+          <p>
+            The on-site action sequence for C1 — isolate the affected circuit (or the whole
+            installation if the defect is on the supply side), lock off, label, photograph the
+            defect, brief the duty holder verbally and confirm in writing the same day, document the
+            make-safe action on the EICR. A C1 finding combined with no make-safe action leaves you
+            exposed under EAWR Reg 4 even if the duty holder later refuses remediation — your duty
+            is to make safe what you find dangerous, not just to record it.
+          </p>
+        </ConceptBlock>
+
+        <RegsCallout
+          source="IET Guidance Note 3 (9th Ed:2022, A4) — EICR observation classification codes"
+          clause="One of the following codes, as appropriate, shall be allocated to each observation made in Section K to indicate the degree of urgency for remedial action: C1, C2, C3, or FI. These classification codes are used to indicate risk levels that affect the overall assessment of the report and to inform the person(s) responsible for the installation."
+          meaning={
+            <>
+              GN3 is explicit that every observation gets one code — not none, not multiple. The
+              code communicates urgency to the duty holder. That single-code-per-observation rule
+              keeps the report defensible: each defect has a clear category and a clear expected
+              action. Inspectors who batch defects under a single code, or list observations without
+              codes, undermine the report's legal and contractual function.
+            </>
+          }
+          cite="Source: IET Guidance Note 3 (9th Edition:2022, Amendment 4 update) — EICR Section K classification codes."
+        />
+
+        <SectionRule />
+
+        <ConceptBlock
+          title="C2 — Potentially dangerous, urgent action required"
+          plainEnglish="C2 means the installation is currently safe to use as designed, but a single foreseeable fault would expose someone to danger that the installation should have been protecting against. The danger is potential, not present — but the gap is real and needs urgent attention."
+          onSite={`C2 is the most-debated code. The honest test — "if a single foreseeable fault occurred, would a person be exposed to electric shock, fire, burn, or the danger that BS 7671 is designed to prevent?" If yes, C2. If the fault would still be safely contained, C3 or no code.`}
+        >
+          <p>
+            BPG4 typical C2 examples — these are the bread-and-butter codes on most domestic EICRs:
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>
+                Absence of RCD protection on socket-outlet circuits used by ordinary persons.
+              </strong>{' '}
+              Pre-2008 installation with no RCD on downstairs sockets used for portable equipment.
+              Currently safe; single foreseeable fault (damaged flex, appliance failure) loses the
+              protection that BS 7671 currently requires under Reg 411.3.3.
+            </li>
+            <li>
+              <strong>Absence of main protective bonding to extraneous-conductive-parts.</strong>
+              Gas, water, structural steel not bonded to MET. ADS may still operate but the
+              touch-voltage protection layer that bonding provides is missing.
+            </li>
+            <li>
+              <strong>Inadequate or undersized CPC.</strong> Sub-circuit CPC is undersized or
+              damaged in a way that could increase Zs above the maximum permitted in fault
+              conditions. Currently within limits; deterioration or a fault could push it outside.
+            </li>
+            <li>
+              <strong>Incorrect polarity at a switch or accessory.</strong> The single-pole
+              switching device is in the neutral — switching opens the neutral and leaves the load
+              energised. A future maintenance person isolating via the switch is exposed.
+            </li>
+            <li>
+              <strong>
+                Defective accessory cover or enclosure that protects live parts but is damaged in a
+                way that could expose them.
+              </strong>{' '}
+              Cracked CU lid that still covers the busbars but is one impact away from exposing
+              them.
+            </li>
+            <li>
+              <strong>Incorrect conductor identification.</strong> Strappers used as live and
+              switched-live without re-identification. The next person works on this circuit
+              expecting standard colours and gets a surprise.
+            </li>
+            <li>
+              <strong>Old rubber-insulated cable showing signs of perishing.</strong> Insulation
+              resistance currently within limits but visible cracking. The defect is not immediate
+              but the trajectory is downward.
+            </li>
+            <li>
+              <strong>
+                Missing or inoperative SPD where one is required by Reg 443 assessment.
+              </strong>{' '}
+              Risk assessment under A4 indicates SPD required; not present. C2 if the location is
+              high-risk (lightning exposure, sensitive equipment); C3 if low-risk and SPD is
+              best-practice rather than risk-required.
+            </li>
+          </ul>
+          <p>
+            The action expected from a C2 is "remediation arranged urgently" — typically within 28
+            days for rented dwellings under the Private Rented Sector Regulations, sooner where the
+            duty holder has the resources. C2 marks the report Unsatisfactory and triggers the
+            documented remediation cycle.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck
+          id={checks[0].id}
+          question={checks[0].question}
+          options={checks[0].options}
+          correctIndex={checks[0].correctIndex}
+          explanation={checks[0].explanation}
+        />
+
+        <SectionRule />
+
+        <ConceptBlock
+          title="C3 — Improvement recommended"
+          plainEnglish="C3 means the installation is safe to remain in service as found, but an upgrade or change would bring it closer to current best practice. C3 does not require remediation — it is advisory. C3-only reports remain Satisfactory."
+          onSite="The trap with C3 is over-using it as a diplomatic substitute for C2. If the issue would expose someone to a foreseeable-fault danger, it is C2 not C3. If you wouldn't sit in court and defend C3 to that gap, recode it C2."
+        >
+          <p>BPG4 typical C3 examples — improvements rather than risks:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>
+                Absence of AFDDs in locations where Reg 421.1.7 (A4:2026) recommends but does not
+                require them.
+              </strong>{' '}
+              Single-dwelling occupancy outside the HRRB scope. Improvement recommended; not a
+              defect.
+            </li>
+            <li>
+              <strong>Wooden back box behind a metal-clad accessory in an old install.</strong>
+              Currently safe with intact cable insulation and earthing in place. Modern best
+              practice is a metal back box with terminal earthing. C3 — recommend upgrade at next
+              refurbishment.
+            </li>
+            <li>
+              <strong>Older but still-compliant consumer unit.</strong> Plastic CU installed
+              pre-2016, no fire damage, all devices working. Currently safe. Best practice is to
+              replace with a metal-enclosed unit at next opportunity. C3.
+            </li>
+            <li>
+              <strong>
+                Cable installation method not aligned with current best practice but not presenting
+                a hazard.
+              </strong>{' '}
+              Surface-mounted PVC trunking in a non-domestic area where modern install would use
+              steel containment. Compliant when fitted; improved practice now exists. C3.
+            </li>
+            <li>
+              <strong>Labels faded but legible.</strong> RCD test labels, circuit chart, isolation
+              identification still readable but worn. Improvement — refresh the labels at next
+              visit.
+            </li>
+          </ul>
+          <p>
+            C3 entries should still be specific and actionable. "Recommend replacing plastic
+            consumer unit with metal-enclosed unit at next refurbishment" is useful. "General
+            upgrade recommended" is not — too vague to be acted on, undermines the report's
+            credibility.
+          </p>
+        </ConceptBlock>
+
+        <RegsCallout
+          source="IET Guidance Note 3 — Advisory items separate from overall report assessment"
+          clause="The example explicitly separates advisory observations from the overall assessment by stating they 'do not affect the overall assessment of the report.' Therefore an advisory-coded item (C3/FI) shall not change the overall condition classification (e.g., satisfactory/unsatisfactory) except where an item is coded C1 or C2 or a code that requires mandatory remedial action."
+          meaning={
+            <>
+              GN3 confirms what BPG4 codifies — C3 is advisory and does not tip the report to
+              Unsatisfactory on its own. The clause also notes FI does affect the overall assessment
+              (because the inspector cannot certify safety until the investigation is complete). C1
+              and C2 always tip Unsatisfactory; multiple C3s do not. Get this right — a Satisfactory
+              report with a long C3 list is correct; the same report marked Unsatisfactory creates
+              unnecessary remediation pressure on the duty holder.
+            </>
+          }
+          cite="Source: IET Guidance Note 3 — guidance on EICR observation coding and overall classification."
+        />
+
+        <SectionRule />
+
+        <ConceptBlock
+          title="FI — Further Investigation required"
+          plainEnglish="FI means the inspector cannot reach a confident classification with the evidence available. Could be a measurement that doesn't add up, a suspected defect that requires invasive access beyond the agreed scope, or unfamiliar equipment that needs specialist input. FI is a planned next step, not a default for uncertainty."
+          onSite="FI is the honest call when you genuinely can't decide. Don't use it to dodge a return visit (under-use) or as a catch-all for things you didn't bother investigating (over-use). Each FI must specify what investigation is needed and why."
+        >
+          <p>BPG4 typical FI scenarios:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Inconsistent test readings.</strong> Zs at a circuit endpoint reads
+              significantly higher than R1+R2+Ze would predict. Could be a measurement artefact
+              (probe contact, lead resistance, battery) or a real high-resistance joint. FI to
+              confirm with second method and fresh kit.
+            </li>
+            <li>
+              <strong>Suspected defect requiring invasive access.</strong> Suspected damaged cable
+              inside a wall void where the EICR scope did not include opening up. FI to arrange
+              access and confirm.
+            </li>
+            <li>
+              <strong>Unfamiliar specialist equipment.</strong> Industrial PLC-controlled
+              switchgear, EV charger arrays with smart load management, complex BMS-integrated
+              lighting controls. FI to bring in specialist competence.
+            </li>
+            <li>
+              <strong>Equipment unable to be tested at the time of inspection.</strong> Fire alarm
+              panel, BMS, lift control on a separate maintenance contract — the inspector cannot
+              test them within the EICR scope. FI to coordinate with the specialist contractors.
+            </li>
+            <li>
+              <strong>Suspected upstream supply issue.</strong> Repeated nuisance tripping of an RCD
+              with no identified downstream fault — could be a network neutral problem. FI to
+              investigate with the DNO or a specialist supply analyser.
+            </li>
+          </ul>
+          <p>
+            The FI entry should specify: what is suspected, what investigation is recommended, who
+            should carry it out, and what the expected outcome will inform. A vague "FI —
+            investigate further" is not enough. The duty holder needs to know what to commission and
+            the next inspector needs to understand what was outstanding when the original report was
+            issued.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck
+          id={checks[1].id}
+          question={checks[1].question}
+          options={checks[1].options}
+          correctIndex={checks[1].correctIndex}
+          explanation={checks[1].explanation}
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>The defensible coding test</ContentEyebrow>
+
+        <ConceptBlock
+          title="The four-question test for every coding decision"
+          plainEnglish="When you cannot decide between codes, run the same four questions every time. Apply them honestly and the code follows. The discipline of asking the same questions across every defect gives a report internal consistency that survives challenge."
+        >
+          <p>The four questions, applied to every coded observation:</p>
+          <ol className="space-y-1.5 list-decimal pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Is anyone exposed to a danger right now?</strong> Yes = C1. The danger is
+              present and accessible under reasonably foreseeable conditions. Make safe before
+              leaving.
+            </li>
+            <li>
+              <strong>
+                Would a single foreseeable fault expose someone to danger that BS 7671 should be
+                preventing?
+              </strong>{' '}
+              Yes = C2. The installation works as designed but a missing safety layer means a future
+              fault crystallises into harm.
+            </li>
+            <li>
+              <strong>
+                Is the installation safe as found, but does an upgrade exist that would bring it
+                closer to current best practice?
+              </strong>{' '}
+              Yes = C3. Improvement, not a defect. Report stays Satisfactory.
+            </li>
+            <li>
+              <strong>Do I have enough evidence to answer 1, 2, or 3 with confidence?</strong>
+              No = FI. Specify what investigation is needed and what the expected outcome will
+              inform.
+            </li>
+          </ol>
+          <p>
+            When two questions seem to give different answers — e.g. "currently safe but a fault
+            could expose" versus "best practice would upgrade" — the higher-risk code wins. Default
+            upward, not downward. A C2 wrongly coded as C3 leaves a real risk unaddressed; a C3
+            wrongly coded as C2 imposes unnecessary cost. The asymmetry favours the higher code
+            where genuine doubt exists, with the Observations narrative explaining the reasoning.
+          </p>
+        </ConceptBlock>
+
+        <RegsCallout
+          source="IET Guidance Note 3 — EICR definition and content requirements"
+          clause="An Electrical Installation Condition Report (EICR) is the formal record produced following periodic inspection and testing of an electrical installation. The EICR shall identify any observed damage, deterioration, defects and conditions which may give rise to danger and shall state any action required, including codes for severity (e.g. C1, C2, C3, FI)."
+          meaning={
+            <>
+              The EICR is more than a checklist — it is a formal safety document with a defined
+              content requirement. GN3 sets the bar: identify what could give rise to danger, state
+              the action required, code the severity. An EICR that lists observations without codes,
+              or codes without supporting narrative, falls short of GN3 and would struggle to
+              support the duty holder in discharging EAWR Reg 4(2).
+            </>
+          }
+          cite="Source: IET Guidance Note 3 — definition and required content of the Electrical Installation Condition Report."
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>A4:2026 changes that affect coding</ContentEyebrow>
+
+        <ConceptBlock
+          title="A4:2026 updates that change the coding picture"
+          plainEnglish="Amendment 4 to BS 7671:2018 published in 2026 changes several things that affect EICR coding — the RCD test method, the AFDD recommendation, updated maximum Zs values, and renumbered documentation requirements. Old habits need refreshing."
+          onSite="If you are inspecting under A4 you must apply A4 limits. Pre-A4 EICRs that referenced older Zs maxima or older RCD test methods are not wrong for their time but are not the current benchmark. Re-test against A4 values."
+        >
+          <p>The A4 changes most relevant to coding judgement:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Reg 643.7.3 — single AC RCD test.</strong> The old multi-test sequence at
+              multiples of IΔn (50%, 100%, 500%) is replaced with a single AC test at IΔn (1×). The
+              trip time limit (200 ms for general-use, 40 ms for high-risk additional protection) is
+              unchanged. Do not over-test or under-test against the new method — coding flows from
+              compliance with the current method.
+            </li>
+            <li>
+              <strong>Reg 421.1.7 — AFDD recommendation.</strong> AFDDs recommended for socket
+              circuits in HMOs, sleeping accommodation, and certain higher-risk locations.
+              Recommend, not require — so absence on existing installations defaults to C3, not C2.
+              HRRB-specific requirements via the Building Safety Act 2022 are a separate matter
+              where AFDDs may be a hard requirement.
+            </li>
+            <li>
+              <strong>Table 41.3 — updated maximum Zs values.</strong> The 80% rule for cable
+              temperature correction and revised maxima for B-curve devices. B32 maximum is 1.37 Ω
+              at 80% under A4. Use the A4 table values when coding A4-era inspections.
+            </li>
+            <li>
+              <strong>Reg 132.13 — documentation requirements.</strong> Renumbered from 132.13 in
+              earlier editions. Substance largely unchanged but the regulation reference must match
+              the edition you are working under.
+            </li>
+            <li>
+              <strong>TN-C-S (PNB) treatment.</strong> A4:2026 clarifies the requirements around
+              Protective Neutral Bonding installations — particularly relevant where a periodic
+              inspection finds a PNB arrangement and needs to assess its compliance with the
+              tightened requirements.
+            </li>
+          </ul>
+          <p>
+            The principle is consistent across editions — code against current standards as a risk
+            assessment, not against historical compliance. A4:2026 changed the standards; EICRs
+            issued under A4 must reflect them.
+          </p>
+        </ConceptBlock>
+
+        <CommonMistake
+          title="Mis-coding the absence of RCD on socket circuits as C3 instead of C2"
+          whatHappens={
+            <>
+              You inspect a 2003 installation. Downstairs ring serving general sockets has no RCD
+              protection. You think — installation is original, working fine, just lacks a modern
+              feature — and code C3 "improvement recommended". Report goes out Satisfactory. Three
+              months later a child sticks a paperclip in a socket and is injured. The investigation
+              reads your report and notes the C3 coding for an absence that BPG4 lists as a typical
+              C2.
+            </>
+          }
+          doInstead={
+            <>
+              Apply the four-question test. Question 2: would a single foreseeable fault expose
+              someone to danger BS 7671 should prevent? Damaged flex on a kettle, child poking a
+              paperclip into a socket, faulty appliance — all foreseeable, all would have been
+              caught by the RCD that current Reg 411.3.3 requires. Code C2. Report goes out
+              Unsatisfactory. Landlord or homeowner commissions remediation. Risk closed.
+            </>
+          }
+        />
+
+        <CommonMistake
+          title="Walking away from a C1 without making safe"
+          whatHappens={
+            <>
+              You find a damaged accessory exposing a live conductor in a hallway. You code C1 on
+              the EICR, leave the report with the duty holder, and head to the next job. A child
+              runs through the hallway later that day, brushes the accessory, and gets a shock. The
+              HSE investigation reads your EICR, sees the C1, and asks "what did you do to make
+              safe?". Your answer "I told them about it" is not enough — your duty under EAWR Reg 4
+              attached the moment you identified the danger.
+            </>
+          }
+          doInstead={
+            <>
+              C1 triggers an immediate-action obligation. Isolate the affected circuit (or the whole
+              installation if the defect is on the supply side). Lock off if equipment is available;
+              otherwise remove the relevant fuse or breaker. Label the isolation clearly. Brief the
+              duty holder verbally and confirm in writing the same day. Document the make-safe
+              action on the EICR alongside the C1 coding. If the duty holder objects to isolation,
+              document the objection — your duty is to make safe what you found, not to negotiate
+              continued operation of a known danger.
+            </>
+          }
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>Worked examples — landlord 5-year periodic</ContentEyebrow>
+
+        <Scenario
+          title="Coding a real EICR — landlord 5-year periodic on a Victorian terrace conversion"
+          situation={
+            <>
+              You are commissioned by a landlord to carry out the statutory 5-year EICR on a
+              Victorian terrace converted into two flats. Original CU dates from 2008 — split load,
+              all-RCD on one bank, no RCD on the other. Lighting circuits not on RCD. Bathroom
+              shower circuit has its own dedicated RCD on a separate enclosure. Main bonding to gas
+              present and continuous; main bonding to water absent (you trace it back and find it
+              was disconnected during a kitchen refit). Earth electrode for the supplementary garden
+              socket reads 78 Ω. Visual finds a cracked CU bus chamber cover that is intact but
+              visibly damaged. Two socket faceplates loose but conductors not exposed. The lower
+              flat has a metal-clad consumer unit installed in 2019 with all RCBOs.
+            </>
+          }
+          whatToDo={
+            <>
+              Code each observation against BPG4. Original CU 2008 lighting circuits not on RCD —
+              pre-2008 not required, post-2008 required for cables in walls less than 50 mm deep
+              without earthed metallic protection. Investigate cable depth; if shallow and
+              unprotected, C2 (Reg 522.6.202). Main bonding to water absent — C2 (typical BPG4
+              category, missing main protective bonding to extraneous-conductive-part). Earth
+              electrode 78 Ω feeding a TT garden socket with 30 mA RCD — at 78 Ω the touch voltage
+              on a 30 mA trip is 2.34 V (well within 50 V) but BS 7671 best practice is under 200 Ω
+              with margin; at 78 Ω it is fine, no code, record value. Cracked CU bus chamber cover —
+              currently containing live parts but damaged, one impact from exposing them — C2. Loose
+              socket faceplates with conductors not exposed — C3 (improvement, retighten and
+              inspect). Lower flat 2019 metal CU all RCBOs — compliant, no code. Bonding to gas
+              present and continuous — record on schedule, no code. Overall: multiple C2s present so
+              report Unsatisfactory. Landlord has 28 days under the PRS Regulations to commission
+              remedial works.
+            </>
+          }
+          whyItMatters={
+            <>
+              The PRS Regulations 2020 mean an Unsatisfactory EICR is not just a recommendation — it
+              triggers a statutory 28-day landlord remediation duty enforceable by local authority
+              with civil penalties up to £30,000 per breach. Mis-coding a real C2 as C3 leaves both
+              the tenant exposed to electrical risk and the landlord exposed to local authority
+              enforcement when a competent inspection later catches the same defect. Mis-coding a C3
+              as C2 imposes unnecessary remediation cost and undermines trust in the inspection
+              process. The defensible report codes accurately, explains the reasoning in the
+              Observations narrative, and gives the landlord clear actions with priorities.
+            </>
+          }
+        />
+
+        <InlineCheck
+          id={checks[2].id}
+          question={checks[2].question}
+          options={checks[2].options}
+          correctIndex={checks[2].correctIndex}
+          explanation={checks[2].explanation}
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>The overall classification</ContentEyebrow>
+
+        <ConceptBlock
+          title="Satisfactory or Unsatisfactory — what tips the call"
+          plainEnglish="The overall classification on the EICR front page is binary — Satisfactory or Unsatisfactory. The rule is simple and consistent across BPG4 and GN3: any C1, any C2, or any FI = Unsatisfactory. C3-only reports stay Satisfactory."
+          onSite="The overall classification matters more than the codes themselves for legal and commercial purposes. The PRS Regulations key on Unsatisfactory; insurers and mortgage lenders ask the binary question; the duty holder budgets remediation against that single word. Get the codes right and the overall flows from them."
+        >
+          <p>The classification logic, expressed as a decision tree:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Any C1 present</strong> = Unsatisfactory. Plus the make-safe-before-leaving
+              obligation already discharged on site.
+            </li>
+            <li>
+              <strong>Any C2 present</strong> = Unsatisfactory. Remediation expected urgently — 28
+              days for rented dwellings under PRS Regs.
+            </li>
+            <li>
+              <strong>Any FI present</strong> = Unsatisfactory. The investigation must complete and
+              the report be re-issued with definitive coding before the installation is considered
+              safe to remain in service.
+            </li>
+            <li>
+              <strong>Only C3s present</strong> = Satisfactory. Improvements recommended but not
+              required. Installation is safe to remain in service.
+            </li>
+            <li>
+              <strong>No observations</strong> = Satisfactory. Rare on older installations but
+              possible on newer ones in good condition with no improvements recommended.
+            </li>
+          </ul>
+          <p>
+            The recommended date for next inspection runs alongside the classification. A
+            Satisfactory report typically recommends the next standard interval (5 years for rented
+            dwellings, 10 years for owner-occupied, varying for commercial). An Unsatisfactory
+            report typically recommends a re-inspection after the remediation is complete, then back
+            to the standard cycle. Do not extend the cycle beyond what the installation condition
+            supports — extending an unsatisfactory installation's cycle dilutes the EICR's
+            protective function.
+          </p>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="The Observations section — narrative that supports the codes"
+          plainEnglish="The Observations section (Section K on the model EICR) is where the codes get their reasoning. A code without narrative is half a record; a narrative without a code is half an action. Together they tell the duty holder what was found, why it matters, and what to do about it."
+          onSite="Write the narrative for two readers — the duty holder commissioning remediation, and the next electrician picking up the work. Both need to understand what was observed, where, and why it matters. Avoid jargon where plain language works; cite reg numbers where they add precision."
+        >
+          <p>The structure of a good Observations entry:</p>
+          <ol className="space-y-1.5 list-decimal pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>What was observed.</strong> Specific, located, factual. "Main protective
+              bonding to incoming water service absent — bonding clamp present at meter but
+              conductor terminates 200 mm away with no continuation visible." Not "bonding problem".
+            </li>
+            <li>
+              <strong>Why it matters.</strong> The risk in plain terms. "An exposed-conductive-part
+              or extraneous-conductive-part not bonded to MET could rise to fault voltage in a first
+              fault scenario, presenting a touch voltage hazard."
+            </li>
+            <li>
+              <strong>The relevant reference.</strong> BS 7671 reg or GN3 section that frames the
+              requirement. "Reg 411.3.1.2 — main protective bonding to extraneous-conductive-parts."
+            </li>
+            <li>
+              <strong>The recommended action.</strong> Specific, actionable. "Reinstate main
+              protective bonding to incoming water service using 10 mm² conductor, terminated at MET
+              on one end and at the bonding clamp within 600 mm of meter on the other end."
+            </li>
+            <li>
+              <strong>The classification code.</strong> C1, C2, C3, or FI per the four-question
+              test.
+            </li>
+          </ol>
+          <p>
+            Photos attached or referenced (where the report system supports it) make a real
+            difference for both the duty holder and the next inspector. A picture of the as-found
+            condition is worth pages of narrative.
+          </p>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <FAQ items={faqs} />
+
+        <SectionRule />
+
+        <KeyTakeaways
+          points={[
+            'C1 = danger present, immediate action. Inspector must make safe before leaving site under EAWR Reg 4 continuing duty.',
+            'C2 = potentially dangerous, urgent action. Single foreseeable fault scenario. Examples: missing RCD on socket circuits, missing main bonding, undersized CPC.',
+            'C3 = improvement recommended. Installation safe as found. Does not trigger Unsatisfactory. Examples: pre-2016 plastic CU, AFDD recommendations under Reg 421.1.7.',
+            'FI = further investigation needed. Inspector cannot reach confident classification with evidence on hand. Specify what investigation and why.',
+            'Any C1 OR C2 OR FI tips overall classification to Unsatisfactory. C3-only reports stay Satisfactory.',
+            'BPG4 (Best Practice Guide 4 — Electrical Safety First) is the industry consensus document. GN3 reproduces the codes; BPG4 gives worked examples.',
+            'The four-question test — danger now, single-fault danger, improvement only, or insufficient evidence — drives every coding decision.',
+            'A4:2026 affects coding via Reg 643.7.3 (single AC RCD test), Reg 421.1.7 (AFDD recommendation), Table 41.3 updated Zs values (B32 = 1.37 Ω), Reg 132.13 documentation, and TN-C-S (PNB) treatment.',
+          ]}
+        />
+
+        <Quiz title="EICR coding — knowledge check" questions={quizQuestions} />
+
+        <div className="grid grid-cols-2 gap-3 pt-2">
           <button
-            onClick={() => navigate('/study-centre/apprentice/level3-module5-section5')}
-            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            onClick={() => navigate('/study-centre/apprentice/level3-module5-section5-1')}
+            className="rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] transition-colors border border-white/10 p-4 text-left touch-manipulation active:scale-[0.99]"
           >
-            <ArrowLeft className="h-4 w-4" /> Section 5
+            <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white/60">
+              <ArrowLeft className="h-3 w-3" /> Previous
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-white truncate">
+              5.1 Periodic inspection scope
+            </div>
           </button>
-
-          <PageHero
-            eyebrow="Module 5 · Section 5 · Subsection 2"
-            title="EICR coding — C1, C2, C3, FI"
-            description="The defensible coding rubric per BPG4 and GN3. Get the call right and the report does its job; get it wrong and you either over-charge a landlord or leave a real danger in service."
-            tone="emerald"
-          />
-
-          <TLDR
-            points={[
-              "C1 — Danger present, action required immediately. Make safe before leaving site. Triggers Unsatisfactory overall.",
-              "C2 — Potentially dangerous, urgent remedial action needed. Single foreseeable fault scenario. Triggers Unsatisfactory.",
-              "C3 — Improvement recommended. Installation is safe to remain in service. Does not trigger Unsatisfactory.",
-              "FI — Further Investigation needed. Inspector cannot reach a confident classification with evidence on hand. Triggers Unsatisfactory pending investigation.",
-              "Best Practice Guide 4 (Electrical Safety First) is the industry consensus document for consistent coding decisions.",
-            ]}
-          />
-
-          <LearningOutcomes
-            outcomes={[
-              "Cite the four EICR classification codes — C1, C2, C3, FI — and the on-site action each triggers.",
-              "Apply BPG4 (Best Practice Guide 4) logic to allocate codes for common defects encountered on periodic inspection.",
-              "Distinguish C2 (potentially dangerous, urgent) from C3 (improvement recommended) using the foreseeable-fault test.",
-              "Use FI appropriately — as a planned next step, not a default for uncertainty.",
-              "Identify which findings tip an EICR overall classification to Unsatisfactory.",
-              "Explain the inspector's continuing EAWR Reg 4 duty when a C1 is identified, including the make-safe obligation.",
-              "Recognise A4:2026 changes that affect coding judgement — Reg 643.7.3 (single AC RCD test), Reg 421.1.7 (AFDD recommendation), Table 41.3 updated maximum Zs values.",
-            ]}
-            initialVisibleCount={4}
-          />
-
-          <ContentEyebrow>The four codes in detail</ContentEyebrow>
-
-          <ConceptBlock
-            title="C1 — Danger present, action required immediately"
-            plainEnglish="C1 means the danger is here, now, today. Anyone interacting with the installation in the way it is currently being used could be hurt. The classic example is exposed live parts that a person could touch under reasonably foreseeable conditions."
-            onSite="If you find a C1, you don't just code it — you make safe before you leave. Isolate, lock off, label, brief the duty holder. The EAWR Reg 4 duty attaches to you the moment you identify the danger. Walking away from a known C1 is potentially a criminal act."
+          <button
+            onClick={() => navigate('/study-centre/apprentice/level3-module5-section5-3')}
+            className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
           >
-            <p>
-              BPG4 typical C1 examples — these come up regularly on periodic inspections of older
-              domestic and small commercial installations:
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Accessible live parts.</strong> Damaged accessory front exposing terminals,
-                broken socket faceplate with conductors visible, missing blanking plate on a CU
-                with live busbars exposed, broken light pendant with live conductors hanging.
-              </li>
-              <li>
-                <strong>Conductive part energised due to a fault.</strong> Class I metallic
-                enclosure measuring mains voltage to earth — a downstream insulation fault has
-                energised the casing because CPC is missing or open-circuit.
-              </li>
-              <li>
-                <strong>Incorrect polarity at incoming supply.</strong> Reversed line and neutral
-                at the cut-out or meter — switching opens the neutral, leaving the installation
-                live with no obvious indication. A real installer-induced danger that periodic
-                inspections occasionally catch.
-              </li>
-              <li>
-                <strong>Earthing arrangement absent or completely ineffective.</strong> Earthing
-                conductor disconnected at the MET, or main earth missing entirely. ADS cannot
-                operate; touch voltage hazard on any first fault.
-              </li>
-              <li>
-                <strong>Overheating evidence with damaged insulation.</strong> Burnt CU bus chamber
-                with melted insulation around live busbars — cannot leave that in service.
-              </li>
-            </ul>
-            <p>
-              The on-site action sequence for C1 — isolate the affected circuit (or the whole
-              installation if the defect is on the supply side), lock off, label, photograph the
-              defect, brief the duty holder verbally and confirm in writing the same day, document
-              the make-safe action on the EICR. A C1 finding combined with no make-safe action
-              leaves you exposed under EAWR Reg 4 even if the duty holder later refuses
-              remediation — your duty is to make safe what you find dangerous, not just to record
-              it.
-            </p>
-          </ConceptBlock>
-
-          <RegsCallout
-            source="IET Guidance Note 3 (9th Ed:2022, A4) — EICR observation classification codes"
-            clause="One of the following codes, as appropriate, shall be allocated to each observation made in Section K to indicate the degree of urgency for remedial action: C1, C2, C3, or FI. These classification codes are used to indicate risk levels that affect the overall assessment of the report and to inform the person(s) responsible for the installation."
-            meaning={
-              <>
-                GN3 is explicit that every observation gets one code — not none, not multiple.
-                The code communicates urgency to the duty holder. That single-code-per-observation
-                rule keeps the report defensible: each defect has a clear category and a clear
-                expected action. Inspectors who batch defects under a single code, or list
-                observations without codes, undermine the report's legal and contractual function.
-              </>
-            }
-            cite="Source: IET Guidance Note 3 (9th Edition:2022, Amendment 4 update) — EICR Section K classification codes."
-          />
-
-          <SectionRule />
-
-          <ConceptBlock
-            title="C2 — Potentially dangerous, urgent action required"
-            plainEnglish="C2 means the installation is currently safe to use as designed, but a single foreseeable fault would expose someone to danger that the installation should have been protecting against. The danger is potential, not present — but the gap is real and needs urgent attention."
-            onSite={`C2 is the most-debated code. The honest test — "if a single foreseeable fault occurred, would a person be exposed to electric shock, fire, burn, or the danger that BS 7671 is designed to prevent?" If yes, C2. If the fault would still be safely contained, C3 or no code.`}
-          >
-            <p>
-              BPG4 typical C2 examples — these are the bread-and-butter codes on most domestic
-              EICRs:
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Absence of RCD protection on socket-outlet circuits used by ordinary
-                persons.</strong> Pre-2008 installation with no RCD on downstairs sockets used for
-                portable equipment. Currently safe; single foreseeable fault (damaged flex,
-                appliance failure) loses the protection that BS 7671 currently requires under
-                Reg 411.3.3.
-              </li>
-              <li>
-                <strong>Absence of main protective bonding to extraneous-conductive-parts.</strong>
-                Gas, water, structural steel not bonded to MET. ADS may still operate but the
-                touch-voltage protection layer that bonding provides is missing.
-              </li>
-              <li>
-                <strong>Inadequate or undersized CPC.</strong> Sub-circuit CPC is undersized or
-                damaged in a way that could increase Zs above the maximum permitted in fault
-                conditions. Currently within limits; deterioration or a fault could push it
-                outside.
-              </li>
-              <li>
-                <strong>Incorrect polarity at a switch or accessory.</strong> The single-pole
-                switching device is in the neutral — switching opens the neutral and leaves the
-                load energised. A future maintenance person isolating via the switch is exposed.
-              </li>
-              <li>
-                <strong>Defective accessory cover or enclosure that protects live parts but is
-                damaged in a way that could expose them.</strong> Cracked CU lid that still covers
-                the busbars but is one impact away from exposing them.
-              </li>
-              <li>
-                <strong>Incorrect conductor identification.</strong> Strappers used as live and
-                switched-live without re-identification. The next person works on this circuit
-                expecting standard colours and gets a surprise.
-              </li>
-              <li>
-                <strong>Old rubber-insulated cable showing signs of perishing.</strong> Insulation
-                resistance currently within limits but visible cracking. The defect is not
-                immediate but the trajectory is downward.
-              </li>
-              <li>
-                <strong>Missing or inoperative SPD where one is required by Reg 443
-                assessment.</strong> Risk assessment under A4 indicates SPD required; not present.
-                C2 if the location is high-risk (lightning exposure, sensitive equipment); C3 if
-                low-risk and SPD is best-practice rather than risk-required.
-              </li>
-            </ul>
-            <p>
-              The action expected from a C2 is "remediation arranged urgently" — typically within
-              28 days for rented dwellings under the Private Rented Sector Regulations, sooner
-              where the duty holder has the resources. C2 marks the report Unsatisfactory and
-              triggers the documented remediation cycle.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck
-            id={checks[0].id}
-            question={checks[0].question}
-            options={checks[0].options}
-            correctIndex={checks[0].correctIndex}
-            explanation={checks[0].explanation}
-          />
-
-          <SectionRule />
-
-          <ConceptBlock
-            title="C3 — Improvement recommended"
-            plainEnglish="C3 means the installation is safe to remain in service as found, but an upgrade or change would bring it closer to current best practice. C3 does not require remediation — it is advisory. C3-only reports remain Satisfactory."
-            onSite="The trap with C3 is over-using it as a diplomatic substitute for C2. If the issue would expose someone to a foreseeable-fault danger, it is C2 not C3. If you wouldn't sit in court and defend C3 to that gap, recode it C2."
-          >
-            <p>BPG4 typical C3 examples — improvements rather than risks:</p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Absence of AFDDs in locations where Reg 421.1.7 (A4:2026) recommends but
-                does not require them.</strong> Single-dwelling occupancy outside the HRRB scope.
-                Improvement recommended; not a defect.
-              </li>
-              <li>
-                <strong>Wooden back box behind a metal-clad accessory in an old install.</strong>
-                Currently safe with intact cable insulation and earthing in place. Modern best
-                practice is a metal back box with terminal earthing. C3 — recommend upgrade at
-                next refurbishment.
-              </li>
-              <li>
-                <strong>Older but still-compliant consumer unit.</strong> Plastic CU installed
-                pre-2016, no fire damage, all devices working. Currently safe. Best practice is to
-                replace with a metal-enclosed unit at next opportunity. C3.
-              </li>
-              <li>
-                <strong>Cable installation method not aligned with current best practice but not
-                presenting a hazard.</strong> Surface-mounted PVC trunking in a non-domestic area
-                where modern install would use steel containment. Compliant when fitted; improved
-                practice now exists. C3.
-              </li>
-              <li>
-                <strong>Labels faded but legible.</strong> RCD test labels, circuit chart, isolation
-                identification still readable but worn. Improvement — refresh the labels at next
-                visit.
-              </li>
-            </ul>
-            <p>
-              C3 entries should still be specific and actionable. "Recommend replacing plastic
-              consumer unit with metal-enclosed unit at next refurbishment" is useful. "General
-              upgrade recommended" is not — too vague to be acted on, undermines the report's
-              credibility.
-            </p>
-          </ConceptBlock>
-
-          <RegsCallout
-            source="IET Guidance Note 3 — Advisory items separate from overall report assessment"
-            clause="The example explicitly separates advisory observations from the overall assessment by stating they 'do not affect the overall assessment of the report.' Therefore an advisory-coded item (C3/FI) shall not change the overall condition classification (e.g., satisfactory/unsatisfactory) except where an item is coded C1 or C2 or a code that requires mandatory remedial action."
-            meaning={
-              <>
-                GN3 confirms what BPG4 codifies — C3 is advisory and does not tip the report to
-                Unsatisfactory on its own. The clause also notes FI does affect the overall
-                assessment (because the inspector cannot certify safety until the investigation is
-                complete). C1 and C2 always tip Unsatisfactory; multiple C3s do not. Get this right
-                — a Satisfactory report with a long C3 list is correct; the same report marked
-                Unsatisfactory creates unnecessary remediation pressure on the duty holder.
-              </>
-            }
-            cite="Source: IET Guidance Note 3 — guidance on EICR observation coding and overall classification."
-          />
-
-          <SectionRule />
-
-          <ConceptBlock
-            title="FI — Further Investigation required"
-            plainEnglish="FI means the inspector cannot reach a confident classification with the evidence available. Could be a measurement that doesn't add up, a suspected defect that requires invasive access beyond the agreed scope, or unfamiliar equipment that needs specialist input. FI is a planned next step, not a default for uncertainty."
-            onSite="FI is the honest call when you genuinely can't decide. Don't use it to dodge a return visit (under-use) or as a catch-all for things you didn't bother investigating (over-use). Each FI must specify what investigation is needed and why."
-          >
-            <p>BPG4 typical FI scenarios:</p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Inconsistent test readings.</strong> Zs at a circuit endpoint reads
-                significantly higher than R1+R2+Ze would predict. Could be a measurement artefact
-                (probe contact, lead resistance, battery) or a real high-resistance joint. FI to
-                confirm with second method and fresh kit.
-              </li>
-              <li>
-                <strong>Suspected defect requiring invasive access.</strong> Suspected damaged
-                cable inside a wall void where the EICR scope did not include opening up. FI to
-                arrange access and confirm.
-              </li>
-              <li>
-                <strong>Unfamiliar specialist equipment.</strong> Industrial PLC-controlled
-                switchgear, EV charger arrays with smart load management, complex BMS-integrated
-                lighting controls. FI to bring in specialist competence.
-              </li>
-              <li>
-                <strong>Equipment unable to be tested at the time of inspection.</strong> Fire
-                alarm panel, BMS, lift control on a separate maintenance contract — the inspector
-                cannot test them within the EICR scope. FI to coordinate with the specialist
-                contractors.
-              </li>
-              <li>
-                <strong>Suspected upstream supply issue.</strong> Repeated nuisance tripping of an
-                RCD with no identified downstream fault — could be a network neutral problem.
-                FI to investigate with the DNO or a specialist supply analyser.
-              </li>
-            </ul>
-            <p>
-              The FI entry should specify: what is suspected, what investigation is recommended,
-              who should carry it out, and what the expected outcome will inform. A vague "FI —
-              investigate further" is not enough. The duty holder needs to know what to commission
-              and the next inspector needs to understand what was outstanding when the original
-              report was issued.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck
-            id={checks[1].id}
-            question={checks[1].question}
-            options={checks[1].options}
-            correctIndex={checks[1].correctIndex}
-            explanation={checks[1].explanation}
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>The defensible coding test</ContentEyebrow>
-
-          <ConceptBlock
-            title="The four-question test for every coding decision"
-            plainEnglish="When you cannot decide between codes, run the same four questions every time. Apply them honestly and the code follows. The discipline of asking the same questions across every defect gives a report internal consistency that survives challenge."
-          >
-            <p>The four questions, applied to every coded observation:</p>
-            <ol className="space-y-1.5 list-decimal pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Is anyone exposed to a danger right now?</strong> Yes = C1. The danger is
-                present and accessible under reasonably foreseeable conditions. Make safe before
-                leaving.
-              </li>
-              <li>
-                <strong>Would a single foreseeable fault expose someone to danger that BS 7671
-                should be preventing?</strong> Yes = C2. The installation works as designed but a
-                missing safety layer means a future fault crystallises into harm.
-              </li>
-              <li>
-                <strong>Is the installation safe as found, but does an upgrade exist that would
-                bring it closer to current best practice?</strong> Yes = C3. Improvement, not a
-                defect. Report stays Satisfactory.
-              </li>
-              <li>
-                <strong>Do I have enough evidence to answer 1, 2, or 3 with confidence?</strong>
-                No = FI. Specify what investigation is needed and what the expected outcome will
-                inform.
-              </li>
-            </ol>
-            <p>
-              When two questions seem to give different answers — e.g. "currently safe but a fault
-              could expose" versus "best practice would upgrade" — the higher-risk code wins.
-              Default upward, not downward. A C2 wrongly coded as C3 leaves a real risk
-              unaddressed; a C3 wrongly coded as C2 imposes unnecessary cost. The asymmetry
-              favours the higher code where genuine doubt exists, with the Observations narrative
-              explaining the reasoning.
-            </p>
-          </ConceptBlock>
-
-          <RegsCallout
-            source="IET Guidance Note 3 — EICR definition and content requirements"
-            clause="An Electrical Installation Condition Report (EICR) is the formal record produced following periodic inspection and testing of an electrical installation. The EICR shall identify any observed damage, deterioration, defects and conditions which may give rise to danger and shall state any action required, including codes for severity (e.g. C1, C2, C3, FI)."
-            meaning={
-              <>
-                The EICR is more than a checklist — it is a formal safety document with a defined
-                content requirement. GN3 sets the bar: identify what could give rise to danger,
-                state the action required, code the severity. An EICR that lists observations
-                without codes, or codes without supporting narrative, falls short of GN3 and would
-                struggle to support the duty holder in discharging EAWR Reg 4(2).
-              </>
-            }
-            cite="Source: IET Guidance Note 3 — definition and required content of the Electrical Installation Condition Report."
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>A4:2026 changes that affect coding</ContentEyebrow>
-
-          <ConceptBlock
-            title="A4:2026 updates that change the coding picture"
-            plainEnglish="Amendment 4 to BS 7671:2018 published in 2026 changes several things that affect EICR coding — the RCD test method, the AFDD recommendation, updated maximum Zs values, and renumbered documentation requirements. Old habits need refreshing."
-            onSite="If you are inspecting under A4 you must apply A4 limits. Pre-A4 EICRs that referenced older Zs maxima or older RCD test methods are not wrong for their time but are not the current benchmark. Re-test against A4 values."
-          >
-            <p>The A4 changes most relevant to coding judgement:</p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Reg 643.7.3 — single AC RCD test.</strong> The old multi-test sequence at
-                multiples of IΔn (50%, 100%, 500%) is replaced with a single AC test at IΔn (1×).
-                The trip time limit (200 ms for general-use, 40 ms for high-risk additional
-                protection) is unchanged. Do not over-test or under-test against the new method
-                — coding flows from compliance with the current method.
-              </li>
-              <li>
-                <strong>Reg 421.1.7 — AFDD recommendation.</strong> AFDDs recommended for socket
-                circuits in HMOs, sleeping accommodation, and certain higher-risk locations.
-                Recommend, not require — so absence on existing installations defaults to C3, not
-                C2. HRRB-specific requirements via the Building Safety Act 2022 are a separate
-                matter where AFDDs may be a hard requirement.
-              </li>
-              <li>
-                <strong>Table 41.3 — updated maximum Zs values.</strong> The 80% rule for cable
-                temperature correction and revised maxima for B-curve devices. B32 maximum is
-                1.37 Ω at 80% under A4. Use the A4 table values when coding A4-era inspections.
-              </li>
-              <li>
-                <strong>Reg 132.13 — documentation requirements.</strong> Renumbered from 132.13
-                in earlier editions. Substance largely unchanged but the regulation reference must
-                match the edition you are working under.
-              </li>
-              <li>
-                <strong>TN-C-S (PNB) treatment.</strong> A4:2026 clarifies the requirements around
-                Protective Neutral Bonding installations — particularly relevant where a periodic
-                inspection finds a PNB arrangement and needs to assess its compliance with the
-                tightened requirements.
-              </li>
-            </ul>
-            <p>
-              The principle is consistent across editions — code against current standards as a
-              risk assessment, not against historical compliance. A4:2026 changed the standards;
-              EICRs issued under A4 must reflect them.
-            </p>
-          </ConceptBlock>
-
-          <CommonMistake
-            title="Mis-coding the absence of RCD on socket circuits as C3 instead of C2"
-            whatHappens={
-              <>
-                You inspect a 2003 installation. Downstairs ring serving general sockets has no
-                RCD protection. You think — installation is original, working fine, just lacks a
-                modern feature — and code C3 "improvement recommended". Report goes out
-                Satisfactory. Three months later a child sticks a paperclip in a socket and is
-                injured. The investigation reads your report and notes the C3 coding for an
-                absence that BPG4 lists as a typical C2.
-              </>
-            }
-            doInstead={
-              <>
-                Apply the four-question test. Question 2: would a single foreseeable fault expose
-                someone to danger BS 7671 should prevent? Damaged flex on a kettle, child poking
-                a paperclip into a socket, faulty appliance — all foreseeable, all would have been
-                caught by the RCD that current Reg 411.3.3 requires. Code C2. Report goes out
-                Unsatisfactory. Landlord or homeowner commissions remediation. Risk closed.
-              </>
-            }
-          />
-
-          <CommonMistake
-            title="Walking away from a C1 without making safe"
-            whatHappens={
-              <>
-                You find a damaged accessory exposing a live conductor in a hallway. You code C1
-                on the EICR, leave the report with the duty holder, and head to the next job. A
-                child runs through the hallway later that day, brushes the accessory, and gets a
-                shock. The HSE investigation reads your EICR, sees the C1, and asks "what did you
-                do to make safe?". Your answer "I told them about it" is not enough — your duty
-                under EAWR Reg 4 attached the moment you identified the danger.
-              </>
-            }
-            doInstead={
-              <>
-                C1 triggers an immediate-action obligation. Isolate the affected circuit (or the
-                whole installation if the defect is on the supply side). Lock off if equipment is
-                available; otherwise remove the relevant fuse or breaker. Label the isolation
-                clearly. Brief the duty holder verbally and confirm in writing the same day.
-                Document the make-safe action on the EICR alongside the C1 coding. If the duty
-                holder objects to isolation, document the objection — your duty is to make safe
-                what you found, not to negotiate continued operation of a known danger.
-              </>
-            }
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>Worked examples — landlord 5-year periodic</ContentEyebrow>
-
-          <Scenario
-            title="Coding a real EICR — landlord 5-year periodic on a Victorian terrace conversion"
-            situation={
-              <>
-                You are commissioned by a landlord to carry out the statutory 5-year EICR on a
-                Victorian terrace converted into two flats. Original CU dates from 2008 — split
-                load, all-RCD on one bank, no RCD on the other. Lighting circuits not on RCD.
-                Bathroom shower circuit has its own dedicated RCD on a separate enclosure. Main
-                bonding to gas present and continuous; main bonding to water absent (you trace it
-                back and find it was disconnected during a kitchen refit). Earth electrode for the
-                supplementary garden socket reads 78 Ω. Visual finds a cracked CU bus chamber
-                cover that is intact but visibly damaged. Two socket faceplates loose but
-                conductors not exposed. The lower flat has a metal-clad consumer unit installed
-                in 2019 with all RCBOs.
-              </>
-            }
-            whatToDo={
-              <>
-                Code each observation against BPG4. Original CU 2008 lighting circuits not on RCD
-                — pre-2008 not required, post-2008 required for cables in walls less than 50 mm
-                deep without earthed metallic protection. Investigate cable depth; if shallow and
-                unprotected, C2 (Reg 522.6.202). Main bonding to water absent — C2 (typical BPG4
-                category, missing main protective bonding to extraneous-conductive-part). Earth
-                electrode 78 Ω feeding a TT garden socket with 30 mA RCD — at 78 Ω the touch
-                voltage on a 30 mA trip is 2.34 V (well within 50 V) but BS 7671 best practice is
-                under 200 Ω with margin; at 78 Ω it is fine, no code, record value. Cracked CU bus
-                chamber cover — currently containing live parts but damaged, one impact from
-                exposing them — C2. Loose socket faceplates with conductors not exposed — C3
-                (improvement, retighten and inspect). Lower flat 2019 metal CU all RCBOs —
-                compliant, no code. Bonding to gas present and continuous — record on schedule, no
-                code. Overall: multiple C2s present so report Unsatisfactory. Landlord has 28 days
-                under the PRS Regulations to commission remedial works.
-              </>
-            }
-            whyItMatters={
-              <>
-                The PRS Regulations 2020 mean an Unsatisfactory EICR is not just a recommendation
-                — it triggers a statutory 28-day landlord remediation duty enforceable by local
-                authority with civil penalties up to £30,000 per breach. Mis-coding a real C2 as
-                C3 leaves both the tenant exposed to electrical risk and the landlord exposed to
-                local authority enforcement when a competent inspection later catches the same
-                defect. Mis-coding a C3 as C2 imposes unnecessary remediation cost and undermines
-                trust in the inspection process. The defensible report codes accurately, explains
-                the reasoning in the Observations narrative, and gives the landlord clear actions
-                with priorities.
-              </>
-            }
-          />
-
-          <InlineCheck
-            id={checks[2].id}
-            question={checks[2].question}
-            options={checks[2].options}
-            correctIndex={checks[2].correctIndex}
-            explanation={checks[2].explanation}
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>The overall classification</ContentEyebrow>
-
-          <ConceptBlock
-            title="Satisfactory or Unsatisfactory — what tips the call"
-            plainEnglish="The overall classification on the EICR front page is binary — Satisfactory or Unsatisfactory. The rule is simple and consistent across BPG4 and GN3: any C1, any C2, or any FI = Unsatisfactory. C3-only reports stay Satisfactory."
-            onSite="The overall classification matters more than the codes themselves for legal and commercial purposes. The PRS Regulations key on Unsatisfactory; insurers and mortgage lenders ask the binary question; the duty holder budgets remediation against that single word. Get the codes right and the overall flows from them."
-          >
-            <p>The classification logic, expressed as a decision tree:</p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Any C1 present</strong> = Unsatisfactory. Plus the make-safe-before-leaving
-                obligation already discharged on site.
-              </li>
-              <li>
-                <strong>Any C2 present</strong> = Unsatisfactory. Remediation expected urgently
-                — 28 days for rented dwellings under PRS Regs.
-              </li>
-              <li>
-                <strong>Any FI present</strong> = Unsatisfactory. The investigation must complete
-                and the report be re-issued with definitive coding before the installation is
-                considered safe to remain in service.
-              </li>
-              <li>
-                <strong>Only C3s present</strong> = Satisfactory. Improvements recommended but not
-                required. Installation is safe to remain in service.
-              </li>
-              <li>
-                <strong>No observations</strong> = Satisfactory. Rare on older installations but
-                possible on newer ones in good condition with no improvements recommended.
-              </li>
-            </ul>
-            <p>
-              The recommended date for next inspection runs alongside the classification. A
-              Satisfactory report typically recommends the next standard interval (5 years for
-              rented dwellings, 10 years for owner-occupied, varying for commercial). An
-              Unsatisfactory report typically recommends a re-inspection after the remediation is
-              complete, then back to the standard cycle. Do not extend the cycle beyond what the
-              installation condition supports — extending an unsatisfactory installation's cycle
-              dilutes the EICR's protective function.
-            </p>
-          </ConceptBlock>
-
-          <ConceptBlock
-            title="The Observations section — narrative that supports the codes"
-            plainEnglish="The Observations section (Section K on the model EICR) is where the codes get their reasoning. A code without narrative is half a record; a narrative without a code is half an action. Together they tell the duty holder what was found, why it matters, and what to do about it."
-            onSite="Write the narrative for two readers — the duty holder commissioning remediation, and the next electrician picking up the work. Both need to understand what was observed, where, and why it matters. Avoid jargon where plain language works; cite reg numbers where they add precision."
-          >
-            <p>The structure of a good Observations entry:</p>
-            <ol className="space-y-1.5 list-decimal pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>What was observed.</strong> Specific, located, factual. "Main protective
-                bonding to incoming water service absent — bonding clamp present at meter but
-                conductor terminates 200 mm away with no continuation visible." Not "bonding
-                problem".
-              </li>
-              <li>
-                <strong>Why it matters.</strong> The risk in plain terms. "An exposed-conductive-part
-                or extraneous-conductive-part not bonded to MET could rise to fault voltage in a
-                first fault scenario, presenting a touch voltage hazard."
-              </li>
-              <li>
-                <strong>The relevant reference.</strong> BS 7671 reg or GN3 section that frames the
-                requirement. "Reg 411.3.1.2 — main protective bonding to extraneous-conductive-parts."
-              </li>
-              <li>
-                <strong>The recommended action.</strong> Specific, actionable. "Reinstate main
-                protective bonding to incoming water service using 10 mm² conductor, terminated at
-                MET on one end and at the bonding clamp within 600 mm of meter on the other end."
-              </li>
-              <li>
-                <strong>The classification code.</strong> C1, C2, C3, or FI per the four-question
-                test.
-              </li>
-            </ol>
-            <p>
-              Photos attached or referenced (where the report system supports it) make a real
-              difference for both the duty holder and the next inspector. A picture of the as-found
-              condition is worth pages of narrative.
-            </p>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <FAQ items={faqs} />
-
-          <SectionRule />
-
-          <KeyTakeaways
-            points={[
-              "C1 = danger present, immediate action. Inspector must make safe before leaving site under EAWR Reg 4 continuing duty.",
-              "C2 = potentially dangerous, urgent action. Single foreseeable fault scenario. Examples: missing RCD on socket circuits, missing main bonding, undersized CPC.",
-              "C3 = improvement recommended. Installation safe as found. Does not trigger Unsatisfactory. Examples: pre-2016 plastic CU, AFDD recommendations under Reg 421.1.7.",
-              "FI = further investigation needed. Inspector cannot reach confident classification with evidence on hand. Specify what investigation and why.",
-              "Any C1 OR C2 OR FI tips overall classification to Unsatisfactory. C3-only reports stay Satisfactory.",
-              "BPG4 (Best Practice Guide 4 — Electrical Safety First) is the industry consensus document. GN3 reproduces the codes; BPG4 gives worked examples.",
-              "The four-question test — danger now, single-fault danger, improvement only, or insufficient evidence — drives every coding decision.",
-              "A4:2026 affects coding via Reg 643.7.3 (single AC RCD test), Reg 421.1.7 (AFDD recommendation), Table 41.3 updated Zs values (B32 = 1.37 Ω), Reg 132.13 documentation, and TN-C-S (PNB) treatment.",
-            ]}
-          />
-
-          <Quiz title="EICR coding — knowledge check" questions={quizQuestions} />
-
-          <div className="grid grid-cols-2 gap-3 pt-2">
-            <button
-              onClick={() => navigate('/study-centre/apprentice/level3-module5-section5-1')}
-              className="rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] transition-colors border border-white/10 p-4 text-left touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white/60">
-                <ArrowLeft className="h-3 w-3" /> Previous
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-white truncate">
-                5.1 Periodic inspection scope
-              </div>
-            </button>
-            <button
-              onClick={() => navigate('/study-centre/apprentice/level3-module5-section5-3')}
-              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
-                Next subsection <ChevronRight className="h-3 w-3" />
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-black truncate">
-                5.3 Sampling and scope agreement
-              </div>
-            </button>
-          </div>
-        </PageFrame>
-      </div>
-    </div>
+            <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+              Next subsection <ChevronRight className="h-3 w-3" />
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-black truncate">
+              5.3 Sampling and scope agreement
+            </div>
+          </button>
+        </div>
+      </HubBody>
+    </HubPage>
   );
 }

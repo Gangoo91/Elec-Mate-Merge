@@ -7,10 +7,10 @@
  * stats.
  */
 
-import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft, CheckCircle2, AlertTriangle, Building2, Users } from 'lucide-react';
-import { PageFrame, PageHero, itemVariants } from '@/components/college/primitives';
+import { CheckCircle2, AlertTriangle, Building2, Users } from 'lucide-react';
+import { itemVariants } from '@/components/college/primitives';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { Eyebrow, SectionHeader } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
 import { cn } from '@/lib/utils';
 import { NMW_RATES, NMW_EFFECTIVE_LABEL } from '@/data/nmwRates';
@@ -189,318 +189,311 @@ const stats = [
 ];
 
 const EmployerInfoPage = () => {
-  const navigate = useNavigate();
   return (
-    <PageFrame className="px-4 sm:px-6 lg:px-8">
-      <motion.div variants={itemVariants}>
-        <button
-          onClick={() => navigate('/apprentice/toolbox/apprenticeship-funding')}
-          className="inline-flex items-center gap-2 h-11 -ml-2 px-2 rounded-md text-[12px] uppercase tracking-[0.18em] text-white/55 hover:text-white/85 transition-colors touch-manipulation"
-        >
-          <ArrowLeft className="h-4 w-4" />
-          Back
-        </button>
-      </motion.div>
+    <HubPage>
+      <HubMasthead
+        section="Apprentice · Funding"
+        title="Employer information"
+        backTo="/apprentice/toolbox/apprenticeship-funding"
+      />
+      <HubBody>
+        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
+          {
+            'The business case for apprentices — how funding works, what it costs and returns year by year, common concerns answered, and how the maths actually stacks up vs hiring qualified.'
+          }
+        </p>
 
-      <motion.div variants={itemVariants}>
-        <PageHero
-          eyebrow="Apprentice · Funding"
-          title="Employer information"
-          description="The business case for apprentices — how funding works, what it costs and returns year by year, common concerns answered, and how the maths actually stacks up vs hiring qualified."
-          tone="yellow"
-        />
-      </motion.div>
-
-      {/* ── Intro ───────────────────────────────────────────────── */}
-      <motion.div variants={itemVariants}>
-        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-2">
-          <Eyebrow>Made for employers</Eyebrow>
-          <p className="text-[13.5px] text-white/85 leading-relaxed">
-            This section helps employers understand apprenticeship funding and make the business
-            case. Share it with employers who are unfamiliar with how funding works or need
-            convincing that taking on an apprentice is a smart investment.
-          </p>
-        </div>
-      </motion.div>
-
-      {/* ── Levy vs Non-Levy ────────────────────────────────────── */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <SectionHeader
-          eyebrow="Levy vs non-levy"
-          title="Two paths to fund apprentice training"
-          meta="Your payroll size decides which one"
-        />
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5">
-          <FactsCard
-            label="Levy-paying employers"
-            sublabel="Annual payroll over £3m"
-            items={levyFacts}
-            tip="If you're not using all your levy funds, consider transferring up to 50% to supply chain partners or other employers. Many smaller firms are actively seeking levy transfers — builds goodwill and develops your talent pipeline."
-          />
-          <FactsCard
-            label="Non-levy employers (SMEs)"
-            sublabel="Annual payroll under £3m"
-            items={smeFacts}
-            tip="Ask your training provider about levy transfer opportunities — many large employers have unused funds available. A levy transfer means you pay nothing at all for training."
-          />
-        </div>
-      </motion.section>
-
-      {/* ── DAS registration ────────────────────────────────────── */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <SectionHeader
-          eyebrow="How to register on DAS"
-          title="Digital Apprenticeship Service setup"
-          meta="apprenticeships.education.gov.uk · 7 steps"
-        />
-        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3">
-          <ol className="space-y-2">
-            {dasSteps.map((step, i) => (
-              <li key={step} className="flex items-start gap-3">
-                <span className="inline-flex items-center justify-center w-6 h-6 rounded-md border border-elec-yellow/25 bg-elec-yellow/[0.06] text-[11px] font-mono font-semibold tabular-nums text-elec-yellow flex-shrink-0">
-                  {i + 1}
-                </span>
-                <span className="text-[12.5px] text-white/85 leading-relaxed">{step}</span>
-              </li>
-            ))}
-          </ol>
-          <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3">
-            <p className="text-[12.5px] text-white/85 leading-relaxed">
-              <span className="font-semibold text-elec-yellow">Note:</span> Most training providers
-              walk you through this for free. Many will set up the account on your behalf with your
-              permission.
+        {/* ── Intro ───────────────────────────────────────────────── */}
+        <motion.div variants={itemVariants}>
+          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-2">
+            <Eyebrow>Made for employers</Eyebrow>
+            <p className="text-[13.5px] text-white/85 leading-relaxed">
+              This section helps employers understand apprenticeship funding and make the business
+              case. Share it with employers who are unfamiliar with how funding works or need
+              convincing that taking on an apprentice is a smart investment.
             </p>
           </div>
-        </div>
-      </motion.section>
+        </motion.div>
 
-      {/* ── Provider criteria ───────────────────────────────────── */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <SectionHeader
-          eyebrow="Choosing a training provider"
-          title="10 things to check before you commit"
-          meta="The provider has a massive impact on your apprentice's success"
-        />
-        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5">
-          <ul className="space-y-1.5">
-            {providerCriteria.map((item) => (
+        {/* ── Levy vs Non-Levy ────────────────────────────────────── */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <SectionHeader
+            eyebrow="Levy vs non-levy"
+            title="Two paths to fund apprentice training"
+            meta="Your payroll size decides which one"
+          />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5">
+            <FactsCard
+              label="Levy-paying employers"
+              sublabel="Annual payroll over £3m"
+              items={levyFacts}
+              tip="If you're not using all your levy funds, consider transferring up to 50% to supply chain partners or other employers. Many smaller firms are actively seeking levy transfers — builds goodwill and develops your talent pipeline."
+            />
+            <FactsCard
+              label="Non-levy employers (SMEs)"
+              sublabel="Annual payroll under £3m"
+              items={smeFacts}
+              tip="Ask your training provider about levy transfer opportunities — many large employers have unused funds available. A levy transfer means you pay nothing at all for training."
+            />
+          </div>
+        </motion.section>
+
+        {/* ── DAS registration ────────────────────────────────────── */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <SectionHeader
+            eyebrow="How to register on DAS"
+            title="Digital Apprenticeship Service setup"
+            meta="apprenticeships.education.gov.uk · 7 steps"
+          />
+          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3">
+            <ol className="space-y-2">
+              {dasSteps.map((step, i) => (
+                <li key={step} className="flex items-start gap-3">
+                  <span className="inline-flex items-center justify-center w-6 h-6 rounded-md border border-elec-yellow/25 bg-elec-yellow/[0.06] text-[11px] font-mono font-semibold tabular-nums text-elec-yellow flex-shrink-0">
+                    {i + 1}
+                  </span>
+                  <span className="text-[12.5px] text-white/85 leading-relaxed">{step}</span>
+                </li>
+              ))}
+            </ol>
+            <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3">
+              <p className="text-[12.5px] text-white/85 leading-relaxed">
+                <span className="font-semibold text-elec-yellow">Note:</span> Most training
+                providers walk you through this for free. Many will set up the account on your
+                behalf with your permission.
+              </p>
+            </div>
+          </div>
+        </motion.section>
+
+        {/* ── Provider criteria ───────────────────────────────────── */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <SectionHeader
+            eyebrow="Choosing a training provider"
+            title="10 things to check before you commit"
+            meta="The provider has a massive impact on your apprentice's success"
+          />
+          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5">
+            <ul className="space-y-1.5">
+              {providerCriteria.map((item) => (
+                <li
+                  key={item}
+                  className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                >
+                  <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </motion.section>
+
+        {/* ── Year-by-year ────────────────────────────────────────── */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <SectionHeader
+            eyebrow="Year-by-year cost & return"
+            title="Investment in Y1, return from Y2"
+            meta="Productivity rises each year while wages stay below qualified rates"
+          />
+          <ul className="space-y-2.5">
+            {yearByYear.map((y) => (
               <li
-                key={item}
-                className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                key={y.year}
+                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3"
               >
-                <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
-                <span>{item}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </motion.section>
-
-      {/* ── Year-by-year ────────────────────────────────────────── */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <SectionHeader
-          eyebrow="Year-by-year cost & return"
-          title="Investment in Y1, return from Y2"
-          meta="Productivity rises each year while wages stay below qualified rates"
-        />
-        <ul className="space-y-2.5">
-          {yearByYear.map((y) => (
-            <li
-              key={y.year}
-              className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3"
-            >
-              <div className="flex items-baseline justify-between gap-3 flex-wrap">
-                <h3 className="text-[14px] font-semibold text-elec-yellow tracking-tight">
-                  Year {y.year} — {y.phase}
-                </h3>
-              </div>
-              <ul className="space-y-1.5">
-                {y.rows.map((row) => (
-                  <li
-                    key={row.label}
-                    className="flex items-start justify-between gap-3 text-[12.5px] text-white/85"
-                  >
-                    <span>{row.label}</span>
-                    <span
-                      className={cn(
-                        'font-mono tabular-nums font-semibold flex-shrink-0',
-                        row.positive ? 'text-elec-yellow' : 'text-white'
-                      )}
+                <div className="flex items-baseline justify-between gap-3 flex-wrap">
+                  <h3 className="text-[14px] font-semibold text-elec-yellow tracking-tight">
+                    Year {y.year} — {y.phase}
+                  </h3>
+                </div>
+                <ul className="space-y-1.5">
+                  {y.rows.map((row) => (
+                    <li
+                      key={row.label}
+                      className="flex items-start justify-between gap-3 text-[12.5px] text-white/85"
                     >
-                      {row.value}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-              <p className="text-[12.5px] text-white/70 leading-relaxed pt-1 border-t border-white/[0.04]">
-                {y.narrative}
+                      <span>{row.label}</span>
+                      <span
+                        className={cn(
+                          'font-mono tabular-nums font-semibold flex-shrink-0',
+                          row.positive ? 'text-elec-yellow' : 'text-white'
+                        )}
+                      >
+                        {row.value}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+                <p className="text-[12.5px] text-white/70 leading-relaxed pt-1 border-t border-white/[0.04]">
+                  {y.narrative}
+                </p>
+              </li>
+            ))}
+          </ul>
+        </motion.section>
+
+        {/* ── Wage rates ──────────────────────────────────────────── */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <SectionHeader
+            eyebrow={`Apprentice wage rates · ${NMW_EFFECTIVE_LABEL}`}
+            title="Minimum hourly rates"
+            meta="JIB-graded employers typically pay above minimum"
+          />
+          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3">
+            <ul className="space-y-1.5">
+              {wageRates.map((rate) => (
+                <li
+                  key={rate.label}
+                  className="flex items-start justify-between gap-3 text-[12.5px] text-white/85"
+                >
+                  <span>{rate.label}</span>
+                  <span className="font-mono tabular-nums font-semibold text-elec-yellow flex-shrink-0">
+                    {rate.value}
+                  </span>
+                </li>
+              ))}
+            </ul>
+            <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3">
+              <p className="text-[12.5px] text-white/85 leading-relaxed">
+                <span className="font-semibold text-elec-yellow">Note:</span> Many electrical
+                employers pay above minimum from Year 2 onwards. JIB-graded employers follow JIB
+                recommended rates which are typically higher.
               </p>
-            </li>
-          ))}
-        </ul>
-      </motion.section>
-
-      {/* ── Wage rates ──────────────────────────────────────────── */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <SectionHeader
-          eyebrow={`Apprentice wage rates · ${NMW_EFFECTIVE_LABEL}`}
-          title="Minimum hourly rates"
-          meta="JIB-graded employers typically pay above minimum"
-        />
-        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3">
-          <ul className="space-y-1.5">
-            {wageRates.map((rate) => (
-              <li
-                key={rate.label}
-                className="flex items-start justify-between gap-3 text-[12.5px] text-white/85"
-              >
-                <span>{rate.label}</span>
-                <span className="font-mono tabular-nums font-semibold text-elec-yellow flex-shrink-0">
-                  {rate.value}
-                </span>
-              </li>
-            ))}
-          </ul>
-          <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3">
-            <p className="text-[12.5px] text-white/85 leading-relaxed">
-              <span className="font-semibold text-elec-yellow">Note:</span> Many electrical
-              employers pay above minimum from Year 2 onwards. JIB-graded employers follow JIB
-              recommended rates which are typically higher.
-            </p>
+            </div>
           </div>
-        </div>
-      </motion.section>
+        </motion.section>
 
-      {/* ── Common concerns ─────────────────────────────────────── */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <SectionHeader
-          eyebrow="Common employer concerns"
-          title="Five worries — answered"
-          meta="The questions that come up in every conversation"
-        />
-        <ul className="space-y-2">
-          {concerns.map((c) => (
-            <li
-              key={c.question}
-              className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-1.5"
-            >
-              <h3 className="text-[14px] font-semibold text-elec-yellow tracking-tight">
-                {c.question}
-              </h3>
-              <p className="text-[13px] text-white/85 leading-relaxed">{c.answer}</p>
-            </li>
-          ))}
-        </ul>
-      </motion.section>
-
-      {/* ── Supervision ─────────────────────────────────────────── */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <SectionHeader
-          eyebrow="Supervision requirements"
-          title="What's expected of the employer"
-          meta="Decreases as competence increases"
-          action={
-            <span className="inline-flex items-center justify-center w-8 h-8 rounded-md border border-elec-yellow/25 bg-elec-yellow/[0.06]">
-              <Users className="h-4 w-4 text-elec-yellow" />
-            </span>
-          }
-        />
-        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5">
-          <ul className="space-y-1.5">
-            {supervisionRequirements.map((item) => (
+        {/* ── Common concerns ─────────────────────────────────────── */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <SectionHeader
+            eyebrow="Common employer concerns"
+            title="Five worries — answered"
+            meta="The questions that come up in every conversation"
+          />
+          <ul className="space-y-2">
+            {concerns.map((c) => (
               <li
-                key={item}
-                className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                key={c.question}
+                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-1.5"
               >
-                <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
-                <span>{item}</span>
+                <h3 className="text-[14px] font-semibold text-elec-yellow tracking-tight">
+                  {c.question}
+                </h3>
+                <p className="text-[13px] text-white/85 leading-relaxed">{c.answer}</p>
               </li>
             ))}
           </ul>
-        </div>
-      </motion.section>
+        </motion.section>
 
-      {/* ── Apprentice vs hire ──────────────────────────────────── */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <SectionHeader
-          eyebrow="Apprentice vs hiring qualified"
-          title="The maths on hiring instead"
-          meta="What it actually costs to skip the apprenticeship"
-        />
-        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3">
-          <p className="text-[13px] text-white/85 leading-relaxed">
-            Hiring a qualified electrician typically costs:
-          </p>
-          <ul className="space-y-1.5">
-            {hireComparison.map((item) => (
-              <li
-                key={item}
-                className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
-              >
-                <AlertTriangle className="h-3.5 w-3.5 text-white/55 flex-shrink-0 mt-0.5" />
-                <span>{item}</span>
-              </li>
-            ))}
-          </ul>
-          <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3">
-            <p className="text-[12.5px] text-white/85 leading-relaxed">
-              An apprentice costs significantly less in Year 1–2, becomes productive from Year 2,
-              and is fully qualified by Year 4 — trained exactly to your standards, loyal to your
-              business, at a fraction of the total cost.
-            </p>
+        {/* ── Supervision ─────────────────────────────────────────── */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <SectionHeader
+            eyebrow="Supervision requirements"
+            title="What's expected of the employer"
+            meta="Decreases as competence increases"
+            action={
+              <span className="inline-flex items-center justify-center w-8 h-8 rounded-md border border-elec-yellow/25 bg-elec-yellow/[0.06]">
+                <Users className="h-4 w-4 text-elec-yellow" />
+              </span>
+            }
+          />
+          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5">
+            <ul className="space-y-1.5">
+              {supervisionRequirements.map((item) => (
+                <li
+                  key={item}
+                  className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                >
+                  <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
           </div>
-        </div>
-      </motion.section>
+        </motion.section>
 
-      {/* ── Case study ──────────────────────────────────────────── */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <SectionHeader
-          eyebrow="Case study"
-          title="Typical SME electrical contractor"
-          meta="6-person firm · £180k payroll · non-levy · 17-yo apprentice on L3"
-          action={
-            <span className="inline-flex items-center justify-center w-8 h-8 rounded-md border border-elec-yellow/25 bg-elec-yellow/[0.06]">
-              <Building2 className="h-4 w-4 text-elec-yellow" />
-            </span>
-          }
-        />
-        <div className="rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.04] p-4 sm:p-5">
-          <ul className="space-y-1.5">
-            {caseStudyBullets.map((item) => (
-              <li
-                key={item}
-                className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
-              >
-                <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow flex-shrink-0 mt-0.5" />
-                <span>{item}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </motion.section>
-
-      {/* ── Industry stats ──────────────────────────────────────── */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <SectionHeader
-          eyebrow="Industry statistics"
-          title="Six numbers worth knowing"
-          meta="The macro case for apprenticeships in UK electrical"
-        />
-        <ul className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-3">
-          {stats.map((stat) => (
-            <li
-              key={stat.label}
-              className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-3 sm:p-4 text-center space-y-1.5"
-            >
-              <p className="text-[20px] sm:text-[24px] font-mono font-semibold tabular-nums text-elec-yellow leading-none">
-                {stat.value}
+        {/* ── Apprentice vs hire ──────────────────────────────────── */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <SectionHeader
+            eyebrow="Apprentice vs hiring qualified"
+            title="The maths on hiring instead"
+            meta="What it actually costs to skip the apprenticeship"
+          />
+          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3">
+            <p className="text-[13px] text-white/85 leading-relaxed">
+              Hiring a qualified electrician typically costs:
+            </p>
+            <ul className="space-y-1.5">
+              {hireComparison.map((item) => (
+                <li
+                  key={item}
+                  className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                >
+                  <AlertTriangle className="h-3.5 w-3.5 text-white/55 flex-shrink-0 mt-0.5" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+            <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3">
+              <p className="text-[12.5px] text-white/85 leading-relaxed">
+                An apprentice costs significantly less in Year 1–2, becomes productive from Year 2,
+                and is fully qualified by Year 4 — trained exactly to your standards, loyal to your
+                business, at a fraction of the total cost.
               </p>
-              <p className="text-[11px] text-white/70 leading-snug">{stat.label}</p>
-            </li>
-          ))}
-        </ul>
-      </motion.section>
-    </PageFrame>
+            </div>
+          </div>
+        </motion.section>
+
+        {/* ── Case study ──────────────────────────────────────────── */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <SectionHeader
+            eyebrow="Case study"
+            title="Typical SME electrical contractor"
+            meta="6-person firm · £180k payroll · non-levy · 17-yo apprentice on L3"
+            action={
+              <span className="inline-flex items-center justify-center w-8 h-8 rounded-md border border-elec-yellow/25 bg-elec-yellow/[0.06]">
+                <Building2 className="h-4 w-4 text-elec-yellow" />
+              </span>
+            }
+          />
+          <div className="rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.04] p-4 sm:p-5">
+            <ul className="space-y-1.5">
+              {caseStudyBullets.map((item) => (
+                <li
+                  key={item}
+                  className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                >
+                  <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow flex-shrink-0 mt-0.5" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </motion.section>
+
+        {/* ── Industry stats ──────────────────────────────────────── */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <SectionHeader
+            eyebrow="Industry statistics"
+            title="Six numbers worth knowing"
+            meta="The macro case for apprenticeships in UK electrical"
+          />
+          <ul className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-3">
+            {stats.map((stat) => (
+              <li
+                key={stat.label}
+                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-3 sm:p-4 text-center space-y-1.5"
+              >
+                <p className="text-[20px] sm:text-[24px] font-mono font-semibold tabular-nums text-elec-yellow leading-none">
+                  {stat.value}
+                </p>
+                <p className="text-[11px] text-white/70 leading-snug">{stat.label}</p>
+              </li>
+            ))}
+          </ul>
+        </motion.section>
+      </HubBody>
+    </HubPage>
   );
 };
 

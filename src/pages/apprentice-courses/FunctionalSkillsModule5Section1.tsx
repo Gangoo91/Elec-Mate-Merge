@@ -26,12 +26,7 @@ const FunctionalSkillsModule5Section1 = () => {
     {
       id: 1,
       question: 'How long is the Level 1 Functional Skills Maths exam typically?',
-      options: [
-        '30 minutes',
-        '1 hour 30 minutes',
-        '1 hour',
-        '2 hours',
-      ],
+      options: ['30 minutes', '1 hour 30 minutes', '1 hour', '2 hours'],
       correctAnswer: 1,
       explanation:
         'The Level 1 Functional Skills Maths exam is typically 1 hour 30 minutes, split between a non-calculator section (approximately 30 minutes) and a calculator section (approximately 60 minutes).',
@@ -52,12 +47,7 @@ const FunctionalSkillsModule5Section1 = () => {
     {
       id: 3,
       question: 'A cable costs £2.45 per metre. How much would 12 metres cost?',
-      options: [
-        '£28.40',
-        '£24.50',
-        '£30.00',
-        '£29.40',
-      ],
+      options: ['£28.40', '£24.50', '£30.00', '£29.40'],
       correctAnswer: 3,
       explanation:
         '£2.45 multiplied by 12 = £29.40. Break it down: £2 x 12 = £24, then £0.45 x 12 = £5.40, giving a total of £24 + £5.40 = £29.40.',
@@ -78,12 +68,7 @@ const FunctionalSkillsModule5Section1 = () => {
     {
       id: 5,
       question: 'What fraction of an hour is 45 minutes?',
-      options: [
-        '2/3',
-        '3/4',
-        '4/5',
-        '1/2',
-      ],
+      options: ['2/3', '3/4', '4/5', '1/2'],
       correctAnswer: 1,
       explanation:
         '45 minutes out of 60 minutes = 45/60 = 3/4 of an hour. This is a common conversion used in timesheets and job costing for electrical work.',
@@ -104,12 +89,7 @@ const FunctionalSkillsModule5Section1 = () => {
     {
       id: 7,
       question: 'If a room is 4.5 m by 3.2 m, what is its area?',
-      options: [
-        '7.7 m²',
-        '14.04 m²',
-        '15.4 m²',
-        '14.4 m²',
-      ],
+      options: ['7.7 m²', '14.04 m²', '15.4 m²', '14.4 m²'],
       correctAnswer: 3,
       explanation:
         'Area = length x width = 4.5 x 3.2 = 14.4 m². Area calculations are essential for electrical work such as determining lighting layouts and cable run requirements.',
@@ -429,7 +409,7 @@ const FunctionalSkillsModule5Section1 = () => {
         {/* InlineCheck after 02 */}
         <InlineCheck
           question="In the Level 1 Maths exam, can you use a calculator in Section A?"
-          answer="No. Section A is a non-calculator section that tests your mental arithmetic and number sense. Calculators are only permitted in Section B, which covers more complex multi-step problems."
+          correctAnswer="No. Section A is a non-calculator section that tests your mental arithmetic and number sense. Calculators are only permitted in Section B, which covers more complex multi-step problems."
         />
 
         {/* 03 - Level 1 Maths Practice Questions */}
@@ -796,7 +776,7 @@ const FunctionalSkillsModule5Section1 = () => {
         {/* InlineCheck after 04 */}
         <InlineCheck
           question="Name the three components of the Level 1 English Functional Skills assessment."
-          answer="Reading, Writing, and Speaking, Listening and Communicating (SLC). Reading and Writing are externally examined, whilst SLC is assessed internally by your training provider through discussions or presentations."
+          correctAnswer="Reading, Writing, and Speaking, Listening and Communicating (SLC). Reading and Writing are externally examined, whilst SLC is assessed internally by your training provider through discussions or presentations."
         />
 
         {/* 05 - Level 1 English Practice Questions */}
@@ -1136,7 +1116,7 @@ const FunctionalSkillsModule5Section1 = () => {
         {/* InlineCheck after 06 */}
         <InlineCheck
           question="What does 'fitness for purpose' mean in the context of the ICT assessment?"
-          answer="It means your document is suitable and appropriate for its intended audience and use. A safety notice should be clear and direct, a formal letter should be professional, and a spreadsheet should present data logically. It is about meeting the reader's needs, not demonstrating every available feature."
+          correctAnswer="It means your document is suitable and appropriate for its intended audience and use. A safety notice should be clear and direct, a formal letter should be professional, and a spreadsheet should present data logically. It is about meeting the reader's needs, not demonstrating every available feature."
         />
 
         {/* 07 - Time Management Strategies */}

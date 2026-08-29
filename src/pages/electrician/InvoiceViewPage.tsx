@@ -37,6 +37,7 @@ const InvoiceViewPage = () => {
   const [invoice, setInvoice] = useState<Quote | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isMarkingPaid, setIsMarkingPaid] = useState(false);
+  const [isSendingCert, setIsSendingCert] = useState(false);
   const [isDownloading, setIsDownloading] = useState(false);
   const [showGenerationDialog, setShowGenerationDialog] = useState(false);
   const [showLatePaymentHelp, setShowLatePaymentHelp] = useState(false);
@@ -174,6 +175,12 @@ const InvoiceViewPage = () => {
         reminder_count: data.reminder_count || 0,
         last_reminder_sent_at: data.last_reminder_sent_at,
         additional_invoice_items: data.additional_invoice_items as any,
+        linked_certificate_id: data.linked_certificate_id || undefined,
+        linked_certificate_type: data.linked_certificate_type || undefined,
+        linked_certificate_reference: data.linked_certificate_reference || undefined,
+        certificate_release_mode: (data.certificate_release_mode ||
+          'with_invoice') as 'with_invoice' | 'on_payment',
+        certificate_released_at: data.certificate_released_at || null,
       };
 
       setInvoice(quoteData);
@@ -299,6 +306,32 @@ const InvoiceViewPage = () => {
     }
   };
 
+  const handleSendCertificateNow = async () => {
+    if (!invoice) return;
+    setIsSendingCert(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('release-certificate', {
+        body: { source: 'quotes', id: invoice.id, manual: true },
+      });
+      if (error) throw error;
+      if (!data?.released) throw new Error(data?.reason || data?.error || 'Send failed');
+      toast({
+        title: 'Certificate sent',
+        description: `The ${invoice.linked_certificate_type || 'certificate'} has been emailed to ${invoice.client?.name || 'the customer'}.`,
+      });
+      fetchInvoice();
+    } catch (error) {
+      console.error('Manual certificate release failed:', error);
+      toast({
+        title: 'Could not send the certificate',
+        description: error instanceof Error ? error.message : 'Please try again.',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsSendingCert(false);
+    }
+  };
+
   const handleMarkAsPaid = async () => {
     if (!invoice) return;
     setIsMarkingPaid(true);
@@ -308,13 +341,22 @@ const InvoiceViewPage = () => {
         .update({ invoice_status: 'paid', invoice_paid_at: new Date().toISOString() })
         .eq('id', invoice.id);
       if (error) throw error;
-      toast({ title: 'Invoice marked as paid', description: `Invoice ${invoice.invoice_number} has been marked as paid.` });
+      const certNote =
+        invoice.linked_certificate_id &&
+        invoice.certificate_release_mode === 'on_payment' &&
+        !invoice.certificate_released_at
+          ? ` The ${invoice.linked_certificate_type || 'certificate'} is on its way to the customer.`
+          : '';
+      toast({ title: 'Invoice marked as paid', description: `Invoice ${invoice.invoice_number} has been marked as paid.${certNote}` });
       setShowMarkPaidDialog(false);
       // Close the loop in the accounting software (best-effort, non-blocking).
       if (invoice.external_invoice_id && invoice.external_invoice_provider) {
         recordExternalPayment(invoice.id, invoice.external_invoice_provider);
       }
       fetchInvoice();
+      // The held-certificate release lands a couple of seconds after the paid
+      // stamp — refetch once more so the "Cert sent" stage lights up live.
+      if (certNote) setTimeout(fetchInvoice, 4000);
     } catch (error) {
       toast({ title: 'Error', description: 'Failed to mark invoice as paid.', variant: 'destructive' });
     } finally {
@@ -434,6 +476,16 @@ const InvoiceViewPage = () => {
   // flow left them stuck. Any non-paid invoice can now be marked paid.
   const canMarkPaid = !isPaid;
 
+  // Certificate release state — the invoice can carry a certificate that
+  // either rides with the invoice email or is held back until payment.
+  const hasLinkedCert = !!invoice.linked_certificate_id;
+  const certHeld =
+    hasLinkedCert &&
+    invoice.certificate_release_mode === 'on_payment' &&
+    !invoice.certificate_released_at;
+  const certReleased = hasLinkedCert && !!invoice.certificate_released_at;
+  const certLabel = invoice.linked_certificate_type || 'Certificate';
+
   const statusBadge = isPaid
     ? { label: 'Paid', dot: 'bg-emerald-400', text: 'text-emerald-400', pill: 'bg-emerald-500/15 text-emerald-400 border-emerald-500/25', wash: 'from-emerald-500/[0.14]' }
     : isOverdue
@@ -488,6 +540,18 @@ const InvoiceViewPage = () => {
     });
   } else {
     timelineEvents.push({ label: 'Paid', colour: 'bg-white/20', active: false });
+  }
+  // Hold-until-paid certificates get their own stage — the electrician can see
+  // at a glance that the cert follows payment, and when it actually went.
+  if (hasLinkedCert && (certHeld || certReleased)) {
+    timelineEvents.push({
+      label: 'Cert sent',
+      date: invoice.certificate_released_at
+        ? format(new Date(invoice.certificate_released_at), 'd MMM')
+        : undefined,
+      colour: 'bg-teal-400',
+      active: certReleased,
+    });
   }
 
   return (
@@ -578,7 +642,43 @@ const InvoiceViewPage = () => {
                   Synced · {(invoice as any).external_invoice_provider}
                 </span>
               )}
+              {certHeld && (
+                <span className="text-[11px] font-semibold text-amber-400 px-2.5 py-1 rounded-lg bg-amber-500/[0.08] border border-amber-500/20">
+                  {certLabel} held until paid
+                </span>
+              )}
+              {certReleased && (
+                <span className="text-[11px] font-medium text-teal-300 px-2.5 py-1 rounded-lg bg-teal-500/[0.08] border border-teal-500/15">
+                  {certLabel} sent{' '}
+                  {invoice.certificate_released_at
+                    ? format(new Date(invoice.certificate_released_at), 'd MMM yyyy')
+                    : ''}
+                </span>
+              )}
+              {hasLinkedCert && !certHeld && !certReleased && (
+                <span className="text-[11px] font-medium text-white/75 px-2.5 py-1 rounded-lg bg-white/[0.05] border border-white/[0.08]">
+                  {certLabel} attached
+                </span>
+              )}
             </div>
+            {certHeld && (
+              <div className="mt-2.5">
+                <p className="text-[12px] leading-snug text-white">
+                  The {certLabel} is being held back — it emails itself to{' '}
+                  {invoice.client?.name || 'the customer'} the moment this invoice is paid. Paid
+                  by bank transfer? Mark the invoice paid when the money lands and the
+                  certificate goes out on its own.
+                </p>
+                <button
+                  onClick={handleSendCertificateNow}
+                  disabled={isSendingCert}
+                  className="mt-2 h-11 px-4 rounded-xl border border-white/[0.14] bg-white/[0.05] text-[12.5px] font-medium text-white touch-manipulation active:scale-[0.98] disabled:opacity-60 inline-flex items-center gap-2"
+                >
+                  {isSendingCert && <Loader2 className="h-3.5 w-3.5 animate-spin" />}
+                  Send the certificate now instead
+                </button>
+              </div>
+            )}
 
             {/* Progress stepper */}
             <div className="mt-4 pt-4 sm:mt-5 sm:pt-5 border-t border-white/[0.08]">
@@ -1226,6 +1326,12 @@ const InvoiceViewPage = () => {
             <AlertDialogTitle>Mark Invoice as Paid?</AlertDialogTitle>
             <AlertDialogDescription>
               This will mark invoice {invoice.invoice_number} as paid. The payment date will be recorded as today.
+              {certHeld && (
+                <span className="mt-2 block text-teal-300">
+                  The held {certLabel} certificate will be emailed to{' '}
+                  {invoice.client?.name || 'the customer'} automatically.
+                </span>
+              )}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>

@@ -1,8 +1,8 @@
-import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { useNavigate } from 'react-router-dom';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
-import { PageFrame, PageHero } from '@/components/college/primitives';
 import {
   TLDR,
   ConceptBlock,
@@ -378,516 +378,507 @@ export default function BS7671Module1Section3() {
   });
 
   return (
-    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
-      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
-        <PageFrame>
+    <HubPage>
+      <HubMasthead
+        section="Module 1 · Section 3 · Updated for A4:2026"
+        title="Structure of BS 7671 (parts, chapters, appendices)"
+        backTo="../bs7671-module-1"
+      />
+      <HubBody>
+        <div className="max-w-3xl text-[13px] leading-relaxed text-white">
+          {
+            'Eight Parts, ~30 Chapters, ~20 Section-700 special locations, 17 Appendices (two deleted, one NOT USED). Reading the regs faster starts with knowing the shape of the book.'
+          }
+        </div>
+
+        <div className="flex flex-wrap items-center gap-2">
+          {
+            <>
+              <RegBadge>110.1.1</RegBadge>
+              <RegBadge>110.1.3</RegBadge>
+              <AmendmentBadge regs={['110.1.3']} />
+            </>
+          }
+        </div>
+
+        <TLDR
+          points={[
+            'Hierarchical numbering. Reg 411.3.4 = Part 4 / Chapter 41 / Section 411 / item .3.4. The first digit always names the Part.',
+            'Parts 1–6 are the general regulations; Part 7 is special locations and supplements/modifies Parts 1–6 (Reg 110.1.3); Part 8 is the high-level functional framework (prosumer + energy efficiency).',
+            'A4:2026 added Chapter 57 (stationary batteries), Chapter 81 (energy efficiency, replacing deleted App 17), Section 716 (Power over Ethernet) and Section 545 (functional earthing for ICT). Deleted App 17 and Annex B443.',
+          ]}
+        />
+
+        <LearningOutcomes
+          outcomes={[
+            'Decompose any regulation reference (e.g. 411.3.4) into Part, Chapter, Section and item — and predict the topic from the number alone.',
+            'Identify what each of the eight Parts covers and which Chapters / Sections sit within each.',
+            'Apply Reg 110.1.3 to read a Part 7 special-location section as either supplementing or modifying the general regulations.',
+            'Locate frequently-used appendix data — App 4 (cable CCC and voltage drop), App 6 (model forms), App 3 (device curves), App 14 (PSCC), App 16 (EICR inspection items).',
+            'Identify A4:2026 structural changes — new Chapter 57, Chapter 81, Section 716, Section 545; deleted App 17 and Annex B443.',
+            'Use the side-bar margin markings in the printed standard to spot every technical A4 change in any Part you actively work in.',
+          ]}
+          initialVisibleCount={3}
+        />
+
+        <ContentEyebrow>The eight Parts</ContentEyebrow>
+
+        <ConceptBlock
+          title="The eight Parts"
+          plainEnglish="BS 7671 is built as eight Parts. Parts 1 and 2 are reference. Part 3 is design assessment. Parts 4 to 6 are the technical core (protection, equipment, inspection). Part 7 modifies the core for special locations. Part 8 is the high-level functional framework."
+          onSite="Most day-to-day work hits Parts 4, 5 and 7 — protection, equipment selection, and special locations. Periodic inspection lives in Part 6. Part 1 and Part 2 are reference: cite them when a designer or solicitor asks why."
+        >
+          <p>
+            The structure mirrors the IEC 60364 international framework. Numbering is preserved even
+            where a chapter has been removed (e.g. Chapter 45, Chapters 61–63 are marked NOT USED)
+            so cross-references remain stable across editions. The deliberate alignment with IEC
+            60364 means a UK electrician reading a European specification can map the regulation
+            references one-for-one — Part numbers, Chapter numbers and Section numbers line up with
+            their continental equivalents wherever a Part is shared.
+          </p>
+        </ConceptBlock>
+
+        <AppendixTable
+          caption="BS 7671:2018+A4:2026 — Parts and their constituent Chapters"
+          source="Pages 1–8, Contents"
+          headers={['Part', 'Title', 'Chapters / Sections']}
+          rows={partsRows}
+        />
+
+        <ConceptBlock
+          title="What each Part actually contains"
+          plainEnglish="A one-line summary of each Part — what is in it, why it exists, when you reach for it on the day."
+          onSite="Tab the contents page. The single most common mistake on a first reading of a Part 7 section is starting in Chapter 41 instead. Open the section first; it tells you which general regulations are modified before you go and read them."
+        >
+          <ul className="list-disc pl-5 space-y-1.5">
+            <li>
+              <strong className="text-white">
+                Part 1 — Scope, object and fundamental principles.
+              </strong>{' '}
+              Chapter 11 sets the scope (Reg <RegBadge>110.1.1</RegBadge> lists what installations
+              are covered; Reg 110.2 lists the narrow exclusions). Chapter 12 sets the object —
+              safety from injury and damage. Chapter 13 sets the fundamental principles every later
+              Part is built on (good workmanship, suitable materials, accessibility,
+              identification).
+            </li>
+            <li>
+              <strong className="text-white">Part 2 — Definitions.</strong> Alphabetical, no
+              regulation numbers because definitions do not impose requirements — they fix meaning.
+              A4:2026 added definitions for prosumer terms, energy-efficiency terms (matched to new
+              Chapter 81) and stationary-battery terms (matched to new Chapter 57).
+            </li>
+            <li>
+              <strong className="text-white">
+                Part 3 — Assessment of general characteristics.
+              </strong>{' '}
+              Chapters 30–36. Maximum demand / diversity, supply characteristics, conductor
+              arrangement, external influences (keyed to Appendix 5), compatibility,
+              maintainability, safety services, continuity of service.
+            </li>
+            <li>
+              <strong className="text-white">Part 4 — Protection for safety.</strong> Chapters
+              41–46. Protection against electric shock (41), thermal effects (42), overcurrent (43),
+              voltage disturbances and EM disturbances (44), undervoltage (45 — NOT USED), isolation
+              and switching (46). The dense technical core for everyday safety design.
+            </li>
+            <li>
+              <strong className="text-white">Part 5 — Selection and erection of equipment.</strong>{' '}
+              Chapters 51–57. Common rules (51), wiring systems (52), isolation, switching, control
+              (53), earthing arrangements (54 — including new Section 545 for ICT functional
+              earthing), other equipment (55), safety services (56), and the new{' '}
+              <AmendmentBadge regs={['Chapter 57']} /> stationary secondary batteries.
+            </li>
+            <li>
+              <strong className="text-white">Part 6 — Inspection and testing.</strong> Chapters 64
+              (initial verification) and 65 (periodic inspection). The EIC and EICR processes live
+              here; the templates themselves are Appendix 6.
+            </li>
+            <li>
+              <strong className="text-white">Part 7 — Special installations or locations.</strong>{' '}
+              The 700-series sections (701 bath/shower, 705 agriculture, 710 medical, 712 PV, 716
+              PoE NEW, 722 EV, 740 fairgrounds, 753 heating, 760 fire safety, etc). Reg{' '}
+              <RegBadge>110.1.3</RegBadge> says Part 7 supplements or modifies Parts 1–6.
+            </li>
+            <li>
+              <strong className="text-white">Part 8 — Functional requirements.</strong> Chapter 82
+              (Prosumer — local generation + storage + load) and the new{' '}
+              <AmendmentBadge regs={['Chapter 81']} /> energy efficiency. Part 8 is the framework
+              Part — detailed technical requirements still live in Parts 4–7.
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="How a regulation number reads"
+          plainEnglish={
+            <>
+              Take Reg <RegBadge>411.3.4</RegBadge>. First digit (4) names the Part — Protection for
+              safety. First two digits (41) name the Chapter — Protection against electric shock.
+              First three digits (411) name the Section — Protective measure: automatic
+              disconnection of supply (ADS). The remaining digits (.3.4) point to a specific
+              requirement within that Section. Reg 411.3.4 is a NEW under A4: 30 mA RCD on AC final
+              circuits supplying luminaires in dwellings.
+            </>
+          }
+          onSite="When you cite, cite the dated edition and the full numeric reference: 'BS 7671:2018+A4:2026 Reg 411.3.4'. Don't shorten to '411' on the cert — it lands in court ambiguous."
+        >
+          <p>
+            <RegBadge>Reg 411.3.4</RegBadge> sits inside <RegBadge>Section 411</RegBadge> (ADS).
+            Section 411 sits inside Chapter 41 (Protection against electric shock). Chapter 41 sits
+            inside Part 4 (Protection for safety). <AmendmentBadge regs={['411.3.4']} /> is one of
+            the most frequently-tested A4 additions. The same decoding works in reverse: see a
+            citation like 543.1.1 and you know instantly it sits in Part 5 / Chapter 54 (Earthing
+            arrangements and protective conductors) / Section 543 (Protective conductors) — without
+            looking it up.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...inlineChecks[0]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>Reg 110 — scope and the override mechanic</ContentEyebrow>
+
+        <RegsCallout
+          source="BS 7671:2018+A4:2026 · Reg 110.1.1 — Scope"
+          clause="The Regulations apply to the design, erection and verification of electrical installations including additions and alterations to existing installations. Existing installations that have been installed in accordance with earlier editions of the Regulations may not comply with this edition in every respect. This does not necessarily mean that they are unsafe for continued use or require upgrading."
+          meaning="Defines what BS 7671 covers — design, erection, verification — and confirms the standard is forward-looking. An installation legally compliant when built does not become unsafe automatically when a new edition is published; it becomes a deviation from the current edition, which is what the EICR coding system is designed to record."
+          cite="BS 7671:2018+A4:2026, Reg 110.1.1"
+        />
+
+        <RegsCallout
+          source="BS 7671:2018+A4:2026 · Reg 110.1.3 — Part 7 override"
+          clause="The requirements of Part 7 supplement or modify the general requirements contained in other Parts of the Regulations."
+          meaning="The single most important sentence for navigating special locations. When a Part 7 section gives a different requirement from a Part 4 / 5 chapter, the Part 7 requirement applies on that location. Section 722 modifies ADS for EV charging. Section 701 supplements Chapter 41 inside the bathroom zone. Open the section before you open the chapter."
+          cite="BS 7671:2018+A4:2026, Reg 110.1.3"
+        />
+
+        <ConceptBlock
+          title="Part 7 — Special installations or locations"
+          plainEnglish="Part 7 is the location-specific override layer. Sections in the 700 series each cover a specific environment and may add to or change the general regulations for that environment only."
+          onSite="Open the section before you open Chapter 41. The section either modifies the general regs (e.g. 722 EV charging modifies the ADS approach for PME) or supplements them (e.g. 701 adds zone bonding requirements for bathrooms). Get the order wrong and you can spend an hour solving a problem the section solves in a single regulation."
+        >
+          <p>
+            The 700-series is where most modern install pain lives. The sections most likely to come
+            up in CPD recalibration:
+          </p>
+          <ul className="list-disc pl-5 space-y-1.5">
+            <li>
+              <strong className="text-white">701</strong> — Locations containing a bath or shower.
+            </li>
+            <li>
+              <strong className="text-white">705</strong> — Agricultural and horticultural premises.
+            </li>
+            <li>
+              <strong className="text-white">710</strong> — Medical locations (major revision under
+              A4: independent supplies in group 2; new Schedule of Test Results for supplementary
+              bonding resistance).
+            </li>
+            <li>
+              <strong className="text-white">711</strong> — Exhibitions, shows and stands.
+            </li>
+            <li>
+              <strong className="text-white">712</strong> — Solar PV.
+            </li>
+            <li>
+              <strong className="text-white">716</strong> —{' '}
+              <AmendmentBadge regs={['Section 716']} /> Power over Ethernet (NEW under A4).
+            </li>
+            <li>
+              <strong className="text-white">722</strong> — EV charging installations.
+            </li>
+            <li>
+              <strong className="text-white">740</strong> — Fairgrounds, amusement parks, circuses.
+            </li>
+            <li>
+              <strong className="text-white">753</strong> — Heating cables and embedded heating
+              systems.
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <CommonMistake
+          title="Confusing Section 708 (caravan parks) with Section 709 (marinas) on the cert"
+          whatHappens="An installer working at a marina caravan park ticks 708 on the cert. The section reference is for caravan / camping parks; the marina shore-supply pedestals are governed by 709. The cert points the next inspector at the wrong special-location requirements."
+          doInstead="708 is electrical installations in caravan / camping parks. 709 is marinas and similar locations. Where a site is both (a marina with on-site caravan pitches), cite both — the pedestals serving floating berths are 709; the caravan pitches are 708. Section 740 (fairgrounds) is similarly easy to confuse with 711 (exhibitions, shows and stands) — they cover different temporary-installation profiles."
+        />
+
+        <CommonMistake
+          title="Reading Chapter 41 first and ignoring the Part 7 override"
+          whatHappens="Designer specs ADS by 30 mA RCD on a domestic EV install, satisfies Chapter 41, ticks the cert. Job is later flagged on a periodic — Section 722 (Reg 722.312.2.1) prohibits a PEN conductor in the EV circuit on TN supplies. The general Chapter 41 design did not include the 722 modification. Open-PEN risk is now baked into the install."
+          doInstead="Reg 110.1.3 means Part 7 supplements OR modifies Parts 1–6. Always identify the Part 7 section that applies to the location BEFORE doing the Chapter 41 protective-measure design. Read the Part 7 section in full; tab the modifications it makes; then apply Chapter 41 with those modifications baked in. The order is location-first, general-rule-second."
+        />
+
+        <InlineCheck {...inlineChecks[1]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>The Appendices</ContentEyebrow>
+
+        <ConceptBlock
+          title="The Appendices: normative vs informative"
+          plainEnglish="Appendices either carry the same legal weight as the regulations (Normative) or sit alongside them as design reference (Informative). Knowing which is which avoids citing the wrong type."
+        >
+          <p>
+            Appendix 1 (referenced standards) is the only Normative appendix — its contents carry
+            the same weight as the regulations. Appendices 2 onwards are Informative — guidance,
+            design tools and reference data. Informative does not mean optional in practice (you
+            cannot avoid Appendix 4 if you size cables) but it does mean the detailed methodology is
+            not itself the requirement. The legal hook is always the regulation in Parts 1–8 that
+            points to the appendix; the appendix supplies the numerical method or reference data.
+          </p>
+        </ConceptBlock>
+
+        <AppendixTable
+          caption="Appendices 1–17 — what each contains and what A4 changed"
+          source="Pages 410–591, BS 7671:2018+A4:2026"
+          headers={['#', 'Title / type', 'A4:2026 changes']}
+          rows={appendicesRows}
+          notes="App 7 deleted by A2:2022; App 12 NOT USED; App 17 deleted by A4 — content moved into new Chapter 81. Side-bar margins indicate technical A4 changes; non-technical re-indenting is not marked."
+        />
+
+        <ConceptBlock
+          title="The appendices you actually use weekly"
+          plainEnglish="A handful of appendices come out daily. Tab them. The rest are reference for specific scenarios."
+          onSite="Tab the appendices you use weekly: App 3 (device curves), App 4 (cable rating), App 6 (model forms), App 14 (PSCC), App 16 (EICR inspection items). Tab the special-location sections you work in. The index is your fastest route for a topic search; the contents page is your fastest route once you know which Part you need."
+        >
+          <ul className="list-disc pl-5 space-y-1.5">
+            <li>
+              <strong className="text-white">Appendix 1 (Normative).</strong> Referenced standards —
+              every BS, BS EN and IEC standard the regulations call up. If a regulation says "to BS
+              EN 61009-1", App 1 confirms the title and currency.
+            </li>
+            <li>
+              <strong className="text-white">Appendix 3.</strong> Time/current characteristics of
+              overcurrent protective devices. Type B / C / D MCB curves, gG / gM fuses, published
+              Zs(max) for every standard rating. The disconnection-time evidence on every cert
+              traces back here.
+            </li>
+            <li>
+              <strong className="text-white">Appendix 4.</strong> Cable current-carrying capacity
+              and voltage drop. Tables 4D / 4E / 4H / 4J for different insulation and installation
+              methods. A4 split the buried-cable methods into direct-soil-contact and
+              in-conduit-or-duct — re-check any buried-cable design done under A3.
+            </li>
+            <li>
+              <strong className="text-white">Appendix 6.</strong> Model forms — EIC, EICR, Schedule
+              of Test Results, Schedule of Inspections, Minor Works Certificate. A4 redrafted notes,
+              updated signature wording, changed the FI code so it no longer needs to be marked
+              unsatisfactory, and added new SoTR columns for AFDD recording, TN-C-S (PNB) selection,
+              and stationary battery installations.
+            </li>
+            <li>
+              <strong className="text-white">Appendix 14.</strong> Determination of prospective
+              fault current — PSCC at the origin and along the run, used to confirm the OPD breaking
+              capacity is adequate.
+            </li>
+            <li>
+              <strong className="text-white">Appendix 16.</strong> Devices for protection against
+              overvoltage — informative guidance behind Section 534, including Figures 16A1–16A4
+              showing SPD arrangements in TN, TT and IT systems and the CT2 connection detail. Note
+              the common trap: the EICR inspection items are <em>not</em> in App 16, they are in
+              Appendix 6 alongside the model forms.
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <InlineCheck {...inlineChecks[2]} />
+
+        <InlineCheck {...inlineChecks[4]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>A4:2026 structural changes</ContentEyebrow>
+
+        <ConceptBlock
+          title="What A4:2026 actually re-shaped"
+          plainEnglish="A4 is bigger structurally than most amendments — it adds whole chapters and a new section, deletes one appendix and one annex, and rewrites the cable-rating tables. Read this list before you read the regulations themselves."
+          onSite="If you are looking for the reason a regulation reference you remember has moved, the table below is the first place to look. The 'NEW' rows below are entirely new content; the 'Deleted' rows mean cross-references in older guidance now point at nothing."
+        >
+          <p>
+            A4 is dated 15 April 2026 and replaces A3 from 15 October 2026 (transition period). In
+            that window, work designed and certified to A3 remains compliant; new design and new
+            certification from 15 October 2026 onwards must be against A4. Changes are indicated in
+            the printed standard by side-bar margin marks against every technical alteration.
+          </p>
+        </ConceptBlock>
+
+        <AppendixTable
+          caption="A4:2026 — structural changes at a glance"
+          source="BS 7671:2018+A4:2026 Introduction (pp. 17–25)"
+          headers={['Change', 'Title / scope', 'Why it matters']}
+          rows={a4StructuralChangesRows}
+          notes="The A4 introduction (pp. 17–25) is the change log — read it first to map old references to new locations."
+        />
+
+        <ConceptBlock
+          title="The new chapters in detail"
+          plainEnglish="Two completely new chapters and two new sections under A4. Each has a clear functional reason that explains where it sits in the structure."
+        >
+          <ul className="list-disc pl-5 space-y-1.5">
+            <li>
+              <strong className="text-white">Chapter 57 — Stationary secondary batteries.</strong>{' '}
+              Lives in Part 5 (Selection and erection of equipment) because the regulations cover
+              the equipment itself — the battery installation. Excludes batteries inside
+              product-safety-standard equipment (UPS, central battery emergency lighting). Covers
+              BESS, PV-plus-battery hybrids, off-grid hybrids — anything where the battery is the
+              purpose of the installation.
+            </li>
+            <li>
+              <strong className="text-white">Chapter 81 — Energy efficiency.</strong> Lives in Part
+              8 (Functional requirements) because it sets a design-stage functional goal, not a
+              safety requirement. Replaces the deleted Appendix 17. Covers efficient circuit design,
+              monitoring, demand-response readiness — design-stage, not periodic.
+            </li>
+            <li>
+              <strong className="text-white">Section 716 — Power over Ethernet.</strong> Lives in
+              Part 7 (Special installations or locations) because PoE creates a specific environment
+              — power and data on the same low-cross-section conductors, with conductor temperature
+              management, segregation and labelling implications. Captures IEEE 802.3af / at / bt up
+              to 90 W per port (PoE++).
+            </li>
+            <li>
+              <strong className="text-white">
+                Section 545 — Functional earthing for ICT equipment.
+              </strong>{' '}
+              Lives in Part 5 / Chapter 54 (Earthing arrangements and protective conductors).
+              Distinguishes functional earthing (used for the proper operation of ICT equipment,
+              e.g. low-noise reference) from protective earthing (for safety). Sets requirements for
+              the conductors and connection arrangements where both functions are present.
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <InlineCheck {...inlineChecks[5]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>The deletions and the "NOT USED" markers</ContentEyebrow>
+
+        <ConceptBlock
+          title="Why deleted entries are kept in the numbering"
+          plainEnglish="Deleted entries are not rolled up — they are kept as 'Deleted' or 'NOT USED' lines so that every later cross-reference still resolves. The price of clean numbering is some empty slots."
+          onSite="If you are reading old guidance that cites Appendix 17 or Annex B443, the current standard tells you explicitly that they are gone (App 17 to Chapter 81; B443 reorganised inside Section 444). Always check the dated edition on the standard you are reading from."
+        >
+          <p>
+            Three categories of empty entry exist. <strong>Deleted</strong> means an entry was
+            present in an earlier edition and has been removed (App 7 deleted by A2:2022, App 17
+            deleted by A4:2026, Annex B443 deleted by A4:2026). <strong>NOT USED</strong> means the
+            IEC 60364 numbering reserves that slot for content that BS 7671 has not adopted
+            (Chapters 45 / 61 / 62 / 63, App 12). Both keep the cross-references stable so a
+            reference written in 2018 still resolves correctly in 2026 — to either the current
+            content or to the explicit "Deleted" / "NOT USED" line.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...inlineChecks[6]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>Reading the book efficiently</ContentEyebrow>
+
+        <ConceptBlock
+          title="Reading the book efficiently"
+          plainEnglish="A few habits dramatically reduce time-to-answer when you are looking up a regulation under pressure on site or in a design office."
+          onSite="Tab the appendices you use weekly: App 4 (cable rating), App 6 (model forms), App 3 (device curves), App 14 (PSCC), App 16 (EICR items). Tab the special-location sections you work in. The index is your fastest route for a topic search; the contents page is your fastest route once you know which Part you need."
+        >
+          <p>A few habits worth forming for A4:2026 specifically:</p>
+          <ul className="list-disc pl-5 space-y-1.5">
+            <li>
+              <strong className="text-white">Read the introduction to A4:2026</strong> (pages 17–25
+              of the printed copy). It is the change log and the fastest way to know what you used
+              to do that you can no longer do.
+            </li>
+            <li>
+              <strong className="text-white">Side-bar markings</strong> in the right margin indicate
+              technical changes from A3:2024. Where you see one in a section you work in, read it
+              carefully — the existing wording you remember from A3 has been altered.
+            </li>
+            <li>
+              <strong className="text-white">Cross-refs</strong> within the regs are dense (one reg
+              often pulls in three or four others). The first time you read a Part 4 chapter under
+              A4, follow every cross-ref — that is where the new luminaire RCD requirement (411.3.4)
+              and the new ADS-not-feasible group (419) first surface.
+            </li>
+            <li>
+              <strong className="text-white">Numeric prediction.</strong> Train yourself to predict
+              the topic from a regulation number alone. 543.x is protective-conductor sizing. 612.x
+              would be in Chapter 61 (NOT USED — so any reference to 612.x in old guidance has been
+              re-homed). 644.x is initial verification. The numeric pattern is consistent across the
+              standard.
+            </li>
+            <li>
+              <strong className="text-white">Open the special location first.</strong> Reg 110.1.3
+              means the Part 7 section either modifies or supplements the general regs. Reading the
+              special location first tells you which general regs are altered; reading the general
+              regs first risks missing the modification entirely.
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <ContentEyebrow>Scenarios — applying it on the day</ContentEyebrow>
+
+        <Scenario
+          title="Periodic inspection on a 1990s commercial unit converted to a yoga studio with steam room"
+          situation="Three-phase TN-C-S supply at the cut-out, 200 A main switch, six distribution circuits, no significant rework since 2009. The conversion has added a steam room (location containing a bath or shower under Section 701) with extract fan, lighting and a 230 V steam generator."
+          whatToDo="Drive the inspection from Part 6 (Chapter 65 — periodic inspection methodology). Apply Parts 1–5 modified by Part 7 Section 701 inside the steam room. Appendix 6 gives you both halves — the examples of items requiring inspection that drive the Schedule of Inspections, and the model EICR form itself. Critical numeric checks: Reg 411.3.3 (30 mA RCD on socket circuits), Reg 411.3.4 — A4 — (30 mA RCD on AC final circuits supplying luminaires inside domestic premises; this site is commercial so 411.3.4 does NOT apply, but Section 701 supplementary protection inside the steam room may capture the lighting on a similar route)."
+          whyItMatters="Driving the inspection from the wrong Part produces the wrong cert. Part 6 is the methodology; Part 7 is the special-location overlay; Parts 1–5 are the underlying technical requirements. Mixing them up — for example, applying domestic Reg 411.3.4 to a commercial property — is an audit-trail failure even if the underlying decision (RCD on the lighting) is the same."
+        />
+
+        <Scenario
+          title="New-build domestic with battery storage, PV array and EV charger — A4 in force"
+          situation="Two-bed semi-detached new-build. 100 A TN-C-S supply. Customer wants a 4 kWp PV array, a 5 kWh battery storage unit (BESS) and a tethered 7 kW EV charger. The build certifies under BS 7671:2018+A4:2026."
+          whatToDo="This is a Part 8 prosumer installation (Chapter 82) with Part 7 special-location overlays for each load. PV array → Section 712. EV charger → Section 722 (including Reg 722.312.2.1 PEN prohibition). Stationary battery → Part 5 Chapter 57 (NEW under A4). Energy efficiency design considerations → Part 8 Chapter 81 (NEW under A4). Domestic luminaire RCDs → Reg 411.3.4 (NEW under A4) on every AC final circuit feeding lighting. Cert: EIC per Appendix 6 with the new SoTR columns; supporting documentation per Reg 514.9 (diagrams, charts, schedules)."
+          whyItMatters="The structural changes A4 introduces all hit one job. Reading the regulations as if A3 were still in force misses Chapter 57 (battery), Chapter 81 (efficiency framework), Section 716 if PoE is used for the home automation, Section 545 if functional earthing is wired for the inverter / BMS, and Reg 411.3.4 on the lighting circuits. Each miss is a documented departure under Reg 120.3 — and on a new-build, departures are difficult to justify."
+        />
+
+        <SectionRule />
+
+        <KeyTakeaways
+          points={[
+            '8 Parts. Hierarchical numbering, first digit = Part. NOT USED markers preserve IEC numbering for cross-edition stability.',
+            'Reg 110.1.1 sets the scope; Reg 110.1.3 is the override mechanic — Part 7 supplements or modifies Parts 1–6.',
+            'A4:2026 added Chapter 57 (stationary batteries), Chapter 81 (energy efficiency), Section 716 (Power over Ethernet) and Section 545 (functional earthing for ICT).',
+            'A4 deleted Appendix 17 (content promoted to Ch 81) and Annex B443 inside Section 444. App 4 cable tables revised for buried-cable methods.',
+            'Appendix 1 is Normative — referenced standards are mandatory. Appendices 2 onwards are Informative — guidance and design data; the legal hook is the regulation that points to the appendix.',
+            'Tab the weekly appendices: App 3 (device curves), App 4 (cable CCC + Vd), App 6 (model forms), App 14 (PSCC), App 16 (EICR inspection items).',
+            'Side-bar margins in the printed standard mark every technical A4 change. Read them in any Part you actively work in.',
+          ]}
+        />
+
+        <FAQ items={faqs} />
+
+        <Quiz questions={quizQuestions} title="Section 3 · Knowledge check" />
+
+        <div className="grid grid-cols-2 gap-3 pt-2">
           <button
             type="button"
-            onClick={() => navigate('../bs7671-module-1')}
-            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            onClick={() => navigate('/electrician/upskilling/bs7671-module-1-section-2')}
+            className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
           >
-            <ArrowLeft className="h-4 w-4" /> Module 1
+            <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+              <ChevronLeft className="h-3 w-3" /> Previous section
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-white truncate">
+              1.2 The legal framework
+            </div>
           </button>
-
-          <PageHero
-            eyebrow="Module 1 · Section 3 · Updated for A4:2026"
-            title="Structure of BS 7671 (parts, chapters, appendices)"
-            description="Eight Parts, ~30 Chapters, ~20 Section-700 special locations, 17 Appendices (two deleted, one NOT USED). Reading the regs faster starts with knowing the shape of the book."
-            actions={
-              <>
-                <RegBadge>110.1.1</RegBadge>
-                <RegBadge>110.1.3</RegBadge>
-                <AmendmentBadge regs={['110.1.3']} />
-              </>
-            }
-            tone="yellow"
-          />
-
-          <TLDR
-            points={[
-              'Hierarchical numbering. Reg 411.3.4 = Part 4 / Chapter 41 / Section 411 / item .3.4. The first digit always names the Part.',
-              'Parts 1–6 are the general regulations; Part 7 is special locations and supplements/modifies Parts 1–6 (Reg 110.1.3); Part 8 is the high-level functional framework (prosumer + energy efficiency).',
-              'A4:2026 added Chapter 57 (stationary batteries), Chapter 81 (energy efficiency, replacing deleted App 17), Section 716 (Power over Ethernet) and Section 545 (functional earthing for ICT). Deleted App 17 and Annex B443.',
-            ]}
-          />
-
-          <LearningOutcomes
-            outcomes={[
-              'Decompose any regulation reference (e.g. 411.3.4) into Part, Chapter, Section and item — and predict the topic from the number alone.',
-              'Identify what each of the eight Parts covers and which Chapters / Sections sit within each.',
-              'Apply Reg 110.1.3 to read a Part 7 special-location section as either supplementing or modifying the general regulations.',
-              'Locate frequently-used appendix data — App 4 (cable CCC and voltage drop), App 6 (model forms), App 3 (device curves), App 14 (PSCC), App 16 (EICR inspection items).',
-              'Identify A4:2026 structural changes — new Chapter 57, Chapter 81, Section 716, Section 545; deleted App 17 and Annex B443.',
-              'Use the side-bar margin markings in the printed standard to spot every technical A4 change in any Part you actively work in.',
-            ]}
-            initialVisibleCount={3}
-          />
-
-          <ContentEyebrow>The eight Parts</ContentEyebrow>
-
-          <ConceptBlock
-            title="The eight Parts"
-            plainEnglish="BS 7671 is built as eight Parts. Parts 1 and 2 are reference. Part 3 is design assessment. Parts 4 to 6 are the technical core (protection, equipment, inspection). Part 7 modifies the core for special locations. Part 8 is the high-level functional framework."
-            onSite="Most day-to-day work hits Parts 4, 5 and 7 — protection, equipment selection, and special locations. Periodic inspection lives in Part 6. Part 1 and Part 2 are reference: cite them when a designer or solicitor asks why."
+          <button
+            type="button"
+            onClick={() => navigate('/electrician/upskilling/bs7671-module-1-section-4')}
+            className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
           >
-            <p>
-              The structure mirrors the IEC 60364 international framework. Numbering is preserved
-              even where a chapter has been removed (e.g. Chapter 45, Chapters 61–63 are marked NOT
-              USED) so cross-references remain stable across editions. The deliberate alignment with
-              IEC 60364 means a UK electrician reading a European specification can map the
-              regulation references one-for-one — Part numbers, Chapter numbers and Section numbers
-              line up with their continental equivalents wherever a Part is shared.
-            </p>
-          </ConceptBlock>
-
-          <AppendixTable
-            caption="BS 7671:2018+A4:2026 — Parts and their constituent Chapters"
-            source="Pages 1–8, Contents"
-            headers={['Part', 'Title', 'Chapters / Sections']}
-            rows={partsRows}
-          />
-
-          <ConceptBlock
-            title="What each Part actually contains"
-            plainEnglish="A one-line summary of each Part — what is in it, why it exists, when you reach for it on the day."
-            onSite="Tab the contents page. The single most common mistake on a first reading of a Part 7 section is starting in Chapter 41 instead. Open the section first; it tells you which general regulations are modified before you go and read them."
-          >
-            <ul className="list-disc pl-5 space-y-1.5">
-              <li>
-                <strong className="text-white">
-                  Part 1 — Scope, object and fundamental principles.
-                </strong>{' '}
-                Chapter 11 sets the scope (Reg <RegBadge>110.1.1</RegBadge> lists what installations
-                are covered; Reg 110.2 lists the narrow exclusions). Chapter 12 sets the object —
-                safety from injury and damage. Chapter 13 sets the fundamental principles every
-                later Part is built on (good workmanship, suitable materials, accessibility,
-                identification).
-              </li>
-              <li>
-                <strong className="text-white">Part 2 — Definitions.</strong> Alphabetical, no
-                regulation numbers because definitions do not impose requirements — they fix
-                meaning. A4:2026 added definitions for prosumer terms, energy-efficiency terms
-                (matched to new Chapter 81) and stationary-battery terms (matched to new Chapter
-                57).
-              </li>
-              <li>
-                <strong className="text-white">
-                  Part 3 — Assessment of general characteristics.
-                </strong>{' '}
-                Chapters 30–36. Maximum demand / diversity, supply characteristics, conductor
-                arrangement, external influences (keyed to Appendix 5), compatibility,
-                maintainability, safety services, continuity of service.
-              </li>
-              <li>
-                <strong className="text-white">Part 4 — Protection for safety.</strong> Chapters
-                41–46. Protection against electric shock (41), thermal effects (42), overcurrent
-                (43), voltage disturbances and EM disturbances (44), undervoltage (45 — NOT USED),
-                isolation and switching (46). The dense technical core for everyday safety design.
-              </li>
-              <li>
-                <strong className="text-white">
-                  Part 5 — Selection and erection of equipment.
-                </strong>{' '}
-                Chapters 51–57. Common rules (51), wiring systems (52), isolation, switching,
-                control (53), earthing arrangements (54 — including new Section 545 for ICT
-                functional earthing), other equipment (55), safety services (56), and the new{' '}
-                <AmendmentBadge regs={['Chapter 57']} /> stationary secondary batteries.
-              </li>
-              <li>
-                <strong className="text-white">Part 6 — Inspection and testing.</strong> Chapters 64
-                (initial verification) and 65 (periodic inspection). The EIC and EICR processes live
-                here; the templates themselves are Appendix 6.
-              </li>
-              <li>
-                <strong className="text-white">Part 7 — Special installations or locations.</strong>{' '}
-                The 700-series sections (701 bath/shower, 705 agriculture, 710 medical, 712 PV, 716
-                PoE NEW, 722 EV, 740 fairgrounds, 753 heating, 760 fire safety, etc). Reg{' '}
-                <RegBadge>110.1.3</RegBadge> says Part 7 supplements or modifies Parts 1–6.
-              </li>
-              <li>
-                <strong className="text-white">Part 8 — Functional requirements.</strong> Chapter 82
-                (Prosumer — local generation + storage + load) and the new{' '}
-                <AmendmentBadge regs={['Chapter 81']} /> energy efficiency. Part 8 is the framework
-                Part — detailed technical requirements still live in Parts 4–7.
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <ConceptBlock
-            title="How a regulation number reads"
-            plainEnglish={
-              <>
-                Take Reg <RegBadge>411.3.4</RegBadge>. First digit (4) names the Part — Protection
-                for safety. First two digits (41) name the Chapter — Protection against electric
-                shock. First three digits (411) name the Section — Protective measure: automatic
-                disconnection of supply (ADS). The remaining digits (.3.4) point to a specific
-                requirement within that Section. Reg 411.3.4 is a NEW under A4: 30 mA RCD on AC
-                final circuits supplying luminaires in dwellings.
-              </>
-            }
-            onSite="When you cite, cite the dated edition and the full numeric reference: 'BS 7671:2018+A4:2026 Reg 411.3.4'. Don't shorten to '411' on the cert — it lands in court ambiguous."
-          >
-            <p>
-              <RegBadge>Reg 411.3.4</RegBadge> sits inside <RegBadge>Section 411</RegBadge> (ADS).
-              Section 411 sits inside Chapter 41 (Protection against electric shock). Chapter 41
-              sits inside Part 4 (Protection for safety). <AmendmentBadge regs={['411.3.4']} /> is
-              one of the most frequently-tested A4 additions. The same decoding works in reverse:
-              see a citation like 543.1.1 and you know instantly it sits in Part 5 / Chapter 54
-              (Earthing arrangements and protective conductors) / Section 543 (Protective
-              conductors) — without looking it up.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...inlineChecks[0]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>Reg 110 — scope and the override mechanic</ContentEyebrow>
-
-          <RegsCallout
-            source="BS 7671:2018+A4:2026 · Reg 110.1.1 — Scope"
-            clause="The Regulations apply to the design, erection and verification of electrical installations including additions and alterations to existing installations. Existing installations that have been installed in accordance with earlier editions of the Regulations may not comply with this edition in every respect. This does not necessarily mean that they are unsafe for continued use or require upgrading."
-            meaning="Defines what BS 7671 covers — design, erection, verification — and confirms the standard is forward-looking. An installation legally compliant when built does not become unsafe automatically when a new edition is published; it becomes a deviation from the current edition, which is what the EICR coding system is designed to record."
-            cite="BS 7671:2018+A4:2026, Reg 110.1.1"
-          />
-
-          <RegsCallout
-            source="BS 7671:2018+A4:2026 · Reg 110.1.3 — Part 7 override"
-            clause="The requirements of Part 7 supplement or modify the general requirements contained in other Parts of the Regulations."
-            meaning="The single most important sentence for navigating special locations. When a Part 7 section gives a different requirement from a Part 4 / 5 chapter, the Part 7 requirement applies on that location. Section 722 modifies ADS for EV charging. Section 701 supplements Chapter 41 inside the bathroom zone. Open the section before you open the chapter."
-            cite="BS 7671:2018+A4:2026, Reg 110.1.3"
-          />
-
-          <ConceptBlock
-            title="Part 7 — Special installations or locations"
-            plainEnglish="Part 7 is the location-specific override layer. Sections in the 700 series each cover a specific environment and may add to or change the general regulations for that environment only."
-            onSite="Open the section before you open Chapter 41. The section either modifies the general regs (e.g. 722 EV charging modifies the ADS approach for PME) or supplements them (e.g. 701 adds zone bonding requirements for bathrooms). Get the order wrong and you can spend an hour solving a problem the section solves in a single regulation."
-          >
-            <p>
-              The 700-series is where most modern install pain lives. The sections most likely to
-              come up in CPD recalibration:
-            </p>
-            <ul className="list-disc pl-5 space-y-1.5">
-              <li>
-                <strong className="text-white">701</strong> — Locations containing a bath or shower.
-              </li>
-              <li>
-                <strong className="text-white">705</strong> — Agricultural and horticultural
-                premises.
-              </li>
-              <li>
-                <strong className="text-white">710</strong> — Medical locations (major revision
-                under A4: independent supplies in group 2; new Schedule of Test Results for
-                supplementary bonding resistance).
-              </li>
-              <li>
-                <strong className="text-white">711</strong> — Exhibitions, shows and stands.
-              </li>
-              <li>
-                <strong className="text-white">712</strong> — Solar PV.
-              </li>
-              <li>
-                <strong className="text-white">716</strong> —{' '}
-                <AmendmentBadge regs={['Section 716']} /> Power over Ethernet (NEW under A4).
-              </li>
-              <li>
-                <strong className="text-white">722</strong> — EV charging installations.
-              </li>
-              <li>
-                <strong className="text-white">740</strong> — Fairgrounds, amusement parks,
-                circuses.
-              </li>
-              <li>
-                <strong className="text-white">753</strong> — Heating cables and embedded heating
-                systems.
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <CommonMistake
-            title="Confusing Section 708 (caravan parks) with Section 709 (marinas) on the cert"
-            whatHappens="An installer working at a marina caravan park ticks 708 on the cert. The section reference is for caravan / camping parks; the marina shore-supply pedestals are governed by 709. The cert points the next inspector at the wrong special-location requirements."
-            doInstead="708 is electrical installations in caravan / camping parks. 709 is marinas and similar locations. Where a site is both (a marina with on-site caravan pitches), cite both — the pedestals serving floating berths are 709; the caravan pitches are 708. Section 740 (fairgrounds) is similarly easy to confuse with 711 (exhibitions, shows and stands) — they cover different temporary-installation profiles."
-          />
-
-          <CommonMistake
-            title="Reading Chapter 41 first and ignoring the Part 7 override"
-            whatHappens="Designer specs ADS by 30 mA RCD on a domestic EV install, satisfies Chapter 41, ticks the cert. Job is later flagged on a periodic — Section 722 (Reg 722.312.2.1) prohibits a PEN conductor in the EV circuit on TN supplies. The general Chapter 41 design did not include the 722 modification. Open-PEN risk is now baked into the install."
-            doInstead="Reg 110.1.3 means Part 7 supplements OR modifies Parts 1–6. Always identify the Part 7 section that applies to the location BEFORE doing the Chapter 41 protective-measure design. Read the Part 7 section in full; tab the modifications it makes; then apply Chapter 41 with those modifications baked in. The order is location-first, general-rule-second."
-          />
-
-          <InlineCheck {...inlineChecks[1]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>The Appendices</ContentEyebrow>
-
-          <ConceptBlock
-            title="The Appendices: normative vs informative"
-            plainEnglish="Appendices either carry the same legal weight as the regulations (Normative) or sit alongside them as design reference (Informative). Knowing which is which avoids citing the wrong type."
-          >
-            <p>
-              Appendix 1 (referenced standards) is the only Normative appendix — its contents carry
-              the same weight as the regulations. Appendices 2 onwards are Informative — guidance,
-              design tools and reference data. Informative does not mean optional in practice (you
-              cannot avoid Appendix 4 if you size cables) but it does mean the detailed methodology
-              is not itself the requirement. The legal hook is always the regulation in Parts 1–8
-              that points to the appendix; the appendix supplies the numerical method or reference
-              data.
-            </p>
-          </ConceptBlock>
-
-          <AppendixTable
-            caption="Appendices 1–17 — what each contains and what A4 changed"
-            source="Pages 410–591, BS 7671:2018+A4:2026"
-            headers={['#', 'Title / type', 'A4:2026 changes']}
-            rows={appendicesRows}
-            notes="App 7 deleted by A2:2022; App 12 NOT USED; App 17 deleted by A4 — content moved into new Chapter 81. Side-bar margins indicate technical A4 changes; non-technical re-indenting is not marked."
-          />
-
-          <ConceptBlock
-            title="The appendices you actually use weekly"
-            plainEnglish="A handful of appendices come out daily. Tab them. The rest are reference for specific scenarios."
-            onSite="Tab the appendices you use weekly: App 3 (device curves), App 4 (cable rating), App 6 (model forms), App 14 (PSCC), App 16 (EICR inspection items). Tab the special-location sections you work in. The index is your fastest route for a topic search; the contents page is your fastest route once you know which Part you need."
-          >
-            <ul className="list-disc pl-5 space-y-1.5">
-              <li>
-                <strong className="text-white">Appendix 1 (Normative).</strong> Referenced standards
-                — every BS, BS EN and IEC standard the regulations call up. If a regulation says "to
-                BS EN 61009-1", App 1 confirms the title and currency.
-              </li>
-              <li>
-                <strong className="text-white">Appendix 3.</strong> Time/current characteristics of
-                overcurrent protective devices. Type B / C / D MCB curves, gG / gM fuses, published
-                Zs(max) for every standard rating. The disconnection-time evidence on every cert
-                traces back here.
-              </li>
-              <li>
-                <strong className="text-white">Appendix 4.</strong> Cable current-carrying capacity
-                and voltage drop. Tables 4D / 4E / 4H / 4J for different insulation and installation
-                methods. A4 split the buried-cable methods into direct-soil-contact and
-                in-conduit-or-duct — re-check any buried-cable design done under A3.
-              </li>
-              <li>
-                <strong className="text-white">Appendix 6.</strong> Model forms — EIC, EICR,
-                Schedule of Test Results, Schedule of Inspections, Minor Works Certificate. A4
-                redrafted notes, updated signature wording, changed the FI code so it no longer
-                needs to be marked unsatisfactory, and added new SoTR columns for AFDD recording,
-                TN-C-S (PNB) selection, and stationary battery installations.
-              </li>
-              <li>
-                <strong className="text-white">Appendix 14.</strong> Determination of prospective
-                fault current — PSCC at the origin and along the run, used to confirm the OPD
-                breaking capacity is adequate.
-              </li>
-              <li>
-                <strong className="text-white">Appendix 16.</strong> Devices for protection against
-                overvoltage — informative guidance behind Section 534, including Figures 16A1–16A4
-                showing SPD arrangements in TN, TT and IT systems and the CT2 connection detail.
-                Note the common trap: the EICR inspection items are <em>not</em> in App 16, they are
-                in Appendix 6 alongside the model forms.
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <InlineCheck {...inlineChecks[2]} />
-
-          <InlineCheck {...inlineChecks[4]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>A4:2026 structural changes</ContentEyebrow>
-
-          <ConceptBlock
-            title="What A4:2026 actually re-shaped"
-            plainEnglish="A4 is bigger structurally than most amendments — it adds whole chapters and a new section, deletes one appendix and one annex, and rewrites the cable-rating tables. Read this list before you read the regulations themselves."
-            onSite="If you are looking for the reason a regulation reference you remember has moved, the table below is the first place to look. The 'NEW' rows below are entirely new content; the 'Deleted' rows mean cross-references in older guidance now point at nothing."
-          >
-            <p>
-              A4 is dated 15 April 2026 and replaces A3 from 15 October 2026 (transition period). In
-              that window, work designed and certified to A3 remains compliant; new design and new
-              certification from 15 October 2026 onwards must be against A4. Changes are indicated
-              in the printed standard by side-bar margin marks against every technical alteration.
-            </p>
-          </ConceptBlock>
-
-          <AppendixTable
-            caption="A4:2026 — structural changes at a glance"
-            source="BS 7671:2018+A4:2026 Introduction (pp. 17–25)"
-            headers={['Change', 'Title / scope', 'Why it matters']}
-            rows={a4StructuralChangesRows}
-            notes="The A4 introduction (pp. 17–25) is the change log — read it first to map old references to new locations."
-          />
-
-          <ConceptBlock
-            title="The new chapters in detail"
-            plainEnglish="Two completely new chapters and two new sections under A4. Each has a clear functional reason that explains where it sits in the structure."
-          >
-            <ul className="list-disc pl-5 space-y-1.5">
-              <li>
-                <strong className="text-white">Chapter 57 — Stationary secondary batteries.</strong>{' '}
-                Lives in Part 5 (Selection and erection of equipment) because the regulations cover
-                the equipment itself — the battery installation. Excludes batteries inside
-                product-safety-standard equipment (UPS, central battery emergency lighting). Covers
-                BESS, PV-plus-battery hybrids, off-grid hybrids — anything where the battery is the
-                purpose of the installation.
-              </li>
-              <li>
-                <strong className="text-white">Chapter 81 — Energy efficiency.</strong> Lives in
-                Part 8 (Functional requirements) because it sets a design-stage functional goal, not
-                a safety requirement. Replaces the deleted Appendix 17. Covers efficient circuit
-                design, monitoring, demand-response readiness — design-stage, not periodic.
-              </li>
-              <li>
-                <strong className="text-white">Section 716 — Power over Ethernet.</strong> Lives in
-                Part 7 (Special installations or locations) because PoE creates a specific
-                environment — power and data on the same low-cross-section conductors, with
-                conductor temperature management, segregation and labelling implications. Captures
-                IEEE 802.3af / at / bt up to 90 W per port (PoE++).
-              </li>
-              <li>
-                <strong className="text-white">
-                  Section 545 — Functional earthing for ICT equipment.
-                </strong>{' '}
-                Lives in Part 5 / Chapter 54 (Earthing arrangements and protective conductors).
-                Distinguishes functional earthing (used for the proper operation of ICT equipment,
-                e.g. low-noise reference) from protective earthing (for safety). Sets requirements
-                for the conductors and connection arrangements where both functions are present.
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <InlineCheck {...inlineChecks[5]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>The deletions and the "NOT USED" markers</ContentEyebrow>
-
-          <ConceptBlock
-            title="Why deleted entries are kept in the numbering"
-            plainEnglish="Deleted entries are not rolled up — they are kept as 'Deleted' or 'NOT USED' lines so that every later cross-reference still resolves. The price of clean numbering is some empty slots."
-            onSite="If you are reading old guidance that cites Appendix 17 or Annex B443, the current standard tells you explicitly that they are gone (App 17 to Chapter 81; B443 reorganised inside Section 444). Always check the dated edition on the standard you are reading from."
-          >
-            <p>
-              Three categories of empty entry exist. <strong>Deleted</strong> means an entry was
-              present in an earlier edition and has been removed (App 7 deleted by A2:2022, App 17
-              deleted by A4:2026, Annex B443 deleted by A4:2026). <strong>NOT USED</strong> means
-              the IEC 60364 numbering reserves that slot for content that BS 7671 has not adopted
-              (Chapters 45 / 61 / 62 / 63, App 12). Both keep the cross-references stable so a
-              reference written in 2018 still resolves correctly in 2026 — to either the current
-              content or to the explicit "Deleted" / "NOT USED" line.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...inlineChecks[6]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>Reading the book efficiently</ContentEyebrow>
-
-          <ConceptBlock
-            title="Reading the book efficiently"
-            plainEnglish="A few habits dramatically reduce time-to-answer when you are looking up a regulation under pressure on site or in a design office."
-            onSite="Tab the appendices you use weekly: App 4 (cable rating), App 6 (model forms), App 3 (device curves), App 14 (PSCC), App 16 (EICR items). Tab the special-location sections you work in. The index is your fastest route for a topic search; the contents page is your fastest route once you know which Part you need."
-          >
-            <p>A few habits worth forming for A4:2026 specifically:</p>
-            <ul className="list-disc pl-5 space-y-1.5">
-              <li>
-                <strong className="text-white">Read the introduction to A4:2026</strong> (pages
-                17–25 of the printed copy). It is the change log and the fastest way to know what
-                you used to do that you can no longer do.
-              </li>
-              <li>
-                <strong className="text-white">Side-bar markings</strong> in the right margin
-                indicate technical changes from A3:2024. Where you see one in a section you work in,
-                read it carefully — the existing wording you remember from A3 has been altered.
-              </li>
-              <li>
-                <strong className="text-white">Cross-refs</strong> within the regs are dense (one
-                reg often pulls in three or four others). The first time you read a Part 4 chapter
-                under A4, follow every cross-ref — that is where the new luminaire RCD requirement
-                (411.3.4) and the new ADS-not-feasible group (419) first surface.
-              </li>
-              <li>
-                <strong className="text-white">Numeric prediction.</strong> Train yourself to
-                predict the topic from a regulation number alone. 543.x is protective-conductor
-                sizing. 612.x would be in Chapter 61 (NOT USED — so any reference to 612.x in old
-                guidance has been re-homed). 644.x is initial verification. The numeric pattern is
-                consistent across the standard.
-              </li>
-              <li>
-                <strong className="text-white">Open the special location first.</strong> Reg 110.1.3
-                means the Part 7 section either modifies or supplements the general regs. Reading
-                the special location first tells you which general regs are altered; reading the
-                general regs first risks missing the modification entirely.
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <ContentEyebrow>Scenarios — applying it on the day</ContentEyebrow>
-
-          <Scenario
-            title="Periodic inspection on a 1990s commercial unit converted to a yoga studio with steam room"
-            situation="Three-phase TN-C-S supply at the cut-out, 200 A main switch, six distribution circuits, no significant rework since 2009. The conversion has added a steam room (location containing a bath or shower under Section 701) with extract fan, lighting and a 230 V steam generator."
-            whatToDo="Drive the inspection from Part 6 (Chapter 65 — periodic inspection methodology). Apply Parts 1–5 modified by Part 7 Section 701 inside the steam room. Appendix 6 gives you both halves — the examples of items requiring inspection that drive the Schedule of Inspections, and the model EICR form itself. Critical numeric checks: Reg 411.3.3 (30 mA RCD on socket circuits), Reg 411.3.4 — A4 — (30 mA RCD on AC final circuits supplying luminaires inside domestic premises; this site is commercial so 411.3.4 does NOT apply, but Section 701 supplementary protection inside the steam room may capture the lighting on a similar route)."
-            whyItMatters="Driving the inspection from the wrong Part produces the wrong cert. Part 6 is the methodology; Part 7 is the special-location overlay; Parts 1–5 are the underlying technical requirements. Mixing them up — for example, applying domestic Reg 411.3.4 to a commercial property — is an audit-trail failure even if the underlying decision (RCD on the lighting) is the same."
-          />
-
-          <Scenario
-            title="New-build domestic with battery storage, PV array and EV charger — A4 in force"
-            situation="Two-bed semi-detached new-build. 100 A TN-C-S supply. Customer wants a 4 kWp PV array, a 5 kWh battery storage unit (BESS) and a tethered 7 kW EV charger. The build certifies under BS 7671:2018+A4:2026."
-            whatToDo="This is a Part 8 prosumer installation (Chapter 82) with Part 7 special-location overlays for each load. PV array → Section 712. EV charger → Section 722 (including Reg 722.312.2.1 PEN prohibition). Stationary battery → Part 5 Chapter 57 (NEW under A4). Energy efficiency design considerations → Part 8 Chapter 81 (NEW under A4). Domestic luminaire RCDs → Reg 411.3.4 (NEW under A4) on every AC final circuit feeding lighting. Cert: EIC per Appendix 6 with the new SoTR columns; supporting documentation per Reg 514.9 (diagrams, charts, schedules)."
-            whyItMatters="The structural changes A4 introduces all hit one job. Reading the regulations as if A3 were still in force misses Chapter 57 (battery), Chapter 81 (efficiency framework), Section 716 if PoE is used for the home automation, Section 545 if functional earthing is wired for the inverter / BMS, and Reg 411.3.4 on the lighting circuits. Each miss is a documented departure under Reg 120.3 — and on a new-build, departures are difficult to justify."
-          />
-
-          <SectionRule />
-
-          <KeyTakeaways
-            points={[
-              '8 Parts. Hierarchical numbering, first digit = Part. NOT USED markers preserve IEC numbering for cross-edition stability.',
-              'Reg 110.1.1 sets the scope; Reg 110.1.3 is the override mechanic — Part 7 supplements or modifies Parts 1–6.',
-              'A4:2026 added Chapter 57 (stationary batteries), Chapter 81 (energy efficiency), Section 716 (Power over Ethernet) and Section 545 (functional earthing for ICT).',
-              'A4 deleted Appendix 17 (content promoted to Ch 81) and Annex B443 inside Section 444. App 4 cable tables revised for buried-cable methods.',
-              'Appendix 1 is Normative — referenced standards are mandatory. Appendices 2 onwards are Informative — guidance and design data; the legal hook is the regulation that points to the appendix.',
-              'Tab the weekly appendices: App 3 (device curves), App 4 (cable CCC + Vd), App 6 (model forms), App 14 (PSCC), App 16 (EICR inspection items).',
-              'Side-bar margins in the printed standard mark every technical A4 change. Read them in any Part you actively work in.',
-            ]}
-          />
-
-          <FAQ items={faqs} />
-
-          <Quiz questions={quizQuestions} title="Section 3 · Knowledge check" />
-
-          <div className="grid grid-cols-2 gap-3 pt-2">
-            <button
-              type="button"
-              onClick={() => navigate('/electrician/upskilling/bs7671-module-1-section-2')}
-              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
-                <ChevronLeft className="h-3 w-3" /> Previous section
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-white truncate">
-                1.2 The legal framework
-              </div>
-            </button>
-            <button
-              type="button"
-              onClick={() => navigate('/electrician/upskilling/bs7671-module-1-section-4')}
-              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
-                Next section <ChevronRight className="h-3 w-3" />
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-black truncate">
-                1.4 Definitions and key terminology
-              </div>
-            </button>
-          </div>
-        </PageFrame>
-      </div>
-    </div>
+            <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+              Next section <ChevronRight className="h-3 w-3" />
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-black truncate">
+              1.4 Definitions and key terminology
+            </div>
+          </button>
+        </div>
+      </HubBody>
+    </HubPage>
   );
 }

@@ -5,10 +5,10 @@
  */
 
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
-import { PageFrame, PageHero } from '@/components/college/primitives';
 import {
   CommonMistake,
   ConceptBlock,
@@ -230,12 +230,7 @@ const quizQuestions = [
     id: 12,
     question:
       'When scheduling containment installation before cable pulling, what dependency type is used?',
-    options: [
-      'Finish-to-Start',
-      'No dependency needed',
-      'Start-to-Start',
-      'Finish-to-Finish',
-    ],
+    options: ['Finish-to-Start', 'No dependency needed', 'Start-to-Start', 'Finish-to-Finish'],
     correctAnswer: 0,
     explanation:
       'Containment must be complete before cable pulling can begin in that area, requiring a Finish-to-Start dependency. This reflects the physical reality that cables cannot be pulled through uninstalled containment.',
@@ -280,508 +275,515 @@ const HNCModule5Section1_2 = () => {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
-      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
-        <PageFrame>
+    <HubPage>
+      <HubMasthead
+        section="Module 5 · Section 1 · Subsection 2"
+        title="Programme Development"
+        backTo="/study-centre/apprentice/h-n-c-module5-section1"
+      />
+      <HubBody>
+        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
+          Gantt charts, milestones, programme logic and scheduling techniques for MEP installations.
+        </p>
+
+        <TLDR
+          points={[
+            'A programme is the WBS sequenced over time — every activity must trace back to a work package, never invent scope on the bar chart.',
+            'Logic links (FS, SS, FF, SF) and float drive sequence — without proper logic, your Gantt is a wish list, not a plan.',
+            'Milestones are contractual flags (sectional completion, witness test) and information flags (drawing issue, sample approval) — both go on the programme.',
+            'For MEP, build in builder’s work, structural access, BWIC, fire-stopping holds and commissioning windows — these are the clashes that kill programmes.',
+            'Update weekly against actuals. The programme is a control document, not a tender artefact you file after award.',
+          ]}
+        />
+
+        <RegsCallout
+          source="NEC4 ECC — Clause 31.2 (The first programme)"
+          clause="The Contractor shows on each programme which it submits for acceptance — the starting date, access dates, key dates and completion date, planned completion, the order and timing of the operations which the Contractor plans to do in order to Provide the Works, the order and timing of the work of the Client and others as last agreed with them by the Contractor or, if not so agreed, as stated in the Scope, the dates when the Contractor plans to meet each Condition stated for the Key Dates and to complete other work needed to allow the Client and Others to do their work, provisions for float, time risk allowances, health and safety requirements and other procedures set out in the Scope."
+          meaning={
+            <>
+              Under NEC4 the programme is a contractual document — not a marketing chart. If your
+              accepted programme does not show information dates, BWIC, witness windows and float,
+              you have no defence when the Project Manager assesses a compensation event. Build it
+              properly first time, get it accepted, and update it monthly under Clause 32.
+            </>
+          }
+          cite="Source: NEC4 Engineering and Construction Contract — Clause 31.2 (refer to NEC4 published text for verbatim use)."
+        />
+
+        <LearningOutcomes
+          outcomes={[
+            'Create and interpret Gantt charts for MEP installations',
+            'Identify and define project milestones appropriate to building services',
+            'Apply programme logic including dependencies, leads, and lags',
+            'Understand critical path methodology and float calculation',
+            'Use scheduling software effectively (Primavera P6, MS Project)',
+            'Coordinate MEP trades within the construction programme',
+          ]}
+        />
+
+        <SectionRule />
+
+        <ConceptBlock title="Gantt Charts and Bar Charts">
+          <p>
+            The Gantt chart, developed by Henry Gantt in the 1910s, remains the fundamental tool for
+            construction programme visualisation. It displays activities as horizontal bars
+            positioned against a calendar timescale, making it easy to understand project timing at
+            a glance.
+          </p>
+          <p>
+            <strong>Key Gantt chart elements:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Activity bar:</strong> Horizontal bar showing duration from start to finish
+              date
+            </li>
+            <li>
+              <strong>Timescale:</strong> Calendar showing weeks, months, or days across the top
+            </li>
+            <li>
+              <strong>Dependency arrows:</strong> Lines connecting related activities
+            </li>
+            <li>
+              <strong>Milestone diamonds:</strong> Zero-duration achievement points
+            </li>
+            <li>
+              <strong>Progress bar:</strong> Shaded portion showing percentage complete
+            </li>
+          </ul>
+          <p>
+            <strong>MEP installation programme example:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Containment installation:</strong> 4 weeks — predecessor: structure complete —
+              1st fix phase
+            </li>
+            <li>
+              <strong>Cable pulling:</strong> 3 weeks — predecessor: containment (SS+1w) — 1st fix
+              phase
+            </li>
+            <li>
+              <strong>Distribution board installation:</strong> 1 week — predecessor: cables
+              terminated — 1st fix complete
+            </li>
+            <li>
+              <strong>Accessories installation:</strong> 2 weeks — predecessor: 2nd fix start — 2nd
+              fix phase
+            </li>
+            <li>
+              <strong>Testing and commissioning:</strong> 2 weeks — predecessor: all installation
+              complete — commissioning
+            </li>
+          </ul>
+          <p>
+            <strong>Best practice:</strong> Break down programmes by floor or zone for large
+            buildings, enabling progress tracking per area and clearer resource allocation.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...quickCheckQuestions[0]} />
+
+        <SectionRule />
+
+        <ConceptBlock title="Milestones and Key Dates">
+          <p>
+            Milestones are zero-duration events representing significant achievements in the
+            project. They provide clear targets for teams and enable management to track progress
+            against key deliverables without examining every activity in detail.
+          </p>
+          <p>
+            <strong>Typical MEP milestones:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Main switchboard delivered to site</li>
+            <li>First fix electrical complete per floor</li>
+            <li>Temporary power available</li>
+            <li>Permanent power energisation</li>
+            <li>Fire alarm system operational</li>
+            <li>Commissioning complete</li>
+          </ul>
+          <p>
+            <strong>Contractual key dates:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Access to site date</li>
+            <li>Sectional completion dates</li>
+            <li>Practical completion date</li>
+            <li>Client occupation dates</li>
+            <li>Defects liability end date</li>
+            <li>Final account agreement</li>
+          </ul>
+          <p>
+            <strong>Milestone vs activity:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Milestone:</strong> Zero duration, achievement point, diamond symbol — example
+              "First fix complete"
+            </li>
+            <li>
+              <strong>Activity:</strong> Has duration, work package, horizontal bar — example
+              "Install containment L2"
+            </li>
+          </ul>
+          <p>
+            <strong>Programming tip:</strong> Link milestones to payment applications. Achieving
+            milestones often triggers stage payments, making accurate milestone dating financially
+            critical.
+          </p>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <ConceptBlock title="Programme Logic and Dependencies">
+          <p>
+            Programme logic defines the relationships between activities, determining what must
+            happen before, after, or concurrently with other activities. Correct logic is essential
+            for accurate critical path analysis and realistic scheduling.
+          </p>
+          <p>
+            <strong>Dependency types:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Finish-to-Start (FS):</strong> B starts when A finishes — cable pulling after
+              containment complete
+            </li>
+            <li>
+              <strong>Start-to-Start (SS):</strong> B starts when A starts — cable pulling following
+              containment (with lag)
+            </li>
+            <li>
+              <strong>Finish-to-Finish (FF):</strong> B finishes when A finishes — testing complete
+              when installation complete
+            </li>
+            <li>
+              <strong>Start-to-Finish (SF):</strong> B finishes when A starts — temporary power ends
+              when permanent starts (rare)
+            </li>
+          </ul>
+          <p>
+            <strong>Leads and lags:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Lag:</strong> Waiting time added after the dependency. Example: FS + 2 days
+              lag for concrete curing before drilling
+            </li>
+            <li>
+              <strong>Lead:</strong> Overlap time (negative lag). Example: FS - 3 days allows
+              successor to start before predecessor finishes
+            </li>
+            <li>
+              <strong>Application:</strong> Use lags for inspection hold points, material delivery,
+              or curing times
+            </li>
+          </ul>
+          <p>
+            <strong>Critical path methodology:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Critical path:</strong> The longest sequence of dependent activities
+            </li>
+            <li>
+              <strong>Float:</strong> Time an activity can slip without delaying completion
+            </li>
+            <li>
+              <strong>Critical activities:</strong> Those with zero float - any delay delays the
+              project
+            </li>
+            <li>
+              <strong>Near-critical:</strong> Activities with less than 5 days float requiring
+              monitoring
+            </li>
+          </ul>
+          <p>
+            <strong>Logic rule:</strong> Every activity (except project start) should have at least
+            one predecessor. Dangling activities without logic links create unrealistic schedules.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...quickCheckQuestions[1]} />
+
+        <SectionRule />
+
+        <ConceptBlock title="Scheduling Software and MEP Coordination">
+          <p>
+            Professional scheduling software enables complex programme management beyond simple
+            Gantt charts. Understanding these tools is essential for MEP project managers working on
+            commercial and infrastructure projects.
+          </p>
+          <p>
+            <strong>Primavera P6:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Enterprise-level scheduling</li>
+            <li>Multi-project management</li>
+            <li>Robust resource handling</li>
+            <li>Earned value analysis</li>
+            <li>Industry standard for large projects</li>
+            <li>Oracle-owned database system</li>
+          </ul>
+          <p>
+            <strong>Microsoft Project:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Desktop and cloud versions</li>
+            <li>Familiar Microsoft interface</li>
+            <li>Good for small-medium projects</li>
+            <li>Integration with Office 365</li>
+            <li>More accessible learning curve</li>
+            <li>Lower licence cost than P6</li>
+          </ul>
+          <p>
+            <strong>Key software features for MEP:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>WBS (Work Breakdown Structure):</strong> Hierarchical organisation — organise
+              by floor, zone, or system
+            </li>
+            <li>
+              <strong>Resource levelling:</strong> Avoid overallocation — balance electrician
+              numbers across activities
+            </li>
+            <li>
+              <strong>Baseline comparison:</strong> Track variance — identify delays against
+              original programme
+            </li>
+            <li>
+              <strong>Activity codes:</strong> Filtering and reporting — filter by trade
+              (elec/mech/plumb)
+            </li>
+            <li>
+              <strong>Look-ahead reports:</strong> Short-term planning — 2-week look-ahead for
+              coordination meetings
+            </li>
+          </ul>
+          <p>
+            <strong>
+              MEP trade coordination sequence — typical priority order in congested areas (risers,
+              ceiling voids):
+            </strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Mechanical:</strong> Largest ducts/pipes first (least flexible)
+            </li>
+            <li>
+              <strong>Plumbing:</strong> Drainage with fixed gradients
+            </li>
+            <li>
+              <strong>Electrical:</strong> Containment routes around M&amp;P services
+            </li>
+            <li>
+              <strong>Fire protection:</strong> Sprinkler pipework
+            </li>
+            <li>
+              <strong>Controls:</strong> BMS sensors and cabling
+            </li>
+          </ul>
+          <p>
+            <strong>Coordination tip:</strong> Use BIM coordination meetings to resolve clashes
+            before they affect the programme. Virtual clashes are far cheaper to resolve than site
+            conflicts.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...quickCheckQuestions[2]} />
+
+        <SectionRule />
+
+        <ConceptBlock title="Worked Examples">
+          <p>
+            <strong>Example 1 — Calculating Float:</strong> Activity A takes 5 days. Activity B
+            depends on A (FS) and takes 3 days. Project must finish on Day 15. A can start Day 1.
+            What is the float?
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Early Start A = Day 1</li>
+            <li>Early Finish A = Day 1 + 5 = Day 6</li>
+            <li>Early Start B = Day 6</li>
+            <li>Early Finish B = Day 6 + 3 = Day 9</li>
+            <li>Project requires finish Day 15, earliest finish Day 9</li>
+            <li>
+              <strong>Total Float = 15 - 9 = 6 days</strong>
+            </li>
+          </ul>
+          <p>
+            <strong>Example 2 — Dependency Selection:</strong> Containment installation takes 10
+            days. Cable pulling takes 8 days but can start 3 days after containment starts. What
+            dependency and lag?
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Cable pulling starts when containment starts (not finishes)</li>
+            <li>This is a Start-to-Start (SS) relationship</li>
+            <li>3 days must elapse before cables can follow</li>
+            <li>
+              <strong>Answer: SS + 3 days lag</strong>
+            </li>
+            <li>
+              This allows cable pulling to begin in areas where containment is complete, while
+              containment continues in other areas.
+            </li>
+          </ul>
+          <p>
+            <strong>Example 3 — Critical Path Identification:</strong> Three parallel paths: (A)
+            Containment 10d + Cables 8d = 18d, (B) Switchboard delivery 12d + Install 3d = 15d, (C)
+            Generator install 20d. Which is critical?
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Path A: 10 + 8 = 18 days</li>
+            <li>Path B: 12 + 3 = 15 days</li>
+            <li>Path C: 20 days</li>
+            <li>
+              <strong>Critical Path = Path C (Generator) at 20 days</strong>
+            </li>
+            <li>Path A has 2 days float (20-18)</li>
+            <li>Path B has 5 days float (20-15)</li>
+          </ul>
+        </ConceptBlock>
+
+        <InlineCheck {...quickCheckQuestions[3]} />
+
+        <SectionRule />
+
+        <ConceptBlock title="Practical guidance">
+          <p>
+            <strong>Programme development checklist:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Define the Work Breakdown Structure by location/system</li>
+            <li>Identify all activities with realistic durations</li>
+            <li>Establish logical dependencies (avoid excessive constraints)</li>
+            <li>Set key milestones aligned with contract requirements</li>
+            <li>Assign resources and check for overallocation</li>
+            <li>Calculate critical path and review logic</li>
+            <li>Set baseline before work commences</li>
+          </ul>
+          <p>
+            <strong>Key values to remember:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              Finish-to-Start (FS): <strong>Most common dependency</strong>
+            </li>
+            <li>
+              Float = 0: <strong>Critical activity</strong>
+            </li>
+            <li>
+              Near-critical: <strong>Less than 5 days float</strong>
+            </li>
+            <li>
+              Look-ahead period: <strong>2-4 weeks typical</strong>
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <CommonMistake
+          title="Common programming mistakes"
+          whatHappens={
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+              <li>
+                <strong>Missing logic links</strong> - Activities without predecessors create
+                unrealistic schedules
+              </li>
+              <li>
+                <strong>Excessive constraints</strong> - Fixed dates should be used sparingly
+              </li>
+              <li>
+                <strong>Ignoring resource limits</strong> - Scheduling more workers than available
+              </li>
+              <li>
+                <strong>No baseline</strong> - Cannot measure progress without a baseline
+              </li>
+            </ul>
+          }
+          doInstead="Link every activity (except project start) to at least one predecessor, use date constraints sparingly, level resources within available float, and set the baseline before work commences so progress can be tracked against it."
+        />
+
+        <SectionRule />
+
+        <Scenario
+          title="Programme accepted with no information dates — and the consequences"
+          situation={
+            <>
+              You submit your first programme under an NEC4 ECC Option C target cost contract. To
+              save time, you omit information request dates and rely on a generic note "design info
+              required two weeks before activity start". The programme is accepted. Three months
+              later you raise a compensation event because mechanical schematics arrived late and
+              held up your switch-room wiring. The PM rejects it: you cannot show on the accepted
+              programme when the information was due.
+            </>
+          }
+          whatToDo={
+            <>
+              From day one, every activity needing client/designer information must have an explicit
+              information-required date, and every interface with another contractor must have an
+              explicit access date. Build them into Clause 31.2. Use the monthly Clause 32 revisions
+              to adjust against reality. When information is late, the time risk is owned by the
+              Client — but only if the date is on your accepted programme.
+            </>
+          }
+          whyItMatters={
+            <>
+              Programmes are how time risk gets allocated under NEC. Sloppy first programme = silent
+              transfer of risk from Client to Contractor. A well-built programme with information
+              dates, key dates and BWIC sequence is the foundation of every successful CE claim and
+              the death of every spurious one.
+            </>
+          }
+        />
+
+        <SectionRule />
+
+        <FAQ items={faqs} />
+
+        <SectionRule />
+
+        <KeyTakeaways
+          points={[
+            'Programme = WBS sequenced. Every activity traces back to a work package — no scope invention on the bar chart.',
+            'Use proper logic (FS/SS/FF/SF) with realistic lags — over-constrained logic gives false float.',
+            'Milestones split into contractual (sectional completion, key dates) and information (drawing issue, sample approval).',
+            'For MEP: build in BWIC, structural openings, fire-stopping holds, witness windows, commissioning windows.',
+            'Critical path = longest chain of activities with zero float. Protect it ruthlessly.',
+            'Float belongs to the project, not the contractor — but allocate time risk allowances explicitly under NEC.',
+            'Update weekly against actuals; recover or re-baseline rather than letting drift accumulate.',
+            'Under NEC4 Clause 31.2, the accepted programme is contractual evidence — information dates and access dates are non-negotiable.',
+          ]}
+        />
+
+        <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+
+        <div className="grid grid-cols-2 gap-3 pt-2">
           <button
-            onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section1')}
-            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section1-1')}
+            className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
           >
-            <ArrowLeft className="h-4 w-4" /> Back
+            <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+              <ChevronLeft className="h-3 w-3" /> Previous subsection
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-white truncate">
+              Work Breakdown Structure
+            </div>
           </button>
-
-          <PageHero
-            eyebrow="Module 5 · Section 1 · Subsection 2"
-            title="Programme Development"
-            description="Gantt charts, milestones, programme logic and scheduling techniques for MEP installations."
-            tone="purple"
-          />
-
-          <TLDR
-            points={[
-              "A programme is the WBS sequenced over time — every activity must trace back to a work package, never invent scope on the bar chart.",
-              "Logic links (FS, SS, FF, SF) and float drive sequence — without proper logic, your Gantt is a wish list, not a plan.",
-              "Milestones are contractual flags (sectional completion, witness test) and information flags (drawing issue, sample approval) — both go on the programme.",
-              "For MEP, build in builder’s work, structural access, BWIC, fire-stopping holds and commissioning windows — these are the clashes that kill programmes.",
-              "Update weekly against actuals. The programme is a control document, not a tender artefact you file after award.",
-            ]}
-          />
-
-          <RegsCallout
-            source="NEC4 ECC — Clause 31.2 (The first programme)"
-            clause="The Contractor shows on each programme which it submits for acceptance — the starting date, access dates, key dates and completion date, planned completion, the order and timing of the operations which the Contractor plans to do in order to Provide the Works, the order and timing of the work of the Client and others as last agreed with them by the Contractor or, if not so agreed, as stated in the Scope, the dates when the Contractor plans to meet each Condition stated for the Key Dates and to complete other work needed to allow the Client and Others to do their work, provisions for float, time risk allowances, health and safety requirements and other procedures set out in the Scope."
-            meaning={
-              <>
-                Under NEC4 the programme is a contractual document — not a marketing chart. If your accepted programme does not show information dates, BWIC, witness windows and float, you have no defence when the Project Manager assesses a compensation event. Build it properly first time, get it accepted, and update it monthly under Clause 32.
-              </>
-            }
-            cite="Source: NEC4 Engineering and Construction Contract — Clause 31.2 (refer to NEC4 published text for verbatim use)."
-          />
-
-
-          <LearningOutcomes
-            outcomes={[
-              'Create and interpret Gantt charts for MEP installations',
-              'Identify and define project milestones appropriate to building services',
-              'Apply programme logic including dependencies, leads, and lags',
-              'Understand critical path methodology and float calculation',
-              'Use scheduling software effectively (Primavera P6, MS Project)',
-              'Coordinate MEP trades within the construction programme',
-            ]}
-          />
-
-          <SectionRule />
-
-          <ConceptBlock title="Gantt Charts and Bar Charts">
-            <p>
-              The Gantt chart, developed by Henry Gantt in the 1910s, remains the fundamental tool
-              for construction programme visualisation. It displays activities as horizontal bars
-              positioned against a calendar timescale, making it easy to understand project timing
-              at a glance.
-            </p>
-            <p>
-              <strong>Key Gantt chart elements:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Activity bar:</strong> Horizontal bar showing duration from start to finish
-                date
-              </li>
-              <li>
-                <strong>Timescale:</strong> Calendar showing weeks, months, or days across the top
-              </li>
-              <li>
-                <strong>Dependency arrows:</strong> Lines connecting related activities
-              </li>
-              <li>
-                <strong>Milestone diamonds:</strong> Zero-duration achievement points
-              </li>
-              <li>
-                <strong>Progress bar:</strong> Shaded portion showing percentage complete
-              </li>
-            </ul>
-            <p>
-              <strong>MEP installation programme example:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Containment installation:</strong> 4 weeks — predecessor: structure
-                complete — 1st fix phase
-              </li>
-              <li>
-                <strong>Cable pulling:</strong> 3 weeks — predecessor: containment (SS+1w) — 1st
-                fix phase
-              </li>
-              <li>
-                <strong>Distribution board installation:</strong> 1 week — predecessor: cables
-                terminated — 1st fix complete
-              </li>
-              <li>
-                <strong>Accessories installation:</strong> 2 weeks — predecessor: 2nd fix start —
-                2nd fix phase
-              </li>
-              <li>
-                <strong>Testing and commissioning:</strong> 2 weeks — predecessor: all installation
-                complete — commissioning
-              </li>
-            </ul>
-            <p>
-              <strong>Best practice:</strong> Break down programmes by floor or zone for large
-              buildings, enabling progress tracking per area and clearer resource allocation.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...quickCheckQuestions[0]} />
-
-          <SectionRule />
-
-          <ConceptBlock title="Milestones and Key Dates">
-            <p>
-              Milestones are zero-duration events representing significant achievements in the
-              project. They provide clear targets for teams and enable management to track progress
-              against key deliverables without examining every activity in detail.
-            </p>
-            <p>
-              <strong>Typical MEP milestones:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Main switchboard delivered to site</li>
-              <li>First fix electrical complete per floor</li>
-              <li>Temporary power available</li>
-              <li>Permanent power energisation</li>
-              <li>Fire alarm system operational</li>
-              <li>Commissioning complete</li>
-            </ul>
-            <p>
-              <strong>Contractual key dates:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Access to site date</li>
-              <li>Sectional completion dates</li>
-              <li>Practical completion date</li>
-              <li>Client occupation dates</li>
-              <li>Defects liability end date</li>
-              <li>Final account agreement</li>
-            </ul>
-            <p>
-              <strong>Milestone vs activity:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Milestone:</strong> Zero duration, achievement point, diamond symbol —
-                example "First fix complete"
-              </li>
-              <li>
-                <strong>Activity:</strong> Has duration, work package, horizontal bar — example
-                "Install containment L2"
-              </li>
-            </ul>
-            <p>
-              <strong>Programming tip:</strong> Link milestones to payment applications. Achieving
-              milestones often triggers stage payments, making accurate milestone dating financially
-              critical.
-            </p>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <ConceptBlock title="Programme Logic and Dependencies">
-            <p>
-              Programme logic defines the relationships between activities, determining what must
-              happen before, after, or concurrently with other activities. Correct logic is
-              essential for accurate critical path analysis and realistic scheduling.
-            </p>
-            <p>
-              <strong>Dependency types:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Finish-to-Start (FS):</strong> B starts when A finishes — cable pulling
-                after containment complete
-              </li>
-              <li>
-                <strong>Start-to-Start (SS):</strong> B starts when A starts — cable pulling
-                following containment (with lag)
-              </li>
-              <li>
-                <strong>Finish-to-Finish (FF):</strong> B finishes when A finishes — testing
-                complete when installation complete
-              </li>
-              <li>
-                <strong>Start-to-Finish (SF):</strong> B finishes when A starts — temporary power
-                ends when permanent starts (rare)
-              </li>
-            </ul>
-            <p>
-              <strong>Leads and lags:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Lag:</strong> Waiting time added after the dependency. Example: FS + 2 days
-                lag for concrete curing before drilling
-              </li>
-              <li>
-                <strong>Lead:</strong> Overlap time (negative lag). Example: FS - 3 days allows
-                successor to start before predecessor finishes
-              </li>
-              <li>
-                <strong>Application:</strong> Use lags for inspection hold points, material
-                delivery, or curing times
-              </li>
-            </ul>
-            <p>
-              <strong>Critical path methodology:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Critical path:</strong> The longest sequence of dependent activities
-              </li>
-              <li>
-                <strong>Float:</strong> Time an activity can slip without delaying completion
-              </li>
-              <li>
-                <strong>Critical activities:</strong> Those with zero float - any delay delays the
-                project
-              </li>
-              <li>
-                <strong>Near-critical:</strong> Activities with less than 5 days float requiring
-                monitoring
-              </li>
-            </ul>
-            <p>
-              <strong>Logic rule:</strong> Every activity (except project start) should have at
-              least one predecessor. Dangling activities without logic links create unrealistic
-              schedules.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...quickCheckQuestions[1]} />
-
-          <SectionRule />
-
-          <ConceptBlock title="Scheduling Software and MEP Coordination">
-            <p>
-              Professional scheduling software enables complex programme management beyond simple
-              Gantt charts. Understanding these tools is essential for MEP project managers working
-              on commercial and infrastructure projects.
-            </p>
-            <p>
-              <strong>Primavera P6:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Enterprise-level scheduling</li>
-              <li>Multi-project management</li>
-              <li>Robust resource handling</li>
-              <li>Earned value analysis</li>
-              <li>Industry standard for large projects</li>
-              <li>Oracle-owned database system</li>
-            </ul>
-            <p>
-              <strong>Microsoft Project:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Desktop and cloud versions</li>
-              <li>Familiar Microsoft interface</li>
-              <li>Good for small-medium projects</li>
-              <li>Integration with Office 365</li>
-              <li>More accessible learning curve</li>
-              <li>Lower licence cost than P6</li>
-            </ul>
-            <p>
-              <strong>Key software features for MEP:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>WBS (Work Breakdown Structure):</strong> Hierarchical organisation —
-                organise by floor, zone, or system
-              </li>
-              <li>
-                <strong>Resource levelling:</strong> Avoid overallocation — balance electrician
-                numbers across activities
-              </li>
-              <li>
-                <strong>Baseline comparison:</strong> Track variance — identify delays against
-                original programme
-              </li>
-              <li>
-                <strong>Activity codes:</strong> Filtering and reporting — filter by trade
-                (elec/mech/plumb)
-              </li>
-              <li>
-                <strong>Look-ahead reports:</strong> Short-term planning — 2-week look-ahead for
-                coordination meetings
-              </li>
-            </ul>
-            <p>
-              <strong>MEP trade coordination sequence — typical priority order in congested areas
-              (risers, ceiling voids):</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Mechanical:</strong> Largest ducts/pipes first (least flexible)
-              </li>
-              <li>
-                <strong>Plumbing:</strong> Drainage with fixed gradients
-              </li>
-              <li>
-                <strong>Electrical:</strong> Containment routes around M&amp;P services
-              </li>
-              <li>
-                <strong>Fire protection:</strong> Sprinkler pipework
-              </li>
-              <li>
-                <strong>Controls:</strong> BMS sensors and cabling
-              </li>
-            </ul>
-            <p>
-              <strong>Coordination tip:</strong> Use BIM coordination meetings to resolve clashes
-              before they affect the programme. Virtual clashes are far cheaper to resolve than site
-              conflicts.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...quickCheckQuestions[2]} />
-
-          <SectionRule />
-
-          <ConceptBlock title="Worked Examples">
-            <p>
-              <strong>Example 1 — Calculating Float:</strong> Activity A takes 5 days. Activity B
-              depends on A (FS) and takes 3 days. Project must finish on Day 15. A can start Day 1.
-              What is the float?
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Early Start A = Day 1</li>
-              <li>Early Finish A = Day 1 + 5 = Day 6</li>
-              <li>Early Start B = Day 6</li>
-              <li>Early Finish B = Day 6 + 3 = Day 9</li>
-              <li>Project requires finish Day 15, earliest finish Day 9</li>
-              <li>
-                <strong>Total Float = 15 - 9 = 6 days</strong>
-              </li>
-            </ul>
-            <p>
-              <strong>Example 2 — Dependency Selection:</strong> Containment installation takes 10
-              days. Cable pulling takes 8 days but can start 3 days after containment starts. What
-              dependency and lag?
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Cable pulling starts when containment starts (not finishes)</li>
-              <li>This is a Start-to-Start (SS) relationship</li>
-              <li>3 days must elapse before cables can follow</li>
-              <li>
-                <strong>Answer: SS + 3 days lag</strong>
-              </li>
-              <li>
-                This allows cable pulling to begin in areas where containment is complete, while
-                containment continues in other areas.
-              </li>
-            </ul>
-            <p>
-              <strong>Example 3 — Critical Path Identification:</strong> Three parallel paths: (A)
-              Containment 10d + Cables 8d = 18d, (B) Switchboard delivery 12d + Install 3d = 15d,
-              (C) Generator install 20d. Which is critical?
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Path A: 10 + 8 = 18 days</li>
-              <li>Path B: 12 + 3 = 15 days</li>
-              <li>Path C: 20 days</li>
-              <li>
-                <strong>Critical Path = Path C (Generator) at 20 days</strong>
-              </li>
-              <li>Path A has 2 days float (20-18)</li>
-              <li>Path B has 5 days float (20-15)</li>
-            </ul>
-          </ConceptBlock>
-
-          <InlineCheck {...quickCheckQuestions[3]} />
-
-          <SectionRule />
-
-          <ConceptBlock title="Practical guidance">
-            <p>
-              <strong>Programme development checklist:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Define the Work Breakdown Structure by location/system</li>
-              <li>Identify all activities with realistic durations</li>
-              <li>Establish logical dependencies (avoid excessive constraints)</li>
-              <li>Set key milestones aligned with contract requirements</li>
-              <li>Assign resources and check for overallocation</li>
-              <li>Calculate critical path and review logic</li>
-              <li>Set baseline before work commences</li>
-            </ul>
-            <p>
-              <strong>Key values to remember:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                Finish-to-Start (FS): <strong>Most common dependency</strong>
-              </li>
-              <li>
-                Float = 0: <strong>Critical activity</strong>
-              </li>
-              <li>
-                Near-critical: <strong>Less than 5 days float</strong>
-              </li>
-              <li>
-                Look-ahead period: <strong>2-4 weeks typical</strong>
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <CommonMistake
-            title="Common programming mistakes"
-            whatHappens={
-              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
-                <li>
-                  <strong>Missing logic links</strong> - Activities without predecessors create
-                  unrealistic schedules
-                </li>
-                <li>
-                  <strong>Excessive constraints</strong> - Fixed dates should be used sparingly
-                </li>
-                <li>
-                  <strong>Ignoring resource limits</strong> - Scheduling more workers than available
-                </li>
-                <li>
-                  <strong>No baseline</strong> - Cannot measure progress without a baseline
-                </li>
-              </ul>
-            }
-            doInstead="Link every activity (except project start) to at least one predecessor, use date constraints sparingly, level resources within available float, and set the baseline before work commences so progress can be tracked against it."
-          />
-
-          <SectionRule />
-
-          <Scenario
-            title="Programme accepted with no information dates — and the consequences"
-            situation={
-              <>
-                You submit your first programme under an NEC4 ECC Option C target cost contract. To save time, you omit information request dates and rely on a generic note "design info required two weeks before activity start". The programme is accepted. Three months later you raise a compensation event because mechanical schematics arrived late and held up your switch-room wiring. The PM rejects it: you cannot show on the accepted programme when the information was due.
-              </>
-            }
-            whatToDo={
-              <>
-                From day one, every activity needing client/designer information must have an explicit information-required date, and every interface with another contractor must have an explicit access date. Build them into Clause 31.2. Use the monthly Clause 32 revisions to adjust against reality. When information is late, the time risk is owned by the Client — but only if the date is on your accepted programme.
-              </>
-            }
-            whyItMatters={
-              <>
-                Programmes are how time risk gets allocated under NEC. Sloppy first programme = silent transfer of risk from Client to Contractor. A well-built programme with information dates, key dates and BWIC sequence is the foundation of every successful CE claim and the death of every spurious one.
-              </>
-            }
-          />
-
-          <SectionRule />
-
-          <FAQ items={faqs} />
-
-          <SectionRule />
-
-                    <KeyTakeaways
-            points={[
-              "Programme = WBS sequenced. Every activity traces back to a work package — no scope invention on the bar chart.",
-              "Use proper logic (FS/SS/FF/SF) with realistic lags — over-constrained logic gives false float.",
-              "Milestones split into contractual (sectional completion, key dates) and information (drawing issue, sample approval).",
-              "For MEP: build in BWIC, structural openings, fire-stopping holds, witness windows, commissioning windows.",
-              "Critical path = longest chain of activities with zero float. Protect it ruthlessly.",
-              "Float belongs to the project, not the contractor — but allocate time risk allowances explicitly under NEC.",
-              "Update weekly against actuals; recover or re-baseline rather than letting drift accumulate.",
-              "Under NEC4 Clause 31.2, the accepted programme is contractual evidence — information dates and access dates are non-negotiable.",
-            ]}
-          />
-
-
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-
-          <div className="grid grid-cols-2 gap-3 pt-2">
-            <button
-              onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section1-1')}
-              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
-                <ChevronLeft className="h-3 w-3" /> Previous subsection
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-white truncate">
-                Work Breakdown Structure
-              </div>
-            </button>
-            <button
-              onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section1-3')}
-              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
-                Next subsection <ChevronRight className="h-3 w-3" />
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-black truncate">
-                Critical path method
-              </div>
-            </button>
-          </div>
-        </PageFrame>
-      </div>
-    </div>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section1-3')}
+            className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+          >
+            <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+              Next subsection <ChevronRight className="h-3 w-3" />
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-black truncate">
+              Critical path method
+            </div>
+          </button>
+        </div>
+      </HubBody>
+    </HubPage>
   );
 };
 

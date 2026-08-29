@@ -14,11 +14,11 @@
  */
 
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
-import { PageFrame, PageHero } from '@/components/college/primitives';
 import {
   TLDR,
   ConceptBlock,
@@ -35,20 +35,18 @@ import {
 import { videos } from '@/data/study-centre/video-library';
 import useSEO from '@/hooks/useSEO';
 
-const TITLE =
-  'Types, causes and consequences of faults (3.1) | Level 3 Module 4.3.1 | Elec-Mate';
+const TITLE = 'Types, causes and consequences of faults (3.1) | Level 3 Module 4.3.1 | Elec-Mate';
 const DESCRIPTION =
   'The seven canonical electrical fault types — open circuit, short circuit, earth fault, high-resistance joint, insulation failure, transient voltage, excess current — what causes each, what each looks like on the meter, what each does to the installation.';
 
 const checks = [
   {
     id: 'mod4-s3-sub1-open',
-    question:
-      "What's the meter signature of an OPEN CIRCUIT fault on a domestic radial?",
+    question: "What's the meter signature of an OPEN CIRCUIT fault on a domestic radial?",
     options: [
       "Continuity reads near zero (a few hundred milliohms) on the affected conductor; IR reads near zero (a low-resistance bridge); EFLI reads very low. The protective device trips on energisation. Customer symptom: 'the breaker won't stay in / trips the moment I switch on'. This is the meter signature of a short circuit, not an open circuit — the current path is intact and over-low, not broken.",
-      "Continuity reads a moderate elevated value (typically 0.1–5 Ω) on the affected conductor compared with the expected design value; IR is normal; EFLI reads slightly high. The load still operates but the accessory runs warm under load. This is the meter signature of a high-resistance joint, not an open circuit — the path is intact but degraded, not broken.",
-      "Continuity reads normal on the line and neutral but IR reads below 1 MΩ between line and earth; EFLI is within limits. The RCD trips intermittently under load. This is the meter signature of an insulation / earth-leakage fault, not an open circuit — there is a leakage path to earth, not a broken conductor.",
+      'Continuity reads a moderate elevated value (typically 0.1–5 Ω) on the affected conductor compared with the expected design value; IR is normal; EFLI reads slightly high. The load still operates but the accessory runs warm under load. This is the meter signature of a high-resistance joint, not an open circuit — the path is intact but degraded, not broken.',
+      'Continuity reads normal on the line and neutral but IR reads below 1 MΩ between line and earth; EFLI is within limits. The RCD trips intermittently under load. This is the meter signature of an insulation / earth-leakage fault, not an open circuit — there is a leakage path to earth, not a broken conductor.',
       "Continuity reads OPEN (∞ Ω) on the affected conductor; IR reads infinity; EFLI reads OPEN. The load doesn't operate — the customer reports it has simply stopped working.",
     ],
     correctIndex: 3,
@@ -57,12 +55,11 @@ const checks = [
   },
   {
     id: 'mod4-s3-sub1-short',
-    question:
-      "What's the meter signature of a SHORT CIRCUIT fault between L and N?",
+    question: "What's the meter signature of a SHORT CIRCUIT fault between L and N?",
     options: [
       "Continuity between L and N reads OPEN (∞ Ω). The load doesn't operate but the breaker holds in. The user symptom: 'this socket has just gone dead'. This is the meter signature of an open circuit, not a short — there is no current path, so no fault current and no instant trip.",
-      "Continuity between L and N reads a moderate elevated value (0.1–5 Ω) above the expected design figure. The breaker holds but the cable runs warm under load. This is the meter signature of a high-resistance joint, not a short — the path is degraded, not bridged at near-zero ohms.",
-      "Insulation resistance between L and earth reads below 1 MΩ while L–N is normal. The RCD trips but the MCB does not. This is the meter signature of an earth fault, not an L–N short — the leakage path is to earth via the CPC, not directly between live conductors.",
+      'Continuity between L and N reads a moderate elevated value (0.1–5 Ω) above the expected design figure. The breaker holds but the cable runs warm under load. This is the meter signature of a high-resistance joint, not a short — the path is degraded, not bridged at near-zero ohms.',
+      'Insulation resistance between L and earth reads below 1 MΩ while L–N is normal. The RCD trips but the MCB does not. This is the meter signature of an earth fault, not an L–N short — the leakage path is to earth via the CPC, not directly between live conductors.',
       "Continuity between L and N reads near zero (typically <1 Ω). The protective device trips immediately on energisation. The user symptom: 'breaker tripped instantly when I plugged in / switched on'.",
     ],
     correctIndex: 3,
@@ -72,12 +69,12 @@ const checks = [
   {
     id: 'mod4-s3-sub1-hrj',
     question:
-      "What distinguishes a HIGH-RESISTANCE JOINT (HRJ) from a clean termination, and why is it dangerous?",
+      'What distinguishes a HIGH-RESISTANCE JOINT (HRJ) from a clean termination, and why is it dangerous?',
     options: [
-      "An HRJ is a complete break in the conductor — the path reads OPEN on a continuity test. The danger is that the load stops working and the customer is left without supply. It is found by a simple continuity test from end to end, and corrected by re-terminating the broken conductor. This describes an open circuit, not a high-resistance joint — an HRJ is intact but degraded, not broken.",
+      'An HRJ is a complete break in the conductor — the path reads OPEN on a continuity test. The danger is that the load stops working and the customer is left without supply. It is found by a simple continuity test from end to end, and corrected by re-terminating the broken conductor. This describes an open circuit, not a high-resistance joint — an HRJ is intact but degraded, not broken.',
       "An HRJ has higher contact resistance than a clean termination (typically 0.05–5 Ω vs <0.001 Ω). Under load it dissipates I²R heat that can char insulation and ignite the enclosure, yet stays below the device's trip threshold — a silent fire risk.",
-      "An HRJ is a direct contact between line and neutral with near-zero resistance. The danger is the very high fault current it draws, which trips the protective device instantly. It is found by an insulation-resistance test reading near zero and corrected by replacing the damaged cable. This describes a short circuit, not an HRJ — a short trips the MCB; an HRJ stays below the trip threshold and overheats silently.",
-      "An HRJ is a leakage path between a live conductor and earth. The danger is the residual current that flows to earth, tripping the RCD and presenting a shock risk on exposed metalwork. It is found by an insulation-resistance test line-to-earth and corrected by repairing the damaged insulation. This describes an earth fault, not an HRJ — an HRJ is a poor connection in series with the load, not a leakage to earth.",
+      'An HRJ is a direct contact between line and neutral with near-zero resistance. The danger is the very high fault current it draws, which trips the protective device instantly. It is found by an insulation-resistance test reading near zero and corrected by replacing the damaged cable. This describes a short circuit, not an HRJ — a short trips the MCB; an HRJ stays below the trip threshold and overheats silently.',
+      'An HRJ is a leakage path between a live conductor and earth. The danger is the residual current that flows to earth, tripping the RCD and presenting a shock risk on exposed metalwork. It is found by an insulation-resistance test line-to-earth and corrected by repairing the damaged insulation. This describes an earth fault, not an HRJ — an HRJ is a poor connection in series with the load, not a leakage to earth.',
     ],
     correctIndex: 1,
     explanation:
@@ -88,25 +85,25 @@ const checks = [
 const quizQuestions = [
   {
     id: 1,
-    question: "Define each of the seven canonical fault types.",
+    question: 'Define each of the seven canonical fault types.',
     options: [
       "(1) OPEN CIRCUIT — current path broken, R = ∞. (2) LIVE FAULT — any contact involving a live conductor, regardless of the return path. (3) NEUTRAL FAULT — any break or contact on the neutral conductor only. (4) CPC FAULT — any break or contact on the protective conductor. (5) OVERLOAD — sustained current above the cable rating. (6) UNDER-VOLTAGE — supply voltage below 207 V. (7) PHASE IMBALANCE — unequal loading across three phases. This list mixes conductor names with supply conditions and isn't the canonical seven fault-type taxonomy.",
-      "(1) OPEN CIRCUIT — current path broken, R = ∞. (2) SHORT CIRCUIT — direct connection between live conductors (L–L, L–N); very low resistance, very high current. (3) EARTH FAULT — current path between a live conductor and earth. (4) HIGH-RESISTANCE JOINT (HRJ) — termination with elevated contact resistance; I²R heat under load; fire risk. (5) INSULATION FAILURE — degraded dielectric between conductors; high-resistance leakage path. (6) TRANSIENT VOLTAGE — brief over-voltage from lightning or switching; damages electronics. (7) EXCESS CURRENT — overload or fault overcurrent; thermal damage to cables.",
-      "(1) EARTH FAULT. (2) SHORT CIRCUIT. (3) HIGH-RESISTANCE JOINT. (4) ARC FAULT — series and parallel arcing detected by AFDD. (5) RCD NUISANCE TRIP. (6) NEUTRAL-EARTH FAULT. (7) BORROWED NEUTRAL. While each of these is a real fault scenario, the list double-counts (a borrowed neutral and an N–E fault overlap) and omits the canonical open-circuit, insulation-failure, transient and excess-current categories.",
-      "(1) OPEN CIRCUIT. (2) SHORT CIRCUIT. (3) EARTH FAULT. (4) HIGH-RESISTANCE JOINT. (5) POLARITY FAULT — line and neutral reversed at an accessory. (6) PHASE-SEQUENCE FAULT — wrong rotation on a three-phase supply. (7) RCD MIS-SELECTION — wrong RCD type for the load. The last three are wiring or selection errors rather than the canonical fault types, which include insulation failure, transient over-voltage and excess current.",
+      '(1) OPEN CIRCUIT — current path broken, R = ∞. (2) SHORT CIRCUIT — direct connection between live conductors (L–L, L–N); very low resistance, very high current. (3) EARTH FAULT — current path between a live conductor and earth. (4) HIGH-RESISTANCE JOINT (HRJ) — termination with elevated contact resistance; I²R heat under load; fire risk. (5) INSULATION FAILURE — degraded dielectric between conductors; high-resistance leakage path. (6) TRANSIENT VOLTAGE — brief over-voltage from lightning or switching; damages electronics. (7) EXCESS CURRENT — overload or fault overcurrent; thermal damage to cables.',
+      '(1) EARTH FAULT. (2) SHORT CIRCUIT. (3) HIGH-RESISTANCE JOINT. (4) ARC FAULT — series and parallel arcing detected by AFDD. (5) RCD NUISANCE TRIP. (6) NEUTRAL-EARTH FAULT. (7) BORROWED NEUTRAL. While each of these is a real fault scenario, the list double-counts (a borrowed neutral and an N–E fault overlap) and omits the canonical open-circuit, insulation-failure, transient and excess-current categories.',
+      '(1) OPEN CIRCUIT. (2) SHORT CIRCUIT. (3) EARTH FAULT. (4) HIGH-RESISTANCE JOINT. (5) POLARITY FAULT — line and neutral reversed at an accessory. (6) PHASE-SEQUENCE FAULT — wrong rotation on a three-phase supply. (7) RCD MIS-SELECTION — wrong RCD type for the load. The last three are wiring or selection errors rather than the canonical fault types, which include insulation failure, transient over-voltage and excess current.',
     ],
     correctAnswer: 1,
     explanation:
-      "The seven categories cover the canonical fault types. Real faults are sometimes combinations (e.g. an HRJ that progresses to a short circuit after the cable insulation chars). Knowing the categories gives you a diagnostic vocabulary; recognising the meter signature lets you classify quickly.",
+      'The seven categories cover the canonical fault types. Real faults are sometimes combinations (e.g. an HRJ that progresses to a short circuit after the cable insulation chars). Knowing the categories gives you a diagnostic vocabulary; recognising the meter signature lets you classify quickly.',
   },
   {
     id: 2,
-    question: "What protective device responds to which fault type?",
+    question: 'What protective device responds to which fault type?',
     options: [
-      "RCD — overload and short circuit. MCB — earth fault through the CPC. AFDD — transient over-voltage. SPD — series and parallel arc faults. This mapping is back-to-front: the RCD covers residual (earth) faults not overcurrent, the MCB covers overcurrent not earth faults, and AFDD/SPD roles are swapped.",
-      "A single RCBO covers every fault type — overload, short circuit, earth fault, arc fault and transient over-voltage — in one device, which is why modern boards use them throughout. An RCBO combines overcurrent and residual protection only; it does not detect arc signatures (that needs an AFDD) or clamp transients (that needs an SPD).",
-      "MCB / RCBO thermal element — overload. MCB / RCBO magnetic element — short circuit. RCD / RCBO residual element — earth fault through the CPC. AFDD — series and parallel arc faults. SPD — transient over-voltage. BS 88 HRC fuse — short circuit and overload at supply origins.",
-      "MCB magnetic element — overload (slow thermal rise). MCB thermal element — short circuit (instant high current). RCD — transient over-voltage. SPD — earth fault. The thermal and magnetic roles are reversed (thermal is the slow overload element, magnetic is the instant short-circuit element), and the RCD/SPD assignments are wrong.",
+      'RCD — overload and short circuit. MCB — earth fault through the CPC. AFDD — transient over-voltage. SPD — series and parallel arc faults. This mapping is back-to-front: the RCD covers residual (earth) faults not overcurrent, the MCB covers overcurrent not earth faults, and AFDD/SPD roles are swapped.',
+      'A single RCBO covers every fault type — overload, short circuit, earth fault, arc fault and transient over-voltage — in one device, which is why modern boards use them throughout. An RCBO combines overcurrent and residual protection only; it does not detect arc signatures (that needs an AFDD) or clamp transients (that needs an SPD).',
+      'MCB / RCBO thermal element — overload. MCB / RCBO magnetic element — short circuit. RCD / RCBO residual element — earth fault through the CPC. AFDD — series and parallel arc faults. SPD — transient over-voltage. BS 88 HRC fuse — short circuit and overload at supply origins.',
+      'MCB magnetic element — overload (slow thermal rise). MCB thermal element — short circuit (instant high current). RCD — transient over-voltage. SPD — earth fault. The thermal and magnetic roles are reversed (thermal is the slow overload element, magnetic is the instant short-circuit element), and the RCD/SPD assignments are wrong.',
     ],
     correctAnswer: 2,
     explanation:
@@ -114,50 +111,50 @@ const quizQuestions = [
   },
   {
     id: 3,
-    question: "What causes most insulation failures in domestic installations?",
+    question: 'What causes most insulation failures in domestic installations?',
     options: [
-      "Almost all insulation failures are caused by manufacturing defects in the cable itself — voids in the PVC extrusion, contaminated compound, or under-thickness insulation that fails type-test margins. Replacing the cable with a different brand is the usual fix. In practice manufacturing defects are rare; the dominant causes are in-service damage, heat, moisture and ageing.",
-      "The leading cause is over-voltage from the supply — the DNO delivering above 253 V degrades the insulation over time until it breaks down. Raising it with the DNO is the correct response. Sustained over-voltage is uncommon and not the usual cause; mechanical damage, heat and moisture dominate insulation breakdown.",
-      "Insulation fails mainly because installers test at 500 V during commissioning, and the test voltage itself punctures weak spots. Testing at 250 V instead would prevent most failures. The IR test does not cause insulation failure on sound cable; it reveals existing weakness. The real causes are physical damage, heat, moisture and ageing.",
-      "Mostly in-service stress: physical damage, thermal damage, moisture or contamination, UV degradation, ageing and chemical attack — with physical damage the single most common cause. Manufacturing defects are rare.",
+      'Almost all insulation failures are caused by manufacturing defects in the cable itself — voids in the PVC extrusion, contaminated compound, or under-thickness insulation that fails type-test margins. Replacing the cable with a different brand is the usual fix. In practice manufacturing defects are rare; the dominant causes are in-service damage, heat, moisture and ageing.',
+      'The leading cause is over-voltage from the supply — the DNO delivering above 253 V degrades the insulation over time until it breaks down. Raising it with the DNO is the correct response. Sustained over-voltage is uncommon and not the usual cause; mechanical damage, heat and moisture dominate insulation breakdown.',
+      'Insulation fails mainly because installers test at 500 V during commissioning, and the test voltage itself punctures weak spots. Testing at 250 V instead would prevent most failures. The IR test does not cause insulation failure on sound cable; it reveals existing weakness. The real causes are physical damage, heat, moisture and ageing.',
+      'Mostly in-service stress: physical damage, thermal damage, moisture or contamination, UV degradation, ageing and chemical attack — with physical damage the single most common cause. Manufacturing defects are rare.',
     ],
     correctAnswer: 3,
     explanation:
-      "Insulation failure has many causes but the headline is — protect the cable from its environment. In approximate frequency order: physical damage (nail/screw through cable, mouse damage, abrasion); thermal damage (run alongside a heating pipe, enclosed derating, overload heating); moisture/contamination (water ingress, condensation, coastal salt-air); UV degradation (unprotected exterior cables); ageing (polymer breakdown after 30+ years, pre-1970s rubber); chemical attack (PVC-pipe contact, adhesives, hydrocarbons). BS 7671 Section 522 (external influences) covers the cable selection that prevents premature failure.",
+      'Insulation failure has many causes but the headline is — protect the cable from its environment. In approximate frequency order: physical damage (nail/screw through cable, mouse damage, abrasion); thermal damage (run alongside a heating pipe, enclosed derating, overload heating); moisture/contamination (water ingress, condensation, coastal salt-air); UV degradation (unprotected exterior cables); ageing (polymer breakdown after 30+ years, pre-1970s rubber); chemical attack (PVC-pipe contact, adhesives, hydrocarbons). BS 7671 Section 522 (external influences) covers the cable selection that prevents premature failure.',
   },
   {
     id: 4,
     question: "What's a transient over-voltage, where do they come from, and what damages them?",
     options: [
-      "A transient is a brief (microseconds to milliseconds) over-voltage spike — typically 1–6 kV, lightning-induced reaching 20 kV+. It destroys solid-state devices whose peak-voltage tolerance is below the spike. Protected by an SPD under BS 7671 443.",
-      "A transient is a sustained over-voltage lasting minutes to hours — typically the supply sitting at 260–280 V because the DNO transformer tap is set too high. It is corrected by the DNO adjusting the tap. That describes a sustained over-voltage, not a transient — transients are sub-millisecond spikes, and the protective device is an SPD, not a DNO tap change.",
-      "A transient is a brief under-voltage (a sag or brown-out) when a large motor starts and pulls the supply down for a few cycles. It damages equipment by starving it of voltage, and is cured by power-factor correction. A voltage sag is the opposite of a transient over-voltage; sags rarely damage electronics, whereas over-voltage spikes destroy solid-state devices.",
-      "A transient is a 50 Hz harmonic distortion of the supply waveform caused by non-linear loads such as LED drivers and VSDs. It is measured with a power-quality analyser and corrected with harmonic filters. Harmonic distortion is a steady-state waveform-shape problem, not a transient over-voltage event; the protective device for transients is an SPD, not a filter.",
+      'A transient is a brief (microseconds to milliseconds) over-voltage spike — typically 1–6 kV, lightning-induced reaching 20 kV+. It destroys solid-state devices whose peak-voltage tolerance is below the spike. Protected by an SPD under BS 7671 443.',
+      'A transient is a sustained over-voltage lasting minutes to hours — typically the supply sitting at 260–280 V because the DNO transformer tap is set too high. It is corrected by the DNO adjusting the tap. That describes a sustained over-voltage, not a transient — transients are sub-millisecond spikes, and the protective device is an SPD, not a DNO tap change.',
+      'A transient is a brief under-voltage (a sag or brown-out) when a large motor starts and pulls the supply down for a few cycles. It damages equipment by starving it of voltage, and is cured by power-factor correction. A voltage sag is the opposite of a transient over-voltage; sags rarely damage electronics, whereas over-voltage spikes destroy solid-state devices.',
+      'A transient is a 50 Hz harmonic distortion of the supply waveform caused by non-linear loads such as LED drivers and VSDs. It is measured with a power-quality analyser and corrected with harmonic filters. Harmonic distortion is a steady-state waveform-shape problem, not a transient over-voltage event; the protective device for transients is an SPD, not a filter.',
     ],
     correctAnswer: 0,
     explanation:
-      "Transient over-voltages are the silent killer of modern electronics. Sources: lightning (direct or induced), switching of large inductive loads (motor/transformer back-EMF), supply-network fault clearing, and capacitor switching on power-factor correction gear. A single transient can fail an entire LED array. BS 7671 A4:2026 strengthened SPD requirements (Reg 443.4 — risk assessment driving the SPD requirement); most domestic installations now have a Type 2 SPD at the CU. Without one, a single lightning strike within a few miles can fail every electronic device in the property simultaneously.",
+      'Transient over-voltages are the silent killer of modern electronics. Sources: lightning (direct or induced), switching of large inductive loads (motor/transformer back-EMF), supply-network fault clearing, and capacitor switching on power-factor correction gear. A single transient can fail an entire LED array. BS 7671 A4:2026 strengthened SPD requirements (Reg 443.4 — risk assessment driving the SPD requirement); most domestic installations now have a Type 2 SPD at the CU. Without one, a single lightning strike within a few miles can fail every electronic device in the property simultaneously.',
   },
   {
     id: 5,
     question: "What's the difference between an OVERLOAD fault and a SHORT-CIRCUIT fault?",
     options: [
-      "OVERLOAD — a sudden direct contact between live conductors drawing thousands of amps, cleared instantly by the magnetic element. SHORT-CIRCUIT — a sustained current slightly above the cable rating, cleared slowly by the thermal element. This has the two definitions swapped: overload is the slow sustained excess current, short-circuit is the sudden high-current fault.",
-      "OVERLOAD — sustained current above the design rating (typically 1.1–5× rated), cleared by the THERMAL element of the MCB (slow trip). SHORT-CIRCUIT — sudden direct connection between live conductors, very low resistance, thousands of amps, cleared by the MAGNETIC element of the MCB (instantaneous, <10 ms).",
+      'OVERLOAD — a sudden direct contact between live conductors drawing thousands of amps, cleared instantly by the magnetic element. SHORT-CIRCUIT — a sustained current slightly above the cable rating, cleared slowly by the thermal element. This has the two definitions swapped: overload is the slow sustained excess current, short-circuit is the sudden high-current fault.',
+      'OVERLOAD — sustained current above the design rating (typically 1.1–5× rated), cleared by the THERMAL element of the MCB (slow trip). SHORT-CIRCUIT — sudden direct connection between live conductors, very low resistance, thousands of amps, cleared by the MAGNETIC element of the MCB (instantaneous, <10 ms).',
       "OVERLOAD is an earth-leakage fault cleared by the RCD residual element; SHORT-CIRCUIT is an arc fault cleared by the AFDD. Neither is correct: overload and short-circuit are both overcurrent conditions cleared by the MCB's thermal and magnetic elements respectively, not by the RCD or AFDD.",
-      "OVERLOAD and SHORT-CIRCUIT are the same fault at different magnitudes, both cleared by the same single element in the MCB; the only difference is how fast the breaker reacts. They are distinct conditions cleared by two separate elements — the thermal element for sustained overload and the magnetic element for the instantaneous short-circuit.",
+      'OVERLOAD and SHORT-CIRCUIT are the same fault at different magnitudes, both cleared by the same single element in the MCB; the only difference is how fast the breaker reacts. They are distinct conditions cleared by two separate elements — the thermal element for sustained overload and the magnetic element for the instantaneous short-circuit.',
     ],
     correctAnswer: 1,
     explanation:
-      "Overload and short-circuit are the two excess-current categories the MCB protects against. The thermal element covers the slow heating of overload (would damage cable insulation by heating); the magnetic element covers the explosive current of a short (would damage cable / equipment by heating + arc / mechanical force). Type B / C / D ratings define the magnetic threshold (3-5× / 5-10× / 10-20× rated current respectively).",
+      'Overload and short-circuit are the two excess-current categories the MCB protects against. The thermal element covers the slow heating of overload (would damage cable insulation by heating); the magnetic element covers the explosive current of a short (would damage cable / equipment by heating + arc / mechanical force). Type B / C / D ratings define the magnetic threshold (3-5× / 5-10× / 10-20× rated current respectively).',
   },
   {
     id: 6,
     question: "What's a 'parallel arc' fault and how does an AFDD detect it?",
     options: [
-      "Parallel arc = an arc that forms in series with the load, inside a degraded terminal where a loose screw lets the conductor arc against the terminal as current passes through. The AFDD detects the drop in load current. That describes a series arc, not a parallel arc — a parallel arc occurs between two conductors at different potential, not in series with the load.",
+      'Parallel arc = an arc that forms in series with the load, inside a degraded terminal where a loose screw lets the conductor arc against the terminal as current passes through. The AFDD detects the drop in load current. That describes a series arc, not a parallel arc — a parallel arc occurs between two conductors at different potential, not in series with the load.',
       "Parallel arc = the sustained high fault current of an L–N short circuit, which the AFDD detects as a sudden current rise and trips faster than the MCB. A genuine short circuit is cleared by the MCB's magnetic element, not by an AFDD; a parallel arc is intermittent and stays below the magnetic trip threshold, which is precisely why AFDD signature analysis is needed.",
-      "Parallel arc = an arc between two conductors at different potential through degraded insulation or an air gap. The current is high but intermittent and self-extinguishing, so the MCB and RCD miss it; the AFDD trips on its high-frequency signature.",
+      'Parallel arc = an arc between two conductors at different potential through degraded insulation or an air gap. The current is high but intermittent and self-extinguishing, so the MCB and RCD miss it; the AFDD trips on its high-frequency signature.',
       "Parallel arc = an earth-leakage arc between a live conductor and the CPC, which the RCD detects as residual current and the AFDD merely backs up. An L–E arc that produces residual current is caught by the RCD; the AFDD's distinctive value is catching L–L and L–N arcs that produce no residual current and so are invisible to the RCD.",
     ],
     correctAnswer: 2,
@@ -166,11 +163,12 @@ const quizQuestions = [
   },
   {
     id: 7,
-    question: "What's an 'L–L' fault on a three-phase system and what does it look like on the meter?",
+    question:
+      "What's an 'L–L' fault on a three-phase system and what does it look like on the meter?",
     options: [
-      "L–L fault is a fault on a single-phase supply where the live conductor contacts the neutral; on three-phase systems the term has no meaning because there is only one live conductor per circuit. Three-phase supplies have three line conductors, and L–L specifically means a fault between two of those lines (e.g. L1 to L2).",
-      "L–L fault is a break in one of the three phases (a lost phase) — continuity on that line reads OPEN and the three-phase motor it feeds runs on two phases and overheats. That describes single-phasing (an open-circuit on one line), not an L–L fault, which is a low-resistance contact between two lines, not a break.",
-      "L–L fault is an earth fault on a three-phase system where one line touches the armour or CPC; the RCD or earth-fault protection clears it and the other two phases keep running. That describes a line-to-earth fault, not L–L — an L–L fault is between two line conductors and is cleared by overcurrent protection, not an RCD.",
+      'L–L fault is a fault on a single-phase supply where the live conductor contacts the neutral; on three-phase systems the term has no meaning because there is only one live conductor per circuit. Three-phase supplies have three line conductors, and L–L specifically means a fault between two of those lines (e.g. L1 to L2).',
+      'L–L fault is a break in one of the three phases (a lost phase) — continuity on that line reads OPEN and the three-phase motor it feeds runs on two phases and overheats. That describes single-phasing (an open-circuit on one line), not an L–L fault, which is a low-resistance contact between two lines, not a break.',
+      'L–L fault is an earth fault on a three-phase system where one line touches the armour or CPC; the RCD or earth-fault protection clears it and the other two phases keep running. That describes a line-to-earth fault, not L–L — an L–L fault is between two line conductors and is cleared by overcurrent protection, not an RCD.',
       "L–L (phase-to-phase) fault is a direct connection between two phases of a three-phase supply (e.g. L1 and L2). Continuity between the phases reads near zero and the protective device's magnetic element operates on at least one affected phase.",
     ],
     correctAnswer: 3,
@@ -179,12 +177,13 @@ const quizQuestions = [
   },
   {
     id: 8,
-    question: "Which fault type causes the most harm to people, and which causes the most damage to property?",
+    question:
+      'Which fault type causes the most harm to people, and which causes the most damage to property?',
     options: [
-      "PEOPLE: an uncleared earth fault — metalwork rises to phase voltage and current flows through the person to earth; the main cause of shock fatalities. PROPERTY: a high-resistance joint — silent I²R heat under load that ignites combustibles; the main cause of electrical fires.",
-      "PEOPLE: the short circuit — the loud bang and high fault current are what injure people. PROPERTY: the open circuit — loss of supply damages freezers and IT equipment. Short circuits are usually cleared safely in milliseconds by the MCB and rarely injure anyone, and an open circuit causes inconvenience, not fire; the real killers and burners are uncleared earth faults and HRJs.",
-      "PEOPLE: transient over-voltage — surges deliver a shock through equipment casings. PROPERTY: the short circuit — its fault energy melts cabling. Transients damage electronics rather than shocking people, and short circuits are normally cleared before serious fire; uncleared earth faults cause most shock deaths and HRJs cause most electrical fires.",
-      "PEOPLE: the overload — sustained excess current heats accessible surfaces and burns the user. PROPERTY: insulation failure — the only fault that starts fires. Overloads are cleared by the MCB thermal element before surfaces become dangerous, and insulation failure usually progresses to a short or earth fault that trips a device; the silent fire-starter is the HRJ, which no overcurrent device sees.",
+      'PEOPLE: an uncleared earth fault — metalwork rises to phase voltage and current flows through the person to earth; the main cause of shock fatalities. PROPERTY: a high-resistance joint — silent I²R heat under load that ignites combustibles; the main cause of electrical fires.',
+      'PEOPLE: the short circuit — the loud bang and high fault current are what injure people. PROPERTY: the open circuit — loss of supply damages freezers and IT equipment. Short circuits are usually cleared safely in milliseconds by the MCB and rarely injure anyone, and an open circuit causes inconvenience, not fire; the real killers and burners are uncleared earth faults and HRJs.',
+      'PEOPLE: transient over-voltage — surges deliver a shock through equipment casings. PROPERTY: the short circuit — its fault energy melts cabling. Transients damage electronics rather than shocking people, and short circuits are normally cleared before serious fire; uncleared earth faults cause most shock deaths and HRJs cause most electrical fires.',
+      'PEOPLE: the overload — sustained excess current heats accessible surfaces and burns the user. PROPERTY: insulation failure — the only fault that starts fires. Overloads are cleared by the MCB thermal element before surfaces become dangerous, and insulation failure usually progresses to a short or earth fault that trips a device; the silent fire-starter is the HRJ, which no overcurrent device sees.',
     ],
     correctAnswer: 0,
     explanation:
@@ -196,32 +195,32 @@ const faqs = [
   {
     question: "What's the most common fault type on domestic installations?",
     answer:
-      "Earth-leakage faults causing RCD nuisance trips — typically around 40% of domestic fault call-outs in the trade-data sources. Causes: failing appliance heaters (dishwasher, washing machine, kettle elements), water ingress into outdoor sockets / lights, accumulated leakage from many small sources reaching the 30 mA threshold. Second most common: open-circuit faults at sockets and accessories (broken switches, failed terminals). Third: HRJs at sockets and DBs (loose terminals, undersized cable for load). Short circuits and excess current are less frequent but more dramatic when they happen.",
+      'Earth-leakage faults causing RCD nuisance trips — typically around 40% of domestic fault call-outs in the trade-data sources. Causes: failing appliance heaters (dishwasher, washing machine, kettle elements), water ingress into outdoor sockets / lights, accumulated leakage from many small sources reaching the 30 mA threshold. Second most common: open-circuit faults at sockets and accessories (broken switches, failed terminals). Third: HRJs at sockets and DBs (loose terminals, undersized cable for load). Short circuits and excess current are less frequent but more dramatic when they happen.',
   },
   {
-    question: "Why is HRJ so much harder to diagnose than open or short circuit?",
+    question: 'Why is HRJ so much harder to diagnose than open or short circuit?',
     answer:
       "Because the meter readings on a HRJ at no-load look almost identical to a clean termination. The continuity test is at 200 mA — a 0.5 Ω HRJ shows 0.5 Ω, a clean termination shows 0.05 Ω. Both look 'fine' if you don't know the expected value. The HRJ only reveals itself under load (voltage drop across it heats it) and over time (the heat damages the surrounding material). Diagnosis needs: (1) baseline expected continuity reading from cable design, (2) voltage drop measurement under realistic load, (3) thermal imaging at full load. The combination identifies HRJ; no single test does.",
   },
   {
-    question: "Can a fault be more than one of the seven categories at once?",
+    question: 'Can a fault be more than one of the seven categories at once?',
     answer:
-      "Yes. Most real faults evolve. A typical sequence: (1) Insulation failure starts as a high-resistance leakage (e.g. moisture in a junction box). (2) Leakage current heats the contamination, accelerating breakdown. (3) Insulation degrades to short circuit (L–N or L–E). (4) Short-circuit current arcs at the fault, vaporising material and creating a parallel arc fault. (5) Repeated arcing creates an HRJ at the damaged point. (6) HRJ heat ignites surrounding material — fire. The fault you see today might be at stage 3 or 4 of a process that started as a stage 1 leakage two years ago. Diagnosis identifies the current state AND the trajectory.",
+      'Yes. Most real faults evolve. A typical sequence: (1) Insulation failure starts as a high-resistance leakage (e.g. moisture in a junction box). (2) Leakage current heats the contamination, accelerating breakdown. (3) Insulation degrades to short circuit (L–N or L–E). (4) Short-circuit current arcs at the fault, vaporising material and creating a parallel arc fault. (5) Repeated arcing creates an HRJ at the damaged point. (6) HRJ heat ignites surrounding material — fire. The fault you see today might be at stage 3 or 4 of a process that started as a stage 1 leakage two years ago. Diagnosis identifies the current state AND the trajectory.',
   },
   {
-    question: "Do AFDDs replace RCDs?",
+    question: 'Do AFDDs replace RCDs?',
     answer:
       "No — they're complementary. RCDs detect residual currents (earth faults). AFDDs detect arc signatures (parallel and series arcs). They protect against different fault categories. Modern installations under BS 7671 A4:2026 increasingly use AFDD/RCBO combination devices (single device with all three elements: thermal, magnetic, residual + arc detection). Manufacturer examples: Hager AFB, Schneider iC60 with Vigi+AF, Wylex NHXSAF. The combination devices are the future of CU protection — single-pole-and-neutral protection covering all four fault categories.",
   },
   {
-    question: "How much energy is in a typical electrical fire ignition?",
+    question: 'How much energy is in a typical electrical fire ignition?',
     answer:
-      "Surprisingly little. A 0.5 Ω HRJ on a 32 A circuit carrying 25 A under load dissipates 313 W at the joint — equivalent to a small electric heater concentrated in a few millimetres of terminal. Surface temperature can reach 400-600 °C within minutes. PVC insulation chars at 200 °C; wood ignites at 250 °C; paper at 230 °C. So a few hundred watts of HRJ heat is more than enough to ignite combustibles in a typical CU enclosure or junction box. The relatively small power level is why HRJs are missed by overcurrent protection — and why thermal scanning + AFDD are the appropriate detection methods.",
+      'Surprisingly little. A 0.5 Ω HRJ on a 32 A circuit carrying 25 A under load dissipates 313 W at the joint — equivalent to a small electric heater concentrated in a few millimetres of terminal. Surface temperature can reach 400-600 °C within minutes. PVC insulation chars at 200 °C; wood ignites at 250 °C; paper at 230 °C. So a few hundred watts of HRJ heat is more than enough to ignite combustibles in a typical CU enclosure or junction box. The relatively small power level is why HRJs are missed by overcurrent protection — and why thermal scanning + AFDD are the appropriate detection methods.',
   },
   {
-    question: "Why do faults often appear randomly (intermittent) rather than continuously?",
+    question: 'Why do faults often appear randomly (intermittent) rather than continuously?',
     answer:
-      "Several reasons. (1) Thermal cycling — the fault appears when the affected component is at a particular temperature (cold solder joint, heat-sensitive crack). (2) Mechanical movement — vibration, settling, thermal expansion / contraction of cable runs makes contact at one position and not another. (3) Moisture cycling — fault appears when humidity is high (overnight, after rain) and clears when conditions dry. (4) Load-dependent — fault appears under specific load combinations that exceed a marginal joint or cable. (5) Time-dependent — fault appears at specific times (afternoon when temperature peaks, morning when first switched on). Diagnosing intermittent faults often requires data-logging (PQ analyser, see Sub 2.3) over hours / days rather than instantaneous testing.",
+      'Several reasons. (1) Thermal cycling — the fault appears when the affected component is at a particular temperature (cold solder joint, heat-sensitive crack). (2) Mechanical movement — vibration, settling, thermal expansion / contraction of cable runs makes contact at one position and not another. (3) Moisture cycling — fault appears when humidity is high (overnight, after rain) and clears when conditions dry. (4) Load-dependent — fault appears under specific load combinations that exceed a marginal joint or cable. (5) Time-dependent — fault appears at specific times (afternoon when temperature peaks, morning when first switched on). Diagnosing intermittent faults often requires data-logging (PQ analyser, see Sub 2.3) over hours / days rather than instantaneous testing.',
   },
 ];
 
@@ -230,297 +229,522 @@ export default function Sub1() {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
-      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
-        <PageFrame>
-          <button onClick={() => navigate('/study-centre/apprentice/level3-module4-section3')} className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start">
-            <ArrowLeft className="h-4 w-4" /> Section 3
+    <HubPage>
+      <HubMasthead
+        section="Module 4 · Section 3 · Subsection 1"
+        title="Types, causes and consequences of faults"
+        backTo="/study-centre/apprentice/level3-module4-section3"
+      />
+      <HubBody>
+        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
+          The seven canonical electrical fault types — open circuit, short circuit, earth fault,
+          high-resistance joint, insulation failure, transient voltage, excess current — what causes
+          each, what each looks like on the meter, what each does to the installation.
+        </p>
+
+        <TLDR
+          points={[
+            'Seven canonical fault types: open circuit, short circuit, earth fault, HRJ, insulation failure, transient voltage, excess current.',
+            "Most fatal fault: earth fault that isn't cleared (RCD failure or no RCD). Most damaging fault: high-resistance joint (no protective device sees it; ignites buildings).",
+            'Real faults often evolve through stages — insulation failure → arc → HRJ → fire. Diagnosis identifies current state AND trajectory.',
+          ]}
+        />
+
+        <LearningOutcomes
+          outcomes={[
+            'Define and identify each of the seven canonical fault types — open, short, earth, HRJ, insulation failure, transient, excess current.',
+            'Match each fault type to the protective device that responds to it — MCB thermal/magnetic, RCD, AFDD, SPD, fuse.',
+            'Explain why high-resistance joint (HRJ) is the most dangerous fault category for property damage — silent, unprotected by overcurrent devices, ignites combustibles.',
+            'Recognise the meter signatures of each fault type on continuity, IR and EFLI tests.',
+            'Understand fault evolution — how an insulation failure can progress through arc, HRJ, to fire over time.',
+            'Apply BS 7671 A4:2026 protection layering — MCB + RCBO + AFDD + SPD — to cover all fault categories.',
+          ]}
+          initialVisibleCount={3}
+        />
+
+        <ContentEyebrow>The seven canonical fault types</ContentEyebrow>
+
+        <ConceptBlock
+          title="Each fault has a meter signature, a protective device, and a consequence"
+          plainEnglish="Real faults are infinitely varied but they fall into seven categories. Knowing the categories gives you a diagnostic vocabulary; recognising the meter signature lets you classify the fault quickly; knowing the protective device tells you what should have caught it."
+        >
+          <p>The seven types:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Open circuit</strong> — current path broken. R = ∞. Load doesn't operate.
+              Caused by broken conductor, failed terminal, blown fuse.
+            </li>
+            <li>
+              <strong>Short circuit</strong> — direct connection between conductors that should be
+              separate (L–L, L–N, live to live). Very low R, very high current. Trips MCB magnetic
+              element.
+            </li>
+            <li>
+              <strong>Earth fault</strong> — current path between live and earth. Operates RCD if
+              path is through CPC; bypasses RCD if return is via parallel route.
+            </li>
+            <li>
+              <strong>High-resistance joint (HRJ)</strong> — termination with elevated contact
+              resistance. Dissipates I²R heat under load. Fire risk. NOT cleared by any overcurrent
+              device.
+            </li>
+            <li>
+              <strong>Insulation failure</strong> — degraded insulation between conductors.
+              High-resistance leakage path. Precursor to short circuit or earth fault.
+            </li>
+            <li>
+              <strong>Transient over-voltage</strong> — brief over-voltage spike (microseconds to
+              ms) at 1–20+ kV. From lightning, switching, faults. Damages electronics. Cleared by
+              SPD.
+            </li>
+            <li>
+              <strong>Excess current</strong> — overload (sustained 1.1–5× rated) or fault (sudden
+              10×+ rated). Trips MCB thermal or magnetic element respectively.
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <RegsCallout
+          source="BS 7671:2018+A4:2026 — Reg 131.1 (Fundamental principles)"
+          clause={
+            <>
+              "This chapter states the fundamental principles which a person designing, erecting and
+              verifying an electrical installation shall observe... All electrical installations
+              shall be capable of withstanding overcurrent due to overload and short-circuit, and
+              have means provided for the safe disconnection of any fault."
+            </>
+          }
+          meaning={
+            <>
+              The \'fundamental principles' chapter sets the duty for protection against the fault
+              categories. Overcurrent protection (MCB / fuse) covers overload + short circuit. Earth
+              fault protection (RCD / RCBO) covers earth fault. AFDD covers arc faults. SPD covers
+              transients. Each category has a designated protective device under the regulation.
+            </>
+          }
+          cite="Source: BS 7671:2018 incorporating Amendment 2:2022, Reg 131.1."
+        />
+
+        <InlineCheck {...checks[0]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>Open circuit and short circuit — the easy ones</ContentEyebrow>
+
+        <ConceptBlock
+          title="Two categories that show up obviously on the meter"
+          onSite="Open and short circuits are the simplest faults to diagnose because the meter signature is unambiguous — R = ∞ or R = near zero. The hard part is finding the location, not classifying the fault."
+        >
+          <p>Open circuit characteristics:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Continuity reads ∞ Ω on the affected conductor.</li>
+            <li>IR reads infinity (no leakage path).</li>
+            <li>EFLI reads OPEN (the loop is broken).</li>
+            <li>Load doesn't operate.</li>
+            <li>
+              Causes: broken conductor, failed terminal screw, blown fuse, failed switch, broken
+              component.
+            </li>
+          </ul>
+          <p>Short circuit characteristics:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Continuity between L and N (or L and L) reads near zero.</li>
+            <li>Protective device trips immediately on energisation.</li>
+            <li>
+              Causes: insulation breakdown, damaged cable, cross-wired terminal, internal appliance
+              fault.
+            </li>
+            <li>
+              Often visual evidence at the fault point (scorching, melted insulation, displaced
+              conductors).
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <InlineCheck {...checks[1]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>HRJ — the silent killer</ContentEyebrow>
+
+        <ConceptBlock
+          title="Why high-resistance joints are the hardest fault to diagnose AND the most dangerous"
+          plainEnglish="HRJ is a termination with higher-than-design contact resistance. The \'normal' resistance is 0.001 Ω or less; an HRJ might be 0.05–5 Ω. Under load, the joint dissipates power as heat (I²R). Sustained heat damages the surrounding insulation and combustibles."
+          onSite="Sub 2.3 covered the thermal-imaging diagnosis. Sub 2.4 covered the multi-test signature (high R1+R2 + high Zs + voltage drop on load). HRJ is genuinely hard to find — and it's the leading cause of electrical fires in dwellings."
+        >
+          <p>HRJ causes:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              Loose terminal screw (under-torqued, vibration loosened, thermal cycling loosened).
+            </li>
+            <li>Oxidised contact (especially aluminium-to-copper).</li>
+            <li>Undersized crimp or wrong tool used (pliers instead of ratchet crimper).</li>
+            <li>Damaged conductor strands at the termination (over-stripped, knife-nicked).</li>
+            <li>Scorched contact from a previous fault (carbon residue creates the new HRJ).</li>
+            <li>
+              Wrong terminal type for conductor (screw terminal not suitable for fine-stranded flex
+              without bootlace ferrule).
+            </li>
+          </ul>
+          <p>
+            HRJ heat output: a 0.5 Ω joint at 25 A load = 313 W concentrated in a few mm. PVC chars
+            at 200 °C; wood ignites at 250 °C; the joint surface easily reaches 400–600 °C. Fire
+            ignition takes minutes to hours of sustained load.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...checks[2]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>Insulation failure, transient over-voltage, excess current</ContentEyebrow>
+
+        <ConceptBlock title="The remaining three fault categories">
+          <p>
+            <strong>Insulation failure</strong> — degradation of the dielectric between conductors.
+            Causes: physical damage (nail, mouse, abrasion), thermal damage (proximity to heat
+            source, prolonged overload), moisture / contamination, UV degradation, ageing, chemical
+            attack. Progresses to short circuit or earth fault. Diagnosed by IR test — readings
+            below 1 MΩ indicate failure.
+          </p>
+          <p>
+            <strong>Transient over-voltage</strong> — brief spike (μs–ms) at 1–20+ kV. Causes:
+            lightning (direct or induced), switching of inductive loads, supply-network faults,
+            capacitor switching. Damages solid-state devices. SPD (Surge Protective Device) under BS
+            7671 443 is the protection. A4:2026 strengthened SPD requirements.
+          </p>
+          <p>
+            <strong>Excess current</strong> — two sub-categories. OVERLOAD: sustained 1.1–5× rated
+            current; cleared by MCB thermal element (slow trip). SHORT-CIRCUIT FAULT: sudden 10×+
+            rated; cleared by MCB magnetic element (instant trip). Type B/C/D ratings define the
+            magnetic threshold (3-5× / 5-10× / 10-20× respectively).
+          </p>
+        </ConceptBlock>
+
+        <RegsCallout
+          source="BS 7671:2018+A4:2026 — Reg 421.1.7"
+          clause={
+            <>
+              "Regulation 421.1.7 has been redrafted. It is now a requirement to protect final
+              circuits supplying socket-outlets with a rated current not exceeding 32 A using arc
+              fault detection devices (AFDD) in Higher Risk Residential Buildings, Houses in
+              Multiple Occupation, Purpose-built student accommodation and Care homes. For all other
+              premises, the regulation recommends AFDDs for single-phase circuits."
+            </>
+          }
+          meaning={
+            <>
+              A4:2026 split AFDDs into two categories: mandatory for HRRBs, HMOs, PBSA and care
+              homes; recommended for everywhere else. On a fault-diagnosis visit to one of the
+              mandatory categories, an absent AFDD is a non-compliance to record. On other premises,
+              an absent AFDD is a recommendation to discuss &mdash; not a Code 2.
+            </>
+          }
+          cite="Source: BS 7671:2018+A4:2026 — Regulation 421.1.7 (redrafted in A4:2026; AFDDs now a requirement for HRRBs / HMOs / PBSA / care homes, recommended elsewhere)."
+        />
+
+        <RegsCallout
+          source="BS 7671:2018+A4:2026 — Reg 411.4.1"
+          clause={
+            <>
+              "In a TN system, the integrity of the earthing of the installation depends on the
+              reliable and effective connection of the PEN or PE conductors to Earth. Where the
+              earthing is provided from a public or other supply system, compliance with the
+              necessary conditions external to the installation is the responsibility of the
+              distributor."
+            </>
+          }
+          meaning={
+            <>
+              Earth-fault behaviour on TN installations is only as reliable as the upstream PEN.
+              When you&apos;re classifying a fault as &ldquo;earth fault&rdquo; you&apos;re assuming
+              the path back to the transformer is intact. If it isn&apos;t, the fault current never
+              flows, the breaker never trips, and the customer&apos;s metalwork sits at phase
+              voltage. This is why N&ndash;E and Ze readings come before fault classification, not
+              after.
+            </>
+          }
+          cite="Source: BS 7671:2018+A4:2026 — Reg 411.4.1, verbatim."
+        />
+
+        <VideoCard
+          url={videos.faultFinding.url}
+          title={videos.faultFinding.title}
+          channel={videos.faultFinding.channel}
+          duration={videos.faultFinding.duration}
+          topic={videos.faultFinding.topic}
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>Where it goes wrong</ContentEyebrow>
+
+        <CommonMistake
+          title="Diagnosing an HRJ as \'just a worn socket' and replacing without root cause analysis"
+          whatHappens={
+            <>
+              Apprentice finds a kitchen socket with melted face plate, replaces socket, retests,
+              all fine, leaves. Three months later the customer reports another melted socket on the
+              same circuit. Apprentice replaces again. Cycle continues. Real cause: the upstream
+              socket has been over-loaded for years (kettle + microwave + toaster on a single
+              faceplate) — the issue isn't the socket, it\'s the cable rating + the breaker rating +
+              the user\'s load pattern. The melting socket is a symptom; the design / load issue is
+              the root cause.
+            </>
+          }
+          doInstead={
+            <>
+              For HRJ findings, look for the pattern. Multiple HRJs on the same circuit suggest
+              sustained overload, not random failure. Measure the actual load pattern with a clamp
+              meter; check the circuit design against the load; consider upgrading to higher-rated
+              cable / breaker / accessory. Sub 4.4 (5-Whys root cause) walks through the analysis
+              discipline.
+            </>
+          }
+        />
+
+        <CommonMistake
+          title="Restoring a tripped MCB without identifying the fault category"
+          whatHappens={
+            <>
+              Customer has tripped MCB. Apprentice resets it without testing. Breaker stays in.
+              Apprentice leaves. Two days later same breaker trips again — this time the underlying
+              fault has progressed (insulation failure → short circuit) and an arc has scorched the
+              cable. Customer escalates the call-out fee complaint; the apprentice is asked why they
+              didn't investigate the original trip.
+            </>
+          }
+          doInstead={
+            <>
+              A tripped MCB is a symptom — never just reset and leave. Test the affected circuit
+              (continuity, IR, EFLI) to identify the fault category. Find and rectify the cause.
+              Reset only after rectification AND retest. Document the cause and the fix on the job
+              sheet. The 'just reset it' habit is the root of repeat call-outs.
+            </>
+          }
+        />
+
+        <Scenario
+          title="Distinguishing fault types on a multi-symptom domestic complaint"
+          situation={
+            <>
+              Customer reports three symptoms over two weeks: (1) lights flicker briefly when the
+              fridge cycles on, (2) RCD on kitchen ring trips occasionally, (3) socket in utility
+              room is warm to the touch. They suspect 'something wrong with the wiring\'.
+            </>
+          }
+          whatToDo={
+            <>
+              Investigate each symptom as a separate fault hypothesis. (1) Flicker on fridge cycle —
+              voltage drop on inrush; possible HRJ on the supply path or undersized supply cable.
+              Test EFLI at the affected lighting circuit; measure voltage drop with clamp meter when
+              fridge cycles. (2) RCD nuisance trip on kitchen ring — earth leakage. Use clamp meter
+              (L+N together) to measure leakage; identify the leaky appliance by elimination (Sub
+              3.4 covers this). (3) Warm socket — HRJ at that socket. Thermal imaging under load; if
+              hotspot confirmed, isolate, open, inspect, re-terminate. The customer\'s 'something
+              wrong with the wiring' is actually three separate faults of different categories —
+              your investigation reports each one and its rectification.
+            </>
+          }
+          whyItMatters={
+            <>
+              Real fault-diagnosis jobs often have multiple symptoms that look like one issue but
+              are actually independent. The L3 step-up is to investigate each symptom as its own
+              hypothesis with appropriate tests, rather than assuming one root cause. Combining the
+              seven-category framework with disciplined per-symptom testing is what separates a
+              fast, accurate diagnosis from a hand-wavy guess.
+            </>
+          }
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>Open circuit — diagnosis routine</ContentEyebrow>
+
+        <ConceptBlock
+          title="The open-circuit fault — why it happens and how the MFT confirms it"
+          plainEnglish="Open circuit means a break in the conductor — line, neutral or CPC. Symptom: the load doesn't work; voltage at the load is zero; continuity test from supply to load reads OPEN."
+          onSite="Common causes: terminal screw vibrated loose, conductor work-hardened and snapped at a junction box clamp, rodent damage in a loft (rats love XLPE insulation on SWA), broken solder joint inside an electronic load, fuse blown or MCB tripped. Diagnosis: continuity (R1+R2) on the Megger MFT1741+ between supply end and load end of each conductor in turn — line, neutral, CPC. The conductor that reads OPEN is the broken one. Then walk the cable run with continuity probes to find the break point."
+        >
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Continuity sequence</strong> — line continuity (supply L to load L); neutral
+              continuity (supply N to load N); CPC continuity (supply CPC to load earth).
+            </li>
+            <li>
+              <strong>R1+R2</strong> — line + CPC loop. Reads OPEN if either is broken.
+            </li>
+            <li>
+              <strong>Halve and test</strong> — split the cable run at the midpoint, retest each
+              half. The half that reads OPEN contains the break. Repeat until you've localised to a
+              few metres.
+            </li>
+            <li>
+              <strong>Cable-locator</strong> — a Fluke 2042 cable locator or Megger CFL535G can
+              trace cable runs through walls / under floors and identify break points without
+              exposing the cable.
+            </li>
+            <li>
+              <strong>Wander lead</strong> — Megger WL10 / WL20 wander lead extends one MFT probe to
+              the far end of a long radial. Test R1+R2 with the lead at the load and the MFT at the
+              DB.
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <ContentEyebrow>Short circuit — diagnosis routine</ContentEyebrow>
+
+        <ConceptBlock
+          title="The short-circuit fault — L-N or L-L direct contact"
+          plainEnglish="Short circuit means line directly contacting neutral (L-N) or line-to-line on three-phase (L-L). Fault current is limited only by source impedance; PSCC of 1-10 kA is typical. The MCB or fuse trips immediately. Symptom: breaker trips on power-up; loud bang on initial fault; possibly visible damage at the fault point (burnt insulation, tripped MCB on closure)."
+          onSite="Common causes: cable nail / staple driven through twin-and-earth, water ingress bridging L and N inside an outdoor accessory, terminal screw clamping insulation between L and N, rodent damage exposing both conductors, faulty appliance with internal short. Diagnosis: insulation resistance test L-N at 500 V on the Megger MFT1741+ — healthy circuit reads >999 MΩ; short reads near zero (<1 MΩ definitely faulty)."
+        >
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>IR test L-N</strong> — at 500 V (or 250 V if electronics can't be
+              disconnected). Pass: &gt;1 MΩ minimum, typically &gt;100 MΩ on healthy circuit.
+            </li>
+            <li>
+              <strong>Halve and test</strong> — disconnect at midpoint, retest each half. Repeat to
+              localise.
+            </li>
+            <li>
+              <strong>Visual inspection</strong> — burnt insulation, melted accessory, signs of
+              arcing. Common at staple points, nail points through cables, corner-of-back-box where
+              insulation got crushed.
+            </li>
+            <li>
+              <strong>Appliance test</strong> — disconnect all loads, retest IR. If now passes,
+              fault is in an appliance. Plug appliances back one at a time, retest each — the
+              appliance that drops the IR is faulty.
+            </li>
+            <li>
+              <strong>Cable-tracer / fault-finder</strong> — Amprobe AT-7000, Megger FFL3 cable
+              fault locator, both inject signal and locate faults along buried or hidden cable runs.
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <ContentEyebrow>Earth fault — diagnosis routine</ContentEyebrow>
+
+        <ConceptBlock
+          title="The earth fault — L-E direct contact (the most common fault on modern installations)"
+          plainEnglish="Earth fault means line directly contacting CPC or exposed earthed metalwork. Fault current depends on Zs (earth fault loop impedance); on TN-C-S typically 50-500 A; on TT typically 1-5 A. RCD trips at 30 mA residual; MCB trips at instantaneous trip current (typically 5-10× rated)."
+          onSite="Common causes: damaged insulation exposing line conductor near earthed metal, water ingress inside outdoor accessories, faulty heating element shorting to body of appliance, damaged appliance flex with line touching earth. Diagnosis: IR test L-E at 500 V on MFT — healthy >999 MΩ; faulty <1 MΩ. EFLI Zs measurement confirms protection will operate."
+        >
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>IR test L-E</strong> — at 500 V. Identifies the L-E fault if the fault is
+              permanent.
+            </li>
+            <li>
+              <strong>Live clamp test</strong> — Fluke 369 FC or Megger DCM340 leakage clamp around
+              line + neutral together at the circuit origin. A healthy circuit reads &lt;1 mA; an
+              L-E leak reads 5-30+ mA.
+            </li>
+            <li>
+              <strong>Hi-Z (no-trip) loop test</strong> — Megger MFT1741+ Hi-Z mode tests Zs without
+              tripping the RCD. Useful when investigating without disturbing the customer.
+            </li>
+            <li>
+              <strong>Disconnect appliances</strong> — plug-in appliances are the most common cause
+              of intermittent earth leakage (kettle element wet, washing machine drum bearing
+              failed). Disconnect each in turn, retest IR.
+            </li>
+            <li>
+              <strong>Touch-voltage test</strong> — Megger MFT1741+ touch-voltage mode reports the
+              voltage on accessible metalwork during a simulated L-E fault. Above 50 V AC = unsafe.
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <ContentEyebrow>Transient voltages and surge events</ContentEyebrow>
+
+        <ConceptBlock
+          title="The transient fault — when the cause is gone before you arrive"
+          plainEnglish="Transient voltage events (lightning strikes, switching surges, capacitor switching, motor starting, IGBT switching in inverters) can damage equipment and trip protection without leaving a measurable fault. Symptom: equipment damaged, fault is gone, the customer can't reproduce it. Investigation requires either evidence of past events (equipment damage patterns) or a power-quality analyser to catch a future event."
+          onSite="Standard kit: Fluke 1730 / 1760 PQ analyser logs voltage, current and transient events over hours/days. SPDs (Surge Protective Devices) at the origin (Type 1+2 combined units like Hager SPN302D, Schneider iPRD40r, Mersen STR40T2-275) catch lightning-induced surges and prevent equipment damage. A blown SPD is itself a diagnostic clue (the SPD did its job; check for a recent event)."
+        >
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>SPD inspection</strong> — Type 2 SPDs at the CU have a status indicator
+              (red/green window). Red = SPD has operated and needs replacement.
+            </li>
+            <li>
+              <strong>Equipment damage patterns</strong> — pinhole burns on PCBs, blackened MOV
+              (metal-oxide varistor), failed switching power supplies in multiple devices
+              simultaneously = lightning-induced transient.
+            </li>
+            <li>
+              <strong>PQ analyser deployment</strong> — Fluke 1730 logs for 7+ days, captures dips,
+              swells, transients above defined threshold. Customer-presentable report identifies
+              events and timing.
+            </li>
+            <li>
+              <strong>Switching transients</strong> — large motor startups, capacitor banks,
+              contactor operation, VSD switching all create transients. Localised to specific
+              equipment events; correlate by timing.
+            </li>
+            <li>
+              <strong>BS 7671 443 + 534</strong> — Chapter 443 (transient overvoltages) sets when
+              SPDs are required (most modern installations); Chapter 534 (specification for SPDs)
+              sets the technical requirements.
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <FAQ items={faqs} />
+
+        <SectionRule />
+
+        <KeyTakeaways
+          points={[
+            'Seven canonical fault types: open circuit, short circuit, earth fault, HRJ, insulation failure, transient voltage, excess current.',
+            'Each fault has a meter signature, a designated protective device (MCB / RCD / AFDD / SPD / fuse), and a consequence (load fails / fire / shock / equipment damage).',
+            'Most fatal fault: earth fault not cleared (RCD failure or no RCD). Most damaging fault: HRJ (silent, unprotected by overcurrent, ignites buildings).',
+            'Real faults evolve — insulation failure → arc → HRJ → fire. Diagnosis identifies current state AND trajectory.',
+            'Open / short circuit are easy to classify (R = ∞ or near zero). HRJ is hard — needs voltage drop on load + thermal imaging to reveal.',
+            'BS 7671 A4:2026 mandates AFDD on certain dwelling final circuits to catch the parallel-arc fault category that no other device sees.',
+            'SPD (BS 7671 443) protects against transient over-voltages from lightning, switching and supply-network faults.',
+            "Tripped MCB is a symptom — never reset without testing. The 'just reset' habit is the root of repeat call-outs.",
+          ]}
+        />
+
+        <Quiz title="Types, causes and consequences — knowledge check" questions={quizQuestions} />
+
+        <div className="grid grid-cols-2 gap-3 pt-2">
+          <button
+            onClick={() => navigate('/study-centre/apprentice/level3-module4-section2-4')}
+            className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+          >
+            <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+              <ChevronLeft className="h-3 w-3" /> Previous
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-white truncate">
+              2.4 MFT testing
+            </div>
           </button>
-
-          <PageHero
-            eyebrow="Module 4 · Section 3 · Subsection 1"
-            title="Types, causes and consequences of faults"
-            description="The seven canonical electrical fault types — open circuit, short circuit, earth fault, high-resistance joint, insulation failure, transient voltage, excess current — what causes each, what each looks like on the meter, what each does to the installation."
-            tone="emerald"
-          />
-
-          <TLDR
-            points={[
-              "Seven canonical fault types: open circuit, short circuit, earth fault, HRJ, insulation failure, transient voltage, excess current.",
-              "Most fatal fault: earth fault that isn't cleared (RCD failure or no RCD). Most damaging fault: high-resistance joint (no protective device sees it; ignites buildings).",
-              "Real faults often evolve through stages — insulation failure → arc → HRJ → fire. Diagnosis identifies current state AND trajectory.",
-            ]}
-          />
-
-          <LearningOutcomes
-            outcomes={[
-              "Define and identify each of the seven canonical fault types — open, short, earth, HRJ, insulation failure, transient, excess current.",
-              "Match each fault type to the protective device that responds to it — MCB thermal/magnetic, RCD, AFDD, SPD, fuse.",
-              "Explain why high-resistance joint (HRJ) is the most dangerous fault category for property damage — silent, unprotected by overcurrent devices, ignites combustibles.",
-              "Recognise the meter signatures of each fault type on continuity, IR and EFLI tests.",
-              "Understand fault evolution — how an insulation failure can progress through arc, HRJ, to fire over time.",
-              "Apply BS 7671 A4:2026 protection layering — MCB + RCBO + AFDD + SPD — to cover all fault categories.",
-            ]}
-            initialVisibleCount={3}
-          />
-
-          <ContentEyebrow>The seven canonical fault types</ContentEyebrow>
-
-          <ConceptBlock
-            title="Each fault has a meter signature, a protective device, and a consequence"
-            plainEnglish="Real faults are infinitely varied but they fall into seven categories. Knowing the categories gives you a diagnostic vocabulary; recognising the meter signature lets you classify the fault quickly; knowing the protective device tells you what should have caught it."
+          <button
+            onClick={() => navigate('/study-centre/apprentice/level3-module4-section3-2')}
+            className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
           >
-            <p>The seven types:</p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Open circuit</strong> — current path broken. R = ∞. Load doesn't operate. Caused by broken conductor, failed terminal, blown fuse.</li>
-              <li><strong>Short circuit</strong> — direct connection between conductors that should be separate (L–L, L–N, live to live). Very low R, very high current. Trips MCB magnetic element.</li>
-              <li><strong>Earth fault</strong> — current path between live and earth. Operates RCD if path is through CPC; bypasses RCD if return is via parallel route.</li>
-              <li><strong>High-resistance joint (HRJ)</strong> — termination with elevated contact resistance. Dissipates I²R heat under load. Fire risk. NOT cleared by any overcurrent device.</li>
-              <li><strong>Insulation failure</strong> — degraded insulation between conductors. High-resistance leakage path. Precursor to short circuit or earth fault.</li>
-              <li><strong>Transient over-voltage</strong> — brief over-voltage spike (microseconds to ms) at 1–20+ kV. From lightning, switching, faults. Damages electronics. Cleared by SPD.</li>
-              <li><strong>Excess current</strong> — overload (sustained 1.1–5× rated) or fault (sudden 10×+ rated). Trips MCB thermal or magnetic element respectively.</li>
-            </ul>
-          </ConceptBlock>
-
-          <RegsCallout
-            source="BS 7671:2018+A4:2026 — Reg 131.1 (Fundamental principles)"
-            clause={<>"This chapter states the fundamental principles which a person designing, erecting and verifying an electrical installation shall observe... All electrical installations shall be capable of withstanding overcurrent due to overload and short-circuit, and have means provided for the safe disconnection of any fault."</>}
-            meaning={<>The \'fundamental principles' chapter sets the duty for protection against the fault categories. Overcurrent protection (MCB / fuse) covers overload + short circuit. Earth fault protection (RCD / RCBO) covers earth fault. AFDD covers arc faults. SPD covers transients. Each category has a designated protective device under the regulation.</>}
-            cite="Source: BS 7671:2018 incorporating Amendment 2:2022, Reg 131.1."
-          />
-
-          <InlineCheck {...checks[0]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>Open circuit and short circuit — the easy ones</ContentEyebrow>
-
-          <ConceptBlock
-            title="Two categories that show up obviously on the meter"
-            onSite="Open and short circuits are the simplest faults to diagnose because the meter signature is unambiguous — R = ∞ or R = near zero. The hard part is finding the location, not classifying the fault."
-          >
-            <p>Open circuit characteristics:</p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Continuity reads ∞ Ω on the affected conductor.</li>
-              <li>IR reads infinity (no leakage path).</li>
-              <li>EFLI reads OPEN (the loop is broken).</li>
-              <li>Load doesn't operate.</li>
-              <li>Causes: broken conductor, failed terminal screw, blown fuse, failed switch, broken component.</li>
-            </ul>
-            <p>Short circuit characteristics:</p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Continuity between L and N (or L and L) reads near zero.</li>
-              <li>Protective device trips immediately on energisation.</li>
-              <li>Causes: insulation breakdown, damaged cable, cross-wired terminal, internal appliance fault.</li>
-              <li>Often visual evidence at the fault point (scorching, melted insulation, displaced conductors).</li>
-            </ul>
-          </ConceptBlock>
-
-          <InlineCheck {...checks[1]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>HRJ — the silent killer</ContentEyebrow>
-
-          <ConceptBlock
-            title="Why high-resistance joints are the hardest fault to diagnose AND the most dangerous"
-            plainEnglish="HRJ is a termination with higher-than-design contact resistance. The \'normal' resistance is 0.001 Ω or less; an HRJ might be 0.05–5 Ω. Under load, the joint dissipates power as heat (I²R). Sustained heat damages the surrounding insulation and combustibles."
-            onSite="Sub 2.3 covered the thermal-imaging diagnosis. Sub 2.4 covered the multi-test signature (high R1+R2 + high Zs + voltage drop on load). HRJ is genuinely hard to find — and it's the leading cause of electrical fires in dwellings."
-          >
-            <p>HRJ causes:</p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Loose terminal screw (under-torqued, vibration loosened, thermal cycling loosened).</li>
-              <li>Oxidised contact (especially aluminium-to-copper).</li>
-              <li>Undersized crimp or wrong tool used (pliers instead of ratchet crimper).</li>
-              <li>Damaged conductor strands at the termination (over-stripped, knife-nicked).</li>
-              <li>Scorched contact from a previous fault (carbon residue creates the new HRJ).</li>
-              <li>Wrong terminal type for conductor (screw terminal not suitable for fine-stranded flex without bootlace ferrule).</li>
-            </ul>
-            <p>
-              HRJ heat output: a 0.5 Ω joint at 25 A load = 313 W concentrated in a few mm. PVC chars at 200 °C; wood ignites at 250 °C; the joint surface easily reaches 400–600 °C. Fire ignition takes minutes to hours of sustained load.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...checks[2]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>Insulation failure, transient over-voltage, excess current</ContentEyebrow>
-
-          <ConceptBlock
-            title="The remaining three fault categories"
-          >
-            <p><strong>Insulation failure</strong> — degradation of the dielectric between conductors. Causes: physical damage (nail, mouse, abrasion), thermal damage (proximity to heat source, prolonged overload), moisture / contamination, UV degradation, ageing, chemical attack. Progresses to short circuit or earth fault. Diagnosed by IR test — readings below 1 MΩ indicate failure.</p>
-            <p><strong>Transient over-voltage</strong> — brief spike (μs–ms) at 1–20+ kV. Causes: lightning (direct or induced), switching of inductive loads, supply-network faults, capacitor switching. Damages solid-state devices. SPD (Surge Protective Device) under BS 7671 443 is the protection. A4:2026 strengthened SPD requirements.</p>
-            <p><strong>Excess current</strong> — two sub-categories. OVERLOAD: sustained 1.1–5× rated current; cleared by MCB thermal element (slow trip). SHORT-CIRCUIT FAULT: sudden 10×+ rated; cleared by MCB magnetic element (instant trip). Type B/C/D ratings define the magnetic threshold (3-5× / 5-10× / 10-20× respectively).</p>
-          </ConceptBlock>
-
-          <RegsCallout
-            source="BS 7671:2018+A4:2026 — Reg 421.1.7"
-            clause={
-              <>
-                "Regulation 421.1.7 has been redrafted. It is now a requirement to protect final circuits supplying socket-outlets with a rated current not exceeding 32 A using arc fault detection devices (AFDD) in Higher Risk Residential Buildings, Houses in Multiple Occupation, Purpose-built student accommodation and Care homes. For all other premises, the regulation recommends AFDDs for single-phase circuits."
-              </>
-            }
-            meaning={
-              <>
-                A4:2026 split AFDDs into two categories: mandatory for HRRBs, HMOs, PBSA and care homes; recommended for everywhere else. On a fault-diagnosis visit to one of the mandatory categories, an absent AFDD is a non-compliance to record. On other premises, an absent AFDD is a recommendation to discuss &mdash; not a Code 2.
-              </>
-            }
-            cite="Source: BS 7671:2018+A4:2026 — Regulation 421.1.7 (redrafted in A4:2026; AFDDs now a requirement for HRRBs / HMOs / PBSA / care homes, recommended elsewhere)."
-          />
-
-          <RegsCallout
-            source="BS 7671:2018+A4:2026 — Reg 411.4.1"
-            clause={
-              <>
-                "In a TN system, the integrity of the earthing of the installation depends on the reliable and effective connection of the PEN or PE conductors to Earth. Where the earthing is provided from a public or other supply system, compliance with the necessary conditions external to the installation is the responsibility of the distributor."
-              </>
-            }
-            meaning={
-              <>
-                Earth-fault behaviour on TN installations is only as reliable as the upstream PEN. When you&apos;re classifying a fault as &ldquo;earth fault&rdquo; you&apos;re assuming the path back to the transformer is intact. If it isn&apos;t, the fault current never flows, the breaker never trips, and the customer&apos;s metalwork sits at phase voltage. This is why N&ndash;E and Ze readings come before fault classification, not after.
-              </>
-            }
-            cite="Source: BS 7671:2018+A4:2026 — Reg 411.4.1, verbatim."
-          />
-
-          <VideoCard
-            url={videos.faultFinding.url}
-            title={videos.faultFinding.title}
-            channel={videos.faultFinding.channel}
-            duration={videos.faultFinding.duration}
-            topic={videos.faultFinding.topic}
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>Where it goes wrong</ContentEyebrow>
-
-          <CommonMistake
-            title="Diagnosing an HRJ as \'just a worn socket' and replacing without root cause analysis"
-            whatHappens={<>Apprentice finds a kitchen socket with melted face plate, replaces socket, retests, all fine, leaves. Three months later the customer reports another melted socket on the same circuit. Apprentice replaces again. Cycle continues. Real cause: the upstream socket has been over-loaded for years (kettle + microwave + toaster on a single faceplate) — the issue isn't the socket, it\'s the cable rating + the breaker rating + the user\'s load pattern. The melting socket is a symptom; the design / load issue is the root cause.</>}
-            doInstead={<>For HRJ findings, look for the pattern. Multiple HRJs on the same circuit suggest sustained overload, not random failure. Measure the actual load pattern with a clamp meter; check the circuit design against the load; consider upgrading to higher-rated cable / breaker / accessory. Sub 4.4 (5-Whys root cause) walks through the analysis discipline.</>}
-          />
-
-          <CommonMistake
-            title="Restoring a tripped MCB without identifying the fault category"
-            whatHappens={<>Customer has tripped MCB. Apprentice resets it without testing. Breaker stays in. Apprentice leaves. Two days later same breaker trips again — this time the underlying fault has progressed (insulation failure → short circuit) and an arc has scorched the cable. Customer escalates the call-out fee complaint; the apprentice is asked why they didn't investigate the original trip.</>}
-            doInstead={<>A tripped MCB is a symptom — never just reset and leave. Test the affected circuit (continuity, IR, EFLI) to identify the fault category. Find and rectify the cause. Reset only after rectification AND retest. Document the cause and the fix on the job sheet. The 'just reset it' habit is the root of repeat call-outs.</>}
-          />
-
-          <Scenario
-            title="Distinguishing fault types on a multi-symptom domestic complaint"
-            situation={<>Customer reports three symptoms over two weeks: (1) lights flicker briefly when the fridge cycles on, (2) RCD on kitchen ring trips occasionally, (3) socket in utility room is warm to the touch. They suspect 'something wrong with the wiring\'.</>}
-            whatToDo={<>Investigate each symptom as a separate fault hypothesis. (1) Flicker on fridge cycle — voltage drop on inrush; possible HRJ on the supply path or undersized supply cable. Test EFLI at the affected lighting circuit; measure voltage drop with clamp meter when fridge cycles. (2) RCD nuisance trip on kitchen ring — earth leakage. Use clamp meter (L+N together) to measure leakage; identify the leaky appliance by elimination (Sub 3.4 covers this). (3) Warm socket — HRJ at that socket. Thermal imaging under load; if hotspot confirmed, isolate, open, inspect, re-terminate. The customer\'s 'something wrong with the wiring' is actually three separate faults of different categories — your investigation reports each one and its rectification.</>}
-            whyItMatters={<>Real fault-diagnosis jobs often have multiple symptoms that look like one issue but are actually independent. The L3 step-up is to investigate each symptom as its own hypothesis with appropriate tests, rather than assuming one root cause. Combining the seven-category framework with disciplined per-symptom testing is what separates a fast, accurate diagnosis from a hand-wavy guess.</>}
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>Open circuit — diagnosis routine</ContentEyebrow>
-
-          <ConceptBlock
-            title="The open-circuit fault — why it happens and how the MFT confirms it"
-            plainEnglish="Open circuit means a break in the conductor — line, neutral or CPC. Symptom: the load doesn't work; voltage at the load is zero; continuity test from supply to load reads OPEN."
-            onSite="Common causes: terminal screw vibrated loose, conductor work-hardened and snapped at a junction box clamp, rodent damage in a loft (rats love XLPE insulation on SWA), broken solder joint inside an electronic load, fuse blown or MCB tripped. Diagnosis: continuity (R1+R2) on the Megger MFT1741+ between supply end and load end of each conductor in turn — line, neutral, CPC. The conductor that reads OPEN is the broken one. Then walk the cable run with continuity probes to find the break point."
-          >
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Continuity sequence</strong> — line continuity (supply L to load L); neutral continuity (supply N to load N); CPC continuity (supply CPC to load earth).</li>
-              <li><strong>R1+R2</strong> — line + CPC loop. Reads OPEN if either is broken.</li>
-              <li><strong>Halve and test</strong> — split the cable run at the midpoint, retest each half. The half that reads OPEN contains the break. Repeat until you've localised to a few metres.</li>
-              <li><strong>Cable-locator</strong> — a Fluke 2042 cable locator or Megger CFL535G can trace cable runs through walls / under floors and identify break points without exposing the cable.</li>
-              <li><strong>Wander lead</strong> — Megger WL10 / WL20 wander lead extends one MFT probe to the far end of a long radial. Test R1+R2 with the lead at the load and the MFT at the DB.</li>
-            </ul>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <ContentEyebrow>Short circuit — diagnosis routine</ContentEyebrow>
-
-          <ConceptBlock
-            title="The short-circuit fault — L-N or L-L direct contact"
-            plainEnglish="Short circuit means line directly contacting neutral (L-N) or line-to-line on three-phase (L-L). Fault current is limited only by source impedance; PSCC of 1-10 kA is typical. The MCB or fuse trips immediately. Symptom: breaker trips on power-up; loud bang on initial fault; possibly visible damage at the fault point (burnt insulation, tripped MCB on closure)."
-            onSite="Common causes: cable nail / staple driven through twin-and-earth, water ingress bridging L and N inside an outdoor accessory, terminal screw clamping insulation between L and N, rodent damage exposing both conductors, faulty appliance with internal short. Diagnosis: insulation resistance test L-N at 500 V on the Megger MFT1741+ — healthy circuit reads >999 MΩ; short reads near zero (<1 MΩ definitely faulty)."
-          >
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>IR test L-N</strong> — at 500 V (or 250 V if electronics can't be disconnected). Pass: &gt;1 MΩ minimum, typically &gt;100 MΩ on healthy circuit.</li>
-              <li><strong>Halve and test</strong> — disconnect at midpoint, retest each half. Repeat to localise.</li>
-              <li><strong>Visual inspection</strong> — burnt insulation, melted accessory, signs of arcing. Common at staple points, nail points through cables, corner-of-back-box where insulation got crushed.</li>
-              <li><strong>Appliance test</strong> — disconnect all loads, retest IR. If now passes, fault is in an appliance. Plug appliances back one at a time, retest each — the appliance that drops the IR is faulty.</li>
-              <li><strong>Cable-tracer / fault-finder</strong> — Amprobe AT-7000, Megger FFL3 cable fault locator, both inject signal and locate faults along buried or hidden cable runs.</li>
-            </ul>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <ContentEyebrow>Earth fault — diagnosis routine</ContentEyebrow>
-
-          <ConceptBlock
-            title="The earth fault — L-E direct contact (the most common fault on modern installations)"
-            plainEnglish="Earth fault means line directly contacting CPC or exposed earthed metalwork. Fault current depends on Zs (earth fault loop impedance); on TN-C-S typically 50-500 A; on TT typically 1-5 A. RCD trips at 30 mA residual; MCB trips at instantaneous trip current (typically 5-10× rated)."
-            onSite="Common causes: damaged insulation exposing line conductor near earthed metal, water ingress inside outdoor accessories, faulty heating element shorting to body of appliance, damaged appliance flex with line touching earth. Diagnosis: IR test L-E at 500 V on MFT — healthy >999 MΩ; faulty <1 MΩ. EFLI Zs measurement confirms protection will operate."
-          >
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>IR test L-E</strong> — at 500 V. Identifies the L-E fault if the fault is permanent.</li>
-              <li><strong>Live clamp test</strong> — Fluke 369 FC or Megger DCM340 leakage clamp around line + neutral together at the circuit origin. A healthy circuit reads &lt;1 mA; an L-E leak reads 5-30+ mA.</li>
-              <li><strong>Hi-Z (no-trip) loop test</strong> — Megger MFT1741+ Hi-Z mode tests Zs without tripping the RCD. Useful when investigating without disturbing the customer.</li>
-              <li><strong>Disconnect appliances</strong> — plug-in appliances are the most common cause of intermittent earth leakage (kettle element wet, washing machine drum bearing failed). Disconnect each in turn, retest IR.</li>
-              <li><strong>Touch-voltage test</strong> — Megger MFT1741+ touch-voltage mode reports the voltage on accessible metalwork during a simulated L-E fault. Above 50 V AC = unsafe.</li>
-            </ul>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <ContentEyebrow>Transient voltages and surge events</ContentEyebrow>
-
-          <ConceptBlock
-            title="The transient fault — when the cause is gone before you arrive"
-            plainEnglish="Transient voltage events (lightning strikes, switching surges, capacitor switching, motor starting, IGBT switching in inverters) can damage equipment and trip protection without leaving a measurable fault. Symptom: equipment damaged, fault is gone, the customer can't reproduce it. Investigation requires either evidence of past events (equipment damage patterns) or a power-quality analyser to catch a future event."
-            onSite="Standard kit: Fluke 1730 / 1760 PQ analyser logs voltage, current and transient events over hours/days. SPDs (Surge Protective Devices) at the origin (Type 1+2 combined units like Hager SPN302D, Schneider iPRD40r, Mersen STR40T2-275) catch lightning-induced surges and prevent equipment damage. A blown SPD is itself a diagnostic clue (the SPD did its job; check for a recent event)."
-          >
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>SPD inspection</strong> — Type 2 SPDs at the CU have a status indicator (red/green window). Red = SPD has operated and needs replacement.</li>
-              <li><strong>Equipment damage patterns</strong> — pinhole burns on PCBs, blackened MOV (metal-oxide varistor), failed switching power supplies in multiple devices simultaneously = lightning-induced transient.</li>
-              <li><strong>PQ analyser deployment</strong> — Fluke 1730 logs for 7+ days, captures dips, swells, transients above defined threshold. Customer-presentable report identifies events and timing.</li>
-              <li><strong>Switching transients</strong> — large motor startups, capacitor banks, contactor operation, VSD switching all create transients. Localised to specific equipment events; correlate by timing.</li>
-              <li><strong>BS 7671 443 + 534</strong> — Chapter 443 (transient overvoltages) sets when SPDs are required (most modern installations); Chapter 534 (specification for SPDs) sets the technical requirements.</li>
-            </ul>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <FAQ items={faqs} />
-
-          <SectionRule />
-
-          <KeyTakeaways
-            points={[
-              "Seven canonical fault types: open circuit, short circuit, earth fault, HRJ, insulation failure, transient voltage, excess current.",
-              "Each fault has a meter signature, a designated protective device (MCB / RCD / AFDD / SPD / fuse), and a consequence (load fails / fire / shock / equipment damage).",
-              "Most fatal fault: earth fault not cleared (RCD failure or no RCD). Most damaging fault: HRJ (silent, unprotected by overcurrent, ignites buildings).",
-              "Real faults evolve — insulation failure → arc → HRJ → fire. Diagnosis identifies current state AND trajectory.",
-              "Open / short circuit are easy to classify (R = ∞ or near zero). HRJ is hard — needs voltage drop on load + thermal imaging to reveal.",
-              "BS 7671 A4:2026 mandates AFDD on certain dwelling final circuits to catch the parallel-arc fault category that no other device sees.",
-              "SPD (BS 7671 443) protects against transient over-voltages from lightning, switching and supply-network faults.",
-              "Tripped MCB is a symptom — never reset without testing. The 'just reset' habit is the root of repeat call-outs.",
-            ]}
-          />
-
-          <Quiz title="Types, causes and consequences — knowledge check" questions={quizQuestions} />
-
-          <div className="grid grid-cols-2 gap-3 pt-2">
-            <button onClick={() => navigate('/study-centre/apprentice/level3-module4-section2-4')} className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]">
-              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white"><ChevronLeft className="h-3 w-3" /> Previous</div>
-              <div className="mt-1 text-[14px] font-semibold text-white truncate">2.4 MFT testing</div>
-            </button>
-            <button onClick={() => navigate('/study-centre/apprentice/level3-module4-section3-2')} className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]">
-              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">Next subsection <ChevronRight className="h-3 w-3" /></div>
-              <div className="mt-1 text-[14px] font-semibold text-black truncate">3.2 Common symptoms</div>
-            </button>
-          </div>
-        </PageFrame>
-      </div>
-    </div>
+            <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+              Next subsection <ChevronRight className="h-3 w-3" />
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-black truncate">
+              3.2 Common symptoms
+            </div>
+          </button>
+        </div>
+      </HubBody>
+    </HubPage>
   );
 }

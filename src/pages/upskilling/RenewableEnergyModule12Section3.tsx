@@ -1,8 +1,8 @@
-import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { useNavigate } from 'react-router-dom';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
-import { PageFrame, PageHero } from '@/components/college/primitives';
 import {
   TLDR,
   ConceptBlock,
@@ -36,8 +36,7 @@ const inlineChecks = [
   },
   {
     id: 'm12s3-bms-reporting-scope',
-    question:
-      'What does a modern BMS continuously monitor + report?',
+    question: 'What does a modern BMS continuously monitor + report?',
     options: [
       'Only the pack state of charge, which is the single value the customer needs to see',
       'Only the overall pack voltage, since cell-level data is not available to the BMS at all',
@@ -50,8 +49,7 @@ const inlineChecks = [
   },
   {
     id: 'm12s3-eicr-equivalent',
-    question:
-      'What is an "EICR-equivalent" for BESS + how does it differ from standard AC EICR?',
+    question: 'What is an "EICR-equivalent" for BESS + how does it differ from standard AC EICR?',
     options: [
       'It is exactly the same as a standard AC periodic report with no storage-specific additions',
       'No periodic report is needed at all because the BMS monitors the battery continuously',
@@ -64,8 +62,7 @@ const inlineChecks = [
   },
   {
     id: 'm12s3-bms-data-cert',
-    question:
-      'How does BMS data integrate into the cert evidence bundle over the BESS lifecycle?',
+    question: 'How does BMS data integrate into the cert evidence bundle over the BESS lifecycle?',
     options: [
       'At three stages — a commissioning baseline, a periodic snapshot, and an end-of-life export',
       'BMS data is not part of the certification record and is held only by the manufacturer',
@@ -81,7 +78,7 @@ const inlineChecks = [
 const quizQuestions = [
   {
     question:
-      '5-year EICR-equivalent on a 10 kWh BESS. BMS reports SoH = 85%, no faults, 1200 full-equivalent cycles. What is the verifier\'s read?',
+      "5-year EICR-equivalent on a 10 kWh BESS. BMS reports SoH = 85%, no faults, 1200 full-equivalent cycles. What is the verifier's read?",
     options: [
       'Replace the battery immediately, since any SoH reading below 90% indicates the cells have failed',
       'Treat the warranty as automatically void, because 1200 cycles already exceeds the permitted limit',
@@ -106,8 +103,7 @@ const quizQuestions = [
       'Premature SoH degradation at 3-year EICR-equivalent: 65% SoH is FAR below expected curve. Expected at 3 yr: 95-97% (typical LFP 1%/yr loss). 65% = 35% loss = ~5x faster than expected. Triggers: (1) BMS data deep-dive — cycle count (excessive cycling indicates usage pattern issue or BMS misreport); fault history (recurring over-temp events accelerate degradation; cell imbalance suggests cell or module failure); per-cell voltage (cells drifting out of pack indicate cell failure); thermal events (over-temp accelerates capacity loss). (2) Physical inspection — thermal imager on cells + connections; visible inspection for swelling / damage / electrolyte leakage on cells where access permits. (3) Manufacturer engagement — warranty event. Most BESS warranties (Tesla Powerwall, GivEnergy, Sonnen, etc) guarantee SoH not below threshold (usually 70-80% at 10 yr); 65% at 3 yr is firmly within warranty + investigation territory. (4) Customer engagement — operating impact (battery now holds 6.5 kWh not 10 kWh); explain warranty position + manufacturer claim process; interim usage decision (may continue limited use with reduced expectations OR take offline pending resolution). (5) Documentation — comprehensive BMS data export + thermal images + verifier report + manufacturer claim correspondence; cert evidence bundle updated. (6) Root cause — installer reviews install conditions (over-temperature exposure, oversized cycling demand) + manufacturer reviews cell batch + BMS calibration. UK 2025-26 reality: warranty claims happen + manufacturer support typically engaged within 1-3 months for resolution.',
   },
   {
-    question:
-      'What is "cell balancing" + why does it matter for BESS condition reporting?',
+    question: 'What is "cell balancing" + why does it matter for BESS condition reporting?',
     options: [
       'A cosmetic display feature that simply tidies up the cell-voltage graph shown in the portal',
       'An optional setting the customer can disable to make the battery charge noticeably faster',
@@ -116,11 +112,10 @@ const quizQuestions = [
     ],
     correctAnswer: 2,
     explanation:
-      'Cell balancing fundamentals: (1) Why needed — lithium cells in series have slight manufacturing variation + drift over cycles; without balancing the strongest cell hits its over-voltage cut-off first (and weakest cell hits under-voltage first) — limiting the usable pack capacity to the weakest cell. (2) Passive balancing — most common in residential BESS — high-voltage cell\'s excess charge dissipated through resistor (slow + simple + reliable). (3) Active balancing — higher-end commercial BESS — charge transferred between cells via DC-DC converter (faster + more efficient but more complex + costly). (4) Balance check at commissioning — BMS reports per-cell voltages all within manufacturer spec (typically all cells within 20-50 mV at given SoC). Initial check is structural — bad balance at commissioning indicates manufacturing defect or install fault. (5) Periodic check — at EICR-equivalent (5-10 yr) review per-cell voltage spread; growing spread (e.g. one cell consistently 100+ mV below others) indicates that cell is failing — likely warranty event. (6) Operational impact — imbalanced pack = reduced usable capacity (BMS clamps at the weakest cell\'s limits) + accelerated degradation of the weak cell + cycle life reduction. (7) Documentation — BMS data export includes per-cell voltage table; condition report identifies any anomalies; trending over EICR cycles shows degradation pattern. (8) Cert evidence bundle: commissioning baseline + periodic per-cell voltage records + any manufacturer interventions.',
+      "Cell balancing fundamentals: (1) Why needed — lithium cells in series have slight manufacturing variation + drift over cycles; without balancing the strongest cell hits its over-voltage cut-off first (and weakest cell hits under-voltage first) — limiting the usable pack capacity to the weakest cell. (2) Passive balancing — most common in residential BESS — high-voltage cell's excess charge dissipated through resistor (slow + simple + reliable). (3) Active balancing — higher-end commercial BESS — charge transferred between cells via DC-DC converter (faster + more efficient but more complex + costly). (4) Balance check at commissioning — BMS reports per-cell voltages all within manufacturer spec (typically all cells within 20-50 mV at given SoC). Initial check is structural — bad balance at commissioning indicates manufacturing defect or install fault. (5) Periodic check — at EICR-equivalent (5-10 yr) review per-cell voltage spread; growing spread (e.g. one cell consistently 100+ mV below others) indicates that cell is failing — likely warranty event. (6) Operational impact — imbalanced pack = reduced usable capacity (BMS clamps at the weakest cell's limits) + accelerated degradation of the weak cell + cycle life reduction. (7) Documentation — BMS data export includes per-cell voltage table; condition report identifies any anomalies; trending over EICR cycles shows degradation pattern. (8) Cert evidence bundle: commissioning baseline + periodic per-cell voltage records + any manufacturer interventions.",
   },
   {
-    question:
-      'BESS thermal management — what role does it play in condition reporting?',
+    question: 'BESS thermal management — what role does it play in condition reporting?',
     options: [
       'No role at all; cell temperature has no bearing on battery health or on condition reporting',
       'A pure cooling function carrying no monitoring or condition-reporting value whatsoever',
@@ -132,8 +127,7 @@ const quizQuestions = [
       'BESS thermal management + condition reporting: (1) Optimal temperature range — typically 15-35°C for cell operation; some chemistries tolerate -10 to 50°C with reduced performance. (2) Cold cell issues — high internal resistance + reduced charge / discharge rate + reduced capacity available + accelerated SEI layer growth = capacity loss. (3) Hot cell issues — chemical degradation accelerates exponentially with temperature; safety risk (thermal runaway at extreme temperatures); fire / explosion risk for damaged cells. (4) Thermal management system — passive (heatsinks + enclosure + spacing for natural convection — typical residential BESS); active (fans for forced air — mid-range residential); liquid cooling (some high-end residential + most commercial). (5) BMS monitoring — multiple temperature sensors logged continuously; thresholds for warning + alarm + shutdown. (6) Condition reporting elements: (a) extract BMS temperature logs over the period — look for excursions (was the BESS ever above 40°C? below 0°C? for how long?); (b) thermal imaging during EICR-equivalent — Reg 651.4 thermographic images appended; identifies hot spots in cell modules + DC busbar connections + AC terminations; (c) physical inspection — vents clear of debris / spider webs; fans rotating freely; liquid cooling levels (if applicable); enclosure ventilation per manufacturer spec; (d) install location review — has the install location heating profile changed (e.g. new boiler installed nearby; loft conversion changes garage thermal envelope)? (7) Documentation — temperature log summary + thermal images + physical inspection notes; cert evidence bundle updated.',
   },
   {
-    question:
-      'Customer education on BESS condition reporting — what should the installer cover?',
+    question: 'Customer education on BESS condition reporting — what should the installer cover?',
     options: [
       'Portal access, expected degradation, warranty terms, fault response and periodic schedule',
       'Nothing at all; condition reporting is purely an installer matter the customer never needs to understand',
@@ -142,7 +136,7 @@ const quizQuestions = [
     ],
     correctAnswer: 0,
     explanation:
-      'Customer education + ongoing engagement on BESS: (1) Operating portal — show the customer how to access the manufacturer\'s customer-facing portal (web + mobile app); explain SoC (today\'s charge level), SoH (lifecycle health), yield contribution, alert indicators. Walk through a real-time view + a daily / weekly summary. (2) Expected lifecycle — SoH typically degrades ~1%/yr for LFP; 10-year warranty floor 70-80%; system functional for 15-20 yr typically with reduced capacity in later years. Manage expectations: a 10 kWh nominal BESS at 80% SoH still has 8 kWh available — useful but reduced. (3) Warranty terms — what is + isn\'t covered + the SoH threshold + the cycle count threshold + the claim process; copy of warranty in handover pack. (4) Alert response — common alert types (fault state, comms fail, low SoH warning) + customer action (note alert + call installer for non-emergency; emergency = shutdown procedure if displayed). (5) Periodic schedule — annual customer self-check (portal review, visible inspection of vents, listening for unusual fan noise); 5-10 yr professional EICR-equivalent. (6) Fault response — emergency shutdown location + procedure; categorical "do not open the enclosure" message (lithium fires non-trivial); fault → call installer or manufacturer first. (7) Records — copy of EIC + manufacturer commissioning + warranty registration + future EICR-equivalent reports kept with property documents. (8) Annual touchpoint — installer + manufacturer typically offer annual review + monitoring; signed-up customers get earlier intervention on degradation. (9) §12.7 covers customer education + handover delivery in full.',
+      "Customer education + ongoing engagement on BESS: (1) Operating portal — show the customer how to access the manufacturer's customer-facing portal (web + mobile app); explain SoC (today's charge level), SoH (lifecycle health), yield contribution, alert indicators. Walk through a real-time view + a daily / weekly summary. (2) Expected lifecycle — SoH typically degrades ~1%/yr for LFP; 10-year warranty floor 70-80%; system functional for 15-20 yr typically with reduced capacity in later years. Manage expectations: a 10 kWh nominal BESS at 80% SoH still has 8 kWh available — useful but reduced. (3) Warranty terms — what is + isn't covered + the SoH threshold + the cycle count threshold + the claim process; copy of warranty in handover pack. (4) Alert response — common alert types (fault state, comms fail, low SoH warning) + customer action (note alert + call installer for non-emergency; emergency = shutdown procedure if displayed). (5) Periodic schedule — annual customer self-check (portal review, visible inspection of vents, listening for unusual fan noise); 5-10 yr professional EICR-equivalent. (6) Fault response — emergency shutdown location + procedure; categorical \"do not open the enclosure\" message (lithium fires non-trivial); fault → call installer or manufacturer first. (7) Records — copy of EIC + manufacturer commissioning + warranty registration + future EICR-equivalent reports kept with property documents. (8) Annual touchpoint — installer + manufacturer typically offer annual review + monitoring; signed-up customers get earlier intervention on degradation. (9) §12.7 covers customer education + handover delivery in full.",
   },
   {
     question:
@@ -197,509 +191,458 @@ export default function RenewableEnergyModule12Section3() {
   });
 
   return (
-    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
-      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
-        <PageFrame>
+    <HubPage>
+      <HubMasthead
+        section="Module 12 · Section 3 · BS 7671:2018+A4:2026 · Chapter 65 + Reg 651-653 + Chapter 57"
+        title="BESS health monitoring + ongoing condition reporting"
+        backTo="../renewable-energy-module-12"
+      />
+      <HubBody>
+        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
+          The storage lifecycle — State of Health (SoH) + State of Charge (SoC) via BMS,
+          capacity-fade monitoring, EICR-equivalent for storage, integration of BMS data into the
+          cert evidence bundle, customer education + ongoing engagement. BS 7671 Chapter 65 periodic
+          inspection + testing applied to BESS specifics.
+        </p>
+
+        <TLDR
+          points={[
+            'BMS continuously monitors + reports: per-cell voltage, temperature, pack SoC + SoH, DC bus voltage + current, cycle count, fault states, communications health, firmware version.',
+            'SoH = capacity remaining vs original-at-install; ~0.5-1.5%/yr LFP degradation typical; warranty floor typically 70-80% at 10 yr.',
+            'SoC = present energy as fraction of CURRENT capacity (dynamic, minute-by-minute).',
+            'EICR-equivalent for BESS = standard AC EICR + BMS data review + DC bus IR re-test + thermal imaging + firmware + warranty review + per-cell balance check.',
+            'Frequency per Reg 652.1: type of installation + use + maintenance + external influences. Typical 5-10 yr aligned with AC EICR + BMS continuous between.',
+            'Reg 653.2 NOTE: photographic + thermographic images can be appended to the report. Thermal imaging identifies hot spots invisible to BMS alone.',
+            'Cell balancing keeps cells equal voltage across pack; growing imbalance = cell failure indicator; passive (resistor dissipation) or active (charge transfer) per BMS design.',
+            'Thermal management critical — cells outside 15-35°C accelerate degradation. BMS temperature logs + thermal imaging + physical inspection together.',
+            'Customer education at handover + annual touchpoint — portal access, expected lifecycle, alert response, periodic schedule, warranty terms.',
+            'BMS data integrates with cert evidence bundle at commissioning baseline + periodic snapshots + warranty / end-of-life events.',
+          ]}
+        />
+
+        <LearningOutcomes
+          outcomes={[
+            'Distinguish SoC (operational) from SoH (lifecycle) on BESS reporting.',
+            'Interpret BMS data: per-cell voltage, temperature, cycle count, fault history, comms health.',
+            'Conduct EICR-equivalent for BESS combining standard AC EICR with storage-specific elements.',
+            'Apply Reg 652.1 frequency logic to BESS periodic inspection cycle.',
+            'Integrate BMS data into cert evidence bundle across commissioning + periodic + warranty events.',
+            'Use thermal imaging per Reg 653.2 to complement BMS reporting at periodic inspection.',
+            'Identify cell-balance issues + thermal management failures + their lifecycle impact.',
+            'Educate customer on BESS lifecycle expectations, alerts, periodic schedule, warranty.',
+          ]}
+          initialVisibleCount={3}
+        />
+
+        <Pullquote>
+          The BMS is the BESS\'s self-report. The EICR-equivalent is the audit. Together they catch
+          silent failures before they become customer complaints — or fires.
+        </Pullquote>
+
+        <ContentEyebrow>SoC vs SoH + BMS reporting framework</ContentEyebrow>
+
+        <ConceptBlock
+          title="BMS continuous monitoring scope"
+          plainEnglish="Modern BESS BMS continuously monitors comprehensively: per-cell voltage + temperature, pack SoC + SoH, DC bus voltage + current, cycle count, fault states, comms health, firmware version, alarm history. Data accessible via manufacturer portal (installer + customer views). BMS commissioning at install + ongoing operation = the storage lifecycle picture."
+          onSite="BESS BMS replaces the need for many manual checks the electrician would do on a non-BMS system. But the BMS doesn\'t replace periodic EICR-equivalent inspection — physical inspection + thermal imaging + DC bus IR re-test catch issues the BMS doesn\'t see (loose AC terminations, blocked vents, enclosure damage, BMS itself drifting)."
+        >
+          <p>BMS monitoring elements:</p>
+          <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+            <li>
+              <strong className="text-white">Per-cell voltage</strong> — every cell in series
+              typically monitored; balance critical for safety + capacity
+            </li>
+            <li>
+              <strong className="text-white">Per-cell or per-module temperature</strong> — multiple
+              sensors; safety + lifecycle impact
+            </li>
+            <li>
+              <strong className="text-white">Pack-level metrics</strong> — SoC (0-100%), SoH (% of
+              original capacity), DC bus voltage + current, instantaneous power
+            </li>
+            <li>
+              <strong className="text-white">Cycle counting</strong>— full-equivalent-cycles +
+              partial-cycles tracked; influences SoH + warranty
+            </li>
+            <li>
+              <strong className="text-white">Fault states</strong>— over-voltage, under-voltage,
+              over-temp, over-current, isolation fault, comms fault, BMS internal fault
+            </li>
+            <li>
+              <strong className="text-white">Communications health</strong> — BMS to inverter to
+              cloud / portal; comms loss triggered alerts
+            </li>
+            <li>
+              <strong className="text-white">Firmware version</strong> — BMS + inverter firmware
+              tracked; updates applied via portal or service visit
+            </li>
+            <li>
+              <strong className="text-white">Alarm history</strong>— events logged with timestamp +
+              severity for troubleshooting + warranty + audit
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="SoH degradation curve + LFP characteristics"
+          plainEnglish="LFP (Lithium Iron Phosphate) is the dominant residential BESS chemistry in UK 2025-26 (Tesla Powerwall 3, GivEnergy, Sonnen, Sonnen, Anker SOLIX, etc). LFP characteristics: lower energy density than NMC but more cycles + better thermal stability + safer. SoH degrades ~0.5-1.5%/yr depending on usage pattern + temperature + DoD."
+          onSite={`Customer expectation management at handover: explain typical degradation; 10-yr warranty floor (70-80%); operational impact (10 kWh nominal at 80% SoH = 8 kWh usable). Realistic numbers prevent customer complaints about "my battery doesn't hold as much" later in life.`}
+        >
+          <p>SoH degradation factors:</p>
+          <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+            <li>
+              <strong className="text-white">Calendar ageing</strong> — degradation over time
+              regardless of usage; ~0.3-0.5%/yr baseline for LFP
+            </li>
+            <li>
+              <strong className="text-white">Cycle ageing</strong>— degradation per cycle;
+              ~0.02-0.04% per full equivalent cycle for LFP
+            </li>
+            <li>
+              <strong className="text-white">DoD (Depth of Discharge)</strong> — deeper cycles (e.g.
+              100% DoD daily) accelerate ageing more than shallower (e.g. 80% DoD). Most BMS limit
+              DoD to 90-95% to extend life
+            </li>
+            <li>
+              <strong className="text-white">Temperature</strong>— operating outside 15-35°C
+              accelerates degradation. Cold storage also bad — winter performance + lifecycle hit
+            </li>
+            <li>
+              <strong className="text-white">SoC at storage</strong> — storing at very high or very
+              low SoC accelerates ageing; BMS typically targets ~50% for long-term storage
+            </li>
+            <li>
+              <strong className="text-white">Usage pattern</strong>— daily PV-paired
+              self-consumption (1 cycle/day) is moderate; grid arbitrage (2-3 cycles/day)
+              accelerates; emergency-backup-only (1 cycle per month) is calendar-ageing-dominated
+            </li>
+            <li>
+              <strong className="text-white">Warranty reality</strong> — most BESS warranties: 10 yr
+              + SoH ≥ 70-80% + throughput limit (e.g. ~3-5 MWh per kWh nominal). Whichever comes
+              first
+            </li>
+            <li>
+              <strong className="text-white">End-of-life</strong>— at SoH ~60-70% the operational
+              utility diminishes; customer replacement decision; recycling per battery regulations
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <RegsCallout
+          source="BS 7671:2018+A4:2026 · Reg 652.1 — Frequency of periodic inspection + testing"
+          clause="The frequency of periodic inspection and testing of an installation shall be determined having regard to the type of installation and equipment, its use and operation, the frequency and quality of maintenance and the external influences to which it may be subjected. The results and recommendations of previous certificates and condition reports shall also be taken into account."
+          meaning="Reg 652.1 is the frequency rule for periodic inspection. For BESS the frequency considerations: (1) Type of installation — residential vs commercial; LFP vs NMC; integrated package vs hybrid system. (2) Equipment use + operation — daily cycling vs emergency backup; depth of cycling; environmental exposure. (3) Maintenance — has the manufacturer monitoring + annual review been engaged? BMS firmware updates applied? Any prior interventions? (4) External influences — temperature range at install location; humidity; dust; vibration; proximity to other equipment. (5) Previous reports — manufacturer commissioning baseline + any prior EICR-equivalents + alarm history. Typical UK 2025-26 BESS EICR-equivalent: 5-10 yr aligned with AC EICR cycle for the property, with BMS continuous between + customer annual touchpoint + manufacturer scheduled monitoring where contracted. Some commercial sites with intensive cycling may warrant 3-5 yr cycles. Cert evidence bundle records the frequency rationale + the EICR-equivalent findings."
+        />
+
+        <InlineCheck {...inlineChecks[0]} />
+
+        <InlineCheck {...inlineChecks[1]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>EICR-equivalent for BESS — periodic test framework</ContentEyebrow>
+
+        <Pullquote>
+          The BMS is the day-to-day. The periodic EICR-equivalent is the lifecycle audit. Both
+          matter. Neither alone is enough.
+        </Pullquote>
+
+        <ConceptBlock
+          title="EICR-equivalent for BESS — the periodic framework"
+          plainEnglish="EICR-equivalent for BESS extends the standard AC EICR with storage-specific elements: BMS data review (SoH trend, per-cell balance, fault history, cycle count); DC bus IR re-test; thermal imaging; firmware check; manufacturer warranty review; AC-side EICR. Typically 5-10 yr cycle aligned with the property AC EICR."
+          onSite="The verifier needs both BS 7671 EICR competency + BESS-specific competency (manufacturer-certified installer training + BMS data interpretation). UK 2025-26: most BESS EICR-equivalents handled by the original installer or manufacturer-affiliated service company; growing market for independent BESS inspection services."
+        >
+          <p>EICR-equivalent elements for BESS:</p>
+          <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+            <li>
+              <strong className="text-white">BMS data review</strong>— extract: current SoH, cycle
+              count, fault history summary, per-cell voltage balance, comms health, firmware
+              version, temperature event summary. Compare with baseline + previous periodic
+            </li>
+            <li>
+              <strong className="text-white">DC bus IR re-test</strong> — per manufacturer + Table
+              64; trend against commissioning baseline; investigation triggered if approaching
+              threshold or significant drop from baseline
+            </li>
+            <li>
+              <strong className="text-white">Thermal imaging</strong> — Reg 653.2 NOTE:
+              thermographic images appended. Target cells / modules + DC busbar + AC terminations +
+              cooling system. Identifies hot spots invisible to BMS
+            </li>
+            <li>
+              <strong className="text-white">Physical inspection</strong> — enclosure integrity;
+              vent / fan / cooling operation; cable routing intact; warning notices intact;
+              isolators functional; mounting + securing
+            </li>
+            <li>
+              <strong className="text-white">Functional verification</strong> — alarms triggered +
+              verified + clearable; anti-islanding self-test per Reg 551.7.5; emergency shutdown
+              functional; charge / discharge functional via BMS-controlled test
+            </li>
+            <li>
+              <strong className="text-white">Firmware check</strong> — BMS + inverter firmware
+              up-to-date; security patches applied; manufacturer-recommended updates installed
+            </li>
+            <li>
+              <strong className="text-white">Manufacturer warranty review</strong> — status (years
+              remaining, throughput vs limit, SoH vs threshold); document approach to warranty
+              floor; engage manufacturer if anomalies
+            </li>
+            <li>
+              <strong className="text-white">AC-side EICR</strong>— standard Chapter 65 + Reg
+              651-653 review of AC connections, protective devices, RCD, loop impedance, ADS, IR,
+              continuity
+            </li>
+            <li>
+              <strong className="text-white">Reporting + cert evidence bundle</strong> —
+              EICR-equivalent report + BMS data export + thermal images + manufacturer
+              correspondence; integrated into cert evidence bundle; customer copy + installer audit
+              + DNO where applicable
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="Cell balance + thermal management — the two key indicators"
+          plainEnglish="Beyond SoH headline, two BMS data points are the early-warning indicators: (1) per-cell voltage balance — growing spread between cells indicates a cell or BMS issue; (2) temperature log — excursions outside 15-35°C accelerate degradation + indicate environmental or cooling issue. Reviewing both at EICR-equivalent catches lifecycle problems before they become headline degradation."
+          onSite="The verifier extracts BMS data + plots the cell-voltage spread + temperature log over the period; identifies trends + outliers. The conversation with manufacturer + customer is led by the data."
+        >
+          <p>Cell balance + thermal management diagnostics:</p>
+          <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+            <li>
+              <strong className="text-white">Cell voltage spread baseline</strong> — at
+              commissioning all cells within manufacturer spec (typically 20-50 mV at given SoC).
+              Spread = ~10-20 mV typical at install
+            </li>
+            <li>
+              <strong className="text-white">Cell voltage spread trending</strong> — annual review
+              (or at EICR-equivalent) shows spread growing over time. Doubling spread = ~normal
+              ageing; tripling or specific cell drifting = investigation
+            </li>
+            <li>
+              <strong className="text-white">Cell failure signature</strong> — one cell consistently
+              50-100+ mV below others + self-discharging faster + losing balance after balancer
+              activity = cell failure. Manufacturer warranty event
+            </li>
+            <li>
+              <strong className="text-white">Temperature baseline</strong> — at install ambient
+              15-25°C typical; cell temp during operation 20-30°C; manufacturer spec defines
+              acceptable range
+            </li>
+            <li>
+              <strong className="text-white">Temperature excursion trending</strong> — annual review
+              shows over-temp events: date + duration + temperature reached + cause. Hot summer
+              afternoons? Failed fan? Vents blocked? Install location moved?
+            </li>
+            <li>
+              <strong className="text-white">Cold storage events</strong> — winter -5°C events
+              affect LFP performance + lifecycle. Garage installations vulnerable; conditioned-room
+              installations more stable
+            </li>
+            <li>
+              <strong className="text-white">Thermal imaging</strong> — cells / modules + DC busbar
+              + AC terminations. Hot spot on DC busbar = loose / corroded connection (high
+              resistance = I²R heat); hot cell modular = internal cell issue
+            </li>
+            <li>
+              <strong className="text-white">Documentation</strong>— per-cell voltage table +
+              temperature log summary + thermal images + analysis + manufacturer correspondence
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <RegsCallout
+          source="BS 7671:2018+A4:2026 · Reg 653.2 — Photographic + thermographic images in periodic reports"
+          clause="A note has also been added pointing out that photographic and/or thermographic images can be appended to the report."
+          meaning="Reg 653.2 NOTE explicitly enables photographic + thermographic images as report appendices. For BESS condition reporting this is high-value: (1) Baseline photos at commissioning capture the as-installed state — visible inspection of front + side; close-up of nameplate + serial number + DoC reference; isolator + warning notice + cable routing + termination quality. Reference point for future periodic. (2) Periodic photos capture change — damage, soiling, modification, signs of moisture, mounting integrity. Side-by-side with baseline reveals problems. (3) Thermographic images — Reg 651.4 measuring methods includes thermal imager (BS EN 61557 compliance broader than just the standard MFT). Target areas: cell modules (BMS thermal sensors are internal; thermal image of enclosure surface + module casing identifies hot zones); DC busbar connections (high-resistance connections = I²R heat = thermal hot spot); AC terminations; fuse / breaker contact points; cooling system performance (running fan vs failed fan visibly different). (4) Storage + presentation — digital + paper copies; integrated into cert evidence bundle; selected images for customer report. (5) Warranty + audit value — images are evidence in warranty claims + dispute resolution + future-verifier reference. (6) Privacy + security — BMS data + photos may include identifying information; GDPR-aware handling."
+        />
+
+        <InlineCheck {...inlineChecks[2]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>Cert evidence bundle integration + customer engagement</ContentEyebrow>
+
+        <ConceptBlock
+          title="BMS data + cert evidence bundle across the BESS lifecycle"
+          plainEnglish="BMS data integrates at three stages: (1) commissioning baseline — SoH = 100%, per-cell voltages, initial cycle count, fault history empty, firmware version; (2) periodic EICR-equivalent — current data + trend vs baseline + previous periodic; (3) warranty / end-of-life event — BMS data supports manufacturer claim + lifecycle documentation."
+          onSite="The cert evidence bundle becomes the lifecycle dossier — accessible to the customer + installer + manufacturer + future verifiers + insurance + warranty claims. Comprehensive record = simpler resolution when issues arise."
+        >
+          <p>Lifecycle integration stages:</p>
+          <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+            <li>
+              <strong className="text-white">Commissioning baseline</strong> — IV records: SoH =
+              100%, per-cell voltage table, cycle count = 0, fault history empty, firmware version,
+              alarm thresholds + safety limits, manufacturer commissioning record
+            </li>
+            <li>
+              <strong className="text-white">Annual customer touchpoint</strong> — portal review +
+              customer self-check + installer summary email; not necessarily BMS data export but
+              visible monitoring
+            </li>
+            <li>
+              <strong className="text-white">EICR-equivalent (5-10 yr)</strong> — comprehensive BMS
+              data extract + DC bus IR re-test + thermal imaging + functional verification +
+              warranty review; report + cert evidence bundle update
+            </li>
+            <li>
+              <strong className="text-white">Alarm + fault events</strong> — BMS alarm triggers
+              manufacturer + installer alert; response documented + integrated into cert evidence
+              bundle
+            </li>
+            <li>
+              <strong className="text-white">Warranty claim</strong> — premature degradation OR
+              fault triggers claim; BMS data + EICR-equivalent reports + thermal images +
+              manufacturer correspondence all in cert evidence bundle
+            </li>
+            <li>
+              <strong className="text-white">Firmware updates</strong> — BMS + inverter firmware
+              updates logged; security + capability + bug-fix tracked
+            </li>
+            <li>
+              <strong className="text-white">End-of-life</strong>— BESS retired (15-20 yr typical);
+              BMS final data extract; recycling + disposal per battery regulations; cert evidence
+              bundle closed
+            </li>
+            <li>
+              <strong className="text-white">Replacement</strong>— new BESS install treated as new
+              commissioning + cert evidence bundle opens new lifecycle. Old cert bundle retained for
+              property + audit history
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="Customer education + the annual touchpoint"
+          plainEnglish="Customer education is critical for BESS — avoiding silent failures requires the customer engaged with the portal, alert response, periodic schedule, warranty terms. At handover + ongoing the installer guides the customer through the lifecycle."
+          onSite="UK 2025-26 reality: many BESS owners are not technical; the installer\'s clear simple guidance prevents misunderstanding (e.g. why SoH falls; why winter cycling is reduced). Annual touchpoint maintains the relationship + catches issues early."
+        >
+          <p>Customer education topics:</p>
+          <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+            <li>
+              <strong className="text-white">Portal access</strong>— demo + walkthrough at handover;
+              customer logs in successfully + can read the views relevant to them
+            </li>
+            <li>
+              <strong className="text-white">SoC vs SoH</strong>— operational vs lifecycle in plain
+              English; "today\'s charge" vs "battery health"
+            </li>
+            <li>
+              <strong className="text-white">Expected degradation</strong> — ~1%/yr typical; 10-yr
+              warranty floor; SoH 80% still useful (10 kWh nominal = 8 kWh usable)
+            </li>
+            <li>
+              <strong className="text-white">Warranty terms</strong>— copy in handover pack; SoH
+              threshold + cycle count + throughput limit; claim process
+            </li>
+            <li>
+              <strong className="text-white">Alert response</strong>— what alerts mean + customer
+              action; emergency shutdown procedure visible
+            </li>
+            <li>
+              <strong className="text-white">Periodic schedule</strong> — annual customer self-check
+              + 5-10 yr professional EICR-equivalent
+            </li>
+            <li>
+              <strong className="text-white">Operating envelope</strong> — temperature range, vent
+              clearance, do not modify, do not open enclosure, fault → call installer
+            </li>
+            <li>
+              <strong className="text-white">Annual touchpoint</strong> — installer or
+              manufacturer-affiliated annual review (paid service typically £50-150/yr); maintains
+              relationship + catches early issues
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <RegsCallout
+          source="BS 7671:2018+A4:2026 · Chapter 65 + Reg 651.4 — Periodic inspection + reporting"
+          clause="Reg 651.4: Details of any damage, deterioration, defects or dangerous conditions shall be recorded in a report. Reg 651.5: The periodic inspection and testing shall be carried out by one or more skilled persons competent in such work."
+          meaning="Reg 651.4 + Reg 651.5 set the reporting + competency requirements for periodic inspection. For BESS this means: (1) Reg 651.4 — the EICR-equivalent report records any damage (enclosure, cabling, mounting), deterioration (SoH drop beyond expected curve, cell imbalance growing, thermal events accumulating), defects (BMS fault recurrences, comms losses, firmware not up-to-date), dangerous conditions (over-temp events, isolation degradation, cell swelling). Photographic + thermographic images per Reg 653.2 NOTE complement the textual report. (2) Reg 651.5 — competent skilled person: BS 7671 EICR competency + BESS-specific competency (manufacturer-certified installer or equivalent + BMS data interpretation + Chapter 57 understanding). (3) Customer-facing report — clear summary + technical detail in appendix; recommendations + actions + follow-up timeline. (4) Cert evidence bundle integration — report + BMS data + thermal images + manufacturer correspondence all retained. (5) Frequency — Reg 652.1 considers installation type, use, maintenance, external influences; typical 5-10 yr aligned with AC EICR. (6) Documentation flow — installer → customer + installer audit + manufacturer where applicable + insurance + future verifiers."
+        />
+
+        <InlineCheck {...inlineChecks[3]} />
+
+        <BessLifecycleMonitoring caption="BESS lifecycle monitoring + condition reporting diagram. Top: BMS continuous monitoring scope — per-cell voltage + temperature, pack SoC + SoH, DC bus, cycle count, fault states, comms, firmware. Middle: lifecycle stages — commissioning baseline (SoH 100%, cycle 0, balanced, no faults) → daily operation (BMS continuous, portal access) → annual touchpoint (customer self-check, installer summary) → EICR-equivalent every 5-10 yr (full data review + DC bus IR + thermal imaging + functional + warranty + AC EICR) → warranty / replacement / end-of-life. Bottom: cert evidence bundle integration — commissioning + periodic snapshots + alarm events + warranty correspondence + photographic + thermographic images per Reg 653.2 NOTE." />
+
+        <SectionRule />
+
+        <Scenario
+          title="5-year EICR-equivalent on residential 10 kWh BESS — healthy"
+          situation="Mr + Mrs Patel, 4-bed detached, garage-installed 10 kWh GivEnergy LFP BESS commissioned 5 years ago alongside 8 kWp PV. AC EICR due for the property. Original installer engaged for combined AC EICR + BESS EICR-equivalent."
+          whatToDo="(1) Pre-visit: download BMS data via installer portal — SoH trend over 5 yr (100% → 88%), cycle count 1450 (~290/yr daily PV self-consumption), fault history (1 comms loss recovered automatically; no other faults), per-cell voltage balance (latest spread 30 mV — slight growth from 15 mV at commissioning), temperature log (no events outside 5-35°C range; couple of summer-day peaks at 33°C — within spec), firmware updates applied 4 times over 5 yr. (2) On-site Reg 642 inspection — visual: enclosure clean + intact; vents clear; isolators functional; warning notices intact; cable routing intact + no damage. (3) DC bus IR re-test — per GivEnergy DoC: 500 V DC test for the 48 V residential bus; result 25 MΩ (vs commissioning 30 MΩ — slight drop within normal); record. (4) Thermal imaging — DC busbar connections cool; AC terminations cool; cell module casing uniform temperature (no hot spots); cooling fan running normally. (5) Functional verification — anti-islanding self-test per Reg 551.7.5; emergency shutdown tested; alarms triggered + clearable. (6) AC-side EICR — standard Chapter 65 review of CU + circuits + RCD + loop impedance + IR + continuity per Reg 651-653. (7) Manufacturer warranty review — GivEnergy warranty 10 yr + SoH ≥ 60% at 10 yr + throughput limit; current SoH 88% at 5 yr + cycle count 1450 vs throughput limit 30 MWh + ~12 MWh used = on track. (8) Report — satisfactory for continued service; trajectory consistent with expected; next EICR-equivalent in 5 yr aligned with next AC EICR; customer informed via plain-English summary + supporting BMS data chart. (9) Cert evidence bundle — updated with current report + BMS data export + thermal images + photos + AC EICR."
+          whyItMatters="Healthy 5-yr EICR-equivalent demonstrates the standard discipline. SoH 88% at 5 yr + 1450 cycles + clean fault history + balanced cells + good thermal + tested anti-islanding = system in normal operational state. Cert evidence bundle update gives customer confidence + provides audit trail + supports continued warranty. Customer engagement reinforced: portal access reviewed, alert response refreshed, expectation managed (88% → ~75% by 10 yr per current trajectory). Annual touchpoint scheduled. The discipline of the periodic review prevents silent failures."
+        />
+
+        <Scenario
+          title="EICR-equivalent identifies premature degradation — warranty claim path"
+          situation={`Mr Khan, semi-detached, 2-yr-old 13 kWh BESS in conditioned utility room. Customer reports "battery doesn't last as long as before" via the portal. Installer dispatches EICR-equivalent visit.`}
+          whatToDo={`(1) BMS data review (pre-visit + on-site): SoH 76% at 2 yr (vs expected ~98% — significantly premature); cycle count 800 (~400/yr — higher than the typical 300/yr but not extreme); per-cell voltage balance growing — one cell consistently 80 mV below others over the last 6 months; fault history shows 3 over-temp events in summer (cell temp >40°C for ~2 hours each); temperature log shows utility room peaked at 38°C ambient during summer events (utility room had new tumble dryer installed which raised ambient temperature). (2) Reg 642 inspection — find: utility room ambient now higher due to new tumble dryer venting nearby; BESS vents partially obstructed by stored items; one cell module visibly slightly bowed (potential cell failure). (3) DC bus IR re-test — 1000 V DC test (high-voltage commercial BESS bus): result 4 MΩ (vs commissioning 18 MΩ — significant drop). (4) Thermal imaging — hot spot on the bowed cell module (5°C above other modules at idle); DC busbar normal; AC terminations normal. (5) Diagnosis — one cell failing (voltage spread + bowed appearance + hot spot + IR drop); accelerated by ambient temperature exposure (new tumble dryer + obstructed vents); environmental degradation accelerated chemistry decline. (6) Warranty engagement — manufacturer (GivEnergy / Tesla / etc) contacted; warranty likely covers premature SoH below threshold; cell module replacement or whole-unit replacement per manufacturer policy. (7) Customer engagement — explain findings: cell failure + environmental contribution; warranty claim initiated; interim usage decision (continue limited use OR take offline per manufacturer guidance); environmental fix required (relocate tumble dryer ducting + clear BESS vents). (8) Report — current condition unsatisfactory for continued unmodified service; recommendations: warranty claim + environmental fix + 6-month re-inspection. (9) Cert evidence bundle — comprehensive: BMS data export + thermal images + photos + diagnosis + manufacturer correspondence + customer communication trail.`}
+          whyItMatters={`Premature degradation EICR-equivalent demonstrates the value of the discipline. BMS-alone monitoring caught the SoH drop but not the environmental cause; on-site inspection + thermal imaging identified the new tumble dryer + obstructed vents + bowed cell. Manufacturer warranty engaged + customer educated + environmental cause addressed + lifecycle protected for the replacement / repaired unit. Cert evidence bundle is the audit trail for warranty + insurance + future-verifier reference. The skilled person's competency + the manufacturer relationship + the BMS data + the physical inspection together resolve.`}
+        />
+
+        <CommonMistake
+          title="Trusting BMS data alone without physical inspection"
+          whatHappens={`Installer relies on the BMS portal showing "all healthy" + skips the physical inspection at EICR-equivalent. Doesn't see the obstructed vents, the new heat source nearby, the loose AC termination (no thermal imaging done), the deteriorating warning notices, the moisture ingress on enclosure seal. BMS catches the symptoms (over-temp events) months later; root cause was inspection-visible from day one.`}
+          doInstead={`BMS data + physical inspection + thermal imaging together. Reg 651.4: details of any damage, deterioration, defects or dangerous conditions shall be recorded in a report. The BMS doesn't see the enclosure, the cable routing, the install environment changes, the AC termination integrity, the warning notice condition. Physical inspection + thermal imaging + BMS data review is the complete EICR-equivalent. Reg 653.2 NOTE photographic + thermographic images appended to the report. Don't shortcut the physical visit.`}
+        />
+
+        <CommonMistake
+          title="Failing to engage manufacturer warranty when degradation is premature"
+          whatHappens={`EICR-equivalent identifies SoH = 65% at 3 yr (significantly premature). Installer reports as "some degradation noted" + recommends continued use. Doesn't engage manufacturer warranty. Customer told the battery is degrading + replacement budget needed in a few years. 3 years later customer discovers warranty was applicable + the manufacturer would have replaced at that point — but warranty period now expired.`}
+          doInstead={`Premature degradation = warranty engagement opportunity. Most BESS warranties guarantee SoH not below threshold (70-80%) within warranty period (typically 10 yr). SoH 65% at 3 yr is firmly within warranty + investigation territory. The installer's duty: identify the trigger + engage manufacturer + advocate for customer + document the BMS data + thermal images + diagnosis. Cert evidence bundle records the warranty claim correspondence. Manufacturer may replace cell module, replace whole unit, or extend warranty per their policy. Customer outcome is the metric — the discipline of the EICR-equivalent + warranty engagement is the path.`}
+        />
+
+        <SectionRule />
+
+        <KeyTakeaways
+          points={[
+            'BMS continuously monitors comprehensively: per-cell voltage + temperature, pack SoC + SoH, cycle count, fault states, comms, firmware. The day-to-day picture.',
+            'SoC = present energy as fraction of CURRENT capacity (dynamic operational). SoH = capacity remaining vs original-at-install (lifecycle).',
+            'Typical LFP SoH degradation: ~0.5-1.5%/yr; 10-yr warranty floor typically 70-80%; end-of-life at ~60-70% SoH.',
+            'EICR-equivalent for BESS = standard AC EICR + BMS data review + DC bus IR re-test + thermal imaging + firmware + warranty + functional verification.',
+            'Frequency per Reg 652.1: type, use, maintenance, external influences. Typical 5-10 yr aligned with AC EICR + BMS continuous + customer annual touchpoint.',
+            'Cell balance + temperature management are the two key early-warning indicators beyond headline SoH.',
+            'Reg 653.2 NOTE: photographic + thermographic images appended to the report. Reg 651.4: damage, deterioration, defects, dangerous conditions recorded.',
+            "Thermal imaging identifies what BMS doesn't see: DC busbar hot spots, loose AC terminations, blocked vents, bowed cell modules.",
+            'Cert evidence bundle: commissioning baseline + annual touchpoint + EICR-equivalent + warranty events + firmware updates + end-of-life — the lifecycle dossier.',
+            'Customer education: portal access, expected degradation, warranty terms, alert response, periodic schedule, emergency shutdown.',
+            'Reg 651.5: competent skilled person — BS 7671 EICR + BESS-specific competency + manufacturer training + BMS data interpretation.',
+            "Premature degradation = warranty engagement opportunity. Installer's duty to identify + advocate + document.",
+          ]}
+        />
+
+        <FAQ items={faqs} />
+
+        <Quiz questions={quizQuestions} title="Section 3 · Knowledge check" />
+
+        <div className="grid grid-cols-2 gap-3 pt-2">
           <button
             type="button"
-            onClick={() => navigate('../renewable-energy-module-12')}
-            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            onClick={() => navigate('/electrician/upskilling/renewable-energy-module-12-section-2')}
+            className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
           >
-            <ArrowLeft className="h-4 w-4" /> Module 12
+            <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+              <ChevronLeft className="h-3 w-3" /> Previous
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-white truncate">
+              12.2 IR on DC circuits
+            </div>
           </button>
-
-          <PageHero
-            eyebrow="Module 12 · Section 3 · BS 7671:2018+A4:2026 · Chapter 65 + Reg 651-653 + Chapter 57"
-            title="BESS health monitoring + ongoing condition reporting"
-            description="The storage lifecycle — State of Health (SoH) + State of Charge (SoC) via BMS, capacity-fade monitoring, EICR-equivalent for storage, integration of BMS data into the cert evidence bundle, customer education + ongoing engagement. BS 7671 Chapter 65 periodic inspection + testing applied to BESS specifics."
-            tone="yellow"
-          />
-
-          <TLDR
-            points={[
-              'BMS continuously monitors + reports: per-cell voltage, temperature, pack SoC + SoH, DC bus voltage + current, cycle count, fault states, communications health, firmware version.',
-              'SoH = capacity remaining vs original-at-install; ~0.5-1.5%/yr LFP degradation typical; warranty floor typically 70-80% at 10 yr.',
-              'SoC = present energy as fraction of CURRENT capacity (dynamic, minute-by-minute).',
-              'EICR-equivalent for BESS = standard AC EICR + BMS data review + DC bus IR re-test + thermal imaging + firmware + warranty review + per-cell balance check.',
-              'Frequency per Reg 652.1: type of installation + use + maintenance + external influences. Typical 5-10 yr aligned with AC EICR + BMS continuous between.',
-              'Reg 653.2 NOTE: photographic + thermographic images can be appended to the report. Thermal imaging identifies hot spots invisible to BMS alone.',
-              'Cell balancing keeps cells equal voltage across pack; growing imbalance = cell failure indicator; passive (resistor dissipation) or active (charge transfer) per BMS design.',
-              'Thermal management critical — cells outside 15-35°C accelerate degradation. BMS temperature logs + thermal imaging + physical inspection together.',
-              'Customer education at handover + annual touchpoint — portal access, expected lifecycle, alert response, periodic schedule, warranty terms.',
-              'BMS data integrates with cert evidence bundle at commissioning baseline + periodic snapshots + warranty / end-of-life events.',
-            ]}
-          />
-
-          <LearningOutcomes
-            outcomes={[
-              'Distinguish SoC (operational) from SoH (lifecycle) on BESS reporting.',
-              'Interpret BMS data: per-cell voltage, temperature, cycle count, fault history, comms health.',
-              'Conduct EICR-equivalent for BESS combining standard AC EICR with storage-specific elements.',
-              'Apply Reg 652.1 frequency logic to BESS periodic inspection cycle.',
-              'Integrate BMS data into cert evidence bundle across commissioning + periodic + warranty events.',
-              'Use thermal imaging per Reg 653.2 to complement BMS reporting at periodic inspection.',
-              'Identify cell-balance issues + thermal management failures + their lifecycle impact.',
-              'Educate customer on BESS lifecycle expectations, alerts, periodic schedule, warranty.',
-            ]}
-            initialVisibleCount={3}
-          />
-
-          <Pullquote>
-            The BMS is the BESS\'s self-report. The EICR-equivalent is the audit. Together they catch silent failures before they become customer complaints — or fires.
-          </Pullquote>
-
-          <ContentEyebrow>SoC vs SoH + BMS reporting framework</ContentEyebrow>
-
-          <ConceptBlock
-            title="BMS continuous monitoring scope"
-            plainEnglish="Modern BESS BMS continuously monitors comprehensively: per-cell voltage + temperature, pack SoC + SoH, DC bus voltage + current, cycle count, fault states, comms health, firmware version, alarm history. Data accessible via manufacturer portal (installer + customer views). BMS commissioning at install + ongoing operation = the storage lifecycle picture."
-            onSite="BESS BMS replaces the need for many manual checks the electrician would do on a non-BMS system. But the BMS doesn\'t replace periodic EICR-equivalent inspection — physical inspection + thermal imaging + DC bus IR re-test catch issues the BMS doesn\'t see (loose AC terminations, blocked vents, enclosure damage, BMS itself drifting)."
+          <button
+            type="button"
+            onClick={() => navigate('/electrician/upskilling/renewable-energy-module-12-section-4')}
+            className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
           >
-            <p>BMS monitoring elements:</p>
-            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
-              <li>
-                <strong className="text-white">Per-cell voltage</strong> —
-                every cell in series typically monitored; balance critical for safety
-                + capacity
-              </li>
-              <li>
-                <strong className="text-white">Per-cell or
-                  per-module temperature</strong> — multiple sensors; safety + lifecycle
-                impact
-              </li>
-              <li>
-                <strong className="text-white">Pack-level
-                  metrics</strong> — SoC (0-100%), SoH (% of original capacity), DC bus
-                voltage + current, instantaneous power
-              </li>
-              <li>
-                <strong className="text-white">Cycle counting</strong>
-                — full-equivalent-cycles + partial-cycles tracked; influences SoH
-                + warranty
-              </li>
-              <li>
-                <strong className="text-white">Fault states</strong>
-                — over-voltage, under-voltage, over-temp, over-current, isolation fault,
-                comms fault, BMS internal fault
-              </li>
-              <li>
-                <strong className="text-white">Communications
-                  health</strong> — BMS to inverter to cloud / portal; comms loss
-                triggered alerts
-              </li>
-              <li>
-                <strong className="text-white">Firmware
-                  version</strong> — BMS + inverter firmware tracked; updates applied
-                via portal or service visit
-              </li>
-              <li>
-                <strong className="text-white">Alarm history</strong>
-                — events logged with timestamp + severity for troubleshooting +
-                warranty + audit
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <ConceptBlock
-            title="SoH degradation curve + LFP characteristics"
-            plainEnglish="LFP (Lithium Iron Phosphate) is the dominant residential BESS chemistry in UK 2025-26 (Tesla Powerwall 3, GivEnergy, Sonnen, Sonnen, Anker SOLIX, etc). LFP characteristics: lower energy density than NMC but more cycles + better thermal stability + safer. SoH degrades ~0.5-1.5%/yr depending on usage pattern + temperature + DoD."
-            onSite={`Customer expectation management at handover: explain typical degradation; 10-yr warranty floor (70-80%); operational impact (10 kWh nominal at 80% SoH = 8 kWh usable). Realistic numbers prevent customer complaints about "my battery doesn't hold as much" later in life.`}
-          >
-            <p>SoH degradation factors:</p>
-            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
-              <li>
-                <strong className="text-white">Calendar
-                  ageing</strong> — degradation over time regardless of usage; ~0.3-0.5%/yr
-                baseline for LFP
-              </li>
-              <li>
-                <strong className="text-white">Cycle ageing</strong>
-                — degradation per cycle; ~0.02-0.04% per full equivalent cycle for LFP
-              </li>
-              <li>
-                <strong className="text-white">DoD (Depth of
-                  Discharge)</strong> — deeper cycles (e.g. 100% DoD daily) accelerate
-                ageing more than shallower (e.g. 80% DoD). Most BMS limit DoD to 90-95%
-                to extend life
-              </li>
-              <li>
-                <strong className="text-white">Temperature</strong>
-                — operating outside 15-35°C accelerates degradation. Cold storage
-                also bad — winter performance + lifecycle hit
-              </li>
-              <li>
-                <strong className="text-white">SoC at
-                  storage</strong> — storing at very high or very low SoC accelerates
-                ageing; BMS typically targets ~50% for long-term storage
-              </li>
-              <li>
-                <strong className="text-white">Usage pattern</strong>
-                — daily PV-paired self-consumption (1 cycle/day) is moderate; grid
-                arbitrage (2-3 cycles/day) accelerates; emergency-backup-only (1 cycle
-                per month) is calendar-ageing-dominated
-              </li>
-              <li>
-                <strong className="text-white">Warranty
-                  reality</strong> — most BESS warranties: 10 yr + SoH ≥ 70-80% +
-                throughput limit (e.g. ~3-5 MWh per kWh nominal). Whichever comes first
-              </li>
-              <li>
-                <strong className="text-white">End-of-life</strong>
-                — at SoH ~60-70% the operational utility diminishes; customer
-                replacement decision; recycling per battery regulations
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <RegsCallout
-            source="BS 7671:2018+A4:2026 · Reg 652.1 — Frequency of periodic inspection + testing"
-            clause="The frequency of periodic inspection and testing of an installation shall be determined having regard to the type of installation and equipment, its use and operation, the frequency and quality of maintenance and the external influences to which it may be subjected. The results and recommendations of previous certificates and condition reports shall also be taken into account."
-            meaning="Reg 652.1 is the frequency rule for periodic inspection. For BESS the frequency considerations: (1) Type of installation — residential vs commercial; LFP vs NMC; integrated package vs hybrid system. (2) Equipment use + operation — daily cycling vs emergency backup; depth of cycling; environmental exposure. (3) Maintenance — has the manufacturer monitoring + annual review been engaged? BMS firmware updates applied? Any prior interventions? (4) External influences — temperature range at install location; humidity; dust; vibration; proximity to other equipment. (5) Previous reports — manufacturer commissioning baseline + any prior EICR-equivalents + alarm history. Typical UK 2025-26 BESS EICR-equivalent: 5-10 yr aligned with AC EICR cycle for the property, with BMS continuous between + customer annual touchpoint + manufacturer scheduled monitoring where contracted. Some commercial sites with intensive cycling may warrant 3-5 yr cycles. Cert evidence bundle records the frequency rationale + the EICR-equivalent findings."
-          />
-
-          <InlineCheck {...inlineChecks[0]} />
-
-          <InlineCheck {...inlineChecks[1]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>EICR-equivalent for BESS — periodic test framework</ContentEyebrow>
-
-          <Pullquote>
-            The BMS is the day-to-day. The periodic EICR-equivalent is the lifecycle audit. Both matter. Neither alone is enough.
-          </Pullquote>
-
-          <ConceptBlock
-            title="EICR-equivalent for BESS — the periodic framework"
-            plainEnglish="EICR-equivalent for BESS extends the standard AC EICR with storage-specific elements: BMS data review (SoH trend, per-cell balance, fault history, cycle count); DC bus IR re-test; thermal imaging; firmware check; manufacturer warranty review; AC-side EICR. Typically 5-10 yr cycle aligned with the property AC EICR."
-            onSite="The verifier needs both BS 7671 EICR competency + BESS-specific competency (manufacturer-certified installer training + BMS data interpretation). UK 2025-26: most BESS EICR-equivalents handled by the original installer or manufacturer-affiliated service company; growing market for independent BESS inspection services."
-          >
-            <p>EICR-equivalent elements for BESS:</p>
-            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
-              <li>
-                <strong className="text-white">BMS data review</strong>
-                — extract: current SoH, cycle count, fault history summary, per-cell
-                voltage balance, comms health, firmware version, temperature event
-                summary. Compare with baseline + previous periodic
-              </li>
-              <li>
-                <strong className="text-white">DC bus IR
-                  re-test</strong> — per manufacturer + Table 64; trend against
-                commissioning baseline; investigation triggered if approaching
-                threshold or significant drop from baseline
-              </li>
-              <li>
-                <strong className="text-white">Thermal
-                  imaging</strong> — Reg 653.2 NOTE: thermographic images appended.
-                Target cells / modules + DC busbar + AC terminations + cooling system.
-                Identifies hot spots invisible to BMS
-              </li>
-              <li>
-                <strong className="text-white">Physical
-                  inspection</strong> — enclosure integrity; vent / fan / cooling
-                operation; cable routing intact; warning notices intact; isolators
-                functional; mounting + securing
-              </li>
-              <li>
-                <strong className="text-white">Functional
-                  verification</strong> — alarms triggered + verified + clearable;
-                anti-islanding self-test per Reg 551.7.5; emergency shutdown functional;
-                charge / discharge functional via BMS-controlled test
-              </li>
-              <li>
-                <strong className="text-white">Firmware
-                  check</strong> — BMS + inverter firmware up-to-date; security patches
-                applied; manufacturer-recommended updates installed
-              </li>
-              <li>
-                <strong className="text-white">Manufacturer
-                  warranty review</strong> — status (years remaining, throughput vs limit,
-                SoH vs threshold); document approach to warranty floor; engage
-                manufacturer if anomalies
-              </li>
-              <li>
-                <strong className="text-white">AC-side EICR</strong>
-                — standard Chapter 65 + Reg 651-653 review of AC connections,
-                protective devices, RCD, loop impedance, ADS, IR, continuity
-              </li>
-              <li>
-                <strong className="text-white">Reporting +
-                  cert evidence bundle</strong> — EICR-equivalent report + BMS data
-                export + thermal images + manufacturer correspondence; integrated
-                into cert evidence bundle; customer copy + installer audit + DNO
-                where applicable
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <ConceptBlock
-            title="Cell balance + thermal management — the two key indicators"
-            plainEnglish="Beyond SoH headline, two BMS data points are the early-warning indicators: (1) per-cell voltage balance — growing spread between cells indicates a cell or BMS issue; (2) temperature log — excursions outside 15-35°C accelerate degradation + indicate environmental or cooling issue. Reviewing both at EICR-equivalent catches lifecycle problems before they become headline degradation."
-            onSite="The verifier extracts BMS data + plots the cell-voltage spread + temperature log over the period; identifies trends + outliers. The conversation with manufacturer + customer is led by the data."
-          >
-            <p>Cell balance + thermal management diagnostics:</p>
-            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
-              <li>
-                <strong className="text-white">Cell voltage
-                  spread baseline</strong> — at commissioning all cells within
-                manufacturer spec (typically 20-50 mV at given SoC). Spread = ~10-20 mV
-                typical at install
-              </li>
-              <li>
-                <strong className="text-white">Cell voltage
-                  spread trending</strong> — annual review (or at EICR-equivalent)
-                shows spread growing over time. Doubling spread = ~normal ageing;
-                tripling or specific cell drifting = investigation
-              </li>
-              <li>
-                <strong className="text-white">Cell failure
-                  signature</strong> — one cell consistently 50-100+ mV below others +
-                self-discharging faster + losing balance after balancer activity =
-                cell failure. Manufacturer warranty event
-              </li>
-              <li>
-                <strong className="text-white">Temperature
-                  baseline</strong> — at install ambient 15-25°C typical; cell temp
-                during operation 20-30°C; manufacturer spec defines acceptable range
-              </li>
-              <li>
-                <strong className="text-white">Temperature
-                  excursion trending</strong> — annual review shows over-temp events:
-                date + duration + temperature reached + cause. Hot summer afternoons?
-                Failed fan? Vents blocked? Install location moved?
-              </li>
-              <li>
-                <strong className="text-white">Cold storage
-                  events</strong> — winter -5°C events affect LFP performance + lifecycle.
-                Garage installations vulnerable; conditioned-room installations more
-                stable
-              </li>
-              <li>
-                <strong className="text-white">Thermal
-                  imaging</strong> — cells / modules + DC busbar + AC terminations.
-                Hot spot on DC busbar = loose / corroded connection (high resistance =
-                I²R heat); hot cell modular = internal cell issue
-              </li>
-              <li>
-                <strong className="text-white">Documentation</strong>
-                — per-cell voltage table + temperature log summary + thermal images +
-                analysis + manufacturer correspondence
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <RegsCallout
-            source="BS 7671:2018+A4:2026 · Reg 653.2 — Photographic + thermographic images in periodic reports"
-            clause="A note has also been added pointing out that photographic and/or thermographic images can be appended to the report."
-            meaning="Reg 653.2 NOTE explicitly enables photographic + thermographic images as report appendices. For BESS condition reporting this is high-value: (1) Baseline photos at commissioning capture the as-installed state — visible inspection of front + side; close-up of nameplate + serial number + DoC reference; isolator + warning notice + cable routing + termination quality. Reference point for future periodic. (2) Periodic photos capture change — damage, soiling, modification, signs of moisture, mounting integrity. Side-by-side with baseline reveals problems. (3) Thermographic images — Reg 651.4 measuring methods includes thermal imager (BS EN 61557 compliance broader than just the standard MFT). Target areas: cell modules (BMS thermal sensors are internal; thermal image of enclosure surface + module casing identifies hot zones); DC busbar connections (high-resistance connections = I²R heat = thermal hot spot); AC terminations; fuse / breaker contact points; cooling system performance (running fan vs failed fan visibly different). (4) Storage + presentation — digital + paper copies; integrated into cert evidence bundle; selected images for customer report. (5) Warranty + audit value — images are evidence in warranty claims + dispute resolution + future-verifier reference. (6) Privacy + security — BMS data + photos may include identifying information; GDPR-aware handling."
-          />
-
-          <InlineCheck {...inlineChecks[2]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>Cert evidence bundle integration + customer engagement</ContentEyebrow>
-
-          <ConceptBlock
-            title="BMS data + cert evidence bundle across the BESS lifecycle"
-            plainEnglish="BMS data integrates at three stages: (1) commissioning baseline — SoH = 100%, per-cell voltages, initial cycle count, fault history empty, firmware version; (2) periodic EICR-equivalent — current data + trend vs baseline + previous periodic; (3) warranty / end-of-life event — BMS data supports manufacturer claim + lifecycle documentation."
-            onSite="The cert evidence bundle becomes the lifecycle dossier — accessible to the customer + installer + manufacturer + future verifiers + insurance + warranty claims. Comprehensive record = simpler resolution when issues arise."
-          >
-            <p>Lifecycle integration stages:</p>
-            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
-              <li>
-                <strong className="text-white">Commissioning
-                  baseline</strong> — IV records: SoH = 100%, per-cell voltage table,
-                cycle count = 0, fault history empty, firmware version, alarm
-                thresholds + safety limits, manufacturer commissioning record
-              </li>
-              <li>
-                <strong className="text-white">Annual customer
-                  touchpoint</strong> — portal review + customer self-check + installer
-                summary email; not necessarily BMS data export but visible monitoring
-              </li>
-              <li>
-                <strong className="text-white">EICR-equivalent
-                  (5-10 yr)</strong> — comprehensive BMS data extract + DC bus IR
-                re-test + thermal imaging + functional verification + warranty review;
-                report + cert evidence bundle update
-              </li>
-              <li>
-                <strong className="text-white">Alarm + fault
-                  events</strong> — BMS alarm triggers manufacturer + installer alert;
-                response documented + integrated into cert evidence bundle
-              </li>
-              <li>
-                <strong className="text-white">Warranty
-                  claim</strong> — premature degradation OR fault triggers claim; BMS
-                data + EICR-equivalent reports + thermal images + manufacturer
-                correspondence all in cert evidence bundle
-              </li>
-              <li>
-                <strong className="text-white">Firmware
-                  updates</strong> — BMS + inverter firmware updates logged; security
-                + capability + bug-fix tracked
-              </li>
-              <li>
-                <strong className="text-white">End-of-life</strong>
-                — BESS retired (15-20 yr typical); BMS final data extract; recycling
-                + disposal per battery regulations; cert evidence bundle closed
-              </li>
-              <li>
-                <strong className="text-white">Replacement</strong>
-                — new BESS install treated as new commissioning + cert evidence bundle
-                opens new lifecycle. Old cert bundle retained for property + audit
-                history
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <ConceptBlock
-            title="Customer education + the annual touchpoint"
-            plainEnglish="Customer education is critical for BESS — avoiding silent failures requires the customer engaged with the portal, alert response, periodic schedule, warranty terms. At handover + ongoing the installer guides the customer through the lifecycle."
-            onSite="UK 2025-26 reality: many BESS owners are not technical; the installer\'s clear simple guidance prevents misunderstanding (e.g. why SoH falls; why winter cycling is reduced). Annual touchpoint maintains the relationship + catches issues early."
-          >
-            <p>Customer education topics:</p>
-            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
-              <li>
-                <strong className="text-white">Portal access</strong>
-                — demo + walkthrough at handover; customer logs in successfully + can
-                read the views relevant to them
-              </li>
-              <li>
-                <strong className="text-white">SoC vs SoH</strong>
-                — operational vs lifecycle in plain English; "today\'s charge" vs
-                "battery health"
-              </li>
-              <li>
-                <strong className="text-white">Expected
-                  degradation</strong> — ~1%/yr typical; 10-yr warranty floor; SoH 80%
-                still useful (10 kWh nominal = 8 kWh usable)
-              </li>
-              <li>
-                <strong className="text-white">Warranty terms</strong>
-                — copy in handover pack; SoH threshold + cycle count + throughput
-                limit; claim process
-              </li>
-              <li>
-                <strong className="text-white">Alert response</strong>
-                — what alerts mean + customer action; emergency shutdown procedure
-                visible
-              </li>
-              <li>
-                <strong className="text-white">Periodic
-                  schedule</strong> — annual customer self-check + 5-10 yr professional
-                EICR-equivalent
-              </li>
-              <li>
-                <strong className="text-white">Operating
-                  envelope</strong> — temperature range, vent clearance, do not modify,
-                do not open enclosure, fault → call installer
-              </li>
-              <li>
-                <strong className="text-white">Annual
-                  touchpoint</strong> — installer or manufacturer-affiliated annual
-                review (paid service typically £50-150/yr); maintains relationship +
-                catches early issues
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <RegsCallout
-            source="BS 7671:2018+A4:2026 · Chapter 65 + Reg 651.4 — Periodic inspection + reporting"
-            clause="Reg 651.4: Details of any damage, deterioration, defects or dangerous conditions shall be recorded in a report. Reg 651.5: The periodic inspection and testing shall be carried out by one or more skilled persons competent in such work."
-            meaning="Reg 651.4 + Reg 651.5 set the reporting + competency requirements for periodic inspection. For BESS this means: (1) Reg 651.4 — the EICR-equivalent report records any damage (enclosure, cabling, mounting), deterioration (SoH drop beyond expected curve, cell imbalance growing, thermal events accumulating), defects (BMS fault recurrences, comms losses, firmware not up-to-date), dangerous conditions (over-temp events, isolation degradation, cell swelling). Photographic + thermographic images per Reg 653.2 NOTE complement the textual report. (2) Reg 651.5 — competent skilled person: BS 7671 EICR competency + BESS-specific competency (manufacturer-certified installer or equivalent + BMS data interpretation + Chapter 57 understanding). (3) Customer-facing report — clear summary + technical detail in appendix; recommendations + actions + follow-up timeline. (4) Cert evidence bundle integration — report + BMS data + thermal images + manufacturer correspondence all retained. (5) Frequency — Reg 652.1 considers installation type, use, maintenance, external influences; typical 5-10 yr aligned with AC EICR. (6) Documentation flow — installer → customer + installer audit + manufacturer where applicable + insurance + future verifiers."
-          />
-
-          <InlineCheck {...inlineChecks[3]} />
-
-          <BessLifecycleMonitoring
-            caption="BESS lifecycle monitoring + condition reporting diagram. Top: BMS continuous monitoring scope — per-cell voltage + temperature, pack SoC + SoH, DC bus, cycle count, fault states, comms, firmware. Middle: lifecycle stages — commissioning baseline (SoH 100%, cycle 0, balanced, no faults) → daily operation (BMS continuous, portal access) → annual touchpoint (customer self-check, installer summary) → EICR-equivalent every 5-10 yr (full data review + DC bus IR + thermal imaging + functional + warranty + AC EICR) → warranty / replacement / end-of-life. Bottom: cert evidence bundle integration — commissioning + periodic snapshots + alarm events + warranty correspondence + photographic + thermographic images per Reg 653.2 NOTE."
-          />
-
-          <SectionRule />
-
-          <Scenario
-            title="5-year EICR-equivalent on residential 10 kWh BESS — healthy"
-            situation="Mr + Mrs Patel, 4-bed detached, garage-installed 10 kWh GivEnergy LFP BESS commissioned 5 years ago alongside 8 kWp PV. AC EICR due for the property. Original installer engaged for combined AC EICR + BESS EICR-equivalent."
-            whatToDo="(1) Pre-visit: download BMS data via installer portal — SoH trend over 5 yr (100% → 88%), cycle count 1450 (~290/yr daily PV self-consumption), fault history (1 comms loss recovered automatically; no other faults), per-cell voltage balance (latest spread 30 mV — slight growth from 15 mV at commissioning), temperature log (no events outside 5-35°C range; couple of summer-day peaks at 33°C — within spec), firmware updates applied 4 times over 5 yr. (2) On-site Reg 642 inspection — visual: enclosure clean + intact; vents clear; isolators functional; warning notices intact; cable routing intact + no damage. (3) DC bus IR re-test — per GivEnergy DoC: 500 V DC test for the 48 V residential bus; result 25 MΩ (vs commissioning 30 MΩ — slight drop within normal); record. (4) Thermal imaging — DC busbar connections cool; AC terminations cool; cell module casing uniform temperature (no hot spots); cooling fan running normally. (5) Functional verification — anti-islanding self-test per Reg 551.7.5; emergency shutdown tested; alarms triggered + clearable. (6) AC-side EICR — standard Chapter 65 review of CU + circuits + RCD + loop impedance + IR + continuity per Reg 651-653. (7) Manufacturer warranty review — GivEnergy warranty 10 yr + SoH ≥ 60% at 10 yr + throughput limit; current SoH 88% at 5 yr + cycle count 1450 vs throughput limit 30 MWh + ~12 MWh used = on track. (8) Report — satisfactory for continued service; trajectory consistent with expected; next EICR-equivalent in 5 yr aligned with next AC EICR; customer informed via plain-English summary + supporting BMS data chart. (9) Cert evidence bundle — updated with current report + BMS data export + thermal images + photos + AC EICR."
-            whyItMatters="Healthy 5-yr EICR-equivalent demonstrates the standard discipline. SoH 88% at 5 yr + 1450 cycles + clean fault history + balanced cells + good thermal + tested anti-islanding = system in normal operational state. Cert evidence bundle update gives customer confidence + provides audit trail + supports continued warranty. Customer engagement reinforced: portal access reviewed, alert response refreshed, expectation managed (88% → ~75% by 10 yr per current trajectory). Annual touchpoint scheduled. The discipline of the periodic review prevents silent failures."
-          />
-
-          <Scenario
-            title="EICR-equivalent identifies premature degradation — warranty claim path"
-            situation={`Mr Khan, semi-detached, 2-yr-old 13 kWh BESS in conditioned utility room. Customer reports "battery doesn't last as long as before" via the portal. Installer dispatches EICR-equivalent visit.`}
-            whatToDo={`(1) BMS data review (pre-visit + on-site): SoH 76% at 2 yr (vs expected ~98% — significantly premature); cycle count 800 (~400/yr — higher than the typical 300/yr but not extreme); per-cell voltage balance growing — one cell consistently 80 mV below others over the last 6 months; fault history shows 3 over-temp events in summer (cell temp >40°C for ~2 hours each); temperature log shows utility room peaked at 38°C ambient during summer events (utility room had new tumble dryer installed which raised ambient temperature). (2) Reg 642 inspection — find: utility room ambient now higher due to new tumble dryer venting nearby; BESS vents partially obstructed by stored items; one cell module visibly slightly bowed (potential cell failure). (3) DC bus IR re-test — 1000 V DC test (high-voltage commercial BESS bus): result 4 MΩ (vs commissioning 18 MΩ — significant drop). (4) Thermal imaging — hot spot on the bowed cell module (5°C above other modules at idle); DC busbar normal; AC terminations normal. (5) Diagnosis — one cell failing (voltage spread + bowed appearance + hot spot + IR drop); accelerated by ambient temperature exposure (new tumble dryer + obstructed vents); environmental degradation accelerated chemistry decline. (6) Warranty engagement — manufacturer (GivEnergy / Tesla / etc) contacted; warranty likely covers premature SoH below threshold; cell module replacement or whole-unit replacement per manufacturer policy. (7) Customer engagement — explain findings: cell failure + environmental contribution; warranty claim initiated; interim usage decision (continue limited use OR take offline per manufacturer guidance); environmental fix required (relocate tumble dryer ducting + clear BESS vents). (8) Report — current condition unsatisfactory for continued unmodified service; recommendations: warranty claim + environmental fix + 6-month re-inspection. (9) Cert evidence bundle — comprehensive: BMS data export + thermal images + photos + diagnosis + manufacturer correspondence + customer communication trail.`}
-            whyItMatters={`Premature degradation EICR-equivalent demonstrates the value of the discipline. BMS-alone monitoring caught the SoH drop but not the environmental cause; on-site inspection + thermal imaging identified the new tumble dryer + obstructed vents + bowed cell. Manufacturer warranty engaged + customer educated + environmental cause addressed + lifecycle protected for the replacement / repaired unit. Cert evidence bundle is the audit trail for warranty + insurance + future-verifier reference. The skilled person's competency + the manufacturer relationship + the BMS data + the physical inspection together resolve.`}
-          />
-
-          <CommonMistake
-            title="Trusting BMS data alone without physical inspection"
-            whatHappens={`Installer relies on the BMS portal showing "all healthy" + skips the physical inspection at EICR-equivalent. Doesn't see the obstructed vents, the new heat source nearby, the loose AC termination (no thermal imaging done), the deteriorating warning notices, the moisture ingress on enclosure seal. BMS catches the symptoms (over-temp events) months later; root cause was inspection-visible from day one.`}
-            doInstead={`BMS data + physical inspection + thermal imaging together. Reg 651.4: details of any damage, deterioration, defects or dangerous conditions shall be recorded in a report. The BMS doesn't see the enclosure, the cable routing, the install environment changes, the AC termination integrity, the warning notice condition. Physical inspection + thermal imaging + BMS data review is the complete EICR-equivalent. Reg 653.2 NOTE photographic + thermographic images appended to the report. Don't shortcut the physical visit.`}
-          />
-
-          <CommonMistake
-            title="Failing to engage manufacturer warranty when degradation is premature"
-            whatHappens={`EICR-equivalent identifies SoH = 65% at 3 yr (significantly premature). Installer reports as "some degradation noted" + recommends continued use. Doesn't engage manufacturer warranty. Customer told the battery is degrading + replacement budget needed in a few years. 3 years later customer discovers warranty was applicable + the manufacturer would have replaced at that point — but warranty period now expired.`}
-            doInstead={`Premature degradation = warranty engagement opportunity. Most BESS warranties guarantee SoH not below threshold (70-80%) within warranty period (typically 10 yr). SoH 65% at 3 yr is firmly within warranty + investigation territory. The installer's duty: identify the trigger + engage manufacturer + advocate for customer + document the BMS data + thermal images + diagnosis. Cert evidence bundle records the warranty claim correspondence. Manufacturer may replace cell module, replace whole unit, or extend warranty per their policy. Customer outcome is the metric — the discipline of the EICR-equivalent + warranty engagement is the path.`}
-          />
-
-          <SectionRule />
-
-          <KeyTakeaways
-            points={[
-              'BMS continuously monitors comprehensively: per-cell voltage + temperature, pack SoC + SoH, cycle count, fault states, comms, firmware. The day-to-day picture.',
-              'SoC = present energy as fraction of CURRENT capacity (dynamic operational). SoH = capacity remaining vs original-at-install (lifecycle).',
-              'Typical LFP SoH degradation: ~0.5-1.5%/yr; 10-yr warranty floor typically 70-80%; end-of-life at ~60-70% SoH.',
-              'EICR-equivalent for BESS = standard AC EICR + BMS data review + DC bus IR re-test + thermal imaging + firmware + warranty + functional verification.',
-              'Frequency per Reg 652.1: type, use, maintenance, external influences. Typical 5-10 yr aligned with AC EICR + BMS continuous + customer annual touchpoint.',
-              'Cell balance + temperature management are the two key early-warning indicators beyond headline SoH.',
-              'Reg 653.2 NOTE: photographic + thermographic images appended to the report. Reg 651.4: damage, deterioration, defects, dangerous conditions recorded.',
-              'Thermal imaging identifies what BMS doesn\'t see: DC busbar hot spots, loose AC terminations, blocked vents, bowed cell modules.',
-              'Cert evidence bundle: commissioning baseline + annual touchpoint + EICR-equivalent + warranty events + firmware updates + end-of-life — the lifecycle dossier.',
-              'Customer education: portal access, expected degradation, warranty terms, alert response, periodic schedule, emergency shutdown.',
-              'Reg 651.5: competent skilled person — BS 7671 EICR + BESS-specific competency + manufacturer training + BMS data interpretation.',
-              'Premature degradation = warranty engagement opportunity. Installer\'s duty to identify + advocate + document.',
-            ]}
-          />
-
-          <FAQ items={faqs} />
-
-          <Quiz questions={quizQuestions} title="Section 3 · Knowledge check" />
-
-          <div className="grid grid-cols-2 gap-3 pt-2">
-            <button
-              type="button"
-              onClick={() =>
-                navigate('/electrician/upskilling/renewable-energy-module-12-section-2')
-              }
-              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
-                <ChevronLeft className="h-3 w-3" /> Previous
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-white truncate">
-                12.2 IR on DC circuits
-              </div>
-            </button>
-            <button
-              type="button"
-              onClick={() =>
-                navigate('/electrician/upskilling/renewable-energy-module-12-section-4')
-              }
-              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
-                Next section <ChevronRight className="h-3 w-3" />
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-black truncate">
-                12.4 PEN faults + open-PEN protection
-              </div>
-            </button>
-          </div>
-        </PageFrame>
-      </div>
-    </div>
+            <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+              Next section <ChevronRight className="h-3 w-3" />
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-black truncate">
+              12.4 PEN faults + open-PEN protection
+            </div>
+          </button>
+        </div>
+      </HubBody>
+    </HubPage>
   );
 }

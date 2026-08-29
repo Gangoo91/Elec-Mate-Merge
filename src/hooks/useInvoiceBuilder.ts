@@ -398,6 +398,39 @@ export const useInvoiceBuilder = (sourceQuote?: Quote, existingInvoice?: Partial
     }));
   }, []);
 
+  const setLinkedCertificate = useCallback(
+    (
+      cert: {
+        id: string;
+        type: string;
+        reference: string;
+        pdfUrl: string | null;
+      } | null
+    ) => {
+      setInvoice((prev) => ({
+        ...prev,
+        linked_certificate_id: cert?.id ?? undefined,
+        linked_certificate_type: cert?.type ?? undefined,
+        linked_certificate_reference: cert?.reference ?? undefined,
+        linked_certificate_pdf_url: cert?.pdfUrl ?? undefined,
+        // Unlinking clears the hold too — a release mode without a
+        // certificate is meaningless and would confuse the send fn.
+        ...(cert ? {} : { certificate_release_mode: 'with_invoice' as const }),
+      }));
+    },
+    []
+  );
+
+  const setCertificateReleaseMode = useCallback(
+    (mode: NonNullable<Invoice['certificate_release_mode']>) => {
+      setInvoice((prev) => ({
+        ...prev,
+        certificate_release_mode: mode,
+      }));
+    },
+    []
+  );
+
   const updateJobDetails = useCallback((jobDetails: Partial<Quote['jobDetails']>) => {
     setInvoice((prev) => ({
       ...prev,
@@ -442,6 +475,8 @@ export const useInvoiceBuilder = (sourceQuote?: Quote, existingInvoice?: Partial
     updateInvoiceSettings,
     setInvoiceNotes,
     updateInvoiceStatus,
+    setCertificateReleaseMode,
+    setLinkedCertificate,
     updateJobDetails,
     updateClientDetails,
     initializeInvoice,

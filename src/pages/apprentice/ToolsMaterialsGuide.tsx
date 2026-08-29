@@ -14,11 +14,7 @@ import {
   AlertTriangle,
   BadgePoundSterling,
 } from 'lucide-react';
-import {
-  PageFrame,
-  PageHero,
-  itemVariants,
-} from '@/components/college/primitives';
+import { PageFrame, PageHero, itemVariants } from '@/components/college/primitives';
 
 const ToolsMaterialsGuide = () => {
   const navigate = useNavigate();

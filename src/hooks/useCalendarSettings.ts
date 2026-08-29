@@ -1,6 +1,7 @@
 import { useState, useCallback, useEffect } from 'react';
 import type { CalendarView } from '@/types/calendar';
 import { storageGetJSONSync, storageSetJSONSync } from '@/utils/storage';
+import { supabase } from '@/integrations/supabase/client';
 
 const STORAGE_KEY = 'elec-mate-calendar-settings';
 
@@ -75,7 +76,31 @@ export function useCalendarSettings() {
   );
 
   const setJobsAtOnce = useCallback(
-    (jobs: number) => updateSettings({ jobsAtOnce: sane(jobs) }),
+    (jobs: number) => {
+      const value = sane(jobs);
+      updateSettings({ jobsAtOnce: value });
+      /*
+       * Write-through to the profile, fire-and-forget.
+       *
+       * The internal calendar reads localStorage (sync, instant); the PUBLIC
+       * booking engine runs server-side and can only see the profile row. If
+       * these drift, the customer-facing page and the diary disagree about
+       * whether a slot is free — the one thing a booking system must never do.
+       * Known limit: a second device keeps its own localStorage value; the
+       * profile carries whichever device wrote last, which is also the value
+       * the public page uses. Good enough until settings move server-side.
+       */
+      void (async () => {
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
+        if (!user) return;
+        await supabase
+          .from('profiles')
+          .update({ scheduling_jobs_at_once: value })
+          .eq('id', user.id);
+      })();
+    },
     [updateSettings]
   );
 

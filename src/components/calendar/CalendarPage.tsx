@@ -42,6 +42,7 @@ import { useCustomers } from '@/hooks/useCustomers';
 import { spawnFromBooking } from '@/lib/bookingSpawn';
 import { useCalendarPulse } from '@/hooks/useCalendarPulse';
 import { useGoogleCalendarSync } from '@/hooks/useGoogleCalendarSync';
+import { useOutlookCalendarSync } from '@/hooks/useOutlookCalendarSync';
 import { toast } from '@/hooks/use-toast';
 import { useHaptic } from '@/hooks/useHaptic';
 import { useQueryClient } from '@tanstack/react-query';
@@ -100,6 +101,25 @@ const CalendarPageContent = () => {
 
   // Google sync
   const googleSync = useGoogleCalendarSync();
+  const outlookSync = useOutlookCalendarSync();
+
+  // Always-on sync: pull Google changes whenever the diary is opened or the
+  // window comes back into focus, and push app-side changes the moment an
+  // event is created/edited (calendar-events query invalidation fires below).
+  const quietSyncRef = useRef(googleSync.quietSync);
+  quietSyncRef.current = googleSync.quietSync;
+  useEffect(() => {
+    if (!googleSync.status.connected) return;
+    quietSyncRef.current();
+    const onFocus = () => quietSyncRef.current();
+    const onChange = () => quietSyncRef.current(true);
+    window.addEventListener('focus', onFocus);
+    window.addEventListener('elecmate:gcal-sync', onChange);
+    return () => {
+      window.removeEventListener('focus', onFocus);
+      window.removeEventListener('elecmate:gcal-sync', onChange);
+    };
+  }, [googleSync.status.connected]);
   const googleSyncRef = useRef(googleSync);
   googleSyncRef.current = googleSync;
 
@@ -589,6 +609,9 @@ const CalendarPageContent = () => {
           onNext={goNext}
           onToday={goToday}
           onOpenSettings={() => setSettingsSheetOpen(true)}
+          googleConnected={googleSync.status.connected}
+          googleConnecting={googleSync.connecting}
+          onConnectGoogle={googleSync.connect}
           onViewChange={handleViewChange}
         />
 
@@ -737,6 +760,12 @@ const CalendarPageContent = () => {
         onConnect={googleSync.connect}
         onDisconnect={googleSync.disconnect}
         onSyncNow={googleSync.syncNow}
+        outlookStatus={outlookSync.status}
+        outlookSyncing={outlookSync.syncing}
+        outlookConnecting={outlookSync.connecting}
+        onOutlookConnect={outlookSync.connect}
+        onOutlookDisconnect={outlookSync.disconnect}
+        onOutlookSyncNow={outlookSync.syncNow}
         defaultView={view}
         onDefaultViewChange={handleViewChange}
         workingHoursStart={settings.workingHoursStart}

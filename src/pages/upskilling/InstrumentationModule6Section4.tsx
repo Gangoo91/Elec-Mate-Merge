@@ -239,7 +239,7 @@ const InstrumentationModule6Section4 = () => {
 
         <InlineCheck
           question="What is the difference between 'as-found' and 'as-left' calibration results?"
-          answer="As-found results are readings taken before any adjustments (showing the device's actual state in service). As-left results are readings after adjustment (showing what the device will measure going forward). Both must be recorded for traceability and to identify drift patterns."
+          correctAnswer="As-found results are readings taken before any adjustments (showing the device's actual state in service). As-left results are readings after adjustment (showing what the device will measure going forward). Both must be recorded for traceability and to identify drift patterns."
         />
 
         {/* Section 02 - Calibration Certificate Requirements */}
@@ -478,7 +478,7 @@ const InstrumentationModule6Section4 = () => {
 
         <InlineCheck
           question="Why must corrections on paper calibration records use a single line through the error?"
-          answer="A single line allows the original entry to remain readable, proving no data has been hidden or destroyed. The correction must be initialled and dated to show who made the change and when, maintaining audit trail integrity."
+          correctAnswer="A single line allows the original entry to remain readable, proving no data has been hidden or destroyed. The correction must be initialled and dated to show who made the change and when, maintaining audit trail integrity."
         />
 
         {/* Section 04 - Regulatory Compliance */}
@@ -679,7 +679,7 @@ const InstrumentationModule6Section4 = () => {
 
         <InlineCheck
           question="How can trend analysis help optimise calibration intervals?"
-          answer="By tracking drift rate over multiple calibration cycles, you can identify instruments that remain stable longer than their current interval (allowing extension) or those that drift faster than expected (requiring shorter intervals). This data-driven approach reduces costs while maintaining quality."
+          correctAnswer="By tracking drift rate over multiple calibration cycles, you can identify instruments that remain stable longer than their current interval (allowing extension) or those that drift faster than expected (requiring shorter intervals). This data-driven approach reduces costs while maintaining quality."
         />
 
         {/* Real World Scenario */}

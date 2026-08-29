@@ -5,10 +5,10 @@
  */
 
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
-import { PageFrame, PageHero } from '@/components/college/primitives';
 import {
   ConceptBlock,
   CommonMistake,
@@ -62,12 +62,7 @@ const quickCheckQuestions = [
     id: 'pipe-velocity',
     question:
       'What is the recommended maximum water velocity in chilled water distribution pipework?',
-    options: [
-      '5.0 m/s',
-      '0.5 m/s',
-      '1.5 m/s',
-      '3.0 m/s',
-    ],
+    options: ['5.0 m/s', '0.5 m/s', '1.5 m/s', '3.0 m/s'],
     correctIndex: 3,
     explanation:
       'CIBSE recommends maximum velocities of 1.5-3.0 m/s for chilled water distribution mains to limit noise and erosion. Higher velocities increase pump energy and can cause noise issues, particularly near occupied spaces.',
@@ -79,12 +74,7 @@ const quizQuestions = [
     id: 1,
     question:
       'What is the typical COP (Coefficient of Performance) range for a modern water-cooled centrifugal chiller at full load?',
-    options: [
-      '2.5-3.5',
-      '5.5-7.0',
-      '4.0-5.0',
-      '8.0-10.0',
-    ],
+    options: ['2.5-3.5', '5.5-7.0', '4.0-5.0', '8.0-10.0'],
     correctAnswer: 1,
     explanation:
       'Modern water-cooled centrifugal chillers achieve COPs of 5.5-7.0 at full load design conditions. This high efficiency is due to the effective heat rejection via cooling towers and optimised compressor design.',
@@ -148,12 +138,7 @@ const quizQuestions = [
     id: 6,
     question:
       'What pressure drop per metre run is typically used for preliminary chilled water pipe sizing?',
-    options: [
-      '50-100 Pa/m',
-      '400-600 Pa/m',
-      '150-300 Pa/m',
-      '800-1000 Pa/m',
-    ],
+    options: ['50-100 Pa/m', '400-600 Pa/m', '150-300 Pa/m', '800-1000 Pa/m'],
     correctAnswer: 2,
     explanation:
       'CIBSE recommends a pressure drop of 150-300 Pa/m for preliminary pipe sizing. This provides a balance between pipe cost (smaller pipes = higher pressure drop) and pump energy (higher pressure drop = more pump energy).',
@@ -175,12 +160,7 @@ const quizQuestions = [
     id: 8,
     question:
       'At what ambient wet bulb temperature can free cooling typically begin to contribute to a chilled water system?',
-    options: [
-      'Below 10°C WB',
-      'Below 5°C WB',
-      'Below 20°C WB',
-      'Below 15°C WB',
-    ],
+    options: ['Below 10°C WB', 'Below 5°C WB', 'Below 20°C WB', 'Below 15°C WB'],
     correctAnswer: 0,
     explanation:
       'Free cooling can typically begin when ambient wet bulb drops below approximately 10°C, as this allows cooling tower water to approach the required chilled water temperatures. Full free cooling (chillers off) may be possible below 5°C WB.',
@@ -305,296 +285,490 @@ const HNCModule8Section3_3 = () => {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
-      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
-        <PageFrame>
+    <HubPage>
+      <HubMasthead
+        section="Module 8 · Section 3 · Subsection 3"
+        title="Chilled Water Systems"
+        backTo="/study-centre/apprentice/h-n-c-module8-section3"
+      />
+      <HubBody>
+        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
+          Chillers, cooling towers, pumping arrangements and system hydraulics for commercial
+          cooling
+        </p>
+
+        <LearningOutcomes
+          outcomes={[
+            'Understand air-cooled versus water-cooled chiller operation and selection',
+            'Explain cooling tower operation including range and approach',
+            'Design primary-secondary and variable primary pumping systems',
+            'Size chilled water pipework using pressure drop and velocity criteria',
+            'Apply system hydraulics principles for balancing and control',
+            'Implement free cooling strategies to reduce energy consumption',
+          ]}
+        />
+
+        <SectionRule />
+
+        <ConceptBlock title="Chillers - Air-Cooled and Water-Cooled">
+          <p>
+            Chillers are the heart of any chilled water system, producing cold water typically at
+            6°C for distribution to air handling units, fan coil units and other terminal equipment.
+            The choice between air-cooled and water-cooled chillers significantly impacts system
+            efficiency, capital cost and operational complexity.
+          </p>
+          <p>
+            <strong>Air-Cooled Chillers</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Reject heat directly to outdoor air via finned coils and fans</li>
+            <li>Typical COP of 2.5-4.0 depending on ambient conditions</li>
+            <li>Performance degrades significantly above 35°C ambient</li>
+            <li>No water consumption or cooling tower maintenance required</li>
+            <li>Simpler installation but require adequate outdoor space for airflow</li>
+            <li>Generally suited for loads up to approximately 500kW</li>
+          </ul>
+          <p>
+            <strong>Water-Cooled Chillers</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Reject heat via condenser water circuit to cooling towers</li>
+            <li>Higher COP of 5.0-7.0 due to lower condensing temperatures</li>
+            <li>More stable performance regardless of ambient dry bulb temperature</li>
+            <li>Require cooling towers, condenser pumps and water treatment</li>
+            <li>
+              Typical for larger installations &gt;500kW where efficiency savings justify complexity
+            </li>
+            <li>Compressor types include scroll, screw and centrifugal</li>
+          </ul>
+          <p>
+            <strong>Chiller Comparison</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Typical COP:</strong> 2.5-4.0 — 5.0-7.0
+            </li>
+            <li>
+              <strong>Capital cost:</strong> Lower (chiller only) — Higher (+ towers, pumps)
+            </li>
+            <li>
+              <strong>Water consumption:</strong> None — Significant (evaporation)
+            </li>
+            <li>
+              <strong>Maintenance:</strong> Simpler — Complex (water treatment)
+            </li>
+            <li>
+              <strong>Space requirement:</strong> Large outdoor area — Roof/external for towers
+            </li>
+            <li>
+              <strong>Noise:</strong> Condenser fans — Tower fans (lower)
+            </li>
+          </ul>
+          <p>
+            <strong>Design tip:</strong> For UK climates, water-cooled chillers typically offer
+            20-40% energy savings over air-cooled units, often paying back the additional capital
+            cost within 3-5 years for systems operating &gt;2000 hours annually.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...quickCheckQuestions[0]} />
+
+        <SectionRule />
+
+        <ConceptBlock title="Cooling Towers">
+          <p>
+            Cooling towers reject heat from the condenser water circuit to atmosphere through
+            evaporative cooling. As water cascades through the tower, a portion evaporates, removing
+            heat from the remaining water. This allows condenser water temperatures to approach the
+            ambient wet bulb temperature rather than the higher dry bulb temperature.
+          </p>
+          <p>
+            <strong>Key Cooling Tower Terms</strong>
+          </p>
+          <p>Range</p>
+          <p>
+            Temperature difference between entering and leaving water. Typically 5-6K for HVAC
+            applications.
+          </p>
+          <p>Approach</p>
+          <p>
+            Difference between leaving water and ambient wet bulb. Typically 3-5K - lower approach =
+            larger tower.
+          </p>
+          <p>
+            <strong>Cooling tower types:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Induced draught:</strong> Fan at top draws air through fill - most common for
+              HVAC
+            </li>
+            <li>
+              <strong>Forced draught:</strong> Fan at bottom pushes air through - good where height
+              is limited
+            </li>
+            <li>
+              <strong>Crossflow:</strong> Air flows horizontally through falling water - easier
+              maintenance access
+            </li>
+            <li>
+              <strong>Counterflow:</strong> Air flows upward against falling water - more compact,
+              higher efficiency
+            </li>
+          </ul>
+          <p>
+            <strong>Typical Condenser Water Temperatures</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Design (UK summer):</strong> 27-30°C — 32-35°C
+            </li>
+            <li>
+              <strong>Part load (spring/autumn):</strong> 20-25°C — 25-30°C
+            </li>
+            <li>
+              <strong>Free cooling potential:</strong> &lt;15°C — &lt;20°C
+            </li>
+          </ul>
+          <p>
+            <strong>Legionella Risk Management</strong>
+          </p>
+          <p>
+            Cooling towers create ideal conditions for Legionella growth (warm, aerated water with
+            nutrients from airborne contamination). Compliance with L8 ACOP and HSG274 Part 1 is
+            mandatory, requiring written risk assessments, competent water treatment, regular
+            monitoring (including quarterly Legionella testing) and comprehensive records.
+          </p>
+          <p>
+            <strong>Remember:</strong> Cooling tower performance is limited by wet bulb temperature,
+            not dry bulb. A tower cannot cool water below the wet bulb temperature. UK design wet
+            bulb is typically 20°C, allowing condenser water as low as 23-25°C.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...quickCheckQuestions[1]} />
+
+        <SectionRule />
+
+        <ConceptBlock title="Primary-Secondary and Variable Primary Pumping">
+          <p>
+            Pumping arrangement determines how water flows through the chiller plant and
+            distribution system. The two main approaches - primary-secondary and variable primary
+            flow - offer different trade-offs between complexity, capital cost and energy
+            efficiency.
+          </p>
+          <p>
+            <strong>Primary-Secondary Pumping</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Primary pumps maintain constant flow through chillers (one pump per chiller)</li>
+            <li>Secondary pumps distribute variable flow to building loads</li>
+            <li>Bypass pipe (decoupler) connects the two circuits hydraulically</li>
+            <li>When secondary flow &lt; primary, excess water bypasses back to return</li>
+            <li>When secondary flow &gt; primary, warm return mixes with supply (avoid this)</li>
+            <li>Simple, proven approach suitable for most applications</li>
+          </ul>
+          <p>
+            <strong>Primary-Secondary System Rules</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Bypass pipe should be short with minimal fittings (&lt;0.5m head loss)</li>
+            <li>Size bypass for full primary flow at &lt;1.5 m/s velocity</li>
+            <li>Locate DP sensor at hydraulically most remote circuit</li>
+            <li>Primary flow must always exceed or equal secondary flow</li>
+            <li>Stage chillers based on return water temperature or load</li>
+          </ul>
+          <p>
+            <strong>Variable Primary Flow (VPF)</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Eliminates secondary pumps entirely - single set of variable speed pumps</li>
+            <li>Water flows directly from chillers to loads and back</li>
+            <li>Requires chillers rated for variable flow operation (minimum 30-50%)</li>
+            <li>Bypass valve maintains minimum flow when load is very low</li>
+            <li>25-35% pump energy savings compared to primary-secondary</li>
+            <li>More sophisticated controls required for chiller staging</li>
+          </ul>
+          <p>
+            <strong>System Comparison</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Capital cost:</strong> Higher (more pumps) — Lower
+            </li>
+            <li>
+              <strong>Pump energy:</strong> Higher — 25-35% lower
+            </li>
+            <li>
+              <strong>Control complexity:</strong> Simpler — More complex
+            </li>
+            <li>
+              <strong>Chiller requirements:</strong> Any chiller — Variable flow rated
+            </li>
+            <li>
+              <strong>Plant room space:</strong> Larger — Smaller
+            </li>
+          </ul>
+          <p>
+            <strong>Design consideration:</strong> Low delta T syndrome reduces system capacity
+            regardless of pumping arrangement. Ensure control valves are correctly sized (50-70%
+            open at design), coils are clean and properly selected, and system is correctly
+            balanced.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...quickCheckQuestions[2]} />
+
+        <SectionRule />
+
+        <ConceptBlock title="Pipe Sizing and System Hydraulics">
+          <p>
+            Correct pipe sizing balances capital cost against pump energy consumption. Undersized
+            pipes increase pressure drop and pump energy; oversized pipes waste material and
+            increase capital cost. CIBSE Guide C provides comprehensive guidance for pipe sizing in
+            building services.
+          </p>
+          <p>
+            <strong>Pipe Sizing Criteria</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Pressure drop:</strong> 150-300 Pa/m for preliminary sizing
+            </li>
+            <li>
+              <strong>Maximum velocity:</strong> 3.0 m/s in mains, 1.5 m/s near occupied spaces
+            </li>
+            <li>
+              <strong>Minimum velocity:</strong> 0.5 m/s to avoid air accumulation
+            </li>
+            <li>
+              <strong>Noise:</strong> Reduce velocity to 1.0-1.5 m/s for risers and branches
+            </li>
+          </ul>
+          <p>
+            <strong>Flow Rate Calculation</strong>
+          </p>
+          <p>Q = Cooling Load / (4.2 x ΔT x 1000)</p>
+          <p>Where Q is flow rate in l/s, cooling load in kW, ΔT in K (typically 6K)</p>
+          <p>Example: 500kW cooling load</p>
+          <p>Q = 500 / (4.2 x 6 x 1000) = 500 / 25,200 = 0.0198 m³/s</p>
+          <p>Q = 19.8 l/s or 71.4 m³/h</p>
+          <p>
+            <strong>Recommended Pipe Sizes (Steel)</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>DN50:</strong> 2.0 l/s — 1.0 m/s — 50
+            </li>
+            <li>
+              <strong>DN80:</strong> 5.5 l/s — 1.2 m/s — 140
+            </li>
+            <li>
+              <strong>DN100:</strong> 10 l/s — 1.4 m/s — 250
+            </li>
+            <li>
+              <strong>DN150:</strong> 25 l/s — 1.6 m/s — 630
+            </li>
+            <li>
+              <strong>DN200:</strong> 50 l/s — 1.8 m/s — 1260
+            </li>
+          </ul>
+          <p>
+            <strong>System Hydraulics</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Index circuit:</strong> The circuit with highest pressure drop - determines
+              pump head
+            </li>
+            <li>
+              <strong>Balancing:</strong> Adjust regulating valves to achieve design flow in all
+              circuits
+            </li>
+            <li>
+              <strong>Fittings allowance:</strong> Add 30-50% to straight pipe losses for fittings
+            </li>
+            <li>
+              <strong>Control valve authority:</strong> Valve ΔP should be &gt;50% of circuit ΔP
+            </li>
+            <li>
+              <strong>PICV:</strong> Pressure independent control valves combine balancing and
+              control
+            </li>
+          </ul>
+          <p>
+            <strong>Free Cooling Integration</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              Waterside free cooling uses plate heat exchanger between condenser and chilled water
+            </li>
+            <li>Available when wet bulb temperature drops below approximately 10°C</li>
+            <li>Full free cooling (chillers off) possible when wet bulb &lt;5°C</li>
+            <li>Partial free cooling pre-cools return water, reducing chiller load</li>
+            <li>Can reduce annual chiller energy by 30-50% in UK climates</li>
+            <li>Requires controls to switch between modes and manage transitions</li>
+          </ul>
+          <p>
+            <strong>Commissioning note:</strong> All chilled water systems must be flushed, cleaned
+            and chemically treated before commissioning. System balancing should achieve design flow
+            rates ±10%. Document all commissioning results for O&amp;M manual.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...quickCheckQuestions[3]} />
+
+        <SectionRule />
+
+        <ConceptBlock title="Worked Examples">
+          <p>
+            <strong>Example 1: Chiller Selection</strong>
+          </p>
+          <p>
+            <strong>Question:</strong> A building has a design cooling load of 800kW. Compare the
+            annual energy consumption of air-cooled (COP 3.0) vs water-cooled (COP 6.0) chillers
+            operating 2500 equivalent full load hours.
+          </p>
+          <p>Air-cooled annual energy:</p>
+          <p>E = Load / COP x Hours = 800 / 3.0 x 2500 = 666,667 kWh</p>
+          <p>Water-cooled annual energy:</p>
+          <p>E = 800 / 6.0 x 2500 = 333,333 kWh</p>
+          <p>Annual saving = 333,334 kWh</p>
+          <p>
+            At £0.15/kWh = <strong>£50,000 annual saving</strong>
+          </p>
+          <p>
+            <strong>Example 2: Chilled Water Flow Rate</strong>
+          </p>
+          <p>
+            <strong>Question:</strong> Calculate the chilled water flow rate for a 350kW AHU coil
+            with 6/12°C chilled water.
+          </p>
+          <p>Q = Cooling Load / (cp x ΔT x ρ)</p>
+          <p>Q = 350 / (4.2 x 6 x 1000)</p>
+          <p>
+            Q = 350 / 25,200 = <strong>0.0139 m³/s = 13.9 l/s</strong>
+          </p>
+          <p>Or: Q = 50 m³/h</p>
+          <p>→ Select DN80 pipe (capacity ~14 l/s at 200 Pa/m)</p>
+          <p>
+            <strong>Example 3: Pump Head Calculation</strong>
+          </p>
+          <p>
+            <strong>Question:</strong> The index circuit has 150m equivalent pipe length at 250
+            Pa/m, plus chiller (45 kPa), AHU coil (25 kPa) and control valve (15 kPa). Calculate
+            pump head.
+          </p>
+          <p>Pipe losses = 150m x 250 Pa/m = 37,500 Pa = 37.5 kPa</p>
+          <p>Equipment losses = 45 + 25 + 15 = 85 kPa</p>
+          <p>Total = 37.5 + 85 = 122.5 kPa</p>
+          <p>
+            Head in metres = 122.5 / 9.81 = <strong>12.5 m</strong>
+          </p>
+          <p>→ Select pump for 13.9 l/s at 12.5 m head + margin</p>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <ConceptBlock title="Practical guidance">
+          <p>
+            <strong>Essential Formulas:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Flow rate:</strong> Q = kW / (4.2 x ΔT x 1000) in m³/s
+            </li>
+            <li>
+              <strong>COP:</strong> Cooling output / Electrical input
+            </li>
+            <li>
+              <strong>Pump power:</strong> P = Q x ΔP / η (flow x pressure / efficiency)
+            </li>
+            <li>
+              <strong>Cooling tower range:</strong> Entering - Leaving water temp
+            </li>
+            <li>
+              <strong>Cooling tower approach:</strong> Leaving water - Wet bulb temp
+            </li>
+          </ul>
+          <p>
+            <strong>Key Values to Remember:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              Chilled water: <strong>6/12°C</strong> (6K delta T)
+            </li>
+            <li>
+              Condenser water: <strong>27/32°C</strong> typical design
+            </li>
+            <li>
+              Max pipe velocity: <strong>3.0 m/s</strong> mains, <strong>1.5 m/s</strong> branches
+            </li>
+            <li>
+              Pressure drop target: <strong>150-300 Pa/m</strong>
+            </li>
+            <li>
+              Minimum chiller flow: <strong>30-50%</strong> of design
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <CommonMistake
+          title="Common mistakes to avoid"
+          whatHappens={
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+              <li>
+                <strong>Ignoring glycol:</strong> If used, recalculate flow rates (lower specific
+                heat)
+              </li>
+              <li>
+                <strong>Oversizing control valves:</strong> Results in hunting and poor control
+              </li>
+              <li>
+                <strong>Neglecting minimum flow:</strong> Chillers can freeze if flow too low
+              </li>
+              <li>
+                <strong>Wrong DP sensor location:</strong> Must be at index circuit, not plantroom
+              </li>
+              <li>
+                <strong>Ignoring water treatment:</strong> Leads to corrosion, fouling and
+                Legionella risk
+              </li>
+            </ul>
+          }
+          doInstead="Cross-check assumptions against published guidance, validate measured values against design intent, and engage the wider team early when interface issues emerge."
+        />
+
+        <SectionRule />
+
+        <FAQ items={faqs} />
+
+        <SectionRule />
+
+        <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+
+        <div className="grid grid-cols-2 gap-3 pt-2">
           <button
-            onClick={() => navigate("/study-centre/apprentice/h-n-c-module8-section3")}
-            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module8-section3-2')}
+            className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
           >
-            <ArrowLeft className="h-4 w-4" /> Back
+            <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+              <ChevronLeft className="h-3 w-3" /> Previous
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-white truncate">DX systems</div>
           </button>
-
-          <PageHero
-            eyebrow="Module 8 · Section 3 · Subsection 3"
-            title="Chilled Water Systems"
-            description="Chillers, cooling towers, pumping arrangements and system hydraulics for commercial cooling"
-            tone="purple"
-          />
-
-          <LearningOutcomes
-            outcomes={[
-              "Understand air-cooled versus water-cooled chiller operation and selection",
-              "Explain cooling tower operation including range and approach",
-              "Design primary-secondary and variable primary pumping systems",
-              "Size chilled water pipework using pressure drop and velocity criteria",
-              "Apply system hydraulics principles for balancing and control",
-              "Implement free cooling strategies to reduce energy consumption",
-            ]}
-          />
-
-          <SectionRule />
-
-          <ConceptBlock title="Chillers - Air-Cooled and Water-Cooled">
-            <p>Chillers are the heart of any chilled water system, producing cold water typically at 6°C for distribution to air handling units, fan coil units and other terminal equipment. The choice between air-cooled and water-cooled chillers significantly impacts system efficiency, capital cost and operational complexity.</p>
-            <p><strong>Air-Cooled Chillers</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Reject heat directly to outdoor air via finned coils and fans</li>
-              <li>Typical COP of 2.5-4.0 depending on ambient conditions</li>
-              <li>Performance degrades significantly above 35°C ambient</li>
-              <li>No water consumption or cooling tower maintenance required</li>
-              <li>Simpler installation but require adequate outdoor space for airflow</li>
-              <li>Generally suited for loads up to approximately 500kW</li>
-            </ul>
-            <p><strong>Water-Cooled Chillers</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Reject heat via condenser water circuit to cooling towers</li>
-              <li>Higher COP of 5.0-7.0 due to lower condensing temperatures</li>
-              <li>More stable performance regardless of ambient dry bulb temperature</li>
-              <li>Require cooling towers, condenser pumps and water treatment</li>
-              <li>Typical for larger installations &gt;500kW where efficiency savings justify complexity</li>
-              <li>Compressor types include scroll, screw and centrifugal</li>
-            </ul>
-            <p><strong>Chiller Comparison</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Typical COP:</strong> 2.5-4.0 — 5.0-7.0</li>
-              <li><strong>Capital cost:</strong> Lower (chiller only) — Higher (+ towers, pumps)</li>
-              <li><strong>Water consumption:</strong> None — Significant (evaporation)</li>
-              <li><strong>Maintenance:</strong> Simpler — Complex (water treatment)</li>
-              <li><strong>Space requirement:</strong> Large outdoor area — Roof/external for towers</li>
-              <li><strong>Noise:</strong> Condenser fans — Tower fans (lower)</li>
-            </ul>
-            <p><strong>Design tip:</strong> For UK climates, water-cooled chillers typically offer 20-40% energy savings over air-cooled units, often paying back the additional capital cost within 3-5 years for systems operating &gt;2000 hours annually.</p>
-          </ConceptBlock>
-
-          <InlineCheck {...quickCheckQuestions[0]} />
-
-          <SectionRule />
-
-          <ConceptBlock title="Cooling Towers">
-            <p>Cooling towers reject heat from the condenser water circuit to atmosphere through evaporative cooling. As water cascades through the tower, a portion evaporates, removing heat from the remaining water. This allows condenser water temperatures to approach the ambient wet bulb temperature rather than the higher dry bulb temperature.</p>
-            <p><strong>Key Cooling Tower Terms</strong></p>
-            <p>Range</p>
-            <p>Temperature difference between entering and leaving water. Typically 5-6K for HVAC applications.</p>
-            <p>Approach</p>
-            <p>Difference between leaving water and ambient wet bulb. Typically 3-5K - lower approach = larger tower.</p>
-            <p><strong>Cooling tower types:</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Induced draught:</strong> Fan at top draws air through fill - most common for HVAC</li>
-              <li><strong>Forced draught:</strong> Fan at bottom pushes air through - good where height is limited</li>
-              <li><strong>Crossflow:</strong> Air flows horizontally through falling water - easier maintenance access</li>
-              <li><strong>Counterflow:</strong> Air flows upward against falling water - more compact, higher efficiency</li>
-            </ul>
-            <p><strong>Typical Condenser Water Temperatures</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Design (UK summer):</strong> 27-30°C — 32-35°C</li>
-              <li><strong>Part load (spring/autumn):</strong> 20-25°C — 25-30°C</li>
-              <li><strong>Free cooling potential:</strong> &lt;15°C — &lt;20°C</li>
-            </ul>
-            <p><strong>Legionella Risk Management</strong></p>
-            <p>Cooling towers create ideal conditions for Legionella growth (warm, aerated water with nutrients from airborne contamination). Compliance with L8 ACOP and HSG274 Part 1 is mandatory, requiring written risk assessments, competent water treatment, regular monitoring (including quarterly Legionella testing) and comprehensive records.</p>
-            <p><strong>Remember:</strong> Cooling tower performance is limited by wet bulb temperature, not dry bulb. A tower cannot cool water below the wet bulb temperature. UK design wet bulb is typically 20°C, allowing condenser water as low as 23-25°C.</p>
-          </ConceptBlock>
-
-          <InlineCheck {...quickCheckQuestions[1]} />
-
-          <SectionRule />
-
-          <ConceptBlock title="Primary-Secondary and Variable Primary Pumping">
-            <p>Pumping arrangement determines how water flows through the chiller plant and distribution system. The two main approaches - primary-secondary and variable primary flow - offer different trade-offs between complexity, capital cost and energy efficiency.</p>
-            <p><strong>Primary-Secondary Pumping</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Primary pumps maintain constant flow through chillers (one pump per chiller)</li>
-              <li>Secondary pumps distribute variable flow to building loads</li>
-              <li>Bypass pipe (decoupler) connects the two circuits hydraulically</li>
-              <li>When secondary flow &lt; primary, excess water bypasses back to return</li>
-              <li>When secondary flow &gt; primary, warm return mixes with supply (avoid this)</li>
-              <li>Simple, proven approach suitable for most applications</li>
-            </ul>
-            <p><strong>Primary-Secondary System Rules</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Bypass pipe should be short with minimal fittings (&lt;0.5m head loss)</li>
-              <li>Size bypass for full primary flow at &lt;1.5 m/s velocity</li>
-              <li>Locate DP sensor at hydraulically most remote circuit</li>
-              <li>Primary flow must always exceed or equal secondary flow</li>
-              <li>Stage chillers based on return water temperature or load</li>
-            </ul>
-            <p><strong>Variable Primary Flow (VPF)</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Eliminates secondary pumps entirely - single set of variable speed pumps</li>
-              <li>Water flows directly from chillers to loads and back</li>
-              <li>Requires chillers rated for variable flow operation (minimum 30-50%)</li>
-              <li>Bypass valve maintains minimum flow when load is very low</li>
-              <li>25-35% pump energy savings compared to primary-secondary</li>
-              <li>More sophisticated controls required for chiller staging</li>
-            </ul>
-            <p><strong>System Comparison</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Capital cost:</strong> Higher (more pumps) — Lower</li>
-              <li><strong>Pump energy:</strong> Higher — 25-35% lower</li>
-              <li><strong>Control complexity:</strong> Simpler — More complex</li>
-              <li><strong>Chiller requirements:</strong> Any chiller — Variable flow rated</li>
-              <li><strong>Plant room space:</strong> Larger — Smaller</li>
-            </ul>
-            <p><strong>Design consideration:</strong> Low delta T syndrome reduces system capacity regardless of pumping arrangement. Ensure control valves are correctly sized (50-70% open at design), coils are clean and properly selected, and system is correctly balanced.</p>
-          </ConceptBlock>
-
-          <InlineCheck {...quickCheckQuestions[2]} />
-
-          <SectionRule />
-
-          <ConceptBlock title="Pipe Sizing and System Hydraulics">
-            <p>Correct pipe sizing balances capital cost against pump energy consumption. Undersized pipes increase pressure drop and pump energy; oversized pipes waste material and increase capital cost. CIBSE Guide C provides comprehensive guidance for pipe sizing in building services.</p>
-            <p><strong>Pipe Sizing Criteria</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Pressure drop:</strong> 150-300 Pa/m for preliminary sizing</li>
-              <li><strong>Maximum velocity:</strong> 3.0 m/s in mains, 1.5 m/s near occupied spaces</li>
-              <li><strong>Minimum velocity:</strong> 0.5 m/s to avoid air accumulation</li>
-              <li><strong>Noise:</strong> Reduce velocity to 1.0-1.5 m/s for risers and branches</li>
-            </ul>
-            <p><strong>Flow Rate Calculation</strong></p>
-            <p>Q = Cooling Load / (4.2 x ΔT x 1000)</p>
-            <p>Where Q is flow rate in l/s, cooling load in kW, ΔT in K (typically 6K)</p>
-            <p>Example: 500kW cooling load</p>
-            <p>Q = 500 / (4.2 x 6 x 1000) = 500 / 25,200 = 0.0198 m³/s</p>
-            <p>Q = 19.8 l/s or 71.4 m³/h</p>
-            <p><strong>Recommended Pipe Sizes (Steel)</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>DN50:</strong> 2.0 l/s — 1.0 m/s — 50</li>
-              <li><strong>DN80:</strong> 5.5 l/s — 1.2 m/s — 140</li>
-              <li><strong>DN100:</strong> 10 l/s — 1.4 m/s — 250</li>
-              <li><strong>DN150:</strong> 25 l/s — 1.6 m/s — 630</li>
-              <li><strong>DN200:</strong> 50 l/s — 1.8 m/s — 1260</li>
-            </ul>
-            <p><strong>System Hydraulics</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Index circuit:</strong> The circuit with highest pressure drop - determines pump head</li>
-              <li><strong>Balancing:</strong> Adjust regulating valves to achieve design flow in all circuits</li>
-              <li><strong>Fittings allowance:</strong> Add 30-50% to straight pipe losses for fittings</li>
-              <li><strong>Control valve authority:</strong> Valve ΔP should be &gt;50% of circuit ΔP</li>
-              <li><strong>PICV:</strong> Pressure independent control valves combine balancing and control</li>
-            </ul>
-            <p><strong>Free Cooling Integration</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Waterside free cooling uses plate heat exchanger between condenser and chilled water</li>
-              <li>Available when wet bulb temperature drops below approximately 10°C</li>
-              <li>Full free cooling (chillers off) possible when wet bulb &lt;5°C</li>
-              <li>Partial free cooling pre-cools return water, reducing chiller load</li>
-              <li>Can reduce annual chiller energy by 30-50% in UK climates</li>
-              <li>Requires controls to switch between modes and manage transitions</li>
-            </ul>
-            <p><strong>Commissioning note:</strong> All chilled water systems must be flushed, cleaned and chemically treated before commissioning. System balancing should achieve design flow rates ±10%. Document all commissioning results for O&amp;M manual.</p>
-          </ConceptBlock>
-
-          <InlineCheck {...quickCheckQuestions[3]} />
-
-          <SectionRule />
-
-          <ConceptBlock title="Worked Examples">
-            <p>
-              <strong>Example 1: Chiller Selection</strong>
-            </p>
-            <p><strong>Question:</strong> A building has a design cooling load of 800kW. Compare the annual energy consumption of air-cooled (COP 3.0) vs water-cooled (COP 6.0) chillers operating 2500 equivalent full load hours.</p>
-            <p>Air-cooled annual energy:</p>
-            <p>E = Load / COP x Hours = 800 / 3.0 x 2500 = 666,667 kWh</p>
-            <p>Water-cooled annual energy:</p>
-            <p>E = 800 / 6.0 x 2500 = 333,333 kWh</p>
-            <p>Annual saving = 333,334 kWh</p>
-            <p>At £0.15/kWh = <strong>£50,000 annual saving</strong></p>
-            <p>
-              <strong>Example 2: Chilled Water Flow Rate</strong>
-            </p>
-            <p><strong>Question:</strong> Calculate the chilled water flow rate for a 350kW AHU coil with 6/12°C chilled water.</p>
-            <p>Q = Cooling Load / (cp x ΔT x ρ)</p>
-            <p>Q = 350 / (4.2 x 6 x 1000)</p>
-            <p>Q = 350 / 25,200 = <strong>0.0139 m³/s = 13.9 l/s</strong></p>
-            <p>Or: Q = 50 m³/h</p>
-            <p>→ Select DN80 pipe (capacity ~14 l/s at 200 Pa/m)</p>
-            <p>
-              <strong>Example 3: Pump Head Calculation</strong>
-            </p>
-            <p><strong>Question:</strong> The index circuit has 150m equivalent pipe length at 250 Pa/m, plus chiller (45 kPa), AHU coil (25 kPa) and control valve (15 kPa). Calculate pump head.</p>
-            <p>Pipe losses = 150m x 250 Pa/m = 37,500 Pa = 37.5 kPa</p>
-            <p>Equipment losses = 45 + 25 + 15 = 85 kPa</p>
-            <p>Total = 37.5 + 85 = 122.5 kPa</p>
-            <p>Head in metres = 122.5 / 9.81 = <strong>12.5 m</strong></p>
-            <p>→ Select pump for 13.9 l/s at 12.5 m head + margin</p>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <ConceptBlock title="Practical guidance">
-            <p>
-              <strong>Essential Formulas:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Flow rate:</strong> Q = kW / (4.2 x ΔT x 1000) in m³/s</li>
-              <li><strong>COP:</strong> Cooling output / Electrical input</li>
-              <li><strong>Pump power:</strong> P = Q x ΔP / η (flow x pressure / efficiency)</li>
-              <li><strong>Cooling tower range:</strong> Entering - Leaving water temp</li>
-              <li><strong>Cooling tower approach:</strong> Leaving water - Wet bulb temp</li>
-            </ul>
-            <p>
-              <strong>Key Values to Remember:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Chilled water: <strong>6/12°C</strong> (6K delta T)</li>
-              <li>Condenser water: <strong>27/32°C</strong> typical design</li>
-              <li>Max pipe velocity: <strong>3.0 m/s</strong> mains, <strong>1.5 m/s</strong>  branches</li>
-              <li>Pressure drop target: <strong>150-300 Pa/m</strong></li>
-              <li>Minimum chiller flow: <strong>30-50%</strong> of design</li>
-            </ul>
-          </ConceptBlock>
-
-          <CommonMistake
-            title="Common mistakes to avoid"
-            whatHappens={
-              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
-                <li><strong>Ignoring glycol:</strong> If used, recalculate flow rates (lower specific heat)</li>
-                <li><strong>Oversizing control valves:</strong> Results in hunting and poor control</li>
-                <li><strong>Neglecting minimum flow:</strong> Chillers can freeze if flow too low</li>
-                <li><strong>Wrong DP sensor location:</strong> Must be at index circuit, not plantroom</li>
-                <li><strong>Ignoring water treatment:</strong> Leads to corrosion, fouling and Legionella risk</li>
-              </ul>
-            }
-            doInstead="Cross-check assumptions against published guidance, validate measured values against design intent, and engage the wider team early when interface issues emerge."
-          />
-
-          <SectionRule />
-
-          <FAQ items={faqs} />
-
-          <SectionRule />
-
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-
-          <div className="grid grid-cols-2 gap-3 pt-2">
-            <button
-              onClick={() => navigate("/study-centre/apprentice/h-n-c-module8-section3-2")}
-              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
-                <ChevronLeft className="h-3 w-3" /> Previous
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-white truncate">
-                DX systems
-              </div>
-            </button>
-            <button
-              onClick={() => navigate("/study-centre/apprentice/h-n-c-module8-section3-4")}
-              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
-                Next subsection <ChevronRight className="h-3 w-3" />
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-black truncate">
-                Terminal units
-              </div>
-            </button>
-          </div>
-        </PageFrame>
-      </div>
-    </div>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module8-section3-4')}
+            className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+          >
+            <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+              Next subsection <ChevronRight className="h-3 w-3" />
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-black truncate">Terminal units</div>
+          </button>
+        </div>
+      </HubBody>
+    </HubPage>
   );
 };
 

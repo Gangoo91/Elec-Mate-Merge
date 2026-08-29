@@ -28,6 +28,20 @@ interface DocDef {
 
 const noticesAndPermits: DocDef[] = [
   {
+    /*
+     * ELE-1262. Visual inspection only — for an existing installation where a
+     * full EICR is not what was asked for, and where a Minor Works Certificate
+     * is the wrong instrument because the work is neither an addition nor an
+     * alteration. Badge is deliberately NOT "BS 7671": there is no BS 7671
+     * model form for this, and the card must not imply one.
+     */
+    id: 'visual-condition',
+    title: 'Visual Condition Report',
+    description: 'Visual inspection only — no testing',
+    badge: 'VISUAL',
+    href: '/electrician/inspection-testing/visual-condition',
+  },
+  {
     id: 'danger-notice',
     title: 'Danger Notice',
     description: 'C1 danger — issue on the spot',
@@ -197,6 +211,7 @@ const DOC_TYPE_LABELS: Record<string, { label: string }> = {
   'warning-labels': { label: 'LABELS' },
   'safe-isolation': { label: 'SIP' },
   'limitation-notice': { label: 'LIM' },
+  'visual-condition': { label: 'VCR' },
   'non-compliance-notice': { label: 'NCN' },
   'completion-notice': { label: 'COMP' },
 };
@@ -207,6 +222,7 @@ const DOC_TYPE_ROUTES: Record<string, string> = {
   'permit-to-work': 'permit-to-work',
   'safe-isolation': 'safe-isolation',
   'limitation-notice': 'limitation-notice',
+  'visual-condition': 'visual-condition',
   'non-compliance-notice': 'non-compliance-notice',
   'completion-notice': 'completion-notice',
 };
@@ -229,7 +245,7 @@ const LabelsWarningsSection = ({ onBack }: LabelsWarningsSectionProps) => {
         .from('reports')
         .select('report_id, report_type, client_name, installation_address, updated_at, status')
         .eq('user_id', user.id)
-        .in('report_type', ['danger-notice', 'isolation-cert', 'permit-to-work', 'warning-labels', 'safe-isolation', 'limitation-notice', 'non-compliance-notice', 'completion-notice'])
+        .in('report_type', ['danger-notice', 'isolation-cert', 'permit-to-work', 'warning-labels', 'safe-isolation', 'limitation-notice', 'non-compliance-notice', 'completion-notice', 'visual-condition'])
         .is('deleted_at', null)
         .order('updated_at', { ascending: false })
         .limit(10);

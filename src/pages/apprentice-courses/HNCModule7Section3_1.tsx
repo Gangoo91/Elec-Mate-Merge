@@ -5,10 +5,10 @@
  */
 
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
-import { PageFrame, PageHero } from '@/components/college/primitives';
 import {
   ConceptBlock,
   CommonMistake,
@@ -26,12 +26,7 @@ const quickCheckQuestions = [
   {
     id: 'luminous-flux',
     question: 'What is the SI unit of luminous flux?',
-    options: [
-      'Watt (W)',
-      'Lumen (lm)',
-      'Lux (lx)',
-      'Candela (cd)',
-    ],
+    options: ['Watt (W)', 'Lumen (lm)', 'Lux (lx)', 'Candela (cd)'],
     correctIndex: 1,
     explanation:
       'Luminous flux is measured in lumens (lm). It represents the total quantity of visible light emitted by a source in all directions, weighted according to human eye sensitivity.',
@@ -52,12 +47,7 @@ const quickCheckQuestions = [
   {
     id: 'colour-temperature',
     question: 'A light source with a correlated colour temperature (CCT) of 2700K would appear:',
-    options: [
-      'Cool white/bluish',
-      'Neutral white',
-      'Warm white/yellowish',
-      'Daylight',
-    ],
+    options: ['Cool white/bluish', 'Neutral white', 'Warm white/yellowish', 'Daylight'],
     correctIndex: 2,
     explanation:
       'Lower colour temperatures (2700-3000K) produce warm white light with a yellowish appearance. Higher temperatures (5000-6500K) produce cool white to daylight appearance.',
@@ -109,12 +99,7 @@ const quizQuestions = [
     id: 3,
     question:
       'An LED luminaire consumes 40W and produces 4,400 lumens. What is its luminous efficacy?',
-    options: [
-      '40 lm/W',
-      '0.009 lm/W',
-      '4,400 lm/W',
-      '110 lm/W',
-    ],
+    options: ['40 lm/W', '0.009 lm/W', '4,400 lm/W', '110 lm/W'],
     correctAnswer: 3,
     explanation:
       'Luminous efficacy = luminous flux ÷ power = 4,400 lm ÷ 40 W = 110 lm/W. This is typical for modern LED luminaires and significantly higher than traditional incandescent lamps (~15 lm/W).',
@@ -150,12 +135,7 @@ const quizQuestions = [
     id: 6,
     question:
       "The luminous efficacy of a theoretical 'perfect' light source producing only light at 555nm would be:",
-    options: [
-      '100 lm/W',
-      '250 lm/W',
-      '683 lm/W',
-      '1000 lm/W',
-    ],
+    options: ['100 lm/W', '250 lm/W', '683 lm/W', '1000 lm/W'],
     correctAnswer: 2,
     explanation:
       'The maximum theoretical luminous efficacy is 683 lm/W, achieved at 555nm (green-yellow) where the human eye is most sensitive. Real sources are always lower due to spectral distribution.',
@@ -164,12 +144,7 @@ const quizQuestions = [
     id: 7,
     question:
       'For retail applications displaying fresh food, which CRI value would be considered acceptable?',
-    options: [
-      'Ra > 60',
-      'Ra > 70',
-      'Ra > 80',
-      'Ra > 90',
-    ],
+    options: ['Ra > 60', 'Ra > 70', 'Ra > 80', 'Ra > 90'],
     correctAnswer: 3,
     explanation:
       'Retail food displays typically require Ra > 90 for accurate colour rendering, ensuring meat appears red, vegetables appear vibrant, and customers perceive food as fresh and appetising.',
@@ -191,12 +166,7 @@ const quizQuestions = [
     id: 9,
     question:
       'If a surface receives 500 lux of illuminance and has a reflectance of 0.8, what is the exitance?',
-    options: [
-      '500 lm/m²',
-      '400 lm/m²',
-      '625 lm/m²',
-      '4000 lm/m²',
-    ],
+    options: ['500 lm/m²', '400 lm/m²', '625 lm/m²', '4000 lm/m²'],
     correctAnswer: 1,
     explanation:
       'Exitance (M) is the luminous flux leaving a surface per unit area. M = E × ρ = 500 lx × 0.8 = 400 lm/m². The remaining 100 lm/m² is absorbed by the surface.',
@@ -217,12 +187,7 @@ const quizQuestions = [
   {
     id: 11,
     question: 'What luminous efficacy would you expect from a modern T5 fluorescent lamp?',
-    options: [
-      '10-20 lm/W',
-      '40-60 lm/W',
-      '150-200 lm/W',
-      '90-105 lm/W',
-    ],
+    options: ['10-20 lm/W', '40-60 lm/W', '150-200 lm/W', '90-105 lm/W'],
     correctAnswer: 3,
     explanation:
       'Modern T5 fluorescent lamps achieve approximately 90-105 lm/W. This is higher than older T8/T12 tubes but now surpassed by LED technology which can exceed 150 lm/W.',
@@ -280,292 +245,507 @@ const HNCModule7Section3_1 = () => {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
-      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
-        <PageFrame>
+    <HubPage>
+      <HubMasthead
+        section="Module 7 · Section 3 · Subsection 1"
+        title="Lighting Fundamentals"
+        backTo="/study-centre/apprentice/h-n-c-module7-section3"
+      />
+      <HubBody>
+        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
+          Photometric quantities, luminous efficacy, colour temperature, and colour rendering for
+          building services lighting design
+        </p>
+
+        <LearningOutcomes
+          outcomes={[
+            'Define and calculate luminous flux, intensity, illuminance, and luminance',
+            'Apply the inverse square law to point source calculations',
+            'Explain luminous efficacy and compare light source efficiencies',
+            'Describe correlated colour temperature and its applications',
+            'Interpret CRI values and extended colour rendering metrics',
+            'Select appropriate CCT and CRI for different building applications',
+          ]}
+        />
+
+        <SectionRule />
+
+        <ConceptBlock title="Photometric Quantities">
+          <p>
+            Photometry is the science of measuring visible light as perceived by the human eye.
+            Unlike radiometry which measures total electromagnetic radiation, photometry weights
+            measurements according to the spectral sensitivity of human vision, defined by the CIE
+            photopic luminosity function V(λ).
+          </p>
+          <p>
+            <strong>The Four Core Photometric Quantities:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Luminous flux:</strong> Φ (phi) — Lumen (lm) — Total visible light emitted by
+              a source
+            </li>
+            <li>
+              <strong>Luminous intensity:</strong> I — Candela (cd) — Flux per unit solid angle (cd
+              = lm/sr)
+            </li>
+            <li>
+              <strong>Illuminance:</strong> E — Lux (lx) — Flux incident per unit area (lx = lm/m²)
+            </li>
+            <li>
+              <strong>Luminance:</strong> L — cd/m² — Intensity per unit projected area
+            </li>
+          </ul>
+          <p>
+            <strong>Understanding the Lumen</strong>
+          </p>
+          <p>
+            The lumen is derived from the candela: a source of 1 cd intensity emitting uniformly in
+            all directions produces 4π lumens (approximately 12.57 lm). The lumen is weighted by the
+            eye's spectral sensitivity - 1 watt of radiant power at 555nm (green-yellow, peak
+            sensitivity) equals 683 lumens, while 1 watt at other wavelengths produces fewer
+            perceived lumens.
+          </p>
+          <p>
+            <strong>Typical Illuminance Levels</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Full sunlight:</strong> 100,000 lux
+            </li>
+            <li>
+              <strong>Overcast day:</strong> 10,000-20,000 lux
+            </li>
+            <li>
+              <strong>Office workspace:</strong> 300-500 lux
+            </li>
+            <li>
+              <strong>Corridor/circulation:</strong> 100 lux
+            </li>
+            <li>
+              <strong>Emergency lighting:</strong> 1 lux minimum on escape routes
+            </li>
+          </ul>
+          <p>
+            <strong>Key distinction:</strong> Illuminance measures light arriving at a surface;
+            luminance measures light leaving a surface (either emitted or reflected) and represents
+            what we actually perceive as brightness.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...quickCheckQuestions[0]} />
+
+        <SectionRule />
+
+        <ConceptBlock title="Inverse Square Law and Illuminance Calculations">
+          <p>
+            The inverse square law is fundamental to understanding how light diminishes with
+            distance. For a point source, illuminance decreases proportionally to the square of the
+            distance from the source, as light spreads over an increasingly larger area.
+          </p>
+          <p>
+            <strong>Inverse Square Law</strong>
+          </p>
+          <p>E = I / d²</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>E = illuminance (lux)</li>
+            <li>I = luminous intensity (candela)</li>
+            <li>d = distance from source (metres)</li>
+          </ul>
+          <p>
+            <strong>Cosine Law (Oblique Incidence)</strong>
+          </p>
+          <p>E = (I × cos θ) / d²</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>θ = angle of incidence</li>
+            <li>Accounts for non-perpendicular light</li>
+            <li>Maximum E when θ = 0°</li>
+          </ul>
+          <p>
+            <strong>Distance Effects on Illuminance</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>1 m:</strong> 100% — 1000 lux
+            </li>
+            <li>
+              <strong>2 m:</strong> 25% — 250 lux
+            </li>
+            <li>
+              <strong>3 m:</strong> 11% — 111 lux
+            </li>
+            <li>
+              <strong>4 m:</strong> 6.25% — 62.5 lux
+            </li>
+          </ul>
+          <p>
+            <strong>Practical Application</strong>
+          </p>
+          <p>
+            The inverse square law applies strictly to point sources. For linear sources
+            (fluorescent tubes), illuminance decreases linearly with distance when close,
+            transitioning to inverse square behaviour at distances greater than approximately five
+            times the source length. For large area sources, illuminance remains relatively constant
+            until distance exceeds the source dimensions.
+          </p>
+          <p>
+            <strong>Design implication:</strong> Mounting height significantly impacts illuminance
+            and uniformity. Higher mounting spreads light more evenly but reduces peak illuminance,
+            requiring more luminaires.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...quickCheckQuestions[1]} />
+
+        <SectionRule />
+
+        <ConceptBlock title="Luminous Efficacy">
+          <p>
+            Luminous efficacy (η) measures how efficiently a light source converts electrical power
+            into visible light. Expressed in lumens per watt (lm/W), it is the key metric for
+            comparing the energy efficiency of different lamp technologies and is fundamental to
+            sustainable lighting design.
+          </p>
+          <p>
+            <strong>Luminous Efficacy Formula</strong>
+          </p>
+          <p>η = Φ / P</p>
+          <p>
+            Where Φ = luminous flux (lumens) and P = input power (watts). The theoretical maximum
+            for monochromatic light at 555nm is 683 lm/W. White light sources achieve lower values
+            because they emit across the visible spectrum, including wavelengths where the eye is
+            less sensitive.
+          </p>
+          <p>
+            <strong>Efficacy Comparison by Lamp Type</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Incandescent (phased out):</strong> 10-17 — 1,000
+            </li>
+            <li>
+              <strong>Halogen:</strong> 15-25 — 2,000-4,000
+            </li>
+            <li>
+              <strong>Compact fluorescent (CFL):</strong> 50-70 — 8,000-15,000
+            </li>
+            <li>
+              <strong>T5 fluorescent:</strong> 90-105 — 20,000-30,000
+            </li>
+            <li>
+              <strong>LED (current):</strong> 100-200 — 50,000-100,000
+            </li>
+            <li>
+              <strong>High-pressure sodium:</strong> 80-140 — 16,000-24,000
+            </li>
+          </ul>
+          <p>
+            <strong>Luminaire Efficacy vs Lamp Efficacy</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Lamp efficacy:</strong> Light output from bare lamp
+            </li>
+            <li>
+              <strong>Luminaire efficacy:</strong> Light from complete fitting
+            </li>
+            <li>Includes optical losses (reflector, diffuser)</li>
+            <li>Includes driver/ballast losses</li>
+            <li>LOR (Light Output Ratio) = Φluminaire / Φlamp</li>
+          </ul>
+          <p>
+            <strong>Factors Affecting Efficacy</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Operating temperature:</strong> LEDs lose efficacy when hot
+            </li>
+            <li>
+              <strong>Dimming:</strong> Can improve or reduce efficacy
+            </li>
+            <li>
+              <strong>Driver efficiency:</strong> Typically 85-95%
+            </li>
+            <li>
+              <strong>Lumen depreciation:</strong> Reduces over lifetime
+            </li>
+          </ul>
+          <p>
+            <strong>Energy perspective:</strong> Replacing 60W incandescent lamps (900 lm) with 8W
+            LEDs (900 lm) achieves 87% energy reduction while maintaining the same light output.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...quickCheckQuestions[2]} />
+
+        <SectionRule />
+
+        <ConceptBlock title="Colour Temperature and Colour Rendering">
+          <p>
+            The colour appearance of light and its ability to accurately reveal object colours are
+            critical considerations in lighting design. Correlated Colour Temperature (CCT)
+            describes the apparent warmth or coolness of light, while the Colour Rendering Index
+            (CRI) measures how faithfully colours are reproduced compared to a reference illuminant.
+          </p>
+          <p>
+            <strong>Correlated Colour Temperature (CCT)</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>2700-3000K:</strong> Warm white (yellowish) — Residential, hospitality,
+              restaurants
+            </li>
+            <li>
+              <strong>3500-4000K:</strong> Neutral white — Offices, retail, commercial
+            </li>
+            <li>
+              <strong>5000-5700K:</strong> Daylight — Industrial, healthcare, task lighting
+            </li>
+            <li>
+              <strong>6500K+:</strong> Cool daylight (bluish) — Photography, inspection, display
+            </li>
+          </ul>
+          <p>
+            <strong>Understanding CCT</strong>
+          </p>
+          <p>
+            CCT is expressed in Kelvin (K) and relates to the temperature of an ideal black body
+            radiator that would produce light of similar colour. Counter-intuitively, lower
+            temperatures appear warmer (more yellow/orange) while higher temperatures appear cooler
+            (more blue). This matches heated metal: red-hot is cooler than white-hot. The term
+            "correlated" acknowledges that most light sources don't exactly match black body
+            radiation but approximate its colour appearance.
+          </p>
+          <p>
+            <strong>Colour Rendering Index (CRI/Ra)</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Definition:</strong> Measure of colour fidelity compared to reference
+              illuminant
+            </li>
+            <li>
+              <strong>Scale:</strong> 0-100, where 100 is perfect rendering
+            </li>
+            <li>
+              <strong>Ra (average):</strong> Mean of R1-R8 test colour samples
+            </li>
+            <li>
+              <strong>Reference:</strong> Incandescent below 5000K; daylight above 5000K
+            </li>
+          </ul>
+          <p>
+            <strong>CRI Requirements by Application</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Ra &gt; 90:</strong> Excellent — Retail, galleries, healthcare, food display
+            </li>
+            <li>
+              <strong>Ra 80-90:</strong> Good — Offices, education, general commercial
+            </li>
+            <li>
+              <strong>Ra 60-80:</strong> Moderate — Industrial, warehouses, car parks
+            </li>
+            <li>
+              <strong>Ra &lt; 60:</strong> Poor — Security lighting only (HPS)
+            </li>
+          </ul>
+          <p>
+            <strong>Extended CRI Values (R9-R15)</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>R9:</strong> Saturated red - critical for retail/healthcare
+            </li>
+            <li>
+              <strong>R13:</strong> Skin tone (Caucasian reference)
+            </li>
+            <li>
+              <strong>R15:</strong> Skin tone (Asian reference)
+            </li>
+            <li>Standard Ra ignores saturated colours</li>
+          </ul>
+          <p>
+            <strong>TM-30-18 (Modern Alternative)</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Rf:</strong> Fidelity index (like CRI, 0-100)
+            </li>
+            <li>
+              <strong>Rg:</strong> Gamut index (saturation, 60-140)
+            </li>
+            <li>Uses 99 colour samples</li>
+            <li>Colour vector graphics show shifts</li>
+          </ul>
+          <p>
+            <strong>Design consideration:</strong> CCT and CRI are independent. A 3000K lamp can
+            have poor or excellent CRI. Always specify both parameters when colour quality matters.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...quickCheckQuestions[3]} />
+
+        <SectionRule />
+
+        <ConceptBlock title="Worked Examples">
+          <p>
+            <strong>Example 1: Illuminance Calculation</strong>
+          </p>
+          <p>
+            <strong>Problem:</strong> A spotlight has a luminous intensity of 2500 cd in the
+            downward direction. Calculate the illuminance on a horizontal surface directly below at
+            distances of 2m and 4m.
+          </p>
+          <p>Using E = I / d²</p>
+          <p>At 2m distance:</p>
+          <p>E = 2500 / 2² = 2500 / 4 = 625 lux</p>
+          <p>At 4m distance:</p>
+          <p>E = 2500 / 4² = 2500 / 16 = 156.25 lux</p>
+          <p>Note: Doubling distance reduces illuminance to 1/4</p>
+          <p>
+            <strong>Example 2: Luminous Efficacy Comparison</strong>
+          </p>
+          <p>
+            <strong>Problem:</strong> Compare the energy consumption of lighting a space with 60W
+            incandescent lamps versus LED equivalents, both producing 800 lumens.
+          </p>
+          <p>Incandescent: η = 800 lm / 60 W = 13.3 lm/W</p>
+          <p>LED (modern): η = 800 lm / 8 W = 100 lm/W</p>
+          <p>Power saving per lamp: 60 - 8 = 52 W</p>
+          <p>Percentage saving: (52/60) × 100 = 86.7%</p>
+          <p>For 100 lamps operating 3000 hours/year:</p>
+          <p>Incandescent: 100 × 60W × 3000h = 18,000 kWh</p>
+          <p>LED: 100 × 8W × 3000h = 2,400 kWh</p>
+          <p>Annual saving: 15,600 kWh</p>
+          <p>
+            <strong>Example 3: CCT and CRI Selection</strong>
+          </p>
+          <p>
+            <strong>Scenario:</strong> Specify CCT and CRI for a supermarket with different zones.
+          </p>
+          <p>Zone requirements:</p>
+          <p>Fresh meat/fish counter:</p>
+          <p>CCT: 3000K (enhances warm colours)</p>
+          <p>CRI: Ra &gt; 90, R9 &gt; 50 (accurate red rendering)</p>
+          <p>Bakery section:</p>
+          <p>CCT: 2700-3000K (warm, inviting)</p>
+          <p>CRI: Ra &gt; 90 (enhance golden tones)</p>
+          <p>General aisles:</p>
+          <p>CCT: 4000K (neutral, good visibility)</p>
+          <p>CRI: Ra &gt; 80 (acceptable general rendering)</p>
+          <p>Fresh produce:</p>
+          <p>CCT: 4000-5000K (enhance greens)</p>
+          <p>CRI: Ra &gt; 90 (vibrant vegetable colours)</p>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <ConceptBlock title="Practical guidance">
+          <p>
+            <strong>Key Formulae Summary:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Illuminance:</strong> E = Φ / A (lux = lm/m²)
+            </li>
+            <li>
+              <strong>Inverse square law:</strong> E = I / d² (point sources)
+            </li>
+            <li>
+              <strong>Luminous efficacy:</strong> η = Φ / P (lm/W)
+            </li>
+            <li>
+              <strong>Exitance:</strong> M = E × ρ (reflected flux density)
+            </li>
+            <li>
+              <strong>Solid angle:</strong> Total sphere = 4π steradians
+            </li>
+          </ul>
+          <p>
+            <strong>Key Values to Remember:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              Maximum theoretical efficacy: <strong>683 lm/W</strong> at 555nm
+            </li>
+            <li>
+              Modern LED efficacy: <strong>100-200 lm/W</strong>
+            </li>
+            <li>
+              Warm white CCT: <strong>2700-3000K</strong>
+            </li>
+            <li>
+              Neutral white CCT: <strong>4000K</strong>
+            </li>
+            <li>
+              Good colour rendering: <strong>Ra &gt; 80</strong>
+            </li>
+            <li>
+              Excellent colour rendering: <strong>Ra &gt; 90</strong>
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <CommonMistake
+          title="Common mistakes to avoid"
+          whatHappens={
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+              <li>
+                <strong>Confusing illuminance and luminance:</strong> Illuminance is incident light;
+                luminance is perceived brightness
+              </li>
+              <li>
+                <strong>Ignoring CCT psychology:</strong> Warm light feels comfortable but cool
+                light promotes alertness
+              </li>
+              <li>
+                <strong>Specifying CRI without R9:</strong> Standard Ra misses saturated red
+                performance
+              </li>
+              <li>
+                <strong>Comparing lamp vs luminaire efficacy:</strong> Always compare like with like
+              </li>
+            </ul>
+          }
+          doInstead="Cross-check assumptions against published guidance, validate measured values against design intent, and engage the wider team early when interface issues emerge."
+        />
+
+        <SectionRule />
+
+        <FAQ items={faqs} />
+
+        <SectionRule />
+
+        <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+
+        <div className="grid grid-cols-2 gap-3 pt-2">
           <button
-            onClick={() => navigate("/study-centre/apprentice/h-n-c-module7-section3")}
-            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module7-section3')}
+            className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
           >
-            <ArrowLeft className="h-4 w-4" /> Back
+            <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+              <ChevronLeft className="h-3 w-3" /> Back to section
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-white truncate">
+              Lighting design calculations
+            </div>
           </button>
-
-          <PageHero
-            eyebrow="Module 7 · Section 3 · Subsection 1"
-            title="Lighting Fundamentals"
-            description="Photometric quantities, luminous efficacy, colour temperature, and colour rendering for building services lighting design"
-            tone="purple"
-          />
-
-          <LearningOutcomes
-            outcomes={[
-              "Define and calculate luminous flux, intensity, illuminance, and luminance",
-              "Apply the inverse square law to point source calculations",
-              "Explain luminous efficacy and compare light source efficiencies",
-              "Describe correlated colour temperature and its applications",
-              "Interpret CRI values and extended colour rendering metrics",
-              "Select appropriate CCT and CRI for different building applications",
-            ]}
-          />
-
-          <SectionRule />
-
-          <ConceptBlock title="Photometric Quantities">
-            <p>Photometry is the science of measuring visible light as perceived by the human eye. Unlike radiometry which measures total electromagnetic radiation, photometry weights measurements according to the spectral sensitivity of human vision, defined by the CIE photopic luminosity function V(λ).</p>
-            <p><strong>The Four Core Photometric Quantities:</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Luminous flux:</strong> Φ (phi) — Lumen (lm) — Total visible light emitted by a source</li>
-              <li><strong>Luminous intensity:</strong> I — Candela (cd) — Flux per unit solid angle (cd = lm/sr)</li>
-              <li><strong>Illuminance:</strong> E — Lux (lx) — Flux incident per unit area (lx = lm/m²)</li>
-              <li><strong>Luminance:</strong> L — cd/m² — Intensity per unit projected area</li>
-            </ul>
-            <p><strong>Understanding the Lumen</strong></p>
-            <p>The lumen is derived from the candela: a source of 1 cd intensity emitting uniformly in all directions produces 4π lumens (approximately 12.57 lm). The lumen is weighted by the eye's spectral sensitivity - 1 watt of radiant power at 555nm (green-yellow, peak sensitivity) equals 683 lumens, while 1 watt at other wavelengths produces fewer perceived lumens.</p>
-            <p><strong>Typical Illuminance Levels</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Full sunlight:</strong> 100,000 lux</li>
-              <li><strong>Overcast day:</strong> 10,000-20,000 lux</li>
-              <li><strong>Office workspace:</strong> 300-500 lux</li>
-              <li><strong>Corridor/circulation:</strong> 100 lux</li>
-              <li><strong>Emergency lighting:</strong> 1 lux minimum on escape routes</li>
-            </ul>
-            <p><strong>Key distinction:</strong> Illuminance measures light arriving at a surface; luminance measures light leaving a surface (either emitted or reflected) and represents what we actually perceive as brightness.</p>
-          </ConceptBlock>
-
-          <InlineCheck {...quickCheckQuestions[0]} />
-
-          <SectionRule />
-
-          <ConceptBlock title="Inverse Square Law and Illuminance Calculations">
-            <p>The inverse square law is fundamental to understanding how light diminishes with distance. For a point source, illuminance decreases proportionally to the square of the distance from the source, as light spreads over an increasingly larger area.</p>
-            <p><strong>Inverse Square Law</strong></p>
-            <p>E = I / d²</p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>E = illuminance (lux)</li>
-              <li>I = luminous intensity (candela)</li>
-              <li>d = distance from source (metres)</li>
-            </ul>
-            <p><strong>Cosine Law (Oblique Incidence)</strong></p>
-            <p>E = (I × cos θ) / d²</p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>θ = angle of incidence</li>
-              <li>Accounts for non-perpendicular light</li>
-              <li>Maximum E when θ = 0°</li>
-            </ul>
-            <p><strong>Distance Effects on Illuminance</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>1 m:</strong> 100% — 1000 lux</li>
-              <li><strong>2 m:</strong> 25% — 250 lux</li>
-              <li><strong>3 m:</strong> 11% — 111 lux</li>
-              <li><strong>4 m:</strong> 6.25% — 62.5 lux</li>
-            </ul>
-            <p><strong>Practical Application</strong></p>
-            <p>The inverse square law applies strictly to point sources. For linear sources (fluorescent tubes), illuminance decreases linearly with distance when close, transitioning to inverse square behaviour at distances greater than approximately five times the source length. For large area sources, illuminance remains relatively constant until distance exceeds the source dimensions.</p>
-            <p><strong>Design implication:</strong> Mounting height significantly impacts illuminance and uniformity. Higher mounting spreads light more evenly but reduces peak illuminance, requiring more luminaires.</p>
-          </ConceptBlock>
-
-          <InlineCheck {...quickCheckQuestions[1]} />
-
-          <SectionRule />
-
-          <ConceptBlock title="Luminous Efficacy">
-            <p>Luminous efficacy (η) measures how efficiently a light source converts electrical power into visible light. Expressed in lumens per watt (lm/W), it is the key metric for comparing the energy efficiency of different lamp technologies and is fundamental to sustainable lighting design.</p>
-            <p><strong>Luminous Efficacy Formula</strong></p>
-            <p>η = Φ / P</p>
-            <p>Where Φ = luminous flux (lumens) and P = input power (watts). The theoretical maximum for monochromatic light at 555nm is 683 lm/W. White light sources achieve lower values because they emit across the visible spectrum, including wavelengths where the eye is less sensitive.</p>
-            <p><strong>Efficacy Comparison by Lamp Type</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Incandescent (phased out):</strong> 10-17 — 1,000</li>
-              <li><strong>Halogen:</strong> 15-25 — 2,000-4,000</li>
-              <li><strong>Compact fluorescent (CFL):</strong> 50-70 — 8,000-15,000</li>
-              <li><strong>T5 fluorescent:</strong> 90-105 — 20,000-30,000</li>
-              <li><strong>LED (current):</strong> 100-200 — 50,000-100,000</li>
-              <li><strong>High-pressure sodium:</strong> 80-140 — 16,000-24,000</li>
-            </ul>
-            <p><strong>Luminaire Efficacy vs Lamp Efficacy</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Lamp efficacy:</strong> Light output from bare lamp</li>
-              <li><strong>Luminaire efficacy:</strong> Light from complete fitting</li>
-              <li>Includes optical losses (reflector, diffuser)</li>
-              <li>Includes driver/ballast losses</li>
-              <li>LOR (Light Output Ratio) = Φluminaire / Φlamp</li>
-            </ul>
-            <p><strong>Factors Affecting Efficacy</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Operating temperature:</strong> LEDs lose efficacy when hot</li>
-              <li><strong>Dimming:</strong> Can improve or reduce efficacy</li>
-              <li><strong>Driver efficiency:</strong> Typically 85-95%</li>
-              <li><strong>Lumen depreciation:</strong> Reduces over lifetime</li>
-            </ul>
-            <p><strong>Energy perspective:</strong> Replacing 60W incandescent lamps (900 lm) with 8W LEDs (900 lm) achieves 87% energy reduction while maintaining the same light output.</p>
-          </ConceptBlock>
-
-          <InlineCheck {...quickCheckQuestions[2]} />
-
-          <SectionRule />
-
-          <ConceptBlock title="Colour Temperature and Colour Rendering">
-            <p>The colour appearance of light and its ability to accurately reveal object colours are critical considerations in lighting design. Correlated Colour Temperature (CCT) describes the apparent warmth or coolness of light, while the Colour Rendering Index (CRI) measures how faithfully colours are reproduced compared to a reference illuminant.</p>
-            <p><strong>Correlated Colour Temperature (CCT)</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>2700-3000K:</strong> Warm white (yellowish) — Residential, hospitality, restaurants</li>
-              <li><strong>3500-4000K:</strong> Neutral white — Offices, retail, commercial</li>
-              <li><strong>5000-5700K:</strong> Daylight — Industrial, healthcare, task lighting</li>
-              <li><strong>6500K+:</strong> Cool daylight (bluish) — Photography, inspection, display</li>
-            </ul>
-            <p><strong>Understanding CCT</strong></p>
-            <p>CCT is expressed in Kelvin (K) and relates to the temperature of an ideal black body radiator that would produce light of similar colour. Counter-intuitively, lower temperatures appear warmer (more yellow/orange) while higher temperatures appear cooler (more blue). This matches heated metal: red-hot is cooler than white-hot. The term "correlated" acknowledges that most light sources don't exactly match black body radiation but approximate its colour appearance.</p>
-            <p><strong>Colour Rendering Index (CRI/Ra)</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Definition:</strong> Measure of colour fidelity compared to reference illuminant</li>
-              <li><strong>Scale:</strong> 0-100, where 100 is perfect rendering</li>
-              <li><strong>Ra (average):</strong> Mean of R1-R8 test colour samples</li>
-              <li><strong>Reference:</strong> Incandescent below 5000K; daylight above 5000K</li>
-            </ul>
-            <p><strong>CRI Requirements by Application</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Ra &gt; 90:</strong> Excellent — Retail, galleries, healthcare, food display</li>
-              <li><strong>Ra 80-90:</strong> Good — Offices, education, general commercial</li>
-              <li><strong>Ra 60-80:</strong> Moderate — Industrial, warehouses, car parks</li>
-              <li><strong>Ra &lt; 60:</strong> Poor — Security lighting only (HPS)</li>
-            </ul>
-            <p><strong>Extended CRI Values (R9-R15)</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>R9:</strong> Saturated red - critical for retail/healthcare</li>
-              <li><strong>R13:</strong> Skin tone (Caucasian reference)</li>
-              <li><strong>R15:</strong> Skin tone (Asian reference)</li>
-              <li>Standard Ra ignores saturated colours</li>
-            </ul>
-            <p><strong>TM-30-18 (Modern Alternative)</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Rf:</strong> Fidelity index (like CRI, 0-100)</li>
-              <li><strong>Rg:</strong> Gamut index (saturation, 60-140)</li>
-              <li>Uses 99 colour samples</li>
-              <li>Colour vector graphics show shifts</li>
-            </ul>
-            <p><strong>Design consideration:</strong> CCT and CRI are independent. A 3000K lamp can have poor or excellent CRI. Always specify both parameters when colour quality matters.</p>
-          </ConceptBlock>
-
-          <InlineCheck {...quickCheckQuestions[3]} />
-
-          <SectionRule />
-
-          <ConceptBlock title="Worked Examples">
-            <p>
-              <strong>Example 1: Illuminance Calculation</strong>
-            </p>
-            <p><strong>Problem:</strong> A spotlight has a luminous intensity of 2500 cd in the downward direction. Calculate the illuminance on a horizontal surface directly below at distances of 2m and 4m.</p>
-            <p>Using E = I / d²</p>
-            <p>At 2m distance:</p>
-            <p>E = 2500 / 2² = 2500 / 4 = 625 lux</p>
-            <p>At 4m distance:</p>
-            <p>E = 2500 / 4² = 2500 / 16 = 156.25 lux</p>
-            <p>Note: Doubling distance reduces illuminance to 1/4</p>
-            <p>
-              <strong>Example 2: Luminous Efficacy Comparison</strong>
-            </p>
-            <p><strong>Problem:</strong> Compare the energy consumption of lighting a space with 60W incandescent lamps versus LED equivalents, both producing 800 lumens.</p>
-            <p>Incandescent: η = 800 lm / 60 W = 13.3 lm/W</p>
-            <p>LED (modern): η = 800 lm / 8 W = 100 lm/W</p>
-            <p>Power saving per lamp: 60 - 8 = 52 W</p>
-            <p>Percentage saving: (52/60) × 100 = 86.7%</p>
-            <p>For 100 lamps operating 3000 hours/year:</p>
-            <p>Incandescent: 100 × 60W × 3000h = 18,000 kWh</p>
-            <p>LED: 100 × 8W × 3000h = 2,400 kWh</p>
-            <p>Annual saving: 15,600 kWh</p>
-            <p>
-              <strong>Example 3: CCT and CRI Selection</strong>
-            </p>
-            <p><strong>Scenario:</strong> Specify CCT and CRI for a supermarket with different zones.</p>
-            <p>Zone requirements:</p>
-            <p>Fresh meat/fish counter:</p>
-            <p>CCT: 3000K (enhances warm colours)</p>
-            <p>CRI: Ra &gt; 90, R9 &gt; 50 (accurate red rendering)</p>
-            <p>Bakery section:</p>
-            <p>CCT: 2700-3000K (warm, inviting)</p>
-            <p>CRI: Ra &gt; 90 (enhance golden tones)</p>
-            <p>General aisles:</p>
-            <p>CCT: 4000K (neutral, good visibility)</p>
-            <p>CRI: Ra &gt; 80 (acceptable general rendering)</p>
-            <p>Fresh produce:</p>
-            <p>CCT: 4000-5000K (enhance greens)</p>
-            <p>CRI: Ra &gt; 90 (vibrant vegetable colours)</p>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <ConceptBlock title="Practical guidance">
-            <p>
-              <strong>Key Formulae Summary:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Illuminance:</strong> E = Φ / A (lux = lm/m²)</li>
-              <li><strong>Inverse square law:</strong> E = I / d² (point sources)</li>
-              <li><strong>Luminous efficacy:</strong> η = Φ / P (lm/W)</li>
-              <li><strong>Exitance:</strong> M = E × ρ (reflected flux density)</li>
-              <li><strong>Solid angle:</strong> Total sphere = 4π steradians</li>
-            </ul>
-            <p>
-              <strong>Key Values to Remember:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Maximum theoretical efficacy: <strong>683 lm/W</strong> at 555nm</li>
-              <li>Modern LED efficacy: <strong>100-200 lm/W</strong></li>
-              <li>Warm white CCT: <strong>2700-3000K</strong></li>
-              <li>Neutral white CCT: <strong>4000K</strong></li>
-              <li>Good colour rendering: <strong>Ra &gt; 80</strong></li>
-              <li>Excellent colour rendering: <strong>Ra &gt; 90</strong></li>
-            </ul>
-          </ConceptBlock>
-
-          <CommonMistake
-            title="Common mistakes to avoid"
-            whatHappens={
-              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
-                <li><strong>Confusing illuminance and luminance:</strong> Illuminance is incident light; luminance is perceived brightness</li>
-                <li><strong>Ignoring CCT psychology:</strong> Warm light feels comfortable but cool light promotes alertness</li>
-                <li><strong>Specifying CRI without R9:</strong> Standard Ra misses saturated red performance</li>
-                <li><strong>Comparing lamp vs luminaire efficacy:</strong> Always compare like with like</li>
-              </ul>
-            }
-            doInstead="Cross-check assumptions against published guidance, validate measured values against design intent, and engage the wider team early when interface issues emerge."
-          />
-
-          <SectionRule />
-
-          <FAQ items={faqs} />
-
-          <SectionRule />
-
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-
-          <div className="grid grid-cols-2 gap-3 pt-2">
-            <button
-              onClick={() => navigate("/study-centre/apprentice/h-n-c-module7-section3")}
-              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
-                <ChevronLeft className="h-3 w-3" /> Back to section
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-white truncate">
-                Lighting design calculations
-              </div>
-            </button>
-            <button
-              onClick={() => navigate("/study-centre/apprentice/h-n-c-module7-section3-2")}
-              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
-                Next subsection <ChevronRight className="h-3 w-3" />
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-black truncate">
-                Lumen method calculations
-              </div>
-            </button>
-          </div>
-        </PageFrame>
-      </div>
-    </div>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module7-section3-2')}
+            className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+          >
+            <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+              Next subsection <ChevronRight className="h-3 w-3" />
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-black truncate">
+              Lumen method calculations
+            </div>
+          </button>
+        </div>
+      </HubBody>
+    </HubPage>
   );
 };
 

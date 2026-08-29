@@ -9,11 +9,11 @@
  */
 
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
-import { PageFrame, PageHero } from '@/components/college/primitives';
 import {
   TLDR,
   ConceptBlock,
@@ -28,8 +28,7 @@ import {
 } from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
-const TITLE =
-  'Cable pulling and dressing techniques (3.9) | Level 2 Module 4.3.9 | Elec-Mate';
+const TITLE = 'Cable pulling and dressing techniques (3.9) | Level 2 Module 4.3.9 | Elec-Mate';
 const DESCRIPTION =
   'Pre-pull prep, draw rope, lubrication, pulling tension limits, pulling grips vs pulling eyes, bending radius, long-pull tactics, dressing cable on tray and basket. The mechanical craft side of installation.';
 
@@ -95,8 +94,7 @@ const quizQuestions = [
   },
   {
     id: 2,
-    question:
-      'Cable pulling lubricant should be:',
+    question: 'Cable pulling lubricant should be:',
     options: [
       'WD-40, sprayed liberally into the conduit immediately before the pull.',
       'Washing-up liquid diluted with water, on the basis that it is cheap and readily available.',
@@ -109,8 +107,7 @@ const quizQuestions = [
   },
   {
     id: 3,
-    question:
-      'Long-pull tactics — for a pull longer than ~30 m or with multiple bends:',
+    question: 'Long-pull tactics — for a pull longer than ~30 m or with multiple bends:',
     options: [
       'Pull the entire length in one operation but put two people on the rope for the extra force.',
       'Increase the conduit size by one diameter for the whole run to reduce the overall friction.',
@@ -123,8 +120,7 @@ const quizQuestions = [
   },
   {
     id: 4,
-    question:
-      'Cable dressing on a basket / tray run should be:',
+    question: 'Cable dressing on a basket / tray run should be:',
     options: [
       'Laid parallel, segregated by service type, spaced for thermal dissipation, and secured with metal ties.',
       'Bundled together as tightly as possible with plastic ties to keep the run compact and neat.',
@@ -137,8 +133,7 @@ const quizQuestions = [
   },
   {
     id: 5,
-    question:
-      'A draw rope is left in a conduit run after a cable is pulled because:',
+    question: 'A draw rope is left in a conduit run after a cable is pulled because:',
     options: [
       'BS 7671 requires a spare draw rope to remain in every conduit run for earthing purposes.',
       'It is the next person’s draw rope — a ready path for future cable additions without re-roding.',
@@ -151,8 +146,7 @@ const quizQuestions = [
   },
   {
     id: 6,
-    question:
-      'BS 7671 Reg 522.8.1 covers:',
+    question: 'BS 7671 Reg 522.8.1 covers:',
     options: [
       'Earth fault loop impedance limits for each type of protective device on the circuit.',
       'The minimum insulation resistance values to be achieved on a completed circuit.',
@@ -165,8 +159,7 @@ const quizQuestions = [
   },
   {
     id: 7,
-    question:
-      'A "pulling eye" is:',
+    question: 'A "pulling eye" is:',
     options: [
       'A small inspection hole in the side of a conduit box for checking the cable position.',
       'The eyelet on a draw tape that the conduit rod clips into during roding.',
@@ -231,563 +224,531 @@ export default function Sub9() {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
-      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
-        <PageFrame>
+    <HubPage>
+      <HubMasthead
+        section="Module 4 · Section 3 · Subsection 9"
+        title="Cable pulling and dressing techniques"
+        backTo=".."
+      />
+      <HubBody>
+        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
+          The mechanical craft side of installation. Pre-pull prep, draw rope, lubricant, pulling
+          tension limits, pulling grips and eyes, bending radius management, long-pull tactics with
+          intermediate boxes, cable dressing on tray and basket. The supplementary Sub on the skill
+          that turns first-fix planning into installed circuits.
+        </p>
+
+        <TLDR
+          points={[
+            'Pre-pull prep is everything — route survey, draw rope in, lubricant ready, pulling grip or eye attached. A thirty-second prep saves a thirty-minute jam.',
+            'Pull on the cable’s outer sheath via a pulling grip or eye — NEVER on the conductor directly. Conductor pulls damage the conductor at the eye and cause IR failures later.',
+            'Pulling tension limit ~50 N/mm² (≈ 5 kg/mm²) for copper with stocking grip per published manufacturer / IET Electrical Installation Design Guide; ~30 N/mm² if pulling on the conductor itself. Many sites use a conservative 1.5-2 kg/mm² field rule. Bend radius 6× OD unarmoured / 8× SWA / 12× MICC — at PULL time, not just installed.',
+          ]}
+        />
+
+        <LearningOutcomes
+          outcomes={[
+            'Supplementary content — extends LO3 but is not directly mapped to a 204 AC. Designed to deepen apprentice understanding of cable pulling and dressing as a craft skill that turns first-fix planning into installed circuits.',
+            'Plan a cable pull — route survey, conduit fill check, intermediate draw box positions, draw rope installation, lubricant choice.',
+            'Apply pulling tension limits (~50 N/mm² ≈ 5 kg/mm² copper with stocking grip per published manufacturer / IET Electrical Installation Design Guide; conservative 1.5-2 kg/mm² no-thinking-required field rule on most sites) and recognise the warning signs of an over-tensioned pull.',
+            'Use pulling grips and pulling eyes correctly so that pulling force is applied to the cable’s sheath and mechanical termination, never directly to the conductor.',
+            'Maintain bend radius minimums during the pull and in the installed run (6× OD unarmoured, 8× OD SWA, 12× OD MICC).',
+            'Dress cables on tray, basket and ladder runs — parallel, segregated by service, spaced for thermal dissipation, secured with non-combustible metal ties per A4:2026 Reg 521.10.202.',
+          ]}
+          initialVisibleCount={3}
+        />
+
+        <ContentEyebrow>Pre-pull preparation</ContentEyebrow>
+
+        <ConceptBlock
+          title="Survey the route before you start the pull"
+          plainEnglish="Walk the route end to end before pulling any cable. Note every bend, every junction box, every change of containment, every place the cable might catch. Confirm the conduit is clear (rod through, draw rope in, no debris). Confirm the bend radius at every change of direction is within the cable manufacturer minimum. Five minutes of survey saves five hours of jammed pulls."
+        >
+          <p>The pre-pull survey checklist:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Conduit / trunking complete, ends finished, no internal sharp edges.</li>
+            <li>All boxes / junctions in place, lids removable for the pull.</li>
+            <li>Rod through the conduit / draw rope already pulled in.</li>
+            <li>
+              Every bend respects the cable&rsquo;s minimum bend radius (6× OD unarmoured, 8× SWA,
+              12× MICC).
+            </li>
+            <li>Conduit fill within the IET / OSG limit (~40-45 % typically).</li>
+            <li>Lubricant on hand — proper cable-pulling lube, wax-free for PVC conduit.</li>
+            <li>Pulling grip or eye sized for the cable.</li>
+            <li>
+              Pulling rope rated for the expected force (typically 6 mm polyester, 200-300 kg
+              breaking).
+            </li>
+            <li>Power cable puller / hand puller available if the run is long or heavy.</li>
+            <li>Second person at the feeding end if the pull is long or large CSA.</li>
+          </ul>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="Draw rope, draw tape, conduit rod — getting a line through"
+          plainEnglish="Before you can pull the cable, you need a line through the conduit. Three methods. (1) Conduit rod (steel or fibreglass push-rod) — push through, attach the draw rope, pull back. (2) Draw tape (plastic / metal flat tape on a reel) — feed through, attach rope, pull back. (3) Mouse and line (small fabric cone with string, blown through with compressed air or gravity) — feed through, use the string to pull a heavier rope through. Each suits different run lengths and bend complexities."
+        >
+          <p>Method selection:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Short, simple run (under ~10 m, &lt;2 bends)</strong> — conduit rod or
+              fibreglass tape. Push from one end, attach rope, pull back.
+            </li>
+            <li>
+              <strong>Medium run with bends (10-25 m, 3-4 bends)</strong> — fibreglass conduit tape
+              (more flexible than steel rod). Sometimes needs lubricating the rod itself to get
+              through tight bends.
+            </li>
+            <li>
+              <strong>Long or complex run (&gt;25 m or 5+ bends)</strong> — mouse and line method.
+              The mouse is a small fabric or foam cone with a thin string attached. Drop it in the
+              entry, blow compressed air through, the mouse rides the air flow to the far end. Use
+              the string to pull a heavier rope.
+            </li>
+            <li>
+              <strong>Run that already has cable in it</strong> — use the existing draw rope (left
+              from the previous pull) to pull the new cable AND a new draw rope for next time.
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <ContentEyebrow>Pulling tension and force</ContentEyebrow>
+
+        <ConceptBlock
+          title="Pulling tension limit — ~50 N/mm² (≈ 5 kg/mm²) for copper with stocking grip"
+          plainEnglish="The cable manufacturer specifies a maximum pulling tension. The published figure (per cable manufacturer data + IET Electrical Installation Design Guide) is ~50 N/mm² (≈ 5 kg per mm² of conductor CSA) for copper using a stocking grip (Chinese-finger trap). Pulling on the conductor itself rather than via a grip drops this to ~30 N/mm². Many sites use a conservative 1.5-2 kg/mm² as a no-thinking-required field rule. Exceed the limit and the conductors stretch at the eye, individual strands break, the insulation cracks. The cable then fails IR or continuity testing."
+        >
+          <p>How to apply the limit in practice:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Calculate the limit before pulling</strong> — sum the conductor CSAs (e.g. 4 ×
+              16 mm² = 64 mm²), multiply by ~50 N/mm² (≈ 5 kg/mm²) for the published stocking-grip
+              limit (~320 kg). Use the conservative 1.5-2 kg/mm² (≈ 100-130 kg for the same cable)
+              as the field rule for a generous safety margin.
+            </li>
+            <li>
+              <strong>Use a pulling tension meter</strong> on heavy pulls (electric cable pullers
+              usually have one built in; standalone meters available for manual pulls).
+            </li>
+            <li>
+              <strong>Set the puller torque limit</strong> if using a powered cable puller — most
+              modern pullers have an adjustable torque cut-off.
+            </li>
+            <li>
+              <strong>Listen for warning signs</strong> — manual pull becoming "stuck"; cable
+              visibly stretching at the entry; mechanical groaning from the rope/grip system. Stop
+              immediately if any of these appear.
+            </li>
+            <li>
+              <strong>Add intermediate draw boxes</strong> — splits a long pull into shorter ones,
+              each within the tension limit by definition.
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="Pulling grip vs pulling eye — never pull on the conductor"
+          plainEnglish="The pulling rope MUST attach to the cable’s outer sheath (via a pulling grip) or to the cable’s mechanical termination (via a pulling eye). Pulling on the conductor itself — by tying the rope around bare conductors, by crimping the rope onto a stripped end, or by relying on tape — damages the conductor at the attachment point and causes failure."
+          onSite="A pulling grip (also called a Chinese finger trap or stocking) is a braided wire mesh tube that wraps around the cable and tightens as the rope pulls — distributing the force evenly along ~150-300 mm of cable sheath. The grip costs ~£15-25, sized to the cable OD, and is reusable across many pulls. Pulling eyes are factory-fitted on large SWA, MV and HV cables — a specifically engineered loop that connects the rope to the cable’s mechanical termination."
+        >
+          <p>Attachment options by cable type:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>T&E and small unarmoured cable</strong> — pulling grip sized for the OD,
+              slipped over the cable end and tightened with the rope.
+            </li>
+            <li>
+              <strong>SWA up to ~25 mm²</strong> — pulling grip sized for the armour OD; grip wraps
+              the outer sheath, force transmits through to the armour.
+            </li>
+            <li>
+              <strong>SWA above 25 mm²</strong> — factory-fitted pulling eye if specified; otherwise
+              field-installed pulling grip rated for the cable diameter and weight.
+            </li>
+            <li>
+              <strong>MV / HV cable</strong> — always factory-fitted pulling eye, often a swivel
+              between the rope and the eye to prevent twist.
+            </li>
+            <li>
+              <strong>Multiple cables in one pull</strong> — pulling grip large enough to wrap all
+              cables together, OR pull cables individually if the accumulated force exceeds the grip
+              rating.
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <InlineCheck {...checks[1]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>Bend radius management</ContentEyebrow>
+
+        <ConceptBlock
+          title="The minimum bend radius rule, applied at pull time"
+          plainEnglish="The cable manufacturer specifies a minimum bend radius — typically 6× OD for unarmoured cable, 8× OD for SWA, 12× OD for MICC. This applies BOTH during the pull AND in the installed configuration. A bend tighter than the minimum kinks the cable, damages the insulation invisibly, and the cable fails IR or continuity testing months later — long after the original install team has left site."
+        >
+          <p>Practical bend radius management:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Design the route to respect the radius</strong> — pre-formed conduit elbows,
+              basket bend pieces, gentle corners. Never specify a bend tighter than the
+              cable&rsquo;s minimum.
+            </li>
+            <li>
+              <strong>Add draw boxes at any tight corner</strong> — the box becomes a pull-end on
+              each side of the corner, so the cable enters/exits in two straight pulls and the bend
+              in the box itself is gentler.
+            </li>
+            <li>
+              <strong>Use cable rollers at any tight bend during a long pull</strong> — the rollers
+              reduce friction and keep the cable on the bend radius even under tension.
+            </li>
+            <li>
+              <strong>Inspect the installed cable after pulling</strong> — visible kink, flat spot,
+              or bulge in the sheath at any bend means the cable is damaged and should be replaced
+              before energising.
+            </li>
+            <li>
+              <strong>Insulation resistance test before terminating</strong> — confirms the cable
+              survived the pull electrically. ≥1.0 MΩ at 500 V dc minimum.
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <RegsCallout
+          source="BS 7671:2018+A4:2026 — Regulation 522.8.1 (Wiring system mechanical stress during installation)"
+          clause="A wiring system shall be selected and erected to avoid during installation, use or maintenance, damage to the sheath or insulation of cables and their terminations. The use of any lubricants that can have a detrimental effect on the cable or wiring system are not permitted."
+          meaning={
+            <>
+              Reg 522.8.1 is the regulation that sits behind every aspect of cable pulling. The
+              cable must be selected and installed to avoid damage during installation — pulling
+              within the tension limit (avoids stretching the conductor), respecting the bend radius
+              (avoids kinking the sheath), using a pulling grip or eye (avoids damaging the
+              conductor at the rope attachment), and using compatible lubricant (the explicit
+              prohibition on damaging lubricants like WD-40 on PVC conduit). A pulled cable that has
+              been damaged during the pull is a 522.8.1 fail.
+            </>
+          }
+          cite="Source: BS 7671:2018+A4:2026 Part 5, Chapter 52, Regulation 522.8.1 (verbatim)."
+        />
+
+        <RegsCallout
+          source="BS 7671:2018+A4:2026 — Regulation 522.8.3 (Bend radius)"
+          clause="The radius of every bend in a wiring system shall be such that conductors or cables do not suffer damage and terminations are not stressed."
+          meaning={
+            <>
+              Reg 522.8.3 is the bend-radius regulation. "Conductors or cables do not suffer damage"
+              — the bend radius respects the manufacturer minimum. "Terminations are not stressed" —
+              the bend at the termination is gentle enough not to load the connection. The 6× / 8× /
+              12× OD figures from cable manufacturer data exist to satisfy this regulation. Tighter
+              than minimum at pull time damages the cable. Tighter than minimum after installation
+              stresses the conductor in service.
+            </>
+          }
+          cite="Source: BS 7671:2018+A4:2026 Part 5, Chapter 52, Regulation 522.8.3 (verbatim)."
+        />
+
+        <InlineCheck {...checks[2]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>Long-pull tactics</ContentEyebrow>
+
+        <ConceptBlock
+          title="Intermediate draw boxes — splitting the pull into manageable segments"
+          plainEnglish="A pull of more than ~30 m, or with more than 2-3 changes of direction, becomes too much for a single operation — the cumulative friction exceeds the pulling tension limit, and the cable jams. The fix is intermediate draw boxes — accessible junction boxes at intervals along the route. Each draw box is a pull-end and a pull-start, splitting the long route into manageable segments."
+        >
+          <p>Draw box positioning:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Every ~30 m on a long straight run.</li>
+            <li>At any change-of-direction beyond two 90° bends in series.</li>
+            <li>At every floor penetration on a multi-storey service riser.</li>
+            <li>At every change of containment type (conduit to trunking transition).</li>
+            <li>At every junction with a branch circuit going off the main run.</li>
+            <li>Anywhere maintenance access will be needed in future for cable additions.</li>
+          </ul>
+          <p>
+            Plan draw box positions at the design stage. Adding a draw box mid-install means
+            breaking into the conduit, fitting a new junction box, re-routing the cable in two
+            segments — much harder than getting the position right at the start.
+          </p>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="The pull team — feeding end, puller end, communication"
+          plainEnglish="A long or heavy pull is a two-person operation. One person at the feeding end (where the cable comes off the drum, into the conduit / containment); one person at the puller end (where the rope pulls the cable through). Both communicate continuously — the feeder paces the cable into the conduit, the puller takes up the slack, neither rushes ahead of the other. Phone, radio, or shouting depending on the route — but constant contact."
+        >
+          <p>The pull team roles:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Feeder end</strong> — paces cable off the drum, applies lubricant at the
+              conduit entry, watches for kinks, monitors cable damage as it feeds in.
+            </li>
+            <li>
+              <strong>Puller end</strong> — takes up rope slack, applies pulling force, monitors
+              tension, watches for cable arriving (don&rsquo;t over-pull the cable out of the
+              conduit).
+            </li>
+            <li>
+              <strong>Intermediate watcher</strong> — for very long pulls, a third person at a
+              critical bend or draw box to monitor cable behaviour and signal stop / continue.
+            </li>
+            <li>
+              <strong>Communication</strong> — radio / phone / pre-arranged signals. "Stop",
+              "continue", "slack", "snag" — common terms. Hand signals only work for line-of-sight
+              pulls.
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <ContentEyebrow>Cable dressing — after the pull</ContentEyebrow>
+
+        <ConceptBlock
+          title="Tray, basket, ladder — parallel, segregated, secured"
+          plainEnglish="Once cables are on the tray / basket / ladder, dressing them tidily is a craft skill that pays back across years. Parallel laying along the run direction. Segregation by service type (mains in one zone, data in another, fire alarm in a third). Spacing for thermal dissipation per OSG grouping factors. Secured with metal cable ties at intervals. Crossings minimised."
+        >
+          <p>The dressing principles:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Parallel layout</strong> — cables run along the length of the tray/basket, not
+              zig-zagging across.
+            </li>
+            <li>
+              <strong>Segregation by service</strong> — mains cables together, data cables together,
+              fire alarm cables together. Use a tray divider strip for compartmented separation in
+              commercial work; respect BS 6701 (data) and BS 5839 (fire alarm) separation
+              requirements.
+            </li>
+            <li>
+              <strong>Thermal spacing</strong> — apply OSG grouping factor Cg by spacing cables
+              one-diameter apart where the cable schedule depends on a Cg less than 1.0. Bundling
+              tightly increases Cg and reduces every cable&rsquo;s rated current.
+            </li>
+            <li>
+              <strong>Securing</strong> — metal cable ties (per A4:2026 Reg 521.10.202) at ~600 mm
+              horizontal, ~400 mm vertical. Tighten enough to hold but not deform the sheath.
+            </li>
+            <li>
+              <strong>Bend radius at the tray edge</strong> — where cable drops off the tray to a
+              luminaire or accessory below, respect the cable&rsquo;s minimum bend radius at the
+              drop.
+            </li>
+            <li>
+              <strong>Labelling</strong> — every cable labelled at every change of direction, every
+              junction box, every termination — circuit name and CU way number minimum. Heat-shrink
+              printable labels work better than tape in service.
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="Leave a draw rope for the next person"
+          plainEnglish="After completing the pull, leave a polyester draw rope in the conduit / trunking for the next person who needs to add a cable. Costs 50 p of rope; saves the next electrician 30 minutes of re-rodding. Professional courtesy that compounds across the building’s lifetime — the third or fourth cable addition years later still benefits from the rope you left in on day one."
+        >
+          <p>
+            The standard practice — feed a fresh ~6 mm polyester draw rope through the conduit
+            alongside the new cable as you pull. Leave both ends accessible (in junction boxes,
+            behind blanking plates, or coiled in the accessory enclosure). Some installers tape a
+            small cardboard tag to one end with the date and the company name — a simple courtesy
+            that the next trade remembers.
+          </p>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <ContentEyebrow>
+          Worked example — 6 × 2.5 mm² T&E through 10 m of 25 mm conduit, 3 × 90° bends
+        </ContentEyebrow>
+
+        <Scenario
+          title="Pulling six 2.5 mm² T&E circuits through a single 25 mm PVC conduit run with multiple bends"
+          situation={
+            <>
+              Industrial unit conversion to office. Single 25 mm PVC conduit run from the main DB to
+              a 6-way distribution panel in the lab area. Run is 10 m with 3 × 90° bends (DB out,
+              around a structural column, into the lab ceiling, drop down to the panel). You need to
+              pull six separate 2.5 mm² T&E circuits — five sockets and one lighting. The conduit is
+              in place, ends terminated, draw rope already pulled in.
+            </>
+          }
+          whatToDo={
+            <>
+              <strong>
+                Step 1 — fill check using OSG cable factors (NOT raw cross-sectional area).
+              </strong>{' '}
+              Conduit fill calculations don&rsquo;t use cross-sectional area directly — UK practice
+              uses tabulated cable factors that account for cable shape, sheath, bend radius and
+              pulling friction. T&E in particular is FLAT, not round, so π × r² gives the wrong
+              answer. Look up the correct factors in OSG Appendix C / Table H1.{' '}
+              <strong>Worked example:</strong> 2.5 mm² T&E factor = 18 (per OSG Table H1, Method C
+              clipped direct — the cable factor for a single 2.5 mm² T&E in conduit). Six cables ×
+              18 = 108. Conduit factor for 25 mm steel conduit straight run ≈ 333 (Table H1 conduit
+              factor — varies with conduit length and number of bends). Fill ratio = 108 / 333 = 32
+              % — comfortably under the conventional 45 % maximum. The pull is achievable with this
+              conduit; no upsize required for a straight short run.
+              <br />
+              <br />
+              The 45 % maximum fill is the conventional design threshold (some specs allow up to 53
+              % for short straight runs; bends and length tighten the limit by reducing the conduit
+              factor in Table H1). See OSG Appendix C / Table H1 for the lookup tables — both the
+              cable factor (per cable type / CSA) and the conduit factor (per conduit OD / length /
+              number of bends). For three 90° bends in a 10 m run, the conduit factor drops
+              significantly, so re-check the fill against the de-rated conduit factor before the
+              pull.
+              <br />
+              <br />
+              <strong>Step 2 — re-check after derating for bends.</strong> Three 90° bends across a
+              10 m run reduce the effective conduit factor from the straight-run figure of 333 down
+              to roughly 260-280 (per OSG Table H1 conduit-factor adjustments for bends). Recompute:
+              108 / 270 ≈ 40 %. Still under the 45 % maximum, but only just. If the run had a fourth
+              bend or if a longer run dropped the factor further, this would tip over the limit and
+              the design would need revisiting.
+              <br />
+              <br />
+              <strong>Step 3 — pulling tension calc.</strong> Maximum pulling tension per conductor
+              ≈ 50 N/mm² (≈ 5 kg per mm² of conductor CSA) for copper using a stocking grip
+              (Chinese-finger trap). For 6 × 2.5 mm² T&E, pulling on the 6 outer sheaths via a
+              single grip distributes the force across all six cables. Conservative field rule for
+              the bundle: 6 cables × 2 conductors × 2.5 mm² = 30 mm² total copper, × 1.5-2 kg/mm²
+              no-thinking-required field figure = ~45-60 kg estimated pulling load. Easily within
+              manual pull range; well within the 50 N/mm² manufacturer limit. (See cable
+              manufacturer data + IET Electrical Installation Design Guide for the formal figure;
+              the 1.5-2 kg/mm² site rule is the common conservative default.)
+              <br />
+              <br />
+              <strong>Step 4 — pre-pull prep.</strong> Lubricant ready (Polywater J in a tub at the
+              conduit entry). Pulling grip sized for the 6-cable bundle (single grip wrapped around
+              all 6 cables together, OR pull cables in pairs if the bundle is too large for one
+              grip). Draw rope pulled in already. Two-person team — feeder at DB end, puller at
+              panel end. Phone connection between them.
+              <br />
+              <br />
+              <strong>Step 5 — start the pull.</strong> Lubricate the conduit entry. Feeder paces
+              the cables into the conduit at a steady rate. Puller applies steady pulling force on
+              the rope, watching for the cable arriving at the far end. Communication continuous —
+              "good", "easy pull", "feels harder at the second bend", "almost through".
+              <br />
+              <br />
+              <strong>Step 6 — at the bends.</strong> The 3 × 90° bends are the friction hotspots.
+              If the pull becomes hard at a bend, STOP. Reverse slightly to free the cable. Add
+              lubricant at the conduit entry (the lube travels with the cable along the conduit).
+              Re-attempt. If still hard, consider adding a draw box at the worst bend — splits the
+              pull into two manageable segments.
+              <br />
+              <br />
+              <strong>Step 7 — emerge at the far end.</strong> Cables arrive at the panel end.
+              Puller stops pulling. Feeder confirms cable count exiting the conduit matches what
+              went in. Cut cables to the right length at each end, with ~250 mm tail for termination
+              at both DB and panel.
+              <br />
+              <br />
+              <strong>Step 8 — leave a draw rope.</strong> Feed a fresh polyester draw rope through
+              the conduit alongside the just-installed cables — for the next person who needs to add
+              a cable.
+              <br />
+              <br />
+              <strong>Step 9 — IR test.</strong> Insulation resistance test at 500 V dc on each
+              circuit before terminating. ≥1.0 MΩ minimum confirms the cable survived the pull
+              electrically. Below that, the cable was damaged during the pull and must be replaced.
+              <br />
+              <br />
+              <strong>Step 10 — terminate.</strong> Strip, prep, ferrule (where needed), torque to
+              spec at both ends. Sub 5 covers the termination detail. Test certificate completed.
+            </>
+          }
+          whyItMatters={
+            <>
+              The fill calculation in step 1 is the most-skipped check in install practice —
+              apprentices assume that if six T&E cables fit in their hand they will fit through the
+              conduit. They will not always. Done correctly using OSG Appendix C / Table H1 cable
+              factors (NOT raw π × r² cross-section, which gives the wrong answer for flat T&E) the
+              fill is a defendable design figure. Pulling tension limit per the manufacturer is ≈ 50
+              N/mm² (5 kg/mm²) for copper with a stocking grip — many sites use a more conservative
+              1.5-2 kg/mm² field rule. The full ten-step sequence is what good cable installation
+              looks like; short-cutting any step is what bad installs look like.
+            </>
+          }
+        />
+
+        <CommonMistake
+          title="Kinking SWA at a tight corner because no draw box was included in the design"
+          whatHappens={
+            <>
+              You pull a 25 mm² SWA cable through a long route with a tight bend at a structural
+              column — no draw box, no roller, no draw point. You force the cable round the bend
+              during the pull because there is no other option. The SWA visibly kinks at the bend;
+              you straighten it as best you can after pulling. Two years later the cable fails an IR
+              test on a periodic inspection — the kinked sheath has cracked, the bedding has been
+              compressed past its fatigue limit, and a moisture pathway has developed at the bend.
+              Replacement requires breaking out the wall construction at the column.
+            </>
+          }
+          doInstead={
+            <>
+              Design draw boxes into every long or complex route AT THE DESIGN STAGE, before the
+              conduit is even installed. Any change-of-direction beyond two 90° bends in series, any
+              straight pull longer than ~30 m, any tight corner that cannot accept the cable&rsquo;s
+              minimum bend radius — all of these need a draw box. The cost of an extra junction box
+              during first-fix is ~£20-30. The cost of replacing a damaged cable two years later is
+              ~£2000-5000 in remedial work and customer disruption. The economics make themselves.
+            </>
+          }
+        />
+
+        <InlineCheck {...checks[0]} />
+
+        <SectionRule />
+
+        <FAQ items={faqs} />
+
+        <SectionRule />
+
+        <KeyTakeaways
+          points={[
+            'Pre-pull prep — survey the route, confirm fill, install draw rope, ready the lubricant, attach pulling grip / eye. Five minutes of prep saves five hours of jammed pull.',
+            'Pull on the cable’s outer sheath via a pulling grip OR on the cable’s mechanical termination via a pulling eye. NEVER on the conductor directly.',
+            'Pulling tension limit ~50 N/mm² (≈ 5 kg/mm²) for copper with stocking grip per published manufacturer / IET Electrical Installation Design Guide (~30 N/mm² if pulling on the conductor itself). Many sites use a conservative 1.5-2 kg/mm² no-thinking-required field rule. Calculate before pulling, use a tension meter on heavy pulls, listen for warning signs.',
+            'Bend radius minimums apply BOTH during the pull AND in the installed run — 6× OD unarmoured, 8× SWA, 12× MICC. Tighter = damaged cable.',
+            'Long pulls split into shorter segments at intermediate draw boxes — every ~30 m, at every complex bend, at every floor penetration.',
+            'Use proper cable-pulling lubricant (Polywater, Yellow 77) — wax-free for PVC compatibility. Never WD-40, never engine oil, never washing-up liquid.',
+            'Reg 522.8.1 forbids damaging lubricants and requires installation without damage to sheath / insulation / terminations. The pull is part of the regulation.',
+            'After the pull — IR test at 500 V dc to confirm cable integrity. Dress cables on tray / basket parallel, segregated, spaced for thermal, secured with metal ties.',
+            'Always leave a draw rope for the next person. 50 p of rope saves a day of re-rodding years later.',
+          ]}
+        />
+
+        <Quiz title="Cable pulling and dressing — knowledge check" questions={quizQuestions} />
+
+        <div className="grid grid-cols-2 gap-3 pt-2">
           <button
-            onClick={() => navigate('..')}
-            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            onClick={() => navigate('/study-centre/apprentice/level2/module4/section3/3-8')}
+            className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
           >
-            <ArrowLeft className="h-4 w-4" /> Section 3
+            <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+              <ChevronLeft className="h-3 w-3" /> Previous subsection
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-white truncate">
+              3.8 Wiring system selection deep dive
+            </div>
           </button>
-
-          <PageHero
-            eyebrow="Module 4 · Section 3 · Subsection 9"
-            title="Cable pulling and dressing techniques"
-            description="The mechanical craft side of installation. Pre-pull prep, draw rope, lubricant, pulling tension limits, pulling grips and eyes, bending radius management, long-pull tactics with intermediate boxes, cable dressing on tray and basket. The supplementary Sub on the skill that turns first-fix planning into installed circuits."
-            tone="emerald"
-          />
-
-          <TLDR
-            points={[
-              'Pre-pull prep is everything — route survey, draw rope in, lubricant ready, pulling grip or eye attached. A thirty-second prep saves a thirty-minute jam.',
-              'Pull on the cable’s outer sheath via a pulling grip or eye — NEVER on the conductor directly. Conductor pulls damage the conductor at the eye and cause IR failures later.',
-              'Pulling tension limit ~50 N/mm² (≈ 5 kg/mm²) for copper with stocking grip per published manufacturer / IET Electrical Installation Design Guide; ~30 N/mm² if pulling on the conductor itself. Many sites use a conservative 1.5-2 kg/mm² field rule. Bend radius 6× OD unarmoured / 8× SWA / 12× MICC — at PULL time, not just installed.',
-            ]}
-          />
-
-          <LearningOutcomes
-            outcomes={[
-              'Supplementary content — extends LO3 but is not directly mapped to a 204 AC. Designed to deepen apprentice understanding of cable pulling and dressing as a craft skill that turns first-fix planning into installed circuits.',
-              'Plan a cable pull — route survey, conduit fill check, intermediate draw box positions, draw rope installation, lubricant choice.',
-              'Apply pulling tension limits (~50 N/mm² ≈ 5 kg/mm² copper with stocking grip per published manufacturer / IET Electrical Installation Design Guide; conservative 1.5-2 kg/mm² no-thinking-required field rule on most sites) and recognise the warning signs of an over-tensioned pull.',
-              'Use pulling grips and pulling eyes correctly so that pulling force is applied to the cable’s sheath and mechanical termination, never directly to the conductor.',
-              'Maintain bend radius minimums during the pull and in the installed run (6× OD unarmoured, 8× OD SWA, 12× OD MICC).',
-              'Dress cables on tray, basket and ladder runs — parallel, segregated by service, spaced for thermal dissipation, secured with non-combustible metal ties per A4:2026 Reg 521.10.202.',
-            ]}
-            initialVisibleCount={3}
-          />
-
-          <ContentEyebrow>Pre-pull preparation</ContentEyebrow>
-
-          <ConceptBlock
-            title="Survey the route before you start the pull"
-            plainEnglish="Walk the route end to end before pulling any cable. Note every bend, every junction box, every change of containment, every place the cable might catch. Confirm the conduit is clear (rod through, draw rope in, no debris). Confirm the bend radius at every change of direction is within the cable manufacturer minimum. Five minutes of survey saves five hours of jammed pulls."
+          <button
+            onClick={() => navigate('/study-centre/apprentice/level2/module4/section4/4-1')}
+            className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
           >
-            <p>
-              The pre-pull survey checklist:
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Conduit / trunking complete, ends finished, no internal sharp edges.</li>
-              <li>All boxes / junctions in place, lids removable for the pull.</li>
-              <li>Rod through the conduit / draw rope already pulled in.</li>
-              <li>Every bend respects the cable&rsquo;s minimum bend radius (6× OD unarmoured, 8× SWA, 12× MICC).</li>
-              <li>Conduit fill within the IET / OSG limit (~40-45 % typically).</li>
-              <li>Lubricant on hand — proper cable-pulling lube, wax-free for PVC conduit.</li>
-              <li>Pulling grip or eye sized for the cable.</li>
-              <li>Pulling rope rated for the expected force (typically 6 mm polyester, 200-300 kg breaking).</li>
-              <li>Power cable puller / hand puller available if the run is long or heavy.</li>
-              <li>Second person at the feeding end if the pull is long or large CSA.</li>
-            </ul>
-          </ConceptBlock>
-
-          <ConceptBlock
-            title="Draw rope, draw tape, conduit rod — getting a line through"
-            plainEnglish="Before you can pull the cable, you need a line through the conduit. Three methods. (1) Conduit rod (steel or fibreglass push-rod) — push through, attach the draw rope, pull back. (2) Draw tape (plastic / metal flat tape on a reel) — feed through, attach rope, pull back. (3) Mouse and line (small fabric cone with string, blown through with compressed air or gravity) — feed through, use the string to pull a heavier rope through. Each suits different run lengths and bend complexities."
-          >
-            <p>
-              Method selection:
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Short, simple run (under ~10 m, &lt;2 bends)</strong> — conduit
-                rod or fibreglass tape. Push from one end, attach rope, pull back.
-              </li>
-              <li>
-                <strong>Medium run with bends (10-25 m, 3-4 bends)</strong> — fibreglass
-                conduit tape (more flexible than steel rod). Sometimes needs lubricating
-                the rod itself to get through tight bends.
-              </li>
-              <li>
-                <strong>Long or complex run (&gt;25 m or 5+ bends)</strong> — mouse and line
-                method. The mouse is a small fabric or foam cone with a thin string
-                attached. Drop it in the entry, blow compressed air through, the mouse
-                rides the air flow to the far end. Use the string to pull a heavier rope.
-              </li>
-              <li>
-                <strong>Run that already has cable in it</strong> — use the existing draw
-                rope (left from the previous pull) to pull the new cable AND a new draw
-                rope for next time.
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <ContentEyebrow>Pulling tension and force</ContentEyebrow>
-
-          <ConceptBlock
-            title="Pulling tension limit — ~50 N/mm² (≈ 5 kg/mm²) for copper with stocking grip"
-            plainEnglish="The cable manufacturer specifies a maximum pulling tension. The published figure (per cable manufacturer data + IET Electrical Installation Design Guide) is ~50 N/mm² (≈ 5 kg per mm² of conductor CSA) for copper using a stocking grip (Chinese-finger trap). Pulling on the conductor itself rather than via a grip drops this to ~30 N/mm². Many sites use a conservative 1.5-2 kg/mm² as a no-thinking-required field rule. Exceed the limit and the conductors stretch at the eye, individual strands break, the insulation cracks. The cable then fails IR or continuity testing."
-          >
-            <p>
-              How to apply the limit in practice:
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Calculate the limit before pulling</strong> — sum the conductor
-                CSAs (e.g. 4 × 16 mm² = 64 mm²), multiply by ~50 N/mm² (≈ 5 kg/mm²) for
-                the published stocking-grip limit (~320 kg). Use the conservative
-                1.5-2 kg/mm² (≈ 100-130 kg for the same cable) as the field rule for a
-                generous safety margin.
-              </li>
-              <li>
-                <strong>Use a pulling tension meter</strong> on heavy pulls (electric
-                cable pullers usually have one built in; standalone meters available for
-                manual pulls).
-              </li>
-              <li>
-                <strong>Set the puller torque limit</strong> if using a powered cable
-                puller — most modern pullers have an adjustable torque cut-off.
-              </li>
-              <li>
-                <strong>Listen for warning signs</strong> — manual pull becoming "stuck";
-                cable visibly stretching at the entry; mechanical groaning from the
-                rope/grip system. Stop immediately if any of these appear.
-              </li>
-              <li>
-                <strong>Add intermediate draw boxes</strong> — splits a long pull into
-                shorter ones, each within the tension limit by definition.
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <ConceptBlock
-            title="Pulling grip vs pulling eye — never pull on the conductor"
-            plainEnglish="The pulling rope MUST attach to the cable’s outer sheath (via a pulling grip) or to the cable’s mechanical termination (via a pulling eye). Pulling on the conductor itself — by tying the rope around bare conductors, by crimping the rope onto a stripped end, or by relying on tape — damages the conductor at the attachment point and causes failure."
-            onSite="A pulling grip (also called a Chinese finger trap or stocking) is a braided wire mesh tube that wraps around the cable and tightens as the rope pulls — distributing the force evenly along ~150-300 mm of cable sheath. The grip costs ~£15-25, sized to the cable OD, and is reusable across many pulls. Pulling eyes are factory-fitted on large SWA, MV and HV cables — a specifically engineered loop that connects the rope to the cable’s mechanical termination."
-          >
-            <p>
-              Attachment options by cable type:
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>T&E and small unarmoured cable</strong> — pulling grip sized for
-                the OD, slipped over the cable end and tightened with the rope.
-              </li>
-              <li>
-                <strong>SWA up to ~25 mm²</strong> — pulling grip sized for the armour OD;
-                grip wraps the outer sheath, force transmits through to the armour.
-              </li>
-              <li>
-                <strong>SWA above 25 mm²</strong> — factory-fitted pulling eye if specified;
-                otherwise field-installed pulling grip rated for the cable diameter and
-                weight.
-              </li>
-              <li>
-                <strong>MV / HV cable</strong> — always factory-fitted pulling eye, often
-                a swivel between the rope and the eye to prevent twist.
-              </li>
-              <li>
-                <strong>Multiple cables in one pull</strong> — pulling grip large enough
-                to wrap all cables together, OR pull cables individually if the
-                accumulated force exceeds the grip rating.
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <InlineCheck {...checks[1]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>Bend radius management</ContentEyebrow>
-
-          <ConceptBlock
-            title="The minimum bend radius rule, applied at pull time"
-            plainEnglish="The cable manufacturer specifies a minimum bend radius — typically 6× OD for unarmoured cable, 8× OD for SWA, 12× OD for MICC. This applies BOTH during the pull AND in the installed configuration. A bend tighter than the minimum kinks the cable, damages the insulation invisibly, and the cable fails IR or continuity testing months later — long after the original install team has left site."
-          >
-            <p>
-              Practical bend radius management:
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Design the route to respect the radius</strong> — pre-formed
-                conduit elbows, basket bend pieces, gentle corners. Never specify a
-                bend tighter than the cable&rsquo;s minimum.
-              </li>
-              <li>
-                <strong>Add draw boxes at any tight corner</strong> — the box becomes a
-                pull-end on each side of the corner, so the cable enters/exits in two
-                straight pulls and the bend in the box itself is gentler.
-              </li>
-              <li>
-                <strong>Use cable rollers at any tight bend during a long pull</strong> —
-                the rollers reduce friction and keep the cable on the bend radius even
-                under tension.
-              </li>
-              <li>
-                <strong>Inspect the installed cable after pulling</strong> — visible kink,
-                flat spot, or bulge in the sheath at any bend means the cable is damaged
-                and should be replaced before energising.
-              </li>
-              <li>
-                <strong>Insulation resistance test before terminating</strong> — confirms
-                the cable survived the pull electrically. ≥1.0 MΩ at 500 V dc minimum.
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <RegsCallout
-            source="BS 7671:2018+A4:2026 — Regulation 522.8.1 (Wiring system mechanical stress during installation)"
-            clause="A wiring system shall be selected and erected to avoid during installation, use or maintenance, damage to the sheath or insulation of cables and their terminations. The use of any lubricants that can have a detrimental effect on the cable or wiring system are not permitted."
-            meaning={
-              <>
-                Reg 522.8.1 is the regulation that sits behind every aspect of cable
-                pulling. The cable must be selected and installed to avoid damage during
-                installation — pulling within the tension limit (avoids stretching the
-                conductor), respecting the bend radius (avoids kinking the sheath), using
-                a pulling grip or eye (avoids damaging the conductor at the rope
-                attachment), and using compatible lubricant (the explicit prohibition on
-                damaging lubricants like WD-40 on PVC conduit). A pulled cable that has
-                been damaged during the pull is a 522.8.1 fail.
-              </>
-            }
-            cite="Source: BS 7671:2018+A4:2026 Part 5, Chapter 52, Regulation 522.8.1 (verbatim)."
-          />
-
-          <RegsCallout
-            source="BS 7671:2018+A4:2026 — Regulation 522.8.3 (Bend radius)"
-            clause="The radius of every bend in a wiring system shall be such that conductors or cables do not suffer damage and terminations are not stressed."
-            meaning={
-              <>
-                Reg 522.8.3 is the bend-radius regulation. "Conductors or cables do not
-                suffer damage" — the bend radius respects the manufacturer minimum.
-                "Terminations are not stressed" — the bend at the termination is gentle
-                enough not to load the connection. The 6× / 8× / 12× OD figures from
-                cable manufacturer data exist to satisfy this regulation. Tighter than
-                minimum at pull time damages the cable. Tighter than minimum after
-                installation stresses the conductor in service.
-              </>
-            }
-            cite="Source: BS 7671:2018+A4:2026 Part 5, Chapter 52, Regulation 522.8.3 (verbatim)."
-          />
-
-          <InlineCheck {...checks[2]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>Long-pull tactics</ContentEyebrow>
-
-          <ConceptBlock
-            title="Intermediate draw boxes — splitting the pull into manageable segments"
-            plainEnglish="A pull of more than ~30 m, or with more than 2-3 changes of direction, becomes too much for a single operation — the cumulative friction exceeds the pulling tension limit, and the cable jams. The fix is intermediate draw boxes — accessible junction boxes at intervals along the route. Each draw box is a pull-end and a pull-start, splitting the long route into manageable segments."
-          >
-            <p>
-              Draw box positioning:
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Every ~30 m on a long straight run.</li>
-              <li>At any change-of-direction beyond two 90° bends in series.</li>
-              <li>At every floor penetration on a multi-storey service riser.</li>
-              <li>At every change of containment type (conduit to trunking transition).</li>
-              <li>At every junction with a branch circuit going off the main run.</li>
-              <li>Anywhere maintenance access will be needed in future for cable additions.</li>
-            </ul>
-            <p>
-              Plan draw box positions at the design stage. Adding a draw box mid-install
-              means breaking into the conduit, fitting a new junction box, re-routing
-              the cable in two segments — much harder than getting the position right
-              at the start.
-            </p>
-          </ConceptBlock>
-
-          <ConceptBlock
-            title="The pull team — feeding end, puller end, communication"
-            plainEnglish="A long or heavy pull is a two-person operation. One person at the feeding end (where the cable comes off the drum, into the conduit / containment); one person at the puller end (where the rope pulls the cable through). Both communicate continuously — the feeder paces the cable into the conduit, the puller takes up the slack, neither rushes ahead of the other. Phone, radio, or shouting depending on the route — but constant contact."
-          >
-            <p>
-              The pull team roles:
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Feeder end</strong> — paces cable off the drum, applies lubricant
-                at the conduit entry, watches for kinks, monitors cable damage as it
-                feeds in.
-              </li>
-              <li>
-                <strong>Puller end</strong> — takes up rope slack, applies pulling force,
-                monitors tension, watches for cable arriving (don&rsquo;t over-pull the cable
-                out of the conduit).
-              </li>
-              <li>
-                <strong>Intermediate watcher</strong> — for very long pulls, a third
-                person at a critical bend or draw box to monitor cable behaviour and
-                signal stop / continue.
-              </li>
-              <li>
-                <strong>Communication</strong> — radio / phone / pre-arranged signals.
-                "Stop", "continue", "slack", "snag" — common terms. Hand signals only
-                work for line-of-sight pulls.
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <ContentEyebrow>Cable dressing — after the pull</ContentEyebrow>
-
-          <ConceptBlock
-            title="Tray, basket, ladder — parallel, segregated, secured"
-            plainEnglish="Once cables are on the tray / basket / ladder, dressing them tidily is a craft skill that pays back across years. Parallel laying along the run direction. Segregation by service type (mains in one zone, data in another, fire alarm in a third). Spacing for thermal dissipation per OSG grouping factors. Secured with metal cable ties at intervals. Crossings minimised."
-          >
-            <p>
-              The dressing principles:
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Parallel layout</strong> — cables run along the length of the
-                tray/basket, not zig-zagging across.
-              </li>
-              <li>
-                <strong>Segregation by service</strong> — mains cables together, data
-                cables together, fire alarm cables together. Use a tray divider strip
-                for compartmented separation in commercial work; respect BS 6701 (data)
-                and BS 5839 (fire alarm) separation requirements.
-              </li>
-              <li>
-                <strong>Thermal spacing</strong> — apply OSG grouping factor Cg by
-                spacing cables one-diameter apart where the cable schedule depends on
-                a Cg less than 1.0. Bundling tightly increases Cg and reduces every
-                cable&rsquo;s rated current.
-              </li>
-              <li>
-                <strong>Securing</strong> — metal cable ties (per A4:2026 Reg 521.10.202)
-                at ~600 mm horizontal, ~400 mm vertical. Tighten enough to hold but not
-                deform the sheath.
-              </li>
-              <li>
-                <strong>Bend radius at the tray edge</strong> — where cable drops off the
-                tray to a luminaire or accessory below, respect the cable&rsquo;s minimum
-                bend radius at the drop.
-              </li>
-              <li>
-                <strong>Labelling</strong> — every cable labelled at every change of
-                direction, every junction box, every termination — circuit name and CU
-                way number minimum. Heat-shrink printable labels work better than tape
-                in service.
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <ConceptBlock
-            title="Leave a draw rope for the next person"
-            plainEnglish="After completing the pull, leave a polyester draw rope in the conduit / trunking for the next person who needs to add a cable. Costs 50 p of rope; saves the next electrician 30 minutes of re-rodding. Professional courtesy that compounds across the building’s lifetime — the third or fourth cable addition years later still benefits from the rope you left in on day one."
-          >
-            <p>
-              The standard practice — feed a fresh ~6 mm polyester draw rope through
-              the conduit alongside the new cable as you pull. Leave both ends
-              accessible (in junction boxes, behind blanking plates, or coiled in the
-              accessory enclosure). Some installers tape a small cardboard tag to one
-              end with the date and the company name — a simple courtesy that the
-              next trade remembers.
-            </p>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <ContentEyebrow>Worked example — 6 × 2.5 mm² T&E through 10 m of 25 mm conduit, 3 × 90° bends</ContentEyebrow>
-
-          <Scenario
-            title="Pulling six 2.5 mm² T&E circuits through a single 25 mm PVC conduit run with multiple bends"
-            situation={
-              <>
-                Industrial unit conversion to office. Single 25 mm PVC conduit run from
-                the main DB to a 6-way distribution panel in the lab area. Run is 10 m
-                with 3 × 90° bends (DB out, around a structural column, into the lab
-                ceiling, drop down to the panel). You need to pull six separate 2.5 mm²
-                T&E circuits — five sockets and one lighting. The conduit is in place,
-                ends terminated, draw rope already pulled in.
-              </>
-            }
-            whatToDo={
-              <>
-                <strong>Step 1 — fill check using OSG cable factors (NOT raw
-                cross-sectional area).</strong> Conduit fill calculations don&rsquo;t use
-                cross-sectional area directly — UK practice uses tabulated cable factors
-                that account for cable shape, sheath, bend radius and pulling friction.
-                T&E in particular is FLAT, not round, so π × r² gives the wrong answer.
-                Look up the correct factors in OSG Appendix C / Table H1.
-                {' '}
-                <strong>Worked example:</strong> 2.5 mm² T&E factor = 18 (per OSG Table H1,
-                Method C clipped direct — the cable factor for a single 2.5 mm² T&E in
-                conduit). Six cables × 18 = 108. Conduit factor for 25 mm steel conduit
-                straight run ≈ 333 (Table H1 conduit factor — varies with conduit length
-                and number of bends). Fill ratio = 108 / 333 = 32 % — comfortably under
-                the conventional 45 % maximum. The pull is achievable with this conduit;
-                no upsize required for a straight short run.
-                <br /><br />
-                The 45 % maximum fill is the conventional design threshold (some specs
-                allow up to 53 % for short straight runs; bends and length tighten the
-                limit by reducing the conduit factor in Table H1). See OSG Appendix C /
-                Table H1 for the lookup tables — both the cable factor (per cable type
-                / CSA) and the conduit factor (per conduit OD / length / number of bends).
-                For three 90° bends in a 10 m run, the conduit factor drops significantly,
-                so re-check the fill against the de-rated conduit factor before the pull.
-                <br /><br />
-                <strong>Step 2 — re-check after derating for bends.</strong> Three 90°
-                bends across a 10 m run reduce the effective conduit factor from the
-                straight-run figure of 333 down to roughly 260-280 (per OSG Table H1
-                conduit-factor adjustments for bends). Recompute: 108 / 270 ≈ 40 %.
-                Still under the 45 % maximum, but only just. If the run had a fourth
-                bend or if a longer run dropped the factor further, this would tip
-                over the limit and the design would need revisiting.
-                <br /><br />
-                <strong>Step 3 — pulling tension calc.</strong> Maximum pulling tension
-                per conductor ≈ 50 N/mm² (≈ 5 kg per mm² of conductor CSA) for copper
-                using a stocking grip (Chinese-finger trap). For 6 × 2.5 mm² T&E,
-                pulling on the 6 outer sheaths via a single grip distributes the force
-                across all six cables. Conservative field rule for the bundle:
-                6 cables × 2 conductors × 2.5 mm² = 30 mm² total copper, × 1.5-2 kg/mm²
-                no-thinking-required field figure = ~45-60 kg estimated pulling load.
-                Easily within manual pull range; well within the 50 N/mm² manufacturer
-                limit. (See cable manufacturer data + IET Electrical Installation
-                Design Guide for the formal figure; the 1.5-2 kg/mm² site rule is the
-                common conservative default.)
-                <br /><br />
-                <strong>Step 4 — pre-pull prep.</strong> Lubricant ready (Polywater J in
-                a tub at the conduit entry). Pulling grip sized for the 6-cable bundle
-                (single grip wrapped around all 6 cables together, OR pull cables in
-                pairs if the bundle is too large for one grip). Draw rope pulled in
-                already. Two-person team — feeder at DB end, puller at panel end.
-                Phone connection between them.
-                <br /><br />
-                <strong>Step 5 — start the pull.</strong> Lubricate the conduit entry.
-                Feeder paces the cables into the conduit at a steady rate. Puller
-                applies steady pulling force on the rope, watching for the cable
-                arriving at the far end. Communication continuous — "good", "easy
-                pull", "feels harder at the second bend", "almost through".
-                <br /><br />
-                <strong>Step 6 — at the bends.</strong> The 3 × 90° bends are the friction
-                hotspots. If the pull becomes hard at a bend, STOP. Reverse slightly to
-                free the cable. Add lubricant at the conduit entry (the lube travels with
-                the cable along the conduit). Re-attempt. If still hard, consider adding
-                a draw box at the worst bend — splits the pull into two manageable
-                segments.
-                <br /><br />
-                <strong>Step 7 — emerge at the far end.</strong> Cables arrive at the
-                panel end. Puller stops pulling. Feeder confirms cable count exiting the
-                conduit matches what went in. Cut cables to the right length at each end,
-                with ~250 mm tail for termination at both DB and panel.
-                <br /><br />
-                <strong>Step 8 — leave a draw rope.</strong> Feed a fresh polyester draw
-                rope through the conduit alongside the just-installed cables — for the
-                next person who needs to add a cable.
-                <br /><br />
-                <strong>Step 9 — IR test.</strong> Insulation resistance test at 500 V
-                dc on each circuit before terminating. ≥1.0 MΩ minimum confirms the
-                cable survived the pull electrically. Below that, the cable was damaged
-                during the pull and must be replaced.
-                <br /><br />
-                <strong>Step 10 — terminate.</strong> Strip, prep, ferrule (where
-                needed), torque to spec at both ends. Sub 5 covers the termination
-                detail. Test certificate completed.
-              </>
-            }
-            whyItMatters={
-              <>
-                The fill calculation in step 1 is the most-skipped check in install
-                practice — apprentices assume that if six T&E cables fit in their hand
-                they will fit through the conduit. They will not always. Done correctly
-                using OSG Appendix C / Table H1 cable factors (NOT raw π × r²
-                cross-section, which gives the wrong answer for flat T&E) the fill is
-                a defendable design figure. Pulling tension limit per the manufacturer
-                is ≈ 50 N/mm² (5 kg/mm²) for copper with a stocking grip — many sites
-                use a more conservative 1.5-2 kg/mm² field rule. The full ten-step
-                sequence is what good cable installation looks like; short-cutting any
-                step is what bad installs look like.
-              </>
-            }
-          />
-
-          <CommonMistake
-            title="Kinking SWA at a tight corner because no draw box was included in the design"
-            whatHappens={
-              <>
-                You pull a 25 mm² SWA cable through a long route with a tight bend at
-                a structural column — no draw box, no roller, no draw point. You force
-                the cable round the bend during the pull because there is no other
-                option. The SWA visibly kinks at the bend; you straighten it as best
-                you can after pulling. Two years later the cable fails an IR test on a
-                periodic inspection — the kinked sheath has cracked, the bedding has
-                been compressed past its fatigue limit, and a moisture pathway has
-                developed at the bend. Replacement requires breaking out the wall
-                construction at the column.
-              </>
-            }
-            doInstead={
-              <>
-                Design draw boxes into every long or complex route AT THE DESIGN STAGE,
-                before the conduit is even installed. Any change-of-direction beyond
-                two 90° bends in series, any straight pull longer than ~30 m, any
-                tight corner that cannot accept the cable&rsquo;s minimum bend radius — all
-                of these need a draw box. The cost of an extra junction box during
-                first-fix is ~£20-30. The cost of replacing a damaged cable two years
-                later is ~£2000-5000 in remedial work and customer disruption. The
-                economics make themselves.
-              </>
-            }
-          />
-
-          <InlineCheck {...checks[0]} />
-
-          <SectionRule />
-
-          <FAQ items={faqs} />
-
-          <SectionRule />
-
-          <KeyTakeaways
-            points={[
-              'Pre-pull prep — survey the route, confirm fill, install draw rope, ready the lubricant, attach pulling grip / eye. Five minutes of prep saves five hours of jammed pull.',
-              'Pull on the cable’s outer sheath via a pulling grip OR on the cable’s mechanical termination via a pulling eye. NEVER on the conductor directly.',
-              'Pulling tension limit ~50 N/mm² (≈ 5 kg/mm²) for copper with stocking grip per published manufacturer / IET Electrical Installation Design Guide (~30 N/mm² if pulling on the conductor itself). Many sites use a conservative 1.5-2 kg/mm² no-thinking-required field rule. Calculate before pulling, use a tension meter on heavy pulls, listen for warning signs.',
-              'Bend radius minimums apply BOTH during the pull AND in the installed run — 6× OD unarmoured, 8× SWA, 12× MICC. Tighter = damaged cable.',
-              'Long pulls split into shorter segments at intermediate draw boxes — every ~30 m, at every complex bend, at every floor penetration.',
-              'Use proper cable-pulling lubricant (Polywater, Yellow 77) — wax-free for PVC compatibility. Never WD-40, never engine oil, never washing-up liquid.',
-              'Reg 522.8.1 forbids damaging lubricants and requires installation without damage to sheath / insulation / terminations. The pull is part of the regulation.',
-              'After the pull — IR test at 500 V dc to confirm cable integrity. Dress cables on tray / basket parallel, segregated, spaced for thermal, secured with metal ties.',
-              'Always leave a draw rope for the next person. 50 p of rope saves a day of re-rodding years later.',
-            ]}
-          />
-
-          <Quiz title="Cable pulling and dressing — knowledge check" questions={quizQuestions} />
-
-          <div className="grid grid-cols-2 gap-3 pt-2">
-            <button
-              onClick={() => navigate('/study-centre/apprentice/level2/module4/section3/3-8')}
-              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
-                <ChevronLeft className="h-3 w-3" /> Previous subsection
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-white truncate">
-                3.8 Wiring system selection deep dive
-              </div>
-            </button>
-            <button
-              onClick={() => navigate('/study-centre/apprentice/level2/module4/section4/4-1')}
-              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
-                Next subsection <ChevronRight className="h-3 w-3" />
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-black truncate">
-                4.1 Identify cable sizes for main bonding
-              </div>
-            </button>
-          </div>
-        </PageFrame>
-      </div>
-    </div>
+            <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+              Next subsection <ChevronRight className="h-3 w-3" />
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-black truncate">
+              4.1 Identify cable sizes for main bonding
+            </div>
+          </button>
+        </div>
+      </HubBody>
+    </HubPage>
   );
 }

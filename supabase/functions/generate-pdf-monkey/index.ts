@@ -821,6 +821,14 @@ serve(async (req) => {
         return 'Work & materials';
       })();
 
+      // "Hold until paid" — the PDF must tell the same story as the email:
+      // a held certificate has NOT been provided yet, it follows payment.
+      const certificateHeldForPdf =
+        (freshQuote as Record<string, unknown> | null)?.certificate_release_mode ===
+          'on_payment' &&
+        !(freshQuote as Record<string, unknown> | null)?.certificate_released_at &&
+        !!(freshQuote as Record<string, unknown> | null)?.linked_certificate_id;
+
       const transformedInvoice = {
         sectionTitle: invSectionTitle,
         invoiceNumber: freshQuote?.invoice_number || '',
@@ -938,6 +946,10 @@ serve(async (req) => {
               reference: (freshQuote as Record<string, unknown>).linked_certificate_reference,
               type: (freshQuote as Record<string, unknown>).linked_certificate_type,
               pdfUrl: (freshQuote as Record<string, unknown>).linked_certificate_pdf_url,
+              heldUntilPaid: certificateHeldForPdf,
+              statusText: certificateHeldForPdf
+                ? 'To follow by email'
+                : 'Provided with this invoice',
             }
           : null,
       };
@@ -1267,8 +1279,13 @@ serve(async (req) => {
             freshCompanyProfile?.scheme_logo_data_url ||
             null,
         },
-        // Invoice-specific terms and settings
-        terms: buildInvoiceTermsList(freshCompanyProfile?.invoice_terms || null),
+        // Invoice-specific terms and settings. A held certificate makes the
+        // stock "provided separately" term untrue — swap it for the fact.
+        terms: buildInvoiceTermsList(freshCompanyProfile?.invoice_terms || null).map((t) =>
+          certificateHeldForPdf && t === DEFAULT_INVOICE_TERMS_MAP['inv_certificates']
+            ? 'Your certificate will follow by email'
+            : t
+        ),
         invoiceSettings: {
           latePaymentInterestRate: freshCompanyProfile?.late_payment_interest_rate || '8% p.a.',
           preferredPaymentMethod: freshCompanyProfile?.preferred_payment_method || 'Bank Transfer',

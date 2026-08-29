@@ -15,6 +15,16 @@ export interface CertificateActionSheetProps {
   } | null;
   onEdit: () => void;
   onPreview: () => void;
+  /**
+   * ELE-1616 — the certificate the SCHEME returned (the PDF NAPIT hands back),
+   * attached on the Part P notification screen.
+   *
+   * Surfaced here because this is where someone actually looks three years
+   * later when a client rings up. Attaching it on the notifications screen but
+   * only showing it there would mean the one document nobody can find.
+   */
+  schemeCertificate?: { url: string; name: string | null; ref: string | null } | null;
+  onOpenSchemeCertificate?: () => void;
   /** Share the generated PDF (native share / copy link) — completed certs only. */
   onShare?: () => void;
   onConvertToEICR?: () => void;
@@ -67,6 +77,8 @@ export const CertificateActionSheet: React.FC<CertificateActionSheetProps> = ({
   certificate,
   onEdit,
   onPreview,
+  schemeCertificate,
+  onOpenSchemeCertificate,
   onConvertToEICR,
   onExportToEIC,
   onLinkCustomer,
@@ -109,6 +121,17 @@ export const CertificateActionSheet: React.FC<CertificateActionSheetProps> = ({
   const actions: Action[] = [
     { label: 'Download PDF', sub: 'Client-ready document', onClick: run(onPreview) },
   ];
+
+  // Directly under the Elec-Mate PDF — the two documents belong together.
+  if (schemeCertificate?.url && onOpenSchemeCertificate) {
+    actions.push({
+      label: 'Scheme certificate',
+      sub: schemeCertificate.ref
+        ? `From your scheme · ${schemeCertificate.ref}`
+        : schemeCertificate.name || 'The PDF your scheme returned',
+      onClick: run(onOpenSchemeCertificate),
+    });
+  }
 
   if (
     (certificate.reportType === 'eic' || certificate.reportType === 'minor-works') &&

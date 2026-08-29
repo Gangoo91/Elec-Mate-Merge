@@ -392,7 +392,11 @@ export const InvoiceWizard = ({
         </DocumentStepPanel>
 
         <DocumentStepPanel isDesktop={isDesktop} active={step === 3} wide title={STEPS[3].title} sub={STEPS[3].sub}>
-          <InvoiceReviewStep invoice={invoiceBuilder.invoice} />
+          <InvoiceReviewStep
+            invoice={invoiceBuilder.invoice}
+            onSetCertificateReleaseMode={invoiceBuilder.setCertificateReleaseMode}
+            onSetLinkedCertificate={invoiceBuilder.setLinkedCertificate}
+          />
         </DocumentStepPanel>
         </div>
       </div>

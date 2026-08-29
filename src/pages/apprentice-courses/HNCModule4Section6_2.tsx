@@ -7,10 +7,10 @@
  */
 
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
-import { PageFrame, PageHero } from '@/components/college/primitives';
 import {
   TLDR,
   ConceptBlock,
@@ -100,12 +100,7 @@ const quizQuestions = [
   {
     id: 2,
     question: 'Which standard governs graphical symbols for electrical diagrams?',
-    options: [
-      'BS 5266',
-      'BS 7671',
-      'IEC 60617',
-      'BS EN 12464',
-    ],
+    options: ['BS 5266', 'BS 7671', 'IEC 60617', 'BS EN 12464'],
     correctAnswer: 2,
     explanation:
       'IEC 60617 (IEC 60617) provides graphical symbols for use in electrical diagrams, ensuring consistent representation across the industry.',
@@ -126,12 +121,7 @@ const quizQuestions = [
   {
     id: 4,
     question: 'What scale is typically used for electrical layout drawings?',
-    options: [
-      '1:50 or 1:100',
-      '1:10',
-      '1:500',
-      '1:1',
-    ],
+    options: ['1:50 or 1:100', '1:10', '1:500', '1:1'],
     correctAnswer: 0,
     explanation:
       'Electrical layout drawings typically use 1:50 or 1:100 scale, matching architectural plans for coordination. Larger scales (1:20, 1:10) may be used for plant rooms.',
@@ -249,430 +239,423 @@ const HNCModule4Section6_2 = () => {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
-      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
-        <PageFrame>
+    <HubPage>
+      <HubMasthead
+        section="Module 4 · Section 6 · Subsection 2"
+        title="Electrical Drawings"
+        backTo="/study-centre/apprentice/h-n-c-module4-section6"
+      />
+      <HubBody>
+        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
+          Understanding drawing types, standards and CAD practices for building services
+          documentation.
+        </p>
+
+        <LearningOutcomes
+          outcomes={[
+            'Identify different types of electrical drawings and their purposes',
+            'Apply BS EN 61082 and IEC 60617 standards',
+            'Create single-line diagrams showing distribution hierarchy',
+            'Develop layout drawings coordinated with architecture',
+            'Apply CAD standards and layer management',
+            'Manage drawing revisions and coordination',
+          ]}
+          initialVisibleCount={3}
+        />
+
+        <TLDR
+          points={[
+            'Drawing types: single-line (distribution hierarchy), schematics (controls/interlocks), layouts (containment, equipment positions), block (system overview).',
+            'BS EN 61082-1 = preparation of documents. IEC 60617 = graphical symbols. Use the standard libraries; bespoke symbols cause confusion at handover.',
+            'Single-line shows: incomer, transformers, switchgear, busbars, cable size and length, protective device rating, fault level at each board.',
+            'Layout drawings xref the architectural model — reload xrefs before every issue or you’re drawing on stale walls.',
+            'Reg 514.9.2 (introduced A4:2026) requires that all diagrams, charts, and information or instruction notices comply with the applicable specified standards. Your drawings are now an explicit BS 7671 deliverable.',
+          ]}
+        />
+
+        <RegsCallout
+          source="BS 7671:2018+A4:2026 — Regulation 514.9.2"
+          clause="Regulation 514.9.2 has been introduced to advise that all diagrams, charts, and information or instruction notices comply with the applicable standards specified."
+          meaning={
+            <>
+              A4:2026 added Reg 514.9.2 specifically to bring drawings, charts and notices under a
+              documented standards regime. For the HNC designer that means single-line diagrams,
+              schematics, schedules and on-board notices reference and follow BS EN 61082-1, IEC
+              60617 (symbols), BS 1192 / AEC (layers), and the BS 7671 schedule pro-formas in
+              Appendix 6. Hand-drawn diagrams or non-standard symbols on a modern installation now
+              carry an explicit non-compliance against Reg 514.9.2.
+            </>
+          }
+          cite="Source: BS 7671:2018+A4:2026 — Regulation 514.9.2."
+        />
+
+        <SectionRule />
+
+        <ConceptBlock title="Single-Line Diagrams">
+          <p>
+            Single-line diagrams (also called one-line diagrams) represent the electrical
+            distribution system using simplified notation. Each line represents a circuit regardless
+            of the actual number of conductors, showing the hierarchy from supply intake to final
+            circuits.
+          </p>
+          <p>
+            <strong>Information shown on single-line diagrams:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Supply characteristics (voltage, phases, fault level)</li>
+            <li>Main switchgear and distribution board references</li>
+            <li>Protective device types and ratings (MCB, MCCB, RCD)</li>
+            <li>Cable sizes, types and lengths</li>
+            <li>Metering and monitoring points</li>
+            <li>Essential/standby power arrangements</li>
+          </ul>
+          <p>
+            <strong>Single-line diagram structure:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>DNO Supply → Main Switchboard</li>
+            <li>Main Switchboard → Sub-distribution boards</li>
+            <li>Sub-distribution boards → Final distribution boards</li>
+            <li>Final distribution boards → Final circuits (lighting, power, etc.)</li>
+          </ul>
+          <p>
+            <strong>Typical notation on single-line (element / example notation / meaning):</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Incomer — 800A MCCB — 800 Amp moulded case circuit breaker</li>
+            <li>Cable — 4c 95mm² XLPE/SWA — 4-core 95mm² XLPE insulated, steel wire armoured</li>
+            <li>Outgoing way — 32A Type B MCB — 32 Amp Type B miniature circuit breaker</li>
+            <li>RCD — 100A 30mA RCCB — 100A residual current device, 30mA sensitivity</li>
+          </ul>
+          <p>
+            <strong>Key point:</strong> Single-line diagrams are essential for understanding system
+            architecture and for fault calculations.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...quickCheckQuestions[0]} />
+
+        <SectionRule />
+
+        <ConceptBlock title="Schematic and Wiring Diagrams">
+          <p>
+            Schematic diagrams show how circuits function logically, while wiring diagrams show the
+            actual connections for installation. Both are essential for control systems, motor
+            circuits and complex installations.
+          </p>
+          <p>
+            <strong>Schematic diagram features:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Shows circuit logic and operation</li>
+            <li>Uses standard symbols (IEC 60617)</li>
+            <li>Components arranged for clarity</li>
+            <li>Includes interlocks and controls</li>
+            <li>Essential for commissioning</li>
+          </ul>
+          <p>
+            <strong>Wiring diagram features:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Shows actual wire connections</li>
+            <li>Includes terminal references</li>
+            <li>Wire numbering and colours</li>
+            <li>Cable gland positions</li>
+            <li>Essential for installation</li>
+          </ul>
+          <p>
+            <strong>Common applications (application / schematic shows / wiring shows):</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Motor starter — control logic, interlocks — terminal connections</li>
+            <li>Lighting control — switching arrangement — switch wiring detail</li>
+            <li>Fire alarm interface — cause and effect logic — interface connections</li>
+            <li>BMS interface — monitoring/control points — I/O module wiring</li>
+          </ul>
+          <p>
+            <strong>Best practice:</strong> Cross-reference schematic and wiring diagrams with
+            unique component tags.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...quickCheckQuestions[1]} />
+
+        <SectionRule />
+
+        <ConceptBlock title="Layout Drawings">
+          <p>
+            Layout drawings show the physical location of electrical equipment on floor plans. They
+            are produced on architectural backgrounds and coordinated with other building services
+            and structural elements.
+          </p>
+          <p>
+            <strong>Types of layout drawings:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Lighting layouts:</strong> Luminaire positions, switching zones, emergency
+              lighting
+            </li>
+            <li>
+              <strong>Power layouts:</strong> Socket outlets, FCUs, isolators, equipment connections
+            </li>
+            <li>
+              <strong>Containment layouts:</strong> Cable tray, trunking, conduit routes
+            </li>
+            <li>
+              <strong>Reflected ceiling plans:</strong> Ceiling-mounted equipment
+            </li>
+            <li>
+              <strong>Plant room layouts:</strong> Detailed equipment positioning
+            </li>
+          </ul>
+          <p>
+            <strong>Layout drawing requirements (element / requirement):</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Scale:</strong> 1:50 general, 1:20 or 1:10 plant rooms
+            </li>
+            <li>
+              <strong>Background:</strong> Current architectural xref
+            </li>
+            <li>
+              <strong>Equipment:</strong> Standard symbols with tags
+            </li>
+            <li>
+              <strong>Dimensions:</strong> From gridlines or walls as appropriate
+            </li>
+            <li>
+              <strong>Annotations:</strong> Equipment types, circuit references
+            </li>
+          </ul>
+          <p>
+            <strong>Coordination considerations:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Check luminaire positions against ceiling grid and services</li>
+            <li>Verify socket heights against furniture layouts</li>
+            <li>Coordinate containment routes with structural openings</li>
+            <li>Avoid clashes with HVAC, sprinklers and other services</li>
+          </ul>
+          <p>
+            <strong>Critical:</strong> Always use the latest architectural background and coordinate
+            changes promptly.
+          </p>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <ConceptBlock title="CAD Standards and BS EN 61082">
+          <p>
+            Consistent CAD standards ensure drawings are clear, coordinated and professionally
+            presented. BS EN 61082 provides the overarching standard for electrotechnical
+            documentation, complemented by UK-specific CAD conventions.
+          </p>
+          <p>
+            <strong>BS EN 61082 key requirements:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Document identification and structure</li>
+            <li>Reference designation systems (BS EN 81346)</li>
+            <li>Graphical symbols (IEC 60617)</li>
+            <li>Signal and connection presentation</li>
+            <li>Documentation classification</li>
+          </ul>
+          <p>
+            <strong>CAD layer naming (BS 1192 / AEC UK) — example A-E-Lighting-M-Layout:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>A = Discipline (Architecture)</li>
+            <li>E = Sub-discipline (Electrical)</li>
+            <li>Lighting = Element</li>
+            <li>M = Model/Drawing type</li>
+            <li>Layout = Presentation</li>
+          </ul>
+          <p>
+            <strong>Standard line types:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Continuous — equipment, containment</li>
+            <li>Dashed — hidden items</li>
+            <li>Centre line — centre lines, symmetry</li>
+            <li>Phantom — future work, options</li>
+          </ul>
+          <p>
+            <strong>Text standards:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Title: 5mm (1:50), 3.5mm (1:100)</li>
+            <li>Body: 2.5mm (1:50), 2mm (1:100)</li>
+            <li>Sans serif font (Arial, Simplex)</li>
+            <li>Consistent capitalisation</li>
+          </ul>
+          <p>
+            <strong>Drawing title block information:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Project name and number</li>
+            <li>Drawing title and number</li>
+            <li>Scale and paper size</li>
+            <li>Revision status and history</li>
+            <li>Drawn/checked/approved signatures and dates</li>
+            <li>Status (preliminary, for construction, as-built)</li>
+          </ul>
+          <p>
+            <strong>Quality control:</strong> All drawings should be checked against CAD standards
+            before issue.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...quickCheckQuestions[3]} />
+
+        <SectionRule />
+
+        <ConceptBlock title="Practical guidance">
+          <p>
+            <strong>Drawing set organisation:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Use logical drawing numbering (E-001, E-002...)</li>
+            <li>Group by type: Schematic, Layout, Details</li>
+            <li>Include drawing register and index</li>
+            <li>Maintain consistent title block across set</li>
+          </ul>
+          <p>
+            <strong>Revision management:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Use revision clouds to highlight changes</li>
+            <li>Update revision table with description</li>
+            <li>Issue superseded drawings are archived</li>
+            <li>Track revisions in document control system</li>
+          </ul>
+          <p>
+            <strong>Key standards:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>BS EN 61082</strong> — documentation
+            </li>
+            <li>
+              <strong>IEC 60617</strong> — symbols
+            </li>
+            <li>
+              <strong>BS EN 81346</strong> — designations
+            </li>
+            <li>
+              <strong>BS 1192</strong> — CAD/BIM conventions
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <CommonMistake
+          title="Common mistakes to avoid"
+          whatHappens={
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+              <li>
+                <strong>Outdated backgrounds</strong> — using old architectural xrefs
+              </li>
+              <li>
+                <strong>Missing cross-references</strong> — not linking between drawings
+              </li>
+              <li>
+                <strong>Inconsistent symbols</strong> — using non-standard notation
+              </li>
+              <li>
+                <strong>Poor layer discipline</strong> — mixing information on layers
+              </li>
+            </ul>
+          }
+          doInstead="Always reload the current architectural xref before issue, set up cross-references between single-line, schematics and layouts (and matching tags on schedules), use the IEC 60617 symbol library, and enforce BS 1192 / AEC layer naming with a CAD standards check."
+        />
+
+        <SectionRule />
+
+        <Scenario
+          title="Stage 4 issue — drawing pack for a 4-storey commercial fit-out"
+          situation={
+            <>
+              You’re responsible for the M&amp;E electrical drawing pack at RIBA Stage 4 for a
+              4-storey commercial fit-out. Architect issued revised plans last week. QS, contractor
+              and building control all need a coordinated set on Friday. Eleven drawings: one
+              single-line, four floor layouts, three schematic schedules, three section/elevation
+              containment routes.
+            </>
+          }
+          whatToDo={
+            <>
+              Reload the architectural xref before opening any drawing. Run a IEC 60617 symbol audit
+              (most CAD systems offer a "non-standard symbol" report). Verify every layer matches BS
+              1192 / AEC standards. On the single-line: tag every board with its load schedule
+              reference, every cable with size + length + protective device rating, fault level at
+              each board (Reg 510.3 / Chapter 43 evidence). On the floor layouts: every luminaire,
+              socket and switch tagged to the schedule. On the schematic schedules: cross-reference
+              single-line tags. Issue a coordination check report (RFI clashes, xref staleness,
+              layer breaches resolved). Add a "Notes to Reader" panel citing BS EN 61082-1, IEC
+              60617, BS 1192/AEC and Reg 514.9.2 — explicit standards compliance baked into the
+              title block.
+            </>
+          }
+          whyItMatters={
+            <>
+              A drawing pack with stale xrefs, mismatched tags and bespoke symbols generates
+              hundreds of RFIs, undermines tender comparability and fails Reg 514.9.2 for the final
+              O&amp;M. Drawings are an engineering deliverable governed by standards — not a
+              graphic.
+            </>
+          }
+        />
+
+        <SectionRule />
+
+        <KeyTakeaways
+          points={[
+            'BS EN 61082-1 (document preparation) and IEC 60617 (symbols) are the baseline standards — both now reinforced by Reg 514.9.2.',
+            'Single-line: incomer, switchgear, busbars, cables (size + length), protective devices (rating + setting), fault level at every board.',
+            'Schematics: controls, interlocks, ATS sequence-of-operation, BMS interfaces — anything time-or-state dependent.',
+            'Layout drawings xref the architectural model — reload before issue, every time.',
+            'BS 1192 / AEC layer naming is the CAD discipline floor; enforce with a standards check at issue.',
+            'Cross-reference tags between single-line, schematics, layouts and schedules — broken cross-refs are RFI generators.',
+            'Revision management: reason, date, author, drawing references — BS 1192/ISO 19650 is the framework.',
+            'Reg 514.9.2 (A4:2026) makes diagrams, charts and notices an explicit BS 7671 deliverable — design accordingly.',
+          ]}
+        />
+
+        <SectionRule />
+
+        <FAQ items={faqs} />
+
+        <SectionRule />
+
+        <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+
+        <div className="grid grid-cols-2 gap-3 pt-2">
           <button
-            onClick={() => navigate('/study-centre/apprentice/h-n-c-module4-section6')}
-            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module4-section6-1')}
+            className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
           >
-            <ArrowLeft className="h-4 w-4" /> Back
+            <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+              <ChevronLeft className="h-3 w-3" /> Previous subsection
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-white truncate">
+              NBS specifications
+            </div>
           </button>
-
-          <PageHero
-            eyebrow="Module 4 · Section 6 · Subsection 2"
-            title="Electrical Drawings"
-            description="Understanding drawing types, standards and CAD practices for building services documentation."
-            tone="purple"
-          />
-
-          <LearningOutcomes
-            outcomes={[
-              'Identify different types of electrical drawings and their purposes',
-              'Apply BS EN 61082 and IEC 60617 standards',
-              'Create single-line diagrams showing distribution hierarchy',
-              'Develop layout drawings coordinated with architecture',
-              'Apply CAD standards and layer management',
-              'Manage drawing revisions and coordination',
-            ]}
-            initialVisibleCount={3}
-          />
-
-          <TLDR
-            points={[
-              'Drawing types: single-line (distribution hierarchy), schematics (controls/interlocks), layouts (containment, equipment positions), block (system overview).',
-              'BS EN 61082-1 = preparation of documents. IEC 60617 = graphical symbols. Use the standard libraries; bespoke symbols cause confusion at handover.',
-              'Single-line shows: incomer, transformers, switchgear, busbars, cable size and length, protective device rating, fault level at each board.',
-              'Layout drawings xref the architectural model — reload xrefs before every issue or you’re drawing on stale walls.',
-              'Reg 514.9.2 (introduced A4:2026) requires that all diagrams, charts, and information or instruction notices comply with the applicable specified standards. Your drawings are now an explicit BS 7671 deliverable.',
-            ]}
-          />
-
-          <RegsCallout
-            source="BS 7671:2018+A4:2026 — Regulation 514.9.2"
-            clause="Regulation 514.9.2 has been introduced to advise that all diagrams, charts, and information or instruction notices comply with the applicable standards specified."
-            meaning={
-              <>
-                A4:2026 added Reg 514.9.2 specifically to bring drawings, charts and notices under
-                a documented standards regime. For the HNC designer that means single-line
-                diagrams, schematics, schedules and on-board notices reference and follow BS EN
-                61082-1, IEC 60617 (symbols), BS 1192 / AEC (layers), and the BS 7671 schedule
-                pro-formas in Appendix 6. Hand-drawn diagrams or non-standard symbols on a
-                modern installation now carry an explicit non-compliance against Reg 514.9.2.
-              </>
-            }
-            cite="Source: BS 7671:2018+A4:2026 — Regulation 514.9.2."
-          />
-
-          <SectionRule />
-
-          <ConceptBlock title="Single-Line Diagrams">
-            <p>
-              Single-line diagrams (also called one-line diagrams) represent the electrical
-              distribution system using simplified notation. Each line represents a circuit
-              regardless of the actual number of conductors, showing the hierarchy from supply
-              intake to final circuits.
-            </p>
-            <p>
-              <strong>Information shown on single-line diagrams:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Supply characteristics (voltage, phases, fault level)</li>
-              <li>Main switchgear and distribution board references</li>
-              <li>Protective device types and ratings (MCB, MCCB, RCD)</li>
-              <li>Cable sizes, types and lengths</li>
-              <li>Metering and monitoring points</li>
-              <li>Essential/standby power arrangements</li>
-            </ul>
-            <p>
-              <strong>Single-line diagram structure:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>DNO Supply → Main Switchboard</li>
-              <li>Main Switchboard → Sub-distribution boards</li>
-              <li>Sub-distribution boards → Final distribution boards</li>
-              <li>Final distribution boards → Final circuits (lighting, power, etc.)</li>
-            </ul>
-            <p>
-              <strong>Typical notation on single-line (element / example notation / meaning):</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Incomer — 800A MCCB — 800 Amp moulded case circuit breaker</li>
-              <li>Cable — 4c 95mm² XLPE/SWA — 4-core 95mm² XLPE insulated, steel wire armoured</li>
-              <li>Outgoing way — 32A Type B MCB — 32 Amp Type B miniature circuit breaker</li>
-              <li>RCD — 100A 30mA RCCB — 100A residual current device, 30mA sensitivity</li>
-            </ul>
-            <p>
-              <strong>Key point:</strong> Single-line diagrams are essential for understanding
-              system architecture and for fault calculations.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...quickCheckQuestions[0]} />
-
-          <SectionRule />
-
-          <ConceptBlock title="Schematic and Wiring Diagrams">
-            <p>
-              Schematic diagrams show how circuits function logically, while wiring diagrams show
-              the actual connections for installation. Both are essential for control systems, motor
-              circuits and complex installations.
-            </p>
-            <p>
-              <strong>Schematic diagram features:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Shows circuit logic and operation</li>
-              <li>Uses standard symbols (IEC 60617)</li>
-              <li>Components arranged for clarity</li>
-              <li>Includes interlocks and controls</li>
-              <li>Essential for commissioning</li>
-            </ul>
-            <p>
-              <strong>Wiring diagram features:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Shows actual wire connections</li>
-              <li>Includes terminal references</li>
-              <li>Wire numbering and colours</li>
-              <li>Cable gland positions</li>
-              <li>Essential for installation</li>
-            </ul>
-            <p>
-              <strong>Common applications (application / schematic shows / wiring shows):</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Motor starter — control logic, interlocks — terminal connections</li>
-              <li>Lighting control — switching arrangement — switch wiring detail</li>
-              <li>Fire alarm interface — cause and effect logic — interface connections</li>
-              <li>BMS interface — monitoring/control points — I/O module wiring</li>
-            </ul>
-            <p>
-              <strong>Best practice:</strong> Cross-reference schematic and wiring diagrams with
-              unique component tags.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...quickCheckQuestions[1]} />
-
-          <SectionRule />
-
-          <ConceptBlock title="Layout Drawings">
-            <p>
-              Layout drawings show the physical location of electrical equipment on floor plans.
-              They are produced on architectural backgrounds and coordinated with other building
-              services and structural elements.
-            </p>
-            <p>
-              <strong>Types of layout drawings:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Lighting layouts:</strong> Luminaire positions, switching zones, emergency
-                lighting
-              </li>
-              <li>
-                <strong>Power layouts:</strong> Socket outlets, FCUs, isolators, equipment
-                connections
-              </li>
-              <li>
-                <strong>Containment layouts:</strong> Cable tray, trunking, conduit routes
-              </li>
-              <li>
-                <strong>Reflected ceiling plans:</strong> Ceiling-mounted equipment
-              </li>
-              <li>
-                <strong>Plant room layouts:</strong> Detailed equipment positioning
-              </li>
-            </ul>
-            <p>
-              <strong>Layout drawing requirements (element / requirement):</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Scale:</strong> 1:50 general, 1:20 or 1:10 plant rooms
-              </li>
-              <li>
-                <strong>Background:</strong> Current architectural xref
-              </li>
-              <li>
-                <strong>Equipment:</strong> Standard symbols with tags
-              </li>
-              <li>
-                <strong>Dimensions:</strong> From gridlines or walls as appropriate
-              </li>
-              <li>
-                <strong>Annotations:</strong> Equipment types, circuit references
-              </li>
-            </ul>
-            <p>
-              <strong>Coordination considerations:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Check luminaire positions against ceiling grid and services</li>
-              <li>Verify socket heights against furniture layouts</li>
-              <li>Coordinate containment routes with structural openings</li>
-              <li>Avoid clashes with HVAC, sprinklers and other services</li>
-            </ul>
-            <p>
-              <strong>Critical:</strong> Always use the latest architectural background and
-              coordinate changes promptly.
-            </p>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <ConceptBlock title="CAD Standards and BS EN 61082">
-            <p>
-              Consistent CAD standards ensure drawings are clear, coordinated and professionally
-              presented. BS EN 61082 provides the overarching standard for electrotechnical
-              documentation, complemented by UK-specific CAD conventions.
-            </p>
-            <p>
-              <strong>BS EN 61082 key requirements:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Document identification and structure</li>
-              <li>Reference designation systems (BS EN 81346)</li>
-              <li>Graphical symbols (IEC 60617)</li>
-              <li>Signal and connection presentation</li>
-              <li>Documentation classification</li>
-            </ul>
-            <p>
-              <strong>CAD layer naming (BS 1192 / AEC UK) — example A-E-Lighting-M-Layout:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>A = Discipline (Architecture)</li>
-              <li>E = Sub-discipline (Electrical)</li>
-              <li>Lighting = Element</li>
-              <li>M = Model/Drawing type</li>
-              <li>Layout = Presentation</li>
-            </ul>
-            <p>
-              <strong>Standard line types:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Continuous — equipment, containment</li>
-              <li>Dashed — hidden items</li>
-              <li>Centre line — centre lines, symmetry</li>
-              <li>Phantom — future work, options</li>
-            </ul>
-            <p>
-              <strong>Text standards:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Title: 5mm (1:50), 3.5mm (1:100)</li>
-              <li>Body: 2.5mm (1:50), 2mm (1:100)</li>
-              <li>Sans serif font (Arial, Simplex)</li>
-              <li>Consistent capitalisation</li>
-            </ul>
-            <p>
-              <strong>Drawing title block information:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Project name and number</li>
-              <li>Drawing title and number</li>
-              <li>Scale and paper size</li>
-              <li>Revision status and history</li>
-              <li>Drawn/checked/approved signatures and dates</li>
-              <li>Status (preliminary, for construction, as-built)</li>
-            </ul>
-            <p>
-              <strong>Quality control:</strong> All drawings should be checked against CAD standards
-              before issue.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...quickCheckQuestions[3]} />
-
-          <SectionRule />
-
-          <ConceptBlock title="Practical guidance">
-            <p>
-              <strong>Drawing set organisation:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Use logical drawing numbering (E-001, E-002...)</li>
-              <li>Group by type: Schematic, Layout, Details</li>
-              <li>Include drawing register and index</li>
-              <li>Maintain consistent title block across set</li>
-            </ul>
-            <p>
-              <strong>Revision management:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Use revision clouds to highlight changes</li>
-              <li>Update revision table with description</li>
-              <li>Issue superseded drawings are archived</li>
-              <li>Track revisions in document control system</li>
-            </ul>
-            <p>
-              <strong>Key standards:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>BS EN 61082</strong> — documentation
-              </li>
-              <li>
-                <strong>IEC 60617</strong> — symbols
-              </li>
-              <li>
-                <strong>BS EN 81346</strong> — designations
-              </li>
-              <li>
-                <strong>BS 1192</strong> — CAD/BIM conventions
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <CommonMistake
-            title="Common mistakes to avoid"
-            whatHappens={
-              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
-                <li>
-                  <strong>Outdated backgrounds</strong> — using old architectural xrefs
-                </li>
-                <li>
-                  <strong>Missing cross-references</strong> — not linking between drawings
-                </li>
-                <li>
-                  <strong>Inconsistent symbols</strong> — using non-standard notation
-                </li>
-                <li>
-                  <strong>Poor layer discipline</strong> — mixing information on layers
-                </li>
-              </ul>
-            }
-            doInstead="Always reload the current architectural xref before issue, set up cross-references between single-line, schematics and layouts (and matching tags on schedules), use the IEC 60617 symbol library, and enforce BS 1192 / AEC layer naming with a CAD standards check."
-          />
-
-          <SectionRule />
-
-          <Scenario
-            title="Stage 4 issue — drawing pack for a 4-storey commercial fit-out"
-            situation={
-              <>
-                You’re responsible for the M&amp;E electrical drawing pack at RIBA Stage 4 for a
-                4-storey commercial fit-out. Architect issued revised plans last week. QS,
-                contractor and building control all need a coordinated set on Friday. Eleven
-                drawings: one single-line, four floor layouts, three schematic schedules, three
-                section/elevation containment routes.
-              </>
-            }
-            whatToDo={
-              <>
-                Reload the architectural xref before opening any drawing. Run a IEC 60617
-                symbol audit (most CAD systems offer a "non-standard symbol" report). Verify
-                every layer matches BS 1192 / AEC standards. On the single-line: tag every board
-                with its load schedule reference, every cable with size + length + protective
-                device rating, fault level at each board (Reg 510.3 / Chapter 43 evidence). On
-                the floor layouts: every luminaire, socket and switch tagged to the schedule.
-                On the schematic schedules: cross-reference single-line tags. Issue a coordination
-                check report (RFI clashes, xref staleness, layer breaches resolved). Add a "Notes
-                to Reader" panel citing BS EN 61082-1, IEC 60617, BS 1192/AEC and Reg 514.9.2
-                — explicit standards compliance baked into the title block.
-              </>
-            }
-            whyItMatters={
-              <>
-                A drawing pack with stale xrefs, mismatched tags and bespoke symbols generates
-                hundreds of RFIs, undermines tender comparability and fails Reg 514.9.2 for the
-                final O&amp;M. Drawings are an engineering deliverable governed by standards —
-                not a graphic.
-              </>
-            }
-          />
-
-          <SectionRule />
-
-          <KeyTakeaways
-            points={[
-              'BS EN 61082-1 (document preparation) and IEC 60617 (symbols) are the baseline standards — both now reinforced by Reg 514.9.2.',
-              'Single-line: incomer, switchgear, busbars, cables (size + length), protective devices (rating + setting), fault level at every board.',
-              'Schematics: controls, interlocks, ATS sequence-of-operation, BMS interfaces — anything time-or-state dependent.',
-              'Layout drawings xref the architectural model — reload before issue, every time.',
-              'BS 1192 / AEC layer naming is the CAD discipline floor; enforce with a standards check at issue.',
-              'Cross-reference tags between single-line, schematics, layouts and schedules — broken cross-refs are RFI generators.',
-              'Revision management: reason, date, author, drawing references — BS 1192/ISO 19650 is the framework.',
-              'Reg 514.9.2 (A4:2026) makes diagrams, charts and notices an explicit BS 7671 deliverable — design accordingly.',
-            ]}
-          />
-
-          <SectionRule />
-
-          <FAQ items={faqs} />
-
-          <SectionRule />
-
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-
-          <div className="grid grid-cols-2 gap-3 pt-2">
-            <button
-              onClick={() => navigate('/study-centre/apprentice/h-n-c-module4-section6-1')}
-              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
-                <ChevronLeft className="h-3 w-3" /> Previous subsection
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-white truncate">
-                NBS specifications
-              </div>
-            </button>
-            <button
-              onClick={() => navigate('/study-centre/apprentice/h-n-c-module4-section6-3')}
-              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
-                Next subsection <ChevronRight className="h-3 w-3" />
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-black truncate">
-                Schedules and data sheets
-              </div>
-            </button>
-          </div>
-        </PageFrame>
-      </div>
-    </div>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module4-section6-3')}
+            className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+          >
+            <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+              Next subsection <ChevronRight className="h-3 w-3" />
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-black truncate">
+              Schedules and data sheets
+            </div>
+          </button>
+        </div>
+      </HubBody>
+    </HubPage>
   );
 };
 

@@ -39,9 +39,13 @@ serve(async (req: Request) => {
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
     );
 
+    // Which provider? Default google (original behaviour).
+    const body = await req.json().catch(() => ({}) as Record<string, unknown>);
+    const provider = body?.provider === 'outlook' ? 'outlook' : 'google';
+
     // Delete tokens
     const { error: deleteError } = await serviceClient
-      .from('google_calendar_tokens')
+      .from(provider === 'outlook' ? 'outlook_calendar_tokens' : 'google_calendar_tokens')
       .delete()
       .eq('user_id', user.id);
 
@@ -50,18 +54,33 @@ serve(async (req: Request) => {
       throw new Error('Failed to disconnect');
     }
 
-    // Reset all events to local_only
-    await serviceClient
-      .from('calendar_events')
-      .update({
-        sync_status: 'local_only',
-        google_event_id: null,
-        google_calendar_id: null,
-        google_etag: null,
-        last_synced_at: null,
-      })
-      .eq('user_id', user.id)
-      .neq('sync_status', 'local_only');
+    // Clear that provider's linkage. Only downgrade sync_status when the
+    // OTHER provider isn't holding the event.
+    if (provider === 'outlook') {
+      await serviceClient
+        .from('calendar_events')
+        .update({ outlook_event_id: null, outlook_change_key: null })
+        .eq('user_id', user.id)
+        .not('outlook_event_id', 'is', null);
+      await serviceClient
+        .from('calendar_events')
+        .update({ sync_status: 'local_only', last_synced_at: null })
+        .eq('user_id', user.id)
+        .is('google_event_id', null)
+        .neq('sync_status', 'local_only');
+    } else {
+      await serviceClient
+        .from('calendar_events')
+        .update({ google_event_id: null, google_calendar_id: null, google_etag: null })
+        .eq('user_id', user.id)
+        .not('google_event_id', 'is', null);
+      await serviceClient
+        .from('calendar_events')
+        .update({ sync_status: 'local_only', last_synced_at: null })
+        .eq('user_id', user.id)
+        .is('outlook_event_id', null)
+        .neq('sync_status', 'local_only');
+    }
 
     console.log(`✅ Calendar disconnected for user ${user.id}`);
 

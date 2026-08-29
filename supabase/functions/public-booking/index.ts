@@ -80,15 +80,81 @@ serve(async (req) => {
   }
 });
 
-/** Format hour:minute from a Date in UTC (our dates are stored as UTC-equivalent UK times) */
+/**
+ * Minutes Europe/London is ahead of UTC at a given instant. 0 in winter,
+ * 60 during BST.
+ */
+function ukOffsetMinutes(utcMs: number): number {
+  const parts = Object.fromEntries(
+    new Intl.DateTimeFormat('en-GB', {
+      timeZone: 'Europe/London',
+      hour12: false,
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+    })
+      .formatToParts(new Date(utcMs))
+      .filter((p) => p.type !== 'literal')
+      .map((p) => [p.type, p.value])
+  );
+  const asIfUtc = Date.UTC(
+    Number(parts.year),
+    Number(parts.month) - 1,
+    Number(parts.day),
+    Number(parts.hour === '24' ? '0' : parts.hour),
+    Number(parts.minute),
+    Number(parts.second)
+  );
+  return (asIfUtc - utcMs) / 60000;
+}
+
+/**
+ * The true instant of a UK wall-clock time — `('2026-08-31', '09:00')` is
+ * 08:00Z in summer, 09:00Z in winter.
+ *
+ * This is the seam the whole function used to get wrong: working hours and
+ * booked times were built as `T09:00:00Z`, UK wall clock STORED AS UTC, while
+ * the internal app writes true instants and renders them in local time. The
+ * two conventions agree all winter and drift an hour apart every BST — a
+ * portal "09:00" showed as 10:00 in the diary, the customer's .ics said
+ * 10:00, and the availability grid compared real events against a grid that
+ * was an hour out, leaving the electrician's genuinely busy hour bookable.
+ */
+function ukWallToInstant(dateStr: string, hhmm: string): number {
+  const naive = Date.parse(`${dateStr}T${hhmm}:00Z`);
+  return naive - ukOffsetMinutes(naive) * 60000;
+}
+
+/** UK wall-clock hour:minute of a true instant — the label a customer reads. */
 function formatHHMM(date: Date): string {
-  return `${String(date.getUTCHours()).padStart(2, '0')}:${String(date.getUTCMinutes()).padStart(2, '0')}`;
+  return new Intl.DateTimeFormat('en-GB', {
+    timeZone: 'Europe/London',
+    hour12: false,
+    hour: '2-digit',
+    minute: '2-digit',
+  })
+    .format(date)
+    .replace(/^24/, '00');
 }
 
 async function handleGetSlots(req: Request, supabase: ReturnType<typeof createClient>) {
   const url = new URL(req.url);
   const electricianId = url.searchParams.get('electrician_id');
-  const days = Math.min(parseInt(url.searchParams.get('days') || '14', 10), 30);
+  const days = Math.min(parseInt(url.searchParams.get('days') || '14', 10), 56);
+
+  /*
+   * How long a booking the visitor wants. A fixed vocabulary, never raw
+   * minutes — the client is a public page and must not name its own duration.
+   *   slot     — the electrician's configured slot length (default 60)
+   *   half_day — four hours
+   *   full_day — the whole working window for that day
+   */
+  const durationParam = url.searchParams.get('duration');
+  const durationKind: 'slot' | 'half_day' | 'full_day' =
+    durationParam === 'half_day' || durationParam === 'full_day' ? durationParam : 'slot';
 
   if (!electricianId) {
     return new Response(JSON.stringify({ error: 'electrician_id is required' }), {
@@ -111,7 +177,7 @@ async function handleGetSlots(req: Request, supabase: ReturnType<typeof createCl
   const { data: profile, error: profileError } = await supabase
     .from('profiles')
     .select(
-      'full_name, scheduling_working_hours, scheduling_buffer_minutes, scheduling_max_bookings_per_day, scheduling_min_notice_hours, scheduling_blackout_dates, scheduling_slot_minutes'
+      'full_name, scheduling_working_hours, scheduling_buffer_minutes, scheduling_max_bookings_per_day, scheduling_min_notice_hours, scheduling_blackout_dates, scheduling_slot_minutes, scheduling_jobs_at_once'
     )
     .eq('id', electricianId)
     .single();
@@ -151,12 +217,24 @@ async function handleGetSlots(req: Request, supabase: ReturnType<typeof createCl
       ? Number(profile.scheduling_slot_minutes)
       : SLOT_DURATION_MINUTES;
 
+  /*
+   * How many jobs can run at once — the capacity model the internal diary has
+   * used since the day-sheet rebuild, now honoured publicly. A slot is busy
+   * only when the concurrent count reaches capacity; for a firm running three
+   * vans, "any overlap blocks" was throwing away two thirds of their bookable
+   * time. Clamped exactly as the client clamps it.
+   */
+  const capacity: number = Math.min(
+    10,
+    Math.max(1, Number(profile.scheduling_jobs_at_once) || 1)
+  );
+
   // company_profiles is keyed by user_id, not id (long-standing bug
   // returning null here — preserved profile lookup above is what
   // actually drives the response).
   const { data: companyProfile } = await supabase
     .from('company_profiles')
-    .select('company_name')
+    .select('company_name, logo_url, logo_data_url, primary_color')
     .eq('user_id', electricianId)
     .maybeSingle();
 
@@ -185,6 +263,36 @@ async function handleGetSlots(req: Request, supabase: ReturnType<typeof createCl
     .gte('end_at', dateFrom.toISOString())
     .order('start_at', { ascending: true });
 
+  /*
+   * Booked site visits are diary time too.
+   *
+   * The internal calendar has merged them in since the diary rebuild
+   * (useSiteVisitsForCalendar), but this walker only ever saw
+   * `calendar_events` — so a customer could book straight over a visit the
+   * electrician was already committed to. Same shape as the client: an hour
+   * long (site_visits has no duration column), and rows spawned FROM a
+   * booking are skipped because their calendar event is already in the set.
+   */
+  const { data: visitRows } = await supabase
+    .from('site_visits')
+    .select('scheduled_at')
+    .eq('user_id', electricianId)
+    .is('calendar_event_id', null)
+    .not('scheduled_at', 'is', null)
+    .gte('scheduled_at', new Date(dateFrom.getTime() - 24 * 3600 * 1000).toISOString())
+    .lte('scheduled_at', dateTo.toISOString());
+
+  const visitEvents = (visitRows || []).map((v) => {
+    const start = new Date(v.scheduled_at as string);
+    return {
+      start_at: start.toISOString(),
+      end_at: new Date(start.getTime() + 60 * 60 * 1000).toISOString(),
+      all_day: false,
+    };
+  });
+
+  const busyEvents = [...(events || []), ...visitEvents];
+
   // Find available slots using the electrician's working hours.
   // Skips: days with no window set (closed days), past times, days
   // already at their daily booking cap, and any blackout windows.
@@ -204,42 +312,8 @@ async function handleGetSlots(req: Request, supabase: ReturnType<typeof createCl
     return anchorMs + Math.ceil((ms - anchorMs) / stepMs) * stepMs;
   };
 
-  /**
-   * Minutes Europe/London is ahead of UTC at a given instant. 0 in winter,
-   * 60 during BST.
-   */
-  const ukOffsetMinutes = (utcMs: number): number => {
-    const parts = Object.fromEntries(
-      new Intl.DateTimeFormat('en-GB', {
-        timeZone: 'Europe/London',
-        hour12: false,
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
-      })
-        .formatToParts(new Date(utcMs))
-        .map((part) => [part.type, part.value])
-    ) as Record<string, string>;
-
-    const asIfUtc = Date.UTC(
-      Number(parts.year),
-      Number(parts.month) - 1,
-      Number(parts.day),
-      Number(parts.hour === '24' ? '0' : parts.hour),
-      Number(parts.minute),
-      Number(parts.second)
-    );
-    return (asIfUtc - utcMs) / 60000;
-  };
-
   /** The instant UK-local midnight begins on `dateStr`. */
-  const ukDayStartMs = (dateStr: string): number => {
-    const naive = Date.parse(`${dateStr}T00:00:00Z`);
-    return naive - ukOffsetMinutes(naive) * 60000;
-  };
+  const ukDayStartMs = (dateStr: string): number => ukWallToInstant(dateStr, '00:00');
 
   /**
    * The events occupying a given UK calendar date.
@@ -262,16 +336,12 @@ async function handleGetSlots(req: Request, supabase: ReturnType<typeof createCl
         .toISOString()
         .split('T')[0]
     );
-    return (events || []).filter((e) => {
+    return busyEvents.filter((e) => {
       const start = new Date(e.start_at as string).getTime();
       const end = new Date(e.end_at as string).getTime();
       return start < dayEnd && end > dayStart;
     });
   };
-
-  /** A full-day job takes the day out entirely — no slots, not bookable. */
-  const hasAllDayEvent = (dateStr: string): boolean =>
-    eventsOnDate(dateStr).some((e) => e.all_day === true);
 
   const isBlackedOut = (dateStr: string): boolean => {
     if (!Array.isArray(blackoutDates) || blackoutDates.length === 0) return false;
@@ -291,12 +361,11 @@ async function handleGetSlots(req: Request, supabase: ReturnType<typeof createCl
 
     const dateStr = d.toISOString().split('T')[0];
     if (isBlackedOut(dateStr)) continue;
-    // A full-day job blocks the whole working window, not a gap inside it.
-    if (hasAllDayEvent(dateStr)) continue;
 
-    // Working window for the day
-    const dayStartMs = new Date(`${dateStr}T${window.start}:00Z`).getTime();
-    const dayEndMs = new Date(`${dateStr}T${window.end}:00Z`).getTime();
+    // Working window for the day — true instants, so real diary events land
+    // on the grid positions a customer sees, in BST and out of it.
+    const dayStartMs = ukWallToInstant(dateStr, window.start);
+    const dayEndMs = ukWallToInstant(dateStr, window.end);
 
     // Apply min-notice for today (or future days within notice window)
     const earliestBookable = now.getTime() + minNoticeMs;
@@ -305,57 +374,67 @@ async function handleGetSlots(req: Request, supabase: ReturnType<typeof createCl
     if (effectiveStart >= dayEndMs) continue;
 
     /*
-     * Align the cursor to the slot grid, not to the clock hour.
+     * The day's occupations, ready for counting.
      *
-     * This rounded up to the next whole hour. That was invisible while every
-     * slot was 60 minutes and every working day opened on the hour, but it
-     * silently breaks any other length: with 30-minute slots the cursor would
-     * still land only on the hour, so choosing 30 would have produced exactly
-     * the same slots as 60 and the setting would have looked dead.
-     *
-     * The grid is anchored to the day's opening time, so a 90-minute day from
-     * 08:00 offers 08:00, 09:30, 11:00 — not 08:00, 09:00, 10:00.
+     * Timed events are padded by the travel buffer on either side. An all-day
+     * event occupies one LANE for the whole window — it used to strike the
+     * entire day from the list, which is only correct at capacity one. With
+     * three vans, one all-day job leaves two lanes bookable; at capacity one
+     * the count test below reproduces the old behaviour exactly.
      */
-    let cursor = alignUp(effectiveStart, dayStartMs, durationMs);
-
-    // Get events for this specific day. Pad each event by the
-    // configured buffer on either side so the sparky has travel time
-    // between jobs.
-    const dayEvents = eventsOnDate(dateStr)
-      .map((e) => ({
-        start: new Date(e.start_at as string).getTime() - bufferMs,
-        end: new Date(e.end_at as string).getTime() + bufferMs,
-      }))
+    const occupations = eventsOnDate(dateStr)
+      .map((e) =>
+        e.all_day === true
+          ? { start: dayStartMs, end: dayEndMs }
+          : {
+              start: new Date(e.start_at as string).getTime() - bufferMs,
+              end: new Date(e.end_at as string).getTime() + bufferMs,
+            }
+      )
       .sort((a, b) => a.start - b.start);
 
     // Daily booking cap — if the day already has the max number of
     // calendar events, surface zero slots for it.
     if (eventsOnDate(dateStr).length >= maxBookingsPerDay) continue;
 
-    const daySlots: Array<{ date: string; start: string; end: string }> = [];
+    /*
+     * The length being offered on THIS day. `full_day` is the whole working
+     * window, so it varies with the day's hours; the others are fixed.
+     */
+    const dayDurationMs =
+      durationKind === 'full_day'
+        ? dayEndMs - dayStartMs
+        : durationKind === 'half_day'
+          ? 4 * 60 * 60 * 1000
+          : durationMs;
 
-    // Walk through events and fill gaps
-    for (const event of dayEvents) {
-      while (cursor + durationMs <= event.start && cursor + durationMs <= dayEndMs) {
+    // A full day is only honest if the notice period hasn't already eaten
+    // into the morning.
+    if (durationKind === 'full_day' && effectiveStart > dayStartMs) continue;
+
+    /*
+     * Grid scan, not gap walk. The old walker filled gaps between events,
+     * which is inherently one-lane logic — the moment two jobs may run at
+     * once, "the gap between events" stops being the question. Instead, every
+     * grid-aligned start is tested: how many occupations overlap this span?
+     * Fewer than capacity → bookable.
+     */
+    const daySlots: Array<{ date: string; start: string; end: string }> = [];
+    let cursor = alignUp(effectiveStart, dayStartMs, dayDurationMs);
+    while (cursor + dayDurationMs <= dayEndMs) {
+      const slotEnd = cursor + dayDurationMs;
+      let concurrent = 0;
+      for (const occ of occupations) {
+        if (occ.start < slotEnd && occ.end > cursor) concurrent++;
+      }
+      if (concurrent < capacity) {
         daySlots.push({
           date: dateStr,
           start: formatHHMM(new Date(cursor)),
-          end: formatHHMM(new Date(cursor + durationMs)),
+          end: formatHHMM(new Date(slotEnd)),
         });
-        cursor += durationMs;
       }
-      // Back onto the slot grid after the event, for the same reason.
-      cursor = alignUp(Math.max(cursor, event.end), dayStartMs, durationMs);
-    }
-
-    // Remaining slots after last event
-    while (cursor + durationMs <= dayEndMs) {
-      daySlots.push({
-        date: dateStr,
-        start: formatHHMM(new Date(cursor)),
-        end: formatHHMM(new Date(cursor + durationMs)),
-      });
-      cursor += durationMs;
+      cursor += dayDurationMs;
     }
 
     slots.push(...daySlots);
@@ -380,7 +459,8 @@ async function handleGetSlots(req: Request, supabase: ReturnType<typeof createCl
     const dateStr = d.toISOString().split('T')[0];
     if (!workingHours[DAY_KEYS[d.getUTCDay()]]) continue;
     if (isBlackedOut(dateStr)) continue;
-    if (hasAllDayEvent(dateStr)) continue;
+    // All-day jobs close the day only once they use every lane.
+    if (eventsOnDate(dateStr).filter((e) => e.all_day === true).length >= capacity) continue;
     /*
      * Deliberately NOT excluding days that are merely at the daily slot cap.
      *
@@ -391,7 +471,7 @@ async function handleGetSlots(req: Request, supabase: ReturnType<typeof createCl
      * table, and that is what was reported.
      */
     // Respect the same notice period the slot walker applies.
-    if (new Date(`${dateStr}T23:59:59Z`).getTime() < now.getTime() + minNoticeMs) continue;
+    if (ukWallToInstant(dateStr, '23:59') < now.getTime() + minNoticeMs) continue;
     openDates.push(dateStr);
   }
 
@@ -404,6 +484,17 @@ async function handleGetSlots(req: Request, supabase: ReturnType<typeof createCl
       slots,
       open_dates: openDates,
       slot_minutes: slotMinutes,
+      duration: durationKind,
+      capacity,
+      // The page wears the electrician's brand, not ours — same rule as every
+      // client-facing email.
+      branding: {
+        logo_url:
+          (companyProfile?.logo_url as string) ||
+          (companyProfile?.logo_data_url as string) ||
+          null,
+        primary_color: (companyProfile?.primary_color as string) || null,
+      },
     }),
     { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
   );
@@ -618,6 +709,12 @@ async function handleBookSlot(req: Request, supabase: ReturnType<typeof createCl
     // through so we can link the calendar event back to the quote and
     // mark booked_slot_start/end on the quote row.
     quote_id,
+    // Optional loop-closers from reminder emails: a renewal reminder carries
+    // its ledger row id (?rid=…), a maintenance visit reminder its visit id
+    // (?visit=…). Booking from the email then marks the pipeline entry
+    // BOOKED / links the diary event, instead of leaving it to be chased.
+    renewal_id,
+    visit_id,
   } = body;
 
   if (!electrician_id || !date || !start_time || !client_name || !client_phone) {
@@ -656,14 +753,47 @@ async function handleBookSlot(req: Request, supabase: ReturnType<typeof createCl
    */
   const { data: slotProfile } = await supabase
     .from('profiles')
-    .select('scheduling_slot_minutes, scheduling_auto_confirm, full_name')
+    .select(
+      'scheduling_slot_minutes, scheduling_auto_confirm, full_name, scheduling_working_hours, scheduling_jobs_at_once'
+    )
     .eq('id', electrician_id)
     .maybeSingle();
 
-  const bookedMinutes =
+  const slotLen =
     Number(slotProfile?.scheduling_slot_minutes) > 0
-      ? Number(slotProfile.scheduling_slot_minutes)
+      ? Number(slotProfile?.scheduling_slot_minutes)
       : SLOT_DURATION_MINUTES;
+
+  /*
+   * Duration re-derived server-side from the same fixed vocabulary the GET
+   * offers — the client names a KIND, never a number of minutes. `full_day`
+   * is that weekday's working window, so it needs the hours the slots were
+   * generated from.
+   */
+  const durationKind: 'slot' | 'half_day' | 'full_day' =
+    body?.duration === 'half_day' || body?.duration === 'full_day' ? body.duration : 'slot';
+
+  const postHours: WorkingHours = {
+    ...DEFAULT_WORKING_HOURS,
+    ...((slotProfile?.scheduling_working_hours as Partial<WorkingHours>) || {}),
+  };
+  const capacity = Math.min(10, Math.max(1, Number(slotProfile?.scheduling_jobs_at_once) || 1));
+
+  let bookedMinutes = slotLen;
+  if (durationKind === 'half_day') bookedMinutes = 240;
+  if (durationKind === 'full_day') {
+    const weekday = DAY_KEYS[new Date(`${date}T12:00:00Z`).getUTCDay()];
+    const win = postHours[weekday];
+    if (!win) {
+      return new Response(JSON.stringify({ error: 'That day is outside working hours' }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+    const winStart = ukWallToInstant(date, win.start);
+    const winEnd = ukWallToInstant(date, win.end);
+    bookedMinutes = Math.max(60, Math.round((winEnd - winStart) / 60000));
+  }
 
   /*
    * Whether to confirm to the customer, read from the same row.
@@ -675,8 +805,13 @@ async function handleBookSlot(req: Request, supabase: ReturnType<typeof createCl
   const autoConfirm = slotProfile?.scheduling_auto_confirm === true;
   const profileRow = slotProfile;
 
-  // Don't allow booking in the past
-  const startAt = new Date(`${date}T${start_time}:00Z`);
+  /*
+   * The customer's wall-clock choice as a TRUE instant — the same convention
+   * every internal writer uses, which is what makes the diary, the
+   * confirmation email and the .ics all read back "09:00" instead of a
+   * summer hour's drift.
+   */
+  const startAt = new Date(ukWallToInstant(date, start_time));
   const endAt = new Date(startAt.getTime() + bookedMinutes * 60 * 1000);
 
   if (startAt.getTime() < Date.now()) {
@@ -686,16 +821,31 @@ async function handleBookSlot(req: Request, supabase: ReturnType<typeof createCl
     });
   }
 
-  // Validate slot is still available (race condition check)
-  const { data: conflicts } = await supabase
+  /*
+   * Still-available check, by the same rules the slots were offered under:
+   * capacity-aware, and site visits count as diary time. The old check
+   * refused on ANY overlapping event — which double-rejects for a multi-van
+   * firm — and never saw site visits at all, so the one clash it should have
+   * caught could sail through.
+   */
+  const { data: overlapEvents } = await supabase
     .from('calendar_events')
     .select('id')
     .eq('user_id', electrician_id)
     .lt('start_at', endAt.toISOString())
-    .gt('end_at', startAt.toISOString())
-    .limit(1);
+    .gt('end_at', startAt.toISOString());
 
-  if (conflicts && conflicts.length > 0) {
+  const { data: overlapVisits } = await supabase
+    .from('site_visits')
+    .select('scheduled_at')
+    .eq('user_id', electrician_id)
+    .is('calendar_event_id', null)
+    .not('scheduled_at', 'is', null)
+    .gte('scheduled_at', new Date(startAt.getTime() - 60 * 60 * 1000).toISOString())
+    .lt('scheduled_at', endAt.toISOString());
+
+  const concurrent = (overlapEvents?.length ?? 0) + (overlapVisits?.length ?? 0);
+  if (concurrent >= capacity) {
     return new Response(
       JSON.stringify({ error: 'This time slot is no longer available. Please choose another.' }),
       { status: 409, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
@@ -739,6 +889,16 @@ async function handleBookSlot(req: Request, supabase: ReturnType<typeof createCl
     customerId = newCustomer.id;
   }
 
+  // A self-booked customer must land in the electrician's Google Calendar
+  // too — otherwise the one diary they actually look at is the one that
+  // doesn't know they're booked. pending_push + an immediate sync below.
+  const { data: gcalToken } = await supabase
+    .from('google_calendar_tokens')
+    .select('sync_enabled')
+    .eq('user_id', electrician_id)
+    .maybeSingle();
+  const bookingSyncStatus = gcalToken?.sync_enabled ? 'pending_push' : 'local_only';
+
   // Create calendar event (matches MCP calendar.ts createCalendarEvent fields)
   const { data: event, error: eventError } = await supabase
     .from('calendar_events')
@@ -756,13 +916,26 @@ async function handleBookSlot(req: Request, supabase: ReturnType<typeof createCl
       notes: job_description
         ? `Booked via portal\n\n${job_description}`
         : 'Booked via booking portal',
-      sync_status: 'local_only',
+      sync_status: bookingSyncStatus,
       reminder_minutes: 30,
     })
     .select('id')
     .single();
 
   if (eventError) throw new Error(`Failed to create booking: ${eventError.message}`);
+
+  // Push the booking into Google straight away — fire-and-forget, the
+  // 15-minute sweep covers any miss.
+  if (bookingSyncStatus === 'pending_push') {
+    fetch(`${Deno.env.get('SUPABASE_URL')}/functions/v1/sync-google-calendar`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ user_id: electrician_id }),
+    }).catch((syncError) => console.warn('Post-booking sync kick failed:', syncError));
+  }
 
   // ELE-955 — if this booking is tied to an accepted quote, persist the
   // link both ways so the quote detail view shows "Booked for ..." and
@@ -785,6 +958,39 @@ async function handleBookSlot(req: Request, supabase: ReturnType<typeof createCl
       quoteForPush = linkedQuote || null;
     } catch (linkErr) {
       console.warn('quote ↔ booking link failed (non-fatal):', linkErr);
+    }
+  }
+
+  /*
+   * Close the loop the reminder opened. Non-fatal — the booking itself is
+   * already saved — and guarded on the electrician id so a tampered id in
+   * the email link can't touch anyone else's pipeline.
+   */
+  if (renewal_id) {
+    try {
+      await supabase
+        .from('certificate_expiry_reminders')
+        .update({
+          reminder_status: 'booked',
+          booked_for_date: startAt.toISOString(),
+          updated_at: new Date().toISOString(),
+        })
+        .eq('id', renewal_id)
+        .eq('user_id', electrician_id)
+        .not('reminder_status', 'in', '("completed","cancelled")');
+    } catch (loopErr) {
+      console.warn('renewal loop-close failed (non-fatal):', loopErr);
+    }
+  }
+  if (visit_id) {
+    try {
+      await supabase
+        .from('maintenance_contract_visits')
+        .update({ booked_event_id: event.id, booked_at: new Date().toISOString() })
+        .eq('id', visit_id)
+        .eq('user_id', electrician_id);
+    } catch (loopErr) {
+      console.warn('visit loop-close failed (non-fatal):', loopErr);
     }
   }
 
@@ -836,7 +1042,7 @@ async function handleBookSlot(req: Request, supabase: ReturnType<typeof createCl
       type: 'booking_received',
       title: `New Booking: ${client_name}`,
       message: `${client_name} booked ${formattedDate} at ${start_time}${job_description ? ` — ${job_description}` : ''}`,
-      link: '/electrician?tab=calendar',
+      link: '/electrician/business/calendar',
       metadata: {
         customer_id: customerId,
         event_id: event.id,
@@ -996,7 +1202,7 @@ async function handleBookSlot(req: Request, supabase: ReturnType<typeof createCl
         body: `${client_name} · ${formattedDate} at ${start_time}${jobLine}`,
         type: 'default',
         data: {
-          deep_link: '/electrician?tab=calendar',
+          deep_link: '/electrician/business/calendar',
           category: 'booking_received',
           event_id: event.id,
           quote_id: quote_id || null,

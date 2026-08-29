@@ -1,5 +1,6 @@
 import { useState, useCallback, useEffect, useRef } from 'react';
-import { PenTool, Lock, Check, Loader2, FileText, Send, Download } from 'lucide-react';
+import { PenTool, Lock, Check, Loader2, FileText, Send, Download, Camera } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { SignatureCapture } from '@/components/ui/signature-capture';
@@ -10,6 +11,7 @@ import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 import { downloadScopePDF } from '@/utils/scope-pdf';
 import { supabase } from '@/integrations/supabase/client';
 import type { SiteVisit } from '@/types/siteVisit';
+import { createSurveyFromSiteVisit } from '@/utils/siteVisitToSurvey';
 import { inputCn } from '@/components/forms/fieldStyles';
 
 interface SiteVisitSignOffStepProps {
@@ -23,6 +25,7 @@ export const SiteVisitSignOffStep = ({
   assumptions,
   onSendToQuote,
 }: SiteVisitSignOffStepProps) => {
+  const navigate = useNavigate();
   const { toast } = useToast();
   const { updateStatus } = useSiteVisitStorage();
   const { companyProfile } = useCompanyProfile();
@@ -409,6 +412,29 @@ export const SiteVisitSignOffStep = ({
             <p className="text-center text-[12px] text-white">
               Pre-fills materials from your scope into the quote builder
             </p>
+
+            {/*
+              ELE-1634. Only offered when the visit actually has photographs —
+              a survey with nothing to look at is an empty document, and a
+              button that leads to one is worse than no button.
+            */}
+            {(visit.photos?.length ?? 0) > 0 && (
+              <>
+                <Button
+                  variant="outline"
+                  onClick={() => navigate(createSurveyFromSiteVisit(visit))}
+                  className="mt-2 h-12 w-full touch-manipulation rounded-xl border-white/[0.12] bg-white/[0.04] text-[14px] font-semibold text-white hover:bg-white/[0.08]"
+                >
+                  <Camera className="mr-2 h-5 w-5" />
+                  Turn this into a pre-purchase survey
+                </Button>
+                <p className="text-center text-[12px] text-white">
+                  Brings the client and your {visit.photos?.length} photo
+                  {visit.photos?.length === 1 ? '' : 's'} across, and writes up each one
+                  for you to check
+                </p>
+              </>
+            )}
           </div>
         </>
       )}

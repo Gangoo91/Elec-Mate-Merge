@@ -1,8 +1,8 @@
-import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { useNavigate } from 'react-router-dom';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
-import { PageFrame, PageHero } from '@/components/college/primitives';
 import {
   TLDR,
   ConceptBlock,
@@ -16,7 +16,11 @@ import {
   SectionRule,
   Pullquote,
 } from '@/components/study-centre/learning';
-import { KwpSizingTree, InverterArchitectures, Mis3002DesignPack } from '@/components/study-centre/diagrams/renewableM3';
+import {
+  KwpSizingTree,
+  InverterArchitectures,
+  Mis3002DesignPack,
+} from '@/components/study-centre/diagrams/renewableM3';
 import { MpptEnvelope } from '@/components/study-centre/diagrams/renewablePvSiting';
 import useSEO from '@/hooks/useSEO';
 
@@ -56,7 +60,7 @@ const inlineChecks = [
     options: [
       'Just check string V_oc against the inverter at one temperature',
       'String V_oc cold vs inverter absolute max; V_mp hot vs MPPT minimum; V_oc cold vs MPPT maximum',
-      'Set the string size to the customer\'s preferred module count',
+      "Set the string size to the customer's preferred module count",
       'Check only the inverter AC output voltage, not the DC string',
     ],
     correctIndex: 1,
@@ -89,7 +93,7 @@ const inlineChecks = [
     ],
     correctIndex: 1,
     explanation:
-      'Reg 712.431.101: protective devices are required where the condition 1.35 × I_mod_max_ocer < (Ns − 1) × I_sc_max is met (above 2 parallel strings). When LHS < RHS (the parallel reverse-current capacity exceeds the module\'s rated reverse capability), protection is needed. Reg explicitly states one or two parallel strings never need overcurrent protection. At 3+ parallel strings the condition typically becomes met → fuses or DC-MCBs required per Reg 712.432.103 (gPV per BS EN 60269-6, BS EN 60947-3 fuse-combination, or DC-rated MCBs per BS EN 60947-2 / 60898-2 / IEC 60898-3).',
+      "Reg 712.431.101: protective devices are required where the condition 1.35 × I_mod_max_ocer < (Ns − 1) × I_sc_max is met (above 2 parallel strings). When LHS < RHS (the parallel reverse-current capacity exceeds the module's rated reverse capability), protection is needed. Reg explicitly states one or two parallel strings never need overcurrent protection. At 3+ parallel strings the condition typically becomes met → fuses or DC-MCBs required per Reg 712.432.103 (gPV per BS EN 60269-6, BS EN 60947-3 fuse-combination, or DC-rated MCBs per BS EN 60947-2 / 60898-2 / IEC 60898-3).",
   },
   {
     id: 'm3s2-inverter-ratio',
@@ -112,7 +116,7 @@ const inlineChecks = [
     options: [
       'Just a priced quote for the customer to sign',
       'Site survey, yield modelling, single-line schematic, component schedule, MPPT and cable sizing, customer pack and MCS cert',
-      'Only the customer\'s signature on a handover form',
+      "Only the customer's signature on a handover form",
       'No design pack is required for an MCS-funded install',
     ],
     correctIndex: 1,
@@ -125,7 +129,7 @@ const quizQuestions = [
   {
     id: 1,
     question:
-      'A customer wants 6 kWp on a south-facing roof. Modern 400 W modules are available. How many modules and what\'s a typical inverter MPPT string configuration?',
+      "A customer wants 6 kWp on a south-facing roof. Modern 400 W modules are available. How many modules and what's a typical inverter MPPT string configuration?",
     options: [
       '15 modules (6.0 kWp) — one string on a 5 kW single-MPPT inverter, or two on dual-MPPT',
       '6 modules in a single string, giving only 2.4 kWp on the roof',
@@ -162,7 +166,7 @@ const quizQuestions = [
     ],
     correctAnswer: 3,
     explanation:
-      'V_mp falls at hot temperature; hot-temperature V_mp is the critical constraint against the inverter MPPT minimum. V_mp at 70°C = 34.0 × (1 − 0.004 × 45) = 27.9 V per module. Min modules = 200 / 27.9 = 7.2 → 8 modules minimum. Below 8, the inverter can\'t track the MPP, yield drops.',
+      "V_mp falls at hot temperature; hot-temperature V_mp is the critical constraint against the inverter MPPT minimum. V_mp at 70°C = 34.0 × (1 − 0.004 × 45) = 27.9 V per module. Min modules = 200 / 27.9 = 7.2 → 8 modules minimum. Below 8, the inverter can't track the MPP, yield drops.",
   },
   {
     id: 4,
@@ -214,7 +218,7 @@ const quizQuestions = [
       'None — the MPPT sizing is left to the inverter manufacturer',
       'V_oc cold vs absolute max; V_mp hot vs MPPT minimum; V_oc cold vs MPPT maximum, plus the current check',
       'Just the module names and quantities used on the array',
-      'The installer\'s profit margin on the job',
+      "The installer's profit margin on the job",
     ],
     correctAnswer: 1,
     explanation:
@@ -238,12 +242,12 @@ const quizQuestions = [
 
 const faqs = [
   {
-    question: 'How does the customer\'s budget interact with the kWp sizing?',
+    question: "How does the customer's budget interact with the kWp sizing?",
     answer:
-      'Two design constraints set the kWp ceiling: (1) roof area / orientation — the architecture limit; (2) budget — the financial limit. The competent surveyor presents two or three options — &ldquo;here\'s the maximum your roof can take, here\'s the maximum your budget supports, here\'s our recommended compromise.&rdquo; The customer\'s informed choice sets the kWp; the design follows. SEG export contracts and BUS / Home Energy Scotland grants can shift the financial sweet spot toward larger installs.',
+      "Two design constraints set the kWp ceiling: (1) roof area / orientation — the architecture limit; (2) budget — the financial limit. The competent surveyor presents two or three options — &ldquo;here's the maximum your roof can take, here's the maximum your budget supports, here's our recommended compromise.&rdquo; The customer's informed choice sets the kWp; the design follows. SEG export contracts and BUS / Home Energy Scotland grants can shift the financial sweet spot toward larger installs.",
   },
   {
-    question: 'What\'s the typical UK domestic install size in 2025-2026?',
+    question: "What's the typical UK domestic install size in 2025-2026?",
     answer:
       'UK domestic PV installs typically range 4-8 kWp, with 5-6 kWp the most common size — fits a typical south-facing roof, sits below the EREC G98 16 A single-phase threshold (~3.68 kW AC), pairs well with 5-10 kWh battery storage. Larger installs (8-12 kWp) often require EREC G99 application or G100 export limitation. UK household consumption (3,000-5,000 kWh/year typical) sets the self-consumption ceiling without battery; battery extends self-consumption to 60-80%.',
   },
@@ -255,10 +259,10 @@ const faqs = [
   {
     question: 'When is module-level optimisation the right call?',
     answer:
-      'Three criteria typically drive module-level optimisation (microinverters or power optimisers — Section 2.5): (1) shading — partial shading on any module triggers bypass-diode behaviour that drags string yield, recovered by module-level optimisation; (2) multi-orientation arrays where multi-MPPT inverter isn\'t feasible — each module operates at its own MPP; (3) rapid-shutdown regulatory / safety requirements. Cost premium typically £100-£150 per module — justified where yield recovery exceeds cost.',
+      "Three criteria typically drive module-level optimisation (microinverters or power optimisers — Section 2.5): (1) shading — partial shading on any module triggers bypass-diode behaviour that drags string yield, recovered by module-level optimisation; (2) multi-orientation arrays where multi-MPPT inverter isn't feasible — each module operates at its own MPP; (3) rapid-shutdown regulatory / safety requirements. Cost premium typically £100-£150 per module — justified where yield recovery exceeds cost.",
   },
   {
-    question: 'What\'s the workflow for verifying the three voltage rules at design stage?',
+    question: "What's the workflow for verifying the three voltage rules at design stage?",
     answer:
       'Four inputs needed: (1) module datasheet — V_oc_stc, V_mp_stc, I_sc_stc, I_mp_stc, V_oc / V_mp / P_max temperature coefficients; (2) inverter datasheet — absolute max DC voltage, MPPT range min, MPPT range max, per-MPPT max DC current; (3) site temperature extremes — coldest expected cell temperature (typically -15°C UK), hottest expected cell temperature (typically 70°C UK summer); (4) string topology. Apply the three voltage rules per Reg 712.433.101.1; apply per-MPPT current rule; apply the string-fuse inequality per Reg 712.431.101.',
   },
@@ -273,12 +277,13 @@ const faqs = [
       'Future expansion is a common ask — "will we be able to add more modules later, or add battery storage?". The design pack should record whether the inverter is sized for expansion (e.g. 5 kW inverter on 6 kWp now, 8 kWp future = need bigger inverter), whether AC infrastructure supports battery storage, and whether the DNO arrangement supports future capacity. The honest survey informs the customer; the design captures the trade-offs.',
   },
   {
-    question: 'How does the IET CoP for Grid-Connected Solar PV Installations operationalise the sizing requirements?',
+    question:
+      'How does the IET CoP for Grid-Connected Solar PV Installations operationalise the sizing requirements?',
     answer:
       'The IET CoP (currently 5th edition) is the operational complement to BS 7671 Section 712. It expands sizing requirements with worked examples, decision charts, design-pack templates. For inverter MPPT sizing, the CoP walks through the three voltage checks with example calculations. For string-fuse selection, the CoP shows the inequality calculation. MCS MIS 3002 design pack often references the IET CoP as the design methodology source. GN3 cross-references the IET CoP for detailed PV inspection-and-test procedures.',
   },
   {
-    question: 'What\'s the most common sizing fault flagged in MCS audits?',
+    question: "What's the most common sizing fault flagged in MCS audits?",
     answer:
       'Most common MCS audit findings on PV sizing: (1) missing or inadequate inverter MPPT calculations in the design pack — the three voltage checks not shown explicitly; (2) string-fuse inequality not evidenced where parallel strings present; (3) array kWp not matched to inverter rating sensibly (DC:AC outside manufacturer-permitted range); (4) cable sizing not evidenced against Iz ≥ Isc_max; (5) shading factor in PVGIS not matching survey shade-analysis output. The MCS auditor reads the design pack against BS 7671 Section 712 — gaps are major findings requiring rectification.',
   },
@@ -288,383 +293,549 @@ export default function RenewableEnergyModule3Section2() {
   const navigate = useNavigate();
 
   useSEO({
-    title:
-      'PV system sizing — kWp, modules, inverter matching | Renewable Energy 3.2 | Elec-Mate',
+    title: 'PV system sizing — kWp, modules, inverter matching | Renewable Energy 3.2 | Elec-Mate',
     description:
       'PV sizing — kWp specification, module count, inverter MPPT matching against the three voltage rules per Reg 712.433.101.1, string-fuse inequality per Reg 712.431.101, MCS MIS 3002 design pack content.',
   });
 
   return (
-    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
-      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
-        <PageFrame>
+    <HubPage>
+      <HubMasthead
+        section="Module 3 · Section 2 · BS 7671:2018+A4:2026"
+        title="PV system sizing — kWp, modules, inverter matching"
+        backTo="../renewable-energy-module-3"
+      />
+      <HubBody>
+        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
+          The sizing engine — kWp specification, module count, inverter MPPT matching against the
+          three voltage rules per Reg 712.433.101.1, string-fuse inequality per Reg 712.431.101, and
+          the MCS MIS 3002 design-pack content.
+        </p>
+
+        <TLDR
+          points={[
+            'kWp = sum of module STC nameplate powers. Sets inverter sizing, cable sizing, EREC G98 / G99 threshold, SEG export contracting. Module count flows from kWp / module wattage; modern 400-450 W modules typical in 2025-2026.',
+            'Inverter MPPT string sizing requires THREE voltage checks per Reg 712.433.101.1: max V_oc_max at coldest cell temp vs inverter absolute max; min V_mp at hottest cell temp vs inverter MPPT min; max V_oc_max at coldest cell temp vs inverter MPPT max.',
+            'Reg 712.433.101.1 conservative defaults: V_oc_max = 1.2 × V_oc_stc, I_sc_max = 1.25 × I_sc_stc when manufacturer temperature data and site extremes not used. Where data IS used, calculated values take precedence.',
+            'Inverter overloading (DC:AC ratio 1.2-1.4) is standard UK practice — saves inverter cost, captures more low-irradiance yield, clipping loss typically below 2% of annual yield. Manufacturer datasheet specifies permitted overload ratio.',
+            'String protection per Reg 712.431.101: required (above 2 parallel strings) where 1.35 × I_mod_max_ocer < (Ns − 1) × I_sc_max — when the condition IS MET. Reg explicitly states 1 or 2 parallel strings never need protection. Device options per Reg 712.432.103: gPV per BS EN 60269-6, BS EN 60947-3 fuse-combination, or DC-rated MCBs per BS EN 60947-2 / 60898-2 / IEC 60898-3. Both polarities protected per Reg 712.432.101. Rating per Reg 712.432: 1.1 × I_sc_max < I_n ≤ I_mod_max_ocer.',
+            'MCS MIS 3002 design pack: site survey, yield modelling, single-line schematic, component schedule, MPPT calculations, cable sizing, customer information pack, MCS cert. The audit trail for grant-funded installs.',
+          ]}
+        />
+
+        <LearningOutcomes
+          outcomes={[
+            "Specify array kWp for a customer's site against roof area, budget, EREC threshold, self-consumption profile.",
+            'Calculate module count from kWp and module wattage, applying realistic packing factors for access clearances.',
+            'Run the three voltage checks per Reg 712.433.101.1 against the inverter datasheet, using both calculation methodologies.',
+            'Apply the string-fuse inequality per Reg 712.431.101 and size string fuses per BS EN 60269-6 gPV when required.',
+            'Select dual-MPPT vs single-MPPT inverters against array topology (single orientation vs split, shading patterns).',
+            'Assemble the MCS MIS 3002 design pack — site survey, modelling, schematic, schedule, calculations, customer pack, cert.',
+          ]}
+          initialVisibleCount={3}
+        />
+
+        <Pullquote>
+          kWp on the nameplate. Three voltage rules on the inverter. The design pack proves it.
+        </Pullquote>
+
+        <ContentEyebrow>kWp specification — the sizing anchor</ContentEyebrow>
+
+        <ConceptBlock
+          title="kWp — what it is, what it sets"
+          plainEnglish="kWp = sum of module STC nameplate powers, in kilowatts-peak. The array peak power at Standard Test Conditions (1,000 W/m², 25°C cell temp, AM1.5). The design reference for everything downstream."
+          onSite="kWp is the headline number on the customer quote, the MCS cert, the DNO application, the SEG export contract. Real-world yield in kWh is kWp × annual irradiance × performance ratio (Section 1) — the kWp is the input, the kWh/year is the output."
+        >
+          <p>Where the kWp specification anchors the design:</p>
+          <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+            <li>
+              <strong className="text-white">Inverter sizing</strong> — DC:AC ratio 1.2-1.4 typical
+              UK practice; sets inverter rated AC output
+            </li>
+            <li>
+              <strong className="text-white">DC cable sizing</strong> — current rating against
+              I_sc_max (Section 4); voltage rating against V_oc_max
+            </li>
+            <li>
+              <strong className="text-white">AC cable sizing</strong> — current rating against
+              inverter rated AC current (Section 6)
+            </li>
+            <li>
+              <strong className="text-white">EREC G98 / G99 threshold</strong> — inverter AC current
+              vs 16 A single-phase threshold
+            </li>
+            <li>
+              <strong className="text-white">DNO export contract</strong> — kWp sets the export
+              capacity; G100 limitation if required
+            </li>
+            <li>
+              <strong className="text-white">SEG export contracting</strong> — kWp informs the
+              export tariff and meter requirements
+            </li>
+            <li>
+              <strong className="text-white">MCS cert</strong> — kWp on the cert feeds the EPC and
+              property valuation
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="Typical UK domestic install sizes"
+          plainEnglish="UK domestic PV typically 4-8 kWp. 5-6 kWp the most common — fits a typical south-facing roof, sits at the EREC G98 threshold, pairs with 5-10 kWh battery."
+          onSite="Customer constraints set the kWp: roof area limits the upper bound; budget limits the practical bound; EREC G98 threshold favours staying below ~3.68 kW AC for single-phase; self-consumption profile (3,000-5,000 kWh/year typical) sets the financial sweet spot."
+        >
+          <p>Sizing decisions by customer profile:</p>
+          <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+            <li>
+              <strong className="text-white">Small UK domestic (low consumption)</strong> — 3-4 kWp.
+              Below EREC G98 threshold; simple G98 fit-and-notify. Pairs with 3-5 kWh battery
+            </li>
+            <li>
+              <strong className="text-white">Standard UK domestic</strong> — 5-6 kWp. Fits typical
+              south-facing roof; at EREC G98 threshold (~3.68 kW AC); pairs with 5-10 kWh battery
+            </li>
+            <li>
+              <strong className="text-white">Large UK domestic / EV-owning</strong> — 7-10 kWp. May
+              require EREC G99 application or G100 export limitation. Pairs with 10-15 kWh battery
+            </li>
+            <li>
+              <strong className="text-white">Commercial / agricultural</strong> — 10-50 kWp. EREC
+              G99 application; often three-phase; SEG tariff negotiated; commercial EMS
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <KwpSizingTree caption="kWp sizing decision tree — three-branch flowchart from customer site survey output. Branch 1 (roof area): m² available → max module count → max kWp. Branch 2 (budget): customer budget → max kWp at price-per-kWp. Branch 3 (regulatory): EREC G98 threshold → max kWp before G99 application. Final node: chosen kWp = minimum of the three." />
+
+        <InlineCheck {...inlineChecks[0]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>Module count and array layout</ContentEyebrow>
+
+        <Pullquote>Packing factor 80-90%. Clearances are non-negotiable.</Pullquote>
+
+        <ConceptBlock
+          title="Module count from kWp — and the realistic packing factor"
+          plainEnglish="Module count = kWp / module wattage. But the physical fit has its own constraint: clearances around array edges, avoiding flashings / vents, working-at-height access. Realistic packing factor 80-90%."
+          onSite="Modern 60-cell modules typically 1.7 m × 1.1 m (1.87 m² each); 72-cell modules typically 2.1 m × 1.1 m (2.31 m² each). Module count is the lower of (kWp / wattage) or (roof area × packing factor / module area)."
+        >
+          <p>Clearance discipline at survey:</p>
+          <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+            <li>
+              <strong className="text-white">300-500 mm from roof edges</strong> — ridge, eaves,
+              valleys, verges. Working-at-height access, wind-uplift edge zones (highest pressure in
+              storms), some regional fire-service-access
+            </li>
+            <li>
+              <strong className="text-white">Avoid flashings, vents, soil stacks</strong> — modules
+              can\'t sit over these; layout must work around them. Survey-stage photographs
+              essential
+            </li>
+            <li>
+              <strong className="text-white">Avoid roof penetrations</strong> — mounting fixings
+              should go through the rafter, not through tile / slate / felt
+            </li>
+            <li>
+              <strong className="text-white">Module orientation</strong> — landscape (long edge
+              horizontal) gives lower count on long roofs; portrait (long edge vertical) gives
+              flexible string topology
+            </li>
+          </ul>
+          <p>
+            PWI common-mistakes list flags &ldquo;cramming modules to the edges&rdquo; as
+            high-frequency survey error — modules go on, but install is unsafe to maintain and
+            wind-uplift edge zones create structural failure risk. Survey-stage clearance discipline
+            is non-negotiable.
+          </p>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="Module wattage trade-offs — bigger isn\'t always better"
+          plainEnglish="Modern modules 300 W (older) to 600 W+ (commercial). Higher wattage reduces count for the same kWp but bigger physically — may not fit the layout."
+          onSite="UK domestic 2025-2026 typically 400-450 W N-type or TOPCon modules — good balance of wattage, efficiency, size, cost. Commercial uses 500 W+ for cost-per-kWp where layout permits."
+        >
+          <p>Module wattage selection:</p>
+          <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+            <li>
+              <strong className="text-white">300-350 W (older P-type)</strong> — phasing out; lower
+              efficiency means more modules for the same kWp
+            </li>
+            <li>
+              <strong className="text-white">400-450 W (modern N-type, TOPCon, HJT)</strong> — UK
+              domestic standard 2025-2026
+            </li>
+            <li>
+              <strong className="text-white">500-600 W (large-format)</strong> — physically larger
+              (72-cell); commercial roofs where layout permits
+            </li>
+            <li>
+              <strong className="text-white">600+ W (commercial-scale)</strong> — bifacial;
+              commercial ground-mount and large-roof installs
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <InlineCheck {...inlineChecks[1]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>Inverter MPPT string sizing — the three voltage rules</ContentEyebrow>
+
+        <Pullquote>
+          V_oc cold. V_mp hot. V_oc cold again. Three checks. Reg 712.433.101.1.
+        </Pullquote>
+
+        <ConceptBlock
+          title="The three voltage rules for inverter MPPT matching"
+          plainEnglish="The inverter datasheet specifies an absolute maximum DC input voltage (NEVER exceed — destroys the inverter), and an MPPT operating range (the inverter can track the MPP within this range). The three rules ensure the string V stays within these limits across the operating temperature range."
+          onSite="V_oc (open-circuit voltage) rises at cold; V_mp (max-power voltage) falls at hot. The three rules check both extremes. Per Reg 712.433.101.1."
+        >
+          <p>The three voltage rules in order:</p>
+          <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+            <li>
+              <strong className="text-white">
+                Rule 1 — absolute max DC at coldest cell temperature
+              </strong>
+              : V_oc_max_string at coldest expected cell temperature must NOT exceed the inverter
+              absolute maximum DC input voltage. Failing this DESTROYS the inverter. UK coldest
+              typical -15°C
+            </li>
+            <li>
+              <strong className="text-white">
+                Rule 2 — MPPT minimum at hottest cell temperature
+              </strong>
+              : V_mp_string at hottest expected cell temperature must remain ABOVE the inverter MPPT
+              range minimum. Failing this drops the inverter off-MPP — yield loss. UK hottest
+              typical 70°C
+            </li>
+            <li>
+              <strong className="text-white">
+                Rule 3 — MPPT maximum at coldest cell temperature
+              </strong>
+              : V_oc_max_string at coldest expected cell temperature must NOT exceed the inverter
+              MPPT range maximum. Failing this operates outside MPPT range — yield loss
+            </li>
+          </ul>
+          <p>
+            String size constrained by all three rules — pick the largest size that satisfies all
+            three. The design pack shows the calculations.
+          </p>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="Calculation methodologies — coefficient + temperature, or conservative default"
+          plainEnglish="Reg 712.433.101.1 allows two paths: (a) module temperature coefficient + site temperature extremes — gives calculated V_oc_max and V_mp; (b) conservative default multipliers — 1.2 × V_oc_stc, 1.25 × I_sc_stc. Where both available, use the lower (safer)."
+          onSite="Modern module datasheets give V_oc temperature coefficient (typically -0.25 to -0.30 %/°C), V_mp temperature coefficient (typically -0.35 to -0.45 %/°C), P_max temperature coefficient (typically -0.30 to -0.40 %/°C)."
+        >
+          <p>Worked example — V_oc_max at coldest cell temperature:</p>
+          <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+            <li>Module datasheet: V_oc_stc = 41.6 V; V_oc temperature coefficient = -0.27 %/°C</li>
+            <li>
+              Site coldest expected cell temperature: -15°C; delta from STC 25°C = 40°C colder
+            </li>
+            <li>
+              Calculated: V_oc_max = 41.6 × (1 + (0.0027 × 40)) = 41.6 × 1.108 = 46.1 V per module
+            </li>
+            <li>Conservative default: V_oc_max = 1.2 × 41.6 = 49.9 V per module</li>
+            <li>
+              For most-conservative answer use 49.9 V — gives lower max-string-size, safer install
+            </li>
+          </ul>
+          <p>For a 13-module string at the calculated V_oc_max:</p>
+          <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+            <li>13 × 46.1 V = 599.3 V — just under inverter 600 V absolute max</li>
+            <li>14 × 46.1 V = 645.4 V — exceeds inverter max, would destroy inverter</li>
+            <li>Maximum string size: 13 modules</li>
+          </ul>
+        </ConceptBlock>
+
+        <MpptEnvelope caption="Inverter MPPT string sizing diagram — string V plotted against cell temperature for a 13-module string. At coldest -15°C, V_oc_max = 599.3 V (just under inverter 600 V absolute max — Rule 1). At STC 25°C, V_mp = 442 V (within MPPT range 200-550 V). At hottest 70°C, V_mp = 362 V (above MPPT minimum 200 V — Rule 2). The three voltage rules visualised as the string operating envelope inside the inverter MPPT range." />
+
+        <InlineCheck {...inlineChecks[2]} />
+
+        <InlineCheck {...inlineChecks[3]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>String-fuse selection — Reg 712.431.101 / 102</ContentEyebrow>
+
+        <Pullquote>
+          1 or 2 strings: no protection. 3+ with condition met: protection required.
+        </Pullquote>
+
+        <ConceptBlock
+          title="The Reg 712.431.101 string-protection condition"
+          plainEnglish="On a parallel-string array (above 2 strings), a faulted string can draw reverse current from the parallel strings. If the parallel reverse-current capacity (Ns-1) × I_sc_max exceeds the module\'s rated reverse-current capability times the safety factor (1.35 × I_mod_max_ocer), protective devices are required."
+          onSite="Reg condition: protective devices shall be provided where 1.35 × I_mod_max_ocer < (Ns − 1) × I_sc_max. When LHS < RHS — condition MET — protection IS required. The reg also explicitly states: in a PV array with one PV string or two PV strings in parallel, no overcurrent protective device is required, regardless of the module / I_sc values. Devices go in the combiner box, sized per Reg 712.432.103 and 712.432."
+        >
+          <p>Variables explained:</p>
+          <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+            <li>
+              <strong className="text-white">I_mod_max_ocer</strong> — module rated max reverse
+              over-current (from datasheet). Typical modern modules: 15-25 A
+            </li>
+            <li>
+              <strong className="text-white">1.35 multiplier</strong> — conservative factor for
+              fault-current variations
+            </li>
+            <li>
+              <strong className="text-white">Ns</strong> — number of parallel strings on the same
+              combiner / MPPT input
+            </li>
+            <li>
+              <strong className="text-white">I_sc_max</strong> — string max short-circuit current =
+              1.25 × I_sc_stc (conservative default per Reg 712.433.101.1)
+            </li>
+            <li>
+              <strong className="text-white">(Ns − 1)</strong> — number of parallel strings that can
+              push reverse current into a faulted string
+            </li>
+          </ul>
+          <p>Worked example:</p>
+          <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+            <li>
+              Module I_mod_max_ocer = 20 A; I_sc_stc = 12.5 A; I_sc_max = 1.25 × 12.5 = 15.625 A
+            </li>
+            <li>1 string (Ns=1): explicit reg statement — no protection required regardless</li>
+            <li>2 strings (Ns=2): explicit reg statement — no protection required regardless</li>
+            <li>
+              3 strings (Ns=3): (3-1) × 15.625 = 31.25 A; LHS = 27 A &lt; 31.25 A → condition MET →
+              protection required
+            </li>
+            <li>
+              4 strings (Ns=4): 46.875 A; LHS = 27 A &lt; 46.875 A → condition MET → protection
+              required (higher reverse-current potential)
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <RegsCallout
+          source="BS 7671:2018+A4:2026 · Reg 712.431.101 — string protection condition"
+          clause="In a PV array with Ns strings (above 2 strings) in parallel, protective devices shall be provided to protect each PV string where the following condition is met: 1.35 × Imop_max_ocer < (Ns − 1) × Isc_max. In a PV array with one PV string or two PV strings in parallel, no overcurrent protective device is required. NOTE 1: If the inverter has several independent maximum power point trackers (MPPT) or devices with equivalent characteristics and no reverse current can flow from one input to another input by inverter design, then Ns is the number of strings connected to one individual DC input."
+          meaning="Reg 712.431.101 sets the explicit rule: 1 or 2 parallel strings never need overcurrent protective devices, regardless of module / I_sc values. Above 2 parallel strings, the condition 1.35 × I_mod_max_ocer < (Ns-1) × I_sc_max determines whether protection is required — when the condition IS MET (LHS less than RHS), protection IS required. Device options per Reg 712.432.103; sizing per Reg 712.432; both polarities protected per Reg 712.432.101. NOTE 1: on a multi-MPPT inverter where reverse current can\'t flow between MPPT inputs, Ns counts only the strings on each individual MPPT."
+        />
+
+        <InlineCheck {...inlineChecks[4]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>Inverter selection — overloading, MPPTs, topology</ContentEyebrow>
+
+        <Pullquote>DC:AC 1.2-1.4 is the UK norm. Dual-MPPT for split orientations.</Pullquote>
+
+        <ConceptBlock
+          title="DC:AC ratio (inverter overloading) — and why 1.2-1.4 is the UK norm"
+          plainEnglish="Inverter rated AC output is rarely fully utilised — the array rarely produces full STC nameplate. Sizing the inverter at less than array peak (overloading) saves cost and improves low-irradiance operation."
+          onSite="UK practice: DC:AC ratio 1.2-1.4. Inverter clips power output to its rated AC during peak summer noon; clipping loss typically below 2% of annual yield. Manufacturer datasheet specifies max permitted overload — exceeding voids warranty."
+        >
+          <p>Economics of inverter overloading:</p>
+          <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+            <li>
+              <strong className="text-white">DC:AC = 1.0</strong> — no overload. Inverter sized for
+              full array peak. Often operates below rated capacity, lower conversion efficiency.
+              Highest inverter cost
+            </li>
+            <li>
+              <strong className="text-white">DC:AC = 1.2-1.4</strong> — UK domestic norm. Inverter
+              slightly undersized vs array peak — clips briefly at peak summer noon. Annual clipping
+              loss typically below 2%. Inverter operates at higher proportion of rated capacity more
+              often, improving average efficiency
+            </li>
+            <li>
+              <strong className="text-white">DC:AC = 1.5+</strong> — aggressive overloading. Higher
+              clipping loss (5-10% annual), lowest inverter cost. Justified on commercial installs.
+              Manufacturer datasheet must permit
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="Single-MPPT vs dual-MPPT vs multi-MPPT inverters"
+          plainEnglish="Single-MPPT: one DC input pair, all strings parallel. Dual-MPPT: two independent DC input pairs, each tracking its own MPP. Multi-MPPT (3-6) for larger commercial. Module-level (microinverters / optimisers) for per-module MPPT — Section 2.5."
+          onSite="UK domestic typically dual-MPPT — supports east-west splits, hipped roofs, shading flexibility. Single-MPPT acceptable for simple single-orientation arrays. MPPT count drives flexibility and cost."
+        >
+          <p>MPPT architecture decision:</p>
+          <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+            <li>
+              <strong className="text-white">Single-MPPT</strong> — simplest, cheapest. All strings
+              electrically equivalent (same module, orientation, shading). UK domestic on single
+              south-facing roofs
+            </li>
+            <li>
+              <strong className="text-white">Dual-MPPT</strong> — UK domestic standard. Two
+              independent strings on different orientations or shading patterns. East-west splits,
+              hipped roofs. Per-MPPT current typically 12-15 A (vs 20-25 A on single-MPPT)
+            </li>
+            <li>
+              <strong className="text-white">Multi-MPPT (3-6 MPPTs)</strong> — commercial. Larger
+              arrays with multiple orientations / shading zones. Each MPPT independently tracked
+            </li>
+            <li>
+              <strong className="text-white">
+                Module-level (microinverters / power optimisers)
+              </strong>{' '}
+              — per-module MPP tracking. Highest resolution; recovers shading losses; rapid-shutdown
+              capable. Cost premium £100-£150 per module. Section 2.5
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <InverterArchitectures caption="Inverter MPPT architecture diagram — three side-by-side configurations: (1) single-MPPT with one string of 14 modules; (2) dual-MPPT with one string of 8 modules on MPPT-A (south roof) and 6 modules on MPPT-B (west roof); (3) microinverter system with one microinverter per module, AC trunking back to consumer unit. Annotated with MPPT count, per-input current rating, typical use case." />
+
+        <InlineCheck {...inlineChecks[5]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>MCS MIS 3002 design pack — the deliverable</ContentEyebrow>
+
+        <Pullquote>
+          The design pack is the audit trail. Calculations explicit. Single-line schematic
+          mandatory.
+        </Pullquote>
+
+        <ConceptBlock
+          title="MCS MIS 3002 — what the design pack must contain"
+          plainEnglish="MCS MIS 3002 specifies the design pack as the deliverable for MCS-funded PV installs. The audit trail showing the install was designed correctly — survey, modelling, schematic, schedule, calculations, customer pack, cert."
+          onSite="The MCS auditor reads the design pack against BS 7671 Section 712 and MIS 3002 — gaps are major findings. The honest design pack has the calculations explicit, not hidden."
+        >
+          <p>The MCS MIS 3002 design pack core content:</p>
+          <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+            <li>
+              <strong className="text-white">Site survey</strong> — site address, orientation, tilt,
+              shading factor (from objective shade analysis per Section 1), structural assessment,
+              roof type and condition, electrical infrastructure
+            </li>
+            <li>
+              <strong className="text-white">Yield modelling</strong> — PVGIS or equivalent output
+              showing annual and monthly yield in kWh; assumed performance ratio
+            </li>
+            <li>
+              <strong className="text-white">System schematic</strong> — single-line diagram:
+              modules, strings, combiner, DC isolator, inverter, AC isolator, RCBO / CU connection,
+              metering, DNO connection point
+            </li>
+            <li>
+              <strong className="text-white">Component schedule</strong> — manufacturer, model,
+              nameplate / rating for modules, inverter, DC isolator, string fuses, DC cable, AC
+              cable, AC isolator, RCBO, mounting
+            </li>
+            <li>
+              <strong className="text-white">Inverter MPPT calculations</strong> — three voltage
+              checks per Reg 712.433.101.1 explicit, with temperature-coefficient values, site
+              temperature extremes, calculated V_oc_max / V_mp / V_oc_max-vs-MPPT-max
+            </li>
+            <li>
+              <strong className="text-white">Cable sizing calculations</strong> — DC cable per Iz ≥
+              I_sc_max (Section 4), with CCC, grouping, ambient temperature, route length. AC cable
+              per inverter rated AC current (Section 6)
+            </li>
+            <li>
+              <strong className="text-white">String-protection calculations</strong> — Reg
+              712.431.101 condition check (above 2 strings); if protection required per Reg
+              712.431.102, devices per Reg 712.432.103 (gPV per BS EN 60269-6 / fuse-combination per
+              BS EN 60947-3 / DC-MCBs per BS EN 60947-2 / 60898-2 / IEC 60898-3); sizing per Reg
+              712.432 (1.1 × I_sc_max &lt; I_n ≤ I_mod_max_ocer); both polarities per Reg
+              712.432.101; bidirectional per Reg 712.533.101
+            </li>
+            <li>
+              <strong className="text-white">Customer information pack</strong> — site-specific
+              operating instructions, maintenance schedule, emergency contacts, warranty details,
+              MCS cert
+            </li>
+            <li>
+              <strong className="text-white">MCS certificate</strong> — issued after install and
+              commissioning. Feeds the EPC and property valuation
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <Mis3002DesignPack caption="MCS MIS 3002 design pack content map — three columns. Column 1 (Design): site survey, yield modelling, schematic, schedule, calculations. Column 2 (Install): commissioning records, BS EN 62446-1 test results, photographs, schedule of test results. Column 3 (Customer): customer information pack, MCS cert, warranty pack, EPC update. Audit trail running through all three." />
+
+        <InlineCheck {...inlineChecks[6]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>What it looks like in the wild</ContentEyebrow>
+
+        <Scenario
+          title="A customer wants 8 kWp on a small south-facing roof — does it fit?"
+          situation="Customer\'s south-facing roof is 28 m² total. Wants 8 kWp install for EV charging + battery support. Standard 415 W modules available (1.87 m² each)."
+          whatToDo="Module count for 8 kWp: 8,000 / 415 = 19.3 → 20 modules. Roof area for 20 modules at 80-90% packing factor: 20 × 1.87 / 0.85 = 44 m² required. Available 28 m² is well short — won\'t fit. Honest survey: (a) reduce kWp to 5-5.5 kWp (12-14 modules) to fit the 28 m² roof; (b) extend the array to a secondary east or west surface (split arrangement, dual-MPPT inverter); (c) consider larger-format modules (e.g. 500 W) — 16 × 500 W = 8 kWp, but physically larger (2.31 m² each), 16 × 2.31 = 37 m² — still doesn\'t fit. Realistic outcome: 5.5 kWp on the 28 m² roof, or 8 kWp by extending to a second surface."
+          whyItMatters="Architectural fit is the binding constraint on many UK domestic installs. The honest survey converts the customer\'s preferred kWp into the realistic option set. The MCS MIS 3002 design pack records the chosen option and the rationale."
+        />
+
+        <Scenario
+          title="A customer\'s site is shaded — should we use module-level optimisation?"
+          situation="Customer\'s south-facing roof has a tree casting morning shade on 2 of 12 proposed modules from 7-9 am summer. Shade-analysis tool shows annual shading factor 0.88 (12% loss) on the affected modules."
+          whatToDo="Compare string-level vs module-level. String-level (12 modules series, single MPPT): the 2 shaded modules drag the string — annual yield ~85% of unshaded (15% loss). Module-level (microinverters or power optimisers): each module operates at its own MPP — annual yield ~97% of unshaded (3% loss). Module-level recovers 12 percentage points. Cost: 12 modules × £100 (typical optimiser premium) = £1,200 extra. Yield recovery: 12% × 5,500 kWh/year × 25 years × 12 p/kWh = ~£1,980. Module-level pays back over the install life. Design-pack records the analysis and choice."
+          whyItMatters="The objective shade analysis at survey informs the optimisation decision. Without it, the install commissions with string-level architecture, the customer experiences 15% lower yield than modelled, and the optimisation retrofit costs more than installing it day-one."
+        />
+
+        <CommonMistake
+          title="Sizing the string without checking V_oc at coldest cell temperature"
+          whatHappens="An installer sizes a string of 15 modules at 41.6 V_oc_stc = 624 V. Inverter absolute max DC is 600 V. The install works through summer; the first cold winter morning (cell -10°C, V_oc rises ~10%) the string V_oc_max = 686 V — exceeds inverter max. Inverter blows. Warranty void; replacement £1,500+; customer disputes."
+          doInstead="Always run Rule 1 against the coldest expected cell temperature for the install location. Modern module datasheets give V_oc temperature coefficient; UK coldest cell temperature -15°C for domestic. Calculate V_oc_max per module, multiply by string size, compare to inverter absolute max DC. Conservative default 1.2 × V_oc_stc is the fallback. Design pack records the calculation; auditor checks it."
+        />
+
+        <CommonMistake
+          title="Connecting 3+ parallel strings without applying the Reg 712.431.101 fuse inequality"
+          whatHappens="An installer connects 3 parallel strings on a single MPPT without checking Reg 712.431.101. The module I_mod_max_ocer (20 A) is exceeded by (Ns-1) × I_sc_max = 2 × 15.625 = 31.25 A. The install commissions normally — but a single faulted string draws reverse current up to 31.25 A through the modules, exceeding the rated 20 A. Module damage; potentially fire (Section 4 covers fire on DC side per Reg 712.421)."
+          doInstead="Always apply the Reg 712.431.101 condition at design. Substitute the module I_mod_max_ocer, number of parallel strings, and I_sc_max = 1.25 × I_sc_stc. When LHS < RHS (condition MET), protection required — sized per Reg 712.432 (1.1 × I_sc_max < I_n ≤ I_mod_max_ocer) using devices per Reg 712.432.103 (gPV per BS EN 60269-6 or DC-rated MCBs), both polarities per Reg 712.432.101. Design pack records the calculation."
+        />
+
+        <CommonMistake
+          title="MCS audit fails because the inverter MPPT calculations weren\'t in the design pack"
+          whatHappens="An installer completes a 6 kWp install. The design pack lists components but doesn\'t show inverter MPPT sizing calculations explicitly. MCS audit: major finding — Reg 712.433.101.1 calculations missing. Rectification: retrospectively produce calculations, evidence against as-installed string and inverter, resubmit the design pack."
+          doInstead="MCS MIS 3002 design pack expects the inverter MPPT calculations EXPLICIT — three voltage checks per Reg 712.433.101.1 with temperature coefficients, site extremes, and calculated V_oc_max / V_mp. The auditor reads the design pack against BS 7671 Section 712 and MIS 3002 — gaps trigger major findings. Day-one discipline saves the rectification cost."
+        />
+
+        <SectionRule />
+
+        <KeyTakeaways
+          points={[
+            'kWp = sum of module STC nameplate powers — the design reference for inverter sizing, cable sizing, EREC G98/G99 threshold, SEG export contracting.',
+            'UK domestic installs typically 4-8 kWp; 5-6 kWp the most common size at the EREC G98 threshold.',
+            'Module count = kWp / module wattage, constrained by realistic packing factor (80-90%) on available roof area. Modern 400-450 W modules typical in 2025-2026.',
+            'Inverter MPPT sizing requires THREE voltage checks per Reg 712.433.101.1: V_oc_max cold vs inverter absolute max; V_mp hot vs inverter MPPT min; V_oc_max cold vs inverter MPPT max.',
+            'Conservative defaults per Reg 712.433.101.1: V_oc_max = 1.2 × V_oc_stc; I_sc_max = 1.25 × I_sc_stc when manufacturer temperature data and site extremes not used.',
+            'Inverter overloading DC:AC = 1.2-1.4 is UK norm — clipping loss typically below 2% of annual yield. Manufacturer datasheet sets permitted ratio.',
+            'String-protection per Reg 712.431.101: required (above 2 strings) where condition 1.35 × I_mod_max_ocer < (Ns-1) × I_sc_max IS MET. 1 or 2 strings: explicitly never need protection. Devices per Reg 712.432.103 (gPV per BS EN 60269-6, BS EN 60947-3 fuse-combination, or DC-rated MCBs per BS EN 60947-2 / 60898-2 / IEC 60898-3). Sizing per Reg 712.432: 1.1 × I_sc_max < I_n ≤ I_mod_max_ocer. Both polarities protected per Reg 712.432.101; blocking diodes NOT acceptable per Reg 712.432.102.',
+            'MCS MIS 3002 design pack: site survey, yield modelling, schematic, schedule, MPPT calculations, cable sizing, string-fuse inequality check, customer information pack, MCS cert.',
+          ]}
+        />
+
+        <FAQ items={faqs} />
+
+        <Quiz questions={quizQuestions} title="Section 2 · Knowledge check" />
+
+        <div className="grid grid-cols-2 gap-3 pt-2">
           <button
             type="button"
-            onClick={() => navigate('../renewable-energy-module-3')}
-            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            onClick={() => navigate('/electrician/upskilling/renewable-energy-module-3-section-1')}
+            className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
           >
-            <ArrowLeft className="h-4 w-4" /> Module 3
+            <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+              <ChevronLeft className="h-3 w-3" /> Section 1
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-white truncate">
+              Irradiance &amp; shading
+            </div>
           </button>
-
-          <PageHero
-            eyebrow="Module 3 · Section 2 · BS 7671:2018+A4:2026"
-            title="PV system sizing — kWp, modules, inverter matching"
-            description="The sizing engine — kWp specification, module count, inverter MPPT matching against the three voltage rules per Reg 712.433.101.1, string-fuse inequality per Reg 712.431.101, and the MCS MIS 3002 design-pack content."
-            tone="yellow"
-          />
-
-          <TLDR
-            points={[
-              'kWp = sum of module STC nameplate powers. Sets inverter sizing, cable sizing, EREC G98 / G99 threshold, SEG export contracting. Module count flows from kWp / module wattage; modern 400-450 W modules typical in 2025-2026.',
-              'Inverter MPPT string sizing requires THREE voltage checks per Reg 712.433.101.1: max V_oc_max at coldest cell temp vs inverter absolute max; min V_mp at hottest cell temp vs inverter MPPT min; max V_oc_max at coldest cell temp vs inverter MPPT max.',
-              'Reg 712.433.101.1 conservative defaults: V_oc_max = 1.2 × V_oc_stc, I_sc_max = 1.25 × I_sc_stc when manufacturer temperature data and site extremes not used. Where data IS used, calculated values take precedence.',
-              'Inverter overloading (DC:AC ratio 1.2-1.4) is standard UK practice — saves inverter cost, captures more low-irradiance yield, clipping loss typically below 2% of annual yield. Manufacturer datasheet specifies permitted overload ratio.',
-              'String protection per Reg 712.431.101: required (above 2 parallel strings) where 1.35 × I_mod_max_ocer < (Ns − 1) × I_sc_max — when the condition IS MET. Reg explicitly states 1 or 2 parallel strings never need protection. Device options per Reg 712.432.103: gPV per BS EN 60269-6, BS EN 60947-3 fuse-combination, or DC-rated MCBs per BS EN 60947-2 / 60898-2 / IEC 60898-3. Both polarities protected per Reg 712.432.101. Rating per Reg 712.432: 1.1 × I_sc_max < I_n ≤ I_mod_max_ocer.',
-              'MCS MIS 3002 design pack: site survey, yield modelling, single-line schematic, component schedule, MPPT calculations, cable sizing, customer information pack, MCS cert. The audit trail for grant-funded installs.',
-            ]}
-          />
-
-          <LearningOutcomes
-            outcomes={[
-              'Specify array kWp for a customer\'s site against roof area, budget, EREC threshold, self-consumption profile.',
-              'Calculate module count from kWp and module wattage, applying realistic packing factors for access clearances.',
-              'Run the three voltage checks per Reg 712.433.101.1 against the inverter datasheet, using both calculation methodologies.',
-              'Apply the string-fuse inequality per Reg 712.431.101 and size string fuses per BS EN 60269-6 gPV when required.',
-              'Select dual-MPPT vs single-MPPT inverters against array topology (single orientation vs split, shading patterns).',
-              'Assemble the MCS MIS 3002 design pack — site survey, modelling, schematic, schedule, calculations, customer pack, cert.',
-            ]}
-            initialVisibleCount={3}
-          />
-
-          <Pullquote>kWp on the nameplate. Three voltage rules on the inverter. The design pack proves it.</Pullquote>
-
-          <ContentEyebrow>kWp specification — the sizing anchor</ContentEyebrow>
-
-          <ConceptBlock
-            title="kWp — what it is, what it sets"
-            plainEnglish="kWp = sum of module STC nameplate powers, in kilowatts-peak. The array peak power at Standard Test Conditions (1,000 W/m², 25°C cell temp, AM1.5). The design reference for everything downstream."
-            onSite="kWp is the headline number on the customer quote, the MCS cert, the DNO application, the SEG export contract. Real-world yield in kWh is kWp × annual irradiance × performance ratio (Section 1) — the kWp is the input, the kWh/year is the output."
+          <button
+            type="button"
+            onClick={() => navigate('/electrician/upskilling/renewable-energy-module-3-section-3')}
+            className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
           >
-            <p>Where the kWp specification anchors the design:</p>
-            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
-              <li><strong className="text-white">Inverter sizing</strong> — DC:AC ratio 1.2-1.4 typical UK practice; sets inverter rated AC output</li>
-              <li><strong className="text-white">DC cable sizing</strong> — current rating against I_sc_max (Section 4); voltage rating against V_oc_max</li>
-              <li><strong className="text-white">AC cable sizing</strong> — current rating against inverter rated AC current (Section 6)</li>
-              <li><strong className="text-white">EREC G98 / G99 threshold</strong> — inverter AC current vs 16 A single-phase threshold</li>
-              <li><strong className="text-white">DNO export contract</strong> — kWp sets the export capacity; G100 limitation if required</li>
-              <li><strong className="text-white">SEG export contracting</strong> — kWp informs the export tariff and meter requirements</li>
-              <li><strong className="text-white">MCS cert</strong> — kWp on the cert feeds the EPC and property valuation</li>
-            </ul>
-          </ConceptBlock>
-
-          <ConceptBlock
-            title="Typical UK domestic install sizes"
-            plainEnglish="UK domestic PV typically 4-8 kWp. 5-6 kWp the most common — fits a typical south-facing roof, sits at the EREC G98 threshold, pairs with 5-10 kWh battery."
-            onSite="Customer constraints set the kWp: roof area limits the upper bound; budget limits the practical bound; EREC G98 threshold favours staying below ~3.68 kW AC for single-phase; self-consumption profile (3,000-5,000 kWh/year typical) sets the financial sweet spot."
-          >
-            <p>Sizing decisions by customer profile:</p>
-            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
-              <li><strong className="text-white">Small UK domestic (low consumption)</strong> — 3-4 kWp. Below EREC G98 threshold; simple G98 fit-and-notify. Pairs with 3-5 kWh battery</li>
-              <li><strong className="text-white">Standard UK domestic</strong> — 5-6 kWp. Fits typical south-facing roof; at EREC G98 threshold (~3.68 kW AC); pairs with 5-10 kWh battery</li>
-              <li><strong className="text-white">Large UK domestic / EV-owning</strong> — 7-10 kWp. May require EREC G99 application or G100 export limitation. Pairs with 10-15 kWh battery</li>
-              <li><strong className="text-white">Commercial / agricultural</strong> — 10-50 kWp. EREC G99 application; often three-phase; SEG tariff negotiated; commercial EMS</li>
-            </ul>
-          </ConceptBlock>
-
-          <KwpSizingTree
-            caption="kWp sizing decision tree — three-branch flowchart from customer site survey output. Branch 1 (roof area): m² available → max module count → max kWp. Branch 2 (budget): customer budget → max kWp at price-per-kWp. Branch 3 (regulatory): EREC G98 threshold → max kWp before G99 application. Final node: chosen kWp = minimum of the three."
-          />
-
-          <InlineCheck {...inlineChecks[0]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>Module count and array layout</ContentEyebrow>
-
-          <Pullquote>Packing factor 80-90%. Clearances are non-negotiable.</Pullquote>
-
-          <ConceptBlock
-            title="Module count from kWp — and the realistic packing factor"
-            plainEnglish="Module count = kWp / module wattage. But the physical fit has its own constraint: clearances around array edges, avoiding flashings / vents, working-at-height access. Realistic packing factor 80-90%."
-            onSite="Modern 60-cell modules typically 1.7 m × 1.1 m (1.87 m² each); 72-cell modules typically 2.1 m × 1.1 m (2.31 m² each). Module count is the lower of (kWp / wattage) or (roof area × packing factor / module area)."
-          >
-            <p>Clearance discipline at survey:</p>
-            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
-              <li><strong className="text-white">300-500 mm from roof edges</strong> — ridge, eaves, valleys, verges. Working-at-height access, wind-uplift edge zones (highest pressure in storms), some regional fire-service-access</li>
-              <li><strong className="text-white">Avoid flashings, vents, soil stacks</strong> — modules can\'t sit over these; layout must work around them. Survey-stage photographs essential</li>
-              <li><strong className="text-white">Avoid roof penetrations</strong> — mounting fixings should go through the rafter, not through tile / slate / felt</li>
-              <li><strong className="text-white">Module orientation</strong> — landscape (long edge horizontal) gives lower count on long roofs; portrait (long edge vertical) gives flexible string topology</li>
-            </ul>
-            <p>
-              PWI common-mistakes list flags &ldquo;cramming modules to the edges&rdquo; as
-              high-frequency survey error — modules go on, but install is unsafe to
-              maintain and wind-uplift edge zones create structural failure risk.
-              Survey-stage clearance discipline is non-negotiable.
-            </p>
-          </ConceptBlock>
-
-          <ConceptBlock
-            title="Module wattage trade-offs — bigger isn\'t always better"
-            plainEnglish="Modern modules 300 W (older) to 600 W+ (commercial). Higher wattage reduces count for the same kWp but bigger physically — may not fit the layout."
-            onSite="UK domestic 2025-2026 typically 400-450 W N-type or TOPCon modules — good balance of wattage, efficiency, size, cost. Commercial uses 500 W+ for cost-per-kWp where layout permits."
-          >
-            <p>Module wattage selection:</p>
-            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
-              <li><strong className="text-white">300-350 W (older P-type)</strong> — phasing out; lower efficiency means more modules for the same kWp</li>
-              <li><strong className="text-white">400-450 W (modern N-type, TOPCon, HJT)</strong> — UK domestic standard 2025-2026</li>
-              <li><strong className="text-white">500-600 W (large-format)</strong> — physically larger (72-cell); commercial roofs where layout permits</li>
-              <li><strong className="text-white">600+ W (commercial-scale)</strong> — bifacial; commercial ground-mount and large-roof installs</li>
-            </ul>
-          </ConceptBlock>
-
-          <InlineCheck {...inlineChecks[1]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>Inverter MPPT string sizing — the three voltage rules</ContentEyebrow>
-
-          <Pullquote>V_oc cold. V_mp hot. V_oc cold again. Three checks. Reg 712.433.101.1.</Pullquote>
-
-          <ConceptBlock
-            title="The three voltage rules for inverter MPPT matching"
-            plainEnglish="The inverter datasheet specifies an absolute maximum DC input voltage (NEVER exceed — destroys the inverter), and an MPPT operating range (the inverter can track the MPP within this range). The three rules ensure the string V stays within these limits across the operating temperature range."
-            onSite="V_oc (open-circuit voltage) rises at cold; V_mp (max-power voltage) falls at hot. The three rules check both extremes. Per Reg 712.433.101.1."
-          >
-            <p>The three voltage rules in order:</p>
-            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
-              <li><strong className="text-white">Rule 1 — absolute max DC at coldest cell temperature</strong>: V_oc_max_string at coldest expected cell temperature must NOT exceed the inverter absolute maximum DC input voltage. Failing this DESTROYS the inverter. UK coldest typical -15°C</li>
-              <li><strong className="text-white">Rule 2 — MPPT minimum at hottest cell temperature</strong>: V_mp_string at hottest expected cell temperature must remain ABOVE the inverter MPPT range minimum. Failing this drops the inverter off-MPP — yield loss. UK hottest typical 70°C</li>
-              <li><strong className="text-white">Rule 3 — MPPT maximum at coldest cell temperature</strong>: V_oc_max_string at coldest expected cell temperature must NOT exceed the inverter MPPT range maximum. Failing this operates outside MPPT range — yield loss</li>
-            </ul>
-            <p>
-              String size constrained by all three rules — pick the largest size
-              that satisfies all three. The design pack shows the calculations.
-            </p>
-          </ConceptBlock>
-
-          <ConceptBlock
-            title="Calculation methodologies — coefficient + temperature, or conservative default"
-            plainEnglish="Reg 712.433.101.1 allows two paths: (a) module temperature coefficient + site temperature extremes — gives calculated V_oc_max and V_mp; (b) conservative default multipliers — 1.2 × V_oc_stc, 1.25 × I_sc_stc. Where both available, use the lower (safer)."
-            onSite="Modern module datasheets give V_oc temperature coefficient (typically -0.25 to -0.30 %/°C), V_mp temperature coefficient (typically -0.35 to -0.45 %/°C), P_max temperature coefficient (typically -0.30 to -0.40 %/°C)."
-          >
-            <p>Worked example — V_oc_max at coldest cell temperature:</p>
-            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
-              <li>Module datasheet: V_oc_stc = 41.6 V; V_oc temperature coefficient = -0.27 %/°C</li>
-              <li>Site coldest expected cell temperature: -15°C; delta from STC 25°C = 40°C colder</li>
-              <li>Calculated: V_oc_max = 41.6 × (1 + (0.0027 × 40)) = 41.6 × 1.108 = 46.1 V per module</li>
-              <li>Conservative default: V_oc_max = 1.2 × 41.6 = 49.9 V per module</li>
-              <li>For most-conservative answer use 49.9 V — gives lower max-string-size, safer install</li>
-            </ul>
-            <p>For a 13-module string at the calculated V_oc_max:</p>
-            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
-              <li>13 × 46.1 V = 599.3 V — just under inverter 600 V absolute max</li>
-              <li>14 × 46.1 V = 645.4 V — exceeds inverter max, would destroy inverter</li>
-              <li>Maximum string size: 13 modules</li>
-            </ul>
-          </ConceptBlock>
-
-          <MpptEnvelope
-            caption="Inverter MPPT string sizing diagram — string V plotted against cell temperature for a 13-module string. At coldest -15°C, V_oc_max = 599.3 V (just under inverter 600 V absolute max — Rule 1). At STC 25°C, V_mp = 442 V (within MPPT range 200-550 V). At hottest 70°C, V_mp = 362 V (above MPPT minimum 200 V — Rule 2). The three voltage rules visualised as the string operating envelope inside the inverter MPPT range."
-          />
-
-          <InlineCheck {...inlineChecks[2]} />
-
-          <InlineCheck {...inlineChecks[3]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>String-fuse selection — Reg 712.431.101 / 102</ContentEyebrow>
-
-          <Pullquote>1 or 2 strings: no protection. 3+ with condition met: protection required.</Pullquote>
-
-          <ConceptBlock
-            title="The Reg 712.431.101 string-protection condition"
-            plainEnglish="On a parallel-string array (above 2 strings), a faulted string can draw reverse current from the parallel strings. If the parallel reverse-current capacity (Ns-1) × I_sc_max exceeds the module\'s rated reverse-current capability times the safety factor (1.35 × I_mod_max_ocer), protective devices are required."
-            onSite="Reg condition: protective devices shall be provided where 1.35 × I_mod_max_ocer < (Ns − 1) × I_sc_max. When LHS < RHS — condition MET — protection IS required. The reg also explicitly states: in a PV array with one PV string or two PV strings in parallel, no overcurrent protective device is required, regardless of the module / I_sc values. Devices go in the combiner box, sized per Reg 712.432.103 and 712.432."
-          >
-            <p>Variables explained:</p>
-            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
-              <li><strong className="text-white">I_mod_max_ocer</strong> — module rated max reverse over-current (from datasheet). Typical modern modules: 15-25 A</li>
-              <li><strong className="text-white">1.35 multiplier</strong> — conservative factor for fault-current variations</li>
-              <li><strong className="text-white">Ns</strong> — number of parallel strings on the same combiner / MPPT input</li>
-              <li><strong className="text-white">I_sc_max</strong> — string max short-circuit current = 1.25 × I_sc_stc (conservative default per Reg 712.433.101.1)</li>
-              <li><strong className="text-white">(Ns − 1)</strong> — number of parallel strings that can push reverse current into a faulted string</li>
-            </ul>
-            <p>Worked example:</p>
-            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
-              <li>Module I_mod_max_ocer = 20 A; I_sc_stc = 12.5 A; I_sc_max = 1.25 × 12.5 = 15.625 A</li>
-              <li>1 string (Ns=1): explicit reg statement — no protection required regardless</li>
-              <li>2 strings (Ns=2): explicit reg statement — no protection required regardless</li>
-              <li>3 strings (Ns=3): (3-1) × 15.625 = 31.25 A; LHS = 27 A &lt; 31.25 A → condition MET → protection required</li>
-              <li>4 strings (Ns=4): 46.875 A; LHS = 27 A &lt; 46.875 A → condition MET → protection required (higher reverse-current potential)</li>
-            </ul>
-          </ConceptBlock>
-
-          <RegsCallout
-            source="BS 7671:2018+A4:2026 · Reg 712.431.101 — string protection condition"
-            clause="In a PV array with Ns strings (above 2 strings) in parallel, protective devices shall be provided to protect each PV string where the following condition is met: 1.35 × Imop_max_ocer < (Ns − 1) × Isc_max. In a PV array with one PV string or two PV strings in parallel, no overcurrent protective device is required. NOTE 1: If the inverter has several independent maximum power point trackers (MPPT) or devices with equivalent characteristics and no reverse current can flow from one input to another input by inverter design, then Ns is the number of strings connected to one individual DC input."
-            meaning="Reg 712.431.101 sets the explicit rule: 1 or 2 parallel strings never need overcurrent protective devices, regardless of module / I_sc values. Above 2 parallel strings, the condition 1.35 × I_mod_max_ocer < (Ns-1) × I_sc_max determines whether protection is required — when the condition IS MET (LHS less than RHS), protection IS required. Device options per Reg 712.432.103; sizing per Reg 712.432; both polarities protected per Reg 712.432.101. NOTE 1: on a multi-MPPT inverter where reverse current can\'t flow between MPPT inputs, Ns counts only the strings on each individual MPPT."
-          />
-
-          <InlineCheck {...inlineChecks[4]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>Inverter selection — overloading, MPPTs, topology</ContentEyebrow>
-
-          <Pullquote>DC:AC 1.2-1.4 is the UK norm. Dual-MPPT for split orientations.</Pullquote>
-
-          <ConceptBlock
-            title="DC:AC ratio (inverter overloading) — and why 1.2-1.4 is the UK norm"
-            plainEnglish="Inverter rated AC output is rarely fully utilised — the array rarely produces full STC nameplate. Sizing the inverter at less than array peak (overloading) saves cost and improves low-irradiance operation."
-            onSite="UK practice: DC:AC ratio 1.2-1.4. Inverter clips power output to its rated AC during peak summer noon; clipping loss typically below 2% of annual yield. Manufacturer datasheet specifies max permitted overload — exceeding voids warranty."
-          >
-            <p>Economics of inverter overloading:</p>
-            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
-              <li><strong className="text-white">DC:AC = 1.0</strong> — no overload. Inverter sized for full array peak. Often operates below rated capacity, lower conversion efficiency. Highest inverter cost</li>
-              <li><strong className="text-white">DC:AC = 1.2-1.4</strong> — UK domestic norm. Inverter slightly undersized vs array peak — clips briefly at peak summer noon. Annual clipping loss typically below 2%. Inverter operates at higher proportion of rated capacity more often, improving average efficiency</li>
-              <li><strong className="text-white">DC:AC = 1.5+</strong> — aggressive overloading. Higher clipping loss (5-10% annual), lowest inverter cost. Justified on commercial installs. Manufacturer datasheet must permit</li>
-            </ul>
-          </ConceptBlock>
-
-          <ConceptBlock
-            title="Single-MPPT vs dual-MPPT vs multi-MPPT inverters"
-            plainEnglish="Single-MPPT: one DC input pair, all strings parallel. Dual-MPPT: two independent DC input pairs, each tracking its own MPP. Multi-MPPT (3-6) for larger commercial. Module-level (microinverters / optimisers) for per-module MPPT — Section 2.5."
-            onSite="UK domestic typically dual-MPPT — supports east-west splits, hipped roofs, shading flexibility. Single-MPPT acceptable for simple single-orientation arrays. MPPT count drives flexibility and cost."
-          >
-            <p>MPPT architecture decision:</p>
-            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
-              <li><strong className="text-white">Single-MPPT</strong> — simplest, cheapest. All strings electrically equivalent (same module, orientation, shading). UK domestic on single south-facing roofs</li>
-              <li><strong className="text-white">Dual-MPPT</strong> — UK domestic standard. Two independent strings on different orientations or shading patterns. East-west splits, hipped roofs. Per-MPPT current typically 12-15 A (vs 20-25 A on single-MPPT)</li>
-              <li><strong className="text-white">Multi-MPPT (3-6 MPPTs)</strong> — commercial. Larger arrays with multiple orientations / shading zones. Each MPPT independently tracked</li>
-              <li><strong className="text-white">Module-level (microinverters / power optimisers)</strong> — per-module MPP tracking. Highest resolution; recovers shading losses; rapid-shutdown capable. Cost premium £100-£150 per module. Section 2.5</li>
-            </ul>
-          </ConceptBlock>
-
-          <InverterArchitectures
-            caption="Inverter MPPT architecture diagram — three side-by-side configurations: (1) single-MPPT with one string of 14 modules; (2) dual-MPPT with one string of 8 modules on MPPT-A (south roof) and 6 modules on MPPT-B (west roof); (3) microinverter system with one microinverter per module, AC trunking back to consumer unit. Annotated with MPPT count, per-input current rating, typical use case."
-          />
-
-          <InlineCheck {...inlineChecks[5]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>MCS MIS 3002 design pack — the deliverable</ContentEyebrow>
-
-          <Pullquote>The design pack is the audit trail. Calculations explicit. Single-line schematic mandatory.</Pullquote>
-
-          <ConceptBlock
-            title="MCS MIS 3002 — what the design pack must contain"
-            plainEnglish="MCS MIS 3002 specifies the design pack as the deliverable for MCS-funded PV installs. The audit trail showing the install was designed correctly — survey, modelling, schematic, schedule, calculations, customer pack, cert."
-            onSite="The MCS auditor reads the design pack against BS 7671 Section 712 and MIS 3002 — gaps are major findings. The honest design pack has the calculations explicit, not hidden."
-          >
-            <p>The MCS MIS 3002 design pack core content:</p>
-            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
-              <li><strong className="text-white">Site survey</strong> — site address, orientation, tilt, shading factor (from objective shade analysis per Section 1), structural assessment, roof type and condition, electrical infrastructure</li>
-              <li><strong className="text-white">Yield modelling</strong> — PVGIS or equivalent output showing annual and monthly yield in kWh; assumed performance ratio</li>
-              <li><strong className="text-white">System schematic</strong> — single-line diagram: modules, strings, combiner, DC isolator, inverter, AC isolator, RCBO / CU connection, metering, DNO connection point</li>
-              <li><strong className="text-white">Component schedule</strong> — manufacturer, model, nameplate / rating for modules, inverter, DC isolator, string fuses, DC cable, AC cable, AC isolator, RCBO, mounting</li>
-              <li><strong className="text-white">Inverter MPPT calculations</strong> — three voltage checks per Reg 712.433.101.1 explicit, with temperature-coefficient values, site temperature extremes, calculated V_oc_max / V_mp / V_oc_max-vs-MPPT-max</li>
-              <li><strong className="text-white">Cable sizing calculations</strong> — DC cable per Iz ≥ I_sc_max (Section 4), with CCC, grouping, ambient temperature, route length. AC cable per inverter rated AC current (Section 6)</li>
-              <li><strong className="text-white">String-protection calculations</strong> — Reg 712.431.101 condition check (above 2 strings); if protection required per Reg 712.431.102, devices per Reg 712.432.103 (gPV per BS EN 60269-6 / fuse-combination per BS EN 60947-3 / DC-MCBs per BS EN 60947-2 / 60898-2 / IEC 60898-3); sizing per Reg 712.432 (1.1 × I_sc_max &lt; I_n ≤ I_mod_max_ocer); both polarities per Reg 712.432.101; bidirectional per Reg 712.533.101</li>
-              <li><strong className="text-white">Customer information pack</strong> — site-specific operating instructions, maintenance schedule, emergency contacts, warranty details, MCS cert</li>
-              <li><strong className="text-white">MCS certificate</strong> — issued after install and commissioning. Feeds the EPC and property valuation</li>
-            </ul>
-          </ConceptBlock>
-
-          <Mis3002DesignPack
-            caption="MCS MIS 3002 design pack content map — three columns. Column 1 (Design): site survey, yield modelling, schematic, schedule, calculations. Column 2 (Install): commissioning records, BS EN 62446-1 test results, photographs, schedule of test results. Column 3 (Customer): customer information pack, MCS cert, warranty pack, EPC update. Audit trail running through all three."
-          />
-
-          <InlineCheck {...inlineChecks[6]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>What it looks like in the wild</ContentEyebrow>
-
-          <Scenario
-            title="A customer wants 8 kWp on a small south-facing roof — does it fit?"
-            situation="Customer\'s south-facing roof is 28 m² total. Wants 8 kWp install for EV charging + battery support. Standard 415 W modules available (1.87 m² each)."
-            whatToDo="Module count for 8 kWp: 8,000 / 415 = 19.3 → 20 modules. Roof area for 20 modules at 80-90% packing factor: 20 × 1.87 / 0.85 = 44 m² required. Available 28 m² is well short — won\'t fit. Honest survey: (a) reduce kWp to 5-5.5 kWp (12-14 modules) to fit the 28 m² roof; (b) extend the array to a secondary east or west surface (split arrangement, dual-MPPT inverter); (c) consider larger-format modules (e.g. 500 W) — 16 × 500 W = 8 kWp, but physically larger (2.31 m² each), 16 × 2.31 = 37 m² — still doesn\'t fit. Realistic outcome: 5.5 kWp on the 28 m² roof, or 8 kWp by extending to a second surface."
-            whyItMatters="Architectural fit is the binding constraint on many UK domestic installs. The honest survey converts the customer\'s preferred kWp into the realistic option set. The MCS MIS 3002 design pack records the chosen option and the rationale."
-          />
-
-          <Scenario
-            title="A customer\'s site is shaded — should we use module-level optimisation?"
-            situation="Customer\'s south-facing roof has a tree casting morning shade on 2 of 12 proposed modules from 7-9 am summer. Shade-analysis tool shows annual shading factor 0.88 (12% loss) on the affected modules."
-            whatToDo="Compare string-level vs module-level. String-level (12 modules series, single MPPT): the 2 shaded modules drag the string — annual yield ~85% of unshaded (15% loss). Module-level (microinverters or power optimisers): each module operates at its own MPP — annual yield ~97% of unshaded (3% loss). Module-level recovers 12 percentage points. Cost: 12 modules × £100 (typical optimiser premium) = £1,200 extra. Yield recovery: 12% × 5,500 kWh/year × 25 years × 12 p/kWh = ~£1,980. Module-level pays back over the install life. Design-pack records the analysis and choice."
-            whyItMatters="The objective shade analysis at survey informs the optimisation decision. Without it, the install commissions with string-level architecture, the customer experiences 15% lower yield than modelled, and the optimisation retrofit costs more than installing it day-one."
-          />
-
-          <CommonMistake
-            title="Sizing the string without checking V_oc at coldest cell temperature"
-            whatHappens="An installer sizes a string of 15 modules at 41.6 V_oc_stc = 624 V. Inverter absolute max DC is 600 V. The install works through summer; the first cold winter morning (cell -10°C, V_oc rises ~10%) the string V_oc_max = 686 V — exceeds inverter max. Inverter blows. Warranty void; replacement £1,500+; customer disputes."
-            doInstead="Always run Rule 1 against the coldest expected cell temperature for the install location. Modern module datasheets give V_oc temperature coefficient; UK coldest cell temperature -15°C for domestic. Calculate V_oc_max per module, multiply by string size, compare to inverter absolute max DC. Conservative default 1.2 × V_oc_stc is the fallback. Design pack records the calculation; auditor checks it."
-          />
-
-          <CommonMistake
-            title="Connecting 3+ parallel strings without applying the Reg 712.431.101 fuse inequality"
-            whatHappens="An installer connects 3 parallel strings on a single MPPT without checking Reg 712.431.101. The module I_mod_max_ocer (20 A) is exceeded by (Ns-1) × I_sc_max = 2 × 15.625 = 31.25 A. The install commissions normally — but a single faulted string draws reverse current up to 31.25 A through the modules, exceeding the rated 20 A. Module damage; potentially fire (Section 4 covers fire on DC side per Reg 712.421)."
-            doInstead="Always apply the Reg 712.431.101 condition at design. Substitute the module I_mod_max_ocer, number of parallel strings, and I_sc_max = 1.25 × I_sc_stc. When LHS < RHS (condition MET), protection required — sized per Reg 712.432 (1.1 × I_sc_max < I_n ≤ I_mod_max_ocer) using devices per Reg 712.432.103 (gPV per BS EN 60269-6 or DC-rated MCBs), both polarities per Reg 712.432.101. Design pack records the calculation."
-          />
-
-          <CommonMistake
-            title="MCS audit fails because the inverter MPPT calculations weren\'t in the design pack"
-            whatHappens="An installer completes a 6 kWp install. The design pack lists components but doesn\'t show inverter MPPT sizing calculations explicitly. MCS audit: major finding — Reg 712.433.101.1 calculations missing. Rectification: retrospectively produce calculations, evidence against as-installed string and inverter, resubmit the design pack."
-            doInstead="MCS MIS 3002 design pack expects the inverter MPPT calculations EXPLICIT — three voltage checks per Reg 712.433.101.1 with temperature coefficients, site extremes, and calculated V_oc_max / V_mp. The auditor reads the design pack against BS 7671 Section 712 and MIS 3002 — gaps trigger major findings. Day-one discipline saves the rectification cost."
-          />
-
-          <SectionRule />
-
-          <KeyTakeaways
-            points={[
-              'kWp = sum of module STC nameplate powers — the design reference for inverter sizing, cable sizing, EREC G98/G99 threshold, SEG export contracting.',
-              'UK domestic installs typically 4-8 kWp; 5-6 kWp the most common size at the EREC G98 threshold.',
-              'Module count = kWp / module wattage, constrained by realistic packing factor (80-90%) on available roof area. Modern 400-450 W modules typical in 2025-2026.',
-              'Inverter MPPT sizing requires THREE voltage checks per Reg 712.433.101.1: V_oc_max cold vs inverter absolute max; V_mp hot vs inverter MPPT min; V_oc_max cold vs inverter MPPT max.',
-              'Conservative defaults per Reg 712.433.101.1: V_oc_max = 1.2 × V_oc_stc; I_sc_max = 1.25 × I_sc_stc when manufacturer temperature data and site extremes not used.',
-              'Inverter overloading DC:AC = 1.2-1.4 is UK norm — clipping loss typically below 2% of annual yield. Manufacturer datasheet sets permitted ratio.',
-              'String-protection per Reg 712.431.101: required (above 2 strings) where condition 1.35 × I_mod_max_ocer < (Ns-1) × I_sc_max IS MET. 1 or 2 strings: explicitly never need protection. Devices per Reg 712.432.103 (gPV per BS EN 60269-6, BS EN 60947-3 fuse-combination, or DC-rated MCBs per BS EN 60947-2 / 60898-2 / IEC 60898-3). Sizing per Reg 712.432: 1.1 × I_sc_max < I_n ≤ I_mod_max_ocer. Both polarities protected per Reg 712.432.101; blocking diodes NOT acceptable per Reg 712.432.102.',
-              'MCS MIS 3002 design pack: site survey, yield modelling, schematic, schedule, MPPT calculations, cable sizing, string-fuse inequality check, customer information pack, MCS cert.',
-            ]}
-          />
-
-          <FAQ items={faqs} />
-
-          <Quiz questions={quizQuestions} title="Section 2 · Knowledge check" />
-
-          <div className="grid grid-cols-2 gap-3 pt-2">
-            <button
-              type="button"
-              onClick={() =>
-                navigate('/electrician/upskilling/renewable-energy-module-3-section-1')
-              }
-              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
-                <ChevronLeft className="h-3 w-3" /> Section 1
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-white truncate">
-                Irradiance &amp; shading
-              </div>
-            </button>
-            <button
-              type="button"
-              onClick={() =>
-                navigate('/electrician/upskilling/renewable-energy-module-3-section-3')
-              }
-              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
-                Next section <ChevronRight className="h-3 w-3" />
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-black truncate">
-                3.3 Roof safety &amp; mounting
-              </div>
-            </button>
-          </div>
-        </PageFrame>
-      </div>
-    </div>
+            <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+              Next section <ChevronRight className="h-3 w-3" />
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-black truncate">
+              3.3 Roof safety &amp; mounting
+            </div>
+          </button>
+        </div>
+      </HubBody>
+    </HubPage>
   );
 }

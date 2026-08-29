@@ -279,19 +279,26 @@ export default function TakeQuizPage() {
             // recap can show explanations and correct answers. One retry,
             // then say so: rendering the recap without this data mislabels
             // every question as "no answer key".
-            let { data: rev, error: revErr } = await supabase.rpc('get_attempt_review' as never, {
-              p_attempt_id: att.id,
-            } as never);
-            if (revErr) {
-              ({ data: rev, error: revErr } = await supabase.rpc('get_attempt_review' as never, {
+            let { data: rev, error: revErr } = await supabase.rpc(
+              'get_attempt_review' as never,
+              {
                 p_attempt_id: att.id,
-              } as never));
+              } as never
+            );
+            if (revErr) {
+              ({ data: rev, error: revErr } = await supabase.rpc(
+                'get_attempt_review' as never,
+                {
+                  p_attempt_id: att.id,
+                } as never
+              ));
             }
             if (cancelled) return;
             if (revErr) {
               toast({
                 title: "Couldn't load your full results",
-                description: 'Your score is shown — pull down to refresh for the question breakdown.',
+                description:
+                  'Your score is shown — pull down to refresh for the question breakdown.',
               });
             }
             const review = rev as unknown as AttemptReview | null;
@@ -458,11 +465,14 @@ export default function TakeQuizPage() {
     const prev = answers[qid];
     // Optimistic local selection (no lock, no reveal yet).
     setAnswers((cur) => ({ ...cur, [qid]: value }));
-    const { data, error: revealErr } = await supabase.rpc('reveal_quiz_answer' as never, {
-      p_attempt_id: attempt.id,
-      p_question_id: qid,
-      p_answer: value,
-    } as never);
+    const { data, error: revealErr } = await supabase.rpc(
+      'reveal_quiz_answer' as never,
+      {
+        p_attempt_id: attempt.id,
+        p_question_id: qid,
+        p_answer: value,
+      } as never
+    );
     if (revealErr) {
       if ((revealErr.message ?? '').includes('already answered')) {
         // Server already holds a locked answer for this question (e.g. a
@@ -537,11 +547,14 @@ export default function TakeQuizPage() {
         if (unsynced.length > 0) {
           const results = await Promise.all(
             unsynced.map(async ([qid, a]) => {
-              const { data, error: revealErr } = await supabase.rpc('reveal_quiz_answer' as never, {
-                p_attempt_id: attempt.id,
-                p_question_id: qid,
-                p_answer: a,
-              } as never);
+              const { data, error: revealErr } = await supabase.rpc(
+                'reveal_quiz_answer' as never,
+                {
+                  p_attempt_id: attempt.id,
+                  p_question_id: qid,
+                  p_answer: a,
+                } as never
+              );
               return [qid, data as unknown as RevealedKey | null, revealErr] as const;
             })
           );
@@ -564,9 +577,12 @@ export default function TakeQuizPage() {
         }
 
         // Server grades its own stored answers — no payload from the client.
-        const { data, error: subErr } = await supabase.rpc('submit_quiz_attempt' as never, {
-          p_attempt_id: attempt.id,
-        } as never);
+        const { data, error: subErr } = await supabase.rpc(
+          'submit_quiz_attempt' as never,
+          {
+            p_attempt_id: attempt.id,
+          } as never
+        );
         if (subErr) throw new Error(subErr.message);
         const res = data as unknown as SubmitResult;
 

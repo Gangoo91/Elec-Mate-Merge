@@ -16,9 +16,10 @@ interface ChatContainerProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 /**
- * ChatContainer — Editorial full-height chat shell.
+ * ChatContainer — full-height chat shell on the app's volt ground.
  *
- * Flat `bg-[#0a0a0a]` background. No ambient gradients, no glow.
+ * `bg-elec-dark`, the same canvas the hubs sit on — the chat used to be its
+ * own flat `#0a0a0a`, which is why it read darker than every page around it.
  * Safe-area aware. Fills the viewport region provided by its parent.
  */
 export function ChatContainer({
@@ -32,7 +33,7 @@ export function ChatContainer({
     <div
       {...divProps}
       className={cn(
-        'flex flex-col h-full w-full min-w-0 bg-[#0a0a0a] overflow-hidden relative',
+        'flex flex-col h-full w-full min-w-0 bg-elec-dark overflow-hidden relative',
         className
       )}
       /*
@@ -135,14 +136,15 @@ interface ChatInputAreaProps {
 /**
  * ChatInputArea — Sticky bottom input container.
  *
- * Solid `bg-[#0a0a0a]` surface with a single hairline on top.
- * Safe-area padding for iOS home indicator.
+ * Translucent volt-ground surface with a blur, matching the masthead above,
+ * so transcript content sliding beneath it stays faintly visible — the same
+ * treatment the hub mastheads use. Safe-area padding for iOS home indicator.
  */
 export function ChatInputArea({ children, className }: ChatInputAreaProps) {
   return (
     <div
       className={cn(
-        'shrink-0 z-20 relative bg-[#0a0a0a] border-t border-white/[0.08]',
+        'shrink-0 z-20 relative bg-elec-dark/95 backdrop-blur-sm border-t border-white/[0.08]',
         'pb-safe pt-2 px-3 sm:px-4',
         className
       )}

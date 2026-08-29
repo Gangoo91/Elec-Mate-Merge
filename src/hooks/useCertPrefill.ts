@@ -95,6 +95,28 @@ const LAST_CERT_FIELDS: Record<ReportType, string[]> = {
    */
   'board-schedule': [],
   /*
+   * A visual condition report DOES benefit from prefill: the supply and
+   * earthing particulars are properties of the premises, not of the visit,
+   * and copying them forward saves reading them off the board again.
+   */
+  'visual-condition': ['earthingArrangement', 'mainSwitchRating', 'boardLocation', 'boardMake', 'supplyType'],
+  /*
+   * 🔴 Deliberately empty (ELE-1634).
+   *
+   * A pre-purchase survey records no supply or board particulars at all —
+   * nothing is opened, isolated or measured, and the PDF prints those fields
+   * blank on purpose. Copying an earthing arrangement forward from an earlier
+   * certificate would put a characteristic on the survey that the surveyor
+   * never established, which is the one thing this document must not do.
+   */
+  'pre-purchase-survey': [],
+  /*
+   * Premises particulars only. Nothing about the visit itself carries over —
+   * the whole value of a maintenance report is that it records THIS visit, and
+   * a copied thermal finding or torque setting would be a fabrication.
+   */
+  'routine-inspection': ['premisesType', 'supplyType', 'boardsCovered'],
+  /*
    * ⚠️ These two were MISSING, which made `Record<ReportType, string[]>` a
    * standing type error rather than the exhaustive map it is declared to be —
    * so the compiler had stopped policing this list at all. Empty arrays keep

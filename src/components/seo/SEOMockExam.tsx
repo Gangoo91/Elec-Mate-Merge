@@ -43,6 +43,43 @@ import { supabase } from '@/integrations/supabase/client';
 import { recordMiss } from '@/lib/missedQuestions';
 import { EmailCaptureForm } from '@/components/landing/EmailCaptureForm';
 import { PANEL, LABEL } from '@/components/seo/seoSurface';
+import { storageGetJSONSync, storageSetJSONSync, storageRemoveSync } from '@/utils/storage';
+
+/**
+ * In-progress attempt, persisted so a reload does not wipe the paper.
+ *
+ * 🔴 WHY. Everything about a live attempt sat in `useState` and nothing else,
+ * so ANY reload lost the lot — every answer, the flags and the timer, with no
+ * warning. That is not hypothetical: the stale-chunk error boundary
+ * (`category: chunk`, ~94 events in 30 days, all on `analytics-events`)
+ * deliberately force-reloads the page to recover, and iOS evicts backgrounded
+ * tabs routinely. A 60-question timed paper could vanish at question 55.
+ *
+ * The drawn questions are stored too, not just the answers. Questions are drawn
+ * stratified and the options reshuffled with a per-attempt salt, so redrawing on
+ * resume would hand back a DIFFERENT paper and every stored answer index would
+ * point at the wrong option.
+ */
+interface SavedAttempt {
+  /** Bumped when the shape changes, so an old payload is discarded not misread. */
+  v: 1;
+  questions: SEOMockExamQuestion[];
+  answers: (number | null)[];
+  current: number;
+  flagged: number[];
+  attempt: number;
+  startedAt: number;
+  /**
+   * Wall-clock end, not "seconds remaining".
+   *
+   * Storing the remaining seconds would let anyone top the clock back up by
+   * refreshing, which makes a timed paper meaningless. The trade-off is
+   * deliberate: leave for longer than the limit and the attempt is gone.
+   */
+  deadline: number;
+}
+
+const resumeKey = (pathname: string) => `mockExam:progress:${pathname}`;
 
 export interface SEOMockExamQuestion {
   id: number | string;
@@ -234,7 +271,7 @@ export function SEOMockExam({
    * exactly who sits these. It covered the Next button, so the exam looked frozen:
    * two users reported "can't get to the next question" five days apart.
    *
-   * Same mechanism ExamMobileLayout uses for the Study Centre exams, so there is
+   * Same mechanism the Study Centre papers use — each toggles `body.exam-active` — so there is
    * one way of doing this rather than two. Driven off state, not the URL, so no
    * exam route can be missed. Only while ANSWERING — once results are up the
    * page wants its CTA back.
@@ -264,6 +301,8 @@ export function SEOMockExam({
   /** Shown when Submit is pressed with questions still blank. Submitting by
    *  accident scores every blank as wrong, which is how you end up with a 0%. */
   const [confirmingSubmit, setConfirmingSubmit] = useState(false);
+  /** True when this attempt was restored from a previous session. */
+  const [resumed, setResumed] = useState(false);
   /**
    * How often everyone else gets each question wrong, keyed by question id.
    * Pulled from `seo_mock_question_stats` (public-read) after submitting, and
@@ -292,13 +331,15 @@ export function SEOMockExam({
           .map((id) => questionBank.find((q) => q.id === id))
           .filter((q): q is SEOMockExamQuestion => Boolean(q))
       : [];
-    const picked = chosen.length
-      ? chosen
-      : questionBank.slice(0, Math.min(3, questionBank.length));
+    const picked = chosen.length ? chosen : questionBank.slice(0, Math.min(3, questionBank.length));
     return shuffleAllQuestionOptions(picked, 0);
   }, [questionBank, sampleQuestionIds]);
 
   const start = useCallback(() => {
+    // A fresh attempt supersedes any saved one — otherwise a stale paper could
+    // be restored over the top on the next mount.
+    storageRemoveSync(resumeKey(location.pathname));
+    setResumed(false);
     const picked = shuffleAllQuestionOptions(
       drawStratified(questionBank, questionsPerExam, difficultyMix),
       createShuffleSalt()
@@ -326,11 +367,82 @@ export function SEOMockExam({
       const top = el.getBoundingClientRect().top + window.scrollY - STICKY_OFFSET;
       window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
     });
-  }, [questionBank, questionsPerExam, timeLimitMinutes, difficultyMix, onStarted]);
+  }, [
+    questionBank,
+    questionsPerExam,
+    timeLimitMinutes,
+    difficultyMix,
+    onStarted,
+    location.pathname,
+  ]);
+
+  /**
+   * Restore an unfinished attempt on mount.
+   *
+   * Runs once, before the user can interact. An expired attempt is discarded
+   * rather than auto-submitted: silently posting a score for a paper someone
+   * walked away from would put a bogus row in `seo_mock_attempts` and skew the
+   * pass-rate calibration.
+   */
+  useEffect(() => {
+    const saved = storageGetJSONSync<SavedAttempt | null>(resumeKey(location.pathname), null);
+    if (!saved || saved.v !== 1 || !saved.questions?.length) return;
+    const remaining = Math.ceil((saved.deadline - Date.now()) / 1000);
+    if (remaining <= 0) {
+      storageRemoveSync(resumeKey(location.pathname));
+      return;
+    }
+    setQuestions(saved.questions);
+    setAnswers(saved.answers);
+    setCurrent(saved.current);
+    setFlagged(new Set(saved.flagged));
+    setAttempt(saved.attempt);
+    setStartedAt(saved.startedAt);
+    setSecondsLeft(remaining);
+    submitGuardRef.current = false;
+    setStarted(true);
+    setResumed(true);
+    onStarted?.();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  /**
+   * Persist while the attempt is live. Deliberately NOT throttled — the writes
+   * are small and only fire on answer/navigation changes, and losing the last
+   * answer before a crash is exactly the failure this exists to prevent.
+   */
+  useEffect(() => {
+    if (!started || submitted || !questions.length || startedAt === null) return;
+    storageSetJSONSync<SavedAttempt>(resumeKey(location.pathname), {
+      v: 1,
+      questions,
+      answers,
+      current,
+      flagged: [...flagged],
+      attempt,
+      startedAt,
+      deadline: startedAt + timeLimitMinutes * 60_000,
+    });
+  }, [
+    started,
+    submitted,
+    questions,
+    answers,
+    current,
+    flagged,
+    attempt,
+    startedAt,
+    timeLimitMinutes,
+    location.pathname,
+  ]);
 
   const submit = useCallback(() => {
     if (submitGuardRef.current) return;
     submitGuardRef.current = true;
+    // The attempt is over — drop the saved copy so a later visit starts clean
+    // rather than resuming a paper that has already been marked.
+    storageRemoveSync(resumeKey(location.pathname));
+    setResumed(false);
     setSubmitted(true);
     setStarted(false);
     setConfirmingSubmit(false);
@@ -372,7 +484,9 @@ export function SEOMockExam({
     // public/anonymous). Each answered-but-wrong question lands in the
     // personal missed pile that powers /apprentice/revision. Fire-and-
     // forget; zero UI change to the exam flow.
-    const missed = questions.filter((q, i) => answers[i] !== null && answers[i] !== q.correctAnswer);
+    const missed = questions.filter(
+      (q, i) => answers[i] !== null && answers[i] !== q.correctAnswer
+    );
     if (missed.length > 0) {
       void supabase.auth.getSession().then(({ data }) => {
         const uid = data.session?.user?.id;
@@ -740,6 +854,14 @@ export function SEOMockExam({
 
           {/* Question column */}
           <div className="pb-24 pt-6 lg:rounded-2xl lg:border lg:border-white/[0.08] lg:bg-[hsl(0_0%_9%)] lg:p-8 lg:pb-8 lg:pt-8">
+            {/* Say so when the paper came back from a previous session — landing
+                mid-exam with answers already filled in is alarming otherwise. */}
+            {resumed && (
+              <p className="mb-4 border-l-2 border-elec-yellow bg-elec-yellow/[0.08] px-3 py-2 text-[13px] leading-relaxed text-white">
+                <span className="font-semibold">Picked up where you left off.</span> Your answers
+                and remaining time were restored — the clock kept running.
+              </p>
+            )}
             <div className="mb-5 hidden items-baseline justify-between lg:flex">
               <p className={`${LABEL} text-white`}>
                 Question {current + 1} of {questions.length}
@@ -771,9 +893,7 @@ export function SEOMockExam({
                     >
                       <span
                         className={`inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-md text-[12.5px] font-bold ${
-                          selected
-                            ? 'bg-elec-yellow text-black'
-                            : 'bg-[hsl(0_0%_16%)] text-white'
+                          selected ? 'bg-elec-yellow text-black' : 'bg-[hsl(0_0%_16%)] text-white'
                         }`}
                       >
                         {String.fromCharCode(65 + i)}
@@ -1092,10 +1212,7 @@ export function SEOMockExam({
               </h2>
               <ul className={`${PANEL} divide-y divide-white/[0.08]`}>
                 {weakAreas.map((c, i) => (
-                  <li
-                    key={c.name}
-                    className="flex items-baseline gap-3 px-4 py-3 sm:px-5"
-                  >
+                  <li key={c.name} className="flex items-baseline gap-3 px-4 py-3 sm:px-5">
                     <RowNumber n={i + 1} />
                     <span className="flex-1 text-[14.5px] text-white">{c.name}</span>
                     <span className="shrink-0 text-[14px] font-semibold tabular-nums text-orange-300">
@@ -1210,8 +1327,7 @@ export function SEOMockExam({
               {questions.map((q, idx) => {
                 const userAnswer = answers[idx];
                 const isCorrect = userAnswer === q.correctAnswer;
-                const verdict =
-                  userAnswer === null ? 'Skipped' : isCorrect ? 'Correct' : 'Wrong';
+                const verdict = userAnswer === null ? 'Skipped' : isCorrect ? 'Correct' : 'Wrong';
                 const verdictTone =
                   userAnswer === null
                     ? 'text-white'

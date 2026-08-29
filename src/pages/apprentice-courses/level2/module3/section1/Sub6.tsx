@@ -14,11 +14,11 @@
  */
 
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
-import { PageFrame, PageHero } from '@/components/college/primitives';
 import {
   TLDR,
   ConceptBlock,
@@ -46,8 +46,8 @@ const checks = [
     question:
       "What's the practical difference between a Competent Person Scheme (NICEIC, NAPIT, ELECSA) and a JIB grading?",
     options: [
-      "They are two names for the same thing — a CPS card and a JIB card both register an individual electrician as competent, and a contractor only needs one of them to self-certify Part P work and get onto a JIB site.",
-      "A CPS is a Government-approved scheme that lets a contractor self-certify Part P notifiable work; JIB is the joint employer/union body that sets the pay grades and national working rules. CPS is contractor-level; JIB grading is operative-level.",
+      'They are two names for the same thing — a CPS card and a JIB card both register an individual electrician as competent, and a contractor only needs one of them to self-certify Part P work and get onto a JIB site.',
+      'A CPS is a Government-approved scheme that lets a contractor self-certify Part P notifiable work; JIB is the joint employer/union body that sets the pay grades and national working rules. CPS is contractor-level; JIB grading is operative-level.',
       "A CPS sets the operative's pay grade and progression ladder, while JIB grading registers the firm to self-certify Part P work — so the apprentice carries the CPS card and the firm holds the JIB registration.",
       "A CPS is the electricians' trade union and JIB is the competent person scheme — the CPS negotiates pay and conditions while JIB assesses the firm's technical work and lets it notify Building Control directly.",
     ],
@@ -62,7 +62,7 @@ const checks = [
     options: [
       "Public Liability (PL) for injury to the firm's own employees; Employers' Liability (EL) for design and specification errors; Professional Indemnity (PI) for damage to third-party property — three lines that between them cover every exposure the firm faces.",
       "Buildings and Contents cover for the firm's premises and stock; Goods in Transit cover for tools and materials carried in the van; Public Liability for everything else — the three lines a contractor needs before taking on staff.",
-      "Personal Accident cover for the operatives; Legal Expenses cover for any disputes; Public Liability for third-party claims — the standard package every electrical firm is legally required to hold.",
+      'Personal Accident cover for the operatives; Legal Expenses cover for any disputes; Public Liability for third-party claims — the standard package every electrical firm is legally required to hold.',
       "Public Liability (PL) for damage / injury to third parties from the firm's activities; Employers' Liability (EL), compulsory for any firm with employees; Professional Indemnity (PI) for design / advice / specification errors.",
     ],
     correctIndex: 3,
@@ -77,7 +77,7 @@ const checks = [
       'None that matter immediately — suspension only takes effect after a 12-month appeal period, so the firm can carry on self-certifying notifiable work and using the scheme logo until the appeal is finally decided.',
       'A criminal prosecution by Building Control — suspension automatically refers the firm to the local authority, which charges it with an offence under the Building Regulations and seeks an unlimited fine before any commercial consequences apply.',
       'Immediate loss of Part P self-certification authority, likely cancellation of PL cover, forced withdrawal of the scheme logo, and removal from approved-supplier lists — the trading firm collapses commercially even though no statute has been breached.',
-      'Loss of the firm\'s JIB affiliation and the operatives\' grades — suspension downgrades every electrician in the firm and bars them from JIB-affiliated sites until the firm is reinstated.',
+      "Loss of the firm's JIB affiliation and the operatives' grades — suspension downgrades every electrician in the firm and bars them from JIB-affiliated sites until the firm is reinstated.",
     ],
     correctIndex: 2,
     explanation:
@@ -96,7 +96,7 @@ const quizQuestions = [
       'Either (a) issue a Minor Works Certificate, which the customer keeps as proof of notification; OR (b) issue an Electrical Installation Certificate. Both certificates self-notify the work to Building Control automatically when signed, so no separate notification step is needed and route (a) is the quicker of the two.',
       'Either (a) Competent Person Scheme self-certification — registered contractor uploads the cert and the scheme notifies LABC; OR (b) LABC notification — non-registered contractor must notify Building Control before starting, pay the fee, and be inspected. Route (a) takes minutes; route (b) takes weeks plus a fee.',
       'Either (a) register the work with the HSE through the F2508 portal; OR (b) notify the DNO before energising. Route (a) is the standard self-certification path for scheme members and is faster because it is handled online without an inspection.',
-      'Either (a) notify the customer\'s buildings insurer, who records the work as compliant; OR (b) lodge the certificate with the IET. Route (a) is quicker because the insurer accepts the certificate immediately, whereas the IET route involves a verification delay.',
+      "Either (a) notify the customer's buildings insurer, who records the work as compliant; OR (b) lodge the certificate with the IET. Route (a) is quicker because the insurer accepts the certificate immediately, whereas the IET route involves a verification delay.",
     ],
     correctAnswer: 1,
     explanation:
@@ -107,7 +107,7 @@ const quizQuestions = [
     question:
       "The Employers' Liability (Compulsory Insurance) Act 1969 makes EL insurance compulsory for most employers in Great Britain. What is the minimum required cover and where must the certificate be displayed?",
     options: [
-      'Minimum £1 million cover, with the certificate held at the firm\'s registered office and produced only on request by an HSE inspector — there is no requirement to display it where employees work.',
+      "Minimum £1 million cover, with the certificate held at the firm's registered office and produced only on request by an HSE inspector — there is no requirement to display it where employees work.",
       'Minimum £2 million cover, matching the Public Liability minimum, with the certificate kept in the company vehicle so it travels to each site the operatives work on.',
       'Minimum £5 million cover (most policies are written at £10m as standard), with the certificate displayed at each place of business where employees can readily access it (paper or electronic).',
       'Minimum £10 million cover by statute, with the certificate displayed only at the head office because that is where the contract of employment is held — site display is not required under the 1969 Act.',
@@ -122,9 +122,9 @@ const quizQuestions = [
       "An electrical contractor causes a fire in a customer's house through a faulty connection. The customer sues. Which two routes can a civil claim follow and which is more commonly pursued?",
     options: [
       "Two routes — (a) a complaint to the contractor's Competent Person Scheme, which can order compensation; AND (b) a report to Trading Standards, which can prosecute. The scheme route is more commonly used because it is faster and free to the customer.",
-      "Two routes — (a) a claim under the Defective Premises Act 1972 for the cost of putting the dwelling right; AND (b) a claim to the buildings insurer. The insurance route is more commonly pursued because it pays out faster than a court claim.",
-      "Two routes — (a) a criminal complaint to the HSE under EAWR; AND (b) a civil claim for damages. The HSE route is more commonly pursued because a conviction makes the civil damages automatic.",
-      "Two parallel civil routes — (a) breach of contract (the Consumer Rights Act 2015 implied term that work be done with reasonable care and skill); AND (b) the tort of negligence. Both can be pleaded in the same claim, with negligence usually the lead.",
+      'Two routes — (a) a claim under the Defective Premises Act 1972 for the cost of putting the dwelling right; AND (b) a claim to the buildings insurer. The insurance route is more commonly pursued because it pays out faster than a court claim.',
+      'Two routes — (a) a criminal complaint to the HSE under EAWR; AND (b) a civil claim for damages. The HSE route is more commonly pursued because a conviction makes the civil damages automatic.',
+      'Two parallel civil routes — (a) breach of contract (the Consumer Rights Act 2015 implied term that work be done with reasonable care and skill); AND (b) the tort of negligence. Both can be pleaded in the same claim, with negligence usually the lead.',
     ],
     correctAnswer: 3,
     explanation:
@@ -135,10 +135,10 @@ const quizQuestions = [
     question:
       'An electrical contractor designs and specifies a bespoke distribution arrangement for a customer (without doing the install). The design later causes a problem. Which insurance line is primarily in play?',
     options: [
-      "Professional Indemnity (PI) — covers the firm against claims arising from errors, omissions or negligent advice in its professional capacity (design, specification, recommendation), i.e. economic loss caused by bad design rather than physical damage.",
-      "Public Liability (PL) — because the design error will eventually cause physical damage or injury to a third party, PL is the line that responds to any design-stage mistake even when no installation work was carried out.",
+      'Professional Indemnity (PI) — covers the firm against claims arising from errors, omissions or negligent advice in its professional capacity (design, specification, recommendation), i.e. economic loss caused by bad design rather than physical damage.',
+      'Public Liability (PL) — because the design error will eventually cause physical damage or injury to a third party, PL is the line that responds to any design-stage mistake even when no installation work was carried out.',
       "Employers' Liability (EL) — because the design was produced by an employee of the firm, the claim arises out of that employee's work and so falls under the compulsory EL cover.",
-      "Buildings and Contents cover — because the design relates to a fixed installation in a building, any claim is met by the property policy covering the structure rather than a liability line.",
+      'Buildings and Contents cover — because the design relates to a fixed installation in a building, any claim is met by the property policy covering the structure rather than a liability line.',
     ],
     correctAnswer: 0,
     explanation:
@@ -149,10 +149,10 @@ const quizQuestions = [
     question:
       "An apprentice on Year 1 isn't on a Competent Person Scheme themselves — schemes register the firm, not the individual operative. So what scheme-membership does the apprentice's employer need, and what does the apprentice carry personally?",
     options: [
-      "The apprentice must hold their own Competent Person Scheme registration from day one so they can sign off their own work, while the firm only needs Public Liability insurance — the scheme is operative-level and the insurance is firm-level.",
+      'The apprentice must hold their own Competent Person Scheme registration from day one so they can sign off their own work, while the firm only needs Public Liability insurance — the scheme is operative-level and the insurance is firm-level.',
       "The employer's firm needs Competent Person Scheme registration (NICEIC / NAPIT / ELECSA) to self-certify notifiable work; the apprentice carries personal credentials (JIB card, ECS card, college enrolment record) but no personal CPS membership.",
-      "Neither the firm nor the apprentice needs any scheme membership while the apprentice is in training — scheme registration only becomes relevant once the apprentice qualifies and the firm starts doing notifiable work.",
-      "The firm needs JIB grading to self-certify Part P work, and the apprentice personally needs Professional Indemnity insurance because they may make design decisions on site under supervision.",
+      'Neither the firm nor the apprentice needs any scheme membership while the apprentice is in training — scheme registration only becomes relevant once the apprentice qualifies and the firm starts doing notifiable work.',
+      'The firm needs JIB grading to self-certify Part P work, and the apprentice personally needs Professional Indemnity insurance because they may make design decisions on site under supervision.',
     ],
     correctAnswer: 1,
     explanation:
@@ -164,7 +164,7 @@ const quizQuestions = [
       "JIB grading runs from Adult Trainee / Labourer at the entry level through to Technician at the top. What's the typical sequence an apprentice progresses through?",
     options: [
       'Apprentice → Improver → Mate → Chargehand → Foreman → Contracts Manager. The ladder follows the site supervision chain, with each rung adding management responsibility rather than technical competence, and pay rising with the number of operatives supervised.',
-      'Trainee → Qualified Supervisor → Approved Contractor → Master Electrician. The grades track the firm\'s scheme status rather than the individual, so an apprentice progresses by moving the firm up the scheme tiers.',
+      "Trainee → Qualified Supervisor → Approved Contractor → Master Electrician. The grades track the firm's scheme status rather than the individual, so an apprentice progresses by moving the firm up the scheme tiers.",
       'Apprentice (graded by year) → Electrician (on Level 3 + AM2/E + 18th Ed) → Approved Electrician → Technician. Each grade unlocks higher JIB pay and a wider scope of unsupervised work.',
       'Apprentice → Electrician → Senior Electrician → Chartered Electrician → Engineering Technician. The top grades are awarded by the Engineering Council on registration, and pay is set by professional registration level rather than by the JIB National Working Rules.',
     ],
@@ -177,9 +177,9 @@ const quizQuestions = [
     question:
       "What's the difference between the ECA (Electrical Contractors' Association) and the JIB?",
     options: [
-      "The ECA is the competent person scheme that lets contractors self-certify Part P work, while the JIB is the trade body that lobbies on their behalf — so a firm needs ECA membership to notify Building Control but JIB membership is optional.",
+      'The ECA is the competent person scheme that lets contractors self-certify Part P work, while the JIB is the trade body that lobbies on their behalf — so a firm needs ECA membership to notify Building Control but JIB membership is optional.',
       "The ECA is the electricians' trade union that negotiates pay on the operative's behalf, while the JIB is the employer's association — the two sit on opposite sides of the negotiating table rather than working jointly.",
-      "The ECA grades individual operatives and issues their site-access cards, while the JIB registers firms and inspects their technical work — so the apprentice carries an ECA card and the firm holds JIB registration.",
+      'The ECA grades individual operatives and issues their site-access cards, while the JIB registers firms and inspects their technical work — so the apprentice carries an ECA card and the firm holds JIB registration.',
       "The ECA is a voluntary trade body representing contractors' commercial interests (support, lobbying, standard-form contracts); the JIB is the joint employer/union body that sets pay, conditions and grading on JIB-affiliated jobs.",
     ],
     correctAnswer: 3,
@@ -192,9 +192,9 @@ const quizQuestions = [
       "After scheme suspension a contractor wants to challenge the decision. What's the realistic route?",
     options: [
       "Use the scheme's documented appeals process first — every CPS publishes a complaints / appeals procedure, reviewed by an independent panel, that members must exhaust before any external challenge. The pragmatic path is then to remediate and re-apply, not litigate.",
-      "Appeal to the Employment Tribunal within 21 days — scheme suspensions are treated the same as HSE improvement notices, so the Tribunal can suspend the decision and order reinstatement while the appeal is heard.",
+      'Appeal to the Employment Tribunal within 21 days — scheme suspensions are treated the same as HSE improvement notices, so the Tribunal can suspend the decision and order reinstatement while the appeal is heard.',
       "Refer the suspension to the HSE for review — because Competent Person Schemes are Government-approved, the HSE acts as the independent adjudicator and can overturn a scheme's decision on the firm's behalf.",
-      "Switch immediately to a different scheme — registering with another CPS the next day overrides the suspension, because membership of any one scheme is enough to keep the self-certification authority alive.",
+      'Switch immediately to a different scheme — registering with another CPS the next day overrides the suspension, because membership of any one scheme is enough to keep the self-certification authority alive.',
     ],
     correctAnswer: 0,
     explanation:
@@ -244,746 +244,769 @@ export default function Sub6() {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
-      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
-        <PageFrame>
-          <button
-            onClick={() => navigate('..')}
-            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
-          >
-            <ArrowLeft className="h-4 w-4" /> Section 1
-          </button>
+    <HubPage>
+      <HubMasthead
+        section="Module 3 · Section 1 · Subsection 6"
+        title="Competent Person Schemes, insurance and civil implications"
+        backTo=".."
+      />
+      <HubBody>
+        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
+          Why being on a CPS isn't optional for self-employed work — the legal AND commercial chain.
+          NICEIC, NAPIT, ELECSA scheme rules; JIB grading; PL / EL / PI insurance; civil claims
+          under contract and tort; scheme withdrawal consequences; ECA / SELECT trade body
+          memberships; and what an apprentice needs personally vs what the employer needs.
+        </p>
 
-          <PageHero
-            eyebrow="Module 3 · Section 1 · Subsection 6"
-            title="Competent Person Schemes, insurance and civil implications"
-            description="Why being on a CPS isn't optional for self-employed work — the legal AND commercial chain. NICEIC, NAPIT, ELECSA scheme rules; JIB grading; PL / EL / PI insurance; civil claims under contract and tort; scheme withdrawal consequences; ECA / SELECT trade body memberships; and what an apprentice needs personally vs what the employer needs."
-            tone="emerald"
-          />
+        <TLDR
+          points={[
+            'A Competent Person Scheme (NICEIC / NAPIT / ELECSA) registers the firm as a self-certifier for Part P notifiable domestic work in England/Wales — without it, every notifiable job needs LABC notification, fees and weeks of delay.',
+            "Three insurance lines run together — Public Liability (third-party damage / injury), Employers' Liability (compulsory under the 1969 Act, minimum £5m, covers employees including apprentices), Professional Indemnity (design / advice errors).",
+            'Civil claims after an incident usually plead both contract (Consumer Rights Act 2015 implied terms) AND negligence (common law tort) in parallel. The non-statutory paperwork (BS 7671 compliance, EIC, scheme records) is the documentary defence.',
+          ]}
+        />
 
-          <TLDR
-            points={[
-              'A Competent Person Scheme (NICEIC / NAPIT / ELECSA) registers the firm as a self-certifier for Part P notifiable domestic work in England/Wales — without it, every notifiable job needs LABC notification, fees and weeks of delay.',
-              "Three insurance lines run together — Public Liability (third-party damage / injury), Employers' Liability (compulsory under the 1969 Act, minimum £5m, covers employees including apprentices), Professional Indemnity (design / advice errors).",
-              'Civil claims after an incident usually plead both contract (Consumer Rights Act 2015 implied terms) AND negligence (common law tort) in parallel. The non-statutory paperwork (BS 7671 compliance, EIC, scheme records) is the documentary defence.',
-            ]}
-          />
+        <LearningOutcomes
+          outcomes={[
+            'Identify the main UK Competent Person Schemes (NICEIC, NAPIT, ELECSA) and explain how scheme membership operates as the Part P self-certification route.',
+            'Describe the JIB grading ladder (Apprentice → Electrician → Approved Electrician → Technician) and explain how grading determines pay and unsupervised work scope on JIB-affiliated sites.',
+            "Distinguish the three main insurance lines a working contractor carries — Public Liability, Employers' Liability (compulsory under the 1969 Act), Professional Indemnity — and what each covers.",
+            'Explain the two civil-claim routes (breach of contract under the Consumer Rights Act 2015, and the tort of negligence at common law) and how both rely on the non-statutory documentary trail for defence.',
+            'Outline the commercial consequences of scheme suspension or withdrawal — loss of self-certification authority, likely loss of insurance cover, withdrawal of brand assets, removal from approved-supplier lists.',
+            'Distinguish trade body memberships (ECA in England, SELECT in Scotland) from CPS membership and JIB grading, and explain what an apprentice needs personally vs what the firm carries.',
+          ]}
+          initialVisibleCount={3}
+        />
 
-          <LearningOutcomes
-            outcomes={[
-              'Identify the main UK Competent Person Schemes (NICEIC, NAPIT, ELECSA) and explain how scheme membership operates as the Part P self-certification route.',
-              'Describe the JIB grading ladder (Apprentice → Electrician → Approved Electrician → Technician) and explain how grading determines pay and unsupervised work scope on JIB-affiliated sites.',
-              "Distinguish the three main insurance lines a working contractor carries — Public Liability, Employers' Liability (compulsory under the 1969 Act), Professional Indemnity — and what each covers.",
-              'Explain the two civil-claim routes (breach of contract under the Consumer Rights Act 2015, and the tort of negligence at common law) and how both rely on the non-statutory documentary trail for defence.',
-              'Outline the commercial consequences of scheme suspension or withdrawal — loss of self-certification authority, likely loss of insurance cover, withdrawal of brand assets, removal from approved-supplier lists.',
-              'Distinguish trade body memberships (ECA in England, SELECT in Scotland) from CPS membership and JIB grading, and explain what an apprentice needs personally vs what the firm carries.',
-            ]}
-            initialVisibleCount={3}
-          />
+        <ContentEyebrow>Why this matters at deep-dive level</ContentEyebrow>
 
-          <ContentEyebrow>Why this matters at deep-dive level</ContentEyebrow>
+        <ConceptBlock
+          title="Non-statutory but commercially mandatory — the framework that decides whether you can keep trading"
+          plainEnglish="Sub 2 introduced CPS, JIB and the trade infrastructure as concepts. This Sub goes deeper into how each one actually operates commercially — what scheme membership buys you, what insurance covers, what civil claims look like in practice, and what happens to a firm when its scheme withdraws certification."
+          onSite="The order of priority is the reverse of what apprentices often assume. Statutory regs (HASAWA / EAWR) carry criminal sanctions but rarely end a trading firm. The non-statutory framework (CPS / insurance / civil claims) doesn't carry criminal sanctions but routinely DOES end firms. The two systems run in parallel and the commercial one bites harder."
+        >
+          <p>The non-statutory commercial framework has four interlocking pieces:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Competent Person Schemes</strong> — Government-approved bodies that let the
+              contractor self-certify Part P notifiable domestic work.
+            </li>
+            <li>
+              <strong>Insurance</strong> — Public Liability (third-party damage), Employers&apos;
+              Liability (compulsory), Professional Indemnity (design errors).
+            </li>
+            <li>
+              <strong>JIB grading and the trade infrastructure</strong> — the operative-level pay
+              and progression framework, with the JIB card as proof of grade.
+            </li>
+            <li>
+              <strong>Trade body memberships</strong> — ECA in England, SELECT in Scotland —
+              voluntary commercial associations providing support, advocacy and standard-form
+              contracts.
+            </li>
+          </ul>
+          <p>
+            Each piece is voluntary. Each piece is commercially essential for any contractor doing
+            serious volume of work. Together they decide whether the firm can keep trading —
+            independently of whether anything statutory has been breached.
+          </p>
+        </ConceptBlock>
 
-          <ConceptBlock
-            title="Non-statutory but commercially mandatory — the framework that decides whether you can keep trading"
-            plainEnglish="Sub 2 introduced CPS, JIB and the trade infrastructure as concepts. This Sub goes deeper into how each one actually operates commercially — what scheme membership buys you, what insurance covers, what civil claims look like in practice, and what happens to a firm when its scheme withdraws certification."
-            onSite="The order of priority is the reverse of what apprentices often assume. Statutory regs (HASAWA / EAWR) carry criminal sanctions but rarely end a trading firm. The non-statutory framework (CPS / insurance / civil claims) doesn't carry criminal sanctions but routinely DOES end firms. The two systems run in parallel and the commercial one bites harder."
-          >
-            <p>The non-statutory commercial framework has four interlocking pieces:</p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Competent Person Schemes</strong> — Government-approved bodies that let the
-                contractor self-certify Part P notifiable domestic work.
-              </li>
-              <li>
-                <strong>Insurance</strong> — Public Liability (third-party damage), Employers&apos;
-                Liability (compulsory), Professional Indemnity (design errors).
-              </li>
-              <li>
-                <strong>JIB grading and the trade infrastructure</strong> — the operative-level pay
-                and progression framework, with the JIB card as proof of grade.
-              </li>
-              <li>
-                <strong>Trade body memberships</strong> — ECA in England, SELECT in Scotland —
-                voluntary commercial associations providing support, advocacy and standard-form
-                contracts.
-              </li>
-            </ul>
-            <p>
-              Each piece is voluntary. Each piece is commercially essential for any contractor doing
-              serious volume of work. Together they decide whether the firm can keep trading —
-              independently of whether anything statutory has been breached.
-            </p>
-          </ConceptBlock>
+        <SectionRule />
 
-          <SectionRule />
+        <ContentEyebrow>Competent Person Schemes — the Part P self-cert route</ContentEyebrow>
 
-          <ContentEyebrow>Competent Person Schemes — the Part P self-cert route</ContentEyebrow>
+        <ConceptBlock
+          title="How NICEIC, NAPIT and ELECSA actually operate"
+          plainEnglish="A CPS is a Government-approved body that assesses electrical contractors against the scheme's technical and commercial criteria. Once registered, the contractor can self-certify Part P notifiable work in dwellings — uploading the cert to the scheme portal, with the scheme notifying Local Authority Building Control on the contractor's behalf."
+          onSite="Without CPS membership the contractor's only route to compliance with Part P notifiable categories is to notify LABC BEFORE starting each notifiable job. That means: phone call to the council, fee payment (typically £200–£500 per notification), wait for inspection arrangement, work delayed by days or weeks, customer pays the LABC fee on top of the contractor's bill. CPS self-cert avoids all of that — which is why effectively every domestic-work contractor is on a scheme."
+        >
+          <p>The five-stage CPS lifecycle:</p>
+          <ol className="space-y-1.5 list-decimal pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Application</strong> — submit application form, evidence of qualifications
+              (Level 3 minimum + 18th Ed for the Qualified Supervisor), evidence of insurance cover
+              (PL minimum £2m typically required), evidence of a calibrated test instrument set (MFT
+              plus voltage indicator), evidence of business premises and paperwork systems, signed
+              scheme rules.
+            </li>
+            <li>
+              <strong>Initial assessment</strong> — scheme assessor visits the contractor&apos;s
+              premises and a sample of completed work, checks paperwork, observes test procedures,
+              audits a small batch of recent jobs against the scheme&apos;s technical standards.
+            </li>
+            <li>
+              <strong>Annual re-assessment</strong> — every 12 months thereafter. Same pattern —
+              premises visit, paperwork audit, sample job inspection. Scheme assessor produces a
+              written report with any non-conformances flagged.
+            </li>
+            <li>
+              <strong>Self-certification</strong> — for every notifiable job, the contractor uploads
+              the cert to the scheme portal within 30 days. Scheme then notifies LABC on the
+              contractor&apos;s behalf, and the homeowner receives a Building Reg compliance
+              certificate by post.
+            </li>
+            <li>
+              <strong>Non-conformance and escalation</strong> — assessor finds an issue, contractor
+              gets a non-conformance notice with a deadline to remediate. Persistent or serious
+              issues escalate to formal warning, then suspension, then removal from scheme.
+            </li>
+          </ol>
+        </ConceptBlock>
 
-          <ConceptBlock
-            title="How NICEIC, NAPIT and ELECSA actually operate"
-            plainEnglish="A CPS is a Government-approved body that assesses electrical contractors against the scheme's technical and commercial criteria. Once registered, the contractor can self-certify Part P notifiable work in dwellings — uploading the cert to the scheme portal, with the scheme notifying Local Authority Building Control on the contractor's behalf."
-            onSite="Without CPS membership the contractor's only route to compliance with Part P notifiable categories is to notify LABC BEFORE starting each notifiable job. That means: phone call to the council, fee payment (typically £200–£500 per notification), wait for inspection arrangement, work delayed by days or weeks, customer pays the LABC fee on top of the contractor's bill. CPS self-cert avoids all of that — which is why effectively every domestic-work contractor is on a scheme."
-          >
-            <p>The five-stage CPS lifecycle:</p>
-            <ol className="space-y-1.5 list-decimal pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Application</strong> — submit application form, evidence of qualifications
-                (Level 3 minimum + 18th Ed for the Qualified Supervisor), evidence of insurance
-                cover (PL minimum £2m typically required), evidence of a calibrated test instrument
-                set (MFT plus voltage indicator), evidence of business premises and paperwork
-                systems, signed scheme rules.
-              </li>
-              <li>
-                <strong>Initial assessment</strong> — scheme assessor visits the contractor&apos;s
-                premises and a sample of completed work, checks paperwork, observes test procedures,
-                audits a small batch of recent jobs against the scheme&apos;s technical standards.
-              </li>
-              <li>
-                <strong>Annual re-assessment</strong> — every 12 months thereafter. Same pattern —
-                premises visit, paperwork audit, sample job inspection. Scheme assessor produces a
-                written report with any non-conformances flagged.
-              </li>
-              <li>
-                <strong>Self-certification</strong> — for every notifiable job, the contractor
-                uploads the cert to the scheme portal within 30 days. Scheme then notifies LABC on
-                the contractor&apos;s behalf, and the homeowner receives a Building Reg compliance
-                certificate by post.
-              </li>
-              <li>
-                <strong>Non-conformance and escalation</strong> — assessor finds an issue,
-                contractor gets a non-conformance notice with a deadline to remediate. Persistent or
-                serious issues escalate to formal warning, then suspension, then removal from
-                scheme.
-              </li>
-            </ol>
-          </ConceptBlock>
+        <ConceptBlock
+          title="The three main schemes — NICEIC, NAPIT, ELECSA"
+          onSite="Functionally equivalent for the regulator. The differences are in fees, assessment style, customer-facing branding, and the handful of niche scopes (e.g. solar PV, EV charging, microgeneration) that some schemes cover and others don't. Most contractors choose based on cost, perceived assessment intensity and which badge resonates with their customer base."
+        >
+          <p>The schemes:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>NICEIC</strong> — the largest UK scheme, run by Certsure (the Electrical
+              Safety Council&apos;s commercial arm). Strong customer-facing brand recognition.
+              Multiple registration scopes (Domestic Installer, Approved Contractor, Solar PV, EV
+              Charging, etc).
+            </li>
+            <li>
+              <strong>NAPIT</strong> — second-largest scheme, separate organisation. Similar scope
+              coverage. Different assessment style and fee structure.
+            </li>
+            <li>
+              <strong>ELECSA</strong> — also run by Certsure, branded separately from NICEIC,
+              historically targeted at smaller domestic contractors with a slightly lighter
+              assessment touch.
+            </li>
+          </ul>
+          <p>
+            Other smaller scheme operators exist (Stroma was a notable one until its scheme
+            transferred to NICEIC) but the three above account for the vast majority of
+            registrations. Choosing between them is a commercial decision — there&apos;s no
+            regulator-driven reason to pick one over another.
+          </p>
+        </ConceptBlock>
 
-          <ConceptBlock
-            title="The three main schemes — NICEIC, NAPIT, ELECSA"
-            onSite="Functionally equivalent for the regulator. The differences are in fees, assessment style, customer-facing branding, and the handful of niche scopes (e.g. solar PV, EV charging, microgeneration) that some schemes cover and others don't. Most contractors choose based on cost, perceived assessment intensity and which badge resonates with their customer base."
-          >
-            <p>The schemes:</p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>NICEIC</strong> — the largest UK scheme, run by Certsure (the Electrical
-                Safety Council&apos;s commercial arm). Strong customer-facing brand recognition.
-                Multiple registration scopes (Domestic Installer, Approved Contractor, Solar PV, EV
-                Charging, etc).
-              </li>
-              <li>
-                <strong>NAPIT</strong> — second-largest scheme, separate organisation. Similar scope
-                coverage. Different assessment style and fee structure.
-              </li>
-              <li>
-                <strong>ELECSA</strong> — also run by Certsure, branded separately from NICEIC,
-                historically targeted at smaller domestic contractors with a slightly lighter
-                assessment touch.
-              </li>
-            </ul>
-            <p>
-              Other smaller scheme operators exist (Stroma was a notable one until its scheme
-              transferred to NICEIC) but the three above account for the vast majority of
-              registrations. Choosing between them is a commercial decision — there&apos;s no
-              regulator-driven reason to pick one over another.
-            </p>
-          </ConceptBlock>
+        <RegsCallout
+          source="Building Regulations 2010 (England) — Schedule 1, Part P, Requirement P1"
+          clause={
+            <>
+              &quot;Reasonable provision shall be made in the design and installation of electrical
+              installations in order to protect persons operating, maintaining or altering the
+              installations from fire or injury.&quot;
+            </>
+          }
+          meaning={
+            <>
+              That single sentence is the statutory basis for everything in this Sub. P1
+              doesn&apos;t tell you HOW to make reasonable provision — it points at BS 7671 (via
+              Approved Document P) as the deemed-to-satisfy route. The notification regime that
+              makes CPS membership commercially essential sits separately in regs 12 and 20 of the
+              Building Regulations 2010, which list the categories of electrical work that must be
+              notified to Building Control and the two routes to compliance (CPS self-cert or LABC
+              notification before starting). The whole CPS commercial framework hangs off this short
+              paragraph plus the regs 12/20 notification rules.
+            </>
+          }
+          cite="Source: The Building Regulations 2010 (SI 2010/2214), Schedule 1, Part P, Requirement P1; supported by Approved Document P (verbatim from legislation.gov.uk)."
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>Insurance — the three lines every working firm carries</ContentEyebrow>
+
+        <ConceptBlock
+          title="Public Liability — third-party damage and injury"
+          plainEnglish="PL covers the firm against claims from third parties (customers, public, other contractors on site) for property damage or personal injury arising from the firm's activities. Not compulsory under statute, but commercially mandatory — no commercial customer will engage you without it, no scheme will register you without it."
+        >
+          <p>Typical PL policy structure:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              Cover limit — typical minimum £2m, more often £5m for routine work, £10m for larger
+              commercial. Some tier-1 contracts require £10m as standard.
+            </li>
+            <li>
+              Scope — physical damage to third-party property, personal injury to non-employees,
+              consequential losses arising from those.
+            </li>
+            <li>
+              Excess — typical £250–£1,000 per claim; the contractor pays the first slice before the
+              policy responds.
+            </li>
+            <li>
+              Conditions — most policies require BS 7671 compliance, scheme membership, calibrated
+              test instruments, written RAMS for higher-risk jobs. Breach a condition and the
+              insurer can reduce or refuse the claim.
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="Employers' Liability — compulsory under the 1969 Act"
+          plainEnglish="EL covers the firm against claims from its OWN employees (including apprentices) for injury or illness arising from work. Compulsory under the Employers' Liability (Compulsory Insurance) Act 1969 for any firm with employees in Great Britain. Minimum cover £5m. Failure to insure is a criminal offence."
+          onSite="The moment your firm hires an apprentice, EL is mandatory by statute. The certificate must be displayed at each place of business — historically a printed certificate on the wall; the 2008 amendment regulations allow electronic display provided employees can readily access it. HSE inspectors check this routinely."
+        >
+          <p>The statutory wording:</p>
 
           <RegsCallout
-            source="Building Regulations 2010 (England) — Schedule 1, Part P, Requirement P1"
+            source="Employers' Liability (Compulsory Insurance) Act 1969 — s.1(1) and s.1(2)"
             clause={
               <>
-                &quot;Reasonable provision shall be made in the design and installation of
-                electrical installations in order to protect persons operating, maintaining or
-                altering the installations from fire or injury.&quot;
+                <p className="mb-2">
+                  <strong>s.1(1)</strong> — &quot;Except as otherwise provided by this Act, every
+                  employer carrying on any business in Great Britain shall insure, and maintain
+                  insurance, under one or more approved policies with an authorised insurer or
+                  insurers against liability for bodily injury or disease sustained by his
+                  employees, and arising out of and in the course of their employment in Great
+                  Britain in that business.&quot;
+                </p>
+                <p>
+                  <strong>s.1(2)</strong> — &quot;Regulations may provide that the amount for which
+                  an employer is required by this Act to insure and maintain insurance shall, either
+                  generally or in such cases or classes of case as may be prescribed by the
+                  regulations, be limited&hellip;&quot;
+                </p>
               </>
             }
             meaning={
               <>
-                That single sentence is the statutory basis for everything in this Sub. P1
-                doesn&apos;t tell you HOW to make reasonable provision — it points at BS 7671 (via
-                Approved Document P) as the deemed-to-satisfy route. The notification regime that
-                makes CPS membership commercially essential sits separately in regs 12 and 20 of the
-                Building Regulations 2010, which list the categories of electrical work that must be
-                notified to Building Control and the two routes to compliance (CPS self-cert or LABC
-                notification before starting). The whole CPS commercial framework hangs off this
-                short paragraph plus the regs 12/20 notification rules.
+                The 1969 Act is the basis of compulsory EL. The minimum cover (set by the
+                Employers&apos; Liability (Compulsory Insurance) Regulations 1998) is £5 million,
+                though most policies are written at £10m as standard. The certificate must be
+                displayed (paper or electronic) so employees can readily access it. Failure to
+                insure is a criminal offence with daily-rate fines up to £2,500 for each day
+                uninsured. Failure to display the certificate is a separate (lesser) criminal
+                offence. Apprentices count as employees from day one of the contract — meaning the
+                moment a firm takes on an apprentice they trigger the EL requirement.
               </>
             }
-            cite="Source: The Building Regulations 2010 (SI 2010/2214), Schedule 1, Part P, Requirement P1; supported by Approved Document P (verbatim from legislation.gov.uk)."
+            cite="Source: Employers' Liability (Compulsory Insurance) Act 1969 (1969 c.57), s.1 — verbatim from legislation.gov.uk."
           />
+          <p>Key points on EL:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Compulsory floor £5m</strong> — set by the 1969 Act. Most policies are written
+              at £10m as standard because the underwriter&apos;s pricing difference is marginal and
+              the higher limit gives bigger-claim headroom.
+            </li>
+            <li>
+              <strong>Certificate display</strong> — must be displayed (paper or electronic) so
+              employees can readily access it. HSE inspectors check this.
+            </li>
+            <li>
+              <strong>Failure to insure</strong> — criminal offence with daily-rate fines (up to
+              £2,500 per uninsured day) under the 1969 Act. Failure to display = separate criminal
+              offence (lesser fine).
+            </li>
+            <li>
+              <strong>Apprentices and EL</strong> — apprentices are employees from day one of the
+              contract and trigger the EL requirement. The college component of the apprenticeship
+              doesn&apos;t change this.
+            </li>
+          </ul>
+        </ConceptBlock>
 
-          <SectionRule />
+        <ConceptBlock
+          title="Professional Indemnity — design and advice errors"
+          plainEnglish="PI covers the firm against claims arising from errors, omissions or negligent advice in their professional capacity — design, specification, recommendation. Not the same as PL: PL covers physical damage / injury from work; PI covers economic loss from bad advice or design. Increasingly relevant as installers move into design-and-build territory."
+          onSite="A contractor who only does install-to-spec work (someone else's design) can sometimes operate on PL + EL alone. A contractor who does design-and-build, EV charging design, solar PV design or prosumer's installations under BS 7671 Part 8 needs PI too. Many CPS schemes and trade bodies (ECA) increasingly require PI as a condition of membership for design-active firms."
+        >
+          <p>PI policies typically cover:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              Errors in design or specification (e.g. mis-sized cable selected at design stage,
+              wrong protective device specified for the prospective fault current).
+            </li>
+            <li>
+              Negligent advice given to the customer (e.g. misleading recommendation on upgrade
+              scope, wrong assessment of an existing installation).
+            </li>
+            <li>
+              Defective documentation (e.g. inadequate handover pack causing the customer
+              consequential loss when they can&apos;t maintain the install).
+            </li>
+          </ul>
+          <p>
+            PI is &apos;claims-made&apos; rather than &apos;occurrence-based&apos; in most policies
+            — meaning the claim has to be made during the policy period, even if the error occurred
+            years earlier. Contractors leaving design work need to maintain run-off cover to deal
+            with claims that surface after they&apos;ve stopped trading.
+          </p>
+        </ConceptBlock>
 
-          <ContentEyebrow>Insurance — the three lines every working firm carries</ContentEyebrow>
+        <InlineCheck
+          id={checks[1].id}
+          question={checks[1].question}
+          options={checks[1].options}
+          correctIndex={checks[1].correctIndex}
+          explanation={checks[1].explanation}
+        />
 
-          <ConceptBlock
-            title="Public Liability — third-party damage and injury"
-            plainEnglish="PL covers the firm against claims from third parties (customers, public, other contractors on site) for property damage or personal injury arising from the firm's activities. Not compulsory under statute, but commercially mandatory — no commercial customer will engage you without it, no scheme will register you without it."
-          >
-            <p>Typical PL policy structure:</p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                Cover limit — typical minimum £2m, more often £5m for routine work, £10m for larger
-                commercial. Some tier-1 contracts require £10m as standard.
-              </li>
-              <li>
-                Scope — physical damage to third-party property, personal injury to non-employees,
-                consequential losses arising from those.
-              </li>
-              <li>
-                Excess — typical £250–£1,000 per claim; the contractor pays the first slice before
-                the policy responds.
-              </li>
-              <li>
-                Conditions — most policies require BS 7671 compliance, scheme membership, calibrated
-                test instruments, written RAMS for higher-risk jobs. Breach a condition and the
-                insurer can reduce or refuse the claim.
-              </li>
-            </ul>
-          </ConceptBlock>
+        <SectionRule />
 
-          <ConceptBlock
-            title="Employers' Liability — compulsory under the 1969 Act"
-            plainEnglish="EL covers the firm against claims from its OWN employees (including apprentices) for injury or illness arising from work. Compulsory under the Employers' Liability (Compulsory Insurance) Act 1969 for any firm with employees in Great Britain. Minimum cover £5m. Failure to insure is a criminal offence."
-            onSite="The moment your firm hires an apprentice, EL is mandatory by statute. The certificate must be displayed at each place of business — historically a printed certificate on the wall; the 2008 amendment regulations allow electronic display provided employees can readily access it. HSE inspectors check this routinely."
-          >
-            <p>The statutory wording:</p>
+        <ContentEyebrow>Civil claims — contract and tort</ContentEyebrow>
 
-            <RegsCallout
-              source="Employers' Liability (Compulsory Insurance) Act 1969 — s.1(1) and s.1(2)"
-              clause={
-                <>
-                  <p className="mb-2">
-                    <strong>s.1(1)</strong> — &quot;Except as otherwise provided by this Act, every
-                    employer carrying on any business in Great Britain shall insure, and maintain
-                    insurance, under one or more approved policies with an authorised insurer or
-                    insurers against liability for bodily injury or disease sustained by his
-                    employees, and arising out of and in the course of their employment in Great
-                    Britain in that business.&quot;
-                  </p>
-                  <p>
-                    <strong>s.1(2)</strong> — &quot;Regulations may provide that the amount for
-                    which an employer is required by this Act to insure and maintain insurance
-                    shall, either generally or in such cases or classes of case as may be prescribed
-                    by the regulations, be limited&hellip;&quot;
-                  </p>
-                </>
-              }
-              meaning={
-                <>
-                  The 1969 Act is the basis of compulsory EL. The minimum cover (set by the
-                  Employers&apos; Liability (Compulsory Insurance) Regulations 1998) is £5 million,
-                  though most policies are written at £10m as standard. The certificate must be
-                  displayed (paper or electronic) so employees can readily access it. Failure to
-                  insure is a criminal offence with daily-rate fines up to £2,500 for each day
-                  uninsured. Failure to display the certificate is a separate (lesser) criminal
-                  offence. Apprentices count as employees from day one of the contract — meaning the
-                  moment a firm takes on an apprentice they trigger the EL requirement.
-                </>
-              }
-              cite="Source: Employers' Liability (Compulsory Insurance) Act 1969 (1969 c.57), s.1 — verbatim from legislation.gov.uk."
-            />
-            <p>Key points on EL:</p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Compulsory floor £5m</strong> — set by the 1969 Act. Most policies are
-                written at £10m as standard because the underwriter&apos;s pricing difference is
-                marginal and the higher limit gives bigger-claim headroom.
-              </li>
-              <li>
-                <strong>Certificate display</strong> — must be displayed (paper or electronic) so
-                employees can readily access it. HSE inspectors check this.
-              </li>
-              <li>
-                <strong>Failure to insure</strong> — criminal offence with daily-rate fines (up to
-                £2,500 per uninsured day) under the 1969 Act. Failure to display = separate criminal
-                offence (lesser fine).
-              </li>
-              <li>
-                <strong>Apprentices and EL</strong> — apprentices are employees from day one of the
-                contract and trigger the EL requirement. The college component of the apprenticeship
-                doesn&apos;t change this.
-              </li>
-            </ul>
-          </ConceptBlock>
+        <ConceptBlock
+          title="Two parallel routes a customer can take"
+          plainEnglish="When a customer sues an electrical contractor for damage / injury / financial loss caused by the contractor's work, the claim almost always pleads both routes: breach of contract AND tort of negligence. Both can succeed independently. The contractor's PL insurer handles the defence under whichever route applies."
+        >
+          <p>The two routes:</p>
+        </ConceptBlock>
 
-          <ConceptBlock
-            title="Professional Indemnity — design and advice errors"
-            plainEnglish="PI covers the firm against claims arising from errors, omissions or negligent advice in their professional capacity — design, specification, recommendation. Not the same as PL: PL covers physical damage / injury from work; PI covers economic loss from bad advice or design. Increasingly relevant as installers move into design-and-build territory."
-            onSite="A contractor who only does install-to-spec work (someone else's design) can sometimes operate on PL + EL alone. A contractor who does design-and-build, EV charging design, solar PV design or prosumer's installations under BS 7671 Part 8 needs PI too. Many CPS schemes and trade bodies (ECA) increasingly require PI as a condition of membership for design-active firms."
-          >
-            <p>PI policies typically cover:</p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                Errors in design or specification (e.g. mis-sized cable selected at design stage,
-                wrong protective device specified for the prospective fault current).
-              </li>
-              <li>
-                Negligent advice given to the customer (e.g. misleading recommendation on upgrade
-                scope, wrong assessment of an existing installation).
-              </li>
-              <li>
-                Defective documentation (e.g. inadequate handover pack causing the customer
-                consequential loss when they can&apos;t maintain the install).
-              </li>
-            </ul>
-            <p>
-              PI is &apos;claims-made&apos; rather than &apos;occurrence-based&apos; in most
-              policies — meaning the claim has to be made during the policy period, even if the
-              error occurred years earlier. Contractors leaving design work need to maintain run-off
-              cover to deal with claims that surface after they&apos;ve stopped trading.
-            </p>
-          </ConceptBlock>
+        <RegsCallout
+          source="Consumer Rights Act 2015 — section 49 (services performed with reasonable care and skill)"
+          clause={
+            <>
+              &quot;Every contract to supply a service is to be treated as including a term that the
+              trader must perform the service with reasonable care and skill.&quot;
+            </>
+          }
+          meaning={
+            <>
+              The contractual hook for any claim by a consumer customer (private individual, not a
+              business). Replaced the equivalent term in the Supply of Goods and Services Act 1982
+              for consumer contracts. &apos;Reasonable care and skill&apos; is judged against what a
+              competent electrician in the trade would have done — which in practice means BS 7671
+              compliance + IET GN standards + scheme paperwork. Fall short and the contractor is in
+              breach of the implied term, with the customer entitled to repeat performance, price
+              reduction or damages.
+            </>
+          }
+          cite="Source: Consumer Rights Act 2015 (c.15), Part 1, Chapter 4, s.49 — verbatim from legislation.gov.uk."
+        />
 
-          <InlineCheck
-            id={checks[1].id}
-            question={checks[1].question}
-            options={checks[1].options}
-            correctIndex={checks[1].correctIndex}
-            explanation={checks[1].explanation}
-          />
+        <ConceptBlock
+          title="The tort of negligence — the parallel common-law route"
+          onSite="Negligence is the route most often pleaded after physical damage (fire / water damage) or personal injury, because contract claims can sometimes be limited by exclusion clauses while tort claims for property damage and personal injury usually can't be excluded by contract terms (Unfair Contract Terms Act 1977 / Consumer Rights Act 2015 limits)."
+        >
+          <p>The four-step negligence test the court applies:</p>
+          <ol className="space-y-1.5 list-decimal pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Duty of care</strong> — does the contractor owe a duty of care to the
+              claimant? For a customer-claimant the answer is yes by default; for a third-party
+              claimant (a neighbour, a subsequent occupier) the answer is usually yes if the damage
+              was reasonably foreseeable.
+            </li>
+            <li>
+              <strong>Breach</strong> — did the contractor fall below the standard of a reasonably
+              competent electrician? BS 7671 compliance is the standard the court applies.
+            </li>
+            <li>
+              <strong>Causation</strong> — did the breach actually cause the damage / injury? Often
+              the most contested element — was it the install or some other factor (a manufacturing
+              defect, an act of the customer, weather)?
+            </li>
+            <li>
+              <strong>Loss</strong> — what is the actual financial loss? Repair costs, consequential
+              losses (alternative accommodation, loss of business income), personal injury damages.
+            </li>
+          </ol>
+          <p>
+            All four steps have to be satisfied for the claim to succeed. The contractor&apos;s
+            defence team (funded by the PL insurer) typically attacks &apos;breach&apos; and
+            &apos;causation&apos; as the strongest defensive ground — and the documentary evidence
+            base (EIC, EICR, calibration records, RAMS, scheme paperwork) is what supports both
+            attacks.
+          </p>
+        </ConceptBlock>
 
-          <SectionRule />
+        <SectionRule />
 
-          <ContentEyebrow>Civil claims — contract and tort</ContentEyebrow>
+        <ContentEyebrow>Scheme withdrawal — the commercial consequences</ContentEyebrow>
 
-          <ConceptBlock
-            title="Two parallel routes a customer can take"
-            plainEnglish="When a customer sues an electrical contractor for damage / injury / financial loss caused by the contractor's work, the claim almost always pleads both routes: breach of contract AND tort of negligence. Both can succeed independently. The contractor's PL insurer handles the defence under whichever route applies."
-          >
-            <p>The two routes:</p>
-          </ConceptBlock>
+        <ConceptBlock
+          title="What actually happens when a scheme suspends or removes a contractor"
+          plainEnglish="Scheme suspension or removal isn't a criminal sanction. It's the loss of a contractual licence. But the cascade of commercial consequences can end the trading firm just as effectively as a criminal conviction would."
+        >
+          <p>The commercial cascade after scheme suspension:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Loss of Part P self-certification authority</strong> — every notifiable job
+              from that day forward needs LABC notification before starting, with the associated fee
+              and delay.
+            </li>
+            <li>
+              <strong>Insurance cancellation or non-renewal</strong> — most PL insurers require
+              scheme membership as a condition of cover for electrical contractors. Suspension
+              triggers the insurer&apos;s right to cancel or refuse renewal.
+            </li>
+            <li>
+              <strong>Brand asset withdrawal</strong> — scheme logo on van / website / quotes must
+              be removed immediately. Continued use after suspension is fraud (using the badge to
+              imply a status you no longer hold).
+            </li>
+            <li>
+              <strong>Removal from approved-supplier lists</strong> — tier-1 contractors, housing
+              associations, councils and many commercial customers maintain CPS-registered-only
+              supplier lists. Suspension triggers automatic removal.
+            </li>
+            <li>
+              <strong>Customer-facing reputation damage</strong> — many CPS schemes publish lists of
+              suspended / removed members. Search-engine results and customer review sites pick this
+              up.
+            </li>
+          </ul>
+          <p>
+            The scheme&apos;s appeals process is the realistic remedy. Every CPS publishes a
+            complaints / appeals procedure that members must exhaust before any external challenge.
+            Decisions are typically reviewed by an independent panel within the scheme. The
+            pragmatic path after suspension is remediate + re-apply, not litigate.
+          </p>
+        </ConceptBlock>
 
-          <RegsCallout
-            source="Consumer Rights Act 2015 — section 49 (services performed with reasonable care and skill)"
-            clause={
-              <>
-                &quot;Every contract to supply a service is to be treated as including a term that
-                the trader must perform the service with reasonable care and skill.&quot;
-              </>
-            }
-            meaning={
-              <>
-                The contractual hook for any claim by a consumer customer (private individual, not a
-                business). Replaced the equivalent term in the Supply of Goods and Services Act 1982
-                for consumer contracts. &apos;Reasonable care and skill&apos; is judged against what
-                a competent electrician in the trade would have done — which in practice means BS
-                7671 compliance + IET GN standards + scheme paperwork. Fall short and the contractor
-                is in breach of the implied term, with the customer entitled to repeat performance,
-                price reduction or damages.
-              </>
-            }
-            cite="Source: Consumer Rights Act 2015 (c.15), Part 1, Chapter 4, s.49 — verbatim from legislation.gov.uk."
-          />
+        <InlineCheck
+          id={checks[2].id}
+          question={checks[2].question}
+          options={checks[2].options}
+          correctIndex={checks[2].correctIndex}
+          explanation={checks[2].explanation}
+        />
 
-          <ConceptBlock
-            title="The tort of negligence — the parallel common-law route"
-            onSite="Negligence is the route most often pleaded after physical damage (fire / water damage) or personal injury, because contract claims can sometimes be limited by exclusion clauses while tort claims for property damage and personal injury usually can't be excluded by contract terms (Unfair Contract Terms Act 1977 / Consumer Rights Act 2015 limits)."
-          >
-            <p>The four-step negligence test the court applies:</p>
-            <ol className="space-y-1.5 list-decimal pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Duty of care</strong> — does the contractor owe a duty of care to the
-                claimant? For a customer-claimant the answer is yes by default; for a third-party
-                claimant (a neighbour, a subsequent occupier) the answer is usually yes if the
-                damage was reasonably foreseeable.
-              </li>
-              <li>
-                <strong>Breach</strong> — did the contractor fall below the standard of a reasonably
-                competent electrician? BS 7671 compliance is the standard the court applies.
-              </li>
-              <li>
-                <strong>Causation</strong> — did the breach actually cause the damage / injury?
-                Often the most contested element — was it the install or some other factor (a
-                manufacturing defect, an act of the customer, weather)?
-              </li>
-              <li>
-                <strong>Loss</strong> — what is the actual financial loss? Repair costs,
-                consequential losses (alternative accommodation, loss of business income), personal
-                injury damages.
-              </li>
-            </ol>
-            <p>
-              All four steps have to be satisfied for the claim to succeed. The contractor&apos;s
-              defence team (funded by the PL insurer) typically attacks &apos;breach&apos; and
-              &apos;causation&apos; as the strongest defensive ground — and the documentary evidence
-              base (EIC, EICR, calibration records, RAMS, scheme paperwork) is what supports both
-              attacks.
-            </p>
-          </ConceptBlock>
+        <SectionRule />
 
-          <SectionRule />
+        <ContentEyebrow>JIB grading and the trade infrastructure</ContentEyebrow>
 
-          <ContentEyebrow>Scheme withdrawal — the commercial consequences</ContentEyebrow>
+        <ConceptBlock
+          title="The operative-level pay and progression framework"
+          plainEnglish="The Joint Industry Board for the Electrical Contracting Industry (JIB) is the joint employer/union body that sets pay, conditions and grading for the contracting industry in England, Wales and Northern Ireland. SELECT plays a similar role in Scotland (with the SJIB national working rules)."
+          onSite="Most large commercial / industrial sites are JIB-only — no current JIB card at the right grade, no entry. The card carries your grade and is the proof of your status on a JIB-affiliated job. Pay is set by your grade × hours × the JIB hourly rate published in the National Working Rules each year."
+        >
+          <p>The JIB grading ladder you&apos;ll move through:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Adult Trainee / Labourer</strong> — entry route for those without
+              qualifications.
+            </li>
+            <li>
+              <strong>Apprentice</strong> — graded by year of apprenticeship (Year 1, 2, 3, 4
+              typically). The card tracks your progression through the standard.
+            </li>
+            <li>
+              <strong>Electrician</strong> — fully qualified (Level 3 + AM2/E + 18th Edition
+              certification + completed apprenticeship).
+            </li>
+            <li>
+              <strong>Approved Electrician</strong> — Electrician + additional experience and
+              competence demonstration through the JIB&apos;s assessment route. Higher pay grade,
+              broader scope of unsupervised work.
+            </li>
+            <li>
+              <strong>Technician</strong> — top working grade on the JIB ladder. Additional design,
+              fault-finding and supervisory competence demonstrated. Highest hourly rate.
+            </li>
+          </ul>
+          <p>
+            Beyond grading, the JIB Health &amp; Safety Handbook is the practical site-safety
+            reference for JIB jobs, and the JIB National Working Rules cover pay, holidays, travel
+            allowances, lodging allowances and the procedural framework for disputes and grievances.
+          </p>
+        </ConceptBlock>
 
-          <ConceptBlock
-            title="What actually happens when a scheme suspends or removes a contractor"
-            plainEnglish="Scheme suspension or removal isn't a criminal sanction. It's the loss of a contractual licence. But the cascade of commercial consequences can end the trading firm just as effectively as a criminal conviction would."
-          >
-            <p>The commercial cascade after scheme suspension:</p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Loss of Part P self-certification authority</strong> — every notifiable job
-                from that day forward needs LABC notification before starting, with the associated
-                fee and delay.
-              </li>
-              <li>
-                <strong>Insurance cancellation or non-renewal</strong> — most PL insurers require
-                scheme membership as a condition of cover for electrical contractors. Suspension
-                triggers the insurer&apos;s right to cancel or refuse renewal.
-              </li>
-              <li>
-                <strong>Brand asset withdrawal</strong> — scheme logo on van / website / quotes must
-                be removed immediately. Continued use after suspension is fraud (using the badge to
-                imply a status you no longer hold).
-              </li>
-              <li>
-                <strong>Removal from approved-supplier lists</strong> — tier-1 contractors, housing
-                associations, councils and many commercial customers maintain CPS-registered-only
-                supplier lists. Suspension triggers automatic removal.
-              </li>
-              <li>
-                <strong>Customer-facing reputation damage</strong> — many CPS schemes publish lists
-                of suspended / removed members. Search-engine results and customer review sites pick
-                this up.
-              </li>
-            </ul>
-            <p>
-              The scheme&apos;s appeals process is the realistic remedy. Every CPS publishes a
-              complaints / appeals procedure that members must exhaust before any external
-              challenge. Decisions are typically reviewed by an independent panel within the scheme.
-              The pragmatic path after suspension is remediate + re-apply, not litigate.
-            </p>
-          </ConceptBlock>
+        <ConceptBlock
+          title="ECA (England) and SELECT (Scotland) — the trade bodies"
+          onSite="ECA = trade body for England, Wales and Northern Ireland. SELECT = the equivalent for Scotland (and SELECT also operates a recognised competent person scheme route within the Scottish regulatory framework). Both are voluntary commercial membership organisations — different from CPS (which is a Government-approved scheme) and different from JIB (which is the joint employer/union body)."
+        >
+          <p>What trade body membership actually buys you:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Technical, commercial and legal helpline support.</li>
+            <li>
+              Standard-form contracts (e.g. ECA standard sub-contract forms) that members can use as
+              templates instead of drafting from scratch.
+            </li>
+            <li>Lobbying and policy representation with Government and standards bodies.</li>
+            <li>
+              Training resources, CPD events and technical updates on amendments to standards.
+            </li>
+            <li>
+              Customer-facing brand for marketing — &apos;ECA member&apos; / &apos;SELECT
+              member&apos; carries some weight with informed customers.
+            </li>
+          </ul>
+          <p>
+            Trade body membership is voluntary, doesn&apos;t replace CPS or insurance, but gives the
+            contractor a support network that makes the commercial framework easier to operate.
+            Apprentices don&apos;t need ECA / SELECT membership personally — that&apos;s a
+            contractor-level relationship.
+          </p>
+        </ConceptBlock>
 
-          <InlineCheck
-            id={checks[2].id}
-            question={checks[2].question}
-            options={checks[2].options}
-            correctIndex={checks[2].correctIndex}
-            explanation={checks[2].explanation}
-          />
+        <InlineCheck
+          id={checks[0].id}
+          question={checks[0].question}
+          options={checks[0].options}
+          correctIndex={checks[0].correctIndex}
+          explanation={checks[0].explanation}
+        />
 
-          <SectionRule />
+        <SectionRule />
 
-          <ContentEyebrow>JIB grading and the trade infrastructure</ContentEyebrow>
+        <ContentEyebrow>
+          The apprentice angle — what you need vs what your firm needs
+        </ContentEyebrow>
 
-          <ConceptBlock
-            title="The operative-level pay and progression framework"
-            plainEnglish="The Joint Industry Board for the Electrical Contracting Industry (JIB) is the joint employer/union body that sets pay, conditions and grading for the contracting industry in England, Wales and Northern Ireland. SELECT plays a similar role in Scotland (with the SJIB national working rules)."
-            onSite="Most large commercial / industrial sites are JIB-only — no current JIB card at the right grade, no entry. The card carries your grade and is the proof of your status on a JIB-affiliated job. Pay is set by your grade × hours × the JIB hourly rate published in the National Working Rules each year."
-          >
-            <p>The JIB grading ladder you&apos;ll move through:</p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Adult Trainee / Labourer</strong> — entry route for those without
-                qualifications.
-              </li>
-              <li>
-                <strong>Apprentice</strong> — graded by year of apprenticeship (Year 1, 2, 3, 4
-                typically). The card tracks your progression through the standard.
-              </li>
-              <li>
-                <strong>Electrician</strong> — fully qualified (Level 3 + AM2/E + 18th Edition
-                certification + completed apprenticeship).
-              </li>
-              <li>
-                <strong>Approved Electrician</strong> — Electrician + additional experience and
-                competence demonstration through the JIB&apos;s assessment route. Higher pay grade,
-                broader scope of unsupervised work.
-              </li>
-              <li>
-                <strong>Technician</strong> — top working grade on the JIB ladder. Additional
-                design, fault-finding and supervisory competence demonstrated. Highest hourly rate.
-              </li>
-            </ul>
-            <p>
-              Beyond grading, the JIB Health &amp; Safety Handbook is the practical site-safety
-              reference for JIB jobs, and the JIB National Working Rules cover pay, holidays, travel
-              allowances, lodging allowances and the procedural framework for disputes and
-              grievances.
-            </p>
-          </ConceptBlock>
-
-          <ConceptBlock
-            title="ECA (England) and SELECT (Scotland) — the trade bodies"
-            onSite="ECA = trade body for England, Wales and Northern Ireland. SELECT = the equivalent for Scotland (and SELECT also operates a recognised competent person scheme route within the Scottish regulatory framework). Both are voluntary commercial membership organisations — different from CPS (which is a Government-approved scheme) and different from JIB (which is the joint employer/union body)."
-          >
-            <p>What trade body membership actually buys you:</p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Technical, commercial and legal helpline support.</li>
-              <li>
-                Standard-form contracts (e.g. ECA standard sub-contract forms) that members can use
-                as templates instead of drafting from scratch.
-              </li>
-              <li>Lobbying and policy representation with Government and standards bodies.</li>
-              <li>
-                Training resources, CPD events and technical updates on amendments to standards.
-              </li>
-              <li>
-                Customer-facing brand for marketing — &apos;ECA member&apos; / &apos;SELECT
-                member&apos; carries some weight with informed customers.
-              </li>
-            </ul>
-            <p>
-              Trade body membership is voluntary, doesn&apos;t replace CPS or insurance, but gives
-              the contractor a support network that makes the commercial framework easier to
-              operate. Apprentices don&apos;t need ECA / SELECT membership personally — that&apos;s
-              a contractor-level relationship.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck
-            id={checks[0].id}
-            question={checks[0].question}
-            options={checks[0].options}
-            correctIndex={checks[0].correctIndex}
-            explanation={checks[0].explanation}
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>
-            The apprentice angle — what you need vs what your firm needs
-          </ContentEyebrow>
-
-          <ConceptBlock
-            title="Two different layers of credentialing"
-            plainEnglish="The firm carries the contractor-level credentials (CPS scheme registration, PL/EL/PI insurance, ECA membership, JIB affiliation). You as an apprentice carry the operative-level credentials (JIB card with apprenticeship grade, ECS card for site access, college enrolment record). Don't confuse the two."
-            onSite="A common point of confusion early in the apprenticeship: 'do I need NICEIC?' — no, the scheme registers the firm. 'Do I need my own PL insurance?' — no, you're covered under the firm's policy as long as you're acting within scope. 'Do I need EL?' — your firm needs EL to cover YOU; you don't need to buy it personally. 'Do I need a JIB card?' — yes, this is YOUR personal credential."
-          >
-            <p>The credential split:</p>
-            {/* Mobile: card list (<sm) */}
-            <div className="space-y-2 my-2 sm:hidden">
-              {[
-                { credential: 'CPS registration (NICEIC / NAPIT / ELECSA)', heldBy: 'Firm', needs: 'No' },
-                { credential: 'Public Liability insurance', heldBy: 'Firm', needs: "No (covered under firm's policy)" },
-                { credential: "Employers' Liability insurance", heldBy: 'Firm (statutory duty)', needs: 'No — firm holds it to cover you' },
-                { credential: 'Professional Indemnity', heldBy: 'Firm (if design-active)', needs: 'No' },
-                { credential: 'JIB card (apprentice grade)', heldBy: 'Operative (you)', needs: 'YES — your personal credential' },
-                { credential: 'ECS card (site access)', heldBy: 'Operative (you)', needs: 'YES — required for most major sites' },
-                { credential: 'College enrolment / progression record', heldBy: 'Operative (you)', needs: 'YES — your apprenticeship record' },
-                { credential: 'ECA / SELECT trade body membership', heldBy: 'Firm', needs: 'No' },
-              ].map((row) => (
-                <div
-                  key={row.credential}
-                  className="rounded-xl border border-white/[0.08] bg-white/[0.03] p-3 text-[13px] text-white/90 space-y-1.5"
-                >
-                  <div className="font-semibold text-white">{row.credential}</div>
-                  <div className="flex justify-between gap-3">
-                    <span className="text-white/60 uppercase tracking-wide text-[10px] pt-0.5">Held by</span>
-                    <span className="text-right text-white/90">{row.heldBy}</span>
-                  </div>
-                  <div className="flex justify-between gap-3">
-                    <span className="text-white/60 uppercase tracking-wide text-[10px] pt-0.5">
-                      Apprentice needs personally?
-                    </span>
-                    <span className="text-right text-white/90">{row.needs}</span>
-                  </div>
+        <ConceptBlock
+          title="Two different layers of credentialing"
+          plainEnglish="The firm carries the contractor-level credentials (CPS scheme registration, PL/EL/PI insurance, ECA membership, JIB affiliation). You as an apprentice carry the operative-level credentials (JIB card with apprenticeship grade, ECS card for site access, college enrolment record). Don't confuse the two."
+          onSite="A common point of confusion early in the apprenticeship: 'do I need NICEIC?' — no, the scheme registers the firm. 'Do I need my own PL insurance?' — no, you're covered under the firm's policy as long as you're acting within scope. 'Do I need EL?' — your firm needs EL to cover YOU; you don't need to buy it personally. 'Do I need a JIB card?' — yes, this is YOUR personal credential."
+        >
+          <p>The credential split:</p>
+          {/* Mobile: card list (<sm) */}
+          <div className="space-y-2 my-2 sm:hidden">
+            {[
+              {
+                credential: 'CPS registration (NICEIC / NAPIT / ELECSA)',
+                heldBy: 'Firm',
+                needs: 'No',
+              },
+              {
+                credential: 'Public Liability insurance',
+                heldBy: 'Firm',
+                needs: "No (covered under firm's policy)",
+              },
+              {
+                credential: "Employers' Liability insurance",
+                heldBy: 'Firm (statutory duty)',
+                needs: 'No — firm holds it to cover you',
+              },
+              {
+                credential: 'Professional Indemnity',
+                heldBy: 'Firm (if design-active)',
+                needs: 'No',
+              },
+              {
+                credential: 'JIB card (apprentice grade)',
+                heldBy: 'Operative (you)',
+                needs: 'YES — your personal credential',
+              },
+              {
+                credential: 'ECS card (site access)',
+                heldBy: 'Operative (you)',
+                needs: 'YES — required for most major sites',
+              },
+              {
+                credential: 'College enrolment / progression record',
+                heldBy: 'Operative (you)',
+                needs: 'YES — your apprenticeship record',
+              },
+              { credential: 'ECA / SELECT trade body membership', heldBy: 'Firm', needs: 'No' },
+            ].map((row) => (
+              <div
+                key={row.credential}
+                className="rounded-xl border border-white/[0.08] bg-white/[0.03] p-3 text-[13px] text-white/90 space-y-1.5"
+              >
+                <div className="font-semibold text-white">{row.credential}</div>
+                <div className="flex justify-between gap-3">
+                  <span className="text-white/60 uppercase tracking-wide text-[10px] pt-0.5">
+                    Held by
+                  </span>
+                  <span className="text-right text-white/90">{row.heldBy}</span>
                 </div>
-              ))}
-            </div>
-            {/* Desktop: table (>=sm) */}
-            <div className="hidden sm:block my-2">
-              <table className="w-full text-[13px] text-white/90 border-collapse">
-                <thead>
-                  <tr className="border-b border-white/[0.1]">
-                    <th className="text-left p-2 font-semibold text-white/70">Credential</th>
-                    <th className="text-left p-2 font-semibold text-white/70">Held by</th>
-                    <th className="text-left p-2 font-semibold text-white/70">
-                      Apprentice needs personally?
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-white/[0.05]">
-                  <tr>
-                    <td className="p-2">CPS registration (NICEIC / NAPIT / ELECSA)</td>
-                    <td className="p-2">Firm</td>
-                    <td className="p-2">No</td>
-                  </tr>
-                  <tr>
-                    <td className="p-2">Public Liability insurance</td>
-                    <td className="p-2">Firm</td>
-                    <td className="p-2">No (covered under firm&apos;s policy)</td>
-                  </tr>
-                  <tr>
-                    <td className="p-2">Employers&apos; Liability insurance</td>
-                    <td className="p-2">Firm (statutory duty)</td>
-                    <td className="p-2">No — firm holds it to cover you</td>
-                  </tr>
-                  <tr>
-                    <td className="p-2">Professional Indemnity</td>
-                    <td className="p-2">Firm (if design-active)</td>
-                    <td className="p-2">No</td>
-                  </tr>
-                  <tr>
-                    <td className="p-2">JIB card (apprentice grade)</td>
-                    <td className="p-2">Operative (you)</td>
-                    <td className="p-2">YES — your personal credential</td>
-                  </tr>
-                  <tr>
-                    <td className="p-2">ECS card (site access)</td>
-                    <td className="p-2">Operative (you)</td>
-                    <td className="p-2">YES — required for most major sites</td>
-                  </tr>
-                  <tr>
-                    <td className="p-2">College enrolment / progression record</td>
-                    <td className="p-2">Operative (you)</td>
-                    <td className="p-2">YES — your apprenticeship record</td>
-                  </tr>
-                  <tr>
-                    <td className="p-2">ECA / SELECT trade body membership</td>
-                    <td className="p-2">Firm</td>
-                    <td className="p-2">No</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <p>
-              After qualification, if you stay employed, the same split continues. If you go
-              self-employed, you become &apos;the firm&apos; in your own right and have to take on
-              the contractor-level credentials yourself: scheme registration if you do notifiable
-              work, PL insurance, EL if you ever hire anyone, PI if you take design responsibility.
-            </p>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <ContentEyebrow>Where it goes wrong</ContentEyebrow>
-
-          <CommonMistake
-            title="Assuming the firm's PL insurance covers everything you do"
-            whatHappens={
-              <>
-                Apprentice does a small &apos;foreigner&apos; (cash-in-hand side job) for a friend
-                over a weekend — installs a couple of sockets in a garage. The work is competent.
-                Three months later, a fault in the install causes a fire and significant property
-                damage. The apprentice claims under the firm&apos;s PL policy. Insurer refuses — the
-                work was outside the scope of the apprentice&apos;s employment, wasn&apos;t
-                authorised by the firm, wasn&apos;t covered by any relevant insurance. Apprentice is
-                personally exposed to the civil claim with no insurance backing.
-              </>
-            }
-            doInstead={
-              <>
-                Don&apos;t do unauthorised side work during apprenticeship. The firm&apos;s PL only
-                covers work done in the course of employment for the firm. Side work needs its own
-                insurance arrangement, which is rarely commercially viable for an apprentice. The
-                personal exposure on a serious incident is unbounded — there&apos;s no insurance, no
-                scheme defence, no firm to absorb the claim.
-              </>
-            }
-          />
-
-          <CommonMistake
-            title="Confusing the JIB card with a CPS scheme registration"
-            whatHappens={
-              <>
-                Apprentice in their final year sees the JIB card as &apos;the same thing&apos; as
-                NICEIC registration and assumes that holding the card means they&apos;re licensed to
-                self-cert Part P notifiable work. They aren&apos;t. JIB grades the operative; CPS
-                registers the contractor (the firm). Self-certifying notifiable work without the
-                firm being on a scheme is unlawful (Building Regs breach) regardless of how
-                competent the operative is.
-              </>
-            }
-            doInstead={
-              <>
-                Keep the two layers straight in your head. The card is YOUR grade; the scheme is the
-                FIRM&apos;s licence. After qualification, if you go self-employed, you become the
-                firm and have to take scheme registration in your own name to self-cert notifiable
-                work. Until then it&apos;s your firm&apos;s scheme that authorises self-cert, and
-                you sign certificates as an operative under that registration.
-              </>
-            }
-          />
-
-          <Scenario
-            title="Scheme assessment finds persistent calibration gaps and triggers escalation"
-            situation={
-              <>
-                Your firm&apos;s annual NICEIC re-assessment is in two weeks. The Qualified
-                Supervisor (the senior electrician designated for scheme purposes) realises that the
-                firm&apos;s MFTs have lapsed calibration by 4 months. This was raised on the
-                previous assessment as a non-conformance with a 30-day remediation window. The
-                non-conformance was closed at the time, but the calibration cycle has slipped again.
-                The supervisor knows that &apos;persistent failure&apos; is grounds for escalation
-                to formal warning, then suspension.
-              </>
-            }
-            whatToDo={
-              <>
-                Get the calibration done before the assessment. Document the failure-mode (whatever
-                caused the slip — change of supplier, missed reminder, staff turnover) and put a
-                corrective system in place (calibration calendar, named person responsible,
-                automated reminders). Bring the corrective action to the assessment voluntarily —
-                assessors react better to a self-reported issue with a documented fix than to a
-                recurrence they have to find. The firm&apos;s commercial position depends on the
-                assessment outcome — losing scheme membership would cascade into insurance loss,
-                brand-asset withdrawal, supplier-list removal, and potentially the end of the firm.
-              </>
-            }
-            whyItMatters={
-              <>
-                Scheme membership is the contractor&apos;s most valuable non-statutory asset. Losing
-                it for an avoidable reason like calibration drift is a textbook commercial
-                self-harm. The systems that prevent it (calibration cycle, named QS responsible,
-                paperwork audit before each assessment) are part of the &apos;safe systems of
-                work&apos; obligation under HASAWA s.2(2)(a) AND the scheme&apos;s contractual
-                obligations on the contractor. Both layers point in the same direction: get the
-                paperwork right BEFORE the assessor knocks.
-              </>
-            }
-          />
-
-          <SectionRule />
-
-          <FAQ items={faqs} />
-
-          <SectionRule />
-
-          <KeyTakeaways
-            points={[
-              'A Competent Person Scheme (NICEIC / NAPIT / ELECSA) registers the firm as a self-certifier for Part P notifiable domestic work. Without it, every notifiable job needs LABC notification, fees and weeks of delay.',
-              "Three insurance lines run together — Public Liability (third-party), Employers' Liability (compulsory under the 1969 Act, minimum £5m, criminal offence not to insure), Professional Indemnity (design / advice errors).",
-              'Civil claims after an incident plead both contract (Consumer Rights Act 2015 s.49 — reasonable care and skill) and the tort of negligence (duty / breach / causation / loss). The non-statutory paperwork (BS 7671 + EIC + scheme records) is the documentary defence.',
-              'Scheme suspension triggers a cascade — loss of Part P self-certification, likely insurance cancellation, brand-asset withdrawal, removal from approved-supplier lists. Often ends the trading firm even though no statute has been breached.',
-              'JIB grading is operative-level — Apprentice → Electrician → Approved Electrician → Technician. Sets pay rates and unsupervised work scope on JIB-affiliated sites. Different from CPS (contractor-level) and from ECA / SELECT (trade bodies).',
-              'ECA (England/Wales/NI) and SELECT (Scotland) are voluntary trade body memberships. They provide commercial / technical / legal support, standard-form contracts and lobbying — different from CPS and JIB.',
-              "Apprentice carries personal credentials — JIB card (your grade), ECS card (site access), college enrolment record. Firm carries contractor-level credentials — CPS, PL/EL/PI insurance, trade body membership. Don't confuse the two layers.",
-              "Don't do unauthorised side work during apprenticeship — the firm's PL policy doesn't cover work done outside the scope of employment, and the personal civil exposure on a serious incident is unbounded.",
-            ]}
-          />
-
-          <Quiz title="CPS, insurance and civil — knowledge check" questions={quizQuestions} />
-
-          {/* ── Prev / next nav ─────────────────────────────────── */}
-          <div className="grid grid-cols-2 gap-3 pt-2">
-            <button
-              onClick={() => navigate('/study-centre/apprentice/level2/module3/section1/1-5')}
-              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
-                <ChevronLeft className="h-3 w-3" /> Previous
+                <div className="flex justify-between gap-3">
+                  <span className="text-white/60 uppercase tracking-wide text-[10px] pt-0.5">
+                    Apprentice needs personally?
+                  </span>
+                  <span className="text-right text-white/90">{row.needs}</span>
+                </div>
               </div>
-              <div className="mt-1 text-[14px] font-semibold text-white truncate">
-                1.5 BS 7671 deep dive
-              </div>
-            </button>
-            <button
-              onClick={() => navigate('/study-centre/apprentice/level2/module3/section2/2-1')}
-              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
-                Next section <ChevronRight className="h-3 w-3" />
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-black truncate">
-                Section 2 — Technical information and drawings
-              </div>
-            </button>
+            ))}
           </div>
-        </PageFrame>
-      </div>
-    </div>
+          {/* Desktop: table (>=sm) */}
+          <div className="hidden sm:block my-2">
+            <table className="w-full text-[13px] text-white/90 border-collapse">
+              <thead>
+                <tr className="border-b border-white/[0.1]">
+                  <th className="text-left p-2 font-semibold text-white/70">Credential</th>
+                  <th className="text-left p-2 font-semibold text-white/70">Held by</th>
+                  <th className="text-left p-2 font-semibold text-white/70">
+                    Apprentice needs personally?
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-white/[0.05]">
+                <tr>
+                  <td className="p-2">CPS registration (NICEIC / NAPIT / ELECSA)</td>
+                  <td className="p-2">Firm</td>
+                  <td className="p-2">No</td>
+                </tr>
+                <tr>
+                  <td className="p-2">Public Liability insurance</td>
+                  <td className="p-2">Firm</td>
+                  <td className="p-2">No (covered under firm&apos;s policy)</td>
+                </tr>
+                <tr>
+                  <td className="p-2">Employers&apos; Liability insurance</td>
+                  <td className="p-2">Firm (statutory duty)</td>
+                  <td className="p-2">No — firm holds it to cover you</td>
+                </tr>
+                <tr>
+                  <td className="p-2">Professional Indemnity</td>
+                  <td className="p-2">Firm (if design-active)</td>
+                  <td className="p-2">No</td>
+                </tr>
+                <tr>
+                  <td className="p-2">JIB card (apprentice grade)</td>
+                  <td className="p-2">Operative (you)</td>
+                  <td className="p-2">YES — your personal credential</td>
+                </tr>
+                <tr>
+                  <td className="p-2">ECS card (site access)</td>
+                  <td className="p-2">Operative (you)</td>
+                  <td className="p-2">YES — required for most major sites</td>
+                </tr>
+                <tr>
+                  <td className="p-2">College enrolment / progression record</td>
+                  <td className="p-2">Operative (you)</td>
+                  <td className="p-2">YES — your apprenticeship record</td>
+                </tr>
+                <tr>
+                  <td className="p-2">ECA / SELECT trade body membership</td>
+                  <td className="p-2">Firm</td>
+                  <td className="p-2">No</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p>
+            After qualification, if you stay employed, the same split continues. If you go
+            self-employed, you become &apos;the firm&apos; in your own right and have to take on the
+            contractor-level credentials yourself: scheme registration if you do notifiable work, PL
+            insurance, EL if you ever hire anyone, PI if you take design responsibility.
+          </p>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <ContentEyebrow>Where it goes wrong</ContentEyebrow>
+
+        <CommonMistake
+          title="Assuming the firm's PL insurance covers everything you do"
+          whatHappens={
+            <>
+              Apprentice does a small &apos;foreigner&apos; (cash-in-hand side job) for a friend
+              over a weekend — installs a couple of sockets in a garage. The work is competent.
+              Three months later, a fault in the install causes a fire and significant property
+              damage. The apprentice claims under the firm&apos;s PL policy. Insurer refuses — the
+              work was outside the scope of the apprentice&apos;s employment, wasn&apos;t authorised
+              by the firm, wasn&apos;t covered by any relevant insurance. Apprentice is personally
+              exposed to the civil claim with no insurance backing.
+            </>
+          }
+          doInstead={
+            <>
+              Don&apos;t do unauthorised side work during apprenticeship. The firm&apos;s PL only
+              covers work done in the course of employment for the firm. Side work needs its own
+              insurance arrangement, which is rarely commercially viable for an apprentice. The
+              personal exposure on a serious incident is unbounded — there&apos;s no insurance, no
+              scheme defence, no firm to absorb the claim.
+            </>
+          }
+        />
+
+        <CommonMistake
+          title="Confusing the JIB card with a CPS scheme registration"
+          whatHappens={
+            <>
+              Apprentice in their final year sees the JIB card as &apos;the same thing&apos; as
+              NICEIC registration and assumes that holding the card means they&apos;re licensed to
+              self-cert Part P notifiable work. They aren&apos;t. JIB grades the operative; CPS
+              registers the contractor (the firm). Self-certifying notifiable work without the firm
+              being on a scheme is unlawful (Building Regs breach) regardless of how competent the
+              operative is.
+            </>
+          }
+          doInstead={
+            <>
+              Keep the two layers straight in your head. The card is YOUR grade; the scheme is the
+              FIRM&apos;s licence. After qualification, if you go self-employed, you become the firm
+              and have to take scheme registration in your own name to self-cert notifiable work.
+              Until then it&apos;s your firm&apos;s scheme that authorises self-cert, and you sign
+              certificates as an operative under that registration.
+            </>
+          }
+        />
+
+        <Scenario
+          title="Scheme assessment finds persistent calibration gaps and triggers escalation"
+          situation={
+            <>
+              Your firm&apos;s annual NICEIC re-assessment is in two weeks. The Qualified Supervisor
+              (the senior electrician designated for scheme purposes) realises that the firm&apos;s
+              MFTs have lapsed calibration by 4 months. This was raised on the previous assessment
+              as a non-conformance with a 30-day remediation window. The non-conformance was closed
+              at the time, but the calibration cycle has slipped again. The supervisor knows that
+              &apos;persistent failure&apos; is grounds for escalation to formal warning, then
+              suspension.
+            </>
+          }
+          whatToDo={
+            <>
+              Get the calibration done before the assessment. Document the failure-mode (whatever
+              caused the slip — change of supplier, missed reminder, staff turnover) and put a
+              corrective system in place (calibration calendar, named person responsible, automated
+              reminders). Bring the corrective action to the assessment voluntarily — assessors
+              react better to a self-reported issue with a documented fix than to a recurrence they
+              have to find. The firm&apos;s commercial position depends on the assessment outcome —
+              losing scheme membership would cascade into insurance loss, brand-asset withdrawal,
+              supplier-list removal, and potentially the end of the firm.
+            </>
+          }
+          whyItMatters={
+            <>
+              Scheme membership is the contractor&apos;s most valuable non-statutory asset. Losing
+              it for an avoidable reason like calibration drift is a textbook commercial self-harm.
+              The systems that prevent it (calibration cycle, named QS responsible, paperwork audit
+              before each assessment) are part of the &apos;safe systems of work&apos; obligation
+              under HASAWA s.2(2)(a) AND the scheme&apos;s contractual obligations on the
+              contractor. Both layers point in the same direction: get the paperwork right BEFORE
+              the assessor knocks.
+            </>
+          }
+        />
+
+        <SectionRule />
+
+        <FAQ items={faqs} />
+
+        <SectionRule />
+
+        <KeyTakeaways
+          points={[
+            'A Competent Person Scheme (NICEIC / NAPIT / ELECSA) registers the firm as a self-certifier for Part P notifiable domestic work. Without it, every notifiable job needs LABC notification, fees and weeks of delay.',
+            "Three insurance lines run together — Public Liability (third-party), Employers' Liability (compulsory under the 1969 Act, minimum £5m, criminal offence not to insure), Professional Indemnity (design / advice errors).",
+            'Civil claims after an incident plead both contract (Consumer Rights Act 2015 s.49 — reasonable care and skill) and the tort of negligence (duty / breach / causation / loss). The non-statutory paperwork (BS 7671 + EIC + scheme records) is the documentary defence.',
+            'Scheme suspension triggers a cascade — loss of Part P self-certification, likely insurance cancellation, brand-asset withdrawal, removal from approved-supplier lists. Often ends the trading firm even though no statute has been breached.',
+            'JIB grading is operative-level — Apprentice → Electrician → Approved Electrician → Technician. Sets pay rates and unsupervised work scope on JIB-affiliated sites. Different from CPS (contractor-level) and from ECA / SELECT (trade bodies).',
+            'ECA (England/Wales/NI) and SELECT (Scotland) are voluntary trade body memberships. They provide commercial / technical / legal support, standard-form contracts and lobbying — different from CPS and JIB.',
+            "Apprentice carries personal credentials — JIB card (your grade), ECS card (site access), college enrolment record. Firm carries contractor-level credentials — CPS, PL/EL/PI insurance, trade body membership. Don't confuse the two layers.",
+            "Don't do unauthorised side work during apprenticeship — the firm's PL policy doesn't cover work done outside the scope of employment, and the personal civil exposure on a serious incident is unbounded.",
+          ]}
+        />
+
+        <Quiz title="CPS, insurance and civil — knowledge check" questions={quizQuestions} />
+
+        {/* ── Prev / next nav ─────────────────────────────────── */}
+        <div className="grid grid-cols-2 gap-3 pt-2">
+          <button
+            onClick={() => navigate('/study-centre/apprentice/level2/module3/section1/1-5')}
+            className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+          >
+            <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+              <ChevronLeft className="h-3 w-3" /> Previous
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-white truncate">
+              1.5 BS 7671 deep dive
+            </div>
+          </button>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/level2/module3/section2/2-1')}
+            className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+          >
+            <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+              Next section <ChevronRight className="h-3 w-3" />
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-black truncate">
+              Section 2 — Technical information and drawings
+            </div>
+          </button>
+        </div>
+      </HubBody>
+    </HubPage>
   );
 }

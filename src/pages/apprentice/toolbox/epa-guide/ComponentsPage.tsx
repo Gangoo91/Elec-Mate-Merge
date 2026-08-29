@@ -7,17 +7,10 @@
  * Knowledge — around 16.75 hours in total.
  */
 
-import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import {
-  ArrowLeft,
-  CheckCircle2,
-  Clock,
-  FileText,
-  ClipboardCheck,
-  AlertTriangle,
-} from 'lucide-react';
-import { PageFrame, PageHero, itemVariants } from '@/components/college/primitives';
+import { CheckCircle2, Clock, FileText, ClipboardCheck, AlertTriangle } from 'lucide-react';
+import { itemVariants } from '@/components/college/primitives';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { Eyebrow, SectionHeader } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
 
 const am2sSections = [
@@ -187,413 +180,410 @@ const dayChecklists = [
 ];
 
 const ComponentsPage = () => {
-  const navigate = useNavigate();
   return (
-    <PageFrame className="px-4 sm:px-6 lg:px-8">
-      <motion.div variants={itemVariants}>
-        <button
-          onClick={() => navigate('/apprentice/toolbox/end-point-assessment')}
-          className="inline-flex items-center gap-2 h-11 -ml-2 px-2 rounded-md text-[12px] uppercase tracking-[0.18em] text-white/55 hover:text-white/85 transition-colors touch-manipulation"
-        >
-          <ArrowLeft className="h-4 w-4" />
-          Back
-        </button>
-      </motion.div>
+    <HubPage>
+      <HubMasthead
+        section="Apprentice · EPA"
+        title="The AM2S, section by section"
+        backTo="/apprentice/toolbox/end-point-assessment"
+      />
+      <HubBody>
+        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
+          {
+            "For ST0152 the end-point assessment is the integrated AM2S, run by NET — around 16.75 hours of practical work plus an online applied-knowledge test. Here is every section, what you'll be assessed on, and how to prepare."
+          }
+        </p>
 
-      <motion.div variants={itemVariants}>
-        <PageHero
-          eyebrow="Apprentice · EPA"
-          title="The AM2S, section by section"
-          description="For ST0152 the end-point assessment is the integrated AM2S, run by NET — around 16.75 hours of practical work plus an online applied-knowledge test. Here is every section, what you'll be assessed on, and how to prepare."
-          tone="yellow"
-        />
-      </motion.div>
-
-      {/* ── Overview ────────────────────────────────────────────── */}
-      <motion.div variants={itemVariants}>
-        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3">
-          <Eyebrow>Overview</Eyebrow>
-          <h2 className="text-[18px] sm:text-[20px] font-semibold text-white tracking-tight">
-            One integrated assessment
-          </h2>
-          <p className="text-[13.5px] text-white/85 leading-relaxed">
-            The AM2S is a single, integrated end-point assessment run by NET at an approved
-            assessment centre. It brings together safe isolation, installation, inspection and
-            testing, fault diagnosis, and an online applied-knowledge test. There is no separate
-            professional discussion component for this standard — the AM2S is the EPA.
-          </p>
-          <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3">
-            <p className="text-[12.5px] text-white/85 leading-relaxed">
-              <span className="font-semibold text-elec-yellow">After Gateway:</span> your training
-              provider registers you with NET, who schedule the AM2S at an approved centre. The
-              sections are taken across the assessment, totalling around 16.75 hours.
+        {/* ── Overview ────────────────────────────────────────────── */}
+        <motion.div variants={itemVariants}>
+          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3">
+            <Eyebrow>Overview</Eyebrow>
+            <h2 className="text-[18px] sm:text-[20px] font-semibold text-white tracking-tight">
+              One integrated assessment
+            </h2>
+            <p className="text-[13.5px] text-white/85 leading-relaxed">
+              The AM2S is a single, integrated end-point assessment run by NET at an approved
+              assessment centre. It brings together safe isolation, installation, inspection and
+              testing, fault diagnosis, and an online applied-knowledge test. There is no separate
+              professional discussion component for this standard — the AM2S is the EPA.
             </p>
-          </div>
-        </div>
-      </motion.div>
-
-      {/* ── AM2S sections ────────────────────────────────────────── */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <SectionHeader
-          eyebrow="The AM2S sections"
-          title="Six sections, ~16.75 hours"
-          meta="Composite installation carries the most time"
-        />
-        <ul className="space-y-2">
-          {am2sSections.map((s) => (
-            <li
-              key={s.ref}
-              className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-1.5"
-            >
-              <div className="flex items-center justify-between gap-3">
-                <span className="text-[11px] font-mono uppercase tracking-[0.14em] text-elec-yellow/85">
-                  {s.ref}
-                </span>
-                <span className="text-[11.5px] font-mono tabular-nums text-elec-yellow flex-shrink-0">
-                  {s.meta}
-                </span>
-              </div>
-              <h3 className="text-[14px] font-semibold text-white tracking-tight">{s.title}</h3>
-              <p className="text-[12.5px] text-white/85 leading-relaxed">{s.text}</p>
-            </li>
-          ))}
-        </ul>
-        <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3">
-          <p className="text-[12.5px] text-white/85 leading-relaxed">
-            <span className="font-semibold text-elec-yellow">Note:</span> section timings are
-            indicative. NET confirms the exact schedule and any permitted reference material on the
-            day.
-          </p>
-        </div>
-      </motion.section>
-
-      {/* ── Section E: Applied-knowledge test ───────────────────── */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <SectionHeader
-          eyebrow="Section E"
-          title="Assessment of Applied Knowledge"
-          meta="~1 hour · online multiple choice · supervised"
-          action={<ComponentChip icon={FileText} />}
-        />
-        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-4">
-          <p className="text-[13px] text-white/85 leading-relaxed">
-            The applied-knowledge test checks your understanding of electrical theory, BS 7671, and
-            safe working applied to realistic installation scenarios. An online multiple-choice test
-            of around 30 questions, taken under supervised conditions at the NET assessment centre.
-          </p>
-          <div className="space-y-2">
-            <Eyebrow>Topics covered</Eyebrow>
-            <ul className="space-y-1.5">
-              {knowledgeTopics.map((t) => (
-                <li
-                  key={t}
-                  className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
-                >
-                  <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
-                  <span>{t}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div className="rounded-md border border-white/[0.06] bg-white/[0.02] p-3 space-y-2">
-            <Eyebrow>On the day</Eyebrow>
-            <ul className="space-y-1.5">
-              {knowledgeOnDay.map((t) => (
-                <li
-                  key={t}
-                  className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
-                >
-                  <span className="text-elec-yellow font-mono mt-0.5">—</span>
-                  <span>{t}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3">
-            <p className="text-[12.5px] text-white/85 leading-relaxed">
-              <span className="font-semibold text-elec-yellow">Grading:</span> the applied-knowledge
-              test is multiple-choice and assessed on a competence basis. NET confirms the required
-              standard — there is no separate published percentage grade boundary to revise to.
-            </p>
-          </div>
-        </div>
-      </motion.section>
-
-      {/* ── Practical sections ──────────────────────────────────── */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <SectionHeader
-          eyebrow="Sections A–D"
-          title="The practical sections"
-          meta="~15 hours · observed at a NET assessment centre"
-          action={<ComponentChip icon={ClipboardCheck} />}
-        />
-        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-4">
-          <p className="text-[13px] text-white/85 leading-relaxed">
-            The bulk of the AM2S. An independent NET assessor observes you completing a composite
-            installation, then inspecting, testing and certifying it, and diagnosing introduced
-            faults — all under standardised conditions at an approved assessment centre. The
-            assessor watches, takes notes, and may ask you to explain what you are doing.
-          </p>
-          <div className="space-y-2">
-            <Eyebrow>What you'll be assessed on</Eyebrow>
-            <ul className="space-y-1.5">
-              {practicalAssessed.map((t) => (
-                <li
-                  key={t}
-                  className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
-                >
-                  <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
-                  <span>{t}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Safe isolation procedure */}
-          <div className="rounded-md border border-elec-yellow/25 bg-elec-yellow/[0.04] p-3 space-y-2">
-            <Eyebrow className="text-elec-yellow/85">Safe isolation — 5 steps</Eyebrow>
-            <ol className="space-y-2">
-              {safeIsolationSteps.map((item) => (
-                <li key={item.step} className="flex items-start gap-3">
-                  <span className="inline-flex items-center justify-center w-6 h-6 rounded-md border border-elec-yellow/30 bg-elec-yellow/[0.06] text-[11px] font-mono font-semibold tabular-nums text-elec-yellow flex-shrink-0">
-                    {item.step}
-                  </span>
-                  <span className="text-[12.5px] text-white/85 leading-relaxed">{item.text}</span>
-                </li>
-              ))}
-            </ol>
-          </div>
-
-          <div className="rounded-md border border-red-500/30 bg-red-500/[0.04] p-3">
-            <div className="flex items-start gap-2">
-              <AlertTriangle className="h-3.5 w-3.5 text-red-300 flex-shrink-0 mt-0.5" />
+            <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3">
               <p className="text-[12.5px] text-white/85 leading-relaxed">
-                <span className="font-semibold text-red-300">Critical:</span> Failure to follow safe
-                isolation correctly can result in an immediate fail of the practical, regardless of
-                the quality of other work. Practise it until it&rsquo;s second nature.
+                <span className="font-semibold text-elec-yellow">After Gateway:</span> your training
+                provider registers you with NET, who schedule the AM2S at an approved centre. The
+                sections are taken across the assessment, totalling around 16.75 hours.
               </p>
             </div>
           </div>
+        </motion.div>
 
-          <div className="rounded-md border border-white/[0.06] bg-white/[0.02] p-3 space-y-2">
-            <Eyebrow>On the day</Eyebrow>
+        {/* ── AM2S sections ────────────────────────────────────────── */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <SectionHeader
+            eyebrow="The AM2S sections"
+            title="Six sections, ~16.75 hours"
+            meta="Composite installation carries the most time"
+          />
+          <ul className="space-y-2">
+            {am2sSections.map((s) => (
+              <li
+                key={s.ref}
+                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-1.5"
+              >
+                <div className="flex items-center justify-between gap-3">
+                  <span className="text-[11px] font-mono uppercase tracking-[0.14em] text-elec-yellow/85">
+                    {s.ref}
+                  </span>
+                  <span className="text-[11.5px] font-mono tabular-nums text-elec-yellow flex-shrink-0">
+                    {s.meta}
+                  </span>
+                </div>
+                <h3 className="text-[14px] font-semibold text-white tracking-tight">{s.title}</h3>
+                <p className="text-[12.5px] text-white/85 leading-relaxed">{s.text}</p>
+              </li>
+            ))}
+          </ul>
+          <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3">
+            <p className="text-[12.5px] text-white/85 leading-relaxed">
+              <span className="font-semibold text-elec-yellow">Note:</span> section timings are
+              indicative. NET confirms the exact schedule and any permitted reference material on
+              the day.
+            </p>
+          </div>
+        </motion.section>
+
+        {/* ── Section E: Applied-knowledge test ───────────────────── */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <SectionHeader
+            eyebrow="Section E"
+            title="Assessment of Applied Knowledge"
+            meta="~1 hour · online multiple choice · supervised"
+            action={<ComponentChip icon={FileText} />}
+          />
+          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-4">
+            <p className="text-[13px] text-white/85 leading-relaxed">
+              The applied-knowledge test checks your understanding of electrical theory, BS 7671,
+              and safe working applied to realistic installation scenarios. An online
+              multiple-choice test of around 30 questions, taken under supervised conditions at the
+              NET assessment centre.
+            </p>
+            <div className="space-y-2">
+              <Eyebrow>Topics covered</Eyebrow>
+              <ul className="space-y-1.5">
+                {knowledgeTopics.map((t) => (
+                  <li
+                    key={t}
+                    className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                  >
+                    <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
+                    <span>{t}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="rounded-md border border-white/[0.06] bg-white/[0.02] p-3 space-y-2">
+              <Eyebrow>On the day</Eyebrow>
+              <ul className="space-y-1.5">
+                {knowledgeOnDay.map((t) => (
+                  <li
+                    key={t}
+                    className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                  >
+                    <span className="text-elec-yellow font-mono mt-0.5">—</span>
+                    <span>{t}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3">
+              <p className="text-[12.5px] text-white/85 leading-relaxed">
+                <span className="font-semibold text-elec-yellow">Grading:</span> the
+                applied-knowledge test is multiple-choice and assessed on a competence basis. NET
+                confirms the required standard — there is no separate published percentage grade
+                boundary to revise to.
+              </p>
+            </div>
+          </div>
+        </motion.section>
+
+        {/* ── Practical sections ──────────────────────────────────── */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <SectionHeader
+            eyebrow="Sections A–D"
+            title="The practical sections"
+            meta="~15 hours · observed at a NET assessment centre"
+            action={<ComponentChip icon={ClipboardCheck} />}
+          />
+          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-4">
+            <p className="text-[13px] text-white/85 leading-relaxed">
+              The bulk of the AM2S. An independent NET assessor observes you completing a composite
+              installation, then inspecting, testing and certifying it, and diagnosing introduced
+              faults — all under standardised conditions at an approved assessment centre. The
+              assessor watches, takes notes, and may ask you to explain what you are doing.
+            </p>
+            <div className="space-y-2">
+              <Eyebrow>What you'll be assessed on</Eyebrow>
+              <ul className="space-y-1.5">
+                {practicalAssessed.map((t) => (
+                  <li
+                    key={t}
+                    className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                  >
+                    <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
+                    <span>{t}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Safe isolation procedure */}
+            <div className="rounded-md border border-elec-yellow/25 bg-elec-yellow/[0.04] p-3 space-y-2">
+              <Eyebrow className="text-elec-yellow/85">Safe isolation — 5 steps</Eyebrow>
+              <ol className="space-y-2">
+                {safeIsolationSteps.map((item) => (
+                  <li key={item.step} className="flex items-start gap-3">
+                    <span className="inline-flex items-center justify-center w-6 h-6 rounded-md border border-elec-yellow/30 bg-elec-yellow/[0.06] text-[11px] font-mono font-semibold tabular-nums text-elec-yellow flex-shrink-0">
+                      {item.step}
+                    </span>
+                    <span className="text-[12.5px] text-white/85 leading-relaxed">{item.text}</span>
+                  </li>
+                ))}
+              </ol>
+            </div>
+
+            <div className="rounded-md border border-red-500/30 bg-red-500/[0.04] p-3">
+              <div className="flex items-start gap-2">
+                <AlertTriangle className="h-3.5 w-3.5 text-red-300 flex-shrink-0 mt-0.5" />
+                <p className="text-[12.5px] text-white/85 leading-relaxed">
+                  <span className="font-semibold text-red-300">Critical:</span> Failure to follow
+                  safe isolation correctly can result in an immediate fail of the practical,
+                  regardless of the quality of other work. Practise it until it&rsquo;s second
+                  nature.
+                </p>
+              </div>
+            </div>
+
+            <div className="rounded-md border border-white/[0.06] bg-white/[0.02] p-3 space-y-2">
+              <Eyebrow>On the day</Eyebrow>
+              <ul className="space-y-1.5">
+                {practicalOnDay.map((t) => (
+                  <li
+                    key={t}
+                    className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                  >
+                    <span className="text-elec-yellow font-mono mt-0.5">—</span>
+                    <span>{t}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </motion.section>
+
+        {/* ── No separate discussion note ─────────────────────────── */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <SectionHeader
+            eyebrow="What's not in the AM2S"
+            title="No separate professional discussion"
+            meta="A common point of confusion — clear it up early"
+          />
+          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3">
+            <p className="text-[13px] text-white/85 leading-relaxed">
+              Many generic EPA guides describe a stand-alone professional discussion. For the ST0152
+              AM2S there is no separate professional discussion component, and there is no 25 / 50 /
+              25 weighting. Your competence is assessed through the practical sections and the
+              online applied-knowledge test. The assessor may still ask you to explain what you are
+              doing during the practical — that is part of the observation, not a separate
+              interview.
+            </p>
+            <p className="text-[12.5px] text-white/85 leading-relaxed">
+              Your portfolio of evidence remains important for Gateway, but the end-point assessment
+              itself is the AM2S.
+            </p>
+          </div>
+        </motion.section>
+
+        {/* ── Pathways ─────────────────────────────────────────────── */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <SectionHeader
+            eyebrow="Pathways"
+            title="Installation vs maintenance"
+            meta="Same standard, same AM2S — different emphasis"
+          />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5">
+            <PathwayCard
+              title="Installation electrician"
+              items={[
+                'On-programme work focuses on new installation — wiring from scratch, containment, working from plans',
+                'Knowledge emphasis on circuit design, cable selection, installation methods, initial verification',
+                'Portfolio shows a range of installation projects — domestic, commercial, industrial',
+              ]}
+            />
+            <PathwayCard
+              title="Maintenance electrician"
+              items={[
+                'On-programme work focuses on fault finding, repair, and maintenance — diagnosing issues, replacing components, periodic inspection',
+                'Knowledge emphasis on fault diagnosis theory, periodic inspection, maintenance planning',
+                'Portfolio shows maintenance activities — fault logs, repair records, PPM schedules',
+              ]}
+            />
+          </div>
+          <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3">
+            <p className="text-[12.5px] text-white/85 leading-relaxed">
+              <span className="font-semibold text-elec-yellow">Note:</span> The core KSBs are the
+              same for both pathways. The AM2S itself is the same assessment — the difference is the
+              emphasis of your on-programme experience. Discuss your pathway with your training
+              provider to focus your preparation.
+            </p>
+          </div>
+        </motion.section>
+
+        {/* ── What assessors look for ─────────────────────────────── */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <SectionHeader
+            eyebrow="What assessors look for"
+            title="Six priorities — in order"
+            meta="What a competent, safe electrician demonstrates"
+          />
+          <ul className="space-y-2">
+            {assessorsLookFor.map((item) => (
+              <li
+                key={item.title}
+                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5"
+              >
+                <div className="flex items-start gap-2.5">
+                  <CheckCircle2 className="h-4 w-4 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
+                  <div className="space-y-1">
+                    <h3 className="text-[14px] font-semibold text-elec-yellow tracking-tight">
+                      {item.title}
+                    </h3>
+                    <p className="text-[13px] text-white/85 leading-relaxed">{item.description}</p>
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </motion.section>
+
+        {/* ── How components link ─────────────────────────────────── */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <SectionHeader
+            eyebrow="How they link"
+            title="One assessment — connected sections"
+            meta="Prepare across all sections together"
+          />
+          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5">
             <ul className="space-y-1.5">
-              {practicalOnDay.map((t) => (
+              {componentLinks.map((t) => (
                 <li
                   key={t}
-                  className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                  className="flex items-start gap-2 text-[13px] text-white/85 leading-relaxed"
                 >
-                  <span className="text-elec-yellow font-mono mt-0.5">—</span>
+                  <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                   <span>{t}</span>
                 </li>
               ))}
             </ul>
           </div>
-        </div>
-      </motion.section>
+        </motion.section>
 
-      {/* ── No separate discussion note ─────────────────────────── */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <SectionHeader
-          eyebrow="What's not in the AM2S"
-          title="No separate professional discussion"
-          meta="A common point of confusion — clear it up early"
-        />
-        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3">
-          <p className="text-[13px] text-white/85 leading-relaxed">
-            Many generic EPA guides describe a stand-alone professional discussion. For the ST0152
-            AM2S there is no separate professional discussion component, and there is no 25 / 50 /
-            25 weighting. Your competence is assessed through the practical sections and the online
-            applied-knowledge test. The assessor may still ask you to explain what you are doing
-            during the practical — that is part of the observation, not a separate interview.
-          </p>
-          <p className="text-[12.5px] text-white/85 leading-relaxed">
-            Your portfolio of evidence remains important for Gateway, but the end-point assessment
-            itself is the AM2S.
-          </p>
-        </div>
-      </motion.section>
-
-      {/* ── Pathways ─────────────────────────────────────────────── */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <SectionHeader
-          eyebrow="Pathways"
-          title="Installation vs maintenance"
-          meta="Same standard, same AM2S — different emphasis"
-        />
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5">
-          <PathwayCard
-            title="Installation electrician"
-            items={[
-              'On-programme work focuses on new installation — wiring from scratch, containment, working from plans',
-              'Knowledge emphasis on circuit design, cable selection, installation methods, initial verification',
-              'Portfolio shows a range of installation projects — domestic, commercial, industrial',
-            ]}
+        {/* ── Day-of checklists ────────────────────────────────────── */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <SectionHeader
+            eyebrow="Day-of checklists"
+            title="What to bring"
+            meta="Print these, tick them off, sleep well"
           />
-          <PathwayCard
-            title="Maintenance electrician"
-            items={[
-              'On-programme work focuses on fault finding, repair, and maintenance — diagnosing issues, replacing components, periodic inspection',
-              'Knowledge emphasis on fault diagnosis theory, periodic inspection, maintenance planning',
-              'Portfolio shows maintenance activities — fault logs, repair records, PPM schedules',
-            ]}
-          />
-        </div>
-        <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3">
-          <p className="text-[12.5px] text-white/85 leading-relaxed">
-            <span className="font-semibold text-elec-yellow">Note:</span> The core KSBs are the same
-            for both pathways. The AM2S itself is the same assessment — the difference is the
-            emphasis of your on-programme experience. Discuss your pathway with your training
-            provider to focus your preparation.
-          </p>
-        </div>
-      </motion.section>
-
-      {/* ── What assessors look for ─────────────────────────────── */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <SectionHeader
-          eyebrow="What assessors look for"
-          title="Six priorities — in order"
-          meta="What a competent, safe electrician demonstrates"
-        />
-        <ul className="space-y-2">
-          {assessorsLookFor.map((item) => (
-            <li
-              key={item.title}
-              className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5"
-            >
-              <div className="flex items-start gap-2.5">
-                <CheckCircle2 className="h-4 w-4 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
-                <div className="space-y-1">
-                  <h3 className="text-[14px] font-semibold text-elec-yellow tracking-tight">
-                    {item.title}
-                  </h3>
-                  <p className="text-[13px] text-white/85 leading-relaxed">{item.description}</p>
-                </div>
-              </div>
-            </li>
-          ))}
-        </ul>
-      </motion.section>
-
-      {/* ── How components link ─────────────────────────────────── */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <SectionHeader
-          eyebrow="How they link"
-          title="One assessment — connected sections"
-          meta="Prepare across all sections together"
-        />
-        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5">
-          <ul className="space-y-1.5">
-            {componentLinks.map((t) => (
+          <ul className="space-y-2.5">
+            {dayChecklists.map((c) => (
               <li
-                key={t}
-                className="flex items-start gap-2 text-[13px] text-white/85 leading-relaxed"
+                key={c.component}
+                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-2"
               >
-                <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
-                <span>{t}</span>
+                <div className="flex items-center gap-2">
+                  <Clock className="h-4 w-4 text-elec-yellow/85 flex-shrink-0" />
+                  <h3 className="text-[14px] font-semibold text-white tracking-tight">
+                    {c.component}
+                  </h3>
+                </div>
+                <ul className="space-y-1.5">
+                  {c.items.map((item) => (
+                    <li
+                      key={item}
+                      className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                    >
+                      <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
               </li>
             ))}
           </ul>
-        </div>
-      </motion.section>
+        </motion.section>
 
-      {/* ── Day-of checklists ────────────────────────────────────── */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <SectionHeader
-          eyebrow="Day-of checklists"
-          title="What to bring"
-          meta="Print these, tick them off, sleep well"
-        />
-        <ul className="space-y-2.5">
-          {dayChecklists.map((c) => (
-            <li
-              key={c.component}
-              className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-2"
-            >
-              <div className="flex items-center gap-2">
-                <Clock className="h-4 w-4 text-elec-yellow/85 flex-shrink-0" />
-                <h3 className="text-[14px] font-semibold text-white tracking-tight">
-                  {c.component}
-                </h3>
-              </div>
-              <ul className="space-y-1.5">
-                {c.items.map((item) => (
-                  <li
-                    key={item}
-                    className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
-                  >
-                    <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </li>
-          ))}
-        </ul>
-      </motion.section>
-
-      {/* ── Typical order ────────────────────────────────────────── */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <SectionHeader
-          eyebrow="Typical order"
-          title="How the AM2S runs"
-          meta="Scheduled by NET — a common flow"
-        />
-        <ol className="space-y-2">
-          {[
-            {
-              step: 1,
-              title: 'Safe isolation & risk assessment',
-              description:
-                'You begin by safely isolating and assessing the risks before any installation work starts.',
-            },
-            {
-              step: 2,
-              title: 'Composite installation',
-              description:
-                'The longest part — install and wire the composite circuit set from drawings, around 10 hours.',
-            },
-            {
-              step: 3,
-              title: 'Inspection, testing, fault diagnosis',
-              description:
-                'Inspect, test and certify your installation, demonstrate safe isolation of circuits, then find and rectify introduced faults.',
-            },
-            {
-              step: 4,
-              title: 'Applied-knowledge test',
-              description:
-                'The online multiple-choice test completes your single integrated AM2S result.',
-            },
-          ].map((item) => (
-            <li
-              key={item.step}
-              className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5"
-            >
-              <div className="flex items-start gap-3">
-                <span className="inline-flex items-center justify-center w-7 h-7 rounded-md border border-elec-yellow/30 bg-elec-yellow/[0.06] text-[12px] font-mono font-semibold tabular-nums text-elec-yellow flex-shrink-0">
-                  {item.step}
-                </span>
-                <div className="space-y-1">
-                  <h3 className="text-[14px] font-semibold text-white tracking-tight">
-                    {item.title}
-                  </h3>
-                  <p className="text-[13px] text-white/85 leading-relaxed">{item.description}</p>
+        {/* ── Typical order ────────────────────────────────────────── */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <SectionHeader
+            eyebrow="Typical order"
+            title="How the AM2S runs"
+            meta="Scheduled by NET — a common flow"
+          />
+          <ol className="space-y-2">
+            {[
+              {
+                step: 1,
+                title: 'Safe isolation & risk assessment',
+                description:
+                  'You begin by safely isolating and assessing the risks before any installation work starts.',
+              },
+              {
+                step: 2,
+                title: 'Composite installation',
+                description:
+                  'The longest part — install and wire the composite circuit set from drawings, around 10 hours.',
+              },
+              {
+                step: 3,
+                title: 'Inspection, testing, fault diagnosis',
+                description:
+                  'Inspect, test and certify your installation, demonstrate safe isolation of circuits, then find and rectify introduced faults.',
+              },
+              {
+                step: 4,
+                title: 'Applied-knowledge test',
+                description:
+                  'The online multiple-choice test completes your single integrated AM2S result.',
+              },
+            ].map((item) => (
+              <li
+                key={item.step}
+                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5"
+              >
+                <div className="flex items-start gap-3">
+                  <span className="inline-flex items-center justify-center w-7 h-7 rounded-md border border-elec-yellow/30 bg-elec-yellow/[0.06] text-[12px] font-mono font-semibold tabular-nums text-elec-yellow flex-shrink-0">
+                    {item.step}
+                  </span>
+                  <div className="space-y-1">
+                    <h3 className="text-[14px] font-semibold text-white tracking-tight">
+                      {item.title}
+                    </h3>
+                    <p className="text-[13px] text-white/85 leading-relaxed">{item.description}</p>
+                  </div>
                 </div>
-              </div>
-            </li>
-          ))}
-        </ol>
-        <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3">
-          <p className="text-[12.5px] text-white/85 leading-relaxed">
-            <span className="font-semibold text-elec-yellow">Note:</span> the exact order and timing
-            are set by NET. Your training provider will confirm the schedule once your assessment
-            centre and dates are arranged.
-          </p>
-        </div>
-      </motion.section>
-    </PageFrame>
+              </li>
+            ))}
+          </ol>
+          <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3">
+            <p className="text-[12.5px] text-white/85 leading-relaxed">
+              <span className="font-semibold text-elec-yellow">Note:</span> the exact order and
+              timing are set by NET. Your training provider will confirm the schedule once your
+              assessment centre and dates are arranged.
+            </p>
+          </div>
+        </motion.section>
+      </HubBody>
+    </HubPage>
   );
 };
 

@@ -1,8 +1,8 @@
 import { ArrowLeft, ChevronRight } from 'lucide-react';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { useNavigate } from 'react-router-dom';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
-import { PageFrame, PageHero } from '@/components/college/primitives';
 import {
   TLDR,
   LearningOutcomes,
@@ -320,923 +320,917 @@ const DataCablingModule5Section2 = () => {
   );
 
   return (
-    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
-      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
-        <PageFrame>
+    <HubPage>
+      <HubMasthead
+        section="Module 5 · Section 2"
+        title="Link Testing vs Channel Testing"
+        backTo="/electrician/upskilling/data-cabling-module-5"
+      />
+      <HubBody>
+        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
+          TIA-1152-A and BS EN 50346 field certification — permanent-link vs channel adapters,
+          instrument accuracy levels III to V, the parameter set the certifier reports, the DC
+          resistance unbalance test that links data cabling to PoE delivery, the pass / fail margins
+          that separate a 15-year channel from a six-month channel, and the documented certification
+          regime that converts components into evidence.
+        </p>
+
+        <TLDR
+          points={[
+            'Two test models. Permanent-link certifies the contractor scope — the solid-conductor cable from the work-area outlet to the patch panel, including both connectors. Channel additionally includes the patch cords. Both are TIA-1152-A / BS EN 50346 valid; permanent-link is the typical handover deliverable.',
+            'Instrument accuracy is graded — TIA-1152-A defines Levels III, IIIe, IV and V, with V the current top tier. Cat6A passes per the standard at Level III but most manufacturer warranties require Level V output. Specify the level explicitly in the contract.',
+            'The certifier measures the full parameter set: insertion loss, NEXT, PSNEXT, ACR-F, return loss, propagation delay, delay skew, DC resistance, and — critically for PoE — DC resistance unbalance. Each parameter has a Class-EA pass criterion and a margin in dB.',
+            'Class EA at handover with comfortable 3-5 dB margins is a 15-year channel. Marginal pass with sub-1 dB margins drifts under thermal cycling and PoE load — it is a six-month channel. Re-terminate marginal passes at handover. Archive every certifier file per link as the objective record.',
+          ]}
+        />
+
+        <LearningOutcomes
+          outcomes={[
+            'Distinguish a permanent-link test from a channel test, name the adapters used for each, and pick the right one for contractor handover vs end-user verification',
+            'State the four TIA-1152-A instrument accuracy levels (III, IIIe, IV, V) and explain why Cat6A warranties typically require Level V',
+            'List the parameter set a modern certifier measures — insertion loss, NEXT, PSNEXT, ACR-F, return loss, propagation delay, delay skew, DC resistance, DC resistance unbalance — and explain what each describes',
+            'Explain why DC resistance unbalance is the PoE-specific parameter every modern Cat6A certifier supports, and link it to BS 7671 §716.523.2.101',
+            'Identify a marginal pass from certifier output (sub-1 to sub-3 dB margins) and apply the no-marginal-pass handover discipline',
+            'Read a typical certifier output (Fluke DSX, ideal SignalTEK, Softing WireXpert) and recognise the symptoms of common termination defects',
+            'Specify a competent test regime in a cabling contract — including the standard, the level, the adapter type, the parameter margins, and the archive format',
+            'Apply the BS EN 50174-1 / TIA-606-D administration discipline so every link is uniquely identified and every certifier file is archived for the cabling life',
+          ]}
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>Permanent-link vs channel — two test models</ContentEyebrow>
+
+        <ConceptBlock
+          title="What the contractor warrants vs what the user actually sees"
+          plainEnglish="A horizontal cabling run has two distinct sub-systems: the permanent link (the solid-conductor cable from the work-area outlet to the patch panel, including both connectors) and the cords (the stranded-conductor patch cord at the FD and the work-area cord at the desk). The permanent link is the contractor's installed product, warrantable for 15-25 years. The cords are end-user kit, replaceable in seconds. The two test models — permanent-link and channel — measure these two sub-systems separately or together."
+          onSite="On site, a Cat6A install is typically certified to permanent-link at handover. The contractor lays down a Level V certifier, fits a permanent-link adapter at each end (one at the patch panel, one at the work-area outlet), tests every link, archives the result. Channel testing is offered as an additional deliverable — the user supplies the cords they will actually use, the contractor (or the user with their own certifier) runs a channel test through the cords, and the result documents the end-to-end signal path."
+        >
+          <p>The two test models in detail:</p>
+          <ul className="list-disc pl-5 space-y-2 text-[14px]">
+            <li>
+              <strong>Permanent-link test.</strong> Adapters at each end of the certifier terminate
+              at the patch panel and the work-area outlet — i.e. INSIDE the connector at each end,
+              so the connectors are part of the result. The permanent-link adapter is a calibrated
+              reference termination that mimics what a perfect outlet / patch-panel mating would
+              look like. The result certifies the solid-conductor cable PLUS both connectors.
+              Maximum length: 90 m. Used at handover.
+            </li>
+            <li>
+              <strong>Channel test.</strong> Adapters at each end mimic the active-equipment
+              connection — i.e. the test ends at the PLUG of the patch cord, so the cords are
+              INCLUDED in the result. The channel adapter looks electrically like the switch port
+              and the user device port. The result certifies the full signal path the active
+              equipment will see. Maximum length: 100 m (90 m permanent link + ≤ 10 m cord
+              allowance). Used for end-user verification.
+            </li>
+          </ul>
+          <p>
+            Both are valid measurements. Both are defined in TIA-1152-A and BS EN 50346. The choice
+            at handover depends on what is being warranted:
+          </p>
+          <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
+            <li>
+              <strong>Contractor handover</strong> — permanent-link is the natural choice. The cords
+              are end-user kit and may change. The contractor warrants the permanent link, which is
+              what the manufacturer warranty programme registers against.
+            </li>
+            <li>
+              <strong>End-user pre-deployment verification</strong> — channel is the natural choice.
+              The user has selected the cords and wants confidence that the full signal path
+              delivers Class EA before active equipment goes in.
+            </li>
+            <li>
+              <strong>Both</strong> — many high-spec contracts deliver both tests, so the contractor
+              warrants the permanent link AND the user has a baseline channel record for the cord
+              set in use at deployment.
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        {/* Permanent-link vs channel diagram */}
+        <div className="bg-white/5 border border-white/10 rounded-2xl p-4 sm:p-6 my-6">
+          <p className="text-xs font-semibold text-elec-yellow/60 uppercase tracking-wider mb-3">
+            Diagram
+          </p>
+          <h4 className="text-sm font-bold text-white mb-4">
+            Permanent-link vs channel — what each test covers
+          </h4>
+          <svg
+            viewBox="0 0 880 540"
+            className="w-full h-auto"
+            role="img"
+            aria-label="A horizontal cabling run is shown twice. In the upper half, a permanent-link test: the certifier adapters terminate at the patch panel on the left and the work-area outlet on the right, with the solid-conductor cable in between. The cords are not part of the test. In the lower half, a channel test: the adapters terminate at the patch-cord plugs at each end, so both patch cords plus the solid-conductor cable plus both connectors are all part of the test."
+          >
+            {/* ============================================== */}
+            {/* TOP: PERMANENT-LINK TEST                       */}
+            {/* ============================================== */}
+
+            {/* Section title (above) */}
+            <text
+              x="60"
+              y="32"
+              fill="#BBF7D0"
+              fontSize="12"
+              fontWeight="700"
+              fontFamily="system-ui"
+              letterSpacing="0.06em"
+            >
+              PERMANENT-LINK TEST · contractor scope · what is warranted at handover
+            </text>
+
+            {/* Element-name row (above shapes) */}
+            <text
+              x="80"
+              y="62"
+              textAnchor="middle"
+              fill="#CBD5E1"
+              fontSize="10"
+              fontFamily="system-ui"
+            >
+              PL adapter
+            </text>
+            <text
+              x="160"
+              y="62"
+              textAnchor="middle"
+              fill="#CBD5E1"
+              fontSize="10"
+              fontFamily="system-ui"
+            >
+              Patch panel
+            </text>
+            <text
+              x="440"
+              y="62"
+              textAnchor="middle"
+              fill="#CBD5E1"
+              fontSize="10"
+              fontFamily="system-ui"
+            >
+              Solid-conductor cable
+            </text>
+            <text
+              x="720"
+              y="62"
+              textAnchor="middle"
+              fill="#CBD5E1"
+              fontSize="10"
+              fontFamily="system-ui"
+            >
+              Outlet (TO)
+            </text>
+            <text
+              x="800"
+              y="62"
+              textAnchor="middle"
+              fill="#CBD5E1"
+              fontSize="10"
+              fontFamily="system-ui"
+            >
+              PL adapter
+            </text>
+
+            {/* Element row (y=80 to y=120) */}
+            {/* PL adapter left */}
+            <rect
+              x="50"
+              y="80"
+              width="60"
+              height="40"
+              rx="6"
+              fill="rgba(34,197,94,0.18)"
+              stroke="#22C55E"
+              strokeWidth="1.6"
+            />
+            {/* Patch panel */}
+            <rect
+              x="130"
+              y="84"
+              width="60"
+              height="32"
+              rx="4"
+              fill="rgba(252,211,77,0.22)"
+              stroke="#FACC15"
+              strokeWidth="1.4"
+            />
+            {/* Solid cable */}
+            <rect
+              x="210"
+              y="88"
+              width="460"
+              height="24"
+              rx="3"
+              fill="rgba(234,179,8,0.18)"
+              stroke="#EAB308"
+              strokeWidth="1.4"
+            />
+            {/* Outlet */}
+            <rect
+              x="690"
+              y="84"
+              width="60"
+              height="32"
+              rx="4"
+              fill="rgba(252,211,77,0.22)"
+              stroke="#FACC15"
+              strokeWidth="1.4"
+            />
+            {/* PL adapter right */}
+            <rect
+              x="770"
+              y="80"
+              width="60"
+              height="40"
+              rx="6"
+              fill="rgba(34,197,94,0.18)"
+              stroke="#22C55E"
+              strokeWidth="1.6"
+            />
+
+            {/* Element-detail row (below shapes) */}
+            <text
+              x="440"
+              y="138"
+              textAnchor="middle"
+              fill="#FDE68A"
+              fontSize="10.5"
+              fontFamily="system-ui"
+            >
+              ≤ 90 m · solid conductor
+            </text>
+
+            {/* Test-scope bracket (clear of all shapes) */}
+            <line x1="50" y1="158" x2="830" y2="158" stroke="#22C55E" strokeWidth="1.6" />
+            <line x1="50" y1="154" x2="50" y2="162" stroke="#22C55E" strokeWidth="1.6" />
+            <line x1="830" y1="154" x2="830" y2="162" stroke="#22C55E" strokeWidth="1.6" />
+            <text
+              x="440"
+              y="180"
+              textAnchor="middle"
+              fill="#BBF7D0"
+              fontSize="11"
+              fontWeight="700"
+              fontFamily="system-ui"
+            >
+              PERMANENT LINK — solid cable + both fixed connectors (NO cords)
+            </text>
+
+            {/* ============================================== */}
+            {/* BOTTOM: CHANNEL TEST                           */}
+            {/* ============================================== */}
+
+            {/* Section title */}
+            <text
+              x="60"
+              y="234"
+              fill="#A5F3FC"
+              fontSize="12"
+              fontWeight="700"
+              fontFamily="system-ui"
+              letterSpacing="0.06em"
+            >
+              CHANNEL TEST · end-user scope · whole signal path the active port sees
+            </text>
+
+            {/* Element-name row (above shapes) */}
+            <text
+              x="80"
+              y="264"
+              textAnchor="middle"
+              fill="#CBD5E1"
+              fontSize="10"
+              fontFamily="system-ui"
+            >
+              Ch adapter
+            </text>
+            <text
+              x="160"
+              y="264"
+              textAnchor="middle"
+              fill="#CBD5E1"
+              fontSize="10"
+              fontFamily="system-ui"
+            >
+              Patch cord
+            </text>
+            <text
+              x="240"
+              y="264"
+              textAnchor="middle"
+              fill="#CBD5E1"
+              fontSize="10"
+              fontFamily="system-ui"
+            >
+              Panel
+            </text>
+            <text
+              x="440"
+              y="264"
+              textAnchor="middle"
+              fill="#CBD5E1"
+              fontSize="10"
+              fontFamily="system-ui"
+            >
+              Solid-conductor cable
+            </text>
+            <text
+              x="640"
+              y="264"
+              textAnchor="middle"
+              fill="#CBD5E1"
+              fontSize="10"
+              fontFamily="system-ui"
+            >
+              Outlet
+            </text>
+            <text
+              x="720"
+              y="264"
+              textAnchor="middle"
+              fill="#CBD5E1"
+              fontSize="10"
+              fontFamily="system-ui"
+            >
+              WA cord
+            </text>
+            <text
+              x="800"
+              y="264"
+              textAnchor="middle"
+              fill="#CBD5E1"
+              fontSize="10"
+              fontFamily="system-ui"
+            >
+              Ch adapter
+            </text>
+
+            {/* Element row (y=282 to y=322) */}
+            {/* Ch adapter left */}
+            <rect
+              x="50"
+              y="282"
+              width="60"
+              height="40"
+              rx="6"
+              fill="rgba(34,211,238,0.18)"
+              stroke="#22D3EE"
+              strokeWidth="1.6"
+            />
+            {/* Patch cord */}
+            <rect
+              x="130"
+              y="290"
+              width="60"
+              height="24"
+              rx="3"
+              fill="rgba(34,211,238,0.14)"
+              stroke="#22D3EE"
+              strokeWidth="1.4"
+            />
+            {/* Patch panel */}
+            <rect
+              x="210"
+              y="286"
+              width="60"
+              height="32"
+              rx="4"
+              fill="rgba(252,211,77,0.22)"
+              stroke="#FACC15"
+              strokeWidth="1.4"
+            />
+            {/* Solid cable */}
+            <rect
+              x="290"
+              y="290"
+              width="320"
+              height="24"
+              rx="3"
+              fill="rgba(234,179,8,0.18)"
+              stroke="#EAB308"
+              strokeWidth="1.4"
+            />
+            {/* Outlet */}
+            <rect
+              x="630"
+              y="286"
+              width="60"
+              height="32"
+              rx="4"
+              fill="rgba(252,211,77,0.22)"
+              stroke="#FACC15"
+              strokeWidth="1.4"
+            />
+            {/* WA cord */}
+            <rect
+              x="710"
+              y="290"
+              width="60"
+              height="24"
+              rx="3"
+              fill="rgba(34,211,238,0.14)"
+              stroke="#22D3EE"
+              strokeWidth="1.4"
+            />
+            {/* Ch adapter right */}
+            <rect
+              x="790"
+              y="282"
+              width="60"
+              height="40"
+              rx="6"
+              fill="rgba(34,211,238,0.18)"
+              stroke="#22D3EE"
+              strokeWidth="1.6"
+            />
+
+            {/* Element-detail row (below shapes) */}
+            <text
+              x="160"
+              y="340"
+              textAnchor="middle"
+              fill="#A5F3FC"
+              fontSize="10"
+              fontFamily="system-ui"
+            >
+              stranded
+            </text>
+            <text
+              x="440"
+              y="340"
+              textAnchor="middle"
+              fill="#FDE68A"
+              fontSize="10.5"
+              fontFamily="system-ui"
+            >
+              ≤ 90 m · solid conductor
+            </text>
+            <text
+              x="740"
+              y="340"
+              textAnchor="middle"
+              fill="#A5F3FC"
+              fontSize="10"
+              fontFamily="system-ui"
+            >
+              stranded
+            </text>
+
+            {/* Channel-scope bracket */}
+            <line x1="50" y1="358" x2="850" y2="358" stroke="#22D3EE" strokeWidth="1.6" />
+            <line x1="50" y1="354" x2="50" y2="362" stroke="#22D3EE" strokeWidth="1.6" />
+            <line x1="850" y1="354" x2="850" y2="362" stroke="#22D3EE" strokeWidth="1.6" />
+            <text
+              x="440"
+              y="380"
+              textAnchor="middle"
+              fill="#A5F3FC"
+              fontSize="11"
+              fontWeight="700"
+              fontFamily="system-ui"
+            >
+              CHANNEL — permanent link + BOTH cords · ≤ 100 m total · port to port
+            </text>
+
+            {/* ============================================== */}
+            {/* LEGEND                                         */}
+            {/* ============================================== */}
+            <rect
+              x="40"
+              y="408"
+              width="800"
+              height="120"
+              rx="10"
+              fill="rgba(255,255,255,0.04)"
+              stroke="rgba(255,255,255,0.10)"
+              strokeWidth="1"
+            />
+            <text
+              x="60"
+              y="432"
+              fill="#E5E7EB"
+              fontSize="11"
+              fontWeight="700"
+              fontFamily="system-ui"
+              letterSpacing="0.08em"
+            >
+              LEGEND
+            </text>
+
+            <rect
+              x="60"
+              y="446"
+              width="14"
+              height="14"
+              rx="3"
+              fill="rgba(34,197,94,0.18)"
+              stroke="#22C55E"
+              strokeWidth="1.4"
+            />
+            <text x="84" y="458" fill="#E5E7EB" fontSize="10.5" fontFamily="system-ui">
+              Permanent-link adapter — terminates at fixed connectors
+            </text>
+
+            <rect
+              x="60"
+              y="468"
+              width="14"
+              height="14"
+              rx="3"
+              fill="rgba(34,211,238,0.18)"
+              stroke="#22D3EE"
+              strokeWidth="1.4"
+            />
+            <text x="84" y="480" fill="#E5E7EB" fontSize="10.5" fontFamily="system-ui">
+              Channel adapter — terminates at the cord plug
+            </text>
+
+            <rect
+              x="460"
+              y="446"
+              width="14"
+              height="14"
+              rx="3"
+              fill="rgba(234,179,8,0.18)"
+              stroke="#EAB308"
+              strokeWidth="1.4"
+            />
+            <text x="484" y="458" fill="#E5E7EB" fontSize="10.5" fontFamily="system-ui">
+              Solid-conductor permanent cable — installed in wall / ceiling
+            </text>
+
+            <rect
+              x="460"
+              y="468"
+              width="14"
+              height="14"
+              rx="3"
+              fill="rgba(252,211,77,0.22)"
+              stroke="#FACC15"
+              strokeWidth="1.4"
+            />
+            <text x="484" y="480" fill="#E5E7EB" fontSize="10.5" fontFamily="system-ui">
+              Patch panel / outlet — fixed IDC termination point
+            </text>
+
+            <line
+              x1="60"
+              y1="498"
+              x2="820"
+              y2="498"
+              stroke="rgba(255,255,255,0.08)"
+              strokeWidth="1"
+            />
+            <text
+              x="440"
+              y="518"
+              textAnchor="middle"
+              fill="#CBD5E1"
+              fontSize="10"
+              fontFamily="system-ui"
+            >
+              TIA-1152-A · BS EN 50346 — both models valid; permanent-link is the typical handover
+              deliverable
+            </text>
+          </svg>
+        </div>
+
+        <InlineCheck
+          id={inlineChecks[0].id}
+          question={inlineChecks[0].question}
+          options={inlineChecks[0].options}
+          correctIndex={inlineChecks[0].correctIndex}
+          explanation={inlineChecks[0].explanation}
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>The TIA-1152-A parameter set</ContentEyebrow>
+
+        <ConceptBlock
+          title="What the certifier actually measures — and why each parameter matters"
+          plainEnglish="A modern field certifier (Fluke DSX-8000, ideal LanXPLORER, Softing WireXpert) measures a defined parameter set. Each parameter answers a specific question about the channel: does the signal arrive intact (insertion loss), do pairs interfere with each other (NEXT / PSNEXT / ACR-F), do reflections distort the waveform (return loss), do signals arrive in step across the four pairs (propagation delay, delay skew), and — for PoE — do the conductors share DC current evenly (DC resistance, DC resistance unbalance). Each parameter has a Class-EA pass criterion; the certifier reports the measured value and the margin in dB."
+          onSite="The discipline at handover is to inspect the per-link certifier output, not just the headline pass / fail. Look at the margins on NEXT, return loss and ACR-F. A 5 dB margin is comfortable; a 1 dB margin is marginal; a 0.2 dB margin is a re-terminate. Look at DC resistance unbalance — it is the PoE-readiness indicator. Look at delay skew — anything close to the cap suggests a mixed-cable run. The certifier report is a diagnostic tool, not just a pass/fail badge."
+        >
+          <p>The TIA-1152-A parameter set in detail:</p>
+          <ul className="list-disc pl-5 space-y-2 text-[14px]">
+            <li>
+              <strong>Insertion loss.</strong> The signal attenuation end-to-end at each tested
+              frequency. For Cat6A at 500 MHz, the maximum is roughly 35.9 dB across 100 m of
+              channel. Higher-than-expected insertion loss usually means an over-strip, a kinked
+              cable, or a bad connector.
+            </li>
+            <li>
+              <strong>NEXT (near-end crosstalk).</strong> The amount of signal energy that couples
+              between pairs at the near end of the cable. The driver of Cat6A performance. Pair
+              untwist at the termination is the dominant cause of poor NEXT.
+            </li>
+            <li>
+              <strong>PSNEXT (power-sum NEXT).</strong> The total NEXT energy from all three other
+              pairs into the pair under test. Reflects how a real Ethernet signal — driving four
+              pairs simultaneously — sees crosstalk.
+            </li>
+            <li>
+              <strong>ACR-F (attenuation-to-crosstalk ratio, far-end).</strong> The difference
+              between the wanted signal at the far end and the crosstalk at the far end. Essentially
+              a signal-to-noise margin at the receiver.
+            </li>
+            <li>
+              <strong>Return loss.</strong> How much signal energy is reflected back from impedance
+              discontinuities (terminations, kinks, crushed cable). Over-stripped jackets and excess
+              pair untwist are the dominant causes of poor return loss.
+            </li>
+            <li>
+              <strong>Propagation delay.</strong> Signal travel time end-to-end. Related to length
+              and cable construction. Used to compute effective electrical length.
+            </li>
+            <li>
+              <strong>Delay skew.</strong> Maximum pair-to-pair delay difference. Critical for
+              10GBASE-T which parallelises across all four pairs. Class EA cap typically 50 ns.
+            </li>
+            <li>
+              <strong>DC resistance.</strong> End-to-end loop resistance per conductor pair. Used as
+              a continuity check and to compute power loss for PoE.
+            </li>
+            <li>
+              <strong>DC resistance unbalance.</strong> The PoE-critical parameter. Intra-pair
+              (between the two conductors of a pair) and inter-pair (between pairs). Tight
+              tolerances because PoE delivers DC current through the same balanced cabling — uneven
+              sharing causes uneven heating.
+            </li>
+            <li>
+              <strong>Wire map.</strong> Continuity and pinout. Catches reversed pairs, split pairs,
+              opens, shorts. The first thing the certifier checks.
+            </li>
+            <li>
+              <strong>Length.</strong> Physical and effective electrical. Inflated effective length
+              indicates impedance discontinuities — usually a termination defect.
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <RegsCallout
+          source="BS 7671:2018+A4:2026 · §716.523.1.101 (Conductor design current — verbatim)"
+          clause={
+            <>
+              The design current in any conductor shall not exceed the limit specified in BS EN
+              50173-1.
+              <br />
+              NOTE 1: Any temperature rise of the data cables due to the load current they carry, or
+              other causes, will increase the attenuation/insertion loss of the cables. Thus the
+              performance of information transmission channels can be degraded.
+              <br />
+              NOTE 2: Guidance on the effect of the number of loaded conductors, in a multi-cable
+              bundle, on the temperature rise of the cables is given in PD CLC/TR 50174-99-1:2015
+              and requirements and recommendations in relation to planning and installation of such
+              cable bundles are provided in BS ISO/IEC 14763-2 and ISO/IEC TS 29125.
+            </>
+          }
+          meaning="§716.523.1.101 establishes the formal link between data-cabling testing and PoE thermal management. The conductor design current is bounded by BS EN 50173-1 (which feeds the ≤ 750 mA per conductor cap of §716.523.2.101). NOTE 1 makes the test parameter set directly relevant to PoE: temperature rise from PoE current degrades insertion loss — so a Cat6A channel that passes Class EA cold may not pass it under continuous PoE load. NOTE 2 brings the bundle-thermal references — including TIA TSB-184-A and PD CLC/TR 50174-99-1 — into the regulatory scope. DC resistance unbalance is the certifier parameter that catches imbalance before it becomes a thermal failure."
+          cite="Verified verbatim from bs7671_regulations.full_text · A4:2026 edition · BS 7671:2018+A4:2026, published 15 April 2026"
+        />
+
+        <InlineCheck
+          id={inlineChecks[1].id}
+          question={inlineChecks[1].question}
+          options={inlineChecks[1].options}
+          correctIndex={inlineChecks[1].correctIndex}
+          explanation={inlineChecks[1].explanation}
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>Instrument accuracy levels and warranty alignment</ContentEyebrow>
+
+        <ConceptBlock
+          title="Levels III, IIIe, IV, V — and why the spec must name one"
+          plainEnglish="TIA-1152-A defines four field-test instrument accuracy levels: III, IIIe, IV and V (V is the current top tier). The level describes the instrument's residual measurement noise and calibration tolerances — i.e. how accurately it measures the parameters listed above. Higher levels are more accurate; the same cable tested with a Level III certifier and a Level V certifier may produce different headline margins on the same parameters. For Cat6A, Level III is the minimum mandated by the standard; Level V is what most manufacturer warranty programmes require."
+          onSite="The competent contract specifies the level explicitly. Specifying just 'TIA-1152-A' without a level is incomplete — it allows a contractor to use a lower-tier instrument that produces more generous margins, which the warranty manufacturer may then reject. The contract wording is: 'Cat6A horizontal cabling shall be certified to TIA-1152-A Level V (or BS EN 50346 equivalent), permanent-link adapter, every link individually tested, certifier file archived per link, summary report supplied at handover.'"
+        >
+          <p>The four levels and where each is used:</p>
+          <ul className="list-disc pl-5 space-y-2 text-[14px]">
+            <li>
+              <strong>Level III.</strong> Older accuracy level, sufficient for Cat5e / Cat6 / Cat6A
+              per the TIA-1152-A pass criteria. Older field certifiers (Fluke DTX, ideal LANTEK)
+              operate at this level.
+            </li>
+            <li>
+              <strong>Level IIIe.</strong> Enhanced Level III, with tighter tolerances on some
+              parameters. A transitional level; mostly superseded by Level IV / V.
+            </li>
+            <li>
+              <strong>Level IV.</strong> Higher accuracy than III, with tighter calibration
+              tolerances. Used on some Cat6A and many Cat7 / Cat7A applications.
+            </li>
+            <li>
+              <strong>Level V.</strong> Modern top tier. Required by most major manufacturer
+              warranty programmes for Cat6A and mandatory for Cat8 / Class I/II. Modern certifiers —
+              Fluke DSX-8000, ideal LanXPLORER, Softing WireXpert (top SKU) — operate at Level V.
+            </li>
+          </ul>
+          <p>
+            The practical implication is that two contractors quoting "TIA-1152-A certified Cat6A"
+            can deliver materially different evidence: one with a 25-year warranty-aligned Level V
+            record, one with a Level III record that the warranty manufacturer may not register. The
+            cost differential at instrument level is real (a Level V certifier costs roughly twice a
+            Level III), but the cost differential per link tested is negligible. Specify Level V for
+            any Cat6A or above install where warranty cover matters — which is most jobs.
+          </p>
+        </ConceptBlock>
+
+        <AppendixTable
+          caption="TIA-1152-A instrument accuracy levels and typical use"
+          source="TIA-1152-A (2016, current) · BS EN 50346"
+          headers={[
+            'Level',
+            'Typical era / instruments',
+            'Typical use',
+            'Manufacturer warranty alignment',
+          ]}
+          rows={[
+            [
+              'III',
+              'Older Fluke DTX, ideal LANTEK',
+              'Cat5e / Cat6 minimum',
+              'Some Cat5e warranties; many Cat6A warranties reject',
+            ],
+            ['IIIe', 'Transitional', 'Cat6 enhanced', 'Few warranties name it explicitly'],
+            [
+              'IV',
+              'Mid-tier modern certifiers',
+              'Cat6A, Cat7 / 7A',
+              'Some Cat6A warranties accept',
+            ],
+            [
+              'V',
+              'Fluke DSX-8000, ideal LanXPLORER, Softing WireXpert (top)',
+              'Cat6A · Cat8 / Class I, II',
+              'Required by most major Cat6A / Cat8 warranty programmes',
+            ],
+          ]}
+          notes="The standard specifies the minimum level for each Class. Manufacturer warranty programmes typically require a higher level than the minimum. The competent contract names the level explicitly: 'TIA-1152-A Level V certifier output, permanent-link adapter, every link archived'. That binds the contractor to the same accuracy regime the warranty manufacturer audits against."
+        />
+
+        <InlineCheck
+          id={inlineChecks[2].id}
+          question={inlineChecks[2].question}
+          options={inlineChecks[2].options}
+          correctIndex={inlineChecks[2].correctIndex}
+          explanation={inlineChecks[2].explanation}
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>Pass / fail margins and the no-marginal-pass rule</ContentEyebrow>
+
+        <ConceptBlock
+          title="The difference between a 15-year channel and a six-month channel — at handover"
+          plainEnglish="Class EA pass per the standard is a single binary — pass or fail. Class EA at handover with comfortable margins is a 15-year channel; Class EA marginal pass is a six-month channel. The certifier reports the measured parameter value AND the margin in dB against the Class EA pass criterion. A 5 dB NEXT margin is comfortable; a 1 dB NEXT margin is marginal; a 0.2 dB margin is a re-terminate. The discipline at handover is not 'all links pass' — it is 'all links pass with adequate margin'."
+          onSite="Most major manufacturer warranty programmes (Panduit, CommScope, Leviton, Belden — 25-year warranties) define an internal margin threshold typically 3-5 dB above the standard pass criterion. Below that, the warranty audit rejects the link even though it 'passed' per the standard. Best practice on every Cat6A handover is: read every per-link certifier output, identify any link with sub-3 dB margin on any critical parameter, re-terminate before the contractor leaves site, re-test, archive the new result. The dominant cause of marginal passes is excess pair untwist; the fix is 5-10 minutes per termination."
+        >
+          <p>What 'marginal pass' actually means in practice:</p>
+          <ul className="list-disc pl-5 space-y-2 text-[14px]">
+            <li>
+              <strong>Comfortable pass — 3-5 dB or better margin on critical parameters.</strong>{' '}
+              15-year channel; survives thermal cycling, PoE load, cable movement, seasonal
+              humidity. Manufacturer warranty audit accepts. End-user can deploy any service up to
+              Class EA spec confidently.
+            </li>
+            <li>
+              <strong>Marginal pass — 1-3 dB margin on one or more critical parameters.</strong>{' '}
+              Technically passes Class EA per the standard. Drifts under thermal cycling and PoE
+              load — most commonly degrades to fail within 6-18 months. Warranty audit may reject.
+              Should be re-terminated at handover.
+            </li>
+            <li>
+              <strong>Edge pass — sub-1 dB margin.</strong> Time-bomb. Passes the certifier today,
+              fails as soon as the cable warms or moves. Re-terminate immediately. Do not accept at
+              handover.
+            </li>
+            <li>
+              <strong>Fail.</strong> Re-terminate, re-pull, or re-design.
+            </li>
+          </ul>
+          <p>
+            The economics of the no-marginal-pass discipline are straightforward. A re-termination
+            at handover costs 5-10 minutes per link in labour. A re-call to site six months later —
+            diagnose the failing link, remove the patch panel, re-terminate, re-test, re-document,
+            leave site — costs an hour minimum, plus the reputational damage of returning to site to
+            fix work that was signed off as complete. Refuse marginal passes at handover. It is the
+            cheapest insurance the contractor can buy.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck
+          id={inlineChecks[3].id}
+          question={inlineChecks[3].question}
+          options={inlineChecks[3].options}
+          correctIndex={inlineChecks[3].correctIndex}
+          explanation={inlineChecks[3].explanation}
+        />
+
+        <CommonMistake
+          title="Reading only the headline 'PASS' on the certifier and ignoring the margins"
+          whatHappens={
+            <>
+              Contractor finishes the install on a Friday afternoon. Lays down the certifier, runs
+              every link, sees green PASS on each, packs up and leaves site. The handover archive
+              contains 96 PASS results. Six months later, eight links have failed under PoE thermal
+              load — each had been a sub-1 dB NEXT margin pass on day one, the result of excess pair
+              untwist that nobody inspected because the headline read PASS. Contractor is back on
+              site re-terminating eight links plus answering hard questions about why the handover
+              signed off non-deliverable quality.
+            </>
+          }
+          doInstead={
+            <>
+              Read every per-link certifier output, not just the summary. Sort by margin ascending
+              on each critical parameter (NEXT, return loss, ACR-F). Anything with sub-3 dB margin
+              is a re-terminate before handover. The fix is 5-10 minutes per link; the cost of
+              skipping it is a six-month re-call. Specify the discipline in the contract: 'all links
+              shall pass Class EA with not less than 3 dB margin on NEXT, return loss and ACR-F;
+              marginal passes shall be re-terminated and re-tested before handover'. Then enforce
+              it.
+            </>
+          }
+        />
+
+        <Scenario
+          title="Manufacturer warranty audit fails — what does the contractor do?"
+          situation={
+            <>
+              A Cat6A office fit-out, certified to TIA-1152-A and signed off six months ago. The end
+              user submits the certifier files to the manufacturer for the 25-year warranty
+              registration. The audit returns 14 of 96 links rejected: "DC resistance unbalance
+              exceeds programme tolerance" and "NEXT margin below programme threshold". The
+              contractor is asked to remediate.
+            </>
+          }
+          whatToDo={
+            <>
+              Three steps. (1) Pull the original archive and identify the failing links — most
+              likely common termination defects (over-stripped jacket, excess pair untwist) on the
+              same crew or the same patch panel. (2) Re-terminate every rejected link to the
+              manufacturer{"'"}s strip-length and untwist instructions, using the same Cat6A
+              keystone family certified to the same warranty programme. Re-test with a Level V
+              certifier (the audit was Level V; the original may have been Level IV — match the
+              audit instrument). (3) Submit the new per-link files to the manufacturer for re-audit.
+              Update the site BS EN 50174-1 / TIA-606-D administration record to reflect the
+              re-terminated links and the date.
+            </>
+          }
+          whyItMatters={
+            <>
+              Manufacturer warranty audit is the moment the certifier evidence is read by someone
+              who is paid to find faults. If the original handover skipped the margin-discipline
+              check — accepted PASS without inspecting margins — the audit will catch it months
+              later, when re-termination is more expensive. Build the no-marginal-pass discipline
+              into the handover, archive Level V certifier output, and the audit becomes a
+              registration exercise rather than a remediation contract. Skip it, and the audit
+              becomes a re-call to site at contractor expense.
+            </>
+          }
+        />
+
+        <SectionRule />
+
+        <KeyTakeaways
+          title="Worth remembering"
+          points={[
+            'Two test models. Permanent-link certifies the contractor scope (solid cable + both connectors); channel additionally includes the cords. Permanent-link is the typical handover deliverable.',
+            'TIA-1152-A defines instrument accuracy Levels III, IIIe, IV, V — V is the modern top tier and is required by most Cat6A / Cat8 manufacturer warranty programmes. Specify the level explicitly in the contract.',
+            'The certifier measures a defined parameter set: insertion loss, NEXT, PSNEXT, ACR-F, return loss, propagation delay, delay skew, DC resistance, and DC resistance unbalance (the PoE-critical parameter). Each has a Class-EA pass criterion and a margin in dB.',
+            'BS 7671 §716.523.1.101 NOTE 1 makes the test parameter set directly relevant to PoE — temperature rise from PoE current degrades insertion loss. DC resistance unbalance is the certifier parameter that catches uneven current sharing before it becomes a thermal failure.',
+            'No-marginal-pass at handover. Sub-3 dB margins on critical parameters drift under thermal cycling and PoE load; re-terminate before the contractor leaves site. Class EA at handover with comfortable 3-5 dB margins is a 15-year channel.',
+          ]}
+        />
+
+        <FAQ items={faqs} />
+
+        <SectionRule />
+
+        <Quiz title="Knowledge check" questions={quizQuestions} />
+
+        {/* Bottom navigation */}
+        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 mt-6 border-t border-white/10">
           <button
             type="button"
-            onClick={() => navigate('/electrician/upskilling/data-cabling-module-5')}
-            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            onClick={() => navigate('/electrician/upskilling/data-cabling-module-5-section-1')}
+            className="inline-flex items-center justify-center gap-2 w-full sm:w-auto h-12 px-5 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13.5px] font-medium touch-manipulation hover:bg-white/[0.1] active:scale-[0.98]"
           >
-            <ArrowLeft className="h-4 w-4" /> Module 5
+            <ArrowLeft className="h-4 w-4" /> Previous: Termination tools
           </button>
-
-          <PageHero
-            eyebrow="Module 5 · Section 2"
-            title="Link Testing vs Channel Testing"
-            description="TIA-1152-A and BS EN 50346 field certification — permanent-link vs channel adapters, instrument accuracy levels III to V, the parameter set the certifier reports, the DC resistance unbalance test that links data cabling to PoE delivery, the pass / fail margins that separate a 15-year channel from a six-month channel, and the documented certification regime that converts components into evidence."
-            tone="yellow"
-          />
-
-          <TLDR
-            points={[
-              'Two test models. Permanent-link certifies the contractor scope — the solid-conductor cable from the work-area outlet to the patch panel, including both connectors. Channel additionally includes the patch cords. Both are TIA-1152-A / BS EN 50346 valid; permanent-link is the typical handover deliverable.',
-              'Instrument accuracy is graded — TIA-1152-A defines Levels III, IIIe, IV and V, with V the current top tier. Cat6A passes per the standard at Level III but most manufacturer warranties require Level V output. Specify the level explicitly in the contract.',
-              'The certifier measures the full parameter set: insertion loss, NEXT, PSNEXT, ACR-F, return loss, propagation delay, delay skew, DC resistance, and — critically for PoE — DC resistance unbalance. Each parameter has a Class-EA pass criterion and a margin in dB.',
-              'Class EA at handover with comfortable 3-5 dB margins is a 15-year channel. Marginal pass with sub-1 dB margins drifts under thermal cycling and PoE load — it is a six-month channel. Re-terminate marginal passes at handover. Archive every certifier file per link as the objective record.',
-            ]}
-          />
-
-          <LearningOutcomes
-            outcomes={[
-              'Distinguish a permanent-link test from a channel test, name the adapters used for each, and pick the right one for contractor handover vs end-user verification',
-              'State the four TIA-1152-A instrument accuracy levels (III, IIIe, IV, V) and explain why Cat6A warranties typically require Level V',
-              'List the parameter set a modern certifier measures — insertion loss, NEXT, PSNEXT, ACR-F, return loss, propagation delay, delay skew, DC resistance, DC resistance unbalance — and explain what each describes',
-              'Explain why DC resistance unbalance is the PoE-specific parameter every modern Cat6A certifier supports, and link it to BS 7671 §716.523.2.101',
-              'Identify a marginal pass from certifier output (sub-1 to sub-3 dB margins) and apply the no-marginal-pass handover discipline',
-              'Read a typical certifier output (Fluke DSX, ideal SignalTEK, Softing WireXpert) and recognise the symptoms of common termination defects',
-              'Specify a competent test regime in a cabling contract — including the standard, the level, the adapter type, the parameter margins, and the archive format',
-              'Apply the BS EN 50174-1 / TIA-606-D administration discipline so every link is uniquely identified and every certifier file is archived for the cabling life',
-            ]}
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>Permanent-link vs channel — two test models</ContentEyebrow>
-
-          <ConceptBlock
-            title="What the contractor warrants vs what the user actually sees"
-            plainEnglish="A horizontal cabling run has two distinct sub-systems: the permanent link (the solid-conductor cable from the work-area outlet to the patch panel, including both connectors) and the cords (the stranded-conductor patch cord at the FD and the work-area cord at the desk). The permanent link is the contractor's installed product, warrantable for 15-25 years. The cords are end-user kit, replaceable in seconds. The two test models — permanent-link and channel — measure these two sub-systems separately or together."
-            onSite="On site, a Cat6A install is typically certified to permanent-link at handover. The contractor lays down a Level V certifier, fits a permanent-link adapter at each end (one at the patch panel, one at the work-area outlet), tests every link, archives the result. Channel testing is offered as an additional deliverable — the user supplies the cords they will actually use, the contractor (or the user with their own certifier) runs a channel test through the cords, and the result documents the end-to-end signal path."
+          <button
+            type="button"
+            onClick={() => navigate('/electrician/upskilling/data-cabling-module-5-section-3')}
+            className="inline-flex items-center justify-center gap-2 w-full sm:w-auto h-12 px-5 rounded-full bg-elec-yellow text-black text-[13.5px] font-semibold touch-manipulation hover:bg-elec-yellow/90 active:scale-[0.98]"
           >
-            <p>The two test models in detail:</p>
-            <ul className="list-disc pl-5 space-y-2 text-[14px]">
-              <li>
-                <strong>Permanent-link test.</strong> Adapters at each end of the certifier
-                terminate at the patch panel and the work-area outlet — i.e. INSIDE the connector at
-                each end, so the connectors are part of the result. The permanent-link adapter is a
-                calibrated reference termination that mimics what a perfect outlet / patch-panel
-                mating would look like. The result certifies the solid-conductor cable PLUS both
-                connectors. Maximum length: 90 m. Used at handover.
-              </li>
-              <li>
-                <strong>Channel test.</strong> Adapters at each end mimic the active-equipment
-                connection — i.e. the test ends at the PLUG of the patch cord, so the cords are
-                INCLUDED in the result. The channel adapter looks electrically like the switch port
-                and the user device port. The result certifies the full signal path the active
-                equipment will see. Maximum length: 100 m (90 m permanent link + ≤ 10 m cord
-                allowance). Used for end-user verification.
-              </li>
-            </ul>
-            <p>
-              Both are valid measurements. Both are defined in TIA-1152-A and BS EN 50346. The
-              choice at handover depends on what is being warranted:
-            </p>
-            <ul className="list-disc pl-5 space-y-1.5 text-[14px]">
-              <li>
-                <strong>Contractor handover</strong> — permanent-link is the natural choice. The
-                cords are end-user kit and may change. The contractor warrants the permanent link,
-                which is what the manufacturer warranty programme registers against.
-              </li>
-              <li>
-                <strong>End-user pre-deployment verification</strong> — channel is the natural
-                choice. The user has selected the cords and wants confidence that the full signal
-                path delivers Class EA before active equipment goes in.
-              </li>
-              <li>
-                <strong>Both</strong> — many high-spec contracts deliver both tests, so the
-                contractor warrants the permanent link AND the user has a baseline channel record
-                for the cord set in use at deployment.
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          {/* Permanent-link vs channel diagram */}
-          <div className="bg-white/5 border border-white/10 rounded-2xl p-4 sm:p-6 my-6">
-            <p className="text-xs font-semibold text-elec-yellow/60 uppercase tracking-wider mb-3">
-              Diagram
-            </p>
-            <h4 className="text-sm font-bold text-white mb-4">
-              Permanent-link vs channel — what each test covers
-            </h4>
-            <svg
-              viewBox="0 0 880 540"
-              className="w-full h-auto"
-              role="img"
-              aria-label="A horizontal cabling run is shown twice. In the upper half, a permanent-link test: the certifier adapters terminate at the patch panel on the left and the work-area outlet on the right, with the solid-conductor cable in between. The cords are not part of the test. In the lower half, a channel test: the adapters terminate at the patch-cord plugs at each end, so both patch cords plus the solid-conductor cable plus both connectors are all part of the test."
-            >
-              {/* ============================================== */}
-              {/* TOP: PERMANENT-LINK TEST                       */}
-              {/* ============================================== */}
-
-              {/* Section title (above) */}
-              <text
-                x="60"
-                y="32"
-                fill="#BBF7D0"
-                fontSize="12"
-                fontWeight="700"
-                fontFamily="system-ui"
-                letterSpacing="0.06em"
-              >
-                PERMANENT-LINK TEST · contractor scope · what is warranted at handover
-              </text>
-
-              {/* Element-name row (above shapes) */}
-              <text
-                x="80"
-                y="62"
-                textAnchor="middle"
-                fill="#CBD5E1"
-                fontSize="10"
-                fontFamily="system-ui"
-              >
-                PL adapter
-              </text>
-              <text
-                x="160"
-                y="62"
-                textAnchor="middle"
-                fill="#CBD5E1"
-                fontSize="10"
-                fontFamily="system-ui"
-              >
-                Patch panel
-              </text>
-              <text
-                x="440"
-                y="62"
-                textAnchor="middle"
-                fill="#CBD5E1"
-                fontSize="10"
-                fontFamily="system-ui"
-              >
-                Solid-conductor cable
-              </text>
-              <text
-                x="720"
-                y="62"
-                textAnchor="middle"
-                fill="#CBD5E1"
-                fontSize="10"
-                fontFamily="system-ui"
-              >
-                Outlet (TO)
-              </text>
-              <text
-                x="800"
-                y="62"
-                textAnchor="middle"
-                fill="#CBD5E1"
-                fontSize="10"
-                fontFamily="system-ui"
-              >
-                PL adapter
-              </text>
-
-              {/* Element row (y=80 to y=120) */}
-              {/* PL adapter left */}
-              <rect
-                x="50"
-                y="80"
-                width="60"
-                height="40"
-                rx="6"
-                fill="rgba(34,197,94,0.18)"
-                stroke="#22C55E"
-                strokeWidth="1.6"
-              />
-              {/* Patch panel */}
-              <rect
-                x="130"
-                y="84"
-                width="60"
-                height="32"
-                rx="4"
-                fill="rgba(252,211,77,0.22)"
-                stroke="#FACC15"
-                strokeWidth="1.4"
-              />
-              {/* Solid cable */}
-              <rect
-                x="210"
-                y="88"
-                width="460"
-                height="24"
-                rx="3"
-                fill="rgba(234,179,8,0.18)"
-                stroke="#EAB308"
-                strokeWidth="1.4"
-              />
-              {/* Outlet */}
-              <rect
-                x="690"
-                y="84"
-                width="60"
-                height="32"
-                rx="4"
-                fill="rgba(252,211,77,0.22)"
-                stroke="#FACC15"
-                strokeWidth="1.4"
-              />
-              {/* PL adapter right */}
-              <rect
-                x="770"
-                y="80"
-                width="60"
-                height="40"
-                rx="6"
-                fill="rgba(34,197,94,0.18)"
-                stroke="#22C55E"
-                strokeWidth="1.6"
-              />
-
-              {/* Element-detail row (below shapes) */}
-              <text
-                x="440"
-                y="138"
-                textAnchor="middle"
-                fill="#FDE68A"
-                fontSize="10.5"
-                fontFamily="system-ui"
-              >
-                ≤ 90 m · solid conductor
-              </text>
-
-              {/* Test-scope bracket (clear of all shapes) */}
-              <line x1="50" y1="158" x2="830" y2="158" stroke="#22C55E" strokeWidth="1.6" />
-              <line x1="50" y1="154" x2="50" y2="162" stroke="#22C55E" strokeWidth="1.6" />
-              <line x1="830" y1="154" x2="830" y2="162" stroke="#22C55E" strokeWidth="1.6" />
-              <text
-                x="440"
-                y="180"
-                textAnchor="middle"
-                fill="#BBF7D0"
-                fontSize="11"
-                fontWeight="700"
-                fontFamily="system-ui"
-              >
-                PERMANENT LINK — solid cable + both fixed connectors (NO cords)
-              </text>
-
-              {/* ============================================== */}
-              {/* BOTTOM: CHANNEL TEST                           */}
-              {/* ============================================== */}
-
-              {/* Section title */}
-              <text
-                x="60"
-                y="234"
-                fill="#A5F3FC"
-                fontSize="12"
-                fontWeight="700"
-                fontFamily="system-ui"
-                letterSpacing="0.06em"
-              >
-                CHANNEL TEST · end-user scope · whole signal path the active port sees
-              </text>
-
-              {/* Element-name row (above shapes) */}
-              <text
-                x="80"
-                y="264"
-                textAnchor="middle"
-                fill="#CBD5E1"
-                fontSize="10"
-                fontFamily="system-ui"
-              >
-                Ch adapter
-              </text>
-              <text
-                x="160"
-                y="264"
-                textAnchor="middle"
-                fill="#CBD5E1"
-                fontSize="10"
-                fontFamily="system-ui"
-              >
-                Patch cord
-              </text>
-              <text
-                x="240"
-                y="264"
-                textAnchor="middle"
-                fill="#CBD5E1"
-                fontSize="10"
-                fontFamily="system-ui"
-              >
-                Panel
-              </text>
-              <text
-                x="440"
-                y="264"
-                textAnchor="middle"
-                fill="#CBD5E1"
-                fontSize="10"
-                fontFamily="system-ui"
-              >
-                Solid-conductor cable
-              </text>
-              <text
-                x="640"
-                y="264"
-                textAnchor="middle"
-                fill="#CBD5E1"
-                fontSize="10"
-                fontFamily="system-ui"
-              >
-                Outlet
-              </text>
-              <text
-                x="720"
-                y="264"
-                textAnchor="middle"
-                fill="#CBD5E1"
-                fontSize="10"
-                fontFamily="system-ui"
-              >
-                WA cord
-              </text>
-              <text
-                x="800"
-                y="264"
-                textAnchor="middle"
-                fill="#CBD5E1"
-                fontSize="10"
-                fontFamily="system-ui"
-              >
-                Ch adapter
-              </text>
-
-              {/* Element row (y=282 to y=322) */}
-              {/* Ch adapter left */}
-              <rect
-                x="50"
-                y="282"
-                width="60"
-                height="40"
-                rx="6"
-                fill="rgba(34,211,238,0.18)"
-                stroke="#22D3EE"
-                strokeWidth="1.6"
-              />
-              {/* Patch cord */}
-              <rect
-                x="130"
-                y="290"
-                width="60"
-                height="24"
-                rx="3"
-                fill="rgba(34,211,238,0.14)"
-                stroke="#22D3EE"
-                strokeWidth="1.4"
-              />
-              {/* Patch panel */}
-              <rect
-                x="210"
-                y="286"
-                width="60"
-                height="32"
-                rx="4"
-                fill="rgba(252,211,77,0.22)"
-                stroke="#FACC15"
-                strokeWidth="1.4"
-              />
-              {/* Solid cable */}
-              <rect
-                x="290"
-                y="290"
-                width="320"
-                height="24"
-                rx="3"
-                fill="rgba(234,179,8,0.18)"
-                stroke="#EAB308"
-                strokeWidth="1.4"
-              />
-              {/* Outlet */}
-              <rect
-                x="630"
-                y="286"
-                width="60"
-                height="32"
-                rx="4"
-                fill="rgba(252,211,77,0.22)"
-                stroke="#FACC15"
-                strokeWidth="1.4"
-              />
-              {/* WA cord */}
-              <rect
-                x="710"
-                y="290"
-                width="60"
-                height="24"
-                rx="3"
-                fill="rgba(34,211,238,0.14)"
-                stroke="#22D3EE"
-                strokeWidth="1.4"
-              />
-              {/* Ch adapter right */}
-              <rect
-                x="790"
-                y="282"
-                width="60"
-                height="40"
-                rx="6"
-                fill="rgba(34,211,238,0.18)"
-                stroke="#22D3EE"
-                strokeWidth="1.6"
-              />
-
-              {/* Element-detail row (below shapes) */}
-              <text
-                x="160"
-                y="340"
-                textAnchor="middle"
-                fill="#A5F3FC"
-                fontSize="10"
-                fontFamily="system-ui"
-              >
-                stranded
-              </text>
-              <text
-                x="440"
-                y="340"
-                textAnchor="middle"
-                fill="#FDE68A"
-                fontSize="10.5"
-                fontFamily="system-ui"
-              >
-                ≤ 90 m · solid conductor
-              </text>
-              <text
-                x="740"
-                y="340"
-                textAnchor="middle"
-                fill="#A5F3FC"
-                fontSize="10"
-                fontFamily="system-ui"
-              >
-                stranded
-              </text>
-
-              {/* Channel-scope bracket */}
-              <line x1="50" y1="358" x2="850" y2="358" stroke="#22D3EE" strokeWidth="1.6" />
-              <line x1="50" y1="354" x2="50" y2="362" stroke="#22D3EE" strokeWidth="1.6" />
-              <line x1="850" y1="354" x2="850" y2="362" stroke="#22D3EE" strokeWidth="1.6" />
-              <text
-                x="440"
-                y="380"
-                textAnchor="middle"
-                fill="#A5F3FC"
-                fontSize="11"
-                fontWeight="700"
-                fontFamily="system-ui"
-              >
-                CHANNEL — permanent link + BOTH cords · ≤ 100 m total · port to port
-              </text>
-
-              {/* ============================================== */}
-              {/* LEGEND                                         */}
-              {/* ============================================== */}
-              <rect
-                x="40"
-                y="408"
-                width="800"
-                height="120"
-                rx="10"
-                fill="rgba(255,255,255,0.04)"
-                stroke="rgba(255,255,255,0.10)"
-                strokeWidth="1"
-              />
-              <text
-                x="60"
-                y="432"
-                fill="#E5E7EB"
-                fontSize="11"
-                fontWeight="700"
-                fontFamily="system-ui"
-                letterSpacing="0.08em"
-              >
-                LEGEND
-              </text>
-
-              <rect
-                x="60"
-                y="446"
-                width="14"
-                height="14"
-                rx="3"
-                fill="rgba(34,197,94,0.18)"
-                stroke="#22C55E"
-                strokeWidth="1.4"
-              />
-              <text x="84" y="458" fill="#E5E7EB" fontSize="10.5" fontFamily="system-ui">
-                Permanent-link adapter — terminates at fixed connectors
-              </text>
-
-              <rect
-                x="60"
-                y="468"
-                width="14"
-                height="14"
-                rx="3"
-                fill="rgba(34,211,238,0.18)"
-                stroke="#22D3EE"
-                strokeWidth="1.4"
-              />
-              <text x="84" y="480" fill="#E5E7EB" fontSize="10.5" fontFamily="system-ui">
-                Channel adapter — terminates at the cord plug
-              </text>
-
-              <rect
-                x="460"
-                y="446"
-                width="14"
-                height="14"
-                rx="3"
-                fill="rgba(234,179,8,0.18)"
-                stroke="#EAB308"
-                strokeWidth="1.4"
-              />
-              <text x="484" y="458" fill="#E5E7EB" fontSize="10.5" fontFamily="system-ui">
-                Solid-conductor permanent cable — installed in wall / ceiling
-              </text>
-
-              <rect
-                x="460"
-                y="468"
-                width="14"
-                height="14"
-                rx="3"
-                fill="rgba(252,211,77,0.22)"
-                stroke="#FACC15"
-                strokeWidth="1.4"
-              />
-              <text x="484" y="480" fill="#E5E7EB" fontSize="10.5" fontFamily="system-ui">
-                Patch panel / outlet — fixed IDC termination point
-              </text>
-
-              <line
-                x1="60"
-                y1="498"
-                x2="820"
-                y2="498"
-                stroke="rgba(255,255,255,0.08)"
-                strokeWidth="1"
-              />
-              <text
-                x="440"
-                y="518"
-                textAnchor="middle"
-                fill="#CBD5E1"
-                fontSize="10"
-                fontFamily="system-ui"
-              >
-                TIA-1152-A · BS EN 50346 — both models valid; permanent-link is the typical handover
-                deliverable
-              </text>
-            </svg>
-          </div>
-
-          <InlineCheck
-            id={inlineChecks[0].id}
-            question={inlineChecks[0].question}
-            options={inlineChecks[0].options}
-            correctIndex={inlineChecks[0].correctIndex}
-            explanation={inlineChecks[0].explanation}
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>The TIA-1152-A parameter set</ContentEyebrow>
-
-          <ConceptBlock
-            title="What the certifier actually measures — and why each parameter matters"
-            plainEnglish="A modern field certifier (Fluke DSX-8000, ideal LanXPLORER, Softing WireXpert) measures a defined parameter set. Each parameter answers a specific question about the channel: does the signal arrive intact (insertion loss), do pairs interfere with each other (NEXT / PSNEXT / ACR-F), do reflections distort the waveform (return loss), do signals arrive in step across the four pairs (propagation delay, delay skew), and — for PoE — do the conductors share DC current evenly (DC resistance, DC resistance unbalance). Each parameter has a Class-EA pass criterion; the certifier reports the measured value and the margin in dB."
-            onSite="The discipline at handover is to inspect the per-link certifier output, not just the headline pass / fail. Look at the margins on NEXT, return loss and ACR-F. A 5 dB margin is comfortable; a 1 dB margin is marginal; a 0.2 dB margin is a re-terminate. Look at DC resistance unbalance — it is the PoE-readiness indicator. Look at delay skew — anything close to the cap suggests a mixed-cable run. The certifier report is a diagnostic tool, not just a pass/fail badge."
-          >
-            <p>The TIA-1152-A parameter set in detail:</p>
-            <ul className="list-disc pl-5 space-y-2 text-[14px]">
-              <li>
-                <strong>Insertion loss.</strong> The signal attenuation end-to-end at each tested
-                frequency. For Cat6A at 500 MHz, the maximum is roughly 35.9 dB across 100 m of
-                channel. Higher-than-expected insertion loss usually means an over-strip, a kinked
-                cable, or a bad connector.
-              </li>
-              <li>
-                <strong>NEXT (near-end crosstalk).</strong> The amount of signal energy that couples
-                between pairs at the near end of the cable. The driver of Cat6A performance. Pair
-                untwist at the termination is the dominant cause of poor NEXT.
-              </li>
-              <li>
-                <strong>PSNEXT (power-sum NEXT).</strong> The total NEXT energy from all three other
-                pairs into the pair under test. Reflects how a real Ethernet signal — driving four
-                pairs simultaneously — sees crosstalk.
-              </li>
-              <li>
-                <strong>ACR-F (attenuation-to-crosstalk ratio, far-end).</strong> The difference
-                between the wanted signal at the far end and the crosstalk at the far end.
-                Essentially a signal-to-noise margin at the receiver.
-              </li>
-              <li>
-                <strong>Return loss.</strong> How much signal energy is reflected back from
-                impedance discontinuities (terminations, kinks, crushed cable). Over-stripped
-                jackets and excess pair untwist are the dominant causes of poor return loss.
-              </li>
-              <li>
-                <strong>Propagation delay.</strong> Signal travel time end-to-end. Related to length
-                and cable construction. Used to compute effective electrical length.
-              </li>
-              <li>
-                <strong>Delay skew.</strong> Maximum pair-to-pair delay difference. Critical for
-                10GBASE-T which parallelises across all four pairs. Class EA cap typically 50 ns.
-              </li>
-              <li>
-                <strong>DC resistance.</strong> End-to-end loop resistance per conductor pair. Used
-                as a continuity check and to compute power loss for PoE.
-              </li>
-              <li>
-                <strong>DC resistance unbalance.</strong> The PoE-critical parameter. Intra-pair
-                (between the two conductors of a pair) and inter-pair (between pairs). Tight
-                tolerances because PoE delivers DC current through the same balanced cabling —
-                uneven sharing causes uneven heating.
-              </li>
-              <li>
-                <strong>Wire map.</strong> Continuity and pinout. Catches reversed pairs, split
-                pairs, opens, shorts. The first thing the certifier checks.
-              </li>
-              <li>
-                <strong>Length.</strong> Physical and effective electrical. Inflated effective
-                length indicates impedance discontinuities — usually a termination defect.
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <RegsCallout
-            source="BS 7671:2018+A4:2026 · §716.523.1.101 (Conductor design current — verbatim)"
-            clause={
-              <>
-                The design current in any conductor shall not exceed the limit specified in BS EN
-                50173-1.
-                <br />
-                NOTE 1: Any temperature rise of the data cables due to the load current they carry,
-                or other causes, will increase the attenuation/insertion loss of the cables. Thus
-                the performance of information transmission channels can be degraded.
-                <br />
-                NOTE 2: Guidance on the effect of the number of loaded conductors, in a multi-cable
-                bundle, on the temperature rise of the cables is given in PD CLC/TR 50174-99-1:2015
-                and requirements and recommendations in relation to planning and installation of
-                such cable bundles are provided in BS ISO/IEC 14763-2 and ISO/IEC TS 29125.
-              </>
-            }
-            meaning="§716.523.1.101 establishes the formal link between data-cabling testing and PoE thermal management. The conductor design current is bounded by BS EN 50173-1 (which feeds the ≤ 750 mA per conductor cap of §716.523.2.101). NOTE 1 makes the test parameter set directly relevant to PoE: temperature rise from PoE current degrades insertion loss — so a Cat6A channel that passes Class EA cold may not pass it under continuous PoE load. NOTE 2 brings the bundle-thermal references — including TIA TSB-184-A and PD CLC/TR 50174-99-1 — into the regulatory scope. DC resistance unbalance is the certifier parameter that catches imbalance before it becomes a thermal failure."
-            cite="Verified verbatim from bs7671_regulations.full_text · A4:2026 edition · BS 7671:2018+A4:2026, published 15 April 2026"
-          />
-
-          <InlineCheck
-            id={inlineChecks[1].id}
-            question={inlineChecks[1].question}
-            options={inlineChecks[1].options}
-            correctIndex={inlineChecks[1].correctIndex}
-            explanation={inlineChecks[1].explanation}
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>Instrument accuracy levels and warranty alignment</ContentEyebrow>
-
-          <ConceptBlock
-            title="Levels III, IIIe, IV, V — and why the spec must name one"
-            plainEnglish="TIA-1152-A defines four field-test instrument accuracy levels: III, IIIe, IV and V (V is the current top tier). The level describes the instrument's residual measurement noise and calibration tolerances — i.e. how accurately it measures the parameters listed above. Higher levels are more accurate; the same cable tested with a Level III certifier and a Level V certifier may produce different headline margins on the same parameters. For Cat6A, Level III is the minimum mandated by the standard; Level V is what most manufacturer warranty programmes require."
-            onSite="The competent contract specifies the level explicitly. Specifying just 'TIA-1152-A' without a level is incomplete — it allows a contractor to use a lower-tier instrument that produces more generous margins, which the warranty manufacturer may then reject. The contract wording is: 'Cat6A horizontal cabling shall be certified to TIA-1152-A Level V (or BS EN 50346 equivalent), permanent-link adapter, every link individually tested, certifier file archived per link, summary report supplied at handover.'"
-          >
-            <p>The four levels and where each is used:</p>
-            <ul className="list-disc pl-5 space-y-2 text-[14px]">
-              <li>
-                <strong>Level III.</strong> Older accuracy level, sufficient for Cat5e / Cat6 /
-                Cat6A per the TIA-1152-A pass criteria. Older field certifiers (Fluke DTX, ideal
-                LANTEK) operate at this level.
-              </li>
-              <li>
-                <strong>Level IIIe.</strong> Enhanced Level III, with tighter tolerances on some
-                parameters. A transitional level; mostly superseded by Level IV / V.
-              </li>
-              <li>
-                <strong>Level IV.</strong> Higher accuracy than III, with tighter calibration
-                tolerances. Used on some Cat6A and many Cat7 / Cat7A applications.
-              </li>
-              <li>
-                <strong>Level V.</strong> Modern top tier. Required by most major manufacturer
-                warranty programmes for Cat6A and mandatory for Cat8 / Class I/II. Modern certifiers
-                — Fluke DSX-8000, ideal LanXPLORER, Softing WireXpert (top SKU) — operate at Level
-                V.
-              </li>
-            </ul>
-            <p>
-              The practical implication is that two contractors quoting "TIA-1152-A certified Cat6A"
-              can deliver materially different evidence: one with a 25-year warranty-aligned Level V
-              record, one with a Level III record that the warranty manufacturer may not register.
-              The cost differential at instrument level is real (a Level V certifier costs roughly
-              twice a Level III), but the cost differential per link tested is negligible. Specify
-              Level V for any Cat6A or above install where warranty cover matters — which is most
-              jobs.
-            </p>
-          </ConceptBlock>
-
-          <AppendixTable
-            caption="TIA-1152-A instrument accuracy levels and typical use"
-            source="TIA-1152-A (2016, current) · BS EN 50346"
-            headers={[
-              'Level',
-              'Typical era / instruments',
-              'Typical use',
-              'Manufacturer warranty alignment',
-            ]}
-            rows={[
-              [
-                'III',
-                'Older Fluke DTX, ideal LANTEK',
-                'Cat5e / Cat6 minimum',
-                'Some Cat5e warranties; many Cat6A warranties reject',
-              ],
-              ['IIIe', 'Transitional', 'Cat6 enhanced', 'Few warranties name it explicitly'],
-              [
-                'IV',
-                'Mid-tier modern certifiers',
-                'Cat6A, Cat7 / 7A',
-                'Some Cat6A warranties accept',
-              ],
-              [
-                'V',
-                'Fluke DSX-8000, ideal LanXPLORER, Softing WireXpert (top)',
-                'Cat6A · Cat8 / Class I, II',
-                'Required by most major Cat6A / Cat8 warranty programmes',
-              ],
-            ]}
-            notes="The standard specifies the minimum level for each Class. Manufacturer warranty programmes typically require a higher level than the minimum. The competent contract names the level explicitly: 'TIA-1152-A Level V certifier output, permanent-link adapter, every link archived'. That binds the contractor to the same accuracy regime the warranty manufacturer audits against."
-          />
-
-          <InlineCheck
-            id={inlineChecks[2].id}
-            question={inlineChecks[2].question}
-            options={inlineChecks[2].options}
-            correctIndex={inlineChecks[2].correctIndex}
-            explanation={inlineChecks[2].explanation}
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>Pass / fail margins and the no-marginal-pass rule</ContentEyebrow>
-
-          <ConceptBlock
-            title="The difference between a 15-year channel and a six-month channel — at handover"
-            plainEnglish="Class EA pass per the standard is a single binary — pass or fail. Class EA at handover with comfortable margins is a 15-year channel; Class EA marginal pass is a six-month channel. The certifier reports the measured parameter value AND the margin in dB against the Class EA pass criterion. A 5 dB NEXT margin is comfortable; a 1 dB NEXT margin is marginal; a 0.2 dB margin is a re-terminate. The discipline at handover is not 'all links pass' — it is 'all links pass with adequate margin'."
-            onSite="Most major manufacturer warranty programmes (Panduit, CommScope, Leviton, Belden — 25-year warranties) define an internal margin threshold typically 3-5 dB above the standard pass criterion. Below that, the warranty audit rejects the link even though it 'passed' per the standard. Best practice on every Cat6A handover is: read every per-link certifier output, identify any link with sub-3 dB margin on any critical parameter, re-terminate before the contractor leaves site, re-test, archive the new result. The dominant cause of marginal passes is excess pair untwist; the fix is 5-10 minutes per termination."
-          >
-            <p>What 'marginal pass' actually means in practice:</p>
-            <ul className="list-disc pl-5 space-y-2 text-[14px]">
-              <li>
-                <strong>Comfortable pass — 3-5 dB or better margin on critical parameters.</strong>{' '}
-                15-year channel; survives thermal cycling, PoE load, cable movement, seasonal
-                humidity. Manufacturer warranty audit accepts. End-user can deploy any service up to
-                Class EA spec confidently.
-              </li>
-              <li>
-                <strong>Marginal pass — 1-3 dB margin on one or more critical parameters.</strong>{' '}
-                Technically passes Class EA per the standard. Drifts under thermal cycling and PoE
-                load — most commonly degrades to fail within 6-18 months. Warranty audit may reject.
-                Should be re-terminated at handover.
-              </li>
-              <li>
-                <strong>Edge pass — sub-1 dB margin.</strong> Time-bomb. Passes the certifier today,
-                fails as soon as the cable warms or moves. Re-terminate immediately. Do not accept
-                at handover.
-              </li>
-              <li>
-                <strong>Fail.</strong> Re-terminate, re-pull, or re-design.
-              </li>
-            </ul>
-            <p>
-              The economics of the no-marginal-pass discipline are straightforward. A re-termination
-              at handover costs 5-10 minutes per link in labour. A re-call to site six months later
-              — diagnose the failing link, remove the patch panel, re-terminate, re-test,
-              re-document, leave site — costs an hour minimum, plus the reputational damage of
-              returning to site to fix work that was signed off as complete. Refuse marginal passes
-              at handover. It is the cheapest insurance the contractor can buy.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck
-            id={inlineChecks[3].id}
-            question={inlineChecks[3].question}
-            options={inlineChecks[3].options}
-            correctIndex={inlineChecks[3].correctIndex}
-            explanation={inlineChecks[3].explanation}
-          />
-
-          <CommonMistake
-            title="Reading only the headline 'PASS' on the certifier and ignoring the margins"
-            whatHappens={
-              <>
-                Contractor finishes the install on a Friday afternoon. Lays down the certifier, runs
-                every link, sees green PASS on each, packs up and leaves site. The handover archive
-                contains 96 PASS results. Six months later, eight links have failed under PoE
-                thermal load — each had been a sub-1 dB NEXT margin pass on day one, the result of
-                excess pair untwist that nobody inspected because the headline read PASS. Contractor
-                is back on site re-terminating eight links plus answering hard questions about why
-                the handover signed off non-deliverable quality.
-              </>
-            }
-            doInstead={
-              <>
-                Read every per-link certifier output, not just the summary. Sort by margin ascending
-                on each critical parameter (NEXT, return loss, ACR-F). Anything with sub-3 dB margin
-                is a re-terminate before handover. The fix is 5-10 minutes per link; the cost of
-                skipping it is a six-month re-call. Specify the discipline in the contract: 'all
-                links shall pass Class EA with not less than 3 dB margin on NEXT, return loss and
-                ACR-F; marginal passes shall be re-terminated and re-tested before handover'. Then
-                enforce it.
-              </>
-            }
-          />
-
-          <Scenario
-            title="Manufacturer warranty audit fails — what does the contractor do?"
-            situation={
-              <>
-                A Cat6A office fit-out, certified to TIA-1152-A and signed off six months ago. The
-                end user submits the certifier files to the manufacturer for the 25-year warranty
-                registration. The audit returns 14 of 96 links rejected: "DC resistance unbalance
-                exceeds programme tolerance" and "NEXT margin below programme threshold". The
-                contractor is asked to remediate.
-              </>
-            }
-            whatToDo={
-              <>
-                Three steps. (1) Pull the original archive and identify the failing links — most
-                likely common termination defects (over-stripped jacket, excess pair untwist) on the
-                same crew or the same patch panel. (2) Re-terminate every rejected link to the
-                manufacturer{"'"}s strip-length and untwist instructions, using the same Cat6A
-                keystone family certified to the same warranty programme. Re-test with a Level V
-                certifier (the audit was Level V; the original may have been Level IV — match the
-                audit instrument). (3) Submit the new per-link files to the manufacturer for
-                re-audit. Update the site BS EN 50174-1 / TIA-606-D administration record to reflect
-                the re-terminated links and the date.
-              </>
-            }
-            whyItMatters={
-              <>
-                Manufacturer warranty audit is the moment the certifier evidence is read by someone
-                who is paid to find faults. If the original handover skipped the margin-discipline
-                check — accepted PASS without inspecting margins — the audit will catch it months
-                later, when re-termination is more expensive. Build the no-marginal-pass discipline
-                into the handover, archive Level V certifier output, and the audit becomes a
-                registration exercise rather than a remediation contract. Skip it, and the audit
-                becomes a re-call to site at contractor expense.
-              </>
-            }
-          />
-
-          <SectionRule />
-
-          <KeyTakeaways
-            title="Worth remembering"
-            points={[
-              'Two test models. Permanent-link certifies the contractor scope (solid cable + both connectors); channel additionally includes the cords. Permanent-link is the typical handover deliverable.',
-              'TIA-1152-A defines instrument accuracy Levels III, IIIe, IV, V — V is the modern top tier and is required by most Cat6A / Cat8 manufacturer warranty programmes. Specify the level explicitly in the contract.',
-              'The certifier measures a defined parameter set: insertion loss, NEXT, PSNEXT, ACR-F, return loss, propagation delay, delay skew, DC resistance, and DC resistance unbalance (the PoE-critical parameter). Each has a Class-EA pass criterion and a margin in dB.',
-              'BS 7671 §716.523.1.101 NOTE 1 makes the test parameter set directly relevant to PoE — temperature rise from PoE current degrades insertion loss. DC resistance unbalance is the certifier parameter that catches uneven current sharing before it becomes a thermal failure.',
-              'No-marginal-pass at handover. Sub-3 dB margins on critical parameters drift under thermal cycling and PoE load; re-terminate before the contractor leaves site. Class EA at handover with comfortable 3-5 dB margins is a 15-year channel.',
-            ]}
-          />
-
-          <FAQ items={faqs} />
-
-          <SectionRule />
-
-          <Quiz title="Knowledge check" questions={quizQuestions} />
-
-          {/* Bottom navigation */}
-          <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 mt-6 border-t border-white/10">
-            <button
-              type="button"
-              onClick={() => navigate('/electrician/upskilling/data-cabling-module-5-section-1')}
-              className="inline-flex items-center justify-center gap-2 w-full sm:w-auto h-12 px-5 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13.5px] font-medium touch-manipulation hover:bg-white/[0.1] active:scale-[0.98]"
-            >
-              <ArrowLeft className="h-4 w-4" /> Previous: Termination tools
-            </button>
-            <button
-              type="button"
-              onClick={() => navigate('/electrician/upskilling/data-cabling-module-5-section-3')}
-              className="inline-flex items-center justify-center gap-2 w-full sm:w-auto h-12 px-5 rounded-full bg-elec-yellow text-black text-[13.5px] font-semibold touch-manipulation hover:bg-elec-yellow/90 active:scale-[0.98]"
-            >
-              Next section: Patch cord performance
-              <ChevronRight className="h-4 w-4" />
-            </button>
-          </nav>
-        </PageFrame>
-      </div>
-    </div>
+            Next section: Patch cord performance
+            <ChevronRight className="h-4 w-4" />
+          </button>
+        </nav>
+      </HubBody>
+    </HubPage>
   );
 };
 

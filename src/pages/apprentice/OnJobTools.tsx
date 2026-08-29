@@ -1,16 +1,14 @@
 import { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft } from 'lucide-react';
 import {
-  PageFrame,
-  PageHero,
   SectionHeader,
   HubGrid,
   HubCard,
   itemVariants,
   type Tone,
 } from '@/components/college/primitives';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 
 interface ToolDef {
   number: string;
@@ -76,7 +74,8 @@ const SAFETY: ToolDef[] = [
     number: '06',
     eyebrow: 'BS 7671',
     title: 'Inspection & testing run-through',
-    description: 'Complete A4:2026 inspection & testing procedures with step-by-step documentation.',
+    description:
+      'Complete A4:2026 inspection & testing procedures with step-by-step documentation.',
     meta: 'Full guide',
     link: '/apprentice/on-job-tools/bs7671-runthrough',
     tone: 'yellow',
@@ -198,137 +197,134 @@ export default function OnJobTools() {
   }, []);
 
   return (
-    <PageFrame className="px-4 sm:px-6 lg:px-8">
-      <motion.div variants={itemVariants}>
-        <button onClick={() => navigate('/apprentice')} className="inline-flex items-center gap-2 h-11 -ml-2 px-2 rounded-md text-[12px] uppercase tracking-[0.18em] text-white/55 hover:text-white/85 transition-colors touch-manipulation">
-          <ArrowLeft className="h-4 w-4" />
-          Back
-        </button>
-      </motion.div>
-
-      <motion.div variants={itemVariants}>
-        <PageHero
-          eyebrow="Apprentice · On-the-job tools"
-          title="Everything you need on site"
-          description="Safety checklists, quick-reference guides and on-site calculators. Built by electricians, for apprentices."
-          tone="yellow"
-        />
-      </motion.div>
-
-      {/* TIP OF THE DAY — editorial alert card, no icon */}
-      <motion.div
-        variants={itemVariants}
-        className="rounded-2xl border border-elec-yellow/20 bg-gradient-to-br from-elec-yellow/[0.06] via-amber-500/[0.02] to-transparent px-5 py-4 sm:px-6 sm:py-5"
-      >
-        <div className="flex items-baseline gap-2 mb-2">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">
-            Tip
-          </span>
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-            · {todaysTip.category}
-          </span>
-        </div>
-        <p className="text-[13px] leading-relaxed text-white/80 max-w-3xl">{todaysTip.tip}</p>
-      </motion.div>
-
-      {/* QUICK ACCESS */}
-      <motion.section variants={itemVariants} className="space-y-5 sm:space-y-6">
-        <SectionHeader eyebrow="Quick Access" title="Most-used tools" />
-        <HubGrid columns={3}>
-          {QUICK_ACCESS.map((t) => (
-            <HubCard
-              key={t.link + t.number}
-              size="sm"
-              number={t.number}
-              eyebrow={t.eyebrow}
-              title={t.title}
-              description={t.description}
-              meta={t.meta}
-              tone={t.tone}
-              onClick={() => navigate(t.link)}
-            />
-          ))}
-        </HubGrid>
-      </motion.section>
-
-      {/* SAFETY BANNER — calmer editorial note */}
-      <motion.div
-        variants={itemVariants}
-        className="rounded-2xl border border-amber-500/20 bg-amber-500/[0.04] px-5 py-4 sm:px-6 sm:py-5"
-      >
-        <div className="flex items-baseline gap-2 mb-2">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-amber-300/85 tabular-nums">
-            Safety
-          </span>
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-            · Stop and ask
-          </span>
-        </div>
-        <p className="text-[13px] leading-relaxed text-white/80 max-w-3xl">
-          These tools help you prepare properly — they don't replace training or supervision. When
-          in doubt, stop and ask. No one ever got sacked for checking.
+    <HubPage>
+      <HubMasthead
+        section="Apprentice · On-the-job tools"
+        title="Everything you need on site"
+        backTo="/apprentice"
+      />
+      <HubBody>
+        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
+          {
+            'Safety checklists, quick-reference guides and on-site calculators. Built by electricians, for apprentices.'
+          }
         </p>
-      </motion.div>
 
-      {/* SAFETY & COMPLIANCE */}
-      <motion.section variants={itemVariants} className="space-y-5 sm:space-y-6">
-        <SectionHeader eyebrow="Safety & Compliance" title="Stay safe, stay legal" />
-        <HubGrid columns={3}>
-          {SAFETY.map((t) => (
-            <HubCard
-              key={t.link + t.number}
-              size="sm"
-              number={t.number}
-              eyebrow={t.eyebrow}
-              title={t.title}
-              description={t.description}
-              meta={t.meta}
-              tone={t.tone}
-              onClick={() => navigate(t.link)}
-            />
-          ))}
-        </HubGrid>
-      </motion.section>
+        {/* TIP OF THE DAY — editorial alert card, no icon */}
+        <motion.div
+          variants={itemVariants}
+          className="rounded-2xl border border-elec-yellow/20 bg-gradient-to-br from-elec-yellow/[0.06] via-amber-500/[0.02] to-transparent px-5 py-4 sm:px-6 sm:py-5"
+        >
+          <div className="flex items-baseline gap-2 mb-2">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">
+              Tip
+            </span>
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              · {todaysTip.category}
+            </span>
+          </div>
+          <p className="text-[13px] leading-relaxed text-white/80 max-w-3xl">{todaysTip.tip}</p>
+        </motion.div>
 
-      {/* GUIDES & REFERENCE */}
-      <motion.section variants={itemVariants} className="space-y-5 sm:space-y-6">
-        <SectionHeader eyebrow="Guides & Reference" title="Look it up" />
-        <HubGrid columns={3}>
-          {GUIDES.map((t) => (
-            <HubCard
-              key={t.link + t.number}
-              size="sm"
-              number={t.number}
-              eyebrow={t.eyebrow}
-              title={t.title}
-              description={t.description}
-              meta={t.meta}
-              tone={t.tone}
-              onClick={() => navigate(t.link)}
-            />
-          ))}
-        </HubGrid>
-      </motion.section>
+        {/* QUICK ACCESS */}
+        <motion.section variants={itemVariants} className="space-y-5 sm:space-y-6">
+          <SectionHeader eyebrow="Quick Access" title="Most-used tools" />
+          <HubGrid columns={3}>
+            {QUICK_ACCESS.map((t) => (
+              <HubCard
+                key={t.link + t.number}
+                size="sm"
+                number={t.number}
+                eyebrow={t.eyebrow}
+                title={t.title}
+                description={t.description}
+                meta={t.meta}
+                tone={t.tone}
+                onClick={() => navigate(t.link)}
+              />
+            ))}
+          </HubGrid>
+        </motion.section>
 
-      {/* PRACTICE & QUICK REF */}
-      <motion.section variants={itemVariants} className="space-y-5 sm:space-y-6">
-        <SectionHeader eyebrow="Practice & Quick Reference" title="Sharpen the basics" />
-        <HubGrid columns={3}>
-          {PRACTICE.map((t) => (
-            <HubCard
-              key={t.link + t.number}
-              size="sm"
-              number={t.number}
-              eyebrow={t.eyebrow}
-              title={t.title}
-              description={t.description}
-              meta={t.meta}
-              tone={t.tone}
-              onClick={() => navigate(t.link)}
-            />
-          ))}
-        </HubGrid>
-      </motion.section>
-    </PageFrame>
+        {/* SAFETY BANNER — calmer editorial note */}
+        <motion.div
+          variants={itemVariants}
+          className="rounded-2xl border border-amber-500/20 bg-amber-500/[0.04] px-5 py-4 sm:px-6 sm:py-5"
+        >
+          <div className="flex items-baseline gap-2 mb-2">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-amber-300/85 tabular-nums">
+              Safety
+            </span>
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              · Stop and ask
+            </span>
+          </div>
+          <p className="text-[13px] leading-relaxed text-white/80 max-w-3xl">
+            These tools help you prepare properly — they don't replace training or supervision. When
+            in doubt, stop and ask. No one ever got sacked for checking.
+          </p>
+        </motion.div>
+
+        {/* SAFETY & COMPLIANCE */}
+        <motion.section variants={itemVariants} className="space-y-5 sm:space-y-6">
+          <SectionHeader eyebrow="Safety & Compliance" title="Stay safe, stay legal" />
+          <HubGrid columns={3}>
+            {SAFETY.map((t) => (
+              <HubCard
+                key={t.link + t.number}
+                size="sm"
+                number={t.number}
+                eyebrow={t.eyebrow}
+                title={t.title}
+                description={t.description}
+                meta={t.meta}
+                tone={t.tone}
+                onClick={() => navigate(t.link)}
+              />
+            ))}
+          </HubGrid>
+        </motion.section>
+
+        {/* GUIDES & REFERENCE */}
+        <motion.section variants={itemVariants} className="space-y-5 sm:space-y-6">
+          <SectionHeader eyebrow="Guides & Reference" title="Look it up" />
+          <HubGrid columns={3}>
+            {GUIDES.map((t) => (
+              <HubCard
+                key={t.link + t.number}
+                size="sm"
+                number={t.number}
+                eyebrow={t.eyebrow}
+                title={t.title}
+                description={t.description}
+                meta={t.meta}
+                tone={t.tone}
+                onClick={() => navigate(t.link)}
+              />
+            ))}
+          </HubGrid>
+        </motion.section>
+
+        {/* PRACTICE & QUICK REF */}
+        <motion.section variants={itemVariants} className="space-y-5 sm:space-y-6">
+          <SectionHeader eyebrow="Practice & Quick Reference" title="Sharpen the basics" />
+          <HubGrid columns={3}>
+            {PRACTICE.map((t) => (
+              <HubCard
+                key={t.link + t.number}
+                size="sm"
+                number={t.number}
+                eyebrow={t.eyebrow}
+                title={t.title}
+                description={t.description}
+                meta={t.meta}
+                tone={t.tone}
+                onClick={() => navigate(t.link)}
+              />
+            ))}
+          </HubGrid>
+        </motion.section>
+      </HubBody>
+    </HubPage>
   );
 }

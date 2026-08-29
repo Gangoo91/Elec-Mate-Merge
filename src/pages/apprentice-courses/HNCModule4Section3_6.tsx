@@ -7,10 +7,10 @@
  */
 
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
-import { PageFrame, PageHero } from '@/components/college/primitives';
 import {
   TLDR,
   ConceptBlock,
@@ -45,12 +45,7 @@ const quickCheckQuestions = [
   {
     id: 'afdd-standard',
     question: 'Which British Standard covers AFDDs?',
-    options: [
-      'BS EN 62606',
-      'BS 7671',
-      'BS EN 60898',
-      'BS EN 61008',
-    ],
+    options: ['BS EN 62606', 'BS 7671', 'BS EN 60898', 'BS EN 61008'],
     correctIndex: 0,
     explanation:
       'BS EN 62606 specifies requirements for Arc Fault Detection Devices. It defines test methods, performance requirements, and marking for AFDDs used in AC circuits up to 240V and 63A.',
@@ -126,12 +121,7 @@ const quizQuestions = [
   {
     id: 4,
     question: 'What is the typical frequency range analysed by AFDDs for arc detection?',
-    options: [
-      '10 kHz to several MHz',
-      '1-10 kHz',
-      '50-60 Hz only',
-      'Above 100 MHz',
-    ],
+    options: ['10 kHz to several MHz', '1-10 kHz', '50-60 Hz only', 'Above 100 MHz'],
     correctAnswer: 0,
     explanation:
       'AFDDs typically analyse frequencies from about 10 kHz to several MHz. Arc faults produce broadband noise across this range with characteristic patterns that sophisticated algorithms can identify.',
@@ -152,12 +142,7 @@ const quizQuestions = [
   {
     id: 6,
     question: 'What is the maximum rated current for AFDDs to BS EN 62606?',
-    options: [
-      '16A',
-      '32A',
-      '63A',
-      '40A',
-    ],
+    options: ['16A', '32A', '63A', '40A'],
     correctAnswer: 2,
     explanation:
       'BS EN 62606 covers AFDDs for AC circuits with rated voltage up to 240V and rated current up to 63A. This covers most single-phase final circuits in building services.',
@@ -254,555 +239,548 @@ const HNCModule4Section3_6 = () => {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
-      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
-        <PageFrame>
+    <HubPage>
+      <HubMasthead
+        section="Module 4 · Section 3 · Subsection 6"
+        title="Arc Fault Detection"
+        backTo="/study-centre/apprentice/h-n-c-module4-section3"
+      />
+      <HubBody>
+        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
+          AFDDs for fire prevention — technology, applications, and BS 7671 recommendations.
+        </p>
+
+        <TLDR
+          points={[
+            'AFDDs (Arc Fault Detection Devices) detect the high-frequency signature of arcing faults — series (broken conductor) or parallel (insulation breakdown) — that MCBs and RCDs miss.',
+            'Arcing faults are a leading electrical fire cause: BEAMA estimates 50–60% of UK electrical fires originate from undetected arcing.',
+            'BS 7671 Reg 421.1.7 (introduced by Amendment 2:2022) RECOMMENDS the installation of AFDDs in AC final circuits — recommendation, not mandatory.',
+            'Combined AFDD + MCB + RCD modules are the practical specification — single 18 mm wide unit replaces an RCBO at slightly higher cost.',
+            'Best-fit applications: HMOs, care homes, schools, listed buildings, wooden-clad construction, hospitality bedrooms — anywhere a fire would be catastrophic.',
+          ]}
+        />
+
+        <RegsCallout
+          source="BS 7671:2018+A4:2026 — Reg 421.1.7 (Arc fault detection devices)"
+          clause="Regulation 421.1.7 of BS 7671:2018+A4:2026 has been introduced recommending the installation of arc fault detection devices (AFDDs). The regulation text explicitly recommends installation of AFDDs as a measure within Part 4 — Protection for Safety, Chapter 42. The text uses 'recommending the installation' — advisory rather than mandatory phrasing; it does not use 'shall' or other mandatory wording."
+          meaning={
+            <>
+              Reg 421.1.7 was introduced by Amendment 2:2022 and explicitly RECOMMENDS AFDD
+              installation in AC final circuits to mitigate fire risk from arc faults. The wording
+              is advisory (&lsquo;recommending&rsquo;) — NOT mandatory. Designers must still
+              consider AFDDs as part of the risk-based design process and document the decision
+              either way. For high-fire-risk premises (HMOs, care homes, schools, wooden buildings,
+              listed properties) installing AFDDs is the defendable engineering position; omitting
+              them needs a written justification in the design file.
+            </>
+          }
+          cite="Source: BS 7671:2018+A4:2026 — Regulation 421.1.7; BS EN 62606 (AFDD product standard); BEAMA AFDD guidance."
+        />
+
+        <LearningOutcomes
+          outcomes={[
+            'Explain the purpose and operating principle of AFDDs',
+            'Differentiate between series and parallel arc faults',
+            'Apply BS 7671 recommendations for AFDD installation',
+            'Identify appropriate applications for AFDDs in building services',
+            'Understand AFDD limitations and potential nuisance tripping',
+            'Specify combined AFDD devices for circuit protection',
+          ]}
+          initialVisibleCount={3}
+        />
+
+        <SectionRule />
+
+        <ConceptBlock title="Arc Fault Fundamentals">
+          <p>
+            Arc faults occur when electrical current flows through an unintended path via ionised
+            air. The arc generates extreme heat (3000-6000°C) that can ignite nearby materials,
+            causing electrical fires.
+          </p>
+          <p>
+            <strong>Types of arc faults (type / description / detection challenge):</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Series arc</strong> — arc within a single conductor (damaged cable, loose
+              terminal) — current limited by load, MCBs won't detect
+            </li>
+            <li>
+              <strong>Parallel arc (L-N)</strong> — arc between line and neutral (damaged
+              insulation) — may trip MCB eventually but delay allows ignition
+            </li>
+            <li>
+              <strong>Parallel arc (L-E)</strong> — arc between line and earth (insulation failure)
+              — RCD should detect but arc may be intermittent
+            </li>
+          </ul>
+          <p>
+            <strong>Common causes — installation faults:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Loose terminal connections</li>
+            <li>Damaged cable during installation</li>
+            <li>Incorrectly tightened connections</li>
+            <li>Cable pinched by fixings</li>
+          </ul>
+          <p>
+            <strong>Common causes — aging / damage:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Insulation degradation over time</li>
+            <li>Rodent damage to cables</li>
+            <li>Physical damage (DIY, nails)</li>
+            <li>Thermal degradation from overloading</li>
+          </ul>
+          <p>
+            <strong>Why conventional protection fails:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>MCBs:</strong> series arc current is limited by load (e.g., 5A for a lamp) —
+              well below trip threshold
+            </li>
+            <li>
+              <strong>RCDs:</strong> only detect earth leakage — series and L-N arcs don't involve
+              earth
+            </li>
+            <li>
+              <strong>Time delay:</strong> even detectable faults may take seconds to trip — enough
+              time for ignition
+            </li>
+            <li>
+              <strong>Arc impedance:</strong> arc itself adds impedance, further reducing fault
+              current
+            </li>
+          </ul>
+          <p>
+            <strong>Fire statistics:</strong> Approximately 50% of electrical fires in dwellings are
+            attributed to arcing faults in fixed wiring.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...quickCheckQuestions[0]} />
+
+        <SectionRule />
+
+        <ConceptBlock title="AFDD Technology and Operation">
+          <p>
+            AFDDs use sophisticated electronic monitoring and algorithms to analyse the current
+            waveform for characteristic arc signatures whilst distinguishing dangerous arcs from
+            normal switching or motor operation.
+          </p>
+          <p>
+            <strong>Detection principle:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Current monitoring:</strong> high-bandwidth current sensor captures waveform
+              including HF components
+            </li>
+            <li>
+              <strong>Signal processing:</strong> microprocessor analyses frequency spectrum
+              (typically 10kHz - several MHz)
+            </li>
+            <li>
+              <strong>Pattern recognition:</strong> algorithms identify characteristic arc
+              signatures (irregular, broadband noise)
+            </li>
+            <li>
+              <strong>Discrimination:</strong> filters distinguish dangerous arcs from normal
+              switching, motor brushes, etc.
+            </li>
+            <li>
+              <strong>Trip decision:</strong> if arc pattern persists, AFDD disconnects the circuit
+            </li>
+          </ul>
+          <p>
+            <strong>BS EN 62606 requirements (parameter / requirement):</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Rated voltage — up to 240V AC</li>
+            <li>Rated current — up to 63A</li>
+            <li>Arc detection — series and parallel arcs</li>
+            <li>Response time — typically &lt;1 second for test arcs</li>
+            <li>Test function — integral test button required</li>
+            <li>Indicator — visual indication of trip cause</li>
+          </ul>
+          <p>
+            <strong>AFDD device types:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>AFDD only:</strong> arc detection, requires separate OCPD
+            </li>
+            <li>
+              <strong>AFDD + MCB:</strong> combined arc and overcurrent
+            </li>
+            <li>
+              <strong>AFDD + RCBO:</strong> arc, overcurrent, and earth fault
+            </li>
+            <li>
+              <strong>Modular AFDD:</strong> mounts alongside existing MCB
+            </li>
+          </ul>
+          <p>
+            <strong>Typical module width:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>AFDD only: 1-2 modules</li>
+            <li>AFDD + MCB: 2 modules</li>
+            <li>AFDD + RCBO: 2-3 modules</li>
+            <li>Consider board capacity in design</li>
+          </ul>
+          <p>
+            <strong>Selection tip:</strong> Combined AFDD/RCBO devices provide comprehensive
+            protection (arc, overcurrent, earth fault) in minimal space.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...quickCheckQuestions[1]} />
+
+        <SectionRule />
+
+        <ConceptBlock title="BS 7671 Recommendations">
+          <p>
+            BS 7671 Regulation 421.1.7 recommends consideration of AFDDs for specific applications
+            where fire risk is elevated. This is advisory, not mandatory, but represents best
+            practice.
+          </p>
+          <p>
+            <strong>Regulation 421.1.7 recommendations:</strong> "Arc Fault Detection Devices
+            (AFDDs) conforming to BS EN 62606 are recommended in AC final circuits..."
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Sleeping accommodation:</strong> HMOs, hotels, care homes, student
+              accommodation
+            </li>
+            <li>
+              <strong>Combustible construction:</strong> timber-frame buildings, thatched roofs
+            </li>
+            <li>
+              <strong>Fire propagation risk:</strong> high-rise residential, locations with
+              difficult evacuation
+            </li>
+            <li>
+              <strong>Valuable contents:</strong> museums, archives, heritage buildings, data
+              centres
+            </li>
+            <li>
+              <strong>Premises with risk:</strong> where fire could cause serious harm or damage
+            </li>
+          </ul>
+          <p>
+            <strong>
+              Recommended applications in building services (building type / risk factor / AFDD
+              recommendation):
+            </strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>HMO — sleeping, shared facilities — strongly recommended</li>
+            <li>Hotel/B&amp;B — sleeping, unfamiliar occupants — strongly recommended</li>
+            <li>Care home — sleeping, vulnerable occupants — strongly recommended</li>
+            <li>Timber-frame house — combustible construction — recommended</li>
+            <li>Listed building — irreplaceable structure — recommended</li>
+            <li>Standard office — no elevated risk factors — consider on risk assessment</li>
+          </ul>
+          <p>
+            <strong>Cost-benefit considerations:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Additional cost:</strong> AFDDs cost more than standard MCBs/RCBOs
+            </li>
+            <li>
+              <strong>Board space:</strong> combined devices minimise space impact
+            </li>
+            <li>
+              <strong>Insurance:</strong> some insurers offer premium reductions
+            </li>
+            <li>
+              <strong>Liability:</strong> demonstrates duty of care in design
+            </li>
+            <li>
+              <strong>Life safety:</strong> fire prevention in sleeping accommodation
+            </li>
+          </ul>
+          <p>
+            <strong>Designer note:</strong> Document risk assessment and AFDD consideration in the
+            electrical design. If AFDDs are not used, record the reasoning.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...quickCheckQuestions[3]} />
+
+        <SectionRule />
+
+        <ConceptBlock title="Installation, Testing, and Limitations">
+          <p>
+            Successful AFDD implementation requires appropriate installation, commissioning, and
+            awareness of limitations to avoid nuisance tripping whilst maintaining protection.
+          </p>
+          <p>
+            <strong>Installation requirements:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Install at the origin of each protected circuit</li>
+            <li>Ensure test button is accessible for periodic testing</li>
+            <li>Label circuits protected by AFDDs</li>
+            <li>Consider space requirements in distribution board</li>
+            <li>Follow manufacturer's installation instructions</li>
+            <li>Verify compatibility with connected loads</li>
+          </ul>
+          <p>
+            <strong>Testing and verification (test / frequency / method):</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Commissioning — initial — test button operation, visual check</li>
+            <li>User testing — 6 monthly (recommended) — test button operation</li>
+            <li>Periodic inspection — per EICR schedule — test button, visual inspection</li>
+            <li>Arc injection test — optional/specialist — specialised test equipment</li>
+          </ul>
+          <p>
+            <strong>Potential nuisance trip sources:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Universal motors (vacuum, tools)</li>
+            <li>Some LED dimmer switches</li>
+            <li>Older electronic equipment</li>
+            <li>Brush-type motors</li>
+            <li>Some power supplies</li>
+          </ul>
+          <p>
+            <strong>Mitigation strategies:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Select quality AFDD devices</li>
+            <li>Check manufacturer compatibility</li>
+            <li>Separate sensitive loads</li>
+            <li>Use latest generation AFDDs</li>
+            <li>Investigate trips — may be genuine</li>
+          </ul>
+          <p>
+            <strong>Not protected by AFDDs:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>DC circuits (AFDDs are AC only to BS EN 62606)</li>
+            <li>Circuits above 63A</li>
+            <li>Three-phase circuits (without neutral — check specific device)</li>
+            <li>SELV/PELV circuits below AFDD threshold</li>
+            <li>External wiring upstream of the AFDD</li>
+          </ul>
+          <p>
+            <strong>Troubleshooting:</strong> If an AFDD trips repeatedly, investigate the circuit
+            for genuine wiring faults before assuming nuisance tripping. The AFDD may be detecting a
+            real problem.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...quickCheckQuestions[2]} />
+
+        <SectionRule />
+
+        <ConceptBlock title="Worked Examples">
+          <p>
+            <strong>Example 1 — HMO consumer unit specification:</strong> Specify protection for a
+            6-bedroom HMO with sleeping accommodation on all floors. Supply is TN-C-S.
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              Sleeping accommodation: <strong>high risk</strong>
+            </li>
+            <li>
+              Multiple occupants: <strong>high risk</strong>
+            </li>
+            <li>BS 7671 Reg 421.1.7 applies</li>
+            <li>All final circuits: AFDD protection</li>
+            <li>Socket outlets: AFDD/RCBO (30mA)</li>
+            <li>Lighting: AFDD/MCB or AFDD/RCBO</li>
+            <li>Kitchen/bathroom: AFDD/RCBO (30mA) mandatory</li>
+            <li>Comprehensive arc and shock protection</li>
+          </ul>
+          <p>
+            <strong>Example 2 — cost-benefit analysis:</strong> Compare protection options for a
+            10-way consumer unit: standard RCBOs vs AFDD/RCBOs.
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Standard RCBO: £25 × 10 = £250</li>
+            <li>AFDD/RCBO: £80 × 10 = £800</li>
+            <li>
+              Additional cost: <strong>£550</strong>
+            </li>
+            <li>Series arc protection (MCB/RCBO cannot provide)</li>
+            <li>Parallel arc detection before fire conditions</li>
+            <li>Compliance with Reg 421.1.7 recommendation</li>
+            <li>Potential insurance premium reduction</li>
+            <li>Demonstrates design due diligence</li>
+            <li>For sleeping accommodation: cost justified</li>
+            <li>For standard office: discuss with client</li>
+          </ul>
+          <p>
+            <strong>Example 3 — nuisance tripping investigation:</strong> An AFDD trips when a
+            vacuum cleaner is used. How should this be investigated?
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>1. Verify the fault:</strong> does AFDD trip every time? Does same vacuum trip
+              other AFDDs? Do other vacuums trip this AFDD?
+            </li>
+            <li>
+              <strong>2. If vacuum trips all AFDDs:</strong> vacuum may have internal fault; check
+              vacuum flex for damage; test with different vacuum
+            </li>
+            <li>
+              <strong>3. If only this AFDD/circuit:</strong> check for loose connections; inspect
+              socket for damage; test insulation resistance
+            </li>
+            <li>
+              <strong>4. If confirmed nuisance:</strong> modern AFDDs rarely false-trip; consider
+              manufacturer guidance
+            </li>
+            <li>Do not bypass AFDD without investigation</li>
+          </ul>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <ConceptBlock title="Practical guidance">
+          <p>
+            <strong>AFDD specification checklist:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Confirm BS EN 62606 compliance</li>
+            <li>Select appropriate current rating (≤63A)</li>
+            <li>Choose combined device (AFDD/MCB or AFDD/RCBO) where suitable</li>
+            <li>Verify board capacity for module width</li>
+            <li>Check compatibility with connected loads</li>
+            <li>Consider RCD discrimination if multiple devices</li>
+          </ul>
+          <p>
+            <strong>Key points to remember:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              BS EN 62606: up to <strong>240V AC, 63A</strong>
+            </li>
+            <li>
+              Detects: <strong>series and parallel arcs</strong>
+            </li>
+            <li>
+              BS 7671: <strong>recommended</strong>, not mandatory
+            </li>
+            <li>
+              Priority: <strong>sleeping accommodation</strong>
+            </li>
+            <li>
+              Testing: <strong>test button operation</strong>
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <CommonMistake
+          title="Common mistakes to avoid"
+          whatHappens={
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+              <li>
+                <strong>Omitting AFDDs in high-risk locations</strong> — document the decision
+              </li>
+              <li>
+                <strong>Ignoring trips as nuisance</strong> — investigate genuinely
+              </li>
+              <li>
+                <strong>Inadequate board space</strong> — plan for combined devices
+              </li>
+              <li>
+                <strong>No user guidance</strong> — inform occupants about test button
+              </li>
+            </ul>
+          }
+          doInstead="Specify AFDDs (or record the rationale for omission) on every Reg 421.1.7 high-risk circuit, treat repeated AFDD trips as a real fault to investigate, plan distribution board capacity for combined AFDD/RCBO modules, and brief occupants on the 6-monthly test-button check."
+        />
+
+        <SectionRule />
+
+        <Scenario
+          title="HMO refurbishment — specifying AFDDs against a fire-risk-led design"
+          situation={
+            <>
+              A 12-bed HMO is being rewired. The local authority HMO licence requires &lsquo;all
+              reasonable measures&rsquo; against fire. The fire risk assessor has flagged bedroom
+              socket-outlets and luminaires as the highest electrical-fire risk areas — typical HMO
+              failure modes are damaged plug-tops, daisy-chained extension leads and old appliance
+              cords arcing inside furniture.
+            </>
+          }
+          whatToDo={
+            <>
+              Apply Reg 421.1.7 (A4:2026): AFDDs are RECOMMENDED, not mandatory — but the
+              fire-risk-assessment context makes them the defendable specification. Specify combined
+              AFDD+RCBO units (BS EN 62606) on every bedroom socket and luminaire circuit. Standard
+              MCB+RCBO on common-areas where risk is lower. Document the recommendation against Reg
+              421.1.7 in the design file — the &lsquo;all reasonable measures&rsquo; standard in HMO
+              licensing is met by following the recommendation. Cost premium ≈ £40–£60 per circuit
+              vs an RCBO — small money for the risk reduction.
+            </>
+          }
+          whyItMatters={
+            <>
+              Reg 421.1.7 wording is advisory (&lsquo;recommending&rsquo;), not mandatory
+              (&lsquo;shall&rsquo;) — but in any setting where the fire risk is documented as high
+              (HMO, care home, school, listed building), omitting AFDDs is a design position you
+              would have to defend in court if a fire occurred. Following the recommendation is the
+              defendable engineering choice.
+            </>
+          }
+        />
+
+        <SectionRule />
+
+        <FAQ items={faqs} />
+
+        <SectionRule />
+
+        <KeyTakeaways
+          points={[
+            'AFDDs detect the high-frequency RF / current-waveform signature of arcing faults — series (broken conductor / loose terminal) or parallel (insulation breakdown).',
+            'MCBs and RCDs do NOT detect arcing — currents are below MCB trip threshold and arcing produces no residual current.',
+            'Reg 421.1.7 (introduced A4:2026) RECOMMENDS — does not mandate — AFDD installation in AC final circuits to mitigate fire risk.',
+            'Best-fit applications: HMOs, care homes, schools, hotels, listed buildings, wooden-clad construction, escape-route bedrooms.',
+            'Combined AFDD+MCB+RCD modules (single 18 mm slot) are the practical specification — replaces an RCBO at modest premium.',
+            'AFDD product standard: BS EN 62606. Always specify a Listed device, never an unbranded import.',
+            'Design file documentation: where AFDDs are NOT specified, record the engineering reasoning — ‘low fire risk’, ‘cost-benefit’, etc.',
+            'Test methodology: AFDDs include built-in self-test functions; verify operation at commissioning and annually thereafter.',
+          ]}
+        />
+
+        <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+
+        <div className="grid grid-cols-2 gap-3 pt-2">
           <button
-            onClick={() => navigate('/study-centre/apprentice/h-n-c-module4-section3')}
-            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module4-section3-5')}
+            className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
           >
-            <ArrowLeft className="h-4 w-4" /> Back
+            <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+              <ChevronLeft className="h-3 w-3" /> Previous
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-white truncate">
+              Earth fault protection
+            </div>
           </button>
-
-          <PageHero
-            eyebrow="Module 4 · Section 3 · Subsection 6"
-            title="Arc Fault Detection"
-            description="AFDDs for fire prevention — technology, applications, and BS 7671 recommendations."
-            tone="purple"
-          />
-
-          <TLDR
-            points={[
-              'AFDDs (Arc Fault Detection Devices) detect the high-frequency signature of arcing faults — series (broken conductor) or parallel (insulation breakdown) — that MCBs and RCDs miss.',
-              'Arcing faults are a leading electrical fire cause: BEAMA estimates 50–60% of UK electrical fires originate from undetected arcing.',
-              'BS 7671 Reg 421.1.7 (introduced by Amendment 2:2022) RECOMMENDS the installation of AFDDs in AC final circuits — recommendation, not mandatory.',
-              'Combined AFDD + MCB + RCD modules are the practical specification — single 18 mm wide unit replaces an RCBO at slightly higher cost.',
-              'Best-fit applications: HMOs, care homes, schools, listed buildings, wooden-clad construction, hospitality bedrooms — anywhere a fire would be catastrophic.',
-            ]}
-          />
-
-          <RegsCallout
-            source="BS 7671:2018+A4:2026 — Reg 421.1.7 (Arc fault detection devices)"
-            clause="Regulation 421.1.7 of BS 7671:2018+A4:2026 has been introduced recommending the installation of arc fault detection devices (AFDDs). The regulation text explicitly recommends installation of AFDDs as a measure within Part 4 — Protection for Safety, Chapter 42. The text uses 'recommending the installation' — advisory rather than mandatory phrasing; it does not use 'shall' or other mandatory wording."
-            meaning={
-              <>
-                Reg 421.1.7 was introduced by Amendment 2:2022 and explicitly RECOMMENDS
-                AFDD installation in AC final circuits to mitigate fire risk from arc faults.
-                The wording is advisory (&lsquo;recommending&rsquo;) — NOT mandatory. Designers
-                must still consider AFDDs as part of the risk-based design process and document
-                the decision either way. For high-fire-risk premises (HMOs, care homes, schools,
-                wooden buildings, listed properties) installing AFDDs is the defendable
-                engineering position; omitting them needs a written justification in the design
-                file.
-              </>
-            }
-            cite="Source: BS 7671:2018+A4:2026 — Regulation 421.1.7; BS EN 62606 (AFDD product standard); BEAMA AFDD guidance."
-          />
-
-          <LearningOutcomes
-            outcomes={[
-              'Explain the purpose and operating principle of AFDDs',
-              'Differentiate between series and parallel arc faults',
-              'Apply BS 7671 recommendations for AFDD installation',
-              'Identify appropriate applications for AFDDs in building services',
-              'Understand AFDD limitations and potential nuisance tripping',
-              'Specify combined AFDD devices for circuit protection',
-            ]}
-            initialVisibleCount={3}
-          />
-
-          <SectionRule />
-
-          <ConceptBlock title="Arc Fault Fundamentals">
-            <p>
-              Arc faults occur when electrical current flows through an unintended path via
-              ionised air. The arc generates extreme heat (3000-6000°C) that can ignite nearby
-              materials, causing electrical fires.
-            </p>
-            <p>
-              <strong>Types of arc faults (type / description / detection challenge):</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Series arc</strong> — arc within a single conductor (damaged cable, loose
-                terminal) — current limited by load, MCBs won't detect
-              </li>
-              <li>
-                <strong>Parallel arc (L-N)</strong> — arc between line and neutral (damaged
-                insulation) — may trip MCB eventually but delay allows ignition
-              </li>
-              <li>
-                <strong>Parallel arc (L-E)</strong> — arc between line and earth (insulation
-                failure) — RCD should detect but arc may be intermittent
-              </li>
-            </ul>
-            <p>
-              <strong>Common causes — installation faults:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Loose terminal connections</li>
-              <li>Damaged cable during installation</li>
-              <li>Incorrectly tightened connections</li>
-              <li>Cable pinched by fixings</li>
-            </ul>
-            <p>
-              <strong>Common causes — aging / damage:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Insulation degradation over time</li>
-              <li>Rodent damage to cables</li>
-              <li>Physical damage (DIY, nails)</li>
-              <li>Thermal degradation from overloading</li>
-            </ul>
-            <p>
-              <strong>Why conventional protection fails:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>MCBs:</strong> series arc current is limited by load (e.g., 5A for a lamp)
-                — well below trip threshold
-              </li>
-              <li>
-                <strong>RCDs:</strong> only detect earth leakage — series and L-N arcs don't
-                involve earth
-              </li>
-              <li>
-                <strong>Time delay:</strong> even detectable faults may take seconds to trip —
-                enough time for ignition
-              </li>
-              <li>
-                <strong>Arc impedance:</strong> arc itself adds impedance, further reducing fault
-                current
-              </li>
-            </ul>
-            <p>
-              <strong>Fire statistics:</strong> Approximately 50% of electrical fires in dwellings
-              are attributed to arcing faults in fixed wiring.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...quickCheckQuestions[0]} />
-
-          <SectionRule />
-
-          <ConceptBlock title="AFDD Technology and Operation">
-            <p>
-              AFDDs use sophisticated electronic monitoring and algorithms to analyse the current
-              waveform for characteristic arc signatures whilst distinguishing dangerous arcs from
-              normal switching or motor operation.
-            </p>
-            <p>
-              <strong>Detection principle:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Current monitoring:</strong> high-bandwidth current sensor captures
-                waveform including HF components
-              </li>
-              <li>
-                <strong>Signal processing:</strong> microprocessor analyses frequency spectrum
-                (typically 10kHz - several MHz)
-              </li>
-              <li>
-                <strong>Pattern recognition:</strong> algorithms identify characteristic arc
-                signatures (irregular, broadband noise)
-              </li>
-              <li>
-                <strong>Discrimination:</strong> filters distinguish dangerous arcs from normal
-                switching, motor brushes, etc.
-              </li>
-              <li>
-                <strong>Trip decision:</strong> if arc pattern persists, AFDD disconnects the
-                circuit
-              </li>
-            </ul>
-            <p>
-              <strong>BS EN 62606 requirements (parameter / requirement):</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Rated voltage — up to 240V AC</li>
-              <li>Rated current — up to 63A</li>
-              <li>Arc detection — series and parallel arcs</li>
-              <li>Response time — typically &lt;1 second for test arcs</li>
-              <li>Test function — integral test button required</li>
-              <li>Indicator — visual indication of trip cause</li>
-            </ul>
-            <p>
-              <strong>AFDD device types:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>AFDD only:</strong> arc detection, requires separate OCPD
-              </li>
-              <li>
-                <strong>AFDD + MCB:</strong> combined arc and overcurrent
-              </li>
-              <li>
-                <strong>AFDD + RCBO:</strong> arc, overcurrent, and earth fault
-              </li>
-              <li>
-                <strong>Modular AFDD:</strong> mounts alongside existing MCB
-              </li>
-            </ul>
-            <p>
-              <strong>Typical module width:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>AFDD only: 1-2 modules</li>
-              <li>AFDD + MCB: 2 modules</li>
-              <li>AFDD + RCBO: 2-3 modules</li>
-              <li>Consider board capacity in design</li>
-            </ul>
-            <p>
-              <strong>Selection tip:</strong> Combined AFDD/RCBO devices provide comprehensive
-              protection (arc, overcurrent, earth fault) in minimal space.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...quickCheckQuestions[1]} />
-
-          <SectionRule />
-
-          <ConceptBlock title="BS 7671 Recommendations">
-            <p>
-              BS 7671 Regulation 421.1.7 recommends consideration of AFDDs for specific
-              applications where fire risk is elevated. This is advisory, not mandatory, but
-              represents best practice.
-            </p>
-            <p>
-              <strong>Regulation 421.1.7 recommendations:</strong> "Arc Fault Detection Devices
-              (AFDDs) conforming to BS EN 62606 are recommended in AC final circuits..."
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Sleeping accommodation:</strong> HMOs, hotels, care homes, student
-                accommodation
-              </li>
-              <li>
-                <strong>Combustible construction:</strong> timber-frame buildings, thatched roofs
-              </li>
-              <li>
-                <strong>Fire propagation risk:</strong> high-rise residential, locations with
-                difficult evacuation
-              </li>
-              <li>
-                <strong>Valuable contents:</strong> museums, archives, heritage buildings, data
-                centres
-              </li>
-              <li>
-                <strong>Premises with risk:</strong> where fire could cause serious harm or damage
-              </li>
-            </ul>
-            <p>
-              <strong>Recommended applications in building services (building type / risk factor / AFDD recommendation):</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>HMO — sleeping, shared facilities — strongly recommended</li>
-              <li>Hotel/B&amp;B — sleeping, unfamiliar occupants — strongly recommended</li>
-              <li>Care home — sleeping, vulnerable occupants — strongly recommended</li>
-              <li>Timber-frame house — combustible construction — recommended</li>
-              <li>Listed building — irreplaceable structure — recommended</li>
-              <li>Standard office — no elevated risk factors — consider on risk assessment</li>
-            </ul>
-            <p>
-              <strong>Cost-benefit considerations:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Additional cost:</strong> AFDDs cost more than standard MCBs/RCBOs
-              </li>
-              <li>
-                <strong>Board space:</strong> combined devices minimise space impact
-              </li>
-              <li>
-                <strong>Insurance:</strong> some insurers offer premium reductions
-              </li>
-              <li>
-                <strong>Liability:</strong> demonstrates duty of care in design
-              </li>
-              <li>
-                <strong>Life safety:</strong> fire prevention in sleeping accommodation
-              </li>
-            </ul>
-            <p>
-              <strong>Designer note:</strong> Document risk assessment and AFDD consideration in
-              the electrical design. If AFDDs are not used, record the reasoning.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...quickCheckQuestions[3]} />
-
-          <SectionRule />
-
-          <ConceptBlock title="Installation, Testing, and Limitations">
-            <p>
-              Successful AFDD implementation requires appropriate installation, commissioning, and
-              awareness of limitations to avoid nuisance tripping whilst maintaining protection.
-            </p>
-            <p>
-              <strong>Installation requirements:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Install at the origin of each protected circuit</li>
-              <li>Ensure test button is accessible for periodic testing</li>
-              <li>Label circuits protected by AFDDs</li>
-              <li>Consider space requirements in distribution board</li>
-              <li>Follow manufacturer's installation instructions</li>
-              <li>Verify compatibility with connected loads</li>
-            </ul>
-            <p>
-              <strong>Testing and verification (test / frequency / method):</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Commissioning — initial — test button operation, visual check</li>
-              <li>User testing — 6 monthly (recommended) — test button operation</li>
-              <li>Periodic inspection — per EICR schedule — test button, visual inspection</li>
-              <li>Arc injection test — optional/specialist — specialised test equipment</li>
-            </ul>
-            <p>
-              <strong>Potential nuisance trip sources:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Universal motors (vacuum, tools)</li>
-              <li>Some LED dimmer switches</li>
-              <li>Older electronic equipment</li>
-              <li>Brush-type motors</li>
-              <li>Some power supplies</li>
-            </ul>
-            <p>
-              <strong>Mitigation strategies:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Select quality AFDD devices</li>
-              <li>Check manufacturer compatibility</li>
-              <li>Separate sensitive loads</li>
-              <li>Use latest generation AFDDs</li>
-              <li>Investigate trips — may be genuine</li>
-            </ul>
-            <p>
-              <strong>Not protected by AFDDs:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>DC circuits (AFDDs are AC only to BS EN 62606)</li>
-              <li>Circuits above 63A</li>
-              <li>Three-phase circuits (without neutral — check specific device)</li>
-              <li>SELV/PELV circuits below AFDD threshold</li>
-              <li>External wiring upstream of the AFDD</li>
-            </ul>
-            <p>
-              <strong>Troubleshooting:</strong> If an AFDD trips repeatedly, investigate the
-              circuit for genuine wiring faults before assuming nuisance tripping. The AFDD may be
-              detecting a real problem.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...quickCheckQuestions[2]} />
-
-          <SectionRule />
-
-          <ConceptBlock title="Worked Examples">
-            <p>
-              <strong>Example 1 — HMO consumer unit specification:</strong> Specify protection for
-              a 6-bedroom HMO with sleeping accommodation on all floors. Supply is TN-C-S.
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                Sleeping accommodation: <strong>high risk</strong>
-              </li>
-              <li>
-                Multiple occupants: <strong>high risk</strong>
-              </li>
-              <li>BS 7671 Reg 421.1.7 applies</li>
-              <li>All final circuits: AFDD protection</li>
-              <li>Socket outlets: AFDD/RCBO (30mA)</li>
-              <li>Lighting: AFDD/MCB or AFDD/RCBO</li>
-              <li>Kitchen/bathroom: AFDD/RCBO (30mA) mandatory</li>
-              <li>Comprehensive arc and shock protection</li>
-            </ul>
-            <p>
-              <strong>Example 2 — cost-benefit analysis:</strong> Compare protection options for a
-              10-way consumer unit: standard RCBOs vs AFDD/RCBOs.
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Standard RCBO: £25 × 10 = £250</li>
-              <li>AFDD/RCBO: £80 × 10 = £800</li>
-              <li>
-                Additional cost: <strong>£550</strong>
-              </li>
-              <li>Series arc protection (MCB/RCBO cannot provide)</li>
-              <li>Parallel arc detection before fire conditions</li>
-              <li>Compliance with Reg 421.1.7 recommendation</li>
-              <li>Potential insurance premium reduction</li>
-              <li>Demonstrates design due diligence</li>
-              <li>For sleeping accommodation: cost justified</li>
-              <li>For standard office: discuss with client</li>
-            </ul>
-            <p>
-              <strong>Example 3 — nuisance tripping investigation:</strong> An AFDD trips when a
-              vacuum cleaner is used. How should this be investigated?
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>1. Verify the fault:</strong> does AFDD trip every time? Does same vacuum
-                trip other AFDDs? Do other vacuums trip this AFDD?
-              </li>
-              <li>
-                <strong>2. If vacuum trips all AFDDs:</strong> vacuum may have internal fault;
-                check vacuum flex for damage; test with different vacuum
-              </li>
-              <li>
-                <strong>3. If only this AFDD/circuit:</strong> check for loose connections;
-                inspect socket for damage; test insulation resistance
-              </li>
-              <li>
-                <strong>4. If confirmed nuisance:</strong> modern AFDDs rarely false-trip;
-                consider manufacturer guidance
-              </li>
-              <li>Do not bypass AFDD without investigation</li>
-            </ul>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <ConceptBlock title="Practical guidance">
-            <p>
-              <strong>AFDD specification checklist:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Confirm BS EN 62606 compliance</li>
-              <li>Select appropriate current rating (≤63A)</li>
-              <li>Choose combined device (AFDD/MCB or AFDD/RCBO) where suitable</li>
-              <li>Verify board capacity for module width</li>
-              <li>Check compatibility with connected loads</li>
-              <li>Consider RCD discrimination if multiple devices</li>
-            </ul>
-            <p>
-              <strong>Key points to remember:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                BS EN 62606: up to <strong>240V AC, 63A</strong>
-              </li>
-              <li>
-                Detects: <strong>series and parallel arcs</strong>
-              </li>
-              <li>
-                BS 7671: <strong>recommended</strong>, not mandatory
-              </li>
-              <li>
-                Priority: <strong>sleeping accommodation</strong>
-              </li>
-              <li>
-                Testing: <strong>test button operation</strong>
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <CommonMistake
-            title="Common mistakes to avoid"
-            whatHappens={
-              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
-                <li>
-                  <strong>Omitting AFDDs in high-risk locations</strong> — document the decision
-                </li>
-                <li>
-                  <strong>Ignoring trips as nuisance</strong> — investigate genuinely
-                </li>
-                <li>
-                  <strong>Inadequate board space</strong> — plan for combined devices
-                </li>
-                <li>
-                  <strong>No user guidance</strong> — inform occupants about test button
-                </li>
-              </ul>
-            }
-            doInstead="Specify AFDDs (or record the rationale for omission) on every Reg 421.1.7 high-risk circuit, treat repeated AFDD trips as a real fault to investigate, plan distribution board capacity for combined AFDD/RCBO modules, and brief occupants on the 6-monthly test-button check."
-          />
-
-          <SectionRule />
-
-          <Scenario
-            title="HMO refurbishment — specifying AFDDs against a fire-risk-led design"
-            situation={
-              <>
-                A 12-bed HMO is being rewired. The local authority HMO licence requires &lsquo;all
-                reasonable measures&rsquo; against fire. The fire risk assessor has flagged
-                bedroom socket-outlets and luminaires as the highest electrical-fire risk areas
-                — typical HMO failure modes are damaged plug-tops, daisy-chained extension leads
-                and old appliance cords arcing inside furniture.
-              </>
-            }
-            whatToDo={
-              <>
-                Apply Reg 421.1.7 (A4:2026): AFDDs are RECOMMENDED, not mandatory — but the
-                fire-risk-assessment context makes them the defendable specification. Specify
-                combined AFDD+RCBO units (BS EN 62606) on every bedroom socket and luminaire
-                circuit. Standard MCB+RCBO on common-areas where risk is lower. Document the
-                recommendation against Reg 421.1.7 in the design file — the &lsquo;all
-                reasonable measures&rsquo; standard in HMO licensing is met by following the
-                recommendation. Cost premium ≈ £40–£60 per circuit vs an RCBO — small money for
-                the risk reduction.
-              </>
-            }
-            whyItMatters={
-              <>
-                Reg 421.1.7 wording is advisory (&lsquo;recommending&rsquo;), not mandatory
-                (&lsquo;shall&rsquo;) — but in any setting where the fire risk is documented as
-                high (HMO, care home, school, listed building), omitting AFDDs is a design
-                position you would have to defend in court if a fire occurred. Following the
-                recommendation is the defendable engineering choice.
-              </>
-            }
-          />
-
-          <SectionRule />
-
-          <FAQ items={faqs} />
-
-          <SectionRule />
-
-          <KeyTakeaways
-            points={[
-              'AFDDs detect the high-frequency RF / current-waveform signature of arcing faults — series (broken conductor / loose terminal) or parallel (insulation breakdown).',
-              'MCBs and RCDs do NOT detect arcing — currents are below MCB trip threshold and arcing produces no residual current.',
-              'Reg 421.1.7 (introduced A4:2026) RECOMMENDS — does not mandate — AFDD installation in AC final circuits to mitigate fire risk.',
-              'Best-fit applications: HMOs, care homes, schools, hotels, listed buildings, wooden-clad construction, escape-route bedrooms.',
-              'Combined AFDD+MCB+RCD modules (single 18 mm slot) are the practical specification — replaces an RCBO at modest premium.',
-              'AFDD product standard: BS EN 62606. Always specify a Listed device, never an unbranded import.',
-              'Design file documentation: where AFDDs are NOT specified, record the engineering reasoning — ‘low fire risk’, ‘cost-benefit’, etc.',
-              'Test methodology: AFDDs include built-in self-test functions; verify operation at commissioning and annually thereafter.',
-            ]}
-          />
-
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-
-          <div className="grid grid-cols-2 gap-3 pt-2">
-            <button
-              onClick={() => navigate('/study-centre/apprentice/h-n-c-module4-section3-5')}
-              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
-                <ChevronLeft className="h-3 w-3" /> Previous
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-white truncate">
-                Earth fault protection
-              </div>
-            </button>
-            <button
-              onClick={() => navigate('/study-centre/apprentice/h-n-c-module4-section4')}
-              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
-                Next section <ChevronRight className="h-3 w-3" />
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-black truncate">
-                Lighting design
-              </div>
-            </button>
-          </div>
-        </PageFrame>
-      </div>
-    </div>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module4-section4')}
+            className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+          >
+            <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+              Next section <ChevronRight className="h-3 w-3" />
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-black truncate">
+              Lighting design
+            </div>
+          </button>
+        </div>
+      </HubBody>
+    </HubPage>
   );
 };
 

@@ -1,8 +1,8 @@
-import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { useNavigate } from 'react-router-dom';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
-import { PageFrame, PageHero } from '@/components/college/primitives';
 import {
   TLDR,
   ConceptBlock,
@@ -152,12 +152,7 @@ const quizQuestions = [
     id: 3,
     question:
       'A property has a 25 mm² tails arrangement on a TN-C-S supply. The DNO supply earth (PEN) terminal is to be bonded to the gas service pipe. What is the minimum cross-sectional area of the main protective bonding conductor under Reg 544.1.1?',
-    options: [
-      '4 mm² copper',
-      '6 mm² copper',
-      '10 mm² copper',
-      '16 mm² copper',
-    ],
+    options: ['4 mm² copper', '6 mm² copper', '10 mm² copper', '16 mm² copper'],
     correctAnswer: 2,
     explanation:
       'Reg 544.1.1: main protective bonding conductor is half the cross-sectional area of the earthing conductor with a 6 mm² floor and a 25 mm² ceiling — BUT in TN-C-S (PME) supplies the DNO requires a 10 mm² minimum where the supply neutral is up to 35 mm². With 25 mm² tails on a TN-C-S supply, 10 mm² main bonding is the standard answer. The DNO may require larger (16 mm² or 25 mm²) on heavier services — confirm with the supply company.',
@@ -292,397 +287,392 @@ const BS7671Module2Section2 = () => {
   });
 
   return (
-    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
-      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
-        <PageFrame>
+    <HubPage>
+      <HubMasthead
+        section="Module 2 · Section 2"
+        title="Key terms — CPC, ADS, SELV, PELV"
+        backTo="../bs7671-module-2"
+      />
+      <HubBody>
+        <div className="max-w-3xl text-[13px] leading-relaxed text-white">
+          {
+            'The Part 2 definitions BS 7671 expects every electrician to use precisely — protective conductors, protective measures and equipment classes. Get the language right and the design, the cert and the EICR all line up.'
+          }
+        </div>
+
+        <div className="flex flex-wrap items-center gap-2">
+          {
+            <>
+              <RegBadge>411.1</RegBadge>
+              <RegBadge>411.3.1.1</RegBadge>
+              <RegBadge>414.1.1</RegBadge>
+              <AmendmentBadge regs={['411.3.4']} />
+            </>
+          }
+        </div>
+
+        <TLDR
+          points={[
+            'BS 7671 Part 2 distinguishes four distinct protective conductors — CPC, earthing conductor, main protective bonding and supplementary bonding — each with its own regulation and sizing rule (543, 542, 544.1.1, 544.2).',
+            'ADS (Reg 411) is the default UK protective measure. SELV and PELV (Section 414) are alternatives; FELV (Reg 411.7) is NOT a protective measure.',
+            'Class I, II and III equipment match different protective measures. Misnaming a conductor or class on the cert is the most common QS observation — get the language right and the rest follows.',
+          ]}
+        />
+
+        <LearningOutcomes
+          outcomes={[
+            'Define CPC, earthing conductor, main protective bonding conductor and supplementary equipotential bonding conductor — and cite the BS 7671 sizing regulation for each.',
+            'State the verbatim Reg 411.3.1.1 rule and the single recognised exception (pendant lampholder, no exposed metal).',
+            'Distinguish ADS (Reg 411), SELV, PELV (Section 414) and FELV (Reg 411.7) by source, voltage limit and earthing arrangement, and explain why FELV is not a protective measure.',
+            'Identify the three voltage / current limits that define SELV and PELV (Reg 414.1.1) and the basic-protection requirement above 25 V AC (Reg 414.4.4).',
+            'Distinguish Class I, Class II and Class III equipment per IEC 61140 / BS 7671, and pick the right protective measure for each.',
+            'Distinguish live part, exposed-conductive-part and extraneous-conductive-part — and apply the right protective conductor to each.',
+          ]}
+          initialVisibleCount={3}
+        />
+
+        <ContentEyebrow>The four protective conductors</ContentEyebrow>
+
+        <ConceptBlock
+          title="Circuit protective conductor (CPC)"
+          plainEnglish="The conductor that runs from the MET out to every exposed-conductive-part of the installation. It is the fault-current path back to the source and the reason ADS works."
+          onSite="In domestic T&E it is the bare conductor inside the cable, sleeved green-and-yellow at every termination. It must be terminated at every point and accessory under Reg 411.3.1.1 — back-box earthing tags, fitting earth terminals, accessory earth terminals, the lot."
+        >
+          <p>
+            BS 7671 Part 2 defines the CPC as a protective conductor used for protection against
+            electric shock that connects an exposed-conductive-part of equipment to the main
+            earthing terminal of the installation. Sizing is set by Reg 543.1.1 — either the
+            adiabatic equation S = &radic;(I&sup2; &times; t) / k, or selection from Table 54.7 (the
+            conservative one-line lookup). Most domestic CPCs are 1.5 mm&sup2; inside 2.5 mm&sup2;
+            T&amp;E (sockets) or 1.0 mm&sup2; inside 1.5 mm&sup2; T&amp;E (lighting) and meet Reg
+            543.1.1 via Table 54.7.
+          </p>
+        </ConceptBlock>
+
+        <RegsCallout
+          source="BS 7671:2018+A4:2026 · Reg 411.3.1.1 — Protective earthing"
+          clause="Exposed-conductive-parts shall be connected to a protective conductor under the specific conditions for each type of system earthing as specified in Regulations 411.4 to 411.6. Simultaneously accessible exposed-conductive-parts shall be connected to the same earthing system individually, in groups or collectively. A circuit protective conductor shall be run to and terminated at each point in wiring and at each accessory except a lampholder having no exposed-conductive-parts and suspended from such a point."
+          meaning="A CPC at every point and every accessory is the legal default. The lampholder exception is narrow: pendant lampholder, no exposed metal, suspended. Replace it with a metal-bodied luminaire or downlight and the CPC must be present and connected. Mixing earthing systems on the same equipotential zone is also forbidden."
+          cite="BS 7671:2018+A4:2026, Reg 411.3.1.1 (p.66)"
+        />
+
+        <InlineCheck {...inlineChecks[1]} />
+
+        <ConceptBlock
+          title="Earthing conductor — distinct from the CPC"
+          plainEnglish="The conductor that runs from the MET to the means of earthing — the supply PEN in TN-C-S, the earth electrode in TT, or the supply CPC in TN-S. It is the spine that the entire installation hangs off."
+          onSite="In a domestic CU it is the green-and-yellow conductor between the MET earth bar and the supply earth terminal at the cut-out. Typical CSA: 16 mm² copper for a 25 mm² tails arrangement on TN-C-S. Sized as a CPC under Reg 543.1.1, with Reg 542.3.1 minimum CSAs depending on whether it is buried, mechanically protected and corrosion-protected."
+        >
+          <p>
+            Calling the earthing conductor a &quot;CPC&quot; on a cert is one of the most common
+            Part 2 mistakes and a QS will pick it up immediately. They are different conductors with
+            different jobs: the CPC carries fault current from an exposed-conductive-part back to
+            the MET, the earthing conductor carries that fault current from the MET out to the means
+            of earthing. Reg 542.3.1 specifies the minimums: for a buried earthing conductor without
+            mechanical protection the minimum CSA is dictated by corrosion, not just current —
+            typically 25 mm&sup2; copper or 50 mm&sup2; steel. With mechanical protection the rules
+            relax.
+          </p>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="Main protective bonding conductor (Reg 544.1.1)"
+          plainEnglish="The conductor that bonds extraneous-conductive-parts — incoming water, gas, oil, structural steel, central-heating pipework — to the MET. Its job is to keep every accessible metal part at the same potential during a fault, so there is no touch voltage to drive a shock."
+          onSite="The 10 mm² green-and-yellow you clamp to the gas service pipe with a BS 951 earth clamp, within 600 mm of the meter or before any branch — that is the main protective bonding conductor. Sized per Reg 544.1.1: half the CSA of the earthing conductor with a 6 mm² floor and 25 mm² ceiling; in TN-C-S the DNO normally requires 10 mm² minimum where supply neutral ≤ 35 mm² (16 mm² on heavier services)."
+        >
+          <p>
+            Reg 544.1.1 sets the formula but the DNO&apos;s minimums for TN-C-S override on the low
+            side. For a typical UK domestic with 25 mm&sup2; tails on TN-C-S: 16 mm&sup2; earthing
+            conductor, 10 mm&sup2; main protective bonding to gas and water — every
+            extraneous-conductive-part bonded back to the MET. Connection to the pipe must be with a
+            BS 951 earth clamp, with the &quot;Safety Electrical Connection — Do Not Remove&quot;
+            label, on a clean bare-metal section, before any branch (or within 600 mm of the meter
+            outlet on gas).
+          </p>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="Supplementary equipotential bonding conductor (Reg 415.2.1)"
+          plainEnglish="A localised bonding conductor inside a high-risk location (typically a bathroom). It ties together the exposed-conductive-parts and extraneous-conductive-parts within that location so the touch voltage stays below the dangerous threshold even if the main ADS fails."
+          onSite="Bathrooms historically had supplementary bonding on every job. Today the Reg 701.415.2 omission allows it to be left out IF (a) every circuit meets disconnection times, (b) every circuit has 30 mA RCD additional protection, and (c) every extraneous-conductive-part is reliably bonded back to the MET. Miss any of the three and supplementary bonding is back in."
+        >
+          <p>
+            Reg 415.2.1 sets the rule and Reg 544.2 the sizing. The conductor connects either two
+            exposed-conductive-parts, two extraneous-conductive-parts, or an exposed-conductive-part
+            to an extraneous-conductive-part. The practical minimum CSA: 4 mm&sup2; where mechanical
+            protection is not provided, 2.5 mm&sup2; where it is. The Section 415.2 conductor is
+            &quot;supplementary&quot; in the sense of completing the local equipotential zone — it
+            is not a substitute for a CPC, an earthing conductor or main bonding.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...inlineChecks[6]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>Live part vs exposed vs extraneous</ContentEyebrow>
+
+        <ConceptBlock
+          title="Three terms, three protective conductors, three rules"
+          plainEnglish="A live part is intentionally energised. An exposed-conductive-part is metal you can touch that becomes live only under fault. An extraneous-conductive-part is metal you can touch that brings in a potential from outside the installation."
+          onSite="Live parts get basic protection — insulation, barriers, enclosures (Section 416). Exposed-conductive-parts get a CPC plus ADS (Reg 411). Extraneous-conductive-parts get main protective bonding (Reg 544.1.1). Three jobs, three rules — naming them correctly on the cert tells the inspector you understand the model."
+        >
+          <p>
+            The most common Part 2 mistake is calling a copper water pipe an
+            &quot;exposed-conductive-part&quot;. It is not — it is an extraneous-conductive-part
+            because it brings earth potential in from outside the installation, not because it is
+            part of equipment that can become live under fault. The protective treatment is
+            therefore main bonding to the MET (Reg 544.1.1), not a CPC. A central-heating radiator
+            fed from copper pipework is a similar case &mdash; bond the pipework, not the radiator.
+            A metal back-box is the opposite case: it is part of an accessory and CAN become live
+            under fault, so it is an exposed-conductive-part and gets a CPC.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...inlineChecks[5]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>Automatic Disconnection of Supply (ADS)</ContentEyebrow>
+
+        <ConceptBlock
+          title="ADS — the default UK protective measure (Reg 411.1)"
+          plainEnglish="ADS is not a device — it is a designed combination of earthing, bonding, the right protective device and a verified loop impedance. When all four are in place, the circuit clears a fault to earth before the touch voltage becomes dangerous."
+          onSite="On the EIC schedule, the boxes you tick for ADS map to the four ingredients: protective earthing present, MET bonded, OPD/RCD selected, Zs measured against the device's maximum. Every Class I final circuit in a typical domestic installation relies on ADS."
+        >
+          <p>
+            Reg 411.1 introduces ADS as the protective measure described in Section 411. It is built
+            from <strong>(a)</strong> protective earthing of exposed-conductive-parts (Reg
+            411.3.1.1), <strong>(b)</strong> protective equipotential bonding of
+            extraneous-conductive-parts to the MET (Reg 411.3.1.2), <strong>(c)</strong> automatic
+            disconnection by an OPD or RCD within Table 41.1 times (Reg 411.3.2), and{' '}
+            <strong>(d)</strong> coordination with the system earthing arrangement (Reg 411.4.4 TN,
+            411.5.3 TT or 411.6.3 IT). All four must be present for ADS to be in place — missing one
+            means the protective measure is not demonstrably in place, and the cert cannot
+            truthfully claim it.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...inlineChecks[0]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>SELV and PELV (Section 414)</ContentEyebrow>
+
+        <ConceptBlock
+          title="SELV — Safety Extra-Low Voltage"
+          plainEnglish="A circuit at or below band I voltage (≤ 50 V AC / 120 V DC ripple-free per Reg 414.1.1), fed by a safety isolating source, with no intentional connection to earth and complete electrical separation from any other circuit."
+          onSite="Common SELV applications: 12 V LED downlights in zone 0 of a bath/shower, fountain submerged equipment, low-voltage doorbell systems, BA2 environments (children, schools). The source is a BS EN 61558-2-6 safety isolating transformer or a battery, not a domestic transformer plate."
+        >
+          <p>
+            The three SELV requirements work together. First, the voltage limit (Reg 414.1.1): ≤ 50
+            V AC RMS or 120 V DC ripple-free. Second, the source (Section 414.3): a safety isolating
+            transformer to BS EN 61558-2-6, a battery, or a motor-generator with isolated windings.
+            Third, the earthing arrangement: NO intentional connection to earth on the secondary,
+            and exposed-conductive-parts NOT connected to earth or to any protective conductor of
+            another circuit. Lose any of the three and it is not SELV. Reg 414.4.4 also requires
+            basic protection (insulation, barriers, enclosures) where the nominal voltage exceeds 25
+            V AC / 60 V DC ripple-free, or where equipment is immersed.
+          </p>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="PELV — Protective Extra-Low Voltage"
+          plainEnglish="Same band I voltage and same safety isolating source as SELV — but earth IS permitted on the secondary. Used where equipment needs functional earthing (EMC shielding, instrumentation reference) and the application is not in a SELV-mandatory location."
+          onSite="Common PELV applications: industrial control panels with shielded screens, BMS systems, instrumentation cabinets, some medical equipment. Same Reg 414.1.1 voltage, same Section 414.3 source — the only difference from SELV is that the secondary may be earthed. Reg 414.4.4 still applies above 25 V AC."
+        >
+          <p>
+            On the cert, the entry under Section 411/414 changes only by whether the secondary is
+            intentionally earthed. SELV — no earth, no connection to any other protective conductor.
+            PELV — earth permitted, exposed-conductive-parts may be connected to earth or to a CPC.
+            Use SELV in zone 0 of a bath/shower, fountain zone 0 and BA2 environments. Use PELV
+            where the controls need a stable functional earth and the application is not in a
+            SELV-mandatory location.
+          </p>
+        </ConceptBlock>
+
+        <RegsCallout
+          source="BS 7671:2018+A4:2026 · Reg 414.1.1 — Voltage limits for SELV and PELV"
+          clause="The protective measure of extra-low voltage by SELV or PELV is recognised where the nominal voltage cannot exceed the upper limit of voltage band I — 50 V AC (rms) or 120 V DC ripple-free."
+          meaning="Band I is the absolute ceiling. Above it, the circuit is no longer SELV or PELV regardless of the source quality. Reg 414.4.4 then layers in a basic-protection requirement once the nominal voltage exceeds 25 V AC RMS or 60 V DC ripple-free, or where equipment is immersed — meaning insulation, barriers or enclosures must still be present at higher SELV/PELV voltages."
+          cite="BS 7671:2018+A4:2026, Reg 414.1.1 / Reg 414.4.4"
+        />
+
+        <InlineCheck {...inlineChecks[2]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>FELV — and why it is NOT a protective measure</ContentEyebrow>
+
+        <ConceptBlock
+          title="FELV (Reg 411.7) — extra-low voltage without safety isolation"
+          plainEnglish="A circuit running at SELV/PELV voltage but lacking the safety-isolating source. The voltage is low; the safety guarantee is not."
+          onSite='Spotting it: an autotransformer feeding 24 V controls, a single-winding ferro-resonant primary, anywhere the primary and secondary share metal or windings without explicit safety isolation per Section 414.3. If you would not bet on the source being "BS EN 61558-2-6 safety isolating", it is FELV.'
+        >
+          <p>
+            Reg 411.7.1 defines FELV as the case where, for functional reasons, the circuit voltage
+            is ≤ 50 V AC / 120 V DC ripple-free, but not all of the Section 414 requirements for
+            SELV or PELV are met, AND SELV / PELV is not strictly required. Reg 411.7.4 forces the
+            source to be either a transformer with at least simple winding separation OR a source
+            complying with Section 414.3. Reg 411.7.3 then requires basic AND fault protection AT
+            THE PRIMARY VOLTAGE — no shortcuts based on the secondary being 24 V. The fix is design:
+            replace the autotransformer with a safety isolating transformer and the circuit becomes
+            SELV (no earth) or PELV (earthed) — both genuine protective measures.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...inlineChecks[3]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>Equipment classes (IEC 61140)</ContentEyebrow>
+
+        <ConceptBlock
+          title="Class I, Class II and Class III — three protective philosophies"
+          plainEnglish="Class I = earthed metal casing, fault protection by ADS via a CPC. Class II = double or reinforced insulation, no CPC, recognised by the double-square symbol. Class III = designed for SELV / PELV supply, voltage limit IS the protective measure."
+          onSite="Most domestic appliances are Class I (kettles, ovens, washing machines, immersion heaters). Most consumer electronics and power tools are Class II (laptops, phone chargers, cordless drills, hair dryers). Class III is rare day-to-day — typically specialised equipment fed from a SELV / PELV supply (low-voltage tools in confined spaces, some medical, certain illuminated signs)."
+        >
+          <p>
+            The three classes map to three different protective measures in BS 7671. Class I relies
+            on Reg 411 ADS — the metal casing is connected via a CPC to the MET, and a fault to
+            earth is cleared by the OPD or RCD within Table 41.1 times. Class II relies on Section
+            412 — double or reinforced insulation as the entire protective measure, no CPC, no earth
+            path. Class III relies on Section 414 — the supply is SELV or PELV and the voltage limit
+            itself is the protective measure. Reg 412.1.2 forbids relying on Class II as the SOLE
+            protective measure on circuits with socket-outlets, LSCs, DCLs or cable couplers because
+            one Class I plug-in defeats it.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...inlineChecks[4]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>Worked example — designing a domestic CU on TN-C-S</ContentEyebrow>
+
+        <ConceptBlock
+          title="Naming every protective conductor on a typical UK domestic"
+          plainEnglish="A worked example pulls every Part 2 term into one picture — the cut-out, the MET, the CU, the bonded services and the final circuits — so each conductor goes on the cert with the right name."
+          onSite="This is the exercise to walk through before you fill in any EIC. Sketch the cut-out, the tails, the MET, the bonding to gas and water, and the final-circuit CPCs. Label every conductor with its Reg before you start the schedule."
+        >
+          <p>
+            <strong>1. Supply.</strong> TN-C-S (PME) cut-out with a 100 A BS 1361 cut-out fuse, 25
+            mm&sup2; meter tails. The DNO supply is a combined PEN up to the cut-out, split into
+            separate N and PE inside the consumer&apos;s installation.{' '}
+            <strong>2. Earthing conductor.</strong> 16 mm&sup2; copper between the MET earth bar and
+            the DNO supply earth terminal at the cut-out — sized per Reg 543.1.1 with the Reg
+            542.3.1 minimum for a copper conductor with mechanical and corrosion protection.{' '}
+            <strong>3. Main protective bonding.</strong> 10 mm&sup2; copper to the incoming gas
+            service (within 600 mm of the meter outlet, before any branch, BS 951 clamp,
+            &quot;Safety Electrical Connection&quot; label) AND 10 mm&sup2; copper to the incoming
+            water service — sized per Reg 544.1.1 with the DNO 10 mm&sup2; minimum on TN-C-S where
+            supply neutral is up to 35 mm&sup2;. <strong>4. Final-circuit CPCs.</strong> 1.5
+            mm&sup2; CPC inside 2.5 mm&sup2; T&amp;E for sockets (Reg 543.1.1 / Table 54.7), 1.0
+            mm&sup2; CPC inside 1.5 mm&sup2; T&amp;E for lighting. Each CPC terminates at every
+            back-box earthing tag and every accessory earth terminal per Reg 411.3.1.1.{' '}
+            <strong>5. Supplementary bonding.</strong> In the bathroom, omitted under Reg 701.415.2
+            because all three conditions hold: every circuit meets disconnection times, every
+            circuit has 30 mA RCD additional protection, and the gas/water services are bonded back
+            to the MET. If any of the three failed, 4 mm&sup2; supplementary bonding would be
+            installed (Reg 415.2.1 / 544.2). <strong>6. The EIC schedule.</strong> Each conductor
+            goes on the cert with its correct name — earthing conductor, main protective bonding to
+            gas, main protective bonding to water, CPCs per circuit. Naming them correctly is the
+            cheapest QS pass on the form.
+          </p>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <ContentEyebrow>Where it goes wrong</ContentEyebrow>
+
+        <CommonMistake
+          title="Calling the earthing conductor a CPC on the EIC"
+          whatHappens='On the EIC schedule of test results, the conductor between the MET and the supply earth terminal is recorded as "CPC, 16 mm²". A QS reviewing the cert flags it: a CPC connects an exposed-conductive-part to the MET, not the MET to the means of earthing. The cert is technically wrong even though the install itself is fine.'
+          doInstead="The conductor between the MET and the means of earthing is the EARTHING CONDUCTOR, sized per Reg 543.1.1 with Reg 542.3.1 minimums. Conductors out from the MET to exposed-conductive-parts are CPCs. Conductors from the MET to extraneous-conductive-parts are MAIN PROTECTIVE BONDING CONDUCTORS (Reg 544.1.1). Three different conductors, three different boxes on the cert. Get the names right and the rest of the schedule lines up automatically."
+        />
+
+        <CommonMistake
+          title="Calling FELV a protective measure"
+          whatHappens='A 24 V control circuit derived from an autotransformer is described on the EIC as "protected by extra-low voltage". There is no safety isolation between the 230 V primary and the 24 V secondary — a primary fault can drive 230 V onto the controls. The cert claims a protective measure that does not exist; the inspector codes it C2.'
+          doInstead="FELV is not a protective measure. Either redesign with a safety isolating transformer (BS EN 61558-2-6) — making it SELV (no earth) or PELV (earthed) — or treat the 24 V circuit as low voltage and apply full basic and fault protection at the primary voltage per Reg 411.7.3. On the cert, do not record FELV as a protective measure; record the basic + fault protection that actually applies."
+        />
+
+        <CommonMistake
+          title="Relying on Class II as the sole protective measure on a circuit with sockets"
+          whatHappens="A designer specifies double-insulated cable and accessories on a small office socket circuit, omits the CPC at every socket and proposes that Class II is the sole protective measure. Reg 412.1.2 explicitly forbids this on any circuit with a socket-outlet, LSC, DCL or cable coupler — a user can plug in Class I equipment and defeat the measure."
+          doInstead="Class II is a per-equipment protective measure, not a circuit-level one. On any circuit a user can change equipment on, ADS via CPC + OPD/RCD must be the primary measure. Class II equipment fed from that ADS-protected circuit is fine — the two measures coexist. The error is only when Class II is the SOLE measure on the whole circuit."
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>Scenarios — applying it on the day</ContentEyebrow>
+
+        <Scenario
+          title="EICR of a 1990s domestic — bonding mis-described"
+          situation='An EICR you are reviewing records 16 mm² "CPC" from MET to supply earth terminal, and 6 mm² "CPC" from MET to incoming gas service. The actual install: 16 mm² earthing conductor and 6 mm² main protective bonding to gas. The TN-C-S supply has 25 mm² tails.'
+          whatToDo="Two issues. First, the cert language is wrong — these are not CPCs. Re-record as 16 mm² earthing conductor (Reg 543.1.1 / 542.3.1) and 6 mm² main protective bonding (Reg 544.1.1). Second, the 6 mm² bonding is undersized for TN-C-S with 25 mm² tails. The DNO requirement on TN-C-S where supply neutral is up to 35 mm² is 10 mm² minimum. Recommend code C2 or C3 for the undersized bonding (depending on whether the rest of the equipotential zone is intact) and fix the cert language as a separate observation."
+          whyItMatters="An EICR with mis-named conductors fails QS even when the install itself is fine. An EICR that misses an undersized main bond on TN-C-S misses a real safety issue. The two together are a typical inspector finding — get the Part 2 language right and the design errors stop hiding behind the wrong vocabulary."
+        />
+
+        <Scenario
+          title="Process panel with a 24 V control circuit — SELV, PELV or FELV?"
+          situation='A small process panel has a 24 V control circuit feeding relays, a PLC and a touchscreen. The 24 V is derived from a transformer marked "BS EN 61558-2-6". The secondary 0 V is connected to the panel earth bar for EMC reference. The customer asks you to record the controls as SELV on the cert.'
+          whatToDo='Confirm the source first — BS EN 61558-2-6 is a safety isolating transformer, so the source meets Section 414.3. Voltage is 24 V AC, well under the Reg 414.1.1 50 V AC limit. The secondary 0 V is intentionally earthed — that excludes SELV. Record the controls as PELV: band I voltage, safety isolating source, earth permitted on the secondary. Reg 414.4.4 basic-protection requirement above 25 V does not bite at 24 V; ensure the 24 V conductors are still segregated from any 230 V conductors per Reg 528. Document on the cert: "Section 411/414 — PELV (Reg 414); source: BS EN 61558-2-6 safety isolating transformer; secondary intentionally earthed for functional reasons."'
+          whyItMatters="Calling it SELV on the cert when the secondary is intentionally earthed is a Part 2 error that an inspector will pick up. Calling it FELV would be wrong in the other direction — the source IS safety-isolated, and the protective measure IS Section 414. Getting the term right is the difference between a defensible cert and a re-do."
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>Quick reference — picking the right term</ContentEyebrow>
+
+        <ConceptBlock
+          title="The Part 2 cheat-sheet for cert language"
+          plainEnglish="Most cert errors come from picking the wrong word. A short cheat-sheet you can run through before you fill in any schedule keeps the language tight and the QS quick."
+          onSite="Conductor between MET and means of earthing → EARTHING CONDUCTOR (Reg 543.1.1 / 542.3.1). Conductor between MET and exposed-conductive-part → CPC (Reg 543.1.1). Conductor between MET and extraneous-conductive-part → MAIN PROTECTIVE BONDING (Reg 544.1.1). Conductor inside a special location tying parts together → SUPPLEMENTARY BONDING (Reg 415.2.1 / 544.2). Voltage ≤ 50 V AC, safety isolating source, no earth → SELV (Section 414). Same but earthed → PELV (Section 414). Voltage ≤ 50 V AC, no safety isolation → FELV (Reg 411.7) — NOT a protective measure."
+        />
+
+        <FAQ items={faqItems} />
+
+        <KeyTakeaways
+          points={[
+            'Four protective conductors with four different jobs: CPC (Reg 543.1.1, exposed-conductive-parts to MET), earthing conductor (Reg 543.1.1 / 542.3.1, MET to means of earthing), main protective bonding (Reg 544.1.1, extraneous-conductive-parts to MET), supplementary bonding (Reg 415.2.1 / 544.2, local equipotential zone).',
+            'Reg 411.3.1.1 verbatim: a CPC at every point in wiring and every accessory, except a pendant lampholder having no exposed-conductive-parts and suspended from such a point. No other exception.',
+            'ADS (Reg 411) is the default UK protective measure. SELV and PELV (Section 414) are alternatives bound by Reg 414.1.1 (≤ 50 V AC / 120 V DC ripple-free) and Section 414.3 (safety isolating source). FELV (Reg 411.7) is NOT a protective measure.',
+            'Class I = ADS via CPC. Class II = double or reinforced insulation (Section 412), no CPC. Class III = SELV / PELV supply. Reg 412.1.2 forbids Class II as the sole measure on circuits with sockets / LSCs / DCLs / couplers.',
+            'Live part vs exposed-conductive-part vs extraneous-conductive-part — three terms, three protective treatments. Get the language right on the cert and the design and the EICR follow.',
+          ]}
+        />
+
+        <Quiz questions={quizQuestions} />
+
+        <div className="grid grid-cols-2 gap-3 pt-2">
           <button
             type="button"
-            onClick={() => navigate('../bs7671-module-2')}
-            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            onClick={() => navigate('/electrician/upskilling/bs7671-module-2')}
+            className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
           >
-            <ArrowLeft className="h-4 w-4" /> Module 2
+            <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+              <ChevronLeft className="h-3 w-3" /> Module 2
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-white truncate">
+              Module overview
+            </div>
           </button>
-
-          <PageHero
-            eyebrow="Module 2 · Section 2"
-            title="Key terms — CPC, ADS, SELV, PELV"
-            description="The Part 2 definitions BS 7671 expects every electrician to use precisely — protective conductors, protective measures and equipment classes. Get the language right and the design, the cert and the EICR all line up."
-            actions={
-              <>
-                <RegBadge>411.1</RegBadge>
-                <RegBadge>411.3.1.1</RegBadge>
-                <RegBadge>414.1.1</RegBadge>
-                <AmendmentBadge regs={['411.3.4']} />
-              </>
-            }
-            tone="yellow"
-          />
-
-          <TLDR
-            points={[
-              'BS 7671 Part 2 distinguishes four distinct protective conductors — CPC, earthing conductor, main protective bonding and supplementary bonding — each with its own regulation and sizing rule (543, 542, 544.1.1, 544.2).',
-              'ADS (Reg 411) is the default UK protective measure. SELV and PELV (Section 414) are alternatives; FELV (Reg 411.7) is NOT a protective measure.',
-              'Class I, II and III equipment match different protective measures. Misnaming a conductor or class on the cert is the most common QS observation — get the language right and the rest follows.',
-            ]}
-          />
-
-          <LearningOutcomes
-            outcomes={[
-              'Define CPC, earthing conductor, main protective bonding conductor and supplementary equipotential bonding conductor — and cite the BS 7671 sizing regulation for each.',
-              'State the verbatim Reg 411.3.1.1 rule and the single recognised exception (pendant lampholder, no exposed metal).',
-              'Distinguish ADS (Reg 411), SELV, PELV (Section 414) and FELV (Reg 411.7) by source, voltage limit and earthing arrangement, and explain why FELV is not a protective measure.',
-              'Identify the three voltage / current limits that define SELV and PELV (Reg 414.1.1) and the basic-protection requirement above 25 V AC (Reg 414.4.4).',
-              'Distinguish Class I, Class II and Class III equipment per IEC 61140 / BS 7671, and pick the right protective measure for each.',
-              'Distinguish live part, exposed-conductive-part and extraneous-conductive-part — and apply the right protective conductor to each.',
-            ]}
-            initialVisibleCount={3}
-          />
-
-          <ContentEyebrow>The four protective conductors</ContentEyebrow>
-
-          <ConceptBlock
-            title="Circuit protective conductor (CPC)"
-            plainEnglish="The conductor that runs from the MET out to every exposed-conductive-part of the installation. It is the fault-current path back to the source and the reason ADS works."
-            onSite="In domestic T&E it is the bare conductor inside the cable, sleeved green-and-yellow at every termination. It must be terminated at every point and accessory under Reg 411.3.1.1 — back-box earthing tags, fitting earth terminals, accessory earth terminals, the lot."
+          <button
+            type="button"
+            onClick={() => navigate('/electrician/upskilling/bs7671-module-2-section-3')}
+            className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
           >
-            <p>
-              BS 7671 Part 2 defines the CPC as a protective conductor used for protection against
-              electric shock that connects an exposed-conductive-part of equipment to the main
-              earthing terminal of the installation. Sizing is set by Reg 543.1.1 — either the
-              adiabatic equation S = &radic;(I&sup2; &times; t) / k, or selection from Table 54.7
-              (the conservative one-line lookup). Most domestic CPCs are 1.5 mm&sup2; inside 2.5
-              mm&sup2; T&amp;E (sockets) or 1.0 mm&sup2; inside 1.5 mm&sup2; T&amp;E (lighting) and
-              meet Reg 543.1.1 via Table 54.7.
-            </p>
-          </ConceptBlock>
-
-          <RegsCallout
-            source="BS 7671:2018+A4:2026 · Reg 411.3.1.1 — Protective earthing"
-            clause="Exposed-conductive-parts shall be connected to a protective conductor under the specific conditions for each type of system earthing as specified in Regulations 411.4 to 411.6. Simultaneously accessible exposed-conductive-parts shall be connected to the same earthing system individually, in groups or collectively. A circuit protective conductor shall be run to and terminated at each point in wiring and at each accessory except a lampholder having no exposed-conductive-parts and suspended from such a point."
-            meaning="A CPC at every point and every accessory is the legal default. The lampholder exception is narrow: pendant lampholder, no exposed metal, suspended. Replace it with a metal-bodied luminaire or downlight and the CPC must be present and connected. Mixing earthing systems on the same equipotential zone is also forbidden."
-            cite="BS 7671:2018+A4:2026, Reg 411.3.1.1 (p.66)"
-          />
-
-          <InlineCheck {...inlineChecks[1]} />
-
-          <ConceptBlock
-            title="Earthing conductor — distinct from the CPC"
-            plainEnglish="The conductor that runs from the MET to the means of earthing — the supply PEN in TN-C-S, the earth electrode in TT, or the supply CPC in TN-S. It is the spine that the entire installation hangs off."
-            onSite="In a domestic CU it is the green-and-yellow conductor between the MET earth bar and the supply earth terminal at the cut-out. Typical CSA: 16 mm² copper for a 25 mm² tails arrangement on TN-C-S. Sized as a CPC under Reg 543.1.1, with Reg 542.3.1 minimum CSAs depending on whether it is buried, mechanically protected and corrosion-protected."
-          >
-            <p>
-              Calling the earthing conductor a &quot;CPC&quot; on a cert is one of the most common
-              Part 2 mistakes and a QS will pick it up immediately. They are different conductors
-              with different jobs: the CPC carries fault current from an exposed-conductive-part
-              back to the MET, the earthing conductor carries that fault current from the MET out to
-              the means of earthing. Reg 542.3.1 specifies the minimums: for a buried earthing
-              conductor without mechanical protection the minimum CSA is dictated by corrosion, not
-              just current — typically 25 mm&sup2; copper or 50 mm&sup2; steel. With mechanical
-              protection the rules relax.
-            </p>
-          </ConceptBlock>
-
-          <ConceptBlock
-            title="Main protective bonding conductor (Reg 544.1.1)"
-            plainEnglish="The conductor that bonds extraneous-conductive-parts — incoming water, gas, oil, structural steel, central-heating pipework — to the MET. Its job is to keep every accessible metal part at the same potential during a fault, so there is no touch voltage to drive a shock."
-            onSite="The 10 mm² green-and-yellow you clamp to the gas service pipe with a BS 951 earth clamp, within 600 mm of the meter or before any branch — that is the main protective bonding conductor. Sized per Reg 544.1.1: half the CSA of the earthing conductor with a 6 mm² floor and 25 mm² ceiling; in TN-C-S the DNO normally requires 10 mm² minimum where supply neutral ≤ 35 mm² (16 mm² on heavier services)."
-          >
-            <p>
-              Reg 544.1.1 sets the formula but the DNO&apos;s minimums for TN-C-S override on the
-              low side. For a typical UK domestic with 25 mm&sup2; tails on TN-C-S: 16 mm&sup2;
-              earthing conductor, 10 mm&sup2; main protective bonding to gas and water — every
-              extraneous-conductive-part bonded back to the MET. Connection to the pipe must be with
-              a BS 951 earth clamp, with the &quot;Safety Electrical Connection — Do Not
-              Remove&quot; label, on a clean bare-metal section, before any branch (or within 600 mm
-              of the meter outlet on gas).
-            </p>
-          </ConceptBlock>
-
-          <ConceptBlock
-            title="Supplementary equipotential bonding conductor (Reg 415.2.1)"
-            plainEnglish="A localised bonding conductor inside a high-risk location (typically a bathroom). It ties together the exposed-conductive-parts and extraneous-conductive-parts within that location so the touch voltage stays below the dangerous threshold even if the main ADS fails."
-            onSite="Bathrooms historically had supplementary bonding on every job. Today the Reg 701.415.2 omission allows it to be left out IF (a) every circuit meets disconnection times, (b) every circuit has 30 mA RCD additional protection, and (c) every extraneous-conductive-part is reliably bonded back to the MET. Miss any of the three and supplementary bonding is back in."
-          >
-            <p>
-              Reg 415.2.1 sets the rule and Reg 544.2 the sizing. The conductor connects either two
-              exposed-conductive-parts, two extraneous-conductive-parts, or an
-              exposed-conductive-part to an extraneous-conductive-part. The practical minimum CSA: 4
-              mm&sup2; where mechanical protection is not provided, 2.5 mm&sup2; where it is. The
-              Section 415.2 conductor is &quot;supplementary&quot; in the sense of completing the
-              local equipotential zone — it is not a substitute for a CPC, an earthing conductor or
-              main bonding.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...inlineChecks[6]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>Live part vs exposed vs extraneous</ContentEyebrow>
-
-          <ConceptBlock
-            title="Three terms, three protective conductors, three rules"
-            plainEnglish="A live part is intentionally energised. An exposed-conductive-part is metal you can touch that becomes live only under fault. An extraneous-conductive-part is metal you can touch that brings in a potential from outside the installation."
-            onSite="Live parts get basic protection — insulation, barriers, enclosures (Section 416). Exposed-conductive-parts get a CPC plus ADS (Reg 411). Extraneous-conductive-parts get main protective bonding (Reg 544.1.1). Three jobs, three rules — naming them correctly on the cert tells the inspector you understand the model."
-          >
-            <p>
-              The most common Part 2 mistake is calling a copper water pipe an
-              &quot;exposed-conductive-part&quot;. It is not — it is an extraneous-conductive-part
-              because it brings earth potential in from outside the installation, not because it is
-              part of equipment that can become live under fault. The protective treatment is
-              therefore main bonding to the MET (Reg 544.1.1), not a CPC. A central-heating radiator
-              fed from copper pipework is a similar case &mdash; bond the pipework, not the
-              radiator. A metal back-box is the opposite case: it is part of an accessory and CAN
-              become live under fault, so it is an exposed-conductive-part and gets a CPC.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...inlineChecks[5]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>Automatic Disconnection of Supply (ADS)</ContentEyebrow>
-
-          <ConceptBlock
-            title="ADS — the default UK protective measure (Reg 411.1)"
-            plainEnglish="ADS is not a device — it is a designed combination of earthing, bonding, the right protective device and a verified loop impedance. When all four are in place, the circuit clears a fault to earth before the touch voltage becomes dangerous."
-            onSite="On the EIC schedule, the boxes you tick for ADS map to the four ingredients: protective earthing present, MET bonded, OPD/RCD selected, Zs measured against the device's maximum. Every Class I final circuit in a typical domestic installation relies on ADS."
-          >
-            <p>
-              Reg 411.1 introduces ADS as the protective measure described in Section 411. It is
-              built from <strong>(a)</strong> protective earthing of exposed-conductive-parts (Reg
-              411.3.1.1), <strong>(b)</strong> protective equipotential bonding of
-              extraneous-conductive-parts to the MET (Reg 411.3.1.2), <strong>(c)</strong> automatic
-              disconnection by an OPD or RCD within Table 41.1 times (Reg 411.3.2), and{' '}
-              <strong>(d)</strong> coordination with the system earthing arrangement (Reg 411.4.4
-              TN, 411.5.3 TT or 411.6.3 IT). All four must be present for ADS to be in place —
-              missing one means the protective measure is not demonstrably in place, and the cert
-              cannot truthfully claim it.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...inlineChecks[0]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>SELV and PELV (Section 414)</ContentEyebrow>
-
-          <ConceptBlock
-            title="SELV — Safety Extra-Low Voltage"
-            plainEnglish="A circuit at or below band I voltage (≤ 50 V AC / 120 V DC ripple-free per Reg 414.1.1), fed by a safety isolating source, with no intentional connection to earth and complete electrical separation from any other circuit."
-            onSite="Common SELV applications: 12 V LED downlights in zone 0 of a bath/shower, fountain submerged equipment, low-voltage doorbell systems, BA2 environments (children, schools). The source is a BS EN 61558-2-6 safety isolating transformer or a battery, not a domestic transformer plate."
-          >
-            <p>
-              The three SELV requirements work together. First, the voltage limit (Reg 414.1.1): ≤
-              50 V AC RMS or 120 V DC ripple-free. Second, the source (Section 414.3): a safety
-              isolating transformer to BS EN 61558-2-6, a battery, or a motor-generator with
-              isolated windings. Third, the earthing arrangement: NO intentional connection to earth
-              on the secondary, and exposed-conductive-parts NOT connected to earth or to any
-              protective conductor of another circuit. Lose any of the three and it is not SELV. Reg
-              414.4.4 also requires basic protection (insulation, barriers, enclosures) where the
-              nominal voltage exceeds 25 V AC / 60 V DC ripple-free, or where equipment is immersed.
-            </p>
-          </ConceptBlock>
-
-          <ConceptBlock
-            title="PELV — Protective Extra-Low Voltage"
-            plainEnglish="Same band I voltage and same safety isolating source as SELV — but earth IS permitted on the secondary. Used where equipment needs functional earthing (EMC shielding, instrumentation reference) and the application is not in a SELV-mandatory location."
-            onSite="Common PELV applications: industrial control panels with shielded screens, BMS systems, instrumentation cabinets, some medical equipment. Same Reg 414.1.1 voltage, same Section 414.3 source — the only difference from SELV is that the secondary may be earthed. Reg 414.4.4 still applies above 25 V AC."
-          >
-            <p>
-              On the cert, the entry under Section 411/414 changes only by whether the secondary is
-              intentionally earthed. SELV — no earth, no connection to any other protective
-              conductor. PELV — earth permitted, exposed-conductive-parts may be connected to earth
-              or to a CPC. Use SELV in zone 0 of a bath/shower, fountain zone 0 and BA2
-              environments. Use PELV where the controls need a stable functional earth and the
-              application is not in a SELV-mandatory location.
-            </p>
-          </ConceptBlock>
-
-          <RegsCallout
-            source="BS 7671:2018+A4:2026 · Reg 414.1.1 — Voltage limits for SELV and PELV"
-            clause="The protective measure of extra-low voltage by SELV or PELV is recognised where the nominal voltage cannot exceed the upper limit of voltage band I — 50 V AC (rms) or 120 V DC ripple-free."
-            meaning="Band I is the absolute ceiling. Above it, the circuit is no longer SELV or PELV regardless of the source quality. Reg 414.4.4 then layers in a basic-protection requirement once the nominal voltage exceeds 25 V AC RMS or 60 V DC ripple-free, or where equipment is immersed — meaning insulation, barriers or enclosures must still be present at higher SELV/PELV voltages."
-            cite="BS 7671:2018+A4:2026, Reg 414.1.1 / Reg 414.4.4"
-          />
-
-          <InlineCheck {...inlineChecks[2]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>FELV — and why it is NOT a protective measure</ContentEyebrow>
-
-          <ConceptBlock
-            title="FELV (Reg 411.7) — extra-low voltage without safety isolation"
-            plainEnglish="A circuit running at SELV/PELV voltage but lacking the safety-isolating source. The voltage is low; the safety guarantee is not."
-            onSite='Spotting it: an autotransformer feeding 24 V controls, a single-winding ferro-resonant primary, anywhere the primary and secondary share metal or windings without explicit safety isolation per Section 414.3. If you would not bet on the source being "BS EN 61558-2-6 safety isolating", it is FELV.'
-          >
-            <p>
-              Reg 411.7.1 defines FELV as the case where, for functional reasons, the circuit
-              voltage is ≤ 50 V AC / 120 V DC ripple-free, but not all of the Section 414
-              requirements for SELV or PELV are met, AND SELV / PELV is not strictly required. Reg
-              411.7.4 forces the source to be either a transformer with at least simple winding
-              separation OR a source complying with Section 414.3. Reg 411.7.3 then requires basic
-              AND fault protection AT THE PRIMARY VOLTAGE — no shortcuts based on the secondary
-              being 24 V. The fix is design: replace the autotransformer with a safety isolating
-              transformer and the circuit becomes SELV (no earth) or PELV (earthed) — both genuine
-              protective measures.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...inlineChecks[3]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>Equipment classes (IEC 61140)</ContentEyebrow>
-
-          <ConceptBlock
-            title="Class I, Class II and Class III — three protective philosophies"
-            plainEnglish="Class I = earthed metal casing, fault protection by ADS via a CPC. Class II = double or reinforced insulation, no CPC, recognised by the double-square symbol. Class III = designed for SELV / PELV supply, voltage limit IS the protective measure."
-            onSite="Most domestic appliances are Class I (kettles, ovens, washing machines, immersion heaters). Most consumer electronics and power tools are Class II (laptops, phone chargers, cordless drills, hair dryers). Class III is rare day-to-day — typically specialised equipment fed from a SELV / PELV supply (low-voltage tools in confined spaces, some medical, certain illuminated signs)."
-          >
-            <p>
-              The three classes map to three different protective measures in BS 7671. Class I
-              relies on Reg 411 ADS — the metal casing is connected via a CPC to the MET, and a
-              fault to earth is cleared by the OPD or RCD within Table 41.1 times. Class II relies
-              on Section 412 — double or reinforced insulation as the entire protective measure, no
-              CPC, no earth path. Class III relies on Section 414 — the supply is SELV or PELV and
-              the voltage limit itself is the protective measure. Reg 412.1.2 forbids relying on
-              Class II as the SOLE protective measure on circuits with socket-outlets, LSCs, DCLs or
-              cable couplers because one Class I plug-in defeats it.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...inlineChecks[4]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>Worked example — designing a domestic CU on TN-C-S</ContentEyebrow>
-
-          <ConceptBlock
-            title="Naming every protective conductor on a typical UK domestic"
-            plainEnglish="A worked example pulls every Part 2 term into one picture — the cut-out, the MET, the CU, the bonded services and the final circuits — so each conductor goes on the cert with the right name."
-            onSite="This is the exercise to walk through before you fill in any EIC. Sketch the cut-out, the tails, the MET, the bonding to gas and water, and the final-circuit CPCs. Label every conductor with its Reg before you start the schedule."
-          >
-            <p>
-              <strong>1. Supply.</strong> TN-C-S (PME) cut-out with a 100 A BS 1361 cut-out fuse, 25
-              mm&sup2; meter tails. The DNO supply is a combined PEN up to the cut-out, split into
-              separate N and PE inside the consumer&apos;s installation.{' '}
-              <strong>2. Earthing conductor.</strong> 16 mm&sup2; copper between the MET earth bar
-              and the DNO supply earth terminal at the cut-out — sized per Reg 543.1.1 with the Reg
-              542.3.1 minimum for a copper conductor with mechanical and corrosion protection.{' '}
-              <strong>3. Main protective bonding.</strong> 10 mm&sup2; copper to the incoming gas
-              service (within 600 mm of the meter outlet, before any branch, BS 951 clamp,
-              &quot;Safety Electrical Connection&quot; label) AND 10 mm&sup2; copper to the incoming
-              water service — sized per Reg 544.1.1 with the DNO 10 mm&sup2; minimum on TN-C-S where
-              supply neutral is up to 35 mm&sup2;. <strong>4. Final-circuit CPCs.</strong> 1.5
-              mm&sup2; CPC inside 2.5 mm&sup2; T&amp;E for sockets (Reg 543.1.1 / Table 54.7), 1.0
-              mm&sup2; CPC inside 1.5 mm&sup2; T&amp;E for lighting. Each CPC terminates at every
-              back-box earthing tag and every accessory earth terminal per Reg 411.3.1.1.{' '}
-              <strong>5. Supplementary bonding.</strong> In the bathroom, omitted under Reg
-              701.415.2 because all three conditions hold: every circuit meets disconnection times,
-              every circuit has 30 mA RCD additional protection, and the gas/water services are
-              bonded back to the MET. If any of the three failed, 4 mm&sup2; supplementary bonding
-              would be installed (Reg 415.2.1 / 544.2). <strong>6. The EIC schedule.</strong> Each
-              conductor goes on the cert with its correct name — earthing conductor, main protective
-              bonding to gas, main protective bonding to water, CPCs per circuit. Naming them
-              correctly is the cheapest QS pass on the form.
-            </p>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <ContentEyebrow>Where it goes wrong</ContentEyebrow>
-
-          <CommonMistake
-            title="Calling the earthing conductor a CPC on the EIC"
-            whatHappens='On the EIC schedule of test results, the conductor between the MET and the supply earth terminal is recorded as "CPC, 16 mm²". A QS reviewing the cert flags it: a CPC connects an exposed-conductive-part to the MET, not the MET to the means of earthing. The cert is technically wrong even though the install itself is fine.'
-            doInstead="The conductor between the MET and the means of earthing is the EARTHING CONDUCTOR, sized per Reg 543.1.1 with Reg 542.3.1 minimums. Conductors out from the MET to exposed-conductive-parts are CPCs. Conductors from the MET to extraneous-conductive-parts are MAIN PROTECTIVE BONDING CONDUCTORS (Reg 544.1.1). Three different conductors, three different boxes on the cert. Get the names right and the rest of the schedule lines up automatically."
-          />
-
-          <CommonMistake
-            title="Calling FELV a protective measure"
-            whatHappens='A 24 V control circuit derived from an autotransformer is described on the EIC as "protected by extra-low voltage". There is no safety isolation between the 230 V primary and the 24 V secondary — a primary fault can drive 230 V onto the controls. The cert claims a protective measure that does not exist; the inspector codes it C2.'
-            doInstead="FELV is not a protective measure. Either redesign with a safety isolating transformer (BS EN 61558-2-6) — making it SELV (no earth) or PELV (earthed) — or treat the 24 V circuit as low voltage and apply full basic and fault protection at the primary voltage per Reg 411.7.3. On the cert, do not record FELV as a protective measure; record the basic + fault protection that actually applies."
-          />
-
-          <CommonMistake
-            title="Relying on Class II as the sole protective measure on a circuit with sockets"
-            whatHappens="A designer specifies double-insulated cable and accessories on a small office socket circuit, omits the CPC at every socket and proposes that Class II is the sole protective measure. Reg 412.1.2 explicitly forbids this on any circuit with a socket-outlet, LSC, DCL or cable coupler — a user can plug in Class I equipment and defeat the measure."
-            doInstead="Class II is a per-equipment protective measure, not a circuit-level one. On any circuit a user can change equipment on, ADS via CPC + OPD/RCD must be the primary measure. Class II equipment fed from that ADS-protected circuit is fine — the two measures coexist. The error is only when Class II is the SOLE measure on the whole circuit."
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>Scenarios — applying it on the day</ContentEyebrow>
-
-          <Scenario
-            title="EICR of a 1990s domestic — bonding mis-described"
-            situation='An EICR you are reviewing records 16 mm² "CPC" from MET to supply earth terminal, and 6 mm² "CPC" from MET to incoming gas service. The actual install: 16 mm² earthing conductor and 6 mm² main protective bonding to gas. The TN-C-S supply has 25 mm² tails.'
-            whatToDo="Two issues. First, the cert language is wrong — these are not CPCs. Re-record as 16 mm² earthing conductor (Reg 543.1.1 / 542.3.1) and 6 mm² main protective bonding (Reg 544.1.1). Second, the 6 mm² bonding is undersized for TN-C-S with 25 mm² tails. The DNO requirement on TN-C-S where supply neutral is up to 35 mm² is 10 mm² minimum. Recommend code C2 or C3 for the undersized bonding (depending on whether the rest of the equipotential zone is intact) and fix the cert language as a separate observation."
-            whyItMatters="An EICR with mis-named conductors fails QS even when the install itself is fine. An EICR that misses an undersized main bond on TN-C-S misses a real safety issue. The two together are a typical inspector finding — get the Part 2 language right and the design errors stop hiding behind the wrong vocabulary."
-          />
-
-          <Scenario
-            title="Process panel with a 24 V control circuit — SELV, PELV or FELV?"
-            situation='A small process panel has a 24 V control circuit feeding relays, a PLC and a touchscreen. The 24 V is derived from a transformer marked "BS EN 61558-2-6". The secondary 0 V is connected to the panel earth bar for EMC reference. The customer asks you to record the controls as SELV on the cert.'
-            whatToDo='Confirm the source first — BS EN 61558-2-6 is a safety isolating transformer, so the source meets Section 414.3. Voltage is 24 V AC, well under the Reg 414.1.1 50 V AC limit. The secondary 0 V is intentionally earthed — that excludes SELV. Record the controls as PELV: band I voltage, safety isolating source, earth permitted on the secondary. Reg 414.4.4 basic-protection requirement above 25 V does not bite at 24 V; ensure the 24 V conductors are still segregated from any 230 V conductors per Reg 528. Document on the cert: "Section 411/414 — PELV (Reg 414); source: BS EN 61558-2-6 safety isolating transformer; secondary intentionally earthed for functional reasons."'
-            whyItMatters="Calling it SELV on the cert when the secondary is intentionally earthed is a Part 2 error that an inspector will pick up. Calling it FELV would be wrong in the other direction — the source IS safety-isolated, and the protective measure IS Section 414. Getting the term right is the difference between a defensible cert and a re-do."
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>Quick reference — picking the right term</ContentEyebrow>
-
-          <ConceptBlock
-            title="The Part 2 cheat-sheet for cert language"
-            plainEnglish="Most cert errors come from picking the wrong word. A short cheat-sheet you can run through before you fill in any schedule keeps the language tight and the QS quick."
-            onSite="Conductor between MET and means of earthing → EARTHING CONDUCTOR (Reg 543.1.1 / 542.3.1). Conductor between MET and exposed-conductive-part → CPC (Reg 543.1.1). Conductor between MET and extraneous-conductive-part → MAIN PROTECTIVE BONDING (Reg 544.1.1). Conductor inside a special location tying parts together → SUPPLEMENTARY BONDING (Reg 415.2.1 / 544.2). Voltage ≤ 50 V AC, safety isolating source, no earth → SELV (Section 414). Same but earthed → PELV (Section 414). Voltage ≤ 50 V AC, no safety isolation → FELV (Reg 411.7) — NOT a protective measure."
-          />
-
-          <FAQ items={faqItems} />
-
-          <KeyTakeaways
-            points={[
-              'Four protective conductors with four different jobs: CPC (Reg 543.1.1, exposed-conductive-parts to MET), earthing conductor (Reg 543.1.1 / 542.3.1, MET to means of earthing), main protective bonding (Reg 544.1.1, extraneous-conductive-parts to MET), supplementary bonding (Reg 415.2.1 / 544.2, local equipotential zone).',
-              'Reg 411.3.1.1 verbatim: a CPC at every point in wiring and every accessory, except a pendant lampholder having no exposed-conductive-parts and suspended from such a point. No other exception.',
-              'ADS (Reg 411) is the default UK protective measure. SELV and PELV (Section 414) are alternatives bound by Reg 414.1.1 (≤ 50 V AC / 120 V DC ripple-free) and Section 414.3 (safety isolating source). FELV (Reg 411.7) is NOT a protective measure.',
-              'Class I = ADS via CPC. Class II = double or reinforced insulation (Section 412), no CPC. Class III = SELV / PELV supply. Reg 412.1.2 forbids Class II as the sole measure on circuits with sockets / LSCs / DCLs / couplers.',
-              'Live part vs exposed-conductive-part vs extraneous-conductive-part — three terms, three protective treatments. Get the language right on the cert and the design and the EICR follow.',
-            ]}
-          />
-
-          <Quiz questions={quizQuestions} />
-
-          <div className="grid grid-cols-2 gap-3 pt-2">
-            <button
-              type="button"
-              onClick={() => navigate('/electrician/upskilling/bs7671-module-2')}
-              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
-                <ChevronLeft className="h-3 w-3" /> Module 2
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-white truncate">
-                Module overview
-              </div>
-            </button>
-            <button
-              type="button"
-              onClick={() => navigate('/electrician/upskilling/bs7671-module-2-section-3')}
-              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
-                Next section <ChevronRight className="h-3 w-3" />
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-black truncate">
-                2.3 New A2/A3/A4 definitions
-              </div>
-            </button>
-          </div>
-        </PageFrame>
-      </div>
-    </div>
+            <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+              Next section <ChevronRight className="h-3 w-3" />
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-black truncate">
+              2.3 New A2/A3/A4 definitions
+            </div>
+          </button>
+        </div>
+      </HubBody>
+    </HubPage>
   );
 };
 

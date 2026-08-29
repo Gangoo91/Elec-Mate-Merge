@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { openExternalUrl } from '@/utils/open-external-url';
@@ -141,6 +141,34 @@ export function useGoogleCalendarSync() {
     }
   }, [toast]);
 
+  // Silent auto-sync: no toasts, throttled to one run per 30s. Fired when
+  // the diary opens, when the window regains focus, and after event changes —
+  // the user should never have to think about Sync Now.
+  const lastQuietSyncRef = useRef(0);
+  const quietSync = useCallback(async (force = false) => {
+    if (!status.connected) return;
+    const now = Date.now();
+    if (!force && now - lastQuietSyncRef.current < 30_000) return;
+    lastQuietSyncRef.current = now;
+    try {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+      if (!session) return;
+      await fetch(`${SUPABASE_URL}/functions/v1/sync-google-calendar`, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${session.access_token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({}),
+      });
+    } catch (error) {
+      // Silent by design — the 15-minute server sweep is the backstop.
+      console.warn('Quiet calendar sync failed:', error);
+    }
+  }, [status.connected]);
+
   // Manual sync
   const syncNow = useCallback(async () => {
     try {
@@ -161,7 +189,11 @@ export function useGoogleCalendarSync() {
       if (!response.ok) throw new Error('Sync failed');
 
       const data = await response.json();
-      toast({ title: `Synced ${data.pulled ?? 0} pulled, ${data.pushed ?? 0} pushed` });
+      toast({
+        title: data.skipped
+          ? 'Already up to date'
+          : `Synced ${data.pulled ?? 0} pulled, ${data.pushed ?? 0} pushed`,
+      });
       await refreshStatus();
     } catch (error: unknown) {
       console.error('Calendar sync failed:', error);
@@ -182,6 +214,7 @@ export function useGoogleCalendarSync() {
     connect,
     disconnect,
     syncNow,
+    quietSync,
     refreshStatus,
   };
 }

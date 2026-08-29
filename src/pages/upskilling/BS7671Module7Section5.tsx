@@ -1,8 +1,8 @@
-import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { useNavigate } from 'react-router-dom';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
-import { PageFrame, PageHero } from '@/components/college/primitives';
 import {
   TLDR,
   ConceptBlock,
@@ -293,412 +293,407 @@ const BS7671Module7Section5 = () => {
   });
 
   return (
-    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
-      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
-        <PageFrame>
+    <HubPage>
+      <HubMasthead
+        section="Module 7 · Section 5 · Updated for A4:2026"
+        title="Prosumer electrical installations (Part 8)"
+        backTo="../bs7671-module-7"
+      />
+      <HubBody>
+        <div className="max-w-3xl text-[13px] leading-relaxed text-white">
+          {
+            "A4:2026 introduces Part 8 / Section 826 — the Prosumer's Electrical Installation (PEI). Bidirectional energy flow, multiple sources, islanded operation. This section covers the design framework, the PV / battery / V2G overlay, parallel-sources rules (Reg 551.7.1), the new PCE warning notice (Reg 570.6.8.203), and where Section 419 alternative protective measures bite."
+          }
+        </div>
+
+        <div className="flex flex-wrap items-center gap-2">
+          {
+            <>
+              <RegBadge>826</RegBadge>
+              <RegBadge>551.7.1</RegBadge>
+              <RegBadge>419.1</RegBadge>
+              <AmendmentBadge regs={['551.7.1', '411.3.4']} />
+            </>
+          }
+        </div>
+
+        <TLDR
+          points={[
+            "BS 7671:2018+A4:2026 introduces Part 8 / Section 826 — the Prosumer's Electrical Installation (PEI). PV, battery storage, V2H / V2G EV, small wind and micro-hydro all sit under it.",
+            'PEI design layers on top of existing sections: Section 712 (PV), Section 551 (parallel sources / generators), Section 514 (identification), Section 419 (alternative protective measures), Reg 411.3.4 (domestic luminaire RCD).',
+            'Headline A4 additions: Reg 570.6.8.203 (PCE warning notice — isolate AC AND DC), updated Reg 551.7.1 (synchronism, earthing, isolation, coordination across sources) and the new explicit cert fields for source / generator / battery on the EIC.',
+          ]}
+        />
+
+        <LearningOutcomes
+          outcomes={[
+            "Define a Prosumer's Electrical Installation (PEI) per Section 826 and recognise which UK installations fall under Part 8 (PV, battery storage, V2H / V2G EV, micro-hydro, small wind).",
+            'Identify the operating modes of a PEI — grid-connected, islanded, parallel — and the BS 7671 terms self-consumption mode, demand-side response (DSR) and Local Electrical Microgrid (LEM).',
+            'Apply Reg 551.7.1 (parallel sources) including the new A4 sub-clauses (c) and (d) covering synchronism, earthing during parallel operation, accessible isolation and protection coordination.',
+            'Apply the Section 712 PV-specific overlay — DC-side OCPDs, RCD-type selection on the AC side (Type A vs Type B), and the inverter-topology decision.',
+            'Apply the new Reg 570.6.8.203 PCE warning notice and the extended Section 514 source-identification rules — and audit a real installation against them.',
+            'Recognise where Section 419 alternative protective measures apply to a PEI (typically islanded operation where conventional ADS via OPD cannot be demonstrated) and pick the right measure.',
+            'Coordinate the EV-charging PEN prohibition (Reg 722.312.2.1) with V2G design and explain why V2G amplifies the open-PEN risk on TN-C-S.',
+          ]}
+          initialVisibleCount={3}
+        />
+
+        <ContentEyebrow>Part 8 — what it actually is</ContentEyebrow>
+
+        <ConceptBlock
+          title="The Prosumer's Electrical Installation (PEI) — Section 826"
+          plainEnglish="A PEI is an installation where the consumer is not just consuming. They are also producing, storing, or both — and energy flows in both directions between the installation and the network."
+          onSite="GN3 (A4 update) standardises the abbreviation PEI. If the property has rooftop PV, a domestic battery, a hybrid inverter, V2H / V2G EV charging, a small wind turbine or a micro-hydro turbine — it's a PEI and Part 8 / Section 826 applies. There is no power threshold below which the section is exempt; even a 1.6 kW PV array on a single phase falls under it."
+        >
+          <p>
+            Section 826 (Part 8, new in A4) defines the PEI as an installation arranged so energy
+            can flow in either direction between the installation and the public supply, and which
+            may operate connected, islanded or in parallel. The defining feature is bidirectional
+            flow — not the magnitude. Section 826 sits above the existing topical sections (Section
+            712 PV, Section 551 generators / parallel sources, Section 514 identification, Section
+            419 alternative measures) and pulls them together as a coherent design framework. GN3
+            (A4 update) uses PEI as the standard abbreviation in all worked examples.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...inlineChecks[0]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>PEI operating modes — the language A4 introduces</ContentEyebrow>
+
+        <ConceptBlock
+          title="Self-consumption, DSR and LEM"
+          plainEnglish="Self-consumption: locally generated energy is used in the installation rather than exported. Demand-side response: load is curtailed in response to grid signals or tariff. LEM: a Local Electrical Microgrid where multiple sources and loads coordinate locally."
+          onSite="A4 introduces these terms because the protective-device coordination and warning-notice requirements differ depending on which modes the installation supports. A self-consumption-only PEI never exports — but still needs the same isolation regime and labelling as one that does, because the inverter is still a source. A DSR-enabled PEI adds load-curtailment devices that must not interfere with ADS or break protective conductors."
+        >
+          <p>
+            Self-consumption mode is the default for most domestic PV + battery installs: the
+            battery firmware preferentially charges from PV during the day and discharges to cover
+            evening household load before any export to the grid. Demand-side response (DSR) is the
+            load-side mirror: the installation reduces or shifts demand in response to grid signals,
+            dynamic tariff or DNO command. The Local Electrical Microgrid (LEM) is the broader case
+            — multiple sources and loads coordinating locally, with formalised control logic. BS
+            7671 Section 826 acknowledges all three but does not specify the communication protocols
+            (those are commercial — settlement, tariff, V2G aggregator contracts).
+          </p>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="Grid-connected, islanded and parallel"
+          plainEnglish="Grid-connected: inverter holds to the supply, anti-islanding kicks in if the supply fails. Islanded: the inverter forms its own grid from the battery, the installation runs without the DNO. Parallel: more than one source is energising the installation at once."
+          onSite="The mode the installation is in changes the fault-current model. Grid-connected with the DNO providing PSCC, conventional ADS via OPD works. Disconnect from grid and the inverter becomes the only source — the inverter\'s short-circuit contribution is electronic and limited, so MCBs may not operate within Table 41.1 times. That\'s the trigger for Section 419 alternative protective measures."
+        >
+          <p>
+            Parallel operation is the case where two or more sources energise the installation
+            simultaneously — the DNO supply plus a generator, the DNO plus a PV inverter, a hybrid
+            inverter operating with the DNO. Reg 551.7.1 governs paralleling and A4 adds new
+            sub-clauses (c) and (d) covering protection coordination across all sources and the
+            requirement that the earthing arrangement remains effective during parallel operation.
+            Most domestic stand-by gensets avoid Reg 551.7.1\'s full burden by using a transfer
+            switch (parallel-via-transfer) that disconnects the DNO before the genset energises the
+            installation; true paralleling typically needs G99 approval.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...inlineChecks[1]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>Reg 551.7.1 — parallel sources, with A4 additions</ContentEyebrow>
+
+        <ConceptBlock
+          title="The four pillars of Reg 551.7.1"
+          plainEnglish="Synchronism. Effective earthing during parallel operation. Accessible isolation. Protection coordination across all sources. Miss any one and the parallel connection isn't compliant."
+          onSite="The A4 additions — sub-clauses (c) and (d) — codify what was implicit before: the earthing arrangement must remain effective when sources are paralleled (you can't have two MET arrangements competing) and protection must be coordinated so that an upstream device can clear a downstream fault under any source-mode combination."
+        />
+
+        <RegsCallout
+          source="BS 7671:2018+A4:2026 · Reg 551.7.1 — Connection of generating sets to the distributor's network"
+          clause="Where a generating set is intended to operate in parallel with a distributor's network, the following requirements apply: (a) provision shall be made to prevent the generating set being connected in parallel with the public supply if it is not in synchronism with that supply; (b) means of isolating the generator from the supply system shall be readily accessible to the distributor at all times; (c) the protection shall be coordinated to ensure correct operation under all source-mode combinations; (d) the earthing arrangement of the installation shall remain effective during parallel operation."
+          meaning="Sub-clauses (c) and (d) are the A4 additions and they apply directly to PEI design: the protection scheme must work whether the system is grid-only, grid + PV, grid + battery, grid + PV + battery, or islanded; and the earthing must hold up across all those mode transitions. ENA EREC G98 (≤16 A / phase) and G99 (above) are the DNO connection standards that sit alongside Reg 551.7.1."
+          cite="BS 7671:2018+A4:2026, Reg 551.7.1 (in force from 15 April 2026)"
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>The Section 712 PV overlay</ContentEyebrow>
+
+        <ConceptBlock
+          title="DC-side requirements and RCD-type selection"
+          plainEnglish="PV is a DC source on the array side and an AC source on the inverter output. The DC side has its own overcurrent protection and isolation rules; the AC side gets its RCD type chosen based on the inverter topology."
+          onSite="DC-side: each string needs a string fuse (where required by manufacturer or by parallel-string design), a load-break DC isolator at the inverter, and surge protection on long DC runs. AC-side: 30 mA RCD additional protection on the AC main from the inverter, type chosen by inverter topology — Type B for transformerless without internal RCM, Type A where the manual confirms internal Type B-equivalent RCM."
+        >
+          <p>
+            Section 712 (PV-specific overlay) carries forward the existing PV requirements and is
+            cross-referenced from Section 826. The DC-side OCPD selection follows the inverter
+            manufacturer\'s instructions and the array string design — not all PV strings need
+            individual string fusing; many small domestic 1- or 2-string systems do not. Where
+            fusing IS required, gPV-rated fuses are used (BS EN 60269-6) — standard gG fuses are not
+            adequate for DC. The DC isolator at the inverter must be load-break rated for the
+            maximum string voltage (typically 600 V or 1000 V DC) and must be lockable in the OFF
+            position for safe maintenance.
+          </p>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="Type B RCD — when, and when not"
+          plainEnglish="Transformerless string inverters can place smooth DC residual on the AC side. Type AC and Type A are blind to it. Type B is required unless the inverter manufacturer's manual confirms internal Type B-equivalent residual-current monitoring (RCM)."
+          onSite="The decision tree: (1) Read the inverter installation manual. (2) If it explicitly says internal RCM Type B-equivalent — Type A upstream is acceptable; document the rationale on the EIC. (3) If silent or transformerless without RCM — Type B upstream is mandatory. (4) Type AC is never the right answer for a PV install. Type B costs 4–5× a Type A but it's the wrong place to value-engineer."
+        >
+          <p>
+            Inverters split into two topologies: isolated (with a transformer, galvanic separation
+            between DC and AC) and transformerless. Transformerless inverters dominate the modern
+            domestic PV market because they\'re cheaper, smaller and more efficient, but the lack of
+            galvanic isolation means smooth DC residual can appear on the AC side under array fault.
+            Type AC sees only sinusoidal AC residual; Type A adds pulsating DC; Type B adds smooth
+            DC. The wrong type is invisible without type-specific testing — a Type AC upstream of a
+            transformerless inverter looks fine on a standard ramp test but is functionally blind to
+            the very fault it\'s meant to clear.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...inlineChecks[4]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>EV charging and V2G — the PEN prohibition</ContentEyebrow>
+
+        <ConceptBlock
+          title="Reg 722.312.2.1 in a V2G context"
+          plainEnglish="No PEN conductor in any EV charging circuit on a TN system. V2G makes the prohibition more important — the EV becomes a bidirectional source, so an open PEN with the vehicle exporting drives the touch-current path through the chassis."
+          onSite="Two compliant designs: (1) Split N and PE before the EV circuit — bring TN-S to the charger. (2) Apply one of Section 722's alternative measures — open-PEN detection device (PEN-fault relay) at the charger, or a separate earth electrode for the EV chassis. Whichever route, the EV circuit cannot include a PEN."
+        >
+          <p>
+            Reg 722.312.2.1 prohibits a PEN conductor in any EV-charging circuit on a TN system. In
+            a V2H / V2G context, the EV is a bidirectional source — the vehicle exports power back
+            to the property and potentially to the network. An open PEN with the vehicle exporting
+            is the worst case: the broken neutral elevates local earth potential towards line
+            voltage, the conductive vehicle body becomes a touch hazard, and the fault path runs
+            through any simultaneously accessible bonded metal. This is why V2G installations are
+            subject to additional design scrutiny — the open-PEN detection device or separate earth
+            electrode is not optional, and the documentation should demonstrate which alternative
+            measure is in force.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...inlineChecks[2]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>Section 419 — alternative protective measures</ContentEyebrow>
+
+        <ConceptBlock
+          title="When ADS via Reg 411 cannot be demonstrated"
+          plainEnglish="In an islanded PEI the inverter is the only source. Inverter fault current is electronically limited — typically 1.0–1.5× rated current for a few cycles before electronics intervene. That's nowhere near what an MCB needs to operate within Table 41.1 times. Section 419 then applies."
+          onSite="The trigger: any operating mode where the upstream source is the inverter rather than the DNO. Off-grid operation, deliberate islanding for resilience, transition periods during grid loss. Reg 419.1 names the alternative measures: 30 mA RCD as the ADS device (the inverter can sustain RCD trip current long enough to operate it), supplementary equipotential bonding to drop touch voltage, double / reinforced insulation per Section 412."
+        >
+          <p>
+            Reg 419.1 was extensively updated in A4 to support PEI design. The conventional Reg 411
+            ADS chain — earthing + bonding + OPD + verified Zs — assumes a fault loop that can
+            sustain enough current to operate the protective device within the disconnection time.
+            In an islanded PEI that assumption fails: the inverter is electronically limited and its
+            short-circuit contribution is far below what MCBs expect. The designer has three Reg 419
+            choices: (a) rely on a 30 mA RCD as the disconnection device (the inverter will sustain
+            trip current long enough), (b) apply supplementary equipotential bonding to keep touch
+            voltage below 50 V even during a fault, or (c) use double / reinforced insulation per
+            Section 412 on the load side. Whichever is chosen must be explicit on the EIC and the
+            design package.
+          </p>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <ContentEyebrow>Section 514 and the new PCE warning notice</ContentEyebrow>
+
+        <ConceptBlock
+          title="Identification — multi-source labelling"
+          plainEnglish="Section 514 has been extended to give explicit treatment to multi-source identification. Each PCE — PV inverter, battery PCE, EV charger — needs its own warning notice. The labelling at the origin must indicate the PEI nature of the installation."
+          onSite="At the origin: dual-supply notice indicating that the installation has more than one source. At the consumer unit: warning of the source(s) feeding it. At each PCE: the new Reg 570.6.8.203 notice — isolate AC AND DC. At the meter position: dual-supply notice. Any roof-mounted equipment: hazard notice for first responders (some authorities now require a marked PV stop-switch at the property entrance)."
+        />
+
+        <RegsCallout
+          source="BS 7671:2018+A4:2026 · Reg 570.6.8.203 — Power Conversion Equipment warning notice (NEW IN A4)"
+          clause="A durable warning notice shall be fixed at the Power Conversion Equipment (PCE) indicating that the equipment has more than one source of supply, and that all such sources shall be isolated before any work is undertaken on the equipment."
+          meaning="Mandatory ('shall') and applies to every PCE in a PEI — PV inverter, battery PCE, hybrid inverter, EV charger with bidirectional capability. The notice must be durable (not a paper sticker) and located AT the equipment so a worker reaches it before the cover. 'All such sources' explicitly covers AC and DC — isolating only the AC main while the DC bus is live in daylight is the failure mode this regulation is closing."
+          cite="BS 7671:2018+A4:2026, Reg 570.6.8.203 (in force from 15 April 2026)"
+        />
+
+        <InlineCheck {...inlineChecks[3]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>
+          The A4 EIC — explicit fields for sources, generators and batteries
+        </ContentEyebrow>
+
+        <ConceptBlock
+          title="What changes on the cert form"
+          plainEnglish="Old EIC forms cannot fully evidence A4 PEI compliance. The A4 EIC adds explicit fields for PV system rating, inverter make / model / topology, battery system rating and chemistry, V2G presence, and the RCD type / rating on the AC side of each PCE."
+          onSite="On the schedule of inspection there are new tick-boxes for: PCE warning notice (Reg 570.6.8.203) present and durable, parallel-sources synchronism and earthing arrangement (Reg 551.7.1) verified, source identification per Section 514 complete, PEI-specific isolation procedure documented and provided to the user. Issuing an old-form cert against an A4 PEI is itself a departure under Reg 120.3."
+        >
+          <p>
+            The cert form changes do real work: they force the designer to record the topology
+            decision (transformerless vs isolated), the RCD-type rationale (Type A vs Type B), the
+            parallel-sources arrangement (transfer switch vs true paralleling), and the isolation
+            regime (AC-only vs AC + DC). A future inspector reads the cert as the design log — the
+            answer to "how did you arrive at the protective device?" is the eight-step record on the
+            EIC. Reconstructing it after the fact from photos and memory is rarely defensible,
+            particularly if the install has gone wrong.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...inlineChecks[6]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>Where it goes wrong</ContentEyebrow>
+
+        <CommonMistake
+          title="Treating a PV installation as static"
+          whatHappens="Designer treats the PV install as just another circuit on the consumer unit — Type A 30 mA RCD on the AC main, no PCE notice, conventional 30-day periodic check. Three years in, the inverter develops an array fault. The Type A RCD doesn\'t see the smooth DC residual. The fault sustains until the homeowner notices an inverter alarm; meanwhile the touch-current risk on the AC bus has been elevated for weeks. EICR coded C2."
+          doInstead="A PEI is not a static install. The RCD type must match the inverter topology — Type B for transformerless without internal RCM, Type A only where the manufacturer\'s manual explicitly confirms internal Type B-equivalent RCM. The PCE warning notice is mandatory under Reg 570.6.8.203 from 15 April 2026. Periodic inspection should include type-specific RCD testing, not just the standard ramp."
+        />
+
+        <CommonMistake
+          title="Putting a source on the load side of an RCD providing additional protection"
+          whatHappens="Installer adds a stand-by genset on the load side of the 30 mA RCD on the AC main, reasoning that the RCD will cover the genset bus too. Reg 551.7.1 plus Reg 314 say no — placing a source downstream of an RCD breaks the assumption that the upstream conductor is unenergised when the RCD trips. The genset can hold the bus live regardless of RCD operation."
+          doInstead="Feed the genset into a dedicated way, OR use a transfer switch that breaks the source connection before the RCD-protected bus is energised by it. The principle: every RCD must have a clear, unidirectional fault-current model. Sources on the load side of additional-protection RCDs defeat that model."
+        />
+
+        <CommonMistake
+          title="Missing the PCE warning notice"
+          whatHappens="Inverter is wall-mounted in the garage. Installer fits the dual-supply notice at the meter and consumer unit but forgets the new Reg 570.6.8.203 notice at the PCE itself. Engineer attending a future fault isolates the AC main, opens the inverter cover, finds the DC bus live in daylight at 600 V. Reg 120.3 departure on the cert; the missing notice is a documented failure mode the regulation is specifically trying to prevent."
+          doInstead="From 15 April 2026, every PCE in a PEI gets a durable warning notice indicating that the equipment has more than one source and that ALL sources must be isolated before work. The notice goes AT the PCE — not at the consumer unit, not on the cover only — so the worker reaches it before the cover. Treat it as a per-PCE requirement: PV inverter, battery PCE, V2G EV charger each get their own."
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>Scenarios — applying it on the day</ContentEyebrow>
+
+        <Scenario
+          title="Hybrid PV + battery retrofit on a 5-year-old TN-C-S consumer unit"
+          situation="Customer wants a 4 kW PV array on the south-facing roof, a 10 kWh lithium-ion battery in the garage, and a hybrid inverter that supports self-consumption mode and limited islanded operation during grid loss. Existing CU: 100 A main switch, Type A 30 mA RCDs on every busbar, 3-year-old metal split-load board. Property is TN-C-S (PME)."
+          whatToDo="Design route under A4: (1) PV inverter is transformerless without internal RCM (typical retrofit) — upstream RCD on the AC side must be Type B 30 mA. Don\'t add the PV to the existing Type A bus; fit a dedicated way. (2) Battery PCE on a separate Type B 30 mA way, with G98 notification within 28 days (system is below 16 A / phase). (3) Section 419 covers islanded operation: rely on the inverter\'s integrated 30 mA RCD as the ADS device when off-grid, document on the EIC. (4) PCE warning notices (Reg 570.6.8.203) at the PV inverter AND the battery PCE — durable, AT the equipment. (5) Source identification per Section 514: dual-supply notice at meter, origin notice at CU, PEI nature noted on the EIC schedule of inspection. (6) Cert: A4 EIC form with explicit fields for PV system rating, inverter topology (transformerless), RCD type (Type B) and rationale, battery system rating, isolation procedure documented for the user."
+          whyItMatters="The cert (EIC) records compliance with the in-force edition. Issuing an old-form cert against an A4 PEI is a documented departure under Reg 120.3 and the burden of justification falls on the designer. Insurers, mortgage providers, MCS auditors and DNO connection officers all read the cert as the evidence of compliance; gaps surface fast and are expensive to retro-fix. The Type B RCD is the headline cost item — over-spec on Type B isn\'t free, but under-spec on Type A is a documented hazard that doesn\'t show on a standard ramp test."
+        />
+
+        <Scenario
+          title="V2G EV charger added to a small commercial property — TN-C-S supply"
+          situation="Customer is a SME with a fleet of two electric vans. They want to install two 22 kW (32 A / phase) three-phase V2G chargers in the yard, both with bidirectional capability so the vans can support the building\'s self-consumption mode during peak hours. Property: TN-C-S, 100 A three-phase supply, recently fitted distribution board."
+          whatToDo="Design route under A4: (1) V2G is a parallel source per Reg 551.7.1 — the vans paralleling with the DNO need synchronism (handled by the charger\'s integrated G99 protection — system is above 16 A / phase so G99 not G98), accessible isolation, protection coordination, effective earthing during parallel operation. Apply for G99 connection BEFORE the install — DNO sign-off can take weeks. (2) Reg 722.312.2.1 prohibits a PEN in the EV circuit on TN — split N and PE before the chargers (TN-S to the chargers) and apply an open-PEN detection device (PEN-fault relay) at each charger position to cover the open-PEN failure mode. V2G amplifies the open-PEN risk because the vans become bidirectional sources. (3) RCD selection: Type B 30 mA on each charger feed (most V2G chargers are transformerless with no internal RCM). (4) PCE warning notices (Reg 570.6.8.203) at each charger — durable, AT the equipment, indicating bidirectional source and AC + DC isolation. (5) Source identification per Section 514. (6) Section 419: islanded operation is unlikely on a commercial site with G99 protection, but document the design assumption. (7) Cert: A4 EIC with explicit V2G presence and RCD-type rationale."
+          whyItMatters="V2G amplifies the consequences of every PEI failure mode. The vans are bidirectional sources, so an open-PEN with vehicles exporting is materially more dangerous than the same fault with a one-way PV install. The G99 connection is the statutory frame — installing a parallel source above G98 thresholds without DNO approval is a breach of ESQCR 2002 and exposes the customer to mandatory disconnection. The Reg 551.7.1 paralleling requirements (synchronism, earthing, isolation, coordination) all apply concurrently and the cert has to evidence each one. Reg 722.312.2.1 PEN prohibition is non-negotiable on TN — it\'s the single most-tested point in the EV-charging sections of the assessment, and V2G is the version of the question examiners reach for first."
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>Designer's quick reference — building a PEI design</ContentEyebrow>
+
+        <ConceptBlock
+          title="The eight-step PEI design log"
+          plainEnglish="A PEI brings together PV / battery sizing, inverter topology, RCD type, parallel-sources rules, alternative protective measures for islanded operation, source identification, PCE warning notices, and the cert entries. Walk it as an explicit design log."
+          onSite="(1) Define the modes the system supports — grid-connected only, grid + islanded, parallel via transfer, true parallel. (2) Define the sources — PV, battery, V2G, generator. (3) Pick inverter topology and identify RCD type per source (Type B unless manual confirms internal RCM). (4) Apply Reg 551.7.1 paralleling rules where any source is on simultaneously. (5) Apply Section 419 alternative measures for any islanded mode. (6) Apply Reg 722.312.2.1 PEN prohibition where EV charging is included; design open-PEN detection. (7) Source identification per Section 514 + PCE warning notices per Reg 570.6.8.203. (8) Cert: A4 EIC with all explicit PEI fields, schedule of inspection PEI tick-boxes, and the design log preserved in the records."
+        >
+          <p>
+            The eight-step design log is the answer to a future inspector\'s "how did you arrive at
+            this design?" question. For typical UK domestic PEI on TN-C-S: hybrid inverter, Type B
+            30 mA RCD on the AC side, G98 notification, transfer switch for any genset, PCE notices
+            at the inverter and battery PCE, source-identification labels at the origin and meter.
+            For V2G or commercial: the same logic with G99 instead of G98, open-PEN detection on
+            every EV circuit, more rigorous documentation, and a longer design-review cycle to align
+            with the DNO and (where applicable) MCS.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...inlineChecks[5]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>Coordination with Reg 411.3.4 and the rest of A4</ContentEyebrow>
+
+        <ConceptBlock
+          title="The A4 PEI changes do not relax the rest of A4"
+          plainEnglish="Adding a PEI does not relax the existing A4 rules. Reg 411.3.4 (domestic luminaire RCD) still applies. The TN-C-S PEN prohibition on EV circuits still applies. AFDD requirements still apply. The PEI sits on top of the rest of A4, not in place of it."
+          onSite="Common error: designer assumes the PEI overlay replaces the standard A4 rules. It doesn\'t. A new dwelling with rooftop PV, a battery and EV charging on TN-C-S still needs: 30 mA RCDs on every socket circuit (411.3.3), 30 mA RCDs on every domestic luminaire circuit (411.3.4), no PEN in the EV circuit (722.312.2.1), AFDDs where required by Section 421, plus all the Section 826 / Reg 570.6.8.203 / Reg 551.7.1 requirements layered on top."
+        >
+          <p>
+            The A4 PEI requirements are additive. The A4 EIC schedule of inspection has new
+            PEI-specific tick-boxes added to the existing schedule — none of the original boxes are
+            removed. A coherent design treats the PEI overlay as an additional layer of compliance
+            over the standard A4 baseline, not a substitute. Where the same physical device
+            satisfies multiple regulations (e.g. a single 30 mA Type B RCBO on a domestic luminaire
+            circuit fed from the PV bus satisfies Reg 411.3.4 AND the Section 712 RCD requirement)
+            record both rationales on the cert — future inspectors get to see both.
+          </p>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <ContentEyebrow>Periodic inspection — testing a PEI</ContentEyebrow>
+
+        <ConceptBlock
+          title="EICR of a PEI under A4"
+          plainEnglish="A periodic inspection of a PEI is more involved than a non-PEI EICR. Standard ADS verification still applies, plus type-specific RCD testing, plus checking the source-mode behaviour (anti-islanding, transfer switch, parallel synchronism) is still functioning, plus auditing the warning-notice regime against Reg 570.6.8.203 and Section 514."
+          onSite="The minimum extra steps versus a non-PEI EICR: (1) Type-specific RCD test on every Type B device — the ramp test alone is not sufficient because it does not exercise the smooth-DC residual path. (2) Functional test of anti-islanding — manufacturer\'s test procedure, recorded on the cert. (3) Visual audit of all warning notices — at the origin, meter, consumer unit, each PCE; durability check (the paper sticker that\'s been there 5 years usually fails). (4) Check the isolation procedure documentation is still with the user (this is often missing on resale). (5) Verify the cert in force matches the install — old-form certs against an A4 PEI become a recurring observation."
+        >
+          <p>
+            GN3 (A4 update) extends the periodic inspection regime for PEI: every observation still
+            gets a single classification (C1 / C2 / C3 / FI), and "satisfactory" overall is not
+            permitted with any C1 or C2 present. Common PEI EICR observations: missing PCE warning
+            notice (typically C3 if the install pre-dates A4 and no other defect, C2 if a fault is
+            documented to have occurred without notice present); wrong RCD type (typically C2 — Type
+            AC or Type A on a transformerless inverter without internal RCM is a documented hazard);
+            broken anti-islanding (C1 or C2 depending on whether the system is currently
+            grid-connected); incorrect parallel-source arrangement (C2 minimum). A clean A4 PEI EICR
+            is a long, methodical exercise — budget the time.
+          </p>
+        </ConceptBlock>
+
+        <FAQ items={faqItems} />
+
+        <KeyTakeaways
+          points={[
+            "BS 7671:2018+A4:2026 introduces Part 8 / Section 826 — the Prosumer's Electrical Installation (PEI). PV, battery storage, V2H / V2G EV, micro-hydro and small wind all sit under it; the defining feature is bidirectional energy flow.",
+            'Operating modes — self-consumption, demand-side response (DSR), Local Electrical Microgrid (LEM), grid-connected, islanded, parallel — change the protection model. The A4 design framework names them explicitly.',
+            'Reg 551.7.1 (parallel sources) — synchronism, accessible isolation, protection coordination across all sources (new (c)), effective earthing during parallel operation (new (d)). G98 (≤16 A / phase) and G99 (above) are the DNO connection standards alongside.',
+            'Reg 570.6.8.203 (NEW IN A4) — durable warning notice at every PCE indicating multiple sources of supply and AC + DC isolation. Section 514 extended for source identification.',
+            "Section 712 (PV) — Type B 30 mA RCD on the AC side of transformerless inverters without internal RCM; Type A only where the manufacturer's manual confirms internal Type B-equivalent RCM.",
+            'Reg 419.1 (alternative protective measures) — bites in islanded operation where conventional ADS via OPD cannot be demonstrated. 30 mA RCD as ADS device, supplementary bonding, or double / reinforced insulation per Section 412.',
+            'Reg 722.312.2.1 (EV PEN ban) — no PEN in any EV charging circuit on TN. V2G amplifies the open-PEN risk; design with TN-S to the charger or open-PEN detection.',
+            'The A4 EIC has explicit fields for source / generator / battery and new schedule-of-inspection PEI tick-boxes. Issuing an old-form cert against an A4 PEI is a documented departure under Reg 120.3.',
+          ]}
+        />
+
+        <Quiz questions={quizQuestions} />
+
+        <div className="grid grid-cols-2 gap-3 pt-2">
           <button
             type="button"
-            onClick={() => navigate('../bs7671-module-7')}
-            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            onClick={() => navigate('/electrician/upskilling/bs7671-module-7')}
+            className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
           >
-            <ArrowLeft className="h-4 w-4" /> Module 7
+            <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+              <ChevronLeft className="h-3 w-3" /> Module 7
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-white truncate">
+              Module overview
+            </div>
           </button>
-
-          <PageHero
-            eyebrow="Module 7 · Section 5 · Updated for A4:2026"
-            title="Prosumer electrical installations (Part 8)"
-            description="A4:2026 introduces Part 8 / Section 826 — the Prosumer's Electrical Installation (PEI). Bidirectional energy flow, multiple sources, islanded operation. This section covers the design framework, the PV / battery / V2G overlay, parallel-sources rules (Reg 551.7.1), the new PCE warning notice (Reg 570.6.8.203), and where Section 419 alternative protective measures bite."
-            actions={
-              <>
-                <RegBadge>826</RegBadge>
-                <RegBadge>551.7.1</RegBadge>
-                <RegBadge>419.1</RegBadge>
-                <AmendmentBadge regs={['551.7.1', '411.3.4']} />
-              </>
-            }
-            tone="yellow"
-          />
-
-          <TLDR
-            points={[
-              "BS 7671:2018+A4:2026 introduces Part 8 / Section 826 — the Prosumer's Electrical Installation (PEI). PV, battery storage, V2H / V2G EV, small wind and micro-hydro all sit under it.",
-              'PEI design layers on top of existing sections: Section 712 (PV), Section 551 (parallel sources / generators), Section 514 (identification), Section 419 (alternative protective measures), Reg 411.3.4 (domestic luminaire RCD).',
-              'Headline A4 additions: Reg 570.6.8.203 (PCE warning notice — isolate AC AND DC), updated Reg 551.7.1 (synchronism, earthing, isolation, coordination across sources) and the new explicit cert fields for source / generator / battery on the EIC.',
-            ]}
-          />
-
-          <LearningOutcomes
-            outcomes={[
-              "Define a Prosumer's Electrical Installation (PEI) per Section 826 and recognise which UK installations fall under Part 8 (PV, battery storage, V2H / V2G EV, micro-hydro, small wind).",
-              'Identify the operating modes of a PEI — grid-connected, islanded, parallel — and the BS 7671 terms self-consumption mode, demand-side response (DSR) and Local Electrical Microgrid (LEM).',
-              'Apply Reg 551.7.1 (parallel sources) including the new A4 sub-clauses (c) and (d) covering synchronism, earthing during parallel operation, accessible isolation and protection coordination.',
-              'Apply the Section 712 PV-specific overlay — DC-side OCPDs, RCD-type selection on the AC side (Type A vs Type B), and the inverter-topology decision.',
-              'Apply the new Reg 570.6.8.203 PCE warning notice and the extended Section 514 source-identification rules — and audit a real installation against them.',
-              'Recognise where Section 419 alternative protective measures apply to a PEI (typically islanded operation where conventional ADS via OPD cannot be demonstrated) and pick the right measure.',
-              'Coordinate the EV-charging PEN prohibition (Reg 722.312.2.1) with V2G design and explain why V2G amplifies the open-PEN risk on TN-C-S.',
-            ]}
-            initialVisibleCount={3}
-          />
-
-          <ContentEyebrow>Part 8 — what it actually is</ContentEyebrow>
-
-          <ConceptBlock
-            title="The Prosumer's Electrical Installation (PEI) — Section 826"
-            plainEnglish="A PEI is an installation where the consumer is not just consuming. They are also producing, storing, or both — and energy flows in both directions between the installation and the network."
-            onSite="GN3 (A4 update) standardises the abbreviation PEI. If the property has rooftop PV, a domestic battery, a hybrid inverter, V2H / V2G EV charging, a small wind turbine or a micro-hydro turbine — it's a PEI and Part 8 / Section 826 applies. There is no power threshold below which the section is exempt; even a 1.6 kW PV array on a single phase falls under it."
+          <button
+            type="button"
+            onClick={() => navigate('/electrician/upskilling/bs7671-module-8')}
+            className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
           >
-            <p>
-              Section 826 (Part 8, new in A4) defines the PEI as an installation arranged so energy
-              can flow in either direction between the installation and the public supply, and which
-              may operate connected, islanded or in parallel. The defining feature is bidirectional
-              flow — not the magnitude. Section 826 sits above the existing topical sections
-              (Section 712 PV, Section 551 generators / parallel sources, Section 514
-              identification, Section 419 alternative measures) and pulls them together as a
-              coherent design framework. GN3 (A4 update) uses PEI as the standard abbreviation in
-              all worked examples.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...inlineChecks[0]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>PEI operating modes — the language A4 introduces</ContentEyebrow>
-
-          <ConceptBlock
-            title="Self-consumption, DSR and LEM"
-            plainEnglish="Self-consumption: locally generated energy is used in the installation rather than exported. Demand-side response: load is curtailed in response to grid signals or tariff. LEM: a Local Electrical Microgrid where multiple sources and loads coordinate locally."
-            onSite="A4 introduces these terms because the protective-device coordination and warning-notice requirements differ depending on which modes the installation supports. A self-consumption-only PEI never exports — but still needs the same isolation regime and labelling as one that does, because the inverter is still a source. A DSR-enabled PEI adds load-curtailment devices that must not interfere with ADS or break protective conductors."
-          >
-            <p>
-              Self-consumption mode is the default for most domestic PV + battery installs: the
-              battery firmware preferentially charges from PV during the day and discharges to cover
-              evening household load before any export to the grid. Demand-side response (DSR) is
-              the load-side mirror: the installation reduces or shifts demand in response to grid
-              signals, dynamic tariff or DNO command. The Local Electrical Microgrid (LEM) is the
-              broader case — multiple sources and loads coordinating locally, with formalised
-              control logic. BS 7671 Section 826 acknowledges all three but does not specify the
-              communication protocols (those are commercial — settlement, tariff, V2G aggregator
-              contracts).
-            </p>
-          </ConceptBlock>
-
-          <ConceptBlock
-            title="Grid-connected, islanded and parallel"
-            plainEnglish="Grid-connected: inverter holds to the supply, anti-islanding kicks in if the supply fails. Islanded: the inverter forms its own grid from the battery, the installation runs without the DNO. Parallel: more than one source is energising the installation at once."
-            onSite="The mode the installation is in changes the fault-current model. Grid-connected with the DNO providing PSCC, conventional ADS via OPD works. Disconnect from grid and the inverter becomes the only source — the inverter\'s short-circuit contribution is electronic and limited, so MCBs may not operate within Table 41.1 times. That\'s the trigger for Section 419 alternative protective measures."
-          >
-            <p>
-              Parallel operation is the case where two or more sources energise the installation
-              simultaneously — the DNO supply plus a generator, the DNO plus a PV inverter, a hybrid
-              inverter operating with the DNO. Reg 551.7.1 governs paralleling and A4 adds new
-              sub-clauses (c) and (d) covering protection coordination across all sources and the
-              requirement that the earthing arrangement remains effective during parallel operation.
-              Most domestic stand-by gensets avoid Reg 551.7.1\'s full burden by using a transfer
-              switch (parallel-via-transfer) that disconnects the DNO before the genset energises
-              the installation; true paralleling typically needs G99 approval.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...inlineChecks[1]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>Reg 551.7.1 — parallel sources, with A4 additions</ContentEyebrow>
-
-          <ConceptBlock
-            title="The four pillars of Reg 551.7.1"
-            plainEnglish="Synchronism. Effective earthing during parallel operation. Accessible isolation. Protection coordination across all sources. Miss any one and the parallel connection isn't compliant."
-            onSite="The A4 additions — sub-clauses (c) and (d) — codify what was implicit before: the earthing arrangement must remain effective when sources are paralleled (you can't have two MET arrangements competing) and protection must be coordinated so that an upstream device can clear a downstream fault under any source-mode combination."
-          />
-
-          <RegsCallout
-            source="BS 7671:2018+A4:2026 · Reg 551.7.1 — Connection of generating sets to the distributor's network"
-            clause="Where a generating set is intended to operate in parallel with a distributor's network, the following requirements apply: (a) provision shall be made to prevent the generating set being connected in parallel with the public supply if it is not in synchronism with that supply; (b) means of isolating the generator from the supply system shall be readily accessible to the distributor at all times; (c) the protection shall be coordinated to ensure correct operation under all source-mode combinations; (d) the earthing arrangement of the installation shall remain effective during parallel operation."
-            meaning="Sub-clauses (c) and (d) are the A4 additions and they apply directly to PEI design: the protection scheme must work whether the system is grid-only, grid + PV, grid + battery, grid + PV + battery, or islanded; and the earthing must hold up across all those mode transitions. ENA EREC G98 (≤16 A / phase) and G99 (above) are the DNO connection standards that sit alongside Reg 551.7.1."
-            cite="BS 7671:2018+A4:2026, Reg 551.7.1 (in force from 15 April 2026)"
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>The Section 712 PV overlay</ContentEyebrow>
-
-          <ConceptBlock
-            title="DC-side requirements and RCD-type selection"
-            plainEnglish="PV is a DC source on the array side and an AC source on the inverter output. The DC side has its own overcurrent protection and isolation rules; the AC side gets its RCD type chosen based on the inverter topology."
-            onSite="DC-side: each string needs a string fuse (where required by manufacturer or by parallel-string design), a load-break DC isolator at the inverter, and surge protection on long DC runs. AC-side: 30 mA RCD additional protection on the AC main from the inverter, type chosen by inverter topology — Type B for transformerless without internal RCM, Type A where the manual confirms internal Type B-equivalent RCM."
-          >
-            <p>
-              Section 712 (PV-specific overlay) carries forward the existing PV requirements and is
-              cross-referenced from Section 826. The DC-side OCPD selection follows the inverter
-              manufacturer\'s instructions and the array string design — not all PV strings need
-              individual string fusing; many small domestic 1- or 2-string systems do not. Where
-              fusing IS required, gPV-rated fuses are used (BS EN 60269-6) — standard gG fuses are
-              not adequate for DC. The DC isolator at the inverter must be load-break rated for the
-              maximum string voltage (typically 600 V or 1000 V DC) and must be lockable in the OFF
-              position for safe maintenance.
-            </p>
-          </ConceptBlock>
-
-          <ConceptBlock
-            title="Type B RCD — when, and when not"
-            plainEnglish="Transformerless string inverters can place smooth DC residual on the AC side. Type AC and Type A are blind to it. Type B is required unless the inverter manufacturer's manual confirms internal Type B-equivalent residual-current monitoring (RCM)."
-            onSite="The decision tree: (1) Read the inverter installation manual. (2) If it explicitly says internal RCM Type B-equivalent — Type A upstream is acceptable; document the rationale on the EIC. (3) If silent or transformerless without RCM — Type B upstream is mandatory. (4) Type AC is never the right answer for a PV install. Type B costs 4–5× a Type A but it's the wrong place to value-engineer."
-          >
-            <p>
-              Inverters split into two topologies: isolated (with a transformer, galvanic separation
-              between DC and AC) and transformerless. Transformerless inverters dominate the modern
-              domestic PV market because they\'re cheaper, smaller and more efficient, but the lack
-              of galvanic isolation means smooth DC residual can appear on the AC side under array
-              fault. Type AC sees only sinusoidal AC residual; Type A adds pulsating DC; Type B adds
-              smooth DC. The wrong type is invisible without type-specific testing — a Type AC
-              upstream of a transformerless inverter looks fine on a standard ramp test but is
-              functionally blind to the very fault it\'s meant to clear.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...inlineChecks[4]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>EV charging and V2G — the PEN prohibition</ContentEyebrow>
-
-          <ConceptBlock
-            title="Reg 722.312.2.1 in a V2G context"
-            plainEnglish="No PEN conductor in any EV charging circuit on a TN system. V2G makes the prohibition more important — the EV becomes a bidirectional source, so an open PEN with the vehicle exporting drives the touch-current path through the chassis."
-            onSite="Two compliant designs: (1) Split N and PE before the EV circuit — bring TN-S to the charger. (2) Apply one of Section 722's alternative measures — open-PEN detection device (PEN-fault relay) at the charger, or a separate earth electrode for the EV chassis. Whichever route, the EV circuit cannot include a PEN."
-          >
-            <p>
-              Reg 722.312.2.1 prohibits a PEN conductor in any EV-charging circuit on a TN system.
-              In a V2H / V2G context, the EV is a bidirectional source — the vehicle exports power
-              back to the property and potentially to the network. An open PEN with the vehicle
-              exporting is the worst case: the broken neutral elevates local earth potential towards
-              line voltage, the conductive vehicle body becomes a touch hazard, and the fault path
-              runs through any simultaneously accessible bonded metal. This is why V2G installations
-              are subject to additional design scrutiny — the open-PEN detection device or separate
-              earth electrode is not optional, and the documentation should demonstrate which
-              alternative measure is in force.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...inlineChecks[2]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>Section 419 — alternative protective measures</ContentEyebrow>
-
-          <ConceptBlock
-            title="When ADS via Reg 411 cannot be demonstrated"
-            plainEnglish="In an islanded PEI the inverter is the only source. Inverter fault current is electronically limited — typically 1.0–1.5× rated current for a few cycles before electronics intervene. That's nowhere near what an MCB needs to operate within Table 41.1 times. Section 419 then applies."
-            onSite="The trigger: any operating mode where the upstream source is the inverter rather than the DNO. Off-grid operation, deliberate islanding for resilience, transition periods during grid loss. Reg 419.1 names the alternative measures: 30 mA RCD as the ADS device (the inverter can sustain RCD trip current long enough to operate it), supplementary equipotential bonding to drop touch voltage, double / reinforced insulation per Section 412."
-          >
-            <p>
-              Reg 419.1 was extensively updated in A4 to support PEI design. The conventional Reg
-              411 ADS chain — earthing + bonding + OPD + verified Zs — assumes a fault loop that can
-              sustain enough current to operate the protective device within the disconnection time.
-              In an islanded PEI that assumption fails: the inverter is electronically limited and
-              its short-circuit contribution is far below what MCBs expect. The designer has three
-              Reg 419 choices: (a) rely on a 30 mA RCD as the disconnection device (the inverter
-              will sustain trip current long enough), (b) apply supplementary equipotential bonding
-              to keep touch voltage below 50 V even during a fault, or (c) use double / reinforced
-              insulation per Section 412 on the load side. Whichever is chosen must be explicit on
-              the EIC and the design package.
-            </p>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <ContentEyebrow>Section 514 and the new PCE warning notice</ContentEyebrow>
-
-          <ConceptBlock
-            title="Identification — multi-source labelling"
-            plainEnglish="Section 514 has been extended to give explicit treatment to multi-source identification. Each PCE — PV inverter, battery PCE, EV charger — needs its own warning notice. The labelling at the origin must indicate the PEI nature of the installation."
-            onSite="At the origin: dual-supply notice indicating that the installation has more than one source. At the consumer unit: warning of the source(s) feeding it. At each PCE: the new Reg 570.6.8.203 notice — isolate AC AND DC. At the meter position: dual-supply notice. Any roof-mounted equipment: hazard notice for first responders (some authorities now require a marked PV stop-switch at the property entrance)."
-          />
-
-          <RegsCallout
-            source="BS 7671:2018+A4:2026 · Reg 570.6.8.203 — Power Conversion Equipment warning notice (NEW IN A4)"
-            clause="A durable warning notice shall be fixed at the Power Conversion Equipment (PCE) indicating that the equipment has more than one source of supply, and that all such sources shall be isolated before any work is undertaken on the equipment."
-            meaning="Mandatory ('shall') and applies to every PCE in a PEI — PV inverter, battery PCE, hybrid inverter, EV charger with bidirectional capability. The notice must be durable (not a paper sticker) and located AT the equipment so a worker reaches it before the cover. 'All such sources' explicitly covers AC and DC — isolating only the AC main while the DC bus is live in daylight is the failure mode this regulation is closing."
-            cite="BS 7671:2018+A4:2026, Reg 570.6.8.203 (in force from 15 April 2026)"
-          />
-
-          <InlineCheck {...inlineChecks[3]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>
-            The A4 EIC — explicit fields for sources, generators and batteries
-          </ContentEyebrow>
-
-          <ConceptBlock
-            title="What changes on the cert form"
-            plainEnglish="Old EIC forms cannot fully evidence A4 PEI compliance. The A4 EIC adds explicit fields for PV system rating, inverter make / model / topology, battery system rating and chemistry, V2G presence, and the RCD type / rating on the AC side of each PCE."
-            onSite="On the schedule of inspection there are new tick-boxes for: PCE warning notice (Reg 570.6.8.203) present and durable, parallel-sources synchronism and earthing arrangement (Reg 551.7.1) verified, source identification per Section 514 complete, PEI-specific isolation procedure documented and provided to the user. Issuing an old-form cert against an A4 PEI is itself a departure under Reg 120.3."
-          >
-            <p>
-              The cert form changes do real work: they force the designer to record the topology
-              decision (transformerless vs isolated), the RCD-type rationale (Type A vs Type B), the
-              parallel-sources arrangement (transfer switch vs true paralleling), and the isolation
-              regime (AC-only vs AC + DC). A future inspector reads the cert as the design log — the
-              answer to "how did you arrive at the protective device?" is the eight-step record on
-              the EIC. Reconstructing it after the fact from photos and memory is rarely defensible,
-              particularly if the install has gone wrong.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...inlineChecks[6]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>Where it goes wrong</ContentEyebrow>
-
-          <CommonMistake
-            title="Treating a PV installation as static"
-            whatHappens="Designer treats the PV install as just another circuit on the consumer unit — Type A 30 mA RCD on the AC main, no PCE notice, conventional 30-day periodic check. Three years in, the inverter develops an array fault. The Type A RCD doesn\'t see the smooth DC residual. The fault sustains until the homeowner notices an inverter alarm; meanwhile the touch-current risk on the AC bus has been elevated for weeks. EICR coded C2."
-            doInstead="A PEI is not a static install. The RCD type must match the inverter topology — Type B for transformerless without internal RCM, Type A only where the manufacturer\'s manual explicitly confirms internal Type B-equivalent RCM. The PCE warning notice is mandatory under Reg 570.6.8.203 from 15 April 2026. Periodic inspection should include type-specific RCD testing, not just the standard ramp."
-          />
-
-          <CommonMistake
-            title="Putting a source on the load side of an RCD providing additional protection"
-            whatHappens="Installer adds a stand-by genset on the load side of the 30 mA RCD on the AC main, reasoning that the RCD will cover the genset bus too. Reg 551.7.1 plus Reg 314 say no — placing a source downstream of an RCD breaks the assumption that the upstream conductor is unenergised when the RCD trips. The genset can hold the bus live regardless of RCD operation."
-            doInstead="Feed the genset into a dedicated way, OR use a transfer switch that breaks the source connection before the RCD-protected bus is energised by it. The principle: every RCD must have a clear, unidirectional fault-current model. Sources on the load side of additional-protection RCDs defeat that model."
-          />
-
-          <CommonMistake
-            title="Missing the PCE warning notice"
-            whatHappens="Inverter is wall-mounted in the garage. Installer fits the dual-supply notice at the meter and consumer unit but forgets the new Reg 570.6.8.203 notice at the PCE itself. Engineer attending a future fault isolates the AC main, opens the inverter cover, finds the DC bus live in daylight at 600 V. Reg 120.3 departure on the cert; the missing notice is a documented failure mode the regulation is specifically trying to prevent."
-            doInstead="From 15 April 2026, every PCE in a PEI gets a durable warning notice indicating that the equipment has more than one source and that ALL sources must be isolated before work. The notice goes AT the PCE — not at the consumer unit, not on the cover only — so the worker reaches it before the cover. Treat it as a per-PCE requirement: PV inverter, battery PCE, V2G EV charger each get their own."
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>Scenarios — applying it on the day</ContentEyebrow>
-
-          <Scenario
-            title="Hybrid PV + battery retrofit on a 5-year-old TN-C-S consumer unit"
-            situation="Customer wants a 4 kW PV array on the south-facing roof, a 10 kWh lithium-ion battery in the garage, and a hybrid inverter that supports self-consumption mode and limited islanded operation during grid loss. Existing CU: 100 A main switch, Type A 30 mA RCDs on every busbar, 3-year-old metal split-load board. Property is TN-C-S (PME)."
-            whatToDo="Design route under A4: (1) PV inverter is transformerless without internal RCM (typical retrofit) — upstream RCD on the AC side must be Type B 30 mA. Don\'t add the PV to the existing Type A bus; fit a dedicated way. (2) Battery PCE on a separate Type B 30 mA way, with G98 notification within 28 days (system is below 16 A / phase). (3) Section 419 covers islanded operation: rely on the inverter\'s integrated 30 mA RCD as the ADS device when off-grid, document on the EIC. (4) PCE warning notices (Reg 570.6.8.203) at the PV inverter AND the battery PCE — durable, AT the equipment. (5) Source identification per Section 514: dual-supply notice at meter, origin notice at CU, PEI nature noted on the EIC schedule of inspection. (6) Cert: A4 EIC form with explicit fields for PV system rating, inverter topology (transformerless), RCD type (Type B) and rationale, battery system rating, isolation procedure documented for the user."
-            whyItMatters="The cert (EIC) records compliance with the in-force edition. Issuing an old-form cert against an A4 PEI is a documented departure under Reg 120.3 and the burden of justification falls on the designer. Insurers, mortgage providers, MCS auditors and DNO connection officers all read the cert as the evidence of compliance; gaps surface fast and are expensive to retro-fix. The Type B RCD is the headline cost item — over-spec on Type B isn\'t free, but under-spec on Type A is a documented hazard that doesn\'t show on a standard ramp test."
-          />
-
-          <Scenario
-            title="V2G EV charger added to a small commercial property — TN-C-S supply"
-            situation="Customer is a SME with a fleet of two electric vans. They want to install two 22 kW (32 A / phase) three-phase V2G chargers in the yard, both with bidirectional capability so the vans can support the building\'s self-consumption mode during peak hours. Property: TN-C-S, 100 A three-phase supply, recently fitted distribution board."
-            whatToDo="Design route under A4: (1) V2G is a parallel source per Reg 551.7.1 — the vans paralleling with the DNO need synchronism (handled by the charger\'s integrated G99 protection — system is above 16 A / phase so G99 not G98), accessible isolation, protection coordination, effective earthing during parallel operation. Apply for G99 connection BEFORE the install — DNO sign-off can take weeks. (2) Reg 722.312.2.1 prohibits a PEN in the EV circuit on TN — split N and PE before the chargers (TN-S to the chargers) and apply an open-PEN detection device (PEN-fault relay) at each charger position to cover the open-PEN failure mode. V2G amplifies the open-PEN risk because the vans become bidirectional sources. (3) RCD selection: Type B 30 mA on each charger feed (most V2G chargers are transformerless with no internal RCM). (4) PCE warning notices (Reg 570.6.8.203) at each charger — durable, AT the equipment, indicating bidirectional source and AC + DC isolation. (5) Source identification per Section 514. (6) Section 419: islanded operation is unlikely on a commercial site with G99 protection, but document the design assumption. (7) Cert: A4 EIC with explicit V2G presence and RCD-type rationale."
-            whyItMatters="V2G amplifies the consequences of every PEI failure mode. The vans are bidirectional sources, so an open-PEN with vehicles exporting is materially more dangerous than the same fault with a one-way PV install. The G99 connection is the statutory frame — installing a parallel source above G98 thresholds without DNO approval is a breach of ESQCR 2002 and exposes the customer to mandatory disconnection. The Reg 551.7.1 paralleling requirements (synchronism, earthing, isolation, coordination) all apply concurrently and the cert has to evidence each one. Reg 722.312.2.1 PEN prohibition is non-negotiable on TN — it\'s the single most-tested point in the EV-charging sections of the assessment, and V2G is the version of the question examiners reach for first."
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>Designer's quick reference — building a PEI design</ContentEyebrow>
-
-          <ConceptBlock
-            title="The eight-step PEI design log"
-            plainEnglish="A PEI brings together PV / battery sizing, inverter topology, RCD type, parallel-sources rules, alternative protective measures for islanded operation, source identification, PCE warning notices, and the cert entries. Walk it as an explicit design log."
-            onSite="(1) Define the modes the system supports — grid-connected only, grid + islanded, parallel via transfer, true parallel. (2) Define the sources — PV, battery, V2G, generator. (3) Pick inverter topology and identify RCD type per source (Type B unless manual confirms internal RCM). (4) Apply Reg 551.7.1 paralleling rules where any source is on simultaneously. (5) Apply Section 419 alternative measures for any islanded mode. (6) Apply Reg 722.312.2.1 PEN prohibition where EV charging is included; design open-PEN detection. (7) Source identification per Section 514 + PCE warning notices per Reg 570.6.8.203. (8) Cert: A4 EIC with all explicit PEI fields, schedule of inspection PEI tick-boxes, and the design log preserved in the records."
-          >
-            <p>
-              The eight-step design log is the answer to a future inspector\'s "how did you arrive
-              at this design?" question. For typical UK domestic PEI on TN-C-S: hybrid inverter,
-              Type B 30 mA RCD on the AC side, G98 notification, transfer switch for any genset, PCE
-              notices at the inverter and battery PCE, source-identification labels at the origin
-              and meter. For V2G or commercial: the same logic with G99 instead of G98, open-PEN
-              detection on every EV circuit, more rigorous documentation, and a longer design-review
-              cycle to align with the DNO and (where applicable) MCS.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...inlineChecks[5]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>Coordination with Reg 411.3.4 and the rest of A4</ContentEyebrow>
-
-          <ConceptBlock
-            title="The A4 PEI changes do not relax the rest of A4"
-            plainEnglish="Adding a PEI does not relax the existing A4 rules. Reg 411.3.4 (domestic luminaire RCD) still applies. The TN-C-S PEN prohibition on EV circuits still applies. AFDD requirements still apply. The PEI sits on top of the rest of A4, not in place of it."
-            onSite="Common error: designer assumes the PEI overlay replaces the standard A4 rules. It doesn\'t. A new dwelling with rooftop PV, a battery and EV charging on TN-C-S still needs: 30 mA RCDs on every socket circuit (411.3.3), 30 mA RCDs on every domestic luminaire circuit (411.3.4), no PEN in the EV circuit (722.312.2.1), AFDDs where required by Section 421, plus all the Section 826 / Reg 570.6.8.203 / Reg 551.7.1 requirements layered on top."
-          >
-            <p>
-              The A4 PEI requirements are additive. The A4 EIC schedule of inspection has new
-              PEI-specific tick-boxes added to the existing schedule — none of the original boxes
-              are removed. A coherent design treats the PEI overlay as an additional layer of
-              compliance over the standard A4 baseline, not a substitute. Where the same physical
-              device satisfies multiple regulations (e.g. a single 30 mA Type B RCBO on a domestic
-              luminaire circuit fed from the PV bus satisfies Reg 411.3.4 AND the Section 712 RCD
-              requirement) record both rationales on the cert — future inspectors get to see both.
-            </p>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <ContentEyebrow>Periodic inspection — testing a PEI</ContentEyebrow>
-
-          <ConceptBlock
-            title="EICR of a PEI under A4"
-            plainEnglish="A periodic inspection of a PEI is more involved than a non-PEI EICR. Standard ADS verification still applies, plus type-specific RCD testing, plus checking the source-mode behaviour (anti-islanding, transfer switch, parallel synchronism) is still functioning, plus auditing the warning-notice regime against Reg 570.6.8.203 and Section 514."
-            onSite="The minimum extra steps versus a non-PEI EICR: (1) Type-specific RCD test on every Type B device — the ramp test alone is not sufficient because it does not exercise the smooth-DC residual path. (2) Functional test of anti-islanding — manufacturer\'s test procedure, recorded on the cert. (3) Visual audit of all warning notices — at the origin, meter, consumer unit, each PCE; durability check (the paper sticker that\'s been there 5 years usually fails). (4) Check the isolation procedure documentation is still with the user (this is often missing on resale). (5) Verify the cert in force matches the install — old-form certs against an A4 PEI become a recurring observation."
-          >
-            <p>
-              GN3 (A4 update) extends the periodic inspection regime for PEI: every observation
-              still gets a single classification (C1 / C2 / C3 / FI), and "satisfactory" overall is
-              not permitted with any C1 or C2 present. Common PEI EICR observations: missing PCE
-              warning notice (typically C3 if the install pre-dates A4 and no other defect, C2 if a
-              fault is documented to have occurred without notice present); wrong RCD type
-              (typically C2 — Type AC or Type A on a transformerless inverter without internal RCM
-              is a documented hazard); broken anti-islanding (C1 or C2 depending on whether the
-              system is currently grid-connected); incorrect parallel-source arrangement (C2
-              minimum). A clean A4 PEI EICR is a long, methodical exercise — budget the time.
-            </p>
-          </ConceptBlock>
-
-          <FAQ items={faqItems} />
-
-          <KeyTakeaways
-            points={[
-              "BS 7671:2018+A4:2026 introduces Part 8 / Section 826 — the Prosumer's Electrical Installation (PEI). PV, battery storage, V2H / V2G EV, micro-hydro and small wind all sit under it; the defining feature is bidirectional energy flow.",
-              'Operating modes — self-consumption, demand-side response (DSR), Local Electrical Microgrid (LEM), grid-connected, islanded, parallel — change the protection model. The A4 design framework names them explicitly.',
-              'Reg 551.7.1 (parallel sources) — synchronism, accessible isolation, protection coordination across all sources (new (c)), effective earthing during parallel operation (new (d)). G98 (≤16 A / phase) and G99 (above) are the DNO connection standards alongside.',
-              'Reg 570.6.8.203 (NEW IN A4) — durable warning notice at every PCE indicating multiple sources of supply and AC + DC isolation. Section 514 extended for source identification.',
-              "Section 712 (PV) — Type B 30 mA RCD on the AC side of transformerless inverters without internal RCM; Type A only where the manufacturer's manual confirms internal Type B-equivalent RCM.",
-              'Reg 419.1 (alternative protective measures) — bites in islanded operation where conventional ADS via OPD cannot be demonstrated. 30 mA RCD as ADS device, supplementary bonding, or double / reinforced insulation per Section 412.',
-              'Reg 722.312.2.1 (EV PEN ban) — no PEN in any EV charging circuit on TN. V2G amplifies the open-PEN risk; design with TN-S to the charger or open-PEN detection.',
-              'The A4 EIC has explicit fields for source / generator / battery and new schedule-of-inspection PEI tick-boxes. Issuing an old-form cert against an A4 PEI is a documented departure under Reg 120.3.',
-            ]}
-          />
-
-          <Quiz questions={quizQuestions} />
-
-          <div className="grid grid-cols-2 gap-3 pt-2">
-            <button
-              type="button"
-              onClick={() => navigate('/electrician/upskilling/bs7671-module-7')}
-              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
-                <ChevronLeft className="h-3 w-3" /> Module 7
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-white truncate">
-                Module overview
-              </div>
-            </button>
-            <button
-              type="button"
-              onClick={() => navigate('/electrician/upskilling/bs7671-module-8')}
-              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
-                Next module <ChevronRight className="h-3 w-3" />
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-black truncate">
-                Module 8 — Reference Materials
-              </div>
-            </button>
-          </div>
-        </PageFrame>
-      </div>
-    </div>
+            <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+              Next module <ChevronRight className="h-3 w-3" />
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-black truncate">
+              Module 8 — Reference Materials
+            </div>
+          </button>
+        </div>
+      </HubBody>
+    </HubPage>
   );
 };
 

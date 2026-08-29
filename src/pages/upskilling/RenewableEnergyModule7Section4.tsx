@@ -1,8 +1,8 @@
-import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { useNavigate } from 'react-router-dom';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
-import { PageFrame, PageHero } from '@/components/college/primitives';
 import {
   TLDR,
   ConceptBlock,
@@ -76,7 +76,8 @@ const inlineChecks = [
 
 const quizQuestions = [
   {
-    question: 'A workplace install needs OCPP integration with the customer’s existing CPMS. What does the installer configure?',
+    question:
+      'A workplace install needs OCPP integration with the customer’s existing CPMS. What does the installer configure?',
     options: [
       'Nothing — the chargers connect to the CPMS automatically with no setup',
       'The CPMS detects and configures each charger by itself once it is energised',
@@ -112,7 +113,8 @@ const quizQuestions = [
       'ISO 15118 = digital communication standard for EV charging. The "plug-and-charge" feature: vehicle and charger negotiate credentials automatically via PLC (Power Line Communication) over the Control Pilot wire. No customer action: plug in → vehicle identified → charger authorised + billed automatically. Emerging in UK 2025-26 on premium Mode 4 (Tesla, Audi, Porsche, Mercedes EQ) + some new Mode 3. OCPP 2.0.1 includes ISO 15118 integration messages. Cert evidence bundle records: charger ISO 15118 support; CPMS ISO 15118 integration; ECC (Elliptic Curve Cryptography) certificate authority used. Customer experience: the plug-and-charge user just plugs in + walks away.',
   },
   {
-    question: 'A workplace site has 8 OCPP-enabled chargers + a CPMS. One charger goes offline (OCPP heartbeat lost). What happens?',
+    question:
+      'A workplace site has 8 OCPP-enabled chargers + a CPMS. One charger goes offline (OCPP heartbeat lost). What happens?',
     options: [
       'Every charger on the site stops because they share one OCPP connection',
       'It keeps running locally while the CPMS flags it offline; diagnose the network first',
@@ -187,448 +189,422 @@ export default function RenewableEnergyModule7Section4() {
   });
 
   return (
-    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
-      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
-        <PageFrame>
+    <HubPage>
+      <HubMasthead
+        section="Module 7 · Section 4 · Open Charge Point Protocol · OCPP 1.6 + 2.0.1"
+        title="OCPP & networked charging"
+        backTo="../renewable-energy-module-7"
+      />
+      <HubBody>
+        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
+          The industry-standard protocol that turns standalone chargers into managed fleets. OCPP
+          1.6 + 2.0.1, CPMS platforms, authentication, smart-charging coordination, ISO 15118
+          plug-and-charge, OCPI roaming, network architecture, security.
+        </p>
+
+        <TLDR
+          points={[
+            'OCPP = Open Charge Point Protocol. Open-source industry standard for chargepoint ↔ CPMS communication. Managed by the Open Charge Alliance.',
+            'OCPP 1.6 dominant in UK 2025-26 (mature, widespread). OCPP 2.0.1 emerging — improved authentication, ISO 15118 integration, smart-charging extensions, security.',
+            'CPMS (Charge Point Management System) is the cloud / on-premise software that manages a fleet of chargers via OCPP. Auth, billing, monitoring, diagnostics, firmware, smart-charging coordination.',
+            'Authentication methods via OCPP: RFID card (~80% UK commercial), mobile app, ISO 15118 plug-and-charge (emerging), contactless bank card terminal (PCAR 2023 mandatory for public).',
+            'Smart charging via OCPP: CPMS sends "SetChargingProfile" messages; chargers apply via CP PWM duty cycle. Real-time coordination for site DLM, tariff windows, fleet priorities, BESS / PV integration.',
+            'ISO 15118 plug-and-charge: vehicle and charger exchange credentials automatically via PLC over CP. No customer action; no RFID. Emerging in UK 2025-26.',
+            'Network architecture: Ethernet primary + cellular backup is the resilient pattern. Wi-Fi-only least reliable. Cellular essential at remote sites.',
+            'OCPP 2.0.1 mandates TLS security. Each charger has a TLS client certificate from the CPMS’s CA; installer commissions with certificate; renewal procedure documented in cert evidence bundle.',
+          ]}
+        />
+
+        <LearningOutcomes
+          outcomes={[
+            'Explain OCPP’s role as the open-source standard for chargepoint ↔ CPMS communication.',
+            'Distinguish OCPP 1.6 (dominant) from OCPP 2.0.1 (emerging, enhanced) — practical implications for new install.',
+            'Identify the CPMS’s functional scope: authentication, billing, monitoring, diagnostics, firmware updates, smart-charging coordination.',
+            'Configure OCPP commissioning per charger: endpoint, credentials, identifier, boot notification + heartbeat verification.',
+            'Apply OCPP smart-charging via SetChargingProfile messages — CPMS coordinates the multi-charger site DLM.',
+            'Explain ISO 15118 plug-and-charge: automatic vehicle ↔ charger credential exchange via PLC over CP.',
+            'Design the network architecture: Ethernet + cellular backup for resilience; cellular for remote sites.',
+            'Apply OCPP 2.0.1 TLS security: client certificate per charger, CA management, renewal procedure.',
+          ]}
+          initialVisibleCount={3}
+        />
+
+        <Pullquote>
+          OCPP is the lingua franca of commercial EV charging. Open the protocol, and the chargers
+          and CPMS speak across vendors. Lock the protocol, and the customer is trapped.
+        </Pullquote>
+
+        <ContentEyebrow>What OCPP is and why it matters</ContentEyebrow>
+
+        <ConceptBlock
+          title="OCPP — Open Charge Point Protocol"
+          plainEnglish="OCPP = the open-source application protocol that lets a chargepoint communicate with a Charge Point Management System (CPMS). Managed by the Open Charge Alliance (OCA), an industry consortium. Hardware-independent: chargers from any OEM that supports OCPP can talk to any OCPP-compliant CPMS."
+          onSite="UK 2025-26 reality: virtually every reputable commercial wallbox + DC fast charger supports OCPP. The customer’s choice of CPMS is separate from the choice of charger hardware. This open architecture protects the customer from vendor lock-in — they can swap CPMS without replacing chargers."
+        >
+          <p>What OCPP enables:</p>
+          <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+            <li>
+              <strong className="text-white">Multi-vendor interoperability</strong> — chargers from
+              ABB, Wallbox, Easee, EO, MyEnergi, Tesla can all integrate with a single CPMS (Driivz,
+              ChargePoint, Spirii, Monta, etc.)
+            </li>
+            <li>
+              <strong className="text-white">Authentication</strong> — CPMS validates user
+              credentials (RFID, app, plug-and-charge) before authorising a session
+            </li>
+            <li>
+              <strong className="text-white">Billing</strong> — session data flows to CPMS; CPMS
+              calculates cost; charges customer / employer / operator
+            </li>
+            <li>
+              <strong className="text-white">Monitoring + diagnostics</strong>— real-time status of
+              every charger; fault alerts; uptime tracking
+            </li>
+            <li>
+              <strong className="text-white">Smart-charging coordination</strong> — CPMS sends
+              max-current profiles per charger per session; chargers apply via CP PWM
+            </li>
+            <li>
+              <strong className="text-white">Firmware updates</strong> — CPMS pushes firmware
+              updates remotely; chargers download, install, reboot
+            </li>
+            <li>
+              <strong className="text-white">Open-source standard</strong> — protocol specifications
+              publicly available; multiple implementations; vendor competition + no lock-in
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <OcppArchitecture caption="OCPP lets any compliant chargepoint talk to any management system — the layer DLM and billing ride on." />
+
+        <RegsCallout
+          source="Open Charge Alliance · OCPP 1.6 + 2.0.1 — industry standard (not BS 7671)"
+          clause="OCPP is an industry application protocol standard maintained by the Open Charge Alliance. OCPP 1.6 (released 2015) is widely deployed. OCPP 2.0.1 (released 2020, updated 2024) is the next generation with enhanced security, ISO 15118 integration, and richer smart-charging. Not a UK statutory regulation; not a BS 7671 requirement; but de-facto standard for commercial / public / fleet UK 2025-26 EV charging."
+          meaning="OCPP is the operational protocol — separate from BS 7671 wiring regs, SCP Regulations 2021 (statutory smart-charging), PCAR 2023 (statutory public charging). The installer’s scope on OCPP: configure the chargers with the customer’s CPMS credentials at commissioning; verify the OCPP connection works (boot notification + heartbeat); test authentication + smart-charging profile reception. Cert evidence bundle records the OCPP version + CPMS account integration + commissioning test result. Ongoing operation is the site operator + CPMS’s responsibility; the installer’s role typically ends at handover."
+        />
+
+        <InlineCheck {...inlineChecks[0]} />
+
+        <InlineCheck {...inlineChecks[1]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>OCPP 1.6 vs 2.0.1 — versions in UK 2025-26</ContentEyebrow>
+
+        <Pullquote>
+          OCPP 1.6 is what’s deployed. OCPP 2.0.1 is what’s coming. The migration takes years.
+        </Pullquote>
+
+        <ConceptBlock
+          title="OCPP 1.6 — the mainstream"
+          plainEnglish="OCPP 1.6 (released 2015) is the dominant version deployed in UK 2025-26 commercial / public / fleet EV charging. Mature, widely supported by chargers + CPMS + roaming hubs. Most legacy + current new installs are OCPP 1.6."
+          onSite="OCPP 1.6 covers the core operational scope: authentication, session control, billing data, monitoring, diagnostics, basic smart-charging (SetChargingProfile), firmware updates. Limitations: security is optional TLS; ISO 15118 plug-and-charge integration limited; smart-charging less granular than 2.0.1."
+        >
+          <p>OCPP 1.6 capabilities:</p>
+          <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+            <li>
+              <strong className="text-white">Boot + heartbeat</strong> — charger reports itself to
+              CPMS on first power-up; periodic keep-alive messages
+            </li>
+            <li>
+              <strong className="text-white">Authorise + StartTransaction + StopTransaction</strong>{' '}
+              — session lifecycle messages. CPMS validates credentials and tracks session start /
+              stop / energy delivered
+            </li>
+            <li>
+              <strong className="text-white">MeterValues</strong> — periodic energy + power +
+              voltage + current reports during a session
+            </li>
+            <li>
+              <strong className="text-white">SetChargingProfile</strong> — CPMS sends max current
+              profile to the charger. Charger applies via CP PWM duty cycle
+            </li>
+            <li>
+              <strong className="text-white">FirmwareUpdate</strong> — CPMS pushes firmware URL;
+              charger downloads, installs, reboots
+            </li>
+            <li>
+              <strong className="text-white">RemoteStartTransaction + RemoteStopTransaction</strong>{' '}
+              — CPMS can start / stop a session remotely (app-driven sessions)
+            </li>
+            <li>
+              <strong className="text-white">DataTransfer</strong> — vendor-specific custom message
+              extension (used for some manufacturer-unique features)
+            </li>
+            <li>
+              <strong className="text-white">Security</strong> — TLS optional in 1.6; many
+              production systems still use plain WebSocket. Authentication via basic auth or token
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="OCPP 2.0.1 — the next generation"
+          plainEnglish="OCPP 2.0.1 (released 2020, updated 2024) is the next-generation protocol. Backwards-incompatible with 1.6 — chargers + CPMS need explicit 2.0.1 support. Improvements: TLS-mandatory security; ISO 15118 plug-and-charge integration; richer smart-charging with hierarchical profiles; better firmware update workflows; enhanced device management; PCAR-friendly transparency."
+          onSite="UK 2025-26 reality: new premium kit (Tesla Wall Connector Gen 3+, ABB Terra new generations, Tritium PKM new generations, Wallbox Pulsar Max) ships with 2.0.1 support. Migration from 1.6 typically requires firmware update on both charger + CPMS sides; some legacy chargers can’t migrate (hardware limit)."
+        >
+          <p>OCPP 2.0.1 improvements:</p>
+          <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+            <li>
+              <strong className="text-white">TLS-mandatory</strong> — encrypted WebSocket
+              connection; certificate-based client authentication; revocation support
+            </li>
+            <li>
+              <strong className="text-white">ISO 15118 integration</strong> — plug-and-charge
+              native; vehicle credentials authenticated automatically; no customer action required
+            </li>
+            <li>
+              <strong className="text-white">Hierarchical smart-charging</strong> — CPMS can set
+              profiles at multiple levels (site, charger, connector, session); priority + override
+              logic
+            </li>
+            <li>
+              <strong className="text-white">Better firmware updates</strong> — granular update
+              messages; rollback support; signed firmware
+            </li>
+            <li>
+              <strong className="text-white">Device management</strong> — richer monitoring +
+              diagnostics + configuration messages
+            </li>
+            <li>
+              <strong className="text-white">PCAR transparency</strong> — tariff advertisement
+              messages (chargers publish current pricing per OCPP), supports PCAR 2023 pricing
+              transparency requirements
+            </li>
+            <li>
+              <strong className="text-white">Customer cert evidence bundle record</strong> — OCPP
+              version + migration path (some 1.6 chargers support OTA upgrade to 2.0.1; others fixed
+              at 1.6 hardware)
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <InlineCheck {...inlineChecks[2]} />
+
+        <InlineCheck {...inlineChecks[3]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>Installer scope — OCPP commissioning + network architecture</ContentEyebrow>
+
+        <ConceptBlock
+          title="OCPP commissioning per charger"
+          plainEnglish="At install commissioning, the installer configures each charger to talk to the customer’s CPMS. Specific steps: endpoint URL + credentials + chargepoint identifier + boot notification test + heartbeat verification + authentication test + smart-charging profile test."
+          onSite="The customer’s site operator (or their IT) provides the CPMS endpoint + credentials. The installer enters these per charger via the manufacturer app or web portal. Cert evidence bundle records the commissioning steps + the test results. Customer-facing benefit: chargers appear in their CPMS dashboard ready for fleet management."
+        >
+          <p>OCPP commissioning steps:</p>
+          <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+            <li>
+              <strong className="text-white">Endpoint URL</strong> — the CPMS’s WebSocket URL (e.g.
+              wss://cpms.example.com/ocpp/1.6 or 2.0.1)
+            </li>
+            <li>
+              <strong className="text-white">Credentials</strong> — username + password or token,
+              issued by the CPMS operator. OCPP 2.0.1: TLS client certificate also required
+            </li>
+            <li>
+              <strong className="text-white">Chargepoint identifier</strong> — unique string for the
+              charger, registered in the CPMS database (e.g. CP-001, or the serial number)
+            </li>
+            <li>
+              <strong className="text-white">Boot notification</strong> — first connection: charger
+              reports itself to CPMS via BootNotification message. Test: charger appears in CPMS
+              dashboard
+            </li>
+            <li>
+              <strong className="text-white">Heartbeat</strong> — periodic keep-alive messages
+              (typically every 60-300 seconds). Test: confirm heartbeat received at CPMS
+            </li>
+            <li>
+              <strong className="text-white">Authentication test</strong> — RFID card tap or app
+              session start. Verify session created + recorded in CPMS
+            </li>
+            <li>
+              <strong className="text-white">Smart-charging test</strong> — CPMS sends
+              SetChargingProfile via OCPP; verify charger applies via CP PWM (vehicle current limit
+              changes)
+            </li>
+            <li>
+              <strong className="text-white">Cert evidence bundle</strong> — OCPP version, endpoint,
+              chargepoint identifier, commissioning test results, CPMS account holder
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="Network architecture — Ethernet, cellular, Wi-Fi"
+          plainEnglish="OCPP chargers need a reliable IP network connection to their CPMS. UK 2025-26 best-practice: Ethernet primary + cellular backup is the resilient pattern. Wi-Fi-only is least reliable (interference, range, security)."
+          onSite="Survey the site network at quote stage. Workplace + commercial: typically Ethernet runs to each charger; cellular backup via 4G / 5G modems. Public hub + motorway services: cellular often the only option. Cellular site requires SIM management + signal strength survey + cellular carrier choice."
+        >
+          <p>Network options:</p>
+          <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+            <li>
+              <strong className="text-white">Ethernet primary</strong> — wired connection from
+              charger to site network switch / managed router. Most reliable, lowest latency, no
+              monthly cellular fee. Standard at workplaces / commercial premises
+            </li>
+            <li>
+              <strong className="text-white">Cellular backup</strong> — 4G / 5G modem inside the
+              charger. Auto-failover when Ethernet fails. SIM card + monthly data plan
+              (~£5-15/charger/month). Cell signal strength survey at each charger location
+            </li>
+            <li>
+              <strong className="text-white">Cellular primary</strong> — only network connection at
+              remote sites (motorway services, kerbside, rural). Same SIM + signal management as
+              backup
+            </li>
+            <li>
+              <strong className="text-white">Wi-Fi</strong> — least reliable. Interference, range,
+              security. Some commercial / workplace installs use Wi-Fi if Ethernet not practical;
+              backup to cellular recommended
+            </li>
+            <li>
+              <strong className="text-white">VLAN separation</strong> — workplace / commercial sites
+              typically put EV chargers on a separate VLAN from the office network for security +
+              bandwidth management
+            </li>
+            <li>
+              <strong className="text-white">Firewall + NAT</strong>— charger’s OCPP WebSocket
+              connection outbound through the site’s firewall (port 80/443 typically). Inbound: not
+              needed (CPMS doesn’t connect into the site)
+            </li>
+            <li>
+              <strong className="text-white">Cert evidence bundle</strong> — network architecture
+              diagram + IP addresses / hostnames + cellular SIM details (if applicable) + VLAN
+              configuration
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="OCPI roaming — the cross-network layer"
+          plainEnglish="OCPI = Open Charge Point Interface. Open-source protocol for CPMS ↔ CPMS communication enabling cross-network roaming. Example: an Octopus Electroverse customer pulls up at an Ionity charger; Electroverse CPMS contacts Ionity CPMS via OCPI; session authorised + billed to Octopus customer. Hubject is the dominant pan-European OCPI roaming hub."
+          onSite="OCPI is configured at the CPMS / network operator level — above the installer’s scope. But operationally relevant: the installer’s charger commissioning enables OCPI by connecting chargers to the customer’s CPMS, which then connects upstream to OCPI hubs. Cert evidence bundle records the CPMS account holder + the OCPI roaming hubs configured (Hubject, Gireve, e-clearing.net common in UK 2025-26)."
+        >
+          <p>OCPI roaming architecture:</p>
+          <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+            <li>
+              <strong className="text-white">CPO CPMS</strong> — the Chargepoint Operator’s
+              management system. Manages the chargers via OCPP downstream and exposes them via OCPI
+              upstream
+            </li>
+            <li>
+              <strong className="text-white">eMSP CPMS</strong> — the e-Mobility Service Provider’s
+              system. Holds the customer’s account + payment credentials. Customer-facing brand
+              (Octopus Electroverse, BP Pulse, Shell Recharge etc.)
+            </li>
+            <li>
+              <strong className="text-white">Roaming hub</strong> — Hubject is the dominant
+              pan-European hub. Gireve, e-clearing.net are alternatives. The hub routes session
+              authorisation + billing between CPO and eMSP CPMS
+            </li>
+            <li>
+              <strong className="text-white">OCPI 2.2.1</strong> — current standard version. UK
+              2025-26 chargepoint networks broadly OCPI 2.2.1 compatible
+            </li>
+            <li>
+              <strong className="text-white">PCAR 2023 alignment</strong> — PCAR mandates roaming
+              acceptance at UK public charge points; OCPI is the technical layer that delivers this
+            </li>
+            <li>
+              <strong className="text-white">Installer scope</strong> — OCPI is CPMS-to-CPMS, so
+              installer’s job is to commission OCPP charger ↔ CPMS correctly; CPMS operator handles
+              OCPI configuration
+            </li>
+            <li>
+              <strong className="text-white">Cert evidence bundle</strong> — record CPMS account
+              holder + roaming hub(s) configured + ongoing operator responsibilities for OCPI
+              compliance
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <RegsCallout
+          source="BS 7671:2018+A4:2026 · Reg 722.531.3.101 + OCPP smart-charging interaction"
+          clause="Reg 722.531.3.101 specifies the RCD architecture for EV charging circuits. The protective devices (RCBO / RCD) operate independently of OCPP — protection is hard-wired, not network-dependent. OCPP smart-charging via SetChargingProfile messages adjusts the maximum current via the Control Pilot (CP) PWM duty cycle; the wallbox’s internal protective devices remain in circuit regardless of OCPP state."
+          meaning="OCPP coordinates operational parameters (max current, session auth, tariff) but never bypasses the BS 7671 protective architecture. Reg 722.531.3.101 RCD trip + Reg 722.411.4 PME alternatives operate regardless of OCPP / CPMS state. Network outage = OCPP communication lost but protective devices unchanged + chargers can continue authorised sessions locally. Cert evidence bundle records: protective device coordination is independent of OCPP; smart-charging is operational layer; no OCPP message can override the protective device function."
+        />
+
+        <Pullquote>
+          OCPP rides on top of BS 7671. The protocol carries the operational data; the regulations
+          carry the safety. Get both right.
+        </Pullquote>
+
+        <Scenario
+          title="Workplace OCPP install — 8 chargers + customer’s existing CPMS"
+          situation="Workplace customer has an existing CPMS (Driivz) used at their other sites. New install: 8 × 22 kW three-phase wallboxes. Customer’s IT provides CPMS endpoint + per-charger credentials. Site has wired Ethernet + Wi-Fi + 4G signal."
+          whatToDo="Per charger commissioning: enter Driivz endpoint URL (wss://driivz.example.com/ocpp) + credentials (username/token issued by Driivz operator) + chargepoint identifier (CP-Site-001 through CP-Site-008). OCPP 1.6 (customer’s CPMS supports 1.6 but not yet 2.0.1). Ethernet primary connection (each charger has its own Ethernet drop from the site managed switch on a dedicated EV VLAN). 4G cellular backup configured. Boot notification test: each charger reports to Driivz on first energise; dashboard confirms 8/8 online. Heartbeat verified. Authentication test: customer’s IT issues an RFID card; tap test on each charger; session created + recorded in Driivz. Smart-charging test: Driivz sends SetChargingProfile (limit one charger to 16 A); verify CP PWM reduces accordingly + vehicle responds. Cert evidence bundle: OCPP version + endpoint + 8 chargepoint identifiers + network architecture + commissioning test results + CPMS account holder details."
+          whyItMatters="OCPP integration is the operational layer that turns a Section 722 install into a managed fleet. Customer-facing benefit: chargers visible in their existing CPMS dashboard; staff RFID cards work uniformly; reporting + cost allocation automatic; firmware updates remote. Installer scope: configure + verify + document. Customer scope: ongoing CPMS operations + monthly fees + user management. Cert evidence bundle is the handover artefact."
+        />
+
+        <Scenario
+          title="Public hub OCPP integration — multi-vendor chargers + CPMS + roaming"
+          situation="Public DC fast hub with 6 × 150 kW from one OEM + 2 × 350 kW from another. Operator uses ChargePoint CPMS + Hubject roaming integration. PCAR 2023 mandatory."
+          whatToDo="Multi-vendor OCPP setup: all 8 chargers configured with ChargePoint OCPP endpoint despite different manufacturers — this is OCPP’s key value (vendor interop). OCPP 2.0.1 (premium DC fast brands support it; ChargePoint CPMS supports it). TLS client certificates per charger from ChargePoint’s CA; loaded at commissioning per manufacturer procedure. ISO 15118 plug-and-charge enabled for emerging premium EVs (vehicle credentials negotiate via PLC over CP). PCAR 2023: payment terminals at each charger (contactless bank card per PCAR); pricing transparency on display + OCPP-published tariff messages; 24/7 helpline phone number on each charger; uptime monitoring + open data feed via OCPP MeterValues + status. Hubject OCPI integration: ChargePoint CPMS connects to Hubject roaming hub; non-ChargePoint customers (e.g. Octopus Electroverse users) can authorise + pay via their home network. Cert evidence bundle: 8 × OCPP commissioning records + TLS certificate fingerprints + ISO 15118 setup + PCAR compliance evidence + OCPI roaming configuration + ongoing operator obligations."
+          whyItMatters="Public DC fast hubs are the testing ground for the full OCPP capability set. Multi-vendor + 2.0.1 + ISO 15118 + PCAR transparency + OCPI roaming all integrate at the OCPP layer. The customer (hub operator) benefits from open-protocol vendor independence; the end-user (public driver) benefits from cross-network roaming + seamless plug-and-charge. UK 2025-26 reality: this is where the protocol’s value compounds. Cert evidence bundle is rich; ongoing operator scope is substantial."
+        />
+
+        <CommonMistake
+          title="Skipping OCPP commissioning + handing the customer chargers with default credentials"
+          whatHappens="Installer commissions the physical install (Section 722 + Part 6) but doesn’t configure OCPP. Customer receives chargers with default factory credentials; can’t connect to their CPMS. Customer waits for installer return visit or self-configures (sometimes incorrectly). Operational delay; customer dissatisfaction; reputation damage."
+          doInstead="OCPP commissioning is part of the install, not a customer task. Get the CPMS endpoint + credentials from the customer’s IT / operator at quote stage. Configure each charger at commissioning. Test boot + heartbeat + auth + smart-charging. Cert evidence bundle records OCPP commissioning results. Customer receives a working integrated install."
+        />
+
+        <CommonMistake
+          title="Using OCPP-incompatible / proprietary-protocol chargers on a multi-vendor site"
+          whatHappens="Customer wants multi-vendor flexibility (some Wallbox + some EO chargers). Installer specs one of the brands as a cheap import that uses a proprietary protocol — works only with the OEM’s own CPMS. Customer can’t integrate all 8 chargers into a single CPMS. Loses the multi-vendor value; needs to either replace those chargers or run two separate CPMS."
+          doInstead="Specify OCPP-compliant chargers at quote stage. Confirm the manufacturer DoC declares OCPP 1.6 (minimum) or 2.0.1 (premium). Cert evidence bundle records the OCPP version per charger. Open-protocol support is the customer’s long-term value protection."
+        />
+
+        <SectionRule />
+
+        <KeyTakeaways
+          points={[
+            'OCPP = Open Charge Point Protocol. Open-source industry standard for chargepoint ↔ CPMS communication. Managed by Open Charge Alliance.',
+            'OCPP 1.6 dominant (UK 2025-26 mainstream). OCPP 2.0.1 emerging — TLS-mandatory, ISO 15118 integration, richer smart-charging, better firmware.',
+            'CPMS = cloud / on-premise software managing a fleet of chargers via OCPP. Auth, billing, monitoring, diagnostics, firmware, smart-charging.',
+            'Authentication methods: RFID (~80% UK commercial), mobile app, ISO 15118 plug-and-charge (emerging), contactless bank card (PCAR public).',
+            'Smart-charging via OCPP SetChargingProfile messages. CPMS coordinates multi-charger site DLM, tariff windows, fleet priorities.',
+            'ISO 15118 plug-and-charge: automatic vehicle ↔ charger credential exchange via PLC over CP. Emerging UK 2025-26 on premium kit.',
+            'Network architecture: Ethernet primary + cellular backup = resilient pattern. Wi-Fi-only least reliable.',
+            'OCPP 2.0.1 mandates TLS security. Each charger has client certificate; installer commissions + documents renewal procedure.',
+            'OCPP commissioning per charger: endpoint URL, credentials, identifier, boot notification + heartbeat + auth + smart-charging tests.',
+            'OCPI = CPMS ↔ CPMS roaming protocol (Hubject is the dominant European hub). Separate from OCPP but operationally connected.',
+            'Cert evidence bundle records: OCPP version per charger + endpoint + credentials reference + commissioning tests + network architecture + CPMS account holder.',
+          ]}
+        />
+
+        <FAQ items={faqs} />
+
+        <Quiz questions={quizQuestions} title="Section 4 · Knowledge check" />
+
+        <div className="grid grid-cols-2 gap-3 pt-2">
           <button
             type="button"
-            onClick={() => navigate('../renewable-energy-module-7')}
-            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            onClick={() => navigate('/electrician/upskilling/renewable-energy-module-7-section-3')}
+            className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
           >
-            <ArrowLeft className="h-4 w-4" /> Module 7
+            <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+              <ChevronLeft className="h-3 w-3" /> Section 3
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-white truncate">
+              Mode 4 DC fast charging
+            </div>
           </button>
-
-          <PageHero
-            eyebrow="Module 7 · Section 4 · Open Charge Point Protocol · OCPP 1.6 + 2.0.1"
-            title="OCPP & networked charging"
-            description="The industry-standard protocol that turns standalone chargers into managed fleets. OCPP 1.6 + 2.0.1, CPMS platforms, authentication, smart-charging coordination, ISO 15118 plug-and-charge, OCPI roaming, network architecture, security."
-            tone="yellow"
-          />
-
-          <TLDR
-            points={[
-              'OCPP = Open Charge Point Protocol. Open-source industry standard for chargepoint ↔ CPMS communication. Managed by the Open Charge Alliance.',
-              'OCPP 1.6 dominant in UK 2025-26 (mature, widespread). OCPP 2.0.1 emerging — improved authentication, ISO 15118 integration, smart-charging extensions, security.',
-              'CPMS (Charge Point Management System) is the cloud / on-premise software that manages a fleet of chargers via OCPP. Auth, billing, monitoring, diagnostics, firmware, smart-charging coordination.',
-              'Authentication methods via OCPP: RFID card (~80% UK commercial), mobile app, ISO 15118 plug-and-charge (emerging), contactless bank card terminal (PCAR 2023 mandatory for public).',
-              'Smart charging via OCPP: CPMS sends "SetChargingProfile" messages; chargers apply via CP PWM duty cycle. Real-time coordination for site DLM, tariff windows, fleet priorities, BESS / PV integration.',
-              'ISO 15118 plug-and-charge: vehicle and charger exchange credentials automatically via PLC over CP. No customer action; no RFID. Emerging in UK 2025-26.',
-              'Network architecture: Ethernet primary + cellular backup is the resilient pattern. Wi-Fi-only least reliable. Cellular essential at remote sites.',
-              'OCPP 2.0.1 mandates TLS security. Each charger has a TLS client certificate from the CPMS’s CA; installer commissions with certificate; renewal procedure documented in cert evidence bundle.',
-            ]}
-          />
-
-          <LearningOutcomes
-            outcomes={[
-              'Explain OCPP’s role as the open-source standard for chargepoint ↔ CPMS communication.',
-              'Distinguish OCPP 1.6 (dominant) from OCPP 2.0.1 (emerging, enhanced) — practical implications for new install.',
-              'Identify the CPMS’s functional scope: authentication, billing, monitoring, diagnostics, firmware updates, smart-charging coordination.',
-              'Configure OCPP commissioning per charger: endpoint, credentials, identifier, boot notification + heartbeat verification.',
-              'Apply OCPP smart-charging via SetChargingProfile messages — CPMS coordinates the multi-charger site DLM.',
-              'Explain ISO 15118 plug-and-charge: automatic vehicle ↔ charger credential exchange via PLC over CP.',
-              'Design the network architecture: Ethernet + cellular backup for resilience; cellular for remote sites.',
-              'Apply OCPP 2.0.1 TLS security: client certificate per charger, CA management, renewal procedure.',
-            ]}
-            initialVisibleCount={3}
-          />
-
-          <Pullquote>
-            OCPP is the lingua franca of commercial EV charging. Open the protocol, and the chargers and CPMS speak across vendors. Lock the protocol, and the customer is trapped.
-          </Pullquote>
-
-          <ContentEyebrow>What OCPP is and why it matters</ContentEyebrow>
-
-          <ConceptBlock
-            title="OCPP — Open Charge Point Protocol"
-            plainEnglish="OCPP = the open-source application protocol that lets a chargepoint communicate with a Charge Point Management System (CPMS). Managed by the Open Charge Alliance (OCA), an industry consortium. Hardware-independent: chargers from any OEM that supports OCPP can talk to any OCPP-compliant CPMS."
-            onSite="UK 2025-26 reality: virtually every reputable commercial wallbox + DC fast charger supports OCPP. The customer’s choice of CPMS is separate from the choice of charger hardware. This open architecture protects the customer from vendor lock-in — they can swap CPMS without replacing chargers."
+          <button
+            type="button"
+            onClick={() => navigate('/electrician/upskilling/renewable-energy-module-7-section-5')}
+            className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
           >
-            <p>What OCPP enables:</p>
-            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
-              <li>
-                <strong className="text-white">Multi-vendor
-                  interoperability</strong> — chargers from ABB, Wallbox, Easee, EO,
-                MyEnergi, Tesla can all integrate with a single CPMS (Driivz, ChargePoint,
-                Spirii, Monta, etc.)
-              </li>
-              <li>
-                <strong className="text-white">Authentication</strong> — CPMS validates
-                user credentials (RFID, app, plug-and-charge) before authorising a session
-              </li>
-              <li>
-                <strong className="text-white">Billing</strong> — session data flows to
-                CPMS; CPMS calculates cost; charges customer / employer / operator
-              </li>
-              <li>
-                <strong className="text-white">Monitoring + diagnostics</strong>
-                — real-time status of every charger; fault alerts; uptime tracking
-              </li>
-              <li>
-                <strong className="text-white">Smart-charging
-                  coordination</strong> — CPMS sends max-current profiles per charger per
-                session; chargers apply via CP PWM
-              </li>
-              <li>
-                <strong className="text-white">Firmware updates</strong> — CPMS pushes
-                firmware updates remotely; chargers download, install, reboot
-              </li>
-              <li>
-                <strong className="text-white">Open-source standard</strong> — protocol
-                specifications publicly available; multiple implementations; vendor
-                competition + no lock-in
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <OcppArchitecture caption="OCPP lets any compliant chargepoint talk to any management system — the layer DLM and billing ride on." />
-
-          <RegsCallout
-            source="Open Charge Alliance · OCPP 1.6 + 2.0.1 — industry standard (not BS 7671)"
-            clause="OCPP is an industry application protocol standard maintained by the Open Charge Alliance. OCPP 1.6 (released 2015) is widely deployed. OCPP 2.0.1 (released 2020, updated 2024) is the next generation with enhanced security, ISO 15118 integration, and richer smart-charging. Not a UK statutory regulation; not a BS 7671 requirement; but de-facto standard for commercial / public / fleet UK 2025-26 EV charging."
-            meaning="OCPP is the operational protocol — separate from BS 7671 wiring regs, SCP Regulations 2021 (statutory smart-charging), PCAR 2023 (statutory public charging). The installer’s scope on OCPP: configure the chargers with the customer’s CPMS credentials at commissioning; verify the OCPP connection works (boot notification + heartbeat); test authentication + smart-charging profile reception. Cert evidence bundle records the OCPP version + CPMS account integration + commissioning test result. Ongoing operation is the site operator + CPMS’s responsibility; the installer’s role typically ends at handover."
-          />
-
-          <InlineCheck {...inlineChecks[0]} />
-
-          <InlineCheck {...inlineChecks[1]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>OCPP 1.6 vs 2.0.1 — versions in UK 2025-26</ContentEyebrow>
-
-          <Pullquote>
-            OCPP 1.6 is what’s deployed. OCPP 2.0.1 is what’s coming. The migration takes years.
-          </Pullquote>
-
-          <ConceptBlock
-            title="OCPP 1.6 — the mainstream"
-            plainEnglish="OCPP 1.6 (released 2015) is the dominant version deployed in UK 2025-26 commercial / public / fleet EV charging. Mature, widely supported by chargers + CPMS + roaming hubs. Most legacy + current new installs are OCPP 1.6."
-            onSite="OCPP 1.6 covers the core operational scope: authentication, session control, billing data, monitoring, diagnostics, basic smart-charging (SetChargingProfile), firmware updates. Limitations: security is optional TLS; ISO 15118 plug-and-charge integration limited; smart-charging less granular than 2.0.1."
-          >
-            <p>OCPP 1.6 capabilities:</p>
-            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
-              <li>
-                <strong className="text-white">Boot + heartbeat</strong> — charger reports
-                itself to CPMS on first power-up; periodic keep-alive messages
-              </li>
-              <li>
-                <strong className="text-white">Authorise + StartTransaction +
-                  StopTransaction</strong> — session lifecycle messages. CPMS validates
-                credentials and tracks session start / stop / energy delivered
-              </li>
-              <li>
-                <strong className="text-white">MeterValues</strong> — periodic energy +
-                power + voltage + current reports during a session
-              </li>
-              <li>
-                <strong className="text-white">SetChargingProfile</strong> — CPMS sends
-                max current profile to the charger. Charger applies via CP PWM duty cycle
-              </li>
-              <li>
-                <strong className="text-white">FirmwareUpdate</strong> — CPMS pushes
-                firmware URL; charger downloads, installs, reboots
-              </li>
-              <li>
-                <strong className="text-white">RemoteStartTransaction +
-                  RemoteStopTransaction</strong> — CPMS can start / stop a session
-                remotely (app-driven sessions)
-              </li>
-              <li>
-                <strong className="text-white">DataTransfer</strong> — vendor-specific
-                custom message extension (used for some manufacturer-unique features)
-              </li>
-              <li>
-                <strong className="text-white">Security</strong> — TLS optional in 1.6;
-                many production systems still use plain WebSocket. Authentication via
-                basic auth or token
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <ConceptBlock
-            title="OCPP 2.0.1 — the next generation"
-            plainEnglish="OCPP 2.0.1 (released 2020, updated 2024) is the next-generation protocol. Backwards-incompatible with 1.6 — chargers + CPMS need explicit 2.0.1 support. Improvements: TLS-mandatory security; ISO 15118 plug-and-charge integration; richer smart-charging with hierarchical profiles; better firmware update workflows; enhanced device management; PCAR-friendly transparency."
-            onSite="UK 2025-26 reality: new premium kit (Tesla Wall Connector Gen 3+, ABB Terra new generations, Tritium PKM new generations, Wallbox Pulsar Max) ships with 2.0.1 support. Migration from 1.6 typically requires firmware update on both charger + CPMS sides; some legacy chargers can’t migrate (hardware limit)."
-          >
-            <p>OCPP 2.0.1 improvements:</p>
-            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
-              <li>
-                <strong className="text-white">TLS-mandatory</strong> — encrypted
-                WebSocket connection; certificate-based client authentication; revocation
-                support
-              </li>
-              <li>
-                <strong className="text-white">ISO 15118 integration</strong> —
-                plug-and-charge native; vehicle credentials authenticated automatically;
-                no customer action required
-              </li>
-              <li>
-                <strong className="text-white">Hierarchical
-                  smart-charging</strong> — CPMS can set profiles at multiple levels
-                (site, charger, connector, session); priority + override logic
-              </li>
-              <li>
-                <strong className="text-white">Better firmware
-                  updates</strong> — granular update messages; rollback support; signed
-                firmware
-              </li>
-              <li>
-                <strong className="text-white">Device management</strong> — richer
-                monitoring + diagnostics + configuration messages
-              </li>
-              <li>
-                <strong className="text-white">PCAR transparency</strong> — tariff
-                advertisement messages (chargers publish current pricing per OCPP),
-                supports PCAR 2023 pricing transparency requirements
-              </li>
-              <li>
-                <strong className="text-white">Customer cert evidence bundle
-                  record</strong> — OCPP version + migration path (some 1.6 chargers
-                support OTA upgrade to 2.0.1; others fixed at 1.6 hardware)
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <InlineCheck {...inlineChecks[2]} />
-
-          <InlineCheck {...inlineChecks[3]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>Installer scope — OCPP commissioning + network architecture</ContentEyebrow>
-
-          <ConceptBlock
-            title="OCPP commissioning per charger"
-            plainEnglish="At install commissioning, the installer configures each charger to talk to the customer’s CPMS. Specific steps: endpoint URL + credentials + chargepoint identifier + boot notification test + heartbeat verification + authentication test + smart-charging profile test."
-            onSite="The customer’s site operator (or their IT) provides the CPMS endpoint + credentials. The installer enters these per charger via the manufacturer app or web portal. Cert evidence bundle records the commissioning steps + the test results. Customer-facing benefit: chargers appear in their CPMS dashboard ready for fleet management."
-          >
-            <p>OCPP commissioning steps:</p>
-            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
-              <li>
-                <strong className="text-white">Endpoint URL</strong> — the CPMS’s
-                WebSocket URL (e.g. wss://cpms.example.com/ocpp/1.6 or 2.0.1)
-              </li>
-              <li>
-                <strong className="text-white">Credentials</strong> — username +
-                password or token, issued by the CPMS operator. OCPP 2.0.1: TLS client
-                certificate also required
-              </li>
-              <li>
-                <strong className="text-white">Chargepoint
-                  identifier</strong> — unique string for the charger, registered in the
-                CPMS database (e.g. CP-001, or the serial number)
-              </li>
-              <li>
-                <strong className="text-white">Boot
-                  notification</strong> — first connection: charger reports itself to
-                CPMS via BootNotification message. Test: charger appears in CPMS
-                dashboard
-              </li>
-              <li>
-                <strong className="text-white">Heartbeat</strong> — periodic keep-alive
-                messages (typically every 60-300 seconds). Test: confirm
-                heartbeat received at CPMS
-              </li>
-              <li>
-                <strong className="text-white">Authentication test</strong> — RFID card
-                tap or app session start. Verify session created + recorded in CPMS
-              </li>
-              <li>
-                <strong className="text-white">Smart-charging
-                  test</strong> — CPMS sends SetChargingProfile via OCPP; verify charger
-                applies via CP PWM (vehicle current limit changes)
-              </li>
-              <li>
-                <strong className="text-white">Cert evidence bundle</strong> — OCPP
-                version, endpoint, chargepoint identifier, commissioning test results,
-                CPMS account holder
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <ConceptBlock
-            title="Network architecture — Ethernet, cellular, Wi-Fi"
-            plainEnglish="OCPP chargers need a reliable IP network connection to their CPMS. UK 2025-26 best-practice: Ethernet primary + cellular backup is the resilient pattern. Wi-Fi-only is least reliable (interference, range, security)."
-            onSite="Survey the site network at quote stage. Workplace + commercial: typically Ethernet runs to each charger; cellular backup via 4G / 5G modems. Public hub + motorway services: cellular often the only option. Cellular site requires SIM management + signal strength survey + cellular carrier choice."
-          >
-            <p>Network options:</p>
-            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
-              <li>
-                <strong className="text-white">Ethernet
-                  primary</strong> — wired connection from charger to site network
-                switch / managed router. Most reliable, lowest latency, no monthly
-                cellular fee. Standard at workplaces / commercial premises
-              </li>
-              <li>
-                <strong className="text-white">Cellular backup</strong> — 4G / 5G
-                modem inside the charger. Auto-failover when Ethernet fails. SIM card +
-                monthly data plan (~£5-15/charger/month). Cell signal strength survey at
-                each charger location
-              </li>
-              <li>
-                <strong className="text-white">Cellular
-                  primary</strong> — only network connection at remote sites
-                (motorway services, kerbside, rural). Same SIM + signal management as
-                backup
-              </li>
-              <li>
-                <strong className="text-white">Wi-Fi</strong> — least reliable.
-                Interference, range, security. Some commercial / workplace installs use
-                Wi-Fi if Ethernet not practical; backup to cellular recommended
-              </li>
-              <li>
-                <strong className="text-white">VLAN
-                  separation</strong> — workplace / commercial sites typically put EV
-                chargers on a separate VLAN from the office network for security +
-                bandwidth management
-              </li>
-              <li>
-                <strong className="text-white">Firewall + NAT</strong>
-                — charger’s OCPP WebSocket connection outbound through the
-                site’s firewall (port 80/443 typically). Inbound: not needed (CPMS
-                doesn’t connect into the site)
-              </li>
-              <li>
-                <strong className="text-white">Cert evidence
-                  bundle</strong> — network architecture diagram + IP addresses /
-                hostnames + cellular SIM details (if applicable) + VLAN configuration
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <ConceptBlock
-            title="OCPI roaming — the cross-network layer"
-            plainEnglish="OCPI = Open Charge Point Interface. Open-source protocol for CPMS ↔ CPMS communication enabling cross-network roaming. Example: an Octopus Electroverse customer pulls up at an Ionity charger; Electroverse CPMS contacts Ionity CPMS via OCPI; session authorised + billed to Octopus customer. Hubject is the dominant pan-European OCPI roaming hub."
-            onSite="OCPI is configured at the CPMS / network operator level — above the installer’s scope. But operationally relevant: the installer’s charger commissioning enables OCPI by connecting chargers to the customer’s CPMS, which then connects upstream to OCPI hubs. Cert evidence bundle records the CPMS account holder + the OCPI roaming hubs configured (Hubject, Gireve, e-clearing.net common in UK 2025-26)."
-          >
-            <p>OCPI roaming architecture:</p>
-            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
-              <li>
-                <strong className="text-white">CPO CPMS</strong> — the Chargepoint
-                Operator’s management system. Manages the chargers via OCPP downstream
-                and exposes them via OCPI upstream
-              </li>
-              <li>
-                <strong className="text-white">eMSP CPMS</strong> — the e-Mobility
-                Service Provider’s system. Holds the customer’s account + payment
-                credentials. Customer-facing brand (Octopus Electroverse, BP Pulse,
-                Shell Recharge etc.)
-              </li>
-              <li>
-                <strong className="text-white">Roaming hub</strong> — Hubject is the
-                dominant pan-European hub. Gireve, e-clearing.net are alternatives. The
-                hub routes session authorisation + billing between CPO and eMSP CPMS
-              </li>
-              <li>
-                <strong className="text-white">OCPI 2.2.1</strong> — current standard
-                version. UK 2025-26 chargepoint networks broadly OCPI 2.2.1 compatible
-              </li>
-              <li>
-                <strong className="text-white">PCAR 2023
-                  alignment</strong> — PCAR mandates roaming acceptance at UK public
-                charge points; OCPI is the technical layer that delivers this
-              </li>
-              <li>
-                <strong className="text-white">Installer scope</strong> — OCPI is
-                CPMS-to-CPMS, so installer’s job is to commission OCPP charger ↔ CPMS
-                correctly; CPMS operator handles OCPI configuration
-              </li>
-              <li>
-                <strong className="text-white">Cert evidence
-                  bundle</strong> — record CPMS account holder + roaming hub(s)
-                configured + ongoing operator responsibilities for OCPI compliance
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <RegsCallout
-            source="BS 7671:2018+A4:2026 · Reg 722.531.3.101 + OCPP smart-charging interaction"
-            clause="Reg 722.531.3.101 specifies the RCD architecture for EV charging circuits. The protective devices (RCBO / RCD) operate independently of OCPP — protection is hard-wired, not network-dependent. OCPP smart-charging via SetChargingProfile messages adjusts the maximum current via the Control Pilot (CP) PWM duty cycle; the wallbox’s internal protective devices remain in circuit regardless of OCPP state."
-            meaning="OCPP coordinates operational parameters (max current, session auth, tariff) but never bypasses the BS 7671 protective architecture. Reg 722.531.3.101 RCD trip + Reg 722.411.4 PME alternatives operate regardless of OCPP / CPMS state. Network outage = OCPP communication lost but protective devices unchanged + chargers can continue authorised sessions locally. Cert evidence bundle records: protective device coordination is independent of OCPP; smart-charging is operational layer; no OCPP message can override the protective device function."
-          />
-
-          <Pullquote>
-            OCPP rides on top of BS 7671. The protocol carries the operational data; the regulations carry the safety. Get both right.
-          </Pullquote>
-
-          <Scenario
-            title="Workplace OCPP install — 8 chargers + customer’s existing CPMS"
-            situation="Workplace customer has an existing CPMS (Driivz) used at their other sites. New install: 8 × 22 kW three-phase wallboxes. Customer’s IT provides CPMS endpoint + per-charger credentials. Site has wired Ethernet + Wi-Fi + 4G signal."
-            whatToDo="Per charger commissioning: enter Driivz endpoint URL (wss://driivz.example.com/ocpp) + credentials (username/token issued by Driivz operator) + chargepoint identifier (CP-Site-001 through CP-Site-008). OCPP 1.6 (customer’s CPMS supports 1.6 but not yet 2.0.1). Ethernet primary connection (each charger has its own Ethernet drop from the site managed switch on a dedicated EV VLAN). 4G cellular backup configured. Boot notification test: each charger reports to Driivz on first energise; dashboard confirms 8/8 online. Heartbeat verified. Authentication test: customer’s IT issues an RFID card; tap test on each charger; session created + recorded in Driivz. Smart-charging test: Driivz sends SetChargingProfile (limit one charger to 16 A); verify CP PWM reduces accordingly + vehicle responds. Cert evidence bundle: OCPP version + endpoint + 8 chargepoint identifiers + network architecture + commissioning test results + CPMS account holder details."
-            whyItMatters="OCPP integration is the operational layer that turns a Section 722 install into a managed fleet. Customer-facing benefit: chargers visible in their existing CPMS dashboard; staff RFID cards work uniformly; reporting + cost allocation automatic; firmware updates remote. Installer scope: configure + verify + document. Customer scope: ongoing CPMS operations + monthly fees + user management. Cert evidence bundle is the handover artefact."
-          />
-
-          <Scenario
-            title="Public hub OCPP integration — multi-vendor chargers + CPMS + roaming"
-            situation="Public DC fast hub with 6 × 150 kW from one OEM + 2 × 350 kW from another. Operator uses ChargePoint CPMS + Hubject roaming integration. PCAR 2023 mandatory."
-            whatToDo="Multi-vendor OCPP setup: all 8 chargers configured with ChargePoint OCPP endpoint despite different manufacturers — this is OCPP’s key value (vendor interop). OCPP 2.0.1 (premium DC fast brands support it; ChargePoint CPMS supports it). TLS client certificates per charger from ChargePoint’s CA; loaded at commissioning per manufacturer procedure. ISO 15118 plug-and-charge enabled for emerging premium EVs (vehicle credentials negotiate via PLC over CP). PCAR 2023: payment terminals at each charger (contactless bank card per PCAR); pricing transparency on display + OCPP-published tariff messages; 24/7 helpline phone number on each charger; uptime monitoring + open data feed via OCPP MeterValues + status. Hubject OCPI integration: ChargePoint CPMS connects to Hubject roaming hub; non-ChargePoint customers (e.g. Octopus Electroverse users) can authorise + pay via their home network. Cert evidence bundle: 8 × OCPP commissioning records + TLS certificate fingerprints + ISO 15118 setup + PCAR compliance evidence + OCPI roaming configuration + ongoing operator obligations."
-            whyItMatters="Public DC fast hubs are the testing ground for the full OCPP capability set. Multi-vendor + 2.0.1 + ISO 15118 + PCAR transparency + OCPI roaming all integrate at the OCPP layer. The customer (hub operator) benefits from open-protocol vendor independence; the end-user (public driver) benefits from cross-network roaming + seamless plug-and-charge. UK 2025-26 reality: this is where the protocol’s value compounds. Cert evidence bundle is rich; ongoing operator scope is substantial."
-          />
-
-          <CommonMistake
-            title="Skipping OCPP commissioning + handing the customer chargers with default credentials"
-            whatHappens="Installer commissions the physical install (Section 722 + Part 6) but doesn’t configure OCPP. Customer receives chargers with default factory credentials; can’t connect to their CPMS. Customer waits for installer return visit or self-configures (sometimes incorrectly). Operational delay; customer dissatisfaction; reputation damage."
-            doInstead="OCPP commissioning is part of the install, not a customer task. Get the CPMS endpoint + credentials from the customer’s IT / operator at quote stage. Configure each charger at commissioning. Test boot + heartbeat + auth + smart-charging. Cert evidence bundle records OCPP commissioning results. Customer receives a working integrated install."
-          />
-
-          <CommonMistake
-            title="Using OCPP-incompatible / proprietary-protocol chargers on a multi-vendor site"
-            whatHappens="Customer wants multi-vendor flexibility (some Wallbox + some EO chargers). Installer specs one of the brands as a cheap import that uses a proprietary protocol — works only with the OEM’s own CPMS. Customer can’t integrate all 8 chargers into a single CPMS. Loses the multi-vendor value; needs to either replace those chargers or run two separate CPMS."
-            doInstead="Specify OCPP-compliant chargers at quote stage. Confirm the manufacturer DoC declares OCPP 1.6 (minimum) or 2.0.1 (premium). Cert evidence bundle records the OCPP version per charger. Open-protocol support is the customer’s long-term value protection."
-          />
-
-          <SectionRule />
-
-          <KeyTakeaways
-            points={[
-              'OCPP = Open Charge Point Protocol. Open-source industry standard for chargepoint ↔ CPMS communication. Managed by Open Charge Alliance.',
-              'OCPP 1.6 dominant (UK 2025-26 mainstream). OCPP 2.0.1 emerging — TLS-mandatory, ISO 15118 integration, richer smart-charging, better firmware.',
-              'CPMS = cloud / on-premise software managing a fleet of chargers via OCPP. Auth, billing, monitoring, diagnostics, firmware, smart-charging.',
-              'Authentication methods: RFID (~80% UK commercial), mobile app, ISO 15118 plug-and-charge (emerging), contactless bank card (PCAR public).',
-              'Smart-charging via OCPP SetChargingProfile messages. CPMS coordinates multi-charger site DLM, tariff windows, fleet priorities.',
-              'ISO 15118 plug-and-charge: automatic vehicle ↔ charger credential exchange via PLC over CP. Emerging UK 2025-26 on premium kit.',
-              'Network architecture: Ethernet primary + cellular backup = resilient pattern. Wi-Fi-only least reliable.',
-              'OCPP 2.0.1 mandates TLS security. Each charger has client certificate; installer commissions + documents renewal procedure.',
-              'OCPP commissioning per charger: endpoint URL, credentials, identifier, boot notification + heartbeat + auth + smart-charging tests.',
-              'OCPI = CPMS ↔ CPMS roaming protocol (Hubject is the dominant European hub). Separate from OCPP but operationally connected.',
-              'Cert evidence bundle records: OCPP version per charger + endpoint + credentials reference + commissioning tests + network architecture + CPMS account holder.',
-            ]}
-          />
-
-          <FAQ items={faqs} />
-
-          <Quiz questions={quizQuestions} title="Section 4 · Knowledge check" />
-
-          <div className="grid grid-cols-2 gap-3 pt-2">
-            <button
-              type="button"
-              onClick={() => navigate('/electrician/upskilling/renewable-energy-module-7-section-3')}
-              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
-                <ChevronLeft className="h-3 w-3" /> Section 3
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-white truncate">
-                Mode 4 DC fast charging
-              </div>
-            </button>
-            <button
-              type="button"
-              onClick={() =>
-                navigate('/electrician/upskilling/renewable-energy-module-7-section-5')
-              }
-              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
-                Next section <ChevronRight className="h-3 w-3" />
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-black truncate">
-                7.5 DLM at scale & charging clusters
-              </div>
-            </button>
-          </div>
-        </PageFrame>
-      </div>
-    </div>
+            <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+              Next section <ChevronRight className="h-3 w-3" />
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-black truncate">
+              7.5 DLM at scale & charging clusters
+            </div>
+          </button>
+        </div>
+      </HubBody>
+    </HubPage>
   );
 }

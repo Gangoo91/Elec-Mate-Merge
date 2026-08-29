@@ -14,771 +14,1133 @@
  */
 
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
-import { PageFrame, PageHero } from '@/components/college/primitives';
-import { TLDR, ConceptBlock, RegsCallout, CommonMistake, Scenario, KeyTakeaways, FAQ, LearningOutcomes, ContentEyebrow, SectionRule } from '@/components/study-centre/learning';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
-const TITLE = 'Reporting routes — the right responsible person (2.4) | Level 3 Module 1.2.4 | Elec-Mate';
-const DESCRIPTION = 'L3 refresher on H&S reporting routes — internal, RIDDOR, environmental, safeguarding, scheme bodies. Identifying the right responsible person for each kind of issue.';
+const TITLE =
+  'Reporting routes — the right responsible person (2.4) | Level 3 Module 1.2.4 | Elec-Mate';
+const DESCRIPTION =
+  'L3 refresher on H&S reporting routes — internal, RIDDOR, environmental, safeguarding, scheme bodies. Identifying the right responsible person for each kind of issue.';
 
 const checks = [
-  { id: 'l3-m1-s2-sub4-route', question: 'You discover a customer has been bypassing an RCD by clipping the test button down. They\'re elderly and have safeguarding concerns. What\'s the L3 reporting route?', options: [
-    'Leave the RCD as the customer has set it — it is their installation and their choice, and pointing out the danger is enough.',
-    'Reinstate the RCD quietly and say nothing, to avoid embarrassing the customer or causing them anxiety about their safety.',
-    'Multiple parallel routes — restore safety, inform the customer, escalate internally, consider a safeguarding referral, and document everything.',
-    'Report the customer to the HSE for tampering with safety equipment, since interfering with an RCD is a criminal offence.',
-  ], correctIndex: 2, explanation: 'Reinstate the RCD and document with photos; inform the customer or their nominated representative; escalate to your firm\'s contracts manager / H&S manager; consider a local-authority adult social care referral if vulnerability is genuine; record it in the job pack. Multiple parallel duties = multiple parallel reports; the L3 step is recognising which routes apply to which issues.' },
-  { id: 'l3-m1-s2-sub4-internal', question: 'What\'s the difference between an "internal" and an "external" report?', options: [
-    'Internal goes to your firm\'s responsible person; external goes to a regulator such as HSE, the Environment Agency or a scheme body.',
-    'Internal = a verbal report; external = a written report. The only difference is whether the report is spoken or written down.',
-    'Internal = reports made during the working day; external = reports made outside working hours to an out-of-hours line.',
-    'Internal = reports about people; external = reports about equipment. The subject of the report decides which it is.',
-  ], correctIndex: 0, explanation: 'External regulators include HSE for H&S, Environment Agency for pollution, local authority for some EHO matters, and scheme bodies like NICEIC for installation defects. Most issues need both — internal first, then the firm\'s responsible person decides on external, unless the chain has demonstrably failed (then PIDA 1998 protects external escalation).' },
-  { id: 'l3-m1-s2-sub4-near-miss', question: 'You spot a near-miss on site — a colleague nearly fell from a step-up because the rubber feet had perished. No injury. What do you do?', options: [
-    'Nothing formal — no one was hurt, so there is nothing to report; just mention it to the colleague to be careful.',
-    'Report it to the HSE under RIDDOR within ten days, since a near-fall from height is a reportable dangerous occurrence.',
-    'Log it internally, pull the step-up out of service and tag it, notify the firm\'s H&S manager, and check whether the fleet needs the same action.',
-    'Quietly replace the perished feet yourself and carry on, so the step-up stays in use and no one is inconvenienced.',
-  ], correctIndex: 2, explanation: 'Most firms have a near-miss reporting system; if not, write it up. Consider whether the issue affects other equipment in the firm\'s fleet. Near-misses are the leading indicator that prevents incidents — Heinrich\'s ratio (300 near-misses : 30 minor injuries : 1 serious) frames why. The near-miss is the cheapest possible chance to prevent the serious incident.' },
+  {
+    id: 'l3-m1-s2-sub4-route',
+    question:
+      "You discover a customer has been bypassing an RCD by clipping the test button down. They're elderly and have safeguarding concerns. What's the L3 reporting route?",
+    options: [
+      'Leave the RCD as the customer has set it — it is their installation and their choice, and pointing out the danger is enough.',
+      'Reinstate the RCD quietly and say nothing, to avoid embarrassing the customer or causing them anxiety about their safety.',
+      'Multiple parallel routes — restore safety, inform the customer, escalate internally, consider a safeguarding referral, and document everything.',
+      'Report the customer to the HSE for tampering with safety equipment, since interfering with an RCD is a criminal offence.',
+    ],
+    correctIndex: 2,
+    explanation:
+      "Reinstate the RCD and document with photos; inform the customer or their nominated representative; escalate to your firm's contracts manager / H&S manager; consider a local-authority adult social care referral if vulnerability is genuine; record it in the job pack. Multiple parallel duties = multiple parallel reports; the L3 step is recognising which routes apply to which issues.",
+  },
+  {
+    id: 'l3-m1-s2-sub4-internal',
+    question: 'What\'s the difference between an "internal" and an "external" report?',
+    options: [
+      "Internal goes to your firm's responsible person; external goes to a regulator such as HSE, the Environment Agency or a scheme body.",
+      'Internal = a verbal report; external = a written report. The only difference is whether the report is spoken or written down.',
+      'Internal = reports made during the working day; external = reports made outside working hours to an out-of-hours line.',
+      'Internal = reports about people; external = reports about equipment. The subject of the report decides which it is.',
+    ],
+    correctIndex: 0,
+    explanation:
+      "External regulators include HSE for H&S, Environment Agency for pollution, local authority for some EHO matters, and scheme bodies like NICEIC for installation defects. Most issues need both — internal first, then the firm's responsible person decides on external, unless the chain has demonstrably failed (then PIDA 1998 protects external escalation).",
+  },
+  {
+    id: 'l3-m1-s2-sub4-near-miss',
+    question:
+      'You spot a near-miss on site — a colleague nearly fell from a step-up because the rubber feet had perished. No injury. What do you do?',
+    options: [
+      'Nothing formal — no one was hurt, so there is nothing to report; just mention it to the colleague to be careful.',
+      'Report it to the HSE under RIDDOR within ten days, since a near-fall from height is a reportable dangerous occurrence.',
+      "Log it internally, pull the step-up out of service and tag it, notify the firm's H&S manager, and check whether the fleet needs the same action.",
+      'Quietly replace the perished feet yourself and carry on, so the step-up stays in use and no one is inconvenienced.',
+    ],
+    correctIndex: 2,
+    explanation:
+      "Most firms have a near-miss reporting system; if not, write it up. Consider whether the issue affects other equipment in the firm's fleet. Near-misses are the leading indicator that prevents incidents — Heinrich's ratio (300 near-misses : 30 minor injuries : 1 serious) frames why. The near-miss is the cheapest possible chance to prevent the serious incident.",
+  },
 ];
 
 const quizQuestions = [
-  { id: 1, question: 'Who is the "responsible person" for H&S reports within a firm?', options: [
-    'The most junior apprentice, who collects reports and passes them up the chain to management.',
-    'Usually the MHSWR Reg 7 designated competent person — H&S manager, contracts manager, Qualified Supervisor or director.',
-    'The HSE inspector assigned to the firm, who receives all internal reports directly.',
-    'Whoever happens to be the senior person on site that day, with the role passing to the next person when they leave.',
-  ], correctAnswer: 1, explanation: 'Every firm with 5+ employees should have one named in the H&S policy under the Reg 7 designation. Knowing your firm\'s named person is L3-essential.' },
-  { id: 2, question: 'What\'s the route for a RIDDOR-reportable incident?', options: [
-    'The injured worker reports it themselves directly to the HSE, since it is their injury and their account that matters.',
-    'Any operative on site can submit the F2508 online without involving management, to save time.',
-    'Internal first — to the firm\'s Reg 3 responsible person, who makes the F2508 / F2508A submission; you escalate the facts, you don\'t report yourself.',
-    'The customer reports it to their own insurer, who then notifies the HSE on the firm\'s behalf.',
-  ], correctAnswer: 2, explanation: 'The responsible person submits via riddor.hse.gov.uk, or phones 0345 300 9923 for fatalities/specified injuries. RIDDOR responsibility sits with the Reg 3 responsible person — typically the employer. Operatives escalate; the responsible person reports (unless you ARE the responsible person).' },
-  { id: 3, question: 'What\'s the route for an environmental hazard / pollution incident?', options: [
-    'Report it only to the customer, since pollution on private land is a matter for the property owner alone.',
-    'Report it to the HSE on form F2508, the same route as any health and safety incident.',
-    'Report it to the local fire and rescue service, who deal with all environmental hazards.',
-    'Internal to the firm, then external to the Environment Agency (England), SEPA (Scotland) or NRW (Wales) on the relevant pollution hotline.',
-  ], correctAnswer: 3, explanation: 'The EA pollution hotline is 0800 80 70 60 (24/7), covering controlled waters, water pollution, land contamination and hazardous-substance escape; the local authority handles noise nuisance and contaminated land. Environmental reporting has its own dedicated routes separate from H&S.' },
-  { id: 4, question: 'What\'s a "near-miss" and why does it matter?', options: [
-    'An event that could have caused injury but didn\'t — and the leading indicator of where the next incident will happen.',
-    'An injury that just falls short of being RIDDOR-reportable, such as a worker off for six days rather than seven.',
-    'A fault on an installation that is found and corrected before the work is handed over to the customer.',
-    'A delivery of materials that arrives later than planned but still in time to avoid delaying the job.',
-  ], correctAnswer: 0, explanation: 'Examples — a slip without a fall, a near-contact, a tool drop without injury, a small fire that self-extinguished. Internal reporting and review of near-misses is one of the highest-impact preventive activities. Heinrich\'s pyramid (loosely): many near-misses per minor injury, many minor injuries per serious incident. Tackle the near-miss and you reduce the major-incident rate.' },
-  { id: 5, question: 'What\'s the report route for a defective installation discovered during EICR?', options: [
-    'Report it verbally to the customer only, since the EICR records test results and not defects.',
-    'Code it on the EICR (C1 / C2 / C3 / FI), inform the dutyholder, and recommend remedial action with timescales appropriate to the code.',
-    'Report it to the HSE under RIDDOR, since a dangerous installation is a reportable dangerous occurrence.',
-    'Leave it unrecorded if the customer declines the remedial work, since coding a defect they will not fix is pointless.',
-  ], correctAnswer: 1, explanation: 'C1 is immediate danger (make safe on the day), C2 potentially dangerous, C3 improvement recommended, FI further investigation. The EICR itself is the formal report and goes to the dutyholder, whose duty under EAWR Reg 4(2) is to act on the findings. EICR coding is the L3-level professional reporting route for installation defects.' },
-  { id: 6, question: 'When should you report a safeguarding concern about a customer?', options: [
-    'Never — safeguarding is outside an electrician\'s role and raising a concern would breach the customer\'s privacy.',
-    'Only when the customer specifically asks you for help with a personal or welfare matter.',
-    'When you see signs of abuse, neglect, undue pressure or vulnerability beyond the scope of the job — raise it internally and signpost to social care.',
-    'Only after you have investigated the situation yourself and confirmed that abuse or neglect is actually taking place.',
-  ], correctAnswer: 2, explanation: 'Report internally to your firm\'s safeguarding lead (where one exists) or contracts manager, and signpost to local authority adult or children\'s social care if appropriate. The Care Act 2014 (England) places statutory duties on local authorities — you don\'t make the assessment, you raise the concern; they assess.' },
-  { id: 7, question: 'What\'s the route for a defect that may indicate a wider product fault?', options: [
-    'Replace the faulty item and say nothing, since one failure is not enough to suggest a wider problem.',
-    'Report it directly to the HSE under RIDDOR, since a faulty product is a reportable dangerous occurrence.',
-    'Post a warning about the product on social media so other electricians are aware of the fault.',
-    'Report internally; if it looks systemic, escalate to the firm\'s technical lead to report to the manufacturer and the Office for Product Safety and Standards.',
-  ], correctAnswer: 3, explanation: 'A systemic defect (e.g. a brand of MCB failing prematurely across multiple installs) is escalated to the manufacturer, OPSS and the product-safety alert system. Product withdrawals and safety alerts come out of these channels — the trade press covers them and firms maintain product-safety registers.' },
-  { id: 8, question: 'How does the L3 supervisor decide which report route to use?', options: [
-    'Map the issue to its route — and recognise that multiple routes can apply to one incident simultaneously.',
-    'Send every issue to the HSE first, since the HSE decides which other body should deal with it.',
-    'Report everything only internally to the firm, and let the firm decide whether anything needs to go further.',
-    'Choose whichever route is quickest at the time, since the important thing is that the issue is reported somewhere.',
-  ], correctAnswer: 0, explanation: 'Personal injury → RIDDOR + internal; equipment defect → internal + product reporting; environmental → EA/SEPA/NRW + internal; safeguarding → local authority + internal; installation defect → EICR + customer + internal; near-miss → internal log; HSE notice → firm\'s legal/H&S team. The mapping skill is L3-essential — knowing which route applies means concerns get to the right place at the right time.' },
+  {
+    id: 1,
+    question: 'Who is the "responsible person" for H&S reports within a firm?',
+    options: [
+      'The most junior apprentice, who collects reports and passes them up the chain to management.',
+      'Usually the MHSWR Reg 7 designated competent person — H&S manager, contracts manager, Qualified Supervisor or director.',
+      'The HSE inspector assigned to the firm, who receives all internal reports directly.',
+      'Whoever happens to be the senior person on site that day, with the role passing to the next person when they leave.',
+    ],
+    correctAnswer: 1,
+    explanation:
+      "Every firm with 5+ employees should have one named in the H&S policy under the Reg 7 designation. Knowing your firm's named person is L3-essential.",
+  },
+  {
+    id: 2,
+    question: "What's the route for a RIDDOR-reportable incident?",
+    options: [
+      'The injured worker reports it themselves directly to the HSE, since it is their injury and their account that matters.',
+      'Any operative on site can submit the F2508 online without involving management, to save time.',
+      "Internal first — to the firm's Reg 3 responsible person, who makes the F2508 / F2508A submission; you escalate the facts, you don't report yourself.",
+      "The customer reports it to their own insurer, who then notifies the HSE on the firm's behalf.",
+    ],
+    correctAnswer: 2,
+    explanation:
+      'The responsible person submits via riddor.hse.gov.uk, or phones 0345 300 9923 for fatalities/specified injuries. RIDDOR responsibility sits with the Reg 3 responsible person — typically the employer. Operatives escalate; the responsible person reports (unless you ARE the responsible person).',
+  },
+  {
+    id: 3,
+    question: "What's the route for an environmental hazard / pollution incident?",
+    options: [
+      'Report it only to the customer, since pollution on private land is a matter for the property owner alone.',
+      'Report it to the HSE on form F2508, the same route as any health and safety incident.',
+      'Report it to the local fire and rescue service, who deal with all environmental hazards.',
+      'Internal to the firm, then external to the Environment Agency (England), SEPA (Scotland) or NRW (Wales) on the relevant pollution hotline.',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'The EA pollution hotline is 0800 80 70 60 (24/7), covering controlled waters, water pollution, land contamination and hazardous-substance escape; the local authority handles noise nuisance and contaminated land. Environmental reporting has its own dedicated routes separate from H&S.',
+  },
+  {
+    id: 4,
+    question: 'What\'s a "near-miss" and why does it matter?',
+    options: [
+      "An event that could have caused injury but didn't — and the leading indicator of where the next incident will happen.",
+      'An injury that just falls short of being RIDDOR-reportable, such as a worker off for six days rather than seven.',
+      'A fault on an installation that is found and corrected before the work is handed over to the customer.',
+      'A delivery of materials that arrives later than planned but still in time to avoid delaying the job.',
+    ],
+    correctAnswer: 0,
+    explanation:
+      "Examples — a slip without a fall, a near-contact, a tool drop without injury, a small fire that self-extinguished. Internal reporting and review of near-misses is one of the highest-impact preventive activities. Heinrich's pyramid (loosely): many near-misses per minor injury, many minor injuries per serious incident. Tackle the near-miss and you reduce the major-incident rate.",
+  },
+  {
+    id: 5,
+    question: "What's the report route for a defective installation discovered during EICR?",
+    options: [
+      'Report it verbally to the customer only, since the EICR records test results and not defects.',
+      'Code it on the EICR (C1 / C2 / C3 / FI), inform the dutyholder, and recommend remedial action with timescales appropriate to the code.',
+      'Report it to the HSE under RIDDOR, since a dangerous installation is a reportable dangerous occurrence.',
+      'Leave it unrecorded if the customer declines the remedial work, since coding a defect they will not fix is pointless.',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'C1 is immediate danger (make safe on the day), C2 potentially dangerous, C3 improvement recommended, FI further investigation. The EICR itself is the formal report and goes to the dutyholder, whose duty under EAWR Reg 4(2) is to act on the findings. EICR coding is the L3-level professional reporting route for installation defects.',
+  },
+  {
+    id: 6,
+    question: 'When should you report a safeguarding concern about a customer?',
+    options: [
+      "Never — safeguarding is outside an electrician's role and raising a concern would breach the customer's privacy.",
+      'Only when the customer specifically asks you for help with a personal or welfare matter.',
+      'When you see signs of abuse, neglect, undue pressure or vulnerability beyond the scope of the job — raise it internally and signpost to social care.',
+      'Only after you have investigated the situation yourself and confirmed that abuse or neglect is actually taking place.',
+    ],
+    correctAnswer: 2,
+    explanation:
+      "Report internally to your firm's safeguarding lead (where one exists) or contracts manager, and signpost to local authority adult or children's social care if appropriate. The Care Act 2014 (England) places statutory duties on local authorities — you don't make the assessment, you raise the concern; they assess.",
+  },
+  {
+    id: 7,
+    question: "What's the route for a defect that may indicate a wider product fault?",
+    options: [
+      'Replace the faulty item and say nothing, since one failure is not enough to suggest a wider problem.',
+      'Report it directly to the HSE under RIDDOR, since a faulty product is a reportable dangerous occurrence.',
+      'Post a warning about the product on social media so other electricians are aware of the fault.',
+      "Report internally; if it looks systemic, escalate to the firm's technical lead to report to the manufacturer and the Office for Product Safety and Standards.",
+    ],
+    correctAnswer: 3,
+    explanation:
+      'A systemic defect (e.g. a brand of MCB failing prematurely across multiple installs) is escalated to the manufacturer, OPSS and the product-safety alert system. Product withdrawals and safety alerts come out of these channels — the trade press covers them and firms maintain product-safety registers.',
+  },
+  {
+    id: 8,
+    question: 'How does the L3 supervisor decide which report route to use?',
+    options: [
+      'Map the issue to its route — and recognise that multiple routes can apply to one incident simultaneously.',
+      'Send every issue to the HSE first, since the HSE decides which other body should deal with it.',
+      'Report everything only internally to the firm, and let the firm decide whether anything needs to go further.',
+      'Choose whichever route is quickest at the time, since the important thing is that the issue is reported somewhere.',
+    ],
+    correctAnswer: 0,
+    explanation:
+      "Personal injury → RIDDOR + internal; equipment defect → internal + product reporting; environmental → EA/SEPA/NRW + internal; safeguarding → local authority + internal; installation defect → EICR + customer + internal; near-miss → internal log; HSE notice → firm's legal/H&S team. The mapping skill is L3-essential — knowing which route applies means concerns get to the right place at the right time.",
+  },
 ];
 
 const faqs = [
-  { question: 'What if my firm doesn\'t have a named H&S manager?', answer: 'They\'re required to have one if 5+ employees (MHSWR Reg 7). Ask the contracts manager or director who the designated competent person is. If the answer is "no-one", that\'s itself a Reg 7 breach — escalate to a director and consider raising it externally if necessary.' },
-  { question: 'Can I report a concern anonymously?', answer: 'You can request anonymity from the firm\'s responsible person, and the HSE accepts anonymous tip-offs (though they\'re harder to act on). PIDA 1998 protections require you to be identifiable to claim them, but the act of reporting in good faith is protected regardless.' },
-  { question: 'What\'s the timescale for raising a near-miss internally?', answer: 'Same day if practical. The next morning at the latest. Memory and detail fade fast; contemporaneous reports have more value.' },
-  { question: 'Should I copy the customer on internal H&S reports?', answer: 'Generally no — internal reports are for the firm\'s management. The customer gets information relevant to them (e.g. EICR results, RIDDOR reports affecting their premises) through appropriate channels.' },
-  { question: 'How do I report an HSE inspector\'s findings I disagree with?', answer: 'Through the firm\'s legal / H&S team. Improvement notices have a 21-day appeal route to Employment Tribunal; FFI invoices have an internal HSE disputes panel. Don\'t engage directly with HSE on the firm\'s behalf without the firm\'s authority.' },
-  { question: 'Are scheme bodies (NICEIC, NAPIT) reporting bodies?', answer: 'They\'re registration bodies for installer competence, not regulators with statutory powers. But a serious installation defect or fraudulent cert can be reported to them and they can suspend / withdraw a firm\'s registration. Often the practical path for installer-level concerns when the firm itself is the issue.' },
-  { question: 'How long should we keep records of an internal incident report?', answer: 'RIDDOR records are statutorily 3 years (Reg 12), but Defective Premises Act / BSA 2022 considerations push residential incident records to 30 years in practice. Most firms now retain incident records indefinitely on digital backup.' },
-  { question: 'If we self-report a breach to the HSE, does it reduce the fine?', answer: 'Self-reporting and cooperation are explicit mitigating factors in the Sentencing Council Definitive Guideline for Health and Safety Offences (2016). They don\'t guarantee no prosecution, but they reduce the band considerably. The HSE Enforcement Management Model also gives weight to voluntary remediation. Honest self-reporting is almost always the lower-cost path.' },
-  { question: 'What\'s the "Concerns and Advice" line at HSE for?', answer: 'It\'s for members of the public, workers and other interested parties to raise safety concerns about workplaces. Phone 0300 003 1647 or web form at hse.gov.uk/contact/concerns. The HSE triages and decides whether to act. Useful when internal escalation has failed and external route is appropriate under PIDA 1998.' },
-  { question: 'How does the "responsible person" under RIDDOR differ from the MHSWR Reg 7 competent person?', answer: 'Different roles. The MHSWR Reg 7 competent person is the firm’s designated H&S adviser who assists in undertaking H&S measures generally. The RIDDOR Reg 3 responsible person is whoever is responsible for making the formal report under that regulation — usually the employer (for employee incidents), the self-employed person (for themselves), or the person in control of premises (for some categories). The two can be the same person in practice but the statutory hooks are distinct. The L3 operative escalates to whichever role applies to the incident in front of them.' },
-  { question: 'Are we required to publish near-miss data internally to operatives?', answer: 'Not by name, but Reg 13 of MHSWR requires the employer to provide employees with comprehensible information on the risks identified by the assessment. Many firms anonymise near-miss data and share monthly bulletins or toolbox talks summarising trends. Transparent near-miss reporting is one of the strongest leading indicators of safety culture; firms that hide near-miss data tend to be the ones where the next significant incident is brewing.' },
-  { question: 'What happens if the firm refuses to submit a RIDDOR report I’ve raised?', answer: 'Document the refusal in writing. Escalate to a director if the responsible person is refusing. If the firm persists in refusing what you reasonably believe is a reportable matter, PIDA 1998 protects external disclosure to the HSE (a prescribed person under s.43F ERA 1996). The HSE concerns line at 0300 003 1647 or the online form is the route. Failure to report is itself a separate offence under RIDDOR Reg 6 and HASAWA s.33.' },
+  {
+    question: "What if my firm doesn't have a named H&S manager?",
+    answer:
+      'They\'re required to have one if 5+ employees (MHSWR Reg 7). Ask the contracts manager or director who the designated competent person is. If the answer is "no-one", that\'s itself a Reg 7 breach — escalate to a director and consider raising it externally if necessary.',
+  },
+  {
+    question: 'Can I report a concern anonymously?',
+    answer:
+      "You can request anonymity from the firm's responsible person, and the HSE accepts anonymous tip-offs (though they're harder to act on). PIDA 1998 protections require you to be identifiable to claim them, but the act of reporting in good faith is protected regardless.",
+  },
+  {
+    question: "What's the timescale for raising a near-miss internally?",
+    answer:
+      'Same day if practical. The next morning at the latest. Memory and detail fade fast; contemporaneous reports have more value.',
+  },
+  {
+    question: 'Should I copy the customer on internal H&S reports?',
+    answer:
+      "Generally no — internal reports are for the firm's management. The customer gets information relevant to them (e.g. EICR results, RIDDOR reports affecting their premises) through appropriate channels.",
+  },
+  {
+    question: "How do I report an HSE inspector's findings I disagree with?",
+    answer:
+      "Through the firm's legal / H&S team. Improvement notices have a 21-day appeal route to Employment Tribunal; FFI invoices have an internal HSE disputes panel. Don't engage directly with HSE on the firm's behalf without the firm's authority.",
+  },
+  {
+    question: 'Are scheme bodies (NICEIC, NAPIT) reporting bodies?',
+    answer:
+      "They're registration bodies for installer competence, not regulators with statutory powers. But a serious installation defect or fraudulent cert can be reported to them and they can suspend / withdraw a firm's registration. Often the practical path for installer-level concerns when the firm itself is the issue.",
+  },
+  {
+    question: 'How long should we keep records of an internal incident report?',
+    answer:
+      'RIDDOR records are statutorily 3 years (Reg 12), but Defective Premises Act / BSA 2022 considerations push residential incident records to 30 years in practice. Most firms now retain incident records indefinitely on digital backup.',
+  },
+  {
+    question: 'If we self-report a breach to the HSE, does it reduce the fine?',
+    answer:
+      "Self-reporting and cooperation are explicit mitigating factors in the Sentencing Council Definitive Guideline for Health and Safety Offences (2016). They don't guarantee no prosecution, but they reduce the band considerably. The HSE Enforcement Management Model also gives weight to voluntary remediation. Honest self-reporting is almost always the lower-cost path.",
+  },
+  {
+    question: 'What\'s the "Concerns and Advice" line at HSE for?',
+    answer:
+      "It's for members of the public, workers and other interested parties to raise safety concerns about workplaces. Phone 0300 003 1647 or web form at hse.gov.uk/contact/concerns. The HSE triages and decides whether to act. Useful when internal escalation has failed and external route is appropriate under PIDA 1998.",
+  },
+  {
+    question:
+      'How does the "responsible person" under RIDDOR differ from the MHSWR Reg 7 competent person?',
+    answer:
+      'Different roles. The MHSWR Reg 7 competent person is the firm’s designated H&S adviser who assists in undertaking H&S measures generally. The RIDDOR Reg 3 responsible person is whoever is responsible for making the formal report under that regulation — usually the employer (for employee incidents), the self-employed person (for themselves), or the person in control of premises (for some categories). The two can be the same person in practice but the statutory hooks are distinct. The L3 operative escalates to whichever role applies to the incident in front of them.',
+  },
+  {
+    question: 'Are we required to publish near-miss data internally to operatives?',
+    answer:
+      'Not by name, but Reg 13 of MHSWR requires the employer to provide employees with comprehensible information on the risks identified by the assessment. Many firms anonymise near-miss data and share monthly bulletins or toolbox talks summarising trends. Transparent near-miss reporting is one of the strongest leading indicators of safety culture; firms that hide near-miss data tend to be the ones where the next significant incident is brewing.',
+  },
+  {
+    question: 'What happens if the firm refuses to submit a RIDDOR report I’ve raised?',
+    answer:
+      'Document the refusal in writing. Escalate to a director if the responsible person is refusing. If the firm persists in refusing what you reasonably believe is a reportable matter, PIDA 1998 protects external disclosure to the HSE (a prescribed person under s.43F ERA 1996). The HSE concerns line at 0300 003 1647 or the online form is the route. Failure to report is itself a separate offence under RIDDOR Reg 6 and HASAWA s.33.',
+  },
 ];
 
 export default function Sub4() {
   const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
   return (
-    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
-      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
-        <PageFrame>
-          <button onClick={() => navigate('/study-centre/apprentice/level3-module1-section2')} className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"><ArrowLeft className="h-4 w-4" /> Section 2</button>
-          <PageHero eyebrow="Module 1 · Section 2 · Subsection 4" title="Reporting routes — the right responsible person" description="Remember from L2 — escalate to a responsible person. At L3 the depth is identifying WHICH responsible person for which kind of issue, and recognising that multiple parallel routes often apply simultaneously." tone="emerald" />
-          <TLDR points={[
+    <HubPage>
+      <HubMasthead
+        section="Module 1 · Section 2 · Subsection 4"
+        title="Reporting routes — the right responsible person"
+        backTo="/study-centre/apprentice/level3-module1-section2"
+      />
+      <HubBody>
+        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
+          {
+            'Remember from L2 — escalate to a responsible person. At L3 the depth is identifying WHICH responsible person for which kind of issue, and recognising that multiple parallel routes often apply simultaneously.'
+          }
+        </p>
+
+        <TLDR
+          points={[
             'Multiple reporting routes exist in parallel — internal (firm), RIDDOR (HSE), environmental (EA/SEPA/NRW), safeguarding (local authority), scheme body (NICEIC/NAPIT), product safety (OPSS). One incident often needs several.',
             "The 'responsible person' under MHSWR Reg 7 is the firm's designated competent person — usually H&S manager, contracts manager, Qualified Supervisor or director.",
-            "Internal first is the discipline — except where internal escalation has demonstrably failed (then PIDA 1998 protects external).",
-            "Near-miss reports are the highest-value preventive activity. Whirlpool £15m (2018) shows unreported near-misses become aggravating factors after a fatality.",
-            "EICR coding (C1 / C2 / C3 / FI) is the L3-professional report route for installation defects — formal, structured, addressed to the dutyholder.",
-            "HASAWA s.20 inspector interviews are not the same as PACE-cautioned interviews. Know which you’re in before answering questions that probe your own liability.",
-          ]} />
-          <LearningOutcomes outcomes={[
-            "Identify the responsible persons for different categories of H&S report — internal, RIDDOR, environmental, safeguarding, product, scheme.",
-            "Apply the principle of parallel reporting (one incident = multiple appropriate routes).",
-            "Distinguish near-miss from incident and apply same-day internal reporting discipline.",
-            "Identify the EICR coding system as the formal report route for installation defects.",
-            "Apply Care Act 2014 safeguarding awareness — raising the concern, not making the assessment.",
-            "Recognise product-safety reporting routes via Office for Product Safety and Standards (OPSS) and trade body alerts.",
-          ]} initialVisibleCount={3} />
+            'Internal first is the discipline — except where internal escalation has demonstrably failed (then PIDA 1998 protects external).',
+            'Near-miss reports are the highest-value preventive activity. Whirlpool £15m (2018) shows unreported near-misses become aggravating factors after a fatality.',
+            'EICR coding (C1 / C2 / C3 / FI) is the L3-professional report route for installation defects — formal, structured, addressed to the dutyholder.',
+            'HASAWA s.20 inspector interviews are not the same as PACE-cautioned interviews. Know which you’re in before answering questions that probe your own liability.',
+          ]}
+        />
+        <LearningOutcomes
+          outcomes={[
+            'Identify the responsible persons for different categories of H&S report — internal, RIDDOR, environmental, safeguarding, product, scheme.',
+            'Apply the principle of parallel reporting (one incident = multiple appropriate routes).',
+            'Distinguish near-miss from incident and apply same-day internal reporting discipline.',
+            'Identify the EICR coding system as the formal report route for installation defects.',
+            'Apply Care Act 2014 safeguarding awareness — raising the concern, not making the assessment.',
+            'Recognise product-safety reporting routes via Office for Product Safety and Standards (OPSS) and trade body alerts.',
+          ]}
+          initialVisibleCount={3}
+        />
 
-          <ContentEyebrow>Internal reporting — the firm's responsible person</ContentEyebrow>
-          <ConceptBlock title="MHSWR Reg 7 designated competent person" plainEnglish="Every firm with 5+ employees must have a designated competent person to assist in undertaking H&S measures. This is your first internal escalation address — usually the H&S manager, contracts manager, Qualified Supervisor or a director." onSite="Find out who this is for YOUR firm on day one. The H&S policy will name them. If the policy doesn\'t exist or doesn\'t name them, that\'s itself a Reg 7 / s.2(3) breach to flag.">
-            <p>Internal report categories:</p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Incidents and near-misses</strong> — same day report.</li>
-              <li><strong>Equipment defects</strong> — pull from service, tag, internal report.</li>
-              <li><strong>Procedure failures</strong> — RAMS doesn&apos;t match the site, instructions missing, training gap identified.</li>
-              <li><strong>Customer / site concerns</strong> — vulnerable persons, dangerous occupant behaviour, safeguarding indicators.</li>
-              <li><strong>Inspector visit</strong> — immediate phone notification of any HSE / EA visit.</li>
-              <li><strong>Concerns about colleagues</strong> — competence, behaviour, fitness for duty.</li>
-            </ul>
-          </ConceptBlock>
+        <ContentEyebrow>Internal reporting — the firm's responsible person</ContentEyebrow>
+        <ConceptBlock
+          title="MHSWR Reg 7 designated competent person"
+          plainEnglish="Every firm with 5+ employees must have a designated competent person to assist in undertaking H&S measures. This is your first internal escalation address — usually the H&S manager, contracts manager, Qualified Supervisor or a director."
+          onSite="Find out who this is for YOUR firm on day one. The H&S policy will name them. If the policy doesn\'t exist or doesn\'t name them, that\'s itself a Reg 7 / s.2(3) breach to flag."
+        >
+          <p>Internal report categories:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Incidents and near-misses</strong> — same day report.
+            </li>
+            <li>
+              <strong>Equipment defects</strong> — pull from service, tag, internal report.
+            </li>
+            <li>
+              <strong>Procedure failures</strong> — RAMS doesn&apos;t match the site, instructions
+              missing, training gap identified.
+            </li>
+            <li>
+              <strong>Customer / site concerns</strong> — vulnerable persons, dangerous occupant
+              behaviour, safeguarding indicators.
+            </li>
+            <li>
+              <strong>Inspector visit</strong> — immediate phone notification of any HSE / EA visit.
+            </li>
+            <li>
+              <strong>Concerns about colleagues</strong> — competence, behaviour, fitness for duty.
+            </li>
+          </ul>
+        </ConceptBlock>
 
-          <ConceptBlock title="Near-miss culture" plainEnglish="Near-misses are events that could have caused injury but didn\'t. Reporting them is the cheapest way to prevent the next incident — Heinrich\'s loose ratio of 300:30:1 (near-misses : minor : serious) is a memory aid." onSite="Most firms have an electronic near-miss reporting form. If yours doesn\'t, write a short note in the job pack. Make it routine — if the only thing that gets reported is actual injury, the firm misses the leading indicators.">
-            <p>What counts as a near-miss worth reporting:</p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Slip without a fall.</li>
-              <li>Tool drop from height with no injury.</li>
-              <li>Stepladder wobble that didn&apos;t fall.</li>
-              <li>Cable detector miss that didn&apos;t lead to a strike.</li>
-              <li>Small fire that self-extinguished.</li>
-              <li>Tripped breaker that wasn&apos;t expected.</li>
-              <li>Safe-isolation lock-off bypass discovered.</li>
-              <li>Customer behaviour that put you in difficulty (running children near work area, aggressive interaction).</li>
-            </ul>
-          </ConceptBlock>
+        <ConceptBlock
+          title="Near-miss culture"
+          plainEnglish="Near-misses are events that could have caused injury but didn\'t. Reporting them is the cheapest way to prevent the next incident — Heinrich\'s loose ratio of 300:30:1 (near-misses : minor : serious) is a memory aid."
+          onSite="Most firms have an electronic near-miss reporting form. If yours doesn\'t, write a short note in the job pack. Make it routine — if the only thing that gets reported is actual injury, the firm misses the leading indicators."
+        >
+          <p>What counts as a near-miss worth reporting:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Slip without a fall.</li>
+            <li>Tool drop from height with no injury.</li>
+            <li>Stepladder wobble that didn&apos;t fall.</li>
+            <li>Cable detector miss that didn&apos;t lead to a strike.</li>
+            <li>Small fire that self-extinguished.</li>
+            <li>Tripped breaker that wasn&apos;t expected.</li>
+            <li>Safe-isolation lock-off bypass discovered.</li>
+            <li>
+              Customer behaviour that put you in difficulty (running children near work area,
+              aggressive interaction).
+            </li>
+          </ul>
+        </ConceptBlock>
 
-          <RegsCallout source="Management of Health and Safety at Work Regulations 1999 — Reg 7(1)" clause={<>"Every employer shall, subject to paragraphs (6) and (7), appoint one or more competent persons to assist him in undertaking the measures he needs to take to comply with the requirements and prohibitions imposed upon him by or under the relevant statutory provisions and by Part II of the Fire Precautions (Workplace) Regulations 1997."</>} meaning={<>The Reg 7 competent person is the firm&apos;s &quot;responsible person&quot; for H&amp;S reporting. Reg 7(8) defines competence as having &quot;sufficient training and experience or knowledge and other qualities&quot; for the role. In a small electrical firm this is often the Qualified Supervisor (NICEIC / NAPIT designation); in a larger firm a separate H&amp;S manager.</>} cite="Source: Management of Health and Safety at Work Regulations 1999 (SI 1999/3242), Reg 7." />
+        <RegsCallout
+          source="Management of Health and Safety at Work Regulations 1999 — Reg 7(1)"
+          clause={
+            <>
+              "Every employer shall, subject to paragraphs (6) and (7), appoint one or more
+              competent persons to assist him in undertaking the measures he needs to take to comply
+              with the requirements and prohibitions imposed upon him by or under the relevant
+              statutory provisions and by Part II of the Fire Precautions (Workplace) Regulations
+              1997."
+            </>
+          }
+          meaning={
+            <>
+              The Reg 7 competent person is the firm&apos;s &quot;responsible person&quot; for
+              H&amp;S reporting. Reg 7(8) defines competence as having &quot;sufficient training and
+              experience or knowledge and other qualities&quot; for the role. In a small electrical
+              firm this is often the Qualified Supervisor (NICEIC / NAPIT designation); in a larger
+              firm a separate H&amp;S manager.
+            </>
+          }
+          cite="Source: Management of Health and Safety at Work Regulations 1999 (SI 1999/3242), Reg 7."
+        />
 
-          <InlineCheck {...checks[0]} />
+        <InlineCheck {...checks[0]} />
 
-          <SectionRule />
-          <ContentEyebrow>External reporting routes</ContentEyebrow>
-          <ConceptBlock title="Multiple regulators, multiple routes" plainEnglish="External reports go to the appropriate regulator depending on the issue type. RIDDOR-reportable injuries → HSE. Pollution → Environment Agency / SEPA / NRW. Safeguarding → local authority. Product safety → manufacturer + OPSS. Installation defects with scheme implications → NICEIC / NAPIT. Each has its own route and timescale." onSite="The L3 mapping skill: when an issue arises, identify which regulator(s) and route(s) apply. Internal first; then external via the firm\'s responsible person; then direct external (PIDA-protected) only if internal has failed.">
-            <p>External regulator quick-reference:</p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>HSE</strong> — workplace H&amp;S, RIDDOR. Online: hse.gov.uk; phone: 0345 300 9923.</li>
-              <li><strong>Local Authority EHO</strong> — H&amp;S in retail/office/leisure/residential; statutory nuisance.</li>
-              <li><strong>Environment Agency</strong> (England) — pollution, waste, contaminated land. 0800 80 70 60 (24/7).</li>
-              <li><strong>SEPA</strong> (Scotland) — same scope, separate body.</li>
-              <li><strong>NRW</strong> (Wales) — same scope, separate body.</li>
-              <li><strong>Local Authority Adult/Children&apos;s Social Care</strong> — safeguarding referrals.</li>
-              <li><strong>OPSS</strong> — product safety alerts and recalls.</li>
-              <li><strong>NICEIC / NAPIT / Stroma / ELECSA</strong> — installer competence schemes; complaints and defective work.</li>
-              <li><strong>Building Safety Regulator</strong> (BSR, within HSE) — HRRB matters under BSA 2022.</li>
-              <li><strong>Fire and Rescue Service</strong> — RRFSO 2005 fire safety enforcement.</li>
-              <li><strong>Gas Safe Register</strong> — gas safety / unauthorised gas work.</li>
-            </ul>
-          </ConceptBlock>
+        <SectionRule />
+        <ContentEyebrow>External reporting routes</ContentEyebrow>
+        <ConceptBlock
+          title="Multiple regulators, multiple routes"
+          plainEnglish="External reports go to the appropriate regulator depending on the issue type. RIDDOR-reportable injuries → HSE. Pollution → Environment Agency / SEPA / NRW. Safeguarding → local authority. Product safety → manufacturer + OPSS. Installation defects with scheme implications → NICEIC / NAPIT. Each has its own route and timescale."
+          onSite="The L3 mapping skill: when an issue arises, identify which regulator(s) and route(s) apply. Internal first; then external via the firm\'s responsible person; then direct external (PIDA-protected) only if internal has failed."
+        >
+          <p>External regulator quick-reference:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>HSE</strong> — workplace H&amp;S, RIDDOR. Online: hse.gov.uk; phone: 0345 300
+              9923.
+            </li>
+            <li>
+              <strong>Local Authority EHO</strong> — H&amp;S in retail/office/leisure/residential;
+              statutory nuisance.
+            </li>
+            <li>
+              <strong>Environment Agency</strong> (England) — pollution, waste, contaminated land.
+              0800 80 70 60 (24/7).
+            </li>
+            <li>
+              <strong>SEPA</strong> (Scotland) — same scope, separate body.
+            </li>
+            <li>
+              <strong>NRW</strong> (Wales) — same scope, separate body.
+            </li>
+            <li>
+              <strong>Local Authority Adult/Children&apos;s Social Care</strong> — safeguarding
+              referrals.
+            </li>
+            <li>
+              <strong>OPSS</strong> — product safety alerts and recalls.
+            </li>
+            <li>
+              <strong>NICEIC / NAPIT / Stroma / ELECSA</strong> — installer competence schemes;
+              complaints and defective work.
+            </li>
+            <li>
+              <strong>Building Safety Regulator</strong> (BSR, within HSE) — HRRB matters under BSA
+              2022.
+            </li>
+            <li>
+              <strong>Fire and Rescue Service</strong> — RRFSO 2005 fire safety enforcement.
+            </li>
+            <li>
+              <strong>Gas Safe Register</strong> — gas safety / unauthorised gas work.
+            </li>
+          </ul>
+        </ConceptBlock>
 
-          <ConceptBlock title="EICR — the formal report route for installation defects" plainEnglish="Electrical Installation Condition Reports are the L3-relevant formal route for reporting installation defects. The coding system (C1/C2/C3/FI) is the structured way to communicate severity to the dutyholder." onSite="C1 = immediate danger; remedial action required immediately, often before leaving site. C2 = potentially dangerous; remedial action urgent. C3 = improvement recommended; not unsafe but doesn\'t comply with current edition. FI = further investigation needed. The EICR goes to the dutyholder; their EAWR Reg 4(2) duty drives the response.">
-            <p>EICR coding shorthand:</p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>C1 — Danger present</strong>. Immediate action — make safe on the day or escalate.</li>
-              <li><strong>C2 — Potentially dangerous</strong>. Remedial action urgent.</li>
-              <li><strong>C3 — Improvement recommended</strong>. Not currently unsafe but doesn&apos;t meet current edition.</li>
-              <li><strong>FI — Further investigation</strong>. Cause of finding cannot be established without intrusive work.</li>
-              <li>Overall outcome: Satisfactory only if no C1 / C2 / FI present.</li>
-            </ul>
-          </ConceptBlock>
+        <ConceptBlock
+          title="EICR — the formal report route for installation defects"
+          plainEnglish="Electrical Installation Condition Reports are the L3-relevant formal route for reporting installation defects. The coding system (C1/C2/C3/FI) is the structured way to communicate severity to the dutyholder."
+          onSite="C1 = immediate danger; remedial action required immediately, often before leaving site. C2 = potentially dangerous; remedial action urgent. C3 = improvement recommended; not unsafe but doesn\'t comply with current edition. FI = further investigation needed. The EICR goes to the dutyholder; their EAWR Reg 4(2) duty drives the response."
+        >
+          <p>EICR coding shorthand:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>C1 — Danger present</strong>. Immediate action — make safe on the day or
+              escalate.
+            </li>
+            <li>
+              <strong>C2 — Potentially dangerous</strong>. Remedial action urgent.
+            </li>
+            <li>
+              <strong>C3 — Improvement recommended</strong>. Not currently unsafe but doesn&apos;t
+              meet current edition.
+            </li>
+            <li>
+              <strong>FI — Further investigation</strong>. Cause of finding cannot be established
+              without intrusive work.
+            </li>
+            <li>Overall outcome: Satisfactory only if no C1 / C2 / FI present.</li>
+          </ul>
+        </ConceptBlock>
 
-          <InlineCheck {...checks[1]} />
+        <InlineCheck {...checks[1]} />
 
-          <SectionRule />
-          <ContentEyebrow>Safeguarding awareness</ContentEyebrow>
-          <ConceptBlock title="Care Act 2014 — raise the concern, don\'t make the assessment" plainEnglish="Visiting electricians are sometimes the only outside contact a vulnerable adult has in a week. Recognising signs of abuse, neglect or undue pressure — and knowing how to raise it — is a real-world part of L3 trade work, even though it isn\'t the C&G syllabus headline." onSite="If something doesn\'t feel right — bruising the customer doesn\'t explain, a relative who pushes the customer around verbally, evidence of self-neglect, signs of cognitive impairment with no support visible — raise it. Internally to your firm; externally to local authority adult social care if you believe there\'s a safeguarding need. You raise; they assess.">
-            <p>Practical signposting:</p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Internal — firm&apos;s safeguarding lead (where one exists) or contracts manager.</li>
-              <li>Local authority — adult social care (Care Act 2014) for adults; children&apos;s social care (Children Act 1989) for children.</li>
-              <li>Police — if you witness an immediate safeguarding crime in progress (assault etc).</li>
-              <li>NSPCC helpline — if children are at risk and immediate police isn&apos;t appropriate.</li>
-              <li>Document what you observed and what you reported. Don&apos;t investigate or interview the suspected victim.</li>
-            </ul>
-          </ConceptBlock>
+        <SectionRule />
+        <ContentEyebrow>Safeguarding awareness</ContentEyebrow>
+        <ConceptBlock
+          title="Care Act 2014 — raise the concern, don\'t make the assessment"
+          plainEnglish="Visiting electricians are sometimes the only outside contact a vulnerable adult has in a week. Recognising signs of abuse, neglect or undue pressure — and knowing how to raise it — is a real-world part of L3 trade work, even though it isn\'t the C&G syllabus headline."
+          onSite="If something doesn\'t feel right — bruising the customer doesn\'t explain, a relative who pushes the customer around verbally, evidence of self-neglect, signs of cognitive impairment with no support visible — raise it. Internally to your firm; externally to local authority adult social care if you believe there\'s a safeguarding need. You raise; they assess."
+        >
+          <p>Practical signposting:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              Internal — firm&apos;s safeguarding lead (where one exists) or contracts manager.
+            </li>
+            <li>
+              Local authority — adult social care (Care Act 2014) for adults; children&apos;s social
+              care (Children Act 1989) for children.
+            </li>
+            <li>
+              Police — if you witness an immediate safeguarding crime in progress (assault etc).
+            </li>
+            <li>
+              NSPCC helpline — if children are at risk and immediate police isn&apos;t appropriate.
+            </li>
+            <li>
+              Document what you observed and what you reported. Don&apos;t investigate or interview
+              the suspected victim.
+            </li>
+          </ul>
+        </ConceptBlock>
 
-          <InlineCheck {...checks[2]} />
+        <InlineCheck {...checks[2]} />
 
-          <SectionRule />
-          <ContentEyebrow>HSE concerns line — when external is the right route</ContentEyebrow>
+        <SectionRule />
+        <ContentEyebrow>HSE concerns line — when external is the right route</ContentEyebrow>
 
-          <ConceptBlock
-            title="The 0300 003 1647 line and the online concerns form"
-            plainEnglish="The HSE operates a Concerns and Advice line for members of the public, workers and others who want to report safety issues. Phone 0300 003 1647; web form via hse.gov.uk/contact/concerns. Reports can be anonymous (though anonymous reports are harder to act on). The HSE doesn’t investigate every concern — they triage by risk, evidence and pattern — but every concern is logged and contributes to the inspector’s intelligence picture."
-            onSite="At L3 the external HSE concerns route is the option you reach for when internal escalation has demonstrably failed and the issue is significant enough to warrant external attention. PIDA 1998 protects the disclosure provided the conditions are met. Use it sparingly and seriously — the HSE relies on credible reporters and discounts vexatious or trivial complaints quickly."
-          >
-            <p>What to include in an HSE concerns report:</p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Specific facts</strong> — what, where, when, who, how often. Photos if
-                you have them lawfully.
-              </li>
-              <li>
-                <strong>Regulation breached</strong> — name the relevant statute or regulation
-                if you know it.
-              </li>
-              <li>
-                <strong>Internal escalation history</strong> — what you raised internally, when,
-                response received.
-              </li>
-              <li>
-                <strong>Risk and harm</strong> — what could happen, who is at risk, has anyone
-                been hurt yet.
-              </li>
-              <li>
-                <strong>Your relationship to the issue</strong> — worker, contractor, customer,
-                neighbour, member of the public.
-              </li>
-              <li>
-                <strong>Contact details</strong> — anonymous reporting is allowed but
-                contactable reports get follow-up that anonymous can&apos;t.
-              </li>
-            </ul>
-          </ConceptBlock>
+        <ConceptBlock
+          title="The 0300 003 1647 line and the online concerns form"
+          plainEnglish="The HSE operates a Concerns and Advice line for members of the public, workers and others who want to report safety issues. Phone 0300 003 1647; web form via hse.gov.uk/contact/concerns. Reports can be anonymous (though anonymous reports are harder to act on). The HSE doesn’t investigate every concern — they triage by risk, evidence and pattern — but every concern is logged and contributes to the inspector’s intelligence picture."
+          onSite="At L3 the external HSE concerns route is the option you reach for when internal escalation has demonstrably failed and the issue is significant enough to warrant external attention. PIDA 1998 protects the disclosure provided the conditions are met. Use it sparingly and seriously — the HSE relies on credible reporters and discounts vexatious or trivial complaints quickly."
+        >
+          <p>What to include in an HSE concerns report:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Specific facts</strong> — what, where, when, who, how often. Photos if you
+              have them lawfully.
+            </li>
+            <li>
+              <strong>Regulation breached</strong> — name the relevant statute or regulation if you
+              know it.
+            </li>
+            <li>
+              <strong>Internal escalation history</strong> — what you raised internally, when,
+              response received.
+            </li>
+            <li>
+              <strong>Risk and harm</strong> — what could happen, who is at risk, has anyone been
+              hurt yet.
+            </li>
+            <li>
+              <strong>Your relationship to the issue</strong> — worker, contractor, customer,
+              neighbour, member of the public.
+            </li>
+            <li>
+              <strong>Contact details</strong> — anonymous reporting is allowed but contactable
+              reports get follow-up that anonymous can&apos;t.
+            </li>
+          </ul>
+        </ConceptBlock>
 
-          <SectionRule />
-          <ContentEyebrow>Scheme body complaints — when the firm is the issue</ContentEyebrow>
+        <SectionRule />
+        <ContentEyebrow>Scheme body complaints — when the firm is the issue</ContentEyebrow>
 
-          <ConceptBlock
-            title="NICEIC, NAPIT and the scheme’s complaint route"
-            plainEnglish="Competent Person Schemes — NICEIC, NAPIT, Stroma, ELECSA, Certsure — are voluntary registration bodies that audit firm and Qualified Supervisor competence. They run formal complaints processes. A complaint can result in re-audit, additional inspection visits, training requirements, suspension or removal of registration. For installation defects on registered firm work, the scheme is often the most practically effective route — particularly when the customer can’t get the firm to put right defective work."
-            onSite="At L3 the scheme route comes up most often when a customer engages your firm to remediate work done by another scheme-registered firm. Your firm typically has a duty to flag the defective work to the scheme; the scheme then investigates. Anonymity for the reporting firm is normally protected. The route is used regularly and works."
-          >
-            <p>When to use the scheme complaint route:</p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Defective work by a scheme-registered firm</strong> that the firm
-                won&apos;t put right when challenged.
-              </li>
-              <li>
-                <strong>Fraudulent certificates</strong> — EICs / EICRs / Minor Works that
-                don&apos;t reflect work actually done.
-              </li>
-              <li>
-                <strong>Work claimed as compliant under Approved Doc P that wasn&apos;t
-                notified</strong> — the scheme should have notified Building Control on the
-                firm&apos;s behalf.
-              </li>
-              <li>
-                <strong>Use of scheme branding by an unregistered firm</strong> — passing-off
-                fraud.
-              </li>
-              <li>
-                <strong>Pattern of poor work across multiple jobs</strong> by a registered
-                Qualified Supervisor.
-              </li>
-              <li>
-                <strong>Failure to honour the scheme&apos;s warranty / consumer-protection
-                provisions</strong>.
-              </li>
-            </ul>
-          </ConceptBlock>
+        <ConceptBlock
+          title="NICEIC, NAPIT and the scheme’s complaint route"
+          plainEnglish="Competent Person Schemes — NICEIC, NAPIT, Stroma, ELECSA, Certsure — are voluntary registration bodies that audit firm and Qualified Supervisor competence. They run formal complaints processes. A complaint can result in re-audit, additional inspection visits, training requirements, suspension or removal of registration. For installation defects on registered firm work, the scheme is often the most practically effective route — particularly when the customer can’t get the firm to put right defective work."
+          onSite="At L3 the scheme route comes up most often when a customer engages your firm to remediate work done by another scheme-registered firm. Your firm typically has a duty to flag the defective work to the scheme; the scheme then investigates. Anonymity for the reporting firm is normally protected. The route is used regularly and works."
+        >
+          <p>When to use the scheme complaint route:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Defective work by a scheme-registered firm</strong> that the firm won&apos;t
+              put right when challenged.
+            </li>
+            <li>
+              <strong>Fraudulent certificates</strong> — EICs / EICRs / Minor Works that don&apos;t
+              reflect work actually done.
+            </li>
+            <li>
+              <strong>
+                Work claimed as compliant under Approved Doc P that wasn&apos;t notified
+              </strong>{' '}
+              — the scheme should have notified Building Control on the firm&apos;s behalf.
+            </li>
+            <li>
+              <strong>Use of scheme branding by an unregistered firm</strong> — passing-off fraud.
+            </li>
+            <li>
+              <strong>Pattern of poor work across multiple jobs</strong> by a registered Qualified
+              Supervisor.
+            </li>
+            <li>
+              <strong>
+                Failure to honour the scheme&apos;s warranty / consumer-protection provisions
+              </strong>
+              .
+            </li>
+          </ul>
+        </ConceptBlock>
 
-          <SectionRule />
-          <ContentEyebrow>Pre-qualification questionnaires — the commercial-impact layer</ContentEyebrow>
+        <SectionRule />
+        <ContentEyebrow>
+          Pre-qualification questionnaires — the commercial-impact layer
+        </ContentEyebrow>
 
-          <ConceptBlock
-            title="Why your firm’s reporting record affects what work you can bid for"
-            plainEnglish="Major clients (housing associations, NHS trusts, local authorities, framework agreements like CHAS / Constructionline / SafeContractor / Achilles) operate Pre-Qualification Questionnaires (PQQ) that ask for declarations of HSE notices, RIDDOR reports, prosecutions, FFI invoices and disciplinary actions in the past 3-5 years. A clean record opens doors; a poor record closes them. The PQQ effect is often the firm’s biggest commercial driver of safety culture — bigger than fines."
-            onSite="At L3 you contribute to the firm’s PQQ record every time you raise a near-miss, close out an action, follow safe-isolation procedures and document the work properly. The accumulated record across the firm becomes the evidence at the next PQQ submission. The firm’s ability to bid for the next major framework depends on what you and your colleagues did over the past 3 years."
-          >
-            <p>What PQQs typically ask:</p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>HSE notices in past 3-5 years</strong> — declared with detail.
-              </li>
-              <li>
-                <strong>Convictions for H&amp;S offences</strong> — including under HASAWA,
-                EAWR, CDM.
-              </li>
-              <li>
-                <strong>RIDDOR-reportable incidents</strong> — number per year per 100,000
-                hours worked. Comparison against industry average.
-              </li>
-              <li>
-                <strong>Insurance claims experience</strong> — Employer&apos;s Liability and
-                Public Liability claims.
-              </li>
-              <li>
-                <strong>Training records</strong> — proportion of operatives with current
-                qualifications and CPD.
-              </li>
-              <li>
-                <strong>Scheme registrations and accreditations</strong> — NICEIC, NAPIT,
-                CHAS, Constructionline, ISO 45001, ISO 14001.
-              </li>
-              <li>
-                <strong>Sample RAMS and method statements</strong> — for similar projects.
-              </li>
-              <li>
-                <strong>References</strong> — from previous projects of similar size and risk.
-              </li>
-            </ul>
-          </ConceptBlock>
+        <ConceptBlock
+          title="Why your firm’s reporting record affects what work you can bid for"
+          plainEnglish="Major clients (housing associations, NHS trusts, local authorities, framework agreements like CHAS / Constructionline / SafeContractor / Achilles) operate Pre-Qualification Questionnaires (PQQ) that ask for declarations of HSE notices, RIDDOR reports, prosecutions, FFI invoices and disciplinary actions in the past 3-5 years. A clean record opens doors; a poor record closes them. The PQQ effect is often the firm’s biggest commercial driver of safety culture — bigger than fines."
+          onSite="At L3 you contribute to the firm’s PQQ record every time you raise a near-miss, close out an action, follow safe-isolation procedures and document the work properly. The accumulated record across the firm becomes the evidence at the next PQQ submission. The firm’s ability to bid for the next major framework depends on what you and your colleagues did over the past 3 years."
+        >
+          <p>What PQQs typically ask:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>HSE notices in past 3-5 years</strong> — declared with detail.
+            </li>
+            <li>
+              <strong>Convictions for H&amp;S offences</strong> — including under HASAWA, EAWR, CDM.
+            </li>
+            <li>
+              <strong>RIDDOR-reportable incidents</strong> — number per year per 100,000 hours
+              worked. Comparison against industry average.
+            </li>
+            <li>
+              <strong>Insurance claims experience</strong> — Employer&apos;s Liability and Public
+              Liability claims.
+            </li>
+            <li>
+              <strong>Training records</strong> — proportion of operatives with current
+              qualifications and CPD.
+            </li>
+            <li>
+              <strong>Scheme registrations and accreditations</strong> — NICEIC, NAPIT, CHAS,
+              Constructionline, ISO 45001, ISO 14001.
+            </li>
+            <li>
+              <strong>Sample RAMS and method statements</strong> — for similar projects.
+            </li>
+            <li>
+              <strong>References</strong> — from previous projects of similar size and risk.
+            </li>
+          </ul>
+        </ConceptBlock>
 
-          <RegsCallout
-            source="Reporting of Injuries, Diseases and Dangerous Occurrences Regulations 2013 — Reg 12"
-            clause={
-              <>
-                &quot;The responsible person must keep a record of any reportable injury,
-                disease or dangerous occurrence which requires reporting under regulations 4, 5,
-                6 or 7. The record must be kept for at least 3 years from the date on which it
-                was made.&quot;
-              </>
-            }
-            meaning={
-              <>
-                The 3-year retention duty. Most firms keep RIDDOR records far longer for PQQ
-                purposes (clients commonly ask for 5+ years) and for Defective Premises Act
-                purposes (BSA 2022 extension to 30-year retrospective limit on residential).
-                The retention duty applies to the responsible person — usually the employer —
-                and the records must be available for inspection.
-              </>
-            }
-            cite="Source: Reporting of Injuries, Diseases and Dangerous Occurrences Regulations 2013 (SI 2013/1471), Reg 12."
-          />
+        <RegsCallout
+          source="Reporting of Injuries, Diseases and Dangerous Occurrences Regulations 2013 — Reg 12"
+          clause={
+            <>
+              &quot;The responsible person must keep a record of any reportable injury, disease or
+              dangerous occurrence which requires reporting under regulations 4, 5, 6 or 7. The
+              record must be kept for at least 3 years from the date on which it was made.&quot;
+            </>
+          }
+          meaning={
+            <>
+              The 3-year retention duty. Most firms keep RIDDOR records far longer for PQQ purposes
+              (clients commonly ask for 5+ years) and for Defective Premises Act purposes (BSA 2022
+              extension to 30-year retrospective limit on residential). The retention duty applies
+              to the responsible person — usually the employer — and the records must be available
+              for inspection.
+            </>
+          }
+          cite="Source: Reporting of Injuries, Diseases and Dangerous Occurrences Regulations 2013 (SI 2013/1471), Reg 12."
+        />
 
-          <RegsCallout
-            source="Health and Safety at Work etc. Act 1974 — s.37(1)"
-            clause={
-              <>
-                &quot;Where an offence under any of the relevant statutory provisions committed
-                by a body corporate is proved to have been committed with the consent or
-                connivance of, or to have been attributable to any neglect on the part of, any
-                director, manager, secretary or other similar officer of the body corporate or
-                a person who was purporting to act in any such capacity, he as well as the
-                body corporate shall be guilty of that offence and shall be liable to be
-                proceeded against and punished accordingly.&quot;
-              </>
-            }
-            meaning={
-              <>
-                Director-level personal liability. When an internal report is escalated and
-                the &quot;responsible person&quot; chooses not to act, s.37 reaches them
-                personally — not just the company. This is why robust internal reporting
-                systems matter: the paper trail showing an issue was raised and ignored is
-                exactly the evidence that converts a corporate prosecution into a personal
-                one. The L3 escalation discipline (verbal plus written, copies retained)
-                protects both you and forces the responsible person to engage.
-              </>
-            }
-            cite="Source: Health and Safety at Work etc. Act 1974 (1974 c.37), s.37."
-          />
+        <RegsCallout
+          source="Health and Safety at Work etc. Act 1974 — s.37(1)"
+          clause={
+            <>
+              &quot;Where an offence under any of the relevant statutory provisions committed by a
+              body corporate is proved to have been committed with the consent or connivance of, or
+              to have been attributable to any neglect on the part of, any director, manager,
+              secretary or other similar officer of the body corporate or a person who was
+              purporting to act in any such capacity, he as well as the body corporate shall be
+              guilty of that offence and shall be liable to be proceeded against and punished
+              accordingly.&quot;
+            </>
+          }
+          meaning={
+            <>
+              Director-level personal liability. When an internal report is escalated and the
+              &quot;responsible person&quot; chooses not to act, s.37 reaches them personally — not
+              just the company. This is why robust internal reporting systems matter: the paper
+              trail showing an issue was raised and ignored is exactly the evidence that converts a
+              corporate prosecution into a personal one. The L3 escalation discipline (verbal plus
+              written, copies retained) protects both you and forces the responsible person to
+              engage.
+            </>
+          }
+          cite="Source: Health and Safety at Work etc. Act 1974 (1974 c.37), s.37."
+        />
 
-          <SectionRule />
-          <ContentEyebrow>Defective Premises Act &amp; the BSA 2022 retrospective tail</ContentEyebrow>
+        <SectionRule />
+        <ContentEyebrow>
+          Defective Premises Act &amp; the BSA 2022 retrospective tail
+        </ContentEyebrow>
 
-          <ConceptBlock
-            title="Why electrical defects in dwellings can come back 30 years later"
-            plainEnglish="The Defective Premises Act 1972 s.1 places a duty on anyone taking on work for or in connection with the provision of a dwelling to ensure the work is done in a workmanlike manner with proper materials and the dwelling is fit for habitation. Originally there was a 6-year limitation. The Building Safety Act 2022 s.135 extended this dramatically: for works completed before 28 June 2022, the limitation is 30 years retrospective; for works after that date, 15 years prospective. An electrical defect in a 2024 CU change can be litigated to 2039; in a 2010 install, until 2040. Reporting and record-keeping take on a different gravity at those timescales."
-            onSite="The L3 reporting discipline directly shapes the firm’s defensibility decades into the future. The job-pack note, the witness inspection record, the EICR coding, the customer briefing — all become the evidence base if the work is challenged years later by a future homeowner. Records that ’might as well be kept’ suddenly are the firm’s primary defence."
-          >
-            <p>What needs to survive 30 years of records:</p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Original certificate</strong> (EIC, MWC, EICR) — model form,
-                schedule of inspections, schedule of test results, signatures.
-              </li>
-              <li>
-                <strong>Photos of installation</strong> — pre-, during-, and post-work
-                conditions; cable routing; CU layout.
-              </li>
-              <li>
-                <strong>Job-pack notes</strong> — what was done, what was found, what was
-                left.
-              </li>
-              <li>
-                <strong>Customer correspondence</strong> — emails, signed acceptance forms,
-                briefings on remaining issues.
-              </li>
-              <li>
-                <strong>Materials records</strong> — manufacturers, batch numbers, sources;
-                relevant where a future product-defect claim might attach.
-              </li>
-              <li>
-                <strong>Operative records</strong> — who did the work, what their
-                qualifications were at the time.
-              </li>
-              <li>
-                <strong>Scheme registration evidence</strong> — for the relevant period.
-              </li>
-              <li>
-                <strong>Insurance records</strong> — PI / EL cover at the time of the work
-                (claims-made vs occurrence basis matters here).
-              </li>
-            </ul>
-          </ConceptBlock>
+        <ConceptBlock
+          title="Why electrical defects in dwellings can come back 30 years later"
+          plainEnglish="The Defective Premises Act 1972 s.1 places a duty on anyone taking on work for or in connection with the provision of a dwelling to ensure the work is done in a workmanlike manner with proper materials and the dwelling is fit for habitation. Originally there was a 6-year limitation. The Building Safety Act 2022 s.135 extended this dramatically: for works completed before 28 June 2022, the limitation is 30 years retrospective; for works after that date, 15 years prospective. An electrical defect in a 2024 CU change can be litigated to 2039; in a 2010 install, until 2040. Reporting and record-keeping take on a different gravity at those timescales."
+          onSite="The L3 reporting discipline directly shapes the firm’s defensibility decades into the future. The job-pack note, the witness inspection record, the EICR coding, the customer briefing — all become the evidence base if the work is challenged years later by a future homeowner. Records that ’might as well be kept’ suddenly are the firm’s primary defence."
+        >
+          <p>What needs to survive 30 years of records:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Original certificate</strong> (EIC, MWC, EICR) — model form, schedule of
+              inspections, schedule of test results, signatures.
+            </li>
+            <li>
+              <strong>Photos of installation</strong> — pre-, during-, and post-work conditions;
+              cable routing; CU layout.
+            </li>
+            <li>
+              <strong>Job-pack notes</strong> — what was done, what was found, what was left.
+            </li>
+            <li>
+              <strong>Customer correspondence</strong> — emails, signed acceptance forms, briefings
+              on remaining issues.
+            </li>
+            <li>
+              <strong>Materials records</strong> — manufacturers, batch numbers, sources; relevant
+              where a future product-defect claim might attach.
+            </li>
+            <li>
+              <strong>Operative records</strong> — who did the work, what their qualifications were
+              at the time.
+            </li>
+            <li>
+              <strong>Scheme registration evidence</strong> — for the relevant period.
+            </li>
+            <li>
+              <strong>Insurance records</strong> — PI / EL cover at the time of the work
+              (claims-made vs occurrence basis matters here).
+            </li>
+          </ul>
+        </ConceptBlock>
 
-          <SectionRule />
-          <ContentEyebrow>Internal incident-management triangle — RIDDOR + insurance + customer comms</ContentEyebrow>
+        <SectionRule />
+        <ContentEyebrow>
+          Internal incident-management triangle — RIDDOR + insurance + customer comms
+        </ContentEyebrow>
 
-          <ConceptBlock
-            title="The three parallel streams after any significant incident"
-            plainEnglish="Any significant incident generates three parallel reporting streams that must be managed together: the regulatory stream (RIDDOR via HSE, plus any environmental, fire or scheme regulator), the insurance stream (EL, PL, PI insurer notifications), and the customer/contractual stream (the customer or principal contractor, framework agreement notification obligations, possible PR/comms). Each has its own audience, timescale and legal weight. Confusion between the three is one of the most common ways firms get themselves into deeper trouble after an incident."
-            onSite="L3 contribution to this triangle: feed the firm’s responsible person clean, consistent facts. The same factual core should flow to all three streams; what differs is the framing, the level of detail, and the timescale. Resist the temptation to brief the customer differently from the regulator — inconsistent accounts get discovered and damage credibility."
-          >
-            <p>The three streams compared:</p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Regulatory (HSE / EA / scheme)</strong> — formal report under
-                statute or scheme rules; timescale mandated; format prescribed (F2508
-                etc); investigator follow-up expected.
-              </li>
-              <li>
-                <strong>Insurance (EL / PL / PI)</strong> — &quot;notification of
-                circumstances&quot; under policy terms; usually within 7-14 days from
-                awareness; insurer assigns claims handler, may take conduct of any
-                resulting claim.
-              </li>
-              <li>
-                <strong>Customer / contractual</strong> — courtesy and contractual
-                obligation; usually same-day for serious matters; tone is supportive,
-                factual, professionally framed.
-              </li>
-              <li>
-                <strong>Internal</strong> — root-cause analysis, lessons learned, fleet /
-                procedure / training updates; weeks-to-months timescale.
-              </li>
-              <li>
-                <strong>Press / public</strong> — only via firm&apos;s designated
-                spokesperson; operatives should not comment to media.
-              </li>
-            </ul>
-          </ConceptBlock>
+        <ConceptBlock
+          title="The three parallel streams after any significant incident"
+          plainEnglish="Any significant incident generates three parallel reporting streams that must be managed together: the regulatory stream (RIDDOR via HSE, plus any environmental, fire or scheme regulator), the insurance stream (EL, PL, PI insurer notifications), and the customer/contractual stream (the customer or principal contractor, framework agreement notification obligations, possible PR/comms). Each has its own audience, timescale and legal weight. Confusion between the three is one of the most common ways firms get themselves into deeper trouble after an incident."
+          onSite="L3 contribution to this triangle: feed the firm’s responsible person clean, consistent facts. The same factual core should flow to all three streams; what differs is the framing, the level of detail, and the timescale. Resist the temptation to brief the customer differently from the regulator — inconsistent accounts get discovered and damage credibility."
+        >
+          <p>The three streams compared:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Regulatory (HSE / EA / scheme)</strong> — formal report under statute or
+              scheme rules; timescale mandated; format prescribed (F2508 etc); investigator
+              follow-up expected.
+            </li>
+            <li>
+              <strong>Insurance (EL / PL / PI)</strong> — &quot;notification of circumstances&quot;
+              under policy terms; usually within 7-14 days from awareness; insurer assigns claims
+              handler, may take conduct of any resulting claim.
+            </li>
+            <li>
+              <strong>Customer / contractual</strong> — courtesy and contractual obligation; usually
+              same-day for serious matters; tone is supportive, factual, professionally framed.
+            </li>
+            <li>
+              <strong>Internal</strong> — root-cause analysis, lessons learned, fleet / procedure /
+              training updates; weeks-to-months timescale.
+            </li>
+            <li>
+              <strong>Press / public</strong> — only via firm&apos;s designated spokesperson;
+              operatives should not comment to media.
+            </li>
+          </ul>
+        </ConceptBlock>
 
-          <SectionRule />
-          <CommonMistake title='"Just telling the supervisor" and assuming it goes from there' whatHappens={<>Apprentice spots a near-miss on a customer&apos;s site (faulty step-up). Mentions it to the supervisor verbally over the phone. Supervisor forgets. Three weeks later a different operative falls from the same step-up; injury results. Investigation finds the original near-miss wasn&apos;t logged. Firm prosecuted; original apprentice &quot;told someone&quot; but didn&apos;t document.</>} doInstead={<>Verbal + written. Phone the supervisor AND log the near-miss in the firm&apos;s system AND email the supervisor with the details. Triple-channel reporting for anything safety-relevant. The cost is two minutes; the benefit is creating a record that survives memory failure.</>} />
+        <SectionRule />
+        <CommonMistake
+          title='"Just telling the supervisor" and assuming it goes from there'
+          whatHappens={
+            <>
+              Apprentice spots a near-miss on a customer&apos;s site (faulty step-up). Mentions it
+              to the supervisor verbally over the phone. Supervisor forgets. Three weeks later a
+              different operative falls from the same step-up; injury results. Investigation finds
+              the original near-miss wasn&apos;t logged. Firm prosecuted; original apprentice
+              &quot;told someone&quot; but didn&apos;t document.
+            </>
+          }
+          doInstead={
+            <>
+              Verbal + written. Phone the supervisor AND log the near-miss in the firm&apos;s system
+              AND email the supervisor with the details. Triple-channel reporting for anything
+              safety-relevant. The cost is two minutes; the benefit is creating a record that
+              survives memory failure.
+            </>
+          }
+        />
 
-          <CommonMistake title="Reporting an HSE-reportable matter directly without internal escalation" whatHappens={<>Apprentice unilaterally calls HSE about a workplace concern without first escalating internally. HSE attends; firm is blindsided; the underlying concern was real but the relationship is destroyed; apprentice loses the protection of having gone through proper channels.</>} doInstead={<>Internal first — give the firm a reasonable opportunity to address the concern. PIDA 1998 protections for external disclosure require (in most cases) internal route to have been tried OR for there to be evidence internal route would be ineffective (e.g. firm complicit). Document the internal route; only go external when it&apos;s demonstrably failed.</>} />
+        <CommonMistake
+          title="Reporting an HSE-reportable matter directly without internal escalation"
+          whatHappens={
+            <>
+              Apprentice unilaterally calls HSE about a workplace concern without first escalating
+              internally. HSE attends; firm is blindsided; the underlying concern was real but the
+              relationship is destroyed; apprentice loses the protection of having gone through
+              proper channels.
+            </>
+          }
+          doInstead={
+            <>
+              Internal first — give the firm a reasonable opportunity to address the concern. PIDA
+              1998 protections for external disclosure require (in most cases) internal route to
+              have been tried OR for there to be evidence internal route would be ineffective (e.g.
+              firm complicit). Document the internal route; only go external when it&apos;s
+              demonstrably failed.
+            </>
+          }
+        />
 
-          <Scenario title="Multiple parallel reports for one incident" situation={<>You arrive at a small commercial unit to investigate a flickering circuit. You find: (1) the customer has been bypassing the RCD by clipping the test button; (2) the customer is an elderly lone trader who seems confused; (3) there&apos;s a small smoke mark on the consumer unit suggesting a previous overheat event; (4) you notice the building&apos;s fire alarm is showing a fault and the panel says &quot;disabled&quot;; (5) the customer&apos;s landlord is on speakerphone pressuring them to &quot;not worry about all this stuff&quot;.</>} whatToDo={<>Map the multiple parallel routes. (1) Restore safe isolation immediately — reinstate the RCD if possible; if you can&apos;t make safe today, leave the supply isolated and document with photos. EICR coding C1 for the bypass; C2 / FI for the smoke mark depending on what you can determine. (2) Internal report to your firm&apos;s contracts manager / H&amp;S manager — pressure from landlord is a customer-care escalation; possible safeguarding concern about confused elderly customer. (3) Customer notification of the EICR findings in writing; copy to landlord if customer authorises. (4) Fire alarm disabled is a Regulatory Reform (Fire Safety) Order 2005 issue — the responsible person (likely the landlord) is in breach; advise the customer in writing; consider notifying the local Fire and Rescue Service if it&apos;s clearly a breach with risk to life. (5) Safeguarding concern about elderly customer with potentially undue pressure — consider local authority adult social care referral; raise with your firm first. Document everything. One incident; five potentially-required reports.</>} whyItMatters={<>The L3 reporting-route mapping is what stops issues falling through the cracks. Each of these issues sits with a different responsible person; failing to escalate any one of them leaves a duty unfulfilled. The firm&apos;s reputation for thoroughness is what wins repeat business and the operative&apos;s personal s.7 record stays clean.</>} />
+        <Scenario
+          title="Multiple parallel reports for one incident"
+          situation={
+            <>
+              You arrive at a small commercial unit to investigate a flickering circuit. You find:
+              (1) the customer has been bypassing the RCD by clipping the test button; (2) the
+              customer is an elderly lone trader who seems confused; (3) there&apos;s a small smoke
+              mark on the consumer unit suggesting a previous overheat event; (4) you notice the
+              building&apos;s fire alarm is showing a fault and the panel says &quot;disabled&quot;;
+              (5) the customer&apos;s landlord is on speakerphone pressuring them to &quot;not worry
+              about all this stuff&quot;.
+            </>
+          }
+          whatToDo={
+            <>
+              Map the multiple parallel routes. (1) Restore safe isolation immediately — reinstate
+              the RCD if possible; if you can&apos;t make safe today, leave the supply isolated and
+              document with photos. EICR coding C1 for the bypass; C2 / FI for the smoke mark
+              depending on what you can determine. (2) Internal report to your firm&apos;s contracts
+              manager / H&amp;S manager — pressure from landlord is a customer-care escalation;
+              possible safeguarding concern about confused elderly customer. (3) Customer
+              notification of the EICR findings in writing; copy to landlord if customer authorises.
+              (4) Fire alarm disabled is a Regulatory Reform (Fire Safety) Order 2005 issue — the
+              responsible person (likely the landlord) is in breach; advise the customer in writing;
+              consider notifying the local Fire and Rescue Service if it&apos;s clearly a breach
+              with risk to life. (5) Safeguarding concern about elderly customer with potentially
+              undue pressure — consider local authority adult social care referral; raise with your
+              firm first. Document everything. One incident; five potentially-required reports.
+            </>
+          }
+          whyItMatters={
+            <>
+              The L3 reporting-route mapping is what stops issues falling through the cracks. Each
+              of these issues sits with a different responsible person; failing to escalate any one
+              of them leaves a duty unfulfilled. The firm&apos;s reputation for thoroughness is what
+              wins repeat business and the operative&apos;s personal s.7 record stays clean.
+            </>
+          }
+        />
 
-          <Scenario
-            title="The HSE concerns line — when internal has demonstrably failed"
-            situation={
-              <>
-                You have raised concerns about your firm&apos;s deteriorating safe-isolation
-                practice three times in writing over six weeks — to your supervisor, to the
-                contracts manager, and finally to a director. Each raise has been
-                acknowledged and quietly buried; no changes have been made. You have now
-                witnessed a colleague work live on a 230V circuit at the direction of the
-                same supervisor, and the contracts manager and director are aware of the
-                ongoing practice.
-              </>
-            }
-            whatToDo={
-              <>
-                Internal route has demonstrably failed. PIDA 1998 (ERA 1996 Part IVA) now
-                protects external disclosure to the HSE as a prescribed person under s.43F.
-                Use the HSE concerns line on 0300 003 1647 or the online form at
-                hse.gov.uk/contact/concerns. Provide: specific facts (who, what, where,
-                when, how often), the regulation breached (EAWR Reg 14), your three written
-                internal raises with dates and recipients, and your contact details. Retain
-                copies of everything. Inform your union if you have one. Consider seeking
-                early ACAS / solicitor advice on any subsequent firm response.
-              </>
-            }
-            whyItMatters={
-              <>
-                The PIDA protection is real but procedurally exacting. The HSE expects to
-                see a documented internal escalation before they will treat the external
-                disclosure as protected; bypassing internal where it has not demonstrably
-                failed weakens the PIDA defence to any subsequent detriment claim. The
-                three-raise sequence over six weeks plus the documented buried-acknowledgement
-                pattern is the evidence trail that makes the external disclosure protected
-                and proportionate.
-              </>
-            }
-          />
+        <Scenario
+          title="The HSE concerns line — when internal has demonstrably failed"
+          situation={
+            <>
+              You have raised concerns about your firm&apos;s deteriorating safe-isolation practice
+              three times in writing over six weeks — to your supervisor, to the contracts manager,
+              and finally to a director. Each raise has been acknowledged and quietly buried; no
+              changes have been made. You have now witnessed a colleague work live on a 230V circuit
+              at the direction of the same supervisor, and the contracts manager and director are
+              aware of the ongoing practice.
+            </>
+          }
+          whatToDo={
+            <>
+              Internal route has demonstrably failed. PIDA 1998 (ERA 1996 Part IVA) now protects
+              external disclosure to the HSE as a prescribed person under s.43F. Use the HSE
+              concerns line on 0300 003 1647 or the online form at hse.gov.uk/contact/concerns.
+              Provide: specific facts (who, what, where, when, how often), the regulation breached
+              (EAWR Reg 14), your three written internal raises with dates and recipients, and your
+              contact details. Retain copies of everything. Inform your union if you have one.
+              Consider seeking early ACAS / solicitor advice on any subsequent firm response.
+            </>
+          }
+          whyItMatters={
+            <>
+              The PIDA protection is real but procedurally exacting. The HSE expects to see a
+              documented internal escalation before they will treat the external disclosure as
+              protected; bypassing internal where it has not demonstrably failed weakens the PIDA
+              defence to any subsequent detriment claim. The three-raise sequence over six weeks
+              plus the documented buried-acknowledgement pattern is the evidence trail that makes
+              the external disclosure protected and proportionate.
+            </>
+          }
+        />
 
-          <SectionRule />
-          <ContentEyebrow>The contemporaneous record — what to capture in the first hour after an incident</ContentEyebrow>
+        <SectionRule />
+        <ContentEyebrow>
+          The contemporaneous record — what to capture in the first hour after an incident
+        </ContentEyebrow>
 
-          <ConceptBlock
-            title="Why the first 60 minutes are evidentially decisive"
-            plainEnglish="The single most valuable evidence in any subsequent investigation is what was written down in the first 60 minutes after an incident. Memory degrades; accounts merge with what was heard from others; mobile phones move; conditions change as people start cleaning up. The L3 supervisor reflex once any immediate first aid is dealt with is to start capturing — photos, contemporaneous notes from anyone present, screenshots of any system alerts, copies of any messages that preceded the event. Most of this work is impossible to do well two days later."
-            onSite="Practical sequence in the first hour: scene control, photographs from multiple angles, individual witness write-downs done separately (so accounts don’t cross-contaminate), retention of any failed equipment, system / app log preservation, communication trail (texts, emails, work-order app entries) screenshot and time-stamped. The firm’s responsible person directs but the L3 supervisor on the ground is often the one executing."
-          >
-            <p>First-hour evidence checklist:</p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Scene photographs</strong> — wide context, medium detail, close detail.
-                Include any safety signage / barriers, position of casualty (if appropriate
-                and consensual), state of equipment, lighting, weather.
-              </li>
-              <li>
-                <strong>Witness write-downs</strong> — separate sheets, in own words, signed
-                and dated. Avoid prompting or suggesting.
-              </li>
-              <li>
-                <strong>Equipment preservation</strong> — failed equipment kept intact; not
-                modified, not cleaned, not disposed of.
-              </li>
-              <li>
-                <strong>System logs</strong> — work-order app, vehicle telematics, electronic
-                test instrument data, CCTV (if available, request preservation in writing
-                same-day).
-              </li>
-              <li>
-                <strong>Communication trail</strong> — texts, emails, app messages from
-                before the event preserved with timestamps.
-              </li>
-              <li>
-                <strong>Conditions log</strong> — weather, lighting, temperature, noise
-                level, time of day, who was on shift.
-              </li>
-              <li>
-                <strong>Your own account</strong> — your contemporaneous notes from the day
-                of the incident; write before discussing the event in detail with anyone.
-              </li>
-            </ul>
-          </ConceptBlock>
+        <ConceptBlock
+          title="Why the first 60 minutes are evidentially decisive"
+          plainEnglish="The single most valuable evidence in any subsequent investigation is what was written down in the first 60 minutes after an incident. Memory degrades; accounts merge with what was heard from others; mobile phones move; conditions change as people start cleaning up. The L3 supervisor reflex once any immediate first aid is dealt with is to start capturing — photos, contemporaneous notes from anyone present, screenshots of any system alerts, copies of any messages that preceded the event. Most of this work is impossible to do well two days later."
+          onSite="Practical sequence in the first hour: scene control, photographs from multiple angles, individual witness write-downs done separately (so accounts don’t cross-contaminate), retention of any failed equipment, system / app log preservation, communication trail (texts, emails, work-order app entries) screenshot and time-stamped. The firm’s responsible person directs but the L3 supervisor on the ground is often the one executing."
+        >
+          <p>First-hour evidence checklist:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Scene photographs</strong> — wide context, medium detail, close detail.
+              Include any safety signage / barriers, position of casualty (if appropriate and
+              consensual), state of equipment, lighting, weather.
+            </li>
+            <li>
+              <strong>Witness write-downs</strong> — separate sheets, in own words, signed and
+              dated. Avoid prompting or suggesting.
+            </li>
+            <li>
+              <strong>Equipment preservation</strong> — failed equipment kept intact; not modified,
+              not cleaned, not disposed of.
+            </li>
+            <li>
+              <strong>System logs</strong> — work-order app, vehicle telematics, electronic test
+              instrument data, CCTV (if available, request preservation in writing same-day).
+            </li>
+            <li>
+              <strong>Communication trail</strong> — texts, emails, app messages from before the
+              event preserved with timestamps.
+            </li>
+            <li>
+              <strong>Conditions log</strong> — weather, lighting, temperature, noise level, time of
+              day, who was on shift.
+            </li>
+            <li>
+              <strong>Your own account</strong> — your contemporaneous notes from the day of the
+              incident; write before discussing the event in detail with anyone.
+            </li>
+          </ul>
+        </ConceptBlock>
 
-          <SectionRule />
-          <ContentEyebrow>Case study — Whirlpool UK Appliances [2018] and the cost of late-and-incomplete reporting</ContentEyebrow>
+        <SectionRule />
+        <ContentEyebrow>
+          Case study — Whirlpool UK Appliances [2018] and the cost of late-and-incomplete reporting
+        </ContentEyebrow>
 
-          <ConceptBlock
-            title="When £15m turns on the gap between incident and report"
-            plainEnglish="Whirlpool UK Appliances was fined £15m in 2018 after an apprentice was crushed to death by a falling pallet at the Yate distribution centre. The HSE’s investigation found multiple failings — but the prosecution’s aggravating factors included the firm’s delayed and incomplete RIDDOR submission, and earlier near-misses involving similar pallet stacks that had been observed by operatives but not reported through the firm’s system. The Sentencing Council Definitive Guideline (2016) treats the firm’s response, including transparency in reporting, as one of the factors moving the case up or down the harm × culpability matrix. Whirlpool’s £15m sat in the very-large-turnover, high-culpability, Category 1 harm cell — partly because the firm could not show that earlier near-misses had been escalated and acted upon."
-            onSite="The L3 reading: the firm’s reporting record over years before an incident shapes the eventual sentence after one. Every near-miss you log, every internal report you make, every escalation you document is a building block in the firm’s mitigation evidence if a serious incident ever occurs. Firms that have a culture of reporting and acting on near-misses receive significantly lower fines after fatal incidents than firms that did not — even where the underlying cause is similar. The aggregate of small reports is the long-term defence."
-          >
-            <p>What the Whirlpool case tells L3 operatives about reporting culture:</p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Near-miss reports are evidence of due diligence</strong> — they show
-                the firm was tracking and acting on warning signs.
-              </li>
-              <li>
-                <strong>Unreported near-misses become aggravating factors</strong> — if
-                operatives observed similar issues but did not report (because reporting was
-                discouraged or pointless), the HSE will note that as systemic.
-              </li>
-              <li>
-                <strong>Late RIDDOR reports are separate offences</strong> — Reg 6 lateness
-                stacks on top of the underlying breach.
-              </li>
-              <li>
-                <strong>Incomplete RIDDOR reports invite re-investigation</strong> — partial
-                facts trigger HSE follow-up that may uncover wider issues.
-              </li>
-              <li>
-                <strong>The Sentencing Council guideline (2016)</strong> explicitly treats
-                quality of reporting as a moving factor in the culpability × harm matrix.
-              </li>
-              <li>
-                <strong>Senior management knowledge</strong> — if a director knew about
-                similar near-misses and did not act, s.37 personal liability attaches.
-              </li>
-              <li>
-                <strong>Internal communication of lessons</strong> — was the near-miss
-                summarised in a toolbox talk? Was the operative briefed on the changes? These
-                are evidence touchpoints.
-              </li>
-            </ul>
-          </ConceptBlock>
+        <ConceptBlock
+          title="When £15m turns on the gap between incident and report"
+          plainEnglish="Whirlpool UK Appliances was fined £15m in 2018 after an apprentice was crushed to death by a falling pallet at the Yate distribution centre. The HSE’s investigation found multiple failings — but the prosecution’s aggravating factors included the firm’s delayed and incomplete RIDDOR submission, and earlier near-misses involving similar pallet stacks that had been observed by operatives but not reported through the firm’s system. The Sentencing Council Definitive Guideline (2016) treats the firm’s response, including transparency in reporting, as one of the factors moving the case up or down the harm × culpability matrix. Whirlpool’s £15m sat in the very-large-turnover, high-culpability, Category 1 harm cell — partly because the firm could not show that earlier near-misses had been escalated and acted upon."
+          onSite="The L3 reading: the firm’s reporting record over years before an incident shapes the eventual sentence after one. Every near-miss you log, every internal report you make, every escalation you document is a building block in the firm’s mitigation evidence if a serious incident ever occurs. Firms that have a culture of reporting and acting on near-misses receive significantly lower fines after fatal incidents than firms that did not — even where the underlying cause is similar. The aggregate of small reports is the long-term defence."
+        >
+          <p>What the Whirlpool case tells L3 operatives about reporting culture:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Near-miss reports are evidence of due diligence</strong> — they show the firm
+              was tracking and acting on warning signs.
+            </li>
+            <li>
+              <strong>Unreported near-misses become aggravating factors</strong> — if operatives
+              observed similar issues but did not report (because reporting was discouraged or
+              pointless), the HSE will note that as systemic.
+            </li>
+            <li>
+              <strong>Late RIDDOR reports are separate offences</strong> — Reg 6 lateness stacks on
+              top of the underlying breach.
+            </li>
+            <li>
+              <strong>Incomplete RIDDOR reports invite re-investigation</strong> — partial facts
+              trigger HSE follow-up that may uncover wider issues.
+            </li>
+            <li>
+              <strong>The Sentencing Council guideline (2016)</strong> explicitly treats quality of
+              reporting as a moving factor in the culpability × harm matrix.
+            </li>
+            <li>
+              <strong>Senior management knowledge</strong> — if a director knew about similar
+              near-misses and did not act, s.37 personal liability attaches.
+            </li>
+            <li>
+              <strong>Internal communication of lessons</strong> — was the near-miss summarised in a
+              toolbox talk? Was the operative briefed on the changes? These are evidence
+              touchpoints.
+            </li>
+          </ul>
+        </ConceptBlock>
 
-          <SectionRule />
-          <ContentEyebrow>Step-by-step procedure — running a near-miss through the firm&apos;s system</ContentEyebrow>
+        <SectionRule />
+        <ContentEyebrow>
+          Step-by-step procedure — running a near-miss through the firm&apos;s system
+        </ContentEyebrow>
 
-          <ConceptBlock
-            title="From observation to closed-out action — what good looks like"
-            plainEnglish="Most firms have a near-miss reporting form (paper or digital). The form is the entry point but the process around it is what creates value. The L3 supervisor reflex is to treat near-miss reports the way the firm treats invoices: every one gets logged, every one gets a reference number, every one gets reviewed, every one gets a closed-out action with a named owner, every one gets summarised in the next safety bulletin. The form on its own is administrative theatre; the process is what reduces the next incident."
-            onSite="Step-by-step the L3 supervisor follows when a near-miss is observed: (1) make safe at the scene; (2) write a brief contemporaneous note; (3) photograph if relevant; (4) submit the firm’s form same-day; (5) notify the responsible person verbally; (6) participate in any follow-up review; (7) ensure any agreed action is implemented; (8) check the firm’s next bulletin to confirm the learning was shared. Skipping any step weakens the chain."
-          >
-            <p>The eight-step near-miss process unpacked:</p>
-            <ol className="space-y-1.5 list-decimal pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Make safe at the scene</strong> — remove the immediate hazard, tag out
-                of service if equipment, restrict access if environmental.
-              </li>
-              <li>
-                <strong>Contemporaneous note</strong> — date, time, location, what happened,
-                what could have happened, who was present, what was done.
-              </li>
-              <li>
-                <strong>Photographs</strong> — equipment condition, location, any
-                contributing factors (lighting, weather, clutter).
-              </li>
-              <li>
-                <strong>Submit firm&apos;s form same-day</strong> — paper or digital. Memory
-                degrades fast; same-day submission preserves accuracy.
-              </li>
-              <li>
-                <strong>Notify responsible person verbally</strong> — phone or in-person
-                briefing in addition to the form submission; ensures awareness.
-              </li>
-              <li>
-                <strong>Follow-up review</strong> — usually within 7-14 days; root-cause
-                analysis if pattern; action planning if change needed.
-              </li>
-              <li>
-                <strong>Action implementation</strong> — fleet check, RAMS update, training
-                refresh, supplier change, procedure rewrite as applicable.
-              </li>
-              <li>
-                <strong>Lesson sharing</strong> — toolbox talk, safety bulletin, training
-                module update; visible closure of the loop.
-              </li>
-            </ol>
-          </ConceptBlock>
+        <ConceptBlock
+          title="From observation to closed-out action — what good looks like"
+          plainEnglish="Most firms have a near-miss reporting form (paper or digital). The form is the entry point but the process around it is what creates value. The L3 supervisor reflex is to treat near-miss reports the way the firm treats invoices: every one gets logged, every one gets a reference number, every one gets reviewed, every one gets a closed-out action with a named owner, every one gets summarised in the next safety bulletin. The form on its own is administrative theatre; the process is what reduces the next incident."
+          onSite="Step-by-step the L3 supervisor follows when a near-miss is observed: (1) make safe at the scene; (2) write a brief contemporaneous note; (3) photograph if relevant; (4) submit the firm’s form same-day; (5) notify the responsible person verbally; (6) participate in any follow-up review; (7) ensure any agreed action is implemented; (8) check the firm’s next bulletin to confirm the learning was shared. Skipping any step weakens the chain."
+        >
+          <p>The eight-step near-miss process unpacked:</p>
+          <ol className="space-y-1.5 list-decimal pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Make safe at the scene</strong> — remove the immediate hazard, tag out of
+              service if equipment, restrict access if environmental.
+            </li>
+            <li>
+              <strong>Contemporaneous note</strong> — date, time, location, what happened, what
+              could have happened, who was present, what was done.
+            </li>
+            <li>
+              <strong>Photographs</strong> — equipment condition, location, any contributing factors
+              (lighting, weather, clutter).
+            </li>
+            <li>
+              <strong>Submit firm&apos;s form same-day</strong> — paper or digital. Memory degrades
+              fast; same-day submission preserves accuracy.
+            </li>
+            <li>
+              <strong>Notify responsible person verbally</strong> — phone or in-person briefing in
+              addition to the form submission; ensures awareness.
+            </li>
+            <li>
+              <strong>Follow-up review</strong> — usually within 7-14 days; root-cause analysis if
+              pattern; action planning if change needed.
+            </li>
+            <li>
+              <strong>Action implementation</strong> — fleet check, RAMS update, training refresh,
+              supplier change, procedure rewrite as applicable.
+            </li>
+            <li>
+              <strong>Lesson sharing</strong> — toolbox talk, safety bulletin, training module
+              update; visible closure of the loop.
+            </li>
+          </ol>
+        </ConceptBlock>
 
-          <SectionRule />
-          <ContentEyebrow>Cross-reference table — which regulator for which kind of issue</ContentEyebrow>
+        <SectionRule />
+        <ContentEyebrow>
+          Cross-reference table — which regulator for which kind of issue
+        </ContentEyebrow>
 
-          <ConceptBlock
-            title="The L3 mapping table you should be able to recite cold"
-            plainEnglish="When an issue arises the first question is ’who is the regulator?’. Multiple regulators sit in parallel across H&S, environmental, safeguarding, product, fire and building safety. Knowing the right one (or the right combination) for the issue in front of you is the L3 supervisor mapping skill that the AC 2.4 syllabus is testing."
-            onSite="Carry the mapping in your head. When something goes wrong on site, the routing decision is part of the response — not something you research afterwards. Mis-routed reports get bounced back and wasted time may shift an incident into a fine."
-          >
-            <p>The regulator-mapping table by issue type:</p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Personal injury at work (employee)</strong> — RIDDOR via HSE +
-                internal + insurance + customer (if affecting their premises).
-              </li>
-              <li>
-                <strong>Personal injury at work (member of public on your site)</strong> —
-                RIDDOR via HSE if hospitalised; internal; insurance; customer; police if
-                criminal element suspected.
-              </li>
-              <li>
-                <strong>Environmental release (water / land / hazardous substance)</strong> —
-                Environment Agency 0800 80 70 60 (England), SEPA (Scotland), NRW (Wales);
-                internal; local authority for some scenarios.
-              </li>
-              <li>
-                <strong>Fire / smoke / fire alarm bypass</strong> — Fire and Rescue Service
-                for active incidents; RRFSO 2005 responsible person (often the
-                landlord/employer) for systemic issues; internal; insurance.
-              </li>
-              <li>
-                <strong>Safeguarding concern (vulnerable adult)</strong> — local authority
-                adult social care under Care Act 2014; police if immediate criminal element;
-                internal safeguarding lead.
-              </li>
-              <li>
-                <strong>Safeguarding concern (child)</strong> — local authority children&apos;s
-                services under Children Act 1989; NSPCC helpline; police if immediate.
-              </li>
-              <li>
-                <strong>Defective installation by another firm</strong> — scheme body
-                (NICEIC, NAPIT, ELECSA, Stroma, Certsure) of the firm in question; customer;
-                internal record for future PQQ.
-              </li>
-              <li>
-                <strong>Product defect (manufacturer issue)</strong> — manufacturer +
-                Office for Product Safety and Standards (OPSS); internal product-safety
-                register.
-              </li>
-              <li>
-                <strong>HRRB matter (BSA 2022)</strong> — Building Safety Regulator (within
-                HSE); internal; principal accountable person.
-              </li>
-              <li>
-                <strong>Gas concern</strong> — Gas Safe Register (for unauthorised gas work
-                or competence issues); HSE (for incidents under GSIUR 1998).
-              </li>
-              <li>
-                <strong>Asbestos disturbance / suspected exposure</strong> — HSE under CAR
-                2012; licensed asbestos contractor for response; internal.
-              </li>
-              <li>
-                <strong>Working time / pay / discrimination</strong> — ACAS; employment
-                tribunal; HMRC for unpaid wages; internal grievance.
-              </li>
-            </ul>
-          </ConceptBlock>
+        <ConceptBlock
+          title="The L3 mapping table you should be able to recite cold"
+          plainEnglish="When an issue arises the first question is ’who is the regulator?’. Multiple regulators sit in parallel across H&S, environmental, safeguarding, product, fire and building safety. Knowing the right one (or the right combination) for the issue in front of you is the L3 supervisor mapping skill that the AC 2.4 syllabus is testing."
+          onSite="Carry the mapping in your head. When something goes wrong on site, the routing decision is part of the response — not something you research afterwards. Mis-routed reports get bounced back and wasted time may shift an incident into a fine."
+        >
+          <p>The regulator-mapping table by issue type:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Personal injury at work (employee)</strong> — RIDDOR via HSE + internal +
+              insurance + customer (if affecting their premises).
+            </li>
+            <li>
+              <strong>Personal injury at work (member of public on your site)</strong> — RIDDOR via
+              HSE if hospitalised; internal; insurance; customer; police if criminal element
+              suspected.
+            </li>
+            <li>
+              <strong>Environmental release (water / land / hazardous substance)</strong> —
+              Environment Agency 0800 80 70 60 (England), SEPA (Scotland), NRW (Wales); internal;
+              local authority for some scenarios.
+            </li>
+            <li>
+              <strong>Fire / smoke / fire alarm bypass</strong> — Fire and Rescue Service for active
+              incidents; RRFSO 2005 responsible person (often the landlord/employer) for systemic
+              issues; internal; insurance.
+            </li>
+            <li>
+              <strong>Safeguarding concern (vulnerable adult)</strong> — local authority adult
+              social care under Care Act 2014; police if immediate criminal element; internal
+              safeguarding lead.
+            </li>
+            <li>
+              <strong>Safeguarding concern (child)</strong> — local authority children&apos;s
+              services under Children Act 1989; NSPCC helpline; police if immediate.
+            </li>
+            <li>
+              <strong>Defective installation by another firm</strong> — scheme body (NICEIC, NAPIT,
+              ELECSA, Stroma, Certsure) of the firm in question; customer; internal record for
+              future PQQ.
+            </li>
+            <li>
+              <strong>Product defect (manufacturer issue)</strong> — manufacturer + Office for
+              Product Safety and Standards (OPSS); internal product-safety register.
+            </li>
+            <li>
+              <strong>HRRB matter (BSA 2022)</strong> — Building Safety Regulator (within HSE);
+              internal; principal accountable person.
+            </li>
+            <li>
+              <strong>Gas concern</strong> — Gas Safe Register (for unauthorised gas work or
+              competence issues); HSE (for incidents under GSIUR 1998).
+            </li>
+            <li>
+              <strong>Asbestos disturbance / suspected exposure</strong> — HSE under CAR 2012;
+              licensed asbestos contractor for response; internal.
+            </li>
+            <li>
+              <strong>Working time / pay / discrimination</strong> — ACAS; employment tribunal; HMRC
+              for unpaid wages; internal grievance.
+            </li>
+          </ul>
+        </ConceptBlock>
 
-          <SectionRule />
-          <ContentEyebrow>The s.20 inspector interview — what to do when asked &quot;what happened?&quot;</ContentEyebrow>
+        <SectionRule />
+        <ContentEyebrow>
+          The s.20 inspector interview — what to do when asked &quot;what happened?&quot;
+        </ContentEyebrow>
 
-          <ConceptBlock
-            title="HASAWA s.20 powers and how the L3 operative responds"
-            plainEnglish="HASAWA s.20 gives the inspector power to require any person to answer questions and sign a declaration of truth. Refusing to answer is itself an offence under s.33(1)(e). BUT — and this is the critical distinction — answers given under s.20 cannot be used against the person who gave them in a criminal prosecution of that person. They CAN be used against the firm and against other parties. The L3 operative reflex is therefore to answer truthfully under s.20 while being clear that questions about your own potential liability shift the interview into PACE territory (where caution and right to silence apply). Know the difference."
-            onSite="When an inspector starts asking questions: be polite, answer factually about what you saw and did, ask the inspector to clarify whether this is a s.20 interview or PACE-cautioned. Do not speculate about cause or blame; stick to what you directly observed. If the question feels like it’s probing for your own personal s.7 liability, request a solicitor before continuing. The firm should provide one; insurer-funded legal support is standard."
-          >
-            <p>Practical responses to inspector questions:</p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>&quot;What happened?&quot;</strong> — describe what you directly
-                observed, in chronological order, in your own words. Stick to facts.
-              </li>
-              <li>
-                <strong>&quot;Who was in charge?&quot;</strong> — name the person; the
-                inspector can verify against documentation.
-              </li>
-              <li>
-                <strong>&quot;Did you know this was unsafe?&quot;</strong> — this is a
-                liability-probing question. Pause; ask whether this is s.20 or PACE; request a
-                solicitor.
-              </li>
-              <li>
-                <strong>&quot;Can I see your training records?&quot;</strong> — produce
-                them; do not interpret what they show.
-              </li>
-              <li>
-                <strong>&quot;Was the RAMS available before you started work?&quot;</strong> —
-                factual; if you signed in to the RAMS, the inspector can see the timestamp.
-              </li>
-              <li>
-                <strong>&quot;Why did you do X?&quot;</strong> — describe what you did and
-                why you understood it to be appropriate at the time. Do not speculate about
-                alternatives in hindsight without legal advice.
-              </li>
-              <li>
-                <strong>&quot;Will you sign this statement?&quot;</strong> — read it
-                carefully; correct any inaccuracies; do not sign anything you have not
-                personally reviewed; ask for a copy.
-              </li>
-            </ul>
-          </ConceptBlock>
+        <ConceptBlock
+          title="HASAWA s.20 powers and how the L3 operative responds"
+          plainEnglish="HASAWA s.20 gives the inspector power to require any person to answer questions and sign a declaration of truth. Refusing to answer is itself an offence under s.33(1)(e). BUT — and this is the critical distinction — answers given under s.20 cannot be used against the person who gave them in a criminal prosecution of that person. They CAN be used against the firm and against other parties. The L3 operative reflex is therefore to answer truthfully under s.20 while being clear that questions about your own potential liability shift the interview into PACE territory (where caution and right to silence apply). Know the difference."
+          onSite="When an inspector starts asking questions: be polite, answer factually about what you saw and did, ask the inspector to clarify whether this is a s.20 interview or PACE-cautioned. Do not speculate about cause or blame; stick to what you directly observed. If the question feels like it’s probing for your own personal s.7 liability, request a solicitor before continuing. The firm should provide one; insurer-funded legal support is standard."
+        >
+          <p>Practical responses to inspector questions:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>&quot;What happened?&quot;</strong> — describe what you directly observed, in
+              chronological order, in your own words. Stick to facts.
+            </li>
+            <li>
+              <strong>&quot;Who was in charge?&quot;</strong> — name the person; the inspector can
+              verify against documentation.
+            </li>
+            <li>
+              <strong>&quot;Did you know this was unsafe?&quot;</strong> — this is a
+              liability-probing question. Pause; ask whether this is s.20 or PACE; request a
+              solicitor.
+            </li>
+            <li>
+              <strong>&quot;Can I see your training records?&quot;</strong> — produce them; do not
+              interpret what they show.
+            </li>
+            <li>
+              <strong>&quot;Was the RAMS available before you started work?&quot;</strong> —
+              factual; if you signed in to the RAMS, the inspector can see the timestamp.
+            </li>
+            <li>
+              <strong>&quot;Why did you do X?&quot;</strong> — describe what you did and why you
+              understood it to be appropriate at the time. Do not speculate about alternatives in
+              hindsight without legal advice.
+            </li>
+            <li>
+              <strong>&quot;Will you sign this statement?&quot;</strong> — read it carefully;
+              correct any inaccuracies; do not sign anything you have not personally reviewed; ask
+              for a copy.
+            </li>
+          </ul>
+        </ConceptBlock>
 
-          <SectionRule />
-          <FAQ items={faqs} />
-          <SectionRule />
-          <KeyTakeaways points={[
-            "Remember from L2 — report H&S concerns to a responsible person. At L3 the depth is mapping the right person for each kind of issue.",
+        <SectionRule />
+        <FAQ items={faqs} />
+        <SectionRule />
+        <KeyTakeaways
+          points={[
+            'Remember from L2 — report H&S concerns to a responsible person. At L3 the depth is mapping the right person for each kind of issue.',
             "MHSWR Reg 7 designated competent person is the firm's internal H&S 'responsible person'. Find out who they are on day one.",
-            "RIDDOR responsible person is the employer / self-employed; they make the F2508. Operatives escalate to them.",
-            "Environmental hazards: EA (England, 0800 80 70 60), SEPA (Scotland), NRW (Wales). 24/7 hotlines.",
+            'RIDDOR responsible person is the employer / self-employed; they make the F2508. Operatives escalate to them.',
+            'Environmental hazards: EA (England, 0800 80 70 60), SEPA (Scotland), NRW (Wales). 24/7 hotlines.',
             "Safeguarding: local authority adult / children's social care. You raise; they assess.",
-            "EICR coding (C1/C2/C3/FI) is the formal report route for installation defects.",
-            "Near-miss reporting is the highest-value preventive activity. Same-day internal log.",
-            "Multiple parallel routes apply to many issues. Map each one and escalate appropriately.",
-            "Whirlpool £15m (2018) — unreported near-misses became aggravating factors after the fatality. Reporting culture is long-term defence.",
-            "Eight-step near-miss process: make safe, note, photograph, submit form, notify verbally, review, action, share lesson.",
-            "HASAWA s.20 vs PACE caution — answer factually under s.20; request solicitor and right-to-silence applies under PACE.",
-            "Defective Premises Act 1972 + BSA 2022 s.135 — residential records may need to survive 30 years. Retain accordingly.",
-          ]} />
-          <Quiz title="Reporting routes — knowledge check" questions={quizQuestions} />
-          <div className="grid grid-cols-2 gap-3 pt-2">
-            <button onClick={() => navigate('/study-centre/apprentice/level3-module1-section2-3')} className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]">
-              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white"><ChevronLeft className="h-3 w-3" /> Previous</div>
-              <div className="mt-1 text-[14px] font-semibold text-white truncate">2.3 Limits of responsibility</div>
-            </button>
-            <button onClick={() => navigate('/study-centre/apprentice/level3-module1-section2-5')} className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]">
-              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">Next subsection <ChevronRight className="h-3 w-3" /></div>
-              <div className="mt-1 text-[14px] font-semibold text-black truncate">2.5 RIDDOR F2508 process</div>
-            </button>
-          </div>
-        </PageFrame>
-      </div>
-    </div>
+            'EICR coding (C1/C2/C3/FI) is the formal report route for installation defects.',
+            'Near-miss reporting is the highest-value preventive activity. Same-day internal log.',
+            'Multiple parallel routes apply to many issues. Map each one and escalate appropriately.',
+            'Whirlpool £15m (2018) — unreported near-misses became aggravating factors after the fatality. Reporting culture is long-term defence.',
+            'Eight-step near-miss process: make safe, note, photograph, submit form, notify verbally, review, action, share lesson.',
+            'HASAWA s.20 vs PACE caution — answer factually under s.20; request solicitor and right-to-silence applies under PACE.',
+            'Defective Premises Act 1972 + BSA 2022 s.135 — residential records may need to survive 30 years. Retain accordingly.',
+          ]}
+        />
+        <Quiz title="Reporting routes — knowledge check" questions={quizQuestions} />
+        <div className="grid grid-cols-2 gap-3 pt-2">
+          <button
+            onClick={() => navigate('/study-centre/apprentice/level3-module1-section2-3')}
+            className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+          >
+            <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+              <ChevronLeft className="h-3 w-3" /> Previous
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-white truncate">
+              2.3 Limits of responsibility
+            </div>
+          </button>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/level3-module1-section2-5')}
+            className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+          >
+            <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+              Next subsection <ChevronRight className="h-3 w-3" />
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-black truncate">
+              2.5 RIDDOR F2508 process
+            </div>
+          </button>
+        </div>
+      </HubBody>
+    </HubPage>
   );
 }

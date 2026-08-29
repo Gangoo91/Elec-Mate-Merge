@@ -4086,6 +4086,48 @@ export type Database = {
         };
         Relationships: [];
       };
+      outlook_calendar_tokens: {
+        Row: {
+          created_at: string;
+          encrypted_access_token: string;
+          encrypted_refresh_token: string | null;
+          id: string;
+          last_sync_at: string | null;
+          outlook_email: string | null;
+          sync_enabled: boolean;
+          sync_token: string | null;
+          token_expires_at: string;
+          updated_at: string;
+          user_id: string;
+        };
+        Insert: {
+          created_at?: string;
+          encrypted_access_token: string;
+          encrypted_refresh_token?: string | null;
+          id?: string;
+          last_sync_at?: string | null;
+          outlook_email?: string | null;
+          sync_enabled?: boolean;
+          sync_token?: string | null;
+          token_expires_at: string;
+          updated_at?: string;
+          user_id: string;
+        };
+        Update: {
+          created_at?: string;
+          encrypted_access_token?: string;
+          encrypted_refresh_token?: string | null;
+          id?: string;
+          last_sync_at?: string | null;
+          outlook_email?: string | null;
+          sync_enabled?: boolean;
+          sync_token?: string | null;
+          token_expires_at?: string;
+          updated_at?: string;
+          user_id?: string;
+        };
+        Relationships: [];
+      };
       calendar_events: {
         Row: {
           all_day: boolean | null;
@@ -4098,6 +4140,8 @@ export type Database = {
           event_type: string;
           google_calendar_id: string | null;
           google_etag: string | null;
+          outlook_event_id: string | null;
+          outlook_change_key: string | null;
           google_event_id: string | null;
           id: string;
           job_id: string | null;
@@ -4128,6 +4172,8 @@ export type Database = {
           event_type?: string;
           google_calendar_id?: string | null;
           google_etag?: string | null;
+          outlook_event_id?: string | null;
+          outlook_change_key?: string | null;
           google_event_id?: string | null;
           id?: string;
           job_id?: string | null;
@@ -4158,6 +4204,8 @@ export type Database = {
           event_type?: string;
           google_calendar_id?: string | null;
           google_etag?: string | null;
+          outlook_event_id?: string | null;
+          outlook_change_key?: string | null;
           google_event_id?: string | null;
           id?: string;
           job_id?: string | null;
@@ -13346,6 +13394,48 @@ export type Database = {
         };
         Relationships: [];
       };
+      elec_ai_feedback: {
+        Row: {
+          agent: string;
+          answer: string;
+          cited_regulations: string[];
+          created_at: string;
+          id: string;
+          metadata: Json;
+          question: string;
+          rating: string;
+          reasons: string[];
+          session_id: string | null;
+          user_id: string;
+        };
+        Insert: {
+          agent?: string;
+          answer: string;
+          cited_regulations?: string[];
+          created_at?: string;
+          id?: string;
+          metadata?: Json;
+          question: string;
+          rating: string;
+          reasons?: string[];
+          session_id?: string | null;
+          user_id: string;
+        };
+        Update: {
+          agent?: string;
+          answer?: string;
+          cited_regulations?: string[];
+          created_at?: string;
+          id?: string;
+          metadata?: Json;
+          question?: string;
+          rating?: string;
+          reasons?: string[];
+          session_id?: string | null;
+          user_id?: string;
+        };
+        Relationships: [];
+      };
       elec_id_documents: {
         Row: {
           appeal_notes: string | null;
@@ -20833,6 +20923,8 @@ export type Database = {
           job_details: Json | null;
           last_reminder_sent_at: string | null;
           linked_certificate_id: string | null;
+          certificate_release_mode: string;
+          certificate_released_at: string | null;
           linked_certificate_pdf_url: string | null;
           linked_certificate_reference: string | null;
           linked_certificate_type: string | null;
@@ -20885,6 +20977,8 @@ export type Database = {
           job_details?: Json | null;
           last_reminder_sent_at?: string | null;
           linked_certificate_id?: string | null;
+          certificate_release_mode?: string;
+          certificate_released_at?: string | null;
           linked_certificate_pdf_url?: string | null;
           linked_certificate_reference?: string | null;
           linked_certificate_type?: string | null;
@@ -20937,6 +21031,8 @@ export type Database = {
           job_details?: Json | null;
           last_reminder_sent_at?: string | null;
           linked_certificate_id?: string | null;
+          certificate_release_mode?: string;
+          certificate_released_at?: string | null;
           linked_certificate_pdf_url?: string | null;
           linked_certificate_reference?: string | null;
           linked_certificate_type?: string | null;
@@ -23297,6 +23393,133 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: 'v_lti_grade_sync_status';
             referencedColumns: ['platform_id'];
+          },
+        ];
+      };
+      maintenance_contract_visits: {
+        Row: {
+          booked_at: string | null;
+          booked_event_id: string | null;
+          completed_at: string | null;
+          contract_id: string;
+          created_at: string;
+          due_date: string;
+          email_sent_at: string | null;
+          id: string;
+          invoice_id: string | null;
+          task_id: string | null;
+          user_id: string;
+        };
+        Insert: {
+          booked_at?: string | null;
+          booked_event_id?: string | null;
+          completed_at?: string | null;
+          contract_id: string;
+          created_at?: string;
+          due_date: string;
+          email_sent_at?: string | null;
+          id?: string;
+          invoice_id?: string | null;
+          task_id?: string | null;
+          user_id: string;
+        };
+        Update: {
+          booked_at?: string | null;
+          booked_event_id?: string | null;
+          completed_at?: string | null;
+          contract_id?: string;
+          created_at?: string;
+          due_date?: string;
+          email_sent_at?: string | null;
+          id?: string;
+          invoice_id?: string | null;
+          task_id?: string | null;
+          user_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'maintenance_contract_visits_contract_id_fkey';
+            columns: ['contract_id'];
+            isOneToOne: false;
+            referencedRelation: 'maintenance_contracts';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      maintenance_contracts: {
+        Row: {
+          auto_create_invoice: boolean;
+          auto_email_customer: boolean;
+          client_type: string;
+          created_at: string;
+          customer_id: string | null;
+          customer_name: string;
+          default_invoice_amount: number | null;
+          description: string | null;
+          end_date: string | null;
+          frequency: string;
+          frequency_custom_days: number | null;
+          id: string;
+          job_type: string;
+          last_generated_at: string | null;
+          next_due_date: string;
+          reminder_days_before: number;
+          start_date: string;
+          status: string;
+          updated_at: string;
+          user_id: string;
+        };
+        Insert: {
+          auto_create_invoice?: boolean;
+          auto_email_customer?: boolean;
+          client_type?: string;
+          created_at?: string;
+          customer_id?: string | null;
+          customer_name: string;
+          default_invoice_amount?: number | null;
+          description?: string | null;
+          end_date?: string | null;
+          frequency: string;
+          frequency_custom_days?: number | null;
+          id?: string;
+          job_type: string;
+          last_generated_at?: string | null;
+          next_due_date: string;
+          reminder_days_before?: number;
+          start_date: string;
+          status?: string;
+          updated_at?: string;
+          user_id: string;
+        };
+        Update: {
+          auto_create_invoice?: boolean;
+          auto_email_customer?: boolean;
+          client_type?: string;
+          created_at?: string;
+          customer_id?: string | null;
+          customer_name?: string;
+          default_invoice_amount?: number | null;
+          description?: string | null;
+          end_date?: string | null;
+          frequency?: string;
+          frequency_custom_days?: number | null;
+          id?: string;
+          job_type?: string;
+          last_generated_at?: string | null;
+          next_due_date?: string;
+          reminder_days_before?: number;
+          start_date?: string;
+          status?: string;
+          updated_at?: string;
+          user_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'maintenance_contracts_customer_id_fkey';
+            columns: ['customer_id'];
+            isOneToOne: false;
+            referencedRelation: 'customers';
+            referencedColumns: ['id'];
           },
         ];
       };
@@ -28770,6 +28993,7 @@ export type Database = {
           scheduling_auto_confirm: boolean;
           scheduling_blackout_dates: Json | null;
           scheduling_buffer_minutes: number | null;
+          scheduling_jobs_at_once: number;
           scheduling_max_bookings_per_day: number | null;
           scheduling_min_notice_hours: number | null;
           scheduling_slot_minutes: number;
@@ -28874,6 +29098,7 @@ export type Database = {
           scheduling_auto_confirm?: boolean;
           scheduling_blackout_dates?: Json | null;
           scheduling_buffer_minutes?: number | null;
+          scheduling_jobs_at_once?: number;
           scheduling_max_bookings_per_day?: number | null;
           scheduling_min_notice_hours?: number | null;
           scheduling_slot_minutes?: number;
@@ -28978,6 +29203,7 @@ export type Database = {
           scheduling_auto_confirm?: boolean;
           scheduling_blackout_dates?: Json | null;
           scheduling_buffer_minutes?: number | null;
+          scheduling_jobs_at_once?: number;
           scheduling_max_bookings_per_day?: number | null;
           scheduling_min_notice_hours?: number | null;
           scheduling_slot_minutes?: number;
@@ -30095,6 +30321,8 @@ export type Database = {
           last_payment_prompt_pushed_at: string | null;
           last_reminder_sent_at: string | null;
           linked_certificate_id: string | null;
+          certificate_release_mode: string;
+          certificate_released_at: string | null;
           linked_certificate_pdf_url: string | null;
           linked_certificate_reference: string | null;
           linked_certificate_type: string | null;
@@ -30186,6 +30414,8 @@ export type Database = {
           last_payment_prompt_pushed_at?: string | null;
           last_reminder_sent_at?: string | null;
           linked_certificate_id?: string | null;
+          certificate_release_mode?: string;
+          certificate_released_at?: string | null;
           linked_certificate_pdf_url?: string | null;
           linked_certificate_reference?: string | null;
           linked_certificate_type?: string | null;
@@ -30277,6 +30507,8 @@ export type Database = {
           last_payment_prompt_pushed_at?: string | null;
           last_reminder_sent_at?: string | null;
           linked_certificate_id?: string | null;
+          certificate_release_mode?: string;
+          certificate_released_at?: string | null;
           linked_certificate_pdf_url?: string | null;
           linked_certificate_reference?: string | null;
           linked_certificate_type?: string | null;
@@ -38104,6 +38336,30 @@ export type Database = {
           percentage?: number | null;
           score?: number;
           time_taken_seconds?: number | null;
+          user_id?: string;
+        };
+        Relationships: [];
+      };
+      user_automations: {
+        Row: {
+          created_at: string;
+          key: string;
+          mode: string;
+          updated_at: string;
+          user_id: string;
+        };
+        Insert: {
+          created_at?: string;
+          key: string;
+          mode?: string;
+          updated_at?: string;
+          user_id: string;
+        };
+        Update: {
+          created_at?: string;
+          key?: string;
+          mode?: string;
+          updated_at?: string;
           user_id?: string;
         };
         Relationships: [];

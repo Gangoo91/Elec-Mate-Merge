@@ -5,10 +5,10 @@
  */
 
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
-import { PageFrame, PageHero } from '@/components/college/primitives';
 import {
   CommonMistake,
   ConceptBlock,
@@ -168,12 +168,7 @@ const quizQuestions = [
     id: 7,
     question:
       'What is the typical ambient noise criterion for open-plan offices under BREEAM Hea 06?',
-    options: [
-      'NR 25',
-      'NR 35',
-      'NR 45',
-      'NR 40',
-    ],
+    options: ['NR 25', 'NR 35', 'NR 45', 'NR 40'],
     correctAnswer: 3,
     explanation:
       'BREEAM typically specifies NR 40 as the maximum background noise level for open-plan offices from building services. Private offices require lower levels (NR 35), and libraries or lecture theatres require NR 30 or lower.',
@@ -208,12 +203,7 @@ const quizQuestions = [
     id: 10,
     question:
       'What is the Unified Glare Rating (UGR) limit typically specified for office lighting?',
-    options: [
-      'UGR < 16',
-      'UGR < 28',
-      'UGR < 19',
-      'UGR < 22',
-    ],
+    options: ['UGR < 16', 'UGR < 28', 'UGR < 19', 'UGR < 22'],
     correctAnswer: 2,
     explanation:
       'BREEAM and lighting standards typically specify UGR < 19 for office environments. Lower values (UGR < 16) apply to detailed drawing work, while higher values (UGR < 22) may be acceptable for circulation areas.',
@@ -286,396 +276,658 @@ const HNCModule6Section3_5 = () => {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
-      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
-        <PageFrame>
+    <HubPage>
+      <HubMasthead
+        section="Module 6 · Section 3 · Subsection 5"
+        title="BREEAM Health and Wellbeing"
+        backTo="/study-centre/apprentice/h-n-c-module6-section3"
+      />
+      <HubBody>
+        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
+          Daylighting, artificial lighting quality, indoor air quality, thermal comfort, and
+          acoustic performance assessment
+        </p>
+
+        <TLDR
+          points={[
+            'Hea 01–08 covers visual comfort (daylighting, glare, lighting controls, view-out), indoor air quality (low-VOC, ventilation, post-construction commissioning), thermal comfort (overheating analysis, controls), acoustics, water quality (Legionella, drinking water), security (Secured by Design), private space, and inclusive design.',
+            'Hea 02 (indoor air quality) requires a low-emitting materials strategy + post-occupancy IAQ measurement (TVOC, formaldehyde) — this is one of the most often-failed credits at post-construction.',
+            'Hea 04 (thermal comfort) requires CIBSE TM52 (or TM59 for residential) overheating analysis — the methodology now mandated by Building Regulations Part O.',
+          ]}
+        />
+
+        <RegsCallout
+          source="CIBSE TM52 (non-residential) / TM59 (residential) — Overheating Risk Assessment + Building Regulations Part O"
+          clause="For residential premises, an overheating risk analysis shall be carried out using CIBSE TM59 (free running) or the simplified method in Part O Schedule 1, comparing predicted operative temperature against the criteria in CIBSE TM52: criterion 1 (number of hours operative temperature exceeds 26°C limit), criterion 2 (weighted exceedance of comfort range), criterion 3 (absolute exceedance of 32°C). All three criteria must be met; failure of any one is non-compliant."
+          meaning={
+            <>
+              Part O makes overheating analysis a Building Regulations requirement, not a BREEAM
+              extra. The TM59 / Part O simplified method is mandatory. BREEAM Hea 04 sits on top of
+              this — additional credits for analysis sensitivity, post-occupancy monitoring, and
+              adaptive comfort considerations. Overheating risk in deep-plan or single-aspect
+              dwellings is the single largest design issue post-Part O.
+            </>
+          }
+          cite="Source: CIBSE TM52 (2013), TM59 (2017); Approved Document O: Overheating, 2021 edition — gov.uk"
+        />
+
+        <LearningOutcomes
+          outcomes={[
+            'Apply BREEAM Hea 01-03 visual comfort criteria for daylighting and views',
+            'Specify ventilation systems meeting Hea 04 indoor air quality requirements',
+            'Design for Hea 05 thermal comfort using adaptive and PMV models',
+            'Achieve Hea 06 acoustic performance targets for various building types',
+            'Integrate artificial lighting quality with energy efficiency objectives',
+            'Evaluate occupant wellbeing through post-occupancy assessment',
+          ]}
+        />
+
+        <SectionRule />
+
+        <ConceptBlock title="Visual Comfort - Daylighting and Views (Hea 01-03)">
+          <p>
+            BREEAM Health and Wellbeing addresses occupant comfort through multiple interconnected
+            criteria. Visual comfort encompasses daylighting provision (Hea 01), view out to the
+            external environment (Hea 02), and glare control to prevent discomfort (Hea 03). These
+            criteria recognise that natural light and external views significantly impact occupant
+            wellbeing and productivity.
+          </p>
+          <p>
+            <strong>Hea 01 - Visual Comfort (Daylighting)</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Average daylight factor:</strong> Minimum 2% for offices, 2.5% for schools, 3%
+              for hospitals
+            </li>
+            <li>
+              <strong>Uniformity:</strong> Minimum daylight factor at least 0.4 times the average
+            </li>
+            <li>
+              <strong>Room depth criterion:</strong> No part of working plane further than 6m from
+              window
+            </li>
+            <li>
+              <strong>Daylight assessment:</strong> Climate-based daylight modelling (CBDM)
+              preferred
+            </li>
+          </ul>
+          <p>
+            <strong>Daylight Assessment Methods</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Daylight Factor (DF):</strong> Ratio of internal to external illuminance (%) —
+              Baseline compliance route
+            </li>
+            <li>
+              <strong>Spatial Daylight Autonomy (sDA):</strong> % floor area receiving 300 lux for
+              50% of hours — Alternative CBDM route
+            </li>
+            <li>
+              <strong>Annual Sunlight Exposure (ASE):</strong> % area receiving 1000 lux for 250+
+              hours — Overheating/glare indicator
+            </li>
+            <li>
+              <strong>Useful Daylight Illuminance (UDI):</strong> Hours within 100-3000 lux range —
+              Comfort-based metric
+            </li>
+          </ul>
+          <p>
+            <strong>Hea 02 - View Out Requirements</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Coverage:</strong> 95% of net internal area must have adequate view
+            </li>
+            <li>
+              <strong>View quality:</strong> Direct line of sight to sky, ground, or landscape
+            </li>
+            <li>
+              <strong>Glazing:</strong> Clear glass at eye level (minimum visible light
+              transmittance 50%)
+            </li>
+            <li>
+              <strong>Distance:</strong> Workstations within 7m of perimeter glazing
+            </li>
+          </ul>
+          <p>
+            <strong>Hea 03 - Glare Control Strategies</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Internal blinds:</strong> Adjustable venetian, roller, or vertical blinds
+            </li>
+            <li>
+              <strong>External shading:</strong> Brise soleil, overhangs, external louvres
+            </li>
+            <li>
+              <strong>Mid-pane blinds:</strong> Integral blinds within double-glazed units
+            </li>
+            <li>
+              <strong>Automated systems:</strong> Solar-tracking blinds or electrochromic glass
+            </li>
+            <li>
+              <strong>Manual override:</strong> Occupant control required regardless of automation
+            </li>
+          </ul>
+          <p>
+            <strong>Design integration:</strong> Balance daylight, views, and glare control with
+            thermal performance - excessive glazing increases cooling loads whilst inadequate
+            glazing limits daylight and views.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...quickCheckQuestions[0]} />
+
+        <SectionRule />
+
+        <ConceptBlock title="Indoor Air Quality (Hea 04)">
+          <p>
+            BREEAM Hea 04 addresses indoor air quality through ventilation provision, pollutant
+            control, and monitoring systems. Poor IAQ affects occupant health, comfort, and
+            cognitive performance. The criteria ensure adequate fresh air supply whilst minimising
+            exposure to internal and external pollution sources.
+          </p>
+          <p>
+            <strong>Ventilation Rates</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Offices: 10 l/s/person</li>
+            <li>Meeting rooms: 12 l/s/person</li>
+            <li>Classrooms: 8-10 l/s/person</li>
+            <li>Retail: 10-15 l/s/person</li>
+          </ul>
+          <p>
+            <strong>CO2 Monitoring</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Target: Below 1000 ppm</li>
+            <li>Alert threshold: 1200 ppm</li>
+            <li>Sensor locations: Breathing zone</li>
+            <li>BMS integration required</li>
+          </ul>
+          <p>
+            <strong>Filtration</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>AHU filters: Minimum F7</li>
+            <li>Higher pollution: F8/F9</li>
+            <li>Pre-filters for protection</li>
+            <li>Access for maintenance</li>
+          </ul>
+          <p>
+            <strong>Pollutant Source Control</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Paints and coatings:</strong> Low VOC specification — EU Ecolabel or
+              equivalent
+            </li>
+            <li>
+              <strong>Adhesives and sealants:</strong> VOC content limits — EC1 Plus certification
+            </li>
+            <li>
+              <strong>Flooring:</strong> Emission testing required — FloorScore or M1
+            </li>
+            <li>
+              <strong>Formaldehyde (wood products):</strong> Low emission boards — E1 classification
+              maximum
+            </li>
+            <li>
+              <strong>External pollution:</strong> Air intake location — Away from traffic, exhausts
+            </li>
+          </ul>
+          <p>
+            <strong>Demand-Controlled Ventilation (DCV)</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>CO2 sensors:</strong> NDIR type, calibrated accuracy ±75 ppm
+            </li>
+            <li>
+              <strong>Setpoint:</strong> Typically 800-1000 ppm to ramp up ventilation
+            </li>
+            <li>
+              <strong>Minimum rate:</strong> Maintain base ventilation regardless of occupancy
+            </li>
+            <li>
+              <strong>Response time:</strong> System should respond within 5-10 minutes
+            </li>
+            <li>
+              <strong>Energy benefit:</strong> 20-40% HVAC energy savings versus fixed rate
+            </li>
+          </ul>
+          <p>
+            <strong>Commissioning requirement:</strong> Air flow rates must be measured and
+            documented during commissioning, with results within 10% of design values.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...quickCheckQuestions[1]} />
+
+        <SectionRule />
+
+        <ConceptBlock title="Thermal Comfort (Hea 05)">
+          <p>
+            BREEAM Hea 05 ensures buildings provide appropriate thermal conditions for occupant
+            comfort and productivity. The criteria reference BS EN 16798-1 (formerly BS EN 15251)
+            and recognise different comfort models for mechanically cooled and naturally ventilated
+            buildings.
+          </p>
+          <p>
+            <strong>BS EN 16798-1 Comfort Categories</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Category I:</strong> High expectation - PPD &lt; 6% (23-26°C summer, 21-23°C
+              winter)
+            </li>
+            <li>
+              <strong>Category II:</strong> Normal expectation - PPD &lt; 10% (22-27°C summer,
+              20-24°C winter)
+            </li>
+            <li>
+              <strong>Category III:</strong> Moderate expectation - PPD &lt; 15% (21-28°C summer,
+              19-25°C winter)
+            </li>
+            <li>
+              <strong>Category IV:</strong> Outside normal criteria (only for limited periods)
+            </li>
+          </ul>
+          <p>
+            <strong>Thermal Comfort Models</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>PMV/PPD (Fanger):</strong> Mechanically conditioned spaces — Fixed temperature
+              bands, RH 40-60%
+            </li>
+            <li>
+              <strong>Adaptive Comfort:</strong> Naturally ventilated buildings — Running mean
+              outdoor temperature linked
+            </li>
+            <li>
+              <strong>Mixed Mode:</strong> Combined natural/mechanical — Changeover strategy defined
+            </li>
+          </ul>
+          <p>
+            <strong>BREEAM Thermal Comfort Requirements</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Thermal modelling:</strong> Dynamic simulation demonstrating comfort
+              compliance
+            </li>
+            <li>
+              <strong>Overheating analysis:</strong> CIBSE TM52 (non-domestic) or TM59 (domestic)
+              criteria
+            </li>
+            <li>
+              <strong>Zoning:</strong> Separate thermal zones for perimeter/core, different
+              orientations
+            </li>
+            <li>
+              <strong>Control:</strong> User-adjustable thermostats, maximum 4°C adjustment range
+            </li>
+            <li>
+              <strong>Humidity:</strong> Maintained within 40-60% RH where humidification provided
+            </li>
+            <li>
+              <strong>Air velocity:</strong> Less than 0.25 m/s in occupied zone (winter heating)
+            </li>
+          </ul>
+          <p>
+            <strong>CIBSE TM52 Overheating Criteria</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Criterion 1:</strong> Hours exceeding threshold &lt; 3%
+            </li>
+            <li>
+              <strong>Criterion 2:</strong> Daily weighted exceedance ≤ 6
+            </li>
+            <li>
+              <strong>Criterion 3:</strong> Absolute maximum 4K above threshold
+            </li>
+            <li>Fail if 2 or more criteria exceeded</li>
+          </ul>
+          <p>
+            <strong>Design Strategies</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Passive:</strong> Thermal mass, night purge, shading
+            </li>
+            <li>
+              <strong>Active:</strong> Mechanical cooling, heat pumps
+            </li>
+            <li>
+              <strong>Controls:</strong> Optimiser, weather compensation
+            </li>
+            <li>
+              <strong>User:</strong> Openable windows, local adjustment
+            </li>
+          </ul>
+          <p>
+            <strong>Adaptive comfort advantage:</strong> Naturally ventilated buildings can accept
+            higher summer temperatures (up to 28°C+) when occupants have control, reducing or
+            eliminating cooling energy requirements.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...quickCheckQuestions[2]} />
+
+        <SectionRule />
+
+        <ConceptBlock title="Acoustic Performance and Lighting Quality (Hea 06)">
+          <p>
+            BREEAM Hea 06 addresses acoustic comfort through ambient noise control, sound insulation
+            between spaces, and reverberation management. Combined with artificial lighting quality
+            requirements, these criteria ensure buildings provide comfortable environments for their
+            intended activities.
+          </p>
+          <p>
+            <strong>Ambient Noise Criteria (NR Ratings)</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Concert hall:</strong> NR 15-20 — HVAC, external ingress
+            </li>
+            <li>
+              <strong>Library / lecture theatre:</strong> NR 25-30 — Terminal units, lighting
+            </li>
+            <li>
+              <strong>Classroom:</strong> NR 30-35 — Ventilation, corridor noise
+            </li>
+            <li>
+              <strong>Private office:</strong> NR 35 — FCUs, diffusers
+            </li>
+            <li>
+              <strong>Open-plan office:</strong> NR 40 — AHU breakout, grilles
+            </li>
+            <li>
+              <strong>Retail / circulation:</strong> NR 45-50 — General building services
+            </li>
+          </ul>
+          <p>
+            <strong>Sound Insulation Requirements</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Office partitions:</strong> DnT,w ≥ 35-40 dB (cellular offices)
+            </li>
+            <li>
+              <strong>Meeting rooms:</strong> DnT,w ≥ 45 dB for confidential discussions
+            </li>
+            <li>
+              <strong>Healthcare consulting:</strong> DnT,w ≥ 45-50 dB (patient privacy)
+            </li>
+            <li>
+              <strong>Floor separations:</strong> L'nT,w ≤ 55-60 dB (impact sound)
+            </li>
+            <li>
+              <strong>Plant rooms:</strong> Rated enclosures, anti-vibration mounts
+            </li>
+          </ul>
+          <p>
+            <strong>Artificial Lighting Quality Metrics</strong>
+          </p>
+          <p>
+            <strong>Illuminance Requirements</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>General office: 300-500 lux</li>
+            <li>Drawing/CAD: 500-750 lux</li>
+            <li>Corridors: 100-150 lux</li>
+            <li>Retail: 300-750 lux</li>
+            <li>Uniformity: ≥ 0.4 general, ≥ 0.6 task</li>
+          </ul>
+          <p>
+            <strong>Quality Parameters</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>UGR: ≤ 19 (offices), ≤ 16 (drawing)</li>
+            <li>CRI: ≥ 80 general, ≥ 90 colour-critical</li>
+            <li>CCT: 3000-4000K typical offices</li>
+            <li>Flicker: ≤ 3% at 100Hz</li>
+            <li>Circadian consideration for 24hr spaces</li>
+          </ul>
+          <p>
+            <strong>Reverberation Control</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Classroom:</strong> 0.4-0.8 seconds — Acoustic ceiling, wall panels
+            </li>
+            <li>
+              <strong>Open-plan office:</strong> 0.5-0.8 seconds — Suspended ceiling, carpet
+            </li>
+            <li>
+              <strong>Meeting room:</strong> 0.4-0.6 seconds — Wall absorption, ceiling
+            </li>
+            <li>
+              <strong>Atrium / reception:</strong> 1.0-1.5 seconds — Baffles, soffit treatment
+            </li>
+          </ul>
+          <p>
+            <strong>Building services noise:</strong> Early coordination with mechanical design is
+            essential - ductwork velocities, attenuator positions, and equipment selections
+            significantly impact achievable NR levels.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...quickCheckQuestions[3]} />
+
+        <SectionRule />
+
+        <ConceptBlock title="Worked Examples">
+          <p>
+            <strong>Example 1: Office Daylighting Assessment</strong>
+          </p>
+          <p>
+            <strong>Scenario:</strong> Verify BREEAM Hea 01 compliance for a 12m deep office floor
+            plate.
+          </p>
+          <p>Given data:</p>
+          <p>Floor depth: 12m from facade</p>
+          <p>Floor-to-ceiling height: 2.7m</p>
+          <p>Window head height: 2.5m</p>
+          <p>Glazing ratio: 50% of facade</p>
+          <p>Visible light transmittance: 65%</p>
+          <p>Daylight factor calculation (simplified):</p>
+          <p>Average DF = (A_window × VLT × 0.85) / (A_floor × (1 - R_mean))</p>
+          <p>Perimeter zone (0-6m): DF ≈ 3.2%</p>
+          <p>Core zone (6-12m): DF ≈ 1.1%</p>
+          <p>Assessment:</p>
+          <p>
+            Average across floor: 2.15% - <span>COMPLIANT</span>
+          </p>
+          <p>
+            Uniformity: 1.1/2.15 = 0.51 - <span>COMPLIANT (≥0.4)</span>
+          </p>
+          <p>Note: Core requires supplementary artificial lighting</p>
+          <p>
+            <strong>Example 2: Ventilation Rate Calculation</strong>
+          </p>
+          <p>
+            <strong>Scenario:</strong> Determine fresh air requirement for a 50-person meeting room.
+          </p>
+          <p>BREEAM Hea 04 requirement:</p>
+          <p>Meeting room rate: 12 l/s/person</p>
+          <p>Fresh air = 50 persons × 12 l/s</p>
+          <p>Fresh air = 600 l/s = 0.6 m³/s</p>
+          <p>Air changes (room 100m², 3m height):</p>
+          <p>Room volume: 300 m³</p>
+          <p>ACH = (0.6 × 3600) / 300 = 7.2 air changes/hour</p>
+          <p>CO2 monitoring setpoints:</p>
+          <p>Minimum ventilation (unoccupied): 150 l/s (0.5 l/s/m²)</p>
+          <p>Ramp-up trigger: 800 ppm CO2</p>
+          <p>Design ventilation: 600 l/s at 1000 ppm</p>
+          <p>System sized for peak with DCV for part-load efficiency</p>
+          <p>
+            <strong>Example 3: Acoustic Design for Open-Plan Office</strong>
+          </p>
+          <p>
+            <strong>Scenario:</strong> Specify building services to achieve NR 40 in open-plan
+            office.
+          </p>
+          <p>Noise budget (summing to NR 40):</p>
+          <p>Supply air diffusers: NR 32 (NC 30)</p>
+          <p>Return air grilles: NR 30</p>
+          <p>FCU/chilled beams: NR 28</p>
+          <p>Lighting (LED drivers): NR 20</p>
+          <p>External ingress: NR 25</p>
+          <p>Logarithmic addition:</p>
+          <p>Combined = 10 × log10(10^3.2 + 10^3.0 + 10^2.8 + 10^2.0 + 10^2.5)</p>
+          <p>Combined ≈ NR 36</p>
+          <p>Result: NR 36 achieved, within NR 40 target</p>
+          <p>Key specifications:</p>
+          <p>- Diffuser velocity: Max 2.5 m/s neck velocity</p>
+          <p>- Duct attenuation: 1m lined duct before diffuser</p>
+          <p>- FCU selection: Low-noise units, silent mode capability</p>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <ConceptBlock title="Practical guidance">
+          <p>
+            <strong>BREEAM Health and Wellbeing Checklist:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Complete daylight modelling early in design - facade changes are costly</li>
+            <li>Specify low-VOC materials throughout - obtain certifications pre-construction</li>
+            <li>Coordinate acoustic requirements with MEP consultant from RIBA Stage 2</li>
+            <li>Include CO2 sensors in BMS specification with clear control strategy</li>
+            <li>Verify glare control meets both manual override and automation requirements</li>
+            <li>Commission thermal comfort and ventilation systems before occupation</li>
+          </ul>
+          <p>
+            <strong>Key Values to Remember:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              Daylight factor: <strong>2% average</strong> for offices (minimum)
+            </li>
+            <li>
+              Fresh air: <strong>10 l/s/person</strong> offices, <strong>12 l/s/person</strong>{' '}
+              meeting rooms
+            </li>
+            <li>
+              CO2 target: <strong>Below 1000 ppm</strong> (alert at 1200 ppm)
+            </li>
+            <li>
+              Office noise: <strong>NR 40</strong> open-plan, <strong>NR 35</strong> cellular
+            </li>
+            <li>
+              Lighting UGR: <strong>≤ 19</strong> for VDU work
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <CommonMistake
+          title="Common mistakes to avoid"
+          whatHappens={
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+              <li>
+                <strong>Late daylight assessment</strong> - modelling after facade design fixed
+                limits options
+              </li>
+              <li>
+                <strong>Ignoring glare</strong> - high daylight factors without shading cause
+                discomfort
+              </li>
+              <li>
+                <strong>Undersized ventilation</strong> - design for peak occupancy, not typical
+              </li>
+              <li>
+                <strong>Acoustic afterthought</strong> - attenuators and treatments cost more when
+                retrofitted
+              </li>
+            </ul>
+          }
+          doInstead="Cross-check assumptions against published guidance, validate measured values against design intent, and engage the wider team early when interface issues emerge."
+        />
+
+        <SectionRule />
+
+        <Scenario
+          title="Post-occupancy IAQ test fails formaldehyde threshold"
+          situation={
+            <>
+              Hea 02 was claimed at design stage with low-VOC materials specified throughout.
+              Post-occupancy IAQ testing six weeks after handover shows formaldehyde at 105 µg/m³ —
+              above the BREEAM 100 µg/m³ threshold. The flush-out period was 2 weeks; the building
+              has been occupied since.
+            </>
+          }
+          whatToDo={
+            <>
+              Investigate source — typically MDF furniture, finished joinery or carpet adhesive that
+              was not on the low-VOC specification. Increase ventilation rates for an extended flush
+              period (2–4 additional weeks at boost), re-test, and provide the assessor with the
+              full test dataset. If still failing, the source material may need replacement
+              (unlikely to be commercially viable post-occupancy). Lesson: tenant fit-out furniture
+              and finishes must be controlled with the same low-VOC specification as the base build,
+              or claim the credit only on base build elements.
+            </>
+          }
+          whyItMatters={
+            <>
+              IAQ post-occupancy testing exposes the gap between design intent and construction
+              execution. Tenant fit-out is the most common contamination source — the credit is
+              often won on the base build and lost on the fit-out. WELL Building Standard treats
+              this even more rigorously; BREEAM is now catching up.
+            </>
+          }
+        />
+
+        <SectionRule />
+
+        <FAQ items={faqs} />
+
+        <SectionRule />
+
+        <KeyTakeaways
+          points={[
+            'Hea 01: daylighting (average daylight factor 2%+ with good distribution), view-out, glare control.',
+            'Hea 02: low-VOC materials + post-occupancy IAQ test (TVOC ≤300 µg/m³, formaldehyde ≤100 µg/m³).',
+            'Hea 04: TM52/TM59 overheating analysis — now mandatory under Part O.',
+            'Hea 05: acoustics — speech intelligibility, ambient noise, reverberation per BB93 (schools), HTM 08-01 (healthcare).',
+            'Hea 06: water hygiene — Legionella risk assessment per HSG274 + L8 ACoP.',
+            'Hea 07: Secured by Design — Police-approved security strategy.',
+            'Hea 08: inclusive design — Equality Act 2010 + BS 8300.',
+          ]}
+        />
+
+        <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+
+        <div className="grid grid-cols-2 gap-3 pt-2">
           <button
-            onClick={() => navigate("/study-centre/apprentice/h-n-c-module6-section3")}
-            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module6-section3-4')}
+            className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
           >
-            <ArrowLeft className="h-4 w-4" /> Back
+            <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+              <ChevronLeft className="h-3 w-3" /> Previous
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-white truncate">
+              Materials and waste
+            </div>
           </button>
-
-          <PageHero
-            eyebrow="Module 6 · Section 3 · Subsection 5"
-            title="BREEAM Health and Wellbeing"
-            description="Daylighting, artificial lighting quality, indoor air quality, thermal comfort, and acoustic performance assessment"
-            tone="purple"
-          />
-
-          <TLDR
-            points={[
-              "Hea 01–08 covers visual comfort (daylighting, glare, lighting controls, view-out), indoor air quality (low-VOC, ventilation, post-construction commissioning), thermal comfort (overheating analysis, controls), acoustics, water quality (Legionella, drinking water), security (Secured by Design), private space, and inclusive design.",
-              "Hea 02 (indoor air quality) requires a low-emitting materials strategy + post-occupancy IAQ measurement (TVOC, formaldehyde) — this is one of the most often-failed credits at post-construction.",
-              "Hea 04 (thermal comfort) requires CIBSE TM52 (or TM59 for residential) overheating analysis — the methodology now mandated by Building Regulations Part O.",
-            ]}
-          />
-
-          <RegsCallout
-            source="CIBSE TM52 (non-residential) / TM59 (residential) — Overheating Risk Assessment + Building Regulations Part O"
-            clause="For residential premises, an overheating risk analysis shall be carried out using CIBSE TM59 (free running) or the simplified method in Part O Schedule 1, comparing predicted operative temperature against the criteria in CIBSE TM52: criterion 1 (number of hours operative temperature exceeds 26°C limit), criterion 2 (weighted exceedance of comfort range), criterion 3 (absolute exceedance of 32°C). All three criteria must be met; failure of any one is non-compliant."
-            meaning={
-              <>
-                Part O makes overheating analysis a Building Regulations requirement, not a BREEAM extra. The TM59 / Part O simplified method is mandatory. BREEAM Hea 04 sits on top of this — additional credits for analysis sensitivity, post-occupancy monitoring, and adaptive comfort considerations. Overheating risk in deep-plan or single-aspect dwellings is the single largest design issue post-Part O.
-              </>
-            }
-            cite="Source: CIBSE TM52 (2013), TM59 (2017); Approved Document O: Overheating, 2021 edition — gov.uk"
-          />
-
-          <LearningOutcomes
-            outcomes={[
-              "Apply BREEAM Hea 01-03 visual comfort criteria for daylighting and views",
-              "Specify ventilation systems meeting Hea 04 indoor air quality requirements",
-              "Design for Hea 05 thermal comfort using adaptive and PMV models",
-              "Achieve Hea 06 acoustic performance targets for various building types",
-              "Integrate artificial lighting quality with energy efficiency objectives",
-              "Evaluate occupant wellbeing through post-occupancy assessment",
-            ]}
-          />
-
-          <SectionRule />
-
-          <ConceptBlock title="Visual Comfort - Daylighting and Views (Hea 01-03)">
-            <p>BREEAM Health and Wellbeing addresses occupant comfort through multiple interconnected criteria. Visual comfort encompasses daylighting provision (Hea 01), view out to the external environment (Hea 02), and glare control to prevent discomfort (Hea 03). These criteria recognise that natural light and external views significantly impact occupant wellbeing and productivity.</p>
-            <p><strong>Hea 01 - Visual Comfort (Daylighting)</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Average daylight factor:</strong> Minimum 2% for offices, 2.5% for schools, 3% for hospitals</li>
-              <li><strong>Uniformity:</strong> Minimum daylight factor at least 0.4 times the average</li>
-              <li><strong>Room depth criterion:</strong> No part of working plane further than 6m from window</li>
-              <li><strong>Daylight assessment:</strong> Climate-based daylight modelling (CBDM) preferred</li>
-            </ul>
-            <p><strong>Daylight Assessment Methods</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Daylight Factor (DF):</strong> Ratio of internal to external illuminance (%) — Baseline compliance route</li>
-              <li><strong>Spatial Daylight Autonomy (sDA):</strong> % floor area receiving 300 lux for 50% of hours — Alternative CBDM route</li>
-              <li><strong>Annual Sunlight Exposure (ASE):</strong> % area receiving 1000 lux for 250+ hours — Overheating/glare indicator</li>
-              <li><strong>Useful Daylight Illuminance (UDI):</strong> Hours within 100-3000 lux range — Comfort-based metric</li>
-            </ul>
-            <p><strong>Hea 02 - View Out Requirements</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Coverage:</strong> 95% of net internal area must have adequate view</li>
-              <li><strong>View quality:</strong> Direct line of sight to sky, ground, or landscape</li>
-              <li><strong>Glazing:</strong> Clear glass at eye level (minimum visible light transmittance 50%)</li>
-              <li><strong>Distance:</strong> Workstations within 7m of perimeter glazing</li>
-            </ul>
-            <p><strong>Hea 03 - Glare Control Strategies</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Internal blinds:</strong> Adjustable venetian, roller, or vertical blinds</li>
-              <li><strong>External shading:</strong> Brise soleil, overhangs, external louvres</li>
-              <li><strong>Mid-pane blinds:</strong> Integral blinds within double-glazed units</li>
-              <li><strong>Automated systems:</strong> Solar-tracking blinds or electrochromic glass</li>
-              <li><strong>Manual override:</strong> Occupant control required regardless of automation</li>
-            </ul>
-            <p><strong>Design integration:</strong> Balance daylight, views, and glare control with thermal performance - excessive glazing increases cooling loads whilst inadequate glazing limits daylight and views.</p>
-          </ConceptBlock>
-
-          <InlineCheck {...quickCheckQuestions[0]} />
-
-          <SectionRule />
-
-          <ConceptBlock title="Indoor Air Quality (Hea 04)">
-            <p>BREEAM Hea 04 addresses indoor air quality through ventilation provision, pollutant control, and monitoring systems. Poor IAQ affects occupant health, comfort, and cognitive performance. The criteria ensure adequate fresh air supply whilst minimising exposure to internal and external pollution sources.</p>
-            <p><strong>Ventilation Rates</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Offices: 10 l/s/person</li>
-              <li>Meeting rooms: 12 l/s/person</li>
-              <li>Classrooms: 8-10 l/s/person</li>
-              <li>Retail: 10-15 l/s/person</li>
-            </ul>
-            <p><strong>CO2 Monitoring</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Target: Below 1000 ppm</li>
-              <li>Alert threshold: 1200 ppm</li>
-              <li>Sensor locations: Breathing zone</li>
-              <li>BMS integration required</li>
-            </ul>
-            <p><strong>Filtration</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>AHU filters: Minimum F7</li>
-              <li>Higher pollution: F8/F9</li>
-              <li>Pre-filters for protection</li>
-              <li>Access for maintenance</li>
-            </ul>
-            <p><strong>Pollutant Source Control</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Paints and coatings:</strong> Low VOC specification — EU Ecolabel or equivalent</li>
-              <li><strong>Adhesives and sealants:</strong> VOC content limits — EC1 Plus certification</li>
-              <li><strong>Flooring:</strong> Emission testing required — FloorScore or M1</li>
-              <li><strong>Formaldehyde (wood products):</strong> Low emission boards — E1 classification maximum</li>
-              <li><strong>External pollution:</strong> Air intake location — Away from traffic, exhausts</li>
-            </ul>
-            <p><strong>Demand-Controlled Ventilation (DCV)</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>CO2 sensors:</strong> NDIR type, calibrated accuracy ±75 ppm</li>
-              <li><strong>Setpoint:</strong> Typically 800-1000 ppm to ramp up ventilation</li>
-              <li><strong>Minimum rate:</strong> Maintain base ventilation regardless of occupancy</li>
-              <li><strong>Response time:</strong> System should respond within 5-10 minutes</li>
-              <li><strong>Energy benefit:</strong> 20-40% HVAC energy savings versus fixed rate</li>
-            </ul>
-            <p><strong>Commissioning requirement:</strong> Air flow rates must be measured and documented during commissioning, with results within 10% of design values.</p>
-          </ConceptBlock>
-
-          <InlineCheck {...quickCheckQuestions[1]} />
-
-          <SectionRule />
-
-          <ConceptBlock title="Thermal Comfort (Hea 05)">
-            <p>BREEAM Hea 05 ensures buildings provide appropriate thermal conditions for occupant comfort and productivity. The criteria reference BS EN 16798-1 (formerly BS EN 15251) and recognise different comfort models for mechanically cooled and naturally ventilated buildings.</p>
-            <p><strong>BS EN 16798-1 Comfort Categories</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Category I:</strong> High expectation - PPD &lt; 6% (23-26°C summer, 21-23°C winter)</li>
-              <li><strong>Category II:</strong> Normal expectation - PPD &lt; 10% (22-27°C summer, 20-24°C winter)</li>
-              <li><strong>Category III:</strong> Moderate expectation - PPD &lt; 15% (21-28°C summer, 19-25°C winter)</li>
-              <li><strong>Category IV:</strong> Outside normal criteria (only for limited periods)</li>
-            </ul>
-            <p><strong>Thermal Comfort Models</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>PMV/PPD (Fanger):</strong> Mechanically conditioned spaces — Fixed temperature bands, RH 40-60%</li>
-              <li><strong>Adaptive Comfort:</strong> Naturally ventilated buildings — Running mean outdoor temperature linked</li>
-              <li><strong>Mixed Mode:</strong> Combined natural/mechanical — Changeover strategy defined</li>
-            </ul>
-            <p><strong>BREEAM Thermal Comfort Requirements</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Thermal modelling:</strong> Dynamic simulation demonstrating comfort compliance</li>
-              <li><strong>Overheating analysis:</strong> CIBSE TM52 (non-domestic) or TM59 (domestic) criteria</li>
-              <li><strong>Zoning:</strong> Separate thermal zones for perimeter/core, different orientations</li>
-              <li><strong>Control:</strong> User-adjustable thermostats, maximum 4°C adjustment range</li>
-              <li><strong>Humidity:</strong> Maintained within 40-60% RH where humidification provided</li>
-              <li><strong>Air velocity:</strong> Less than 0.25 m/s in occupied zone (winter heating)</li>
-            </ul>
-            <p><strong>CIBSE TM52 Overheating Criteria</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Criterion 1:</strong> Hours exceeding threshold &lt; 3%</li>
-              <li><strong>Criterion 2:</strong> Daily weighted exceedance ≤ 6</li>
-              <li><strong>Criterion 3:</strong> Absolute maximum 4K above threshold</li>
-              <li>Fail if 2 or more criteria exceeded</li>
-            </ul>
-            <p><strong>Design Strategies</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Passive:</strong> Thermal mass, night purge, shading</li>
-              <li><strong>Active:</strong> Mechanical cooling, heat pumps</li>
-              <li><strong>Controls:</strong> Optimiser, weather compensation</li>
-              <li><strong>User:</strong> Openable windows, local adjustment</li>
-            </ul>
-            <p><strong>Adaptive comfort advantage:</strong> Naturally ventilated buildings can accept higher summer temperatures (up to 28°C+) when occupants have control, reducing or eliminating cooling energy requirements.</p>
-          </ConceptBlock>
-
-          <InlineCheck {...quickCheckQuestions[2]} />
-
-          <SectionRule />
-
-          <ConceptBlock title="Acoustic Performance and Lighting Quality (Hea 06)">
-            <p>BREEAM Hea 06 addresses acoustic comfort through ambient noise control, sound insulation between spaces, and reverberation management. Combined with artificial lighting quality requirements, these criteria ensure buildings provide comfortable environments for their intended activities.</p>
-            <p><strong>Ambient Noise Criteria (NR Ratings)</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Concert hall:</strong> NR 15-20 — HVAC, external ingress</li>
-              <li><strong>Library / lecture theatre:</strong> NR 25-30 — Terminal units, lighting</li>
-              <li><strong>Classroom:</strong> NR 30-35 — Ventilation, corridor noise</li>
-              <li><strong>Private office:</strong> NR 35 — FCUs, diffusers</li>
-              <li><strong>Open-plan office:</strong> NR 40 — AHU breakout, grilles</li>
-              <li><strong>Retail / circulation:</strong> NR 45-50 — General building services</li>
-            </ul>
-            <p><strong>Sound Insulation Requirements</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Office partitions:</strong> DnT,w ≥ 35-40 dB (cellular offices)</li>
-              <li><strong>Meeting rooms:</strong> DnT,w ≥ 45 dB for confidential discussions</li>
-              <li><strong>Healthcare consulting:</strong> DnT,w ≥ 45-50 dB (patient privacy)</li>
-              <li><strong>Floor separations:</strong> L'nT,w ≤ 55-60 dB (impact sound)</li>
-              <li><strong>Plant rooms:</strong> Rated enclosures, anti-vibration mounts</li>
-            </ul>
-            <p><strong>Artificial Lighting Quality Metrics</strong></p>
-            <p><strong>Illuminance Requirements</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>General office: 300-500 lux</li>
-              <li>Drawing/CAD: 500-750 lux</li>
-              <li>Corridors: 100-150 lux</li>
-              <li>Retail: 300-750 lux</li>
-              <li>Uniformity: ≥ 0.4 general, ≥ 0.6 task</li>
-            </ul>
-            <p><strong>Quality Parameters</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>UGR: ≤ 19 (offices), ≤ 16 (drawing)</li>
-              <li>CRI: ≥ 80 general, ≥ 90 colour-critical</li>
-              <li>CCT: 3000-4000K typical offices</li>
-              <li>Flicker: ≤ 3% at 100Hz</li>
-              <li>Circadian consideration for 24hr spaces</li>
-            </ul>
-            <p><strong>Reverberation Control</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Classroom:</strong> 0.4-0.8 seconds — Acoustic ceiling, wall panels</li>
-              <li><strong>Open-plan office:</strong> 0.5-0.8 seconds — Suspended ceiling, carpet</li>
-              <li><strong>Meeting room:</strong> 0.4-0.6 seconds — Wall absorption, ceiling</li>
-              <li><strong>Atrium / reception:</strong> 1.0-1.5 seconds — Baffles, soffit treatment</li>
-            </ul>
-            <p><strong>Building services noise:</strong> Early coordination with mechanical design is essential - ductwork velocities, attenuator positions, and equipment selections significantly impact achievable NR levels.</p>
-          </ConceptBlock>
-
-          <InlineCheck {...quickCheckQuestions[3]} />
-
-          <SectionRule />
-
-          <ConceptBlock title="Worked Examples">
-            <p>
-              <strong>Example 1: Office Daylighting Assessment</strong>
-            </p>
-            <p><strong>Scenario:</strong> Verify BREEAM Hea 01 compliance for a 12m deep office floor plate.</p>
-            <p>Given data:</p>
-            <p>Floor depth: 12m from facade</p>
-            <p>Floor-to-ceiling height: 2.7m</p>
-            <p>Window head height: 2.5m</p>
-            <p>Glazing ratio: 50% of facade</p>
-            <p>Visible light transmittance: 65%</p>
-            <p>Daylight factor calculation (simplified):</p>
-            <p>Average DF = (A_window × VLT × 0.85) / (A_floor × (1 - R_mean))</p>
-            <p>Perimeter zone (0-6m): DF ≈ 3.2%</p>
-            <p>Core zone (6-12m): DF ≈ 1.1%</p>
-            <p>Assessment:</p>
-            <p>Average across floor: 2.15% - <span>COMPLIANT</span></p>
-            <p>Uniformity: 1.1/2.15 = 0.51 -  <span>COMPLIANT (≥0.4)</span></p>
-            <p>Note: Core requires supplementary artificial lighting</p>
-            <p>
-              <strong>Example 2: Ventilation Rate Calculation</strong>
-            </p>
-            <p><strong>Scenario:</strong> Determine fresh air requirement for a 50-person meeting room.</p>
-            <p>BREEAM Hea 04 requirement:</p>
-            <p>Meeting room rate: 12 l/s/person</p>
-            <p>Fresh air = 50 persons × 12 l/s</p>
-            <p>Fresh air = 600 l/s = 0.6 m³/s</p>
-            <p>Air changes (room 100m², 3m height):</p>
-            <p>Room volume: 300 m³</p>
-            <p>ACH = (0.6 × 3600) / 300 = 7.2 air changes/hour</p>
-            <p>CO2 monitoring setpoints:</p>
-            <p>Minimum ventilation (unoccupied): 150 l/s (0.5 l/s/m²)</p>
-            <p>Ramp-up trigger: 800 ppm CO2</p>
-            <p>Design ventilation: 600 l/s at 1000 ppm</p>
-            <p>System sized for peak with DCV for part-load efficiency</p>
-            <p>
-              <strong>Example 3: Acoustic Design for Open-Plan Office</strong>
-            </p>
-            <p><strong>Scenario:</strong> Specify building services to achieve NR 40 in open-plan office.</p>
-            <p>Noise budget (summing to NR 40):</p>
-            <p>Supply air diffusers: NR 32 (NC 30)</p>
-            <p>Return air grilles: NR 30</p>
-            <p>FCU/chilled beams: NR 28</p>
-            <p>Lighting (LED drivers): NR 20</p>
-            <p>External ingress: NR 25</p>
-            <p>Logarithmic addition:</p>
-            <p>Combined = 10 × log10(10^3.2 + 10^3.0 + 10^2.8 + 10^2.0 + 10^2.5)</p>
-            <p>Combined ≈ NR 36</p>
-            <p>Result: NR 36 achieved, within NR 40 target</p>
-            <p>Key specifications:</p>
-            <p>- Diffuser velocity: Max 2.5 m/s neck velocity</p>
-            <p>- Duct attenuation: 1m lined duct before diffuser</p>
-            <p>- FCU selection: Low-noise units, silent mode capability</p>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <ConceptBlock title="Practical guidance">
-            <p>
-              <strong>BREEAM Health and Wellbeing Checklist:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Complete daylight modelling early in design - facade changes are costly</li>
-              <li>Specify low-VOC materials throughout - obtain certifications pre-construction</li>
-              <li>Coordinate acoustic requirements with MEP consultant from RIBA Stage 2</li>
-              <li>Include CO2 sensors in BMS specification with clear control strategy</li>
-              <li>Verify glare control meets both manual override and automation requirements</li>
-              <li>Commission thermal comfort and ventilation systems before occupation</li>
-            </ul>
-            <p>
-              <strong>Key Values to Remember:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Daylight factor: <strong>2% average</strong> for offices (minimum)</li>
-              <li>Fresh air: <strong>10 l/s/person</strong> offices, <strong>12 l/s/person</strong>  meeting rooms</li>
-              <li>CO2 target: <strong>Below 1000 ppm</strong> (alert at 1200 ppm)</li>
-              <li>Office noise: <strong>NR 40</strong> open-plan, <strong>NR 35</strong> cellular</li>
-              <li>Lighting UGR: <strong>≤ 19</strong> for VDU work</li>
-            </ul>
-          </ConceptBlock>
-
-          <CommonMistake
-            title="Common mistakes to avoid"
-            whatHappens={
-              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
-                <li><strong>Late daylight assessment</strong> - modelling after facade design fixed limits options</li>
-                <li><strong>Ignoring glare</strong> - high daylight factors without shading cause discomfort</li>
-                <li><strong>Undersized ventilation</strong> - design for peak occupancy, not typical</li>
-                <li><strong>Acoustic afterthought</strong> - attenuators and treatments cost more when retrofitted</li>
-              </ul>
-            }
-            doInstead="Cross-check assumptions against published guidance, validate measured values against design intent, and engage the wider team early when interface issues emerge."
-          />
-
-          <SectionRule />
-
-          <Scenario
-            title="Post-occupancy IAQ test fails formaldehyde threshold"
-            situation={
-              <>
-                Hea 02 was claimed at design stage with low-VOC materials specified throughout. Post-occupancy IAQ testing six weeks after handover shows formaldehyde at 105 µg/m³ — above the BREEAM 100 µg/m³ threshold. The flush-out period was 2 weeks; the building has been occupied since.
-              </>
-            }
-            whatToDo={
-              <>
-                Investigate source — typically MDF furniture, finished joinery or carpet adhesive that was not on the low-VOC specification. Increase ventilation rates for an extended flush period (2–4 additional weeks at boost), re-test, and provide the assessor with the full test dataset. If still failing, the source material may need replacement (unlikely to be commercially viable post-occupancy). Lesson: tenant fit-out furniture and finishes must be controlled with the same low-VOC specification as the base build, or claim the credit only on base build elements.
-              </>
-            }
-            whyItMatters={
-              <>
-                IAQ post-occupancy testing exposes the gap between design intent and construction execution. Tenant fit-out is the most common contamination source — the credit is often won on the base build and lost on the fit-out. WELL Building Standard treats this even more rigorously; BREEAM is now catching up.
-              </>
-            }
-          />
-
-          <SectionRule />
-
-          <FAQ items={faqs} />
-
-          <SectionRule />
-
-          <KeyTakeaways
-            points={[
-              "Hea 01: daylighting (average daylight factor 2%+ with good distribution), view-out, glare control.",
-              "Hea 02: low-VOC materials + post-occupancy IAQ test (TVOC ≤300 µg/m³, formaldehyde ≤100 µg/m³).",
-              "Hea 04: TM52/TM59 overheating analysis — now mandatory under Part O.",
-              "Hea 05: acoustics — speech intelligibility, ambient noise, reverberation per BB93 (schools), HTM 08-01 (healthcare).",
-              "Hea 06: water hygiene — Legionella risk assessment per HSG274 + L8 ACoP.",
-              "Hea 07: Secured by Design — Police-approved security strategy.",
-              "Hea 08: inclusive design — Equality Act 2010 + BS 8300.",
-            ]}
-          />
-
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-
-          <div className="grid grid-cols-2 gap-3 pt-2">
-            <button
-              onClick={() => navigate("/study-centre/apprentice/h-n-c-module6-section3-4")}
-              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
-                <ChevronLeft className="h-3 w-3" /> Previous
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-white truncate">
-                Materials and waste
-              </div>
-            </button>
-            <button
-              onClick={() => navigate("/study-centre/apprentice/h-n-c-module6-section3-6")}
-              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
-                Next subsection <ChevronRight className="h-3 w-3" />
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-black truncate">
-                Evidence and certification
-              </div>
-            </button>
-          </div>
-        </PageFrame>
-      </div>
-    </div>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module6-section3-6')}
+            className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+          >
+            <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+              Next subsection <ChevronRight className="h-3 w-3" />
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-black truncate">
+              Evidence and certification
+            </div>
+          </button>
+        </div>
+      </HubBody>
+    </HubPage>
   );
 };
 

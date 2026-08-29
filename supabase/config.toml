@@ -394,3 +394,6 @@ verify_jwt = false
 # response at 2 MB and accepts GET only.
 [functions.proxy-image]
 verify_jwt = false
+
+[functions.google-calendar-webhook]
+verify_jwt = false

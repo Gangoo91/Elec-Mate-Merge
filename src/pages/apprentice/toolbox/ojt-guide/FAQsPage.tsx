@@ -1,5 +1,3 @@
-import { ArrowLeft } from 'lucide-react';
-
 const faqs = [
   {
     question: 'How many hours of OJT do I need?',
@@ -159,69 +157,60 @@ const glossary = [
       'English and Maths qualifications at Level 2 — required for apprenticeship completion if you do not already have GCSEs grade 4+',
   },
 ];
-import { useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { PageFrame, PageHero, SectionHeader, itemVariants } from '@/components/college/primitives';
+import { SectionHeader } from '@/components/college/primitives';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 
 const FAQsPage = () => {
-  const navigate = useNavigate();
   return (
-    <PageFrame className="px-4 sm:px-6 lg:px-8">
-      <motion.div variants={itemVariants}>
-        <button
-          onClick={() => navigate('/apprentice/toolbox/off-job-training-guide')}
-          className="inline-flex items-center gap-2 h-11 -ml-2 px-2 rounded-md text-[12px] uppercase tracking-[0.18em] text-white/55 hover:text-white/85 transition-colors touch-manipulation"
-        >
-          <ArrowLeft className="h-4 w-4" />
-          Back
-        </button>
-      </motion.div>
+    <HubPage>
+      <HubMasthead
+        section="Apprentice · OJT"
+        title="FAQs & Glossary"
+        backTo="/apprentice/toolbox/off-job-training-guide"
+      />
+      <HubBody>
+        {/* FAQs */}
+        <div className="space-y-3">
+          <SectionHeader eyebrow="Reference" title="Frequently asked questions" />
 
-      <motion.div variants={itemVariants}>
-        <PageHero eyebrow="Apprentice · OJT" title="FAQs & Glossary" tone="yellow" />
-      </motion.div>
+          {faqs.map((faq) => (
+            <div
+              key={faq.question}
+              className="sm:rounded-xl sm:border sm:border-elec-yellow/25 sm:bg-elec-yellow/[0.04]"
+            >
+              <div className="sm:p-5 py-4 space-y-2">
+                <h3 className="font-medium text-elec-yellow text-sm">{faq.question}</h3>
+                <p className="text-white text-sm">{faq.answer}</p>
+              </div>
+            </div>
+          ))}
+        </div>
 
-      {/* FAQs */}
-      <div className="space-y-3">
-        <SectionHeader eyebrow="Reference" title="Frequently asked questions" />
-
-        {faqs.map((faq) => (
-          <div
-            key={faq.question}
-            className="sm:rounded-xl sm:border sm:border-elec-yellow/25 sm:bg-elec-yellow/[0.04]"
-          >
-            <div className="sm:p-5 py-4 space-y-2">
-              <h3 className="font-medium text-elec-yellow text-sm">{faq.question}</h3>
-              <p className="text-white text-sm">{faq.answer}</p>
+        {/* Glossary */}
+        <div className="space-y-3">
+          <div className="flex items-baseline justify-between gap-3 pb-1">
+            <div className="space-y-1 min-w-0">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                Glossary of Terms
+              </span>
             </div>
           </div>
-        ))}
-      </div>
 
-      {/* Glossary */}
-      <div className="space-y-3">
-        <div className="flex items-baseline justify-between gap-3 pb-1">
-          <div className="space-y-1 min-w-0">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-              Glossary of Terms
-            </span>
+          <div className="sm:rounded-xl sm:border sm:border-white/[0.06] sm:bg-[hsl(0_0%_10%)]">
+            <div className="sm:p-5 space-y-3">
+              {glossary.map((item) => (
+                <div key={item.term} className="flex items-start gap-2">
+                  <span className="text-elec-yellow font-semibold text-sm min-w-[80px] flex-shrink-0">
+                    {item.term}
+                  </span>
+                  <span className="text-white text-sm">{item.definition}</span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
-
-        <div className="sm:rounded-xl sm:border sm:border-white/[0.06] sm:bg-[hsl(0_0%_10%)]">
-          <div className="sm:p-5 space-y-3">
-            {glossary.map((item) => (
-              <div key={item.term} className="flex items-start gap-2">
-                <span className="text-elec-yellow font-semibold text-sm min-w-[80px] flex-shrink-0">
-                  {item.term}
-                </span>
-                <span className="text-white text-sm">{item.definition}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </PageFrame>
+      </HubBody>
+    </HubPage>
   );
 };
 

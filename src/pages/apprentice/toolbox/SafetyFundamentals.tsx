@@ -14,11 +14,7 @@ import {
   Phone,
   Heart,
 } from 'lucide-react';
-import {
-  PageFrame,
-  PageHero,
-  itemVariants,
-} from '@/components/college/primitives';
+import { PageFrame, PageHero, itemVariants } from '@/components/college/primitives';
 
 const SafetyFundamentals = () => {
   const navigate = useNavigate();

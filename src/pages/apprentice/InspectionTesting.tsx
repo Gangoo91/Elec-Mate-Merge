@@ -74,8 +74,8 @@ const InspectionTesting = () => {
                   </p>
                   <p className="mt-1 text-[13px] leading-relaxed text-white">
                     Work through the eight tests in the order they are carried out, with what to
-                    expect and where it goes wrong at each step. Your progress is saved. There is
-                    an on-site tab for looking a limit up on the job.
+                    expect and where it goes wrong at each step. Your progress is saved. There is an
+                    on-site tab for looking a limit up on the job.
                   </p>
                 </div>
                 <ChevronRight className="mt-0.5 h-5 w-5 shrink-0 text-white" />
@@ -115,7 +115,9 @@ const InspectionTesting = () => {
         </section>
 
         <div className={cardCn}>
-          <p className="text-[14px] font-semibold text-white">A training aid, not a qualification</p>
+          <p className="text-[14px] font-semibold text-white">
+            A training aid, not a qualification
+          </p>
           <p className="mt-1 text-[13px] leading-relaxed text-white">
             This material supports your 2391 training and is for learning only. For formal
             qualifications, speak to City &amp; Guilds, EAL or your training provider.

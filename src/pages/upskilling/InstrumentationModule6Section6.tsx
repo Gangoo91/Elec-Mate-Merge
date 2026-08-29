@@ -224,7 +224,7 @@ const InstrumentationModule6Section6 = () => {
 
         <InlineCheck
           question="What is the difference between Type A and Type B measurement uncertainty?"
-          answer="Type A uncertainty is evaluated statistically from repeated measurements (e.g., calculating standard deviation from multiple readings). Type B uncertainty is evaluated from other sources such as manufacturer specifications, calibration certificates, scientific judgement, or prior knowledge. Both types are equally valid and are combined in uncertainty budgets."
+          correctAnswer="Type A uncertainty is evaluated statistically from repeated measurements (e.g., calculating standard deviation from multiple readings). Type B uncertainty is evaluated from other sources such as manufacturer specifications, calibration certificates, scientific judgement, or prior knowledge. Both types are equally valid and are combined in uncertainty budgets."
         />
 
         {/* Section 02 - Advanced Techniques */}
@@ -475,7 +475,7 @@ const InstrumentationModule6Section6 = () => {
 
         <InlineCheck
           question="What are the main benefits of in-situ calibration compared to laboratory calibration?"
-          answer="In-situ calibration provides: 1) No removal from service required - reduces downtime, 2) Calibration under actual operating conditions, 3) Includes installation effects (mounting, wiring, interference), 4) Detects problems that might not appear in a controlled laboratory environment. The trade-off is that field conditions may introduce additional uncertainty."
+          correctAnswer="In-situ calibration provides: 1) No removal from service required - reduces downtime, 2) Calibration under actual operating conditions, 3) Includes installation effects (mounting, wiring, interference), 4) Detects problems that might not appear in a controlled laboratory environment. The trade-off is that field conditions may introduce additional uncertainty."
         />
 
         {/* Section 04 - Best Practices */}
@@ -700,7 +700,7 @@ const InstrumentationModule6Section6 = () => {
 
         <InlineCheck
           question="How might AI improve calibration practices in the future?"
-          answer="AI can: 1) Predict optimal calibration intervals based on historical drift patterns, 2) Detect anomalies that indicate instrument problems before failure, 3) Recognise patterns in calibration data to forecast maintenance needs, 4) Assist decision-making for calibration scheduling and resource allocation. This reduces costs while improving reliability."
+          correctAnswer="AI can: 1) Predict optimal calibration intervals based on historical drift patterns, 2) Detect anomalies that indicate instrument problems before failure, 3) Recognise patterns in calibration data to forecast maintenance needs, 4) Assist decision-making for calibration scheduling and resource allocation. This reduces costs while improving reliability."
         />
 
         {/* Real World Scenario */}

@@ -3,6 +3,11 @@ import { Suspense } from 'react';
 import { lazyWithRetry } from '@/utils/lazyWithRetry';
 import { CertificateSkeleton } from '@/components/ui/page-skeleton';
 
+import VisualConditionReport from '@/pages/inspection/VisualConditionReport';
+import RoutineInspectionReport from '@/pages/inspection/RoutineInspectionReport';
+import PrePurchaseSurvey from '@/pages/inspection/PrePurchaseSurvey';
+import CertificateImport from '@/pages/inspection/CertificateImport';
+
 // Lazy load the main inspection app page
 const InspectionIndex = lazyWithRetry(() => import('@/pages/inspection/InspectionIndex'));
 const LegacyCertificates = lazyWithRetry(() => import('@/pages/inspection/LegacyCertificates'));
@@ -155,6 +160,13 @@ export default function InspectionRoutes() {
         <Route path="permit-to-work" element={<PermitToWorkPage />} />
         <Route path="permit-to-work/:id" element={<PermitToWorkPage />} />
         <Route path="warning-labels" element={<WarningLabelsPage />} />
+        <Route path="visual-condition" element={<VisualConditionReport />} />
+        <Route path="visual-condition/:id" element={<VisualConditionReport />} />
+        <Route path="import" element={<CertificateImport />} />
+        <Route path="pre-purchase-survey" element={<PrePurchaseSurvey />} />
+        <Route path="pre-purchase-survey/:id" element={<PrePurchaseSurvey />} />
+        <Route path="routine-inspection" element={<RoutineInspectionReport />} />
+        <Route path="routine-inspection/:id" element={<RoutineInspectionReport />} />
         <Route path="board-schedule" element={<BoardSchedulePage />} />
         <Route path="board-schedule/:id" element={<BoardSchedulePage />} />
         <Route path="client-handouts" element={<ClientHandoutsPage />} />

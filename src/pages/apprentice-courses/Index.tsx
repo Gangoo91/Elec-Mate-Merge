@@ -1,20 +1,17 @@
 import { useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { ArrowLeft } from 'lucide-react';
 
 import useSEO from '@/hooks/useSEO';
 import { useCourseProgress } from '@/hooks/useCourseProgress';
 import { completedSectionsForCourse } from '@/lib/courseProgressMatch';
 
 import {
-  PageFrame,
-  PageHero,
-  StatStrip,
-  HubGrid,
-  HubCard,
-  Eyebrow,
-  type Tone,
-} from '@/components/college/primitives';
+  HubPage,
+  HubBody,
+  HubMasthead,
+  HubKpi,
+  HubKpiRow,
+  HubToolGrid,
+} from '@/components/hub/HubPrimitives';
 
 type Level = 'Essential' | 'Foundation' | 'Intermediate' | 'Advanced';
 
@@ -28,12 +25,12 @@ interface Course {
   routeKey: string;
 }
 
-const LEVEL_TONE: Record<Level, Tone> = {
-  Essential: 'yellow',
-  Foundation: 'emerald',
-  Intermediate: 'blue',
-  Advanced: 'purple',
-};
+/**
+ * `LEVEL_TONE` used to map each level to its own hue. Deleted 2026-08-28 for
+ * the same reason `LEVEL_ACCENT` went from `CourseCard`: those blues, purples
+ * and emeralds were the only ones in the Study Centre and belonged to no
+ * palette. The level is still on every card, in words, as the eyebrow.
+ */
 
 const COURSES: Course[] = [
   {
@@ -120,7 +117,6 @@ const COURSES: Course[] = [
 ];
 
 export default function ApprenticeCoursesIndex() {
-  const navigate = useNavigate();
   const { allProgress } = useCourseProgress();
 
   useSEO({
@@ -146,64 +142,41 @@ export default function ApprenticeCoursesIndex() {
   const dominantLevel = Object.entries(levelCounts).sort((a, b) => b[1] - a[1])[0]?.[0] ?? '—';
 
   return (
-    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
-      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
-        <PageFrame>
-          <button
-            onClick={() => navigate('/study-centre')}
-            className="inline-flex items-center gap-2 h-10 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
-          >
-            <ArrowLeft className="h-4 w-4" /> Study centre
-          </button>
+    <HubPage>
+      <HubMasthead section="Study centre" title="Apprentice training" backTo="/study-centre" />
+      <HubBody>
+        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
+          Level 2 & 3 qualifications, AM2 prep, HNC, MOET and the fundamentals every electrician
+          needs.
+        </p>
 
-          <PageHero
-            eyebrow="Study centre"
-            title="Apprentice training"
-            description="Level 2 & 3 qualifications, AM2 prep, HNC, MOET and the fundamentals every electrician needs."
-            tone="blue"
+        <HubKpiRow>
+          <HubKpi label="Courses" value={String(COURSES.length)} context="Available now" accent />
+          <HubKpi label="Completed" value={String(totalCompleted)} context="Sections done" />
+          <HubKpi
+            label="Levels"
+            value={String(Object.keys(levelCounts).length)}
+            context="Foundation → Advanced"
           />
+          <HubKpi label="Pathway" value={String(dominantLevel)} context="Most courses at" />
+        </HubKpiRow>
 
-          <StatStrip
-            columns={4}
-            stats={[
-              { label: 'Courses', value: COURSES.length, sub: 'Available now' },
-              { label: 'Completed', value: totalCompleted, sub: 'Sections done' },
-              {
-                label: 'Levels',
-                value: Object.keys(levelCounts).length,
-                sub: 'Foundation → Advanced',
-              },
-              { label: 'Pathway', value: dominantLevel, sub: 'Most courses at' },
-            ]}
-          />
-
-          <div className="space-y-3">
-            <div className="flex items-center justify-between gap-3 px-0.5">
-              <Eyebrow>All courses</Eyebrow>
-              <span className="text-[11px] text-white">{COURSES.length} total</span>
-            </div>
-            <HubGrid columns={2} className="!bg-black gap-[1.5px]">
-              {COURSES.map((c, i) => {
-                const completed = completedById[c.id] ?? 0;
-                return (
-                  <HubCard
-                    key={c.id}
-                    number={String(i + 1).padStart(2, '0')}
-                    eyebrow={c.level.toUpperCase()}
-                    title={c.title}
-                    description={c.description}
-                    meta={`${c.duration}${completed > 0 ? ` · ${completed} done` : ''}`}
-                    tone={LEVEL_TONE[c.level]}
-                    cta={completed > 0 ? 'Continue' : 'Start learning'}
-                    size="sm"
-                    onClick={() => navigate(c.link)}
-                  />
-                );
-              })}
-            </HubGrid>
-          </div>
-        </PageFrame>
-      </div>
-    </div>
+        <HubToolGrid
+          label="All courses"
+          columns="three"
+          cards={COURSES.map((c) => {
+            const completed = completedById[c.id] ?? 0;
+            return {
+              id: c.id,
+              eyebrow: c.level,
+              title: c.title,
+              description: c.description,
+              meta: `${c.duration}${completed > 0 ? ` · ${completed} done` : ''}`,
+              to: c.link,
+            };
+          })}
+        />
+      </HubBody>
+    </HubPage>
   );
 }

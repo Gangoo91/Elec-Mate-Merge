@@ -65,8 +65,16 @@ const skillFilterOptions = [
 
 export default function SiteDiary() {
   const navigate = useNavigate();
-  const { entries, isLoading, loadError, createEntry, updateEntry, deleteEntry, recentSites, refresh } =
-    useSiteDiaryEntries();
+  const {
+    entries,
+    isLoading,
+    loadError,
+    createEntry,
+    updateEntry,
+    deleteEntry,
+    recentSites,
+    refresh,
+  } = useSiteDiaryEntries();
   const {
     currentStreak,
     longestStreak,
@@ -433,8 +441,8 @@ export default function SiteDiary() {
                       <span className="font-mono tabular-nums">
                         {portfolioOpportunities.length}
                       </span>{' '}
-                      entr{portfolioOpportunities.length !== 1 ? 'ies' : 'y'} could
-                      strengthen your portfolio
+                      entr{portfolioOpportunities.length !== 1 ? 'ies' : 'y'} could strengthen your
+                      portfolio
                     </p>
                   </div>
                   <ChevronRight className="h-4 w-4 text-white/40 flex-shrink-0" />
@@ -464,7 +472,12 @@ export default function SiteDiary() {
                           e.stopPropagation();
                           refreshCoach();
                         }}
-                        onKeyDown={(e) => { if (e.key === 'Enter') { e.stopPropagation(); refreshCoach(); } }}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter') {
+                            e.stopPropagation();
+                            refreshCoach();
+                          }
+                        }}
                         className="h-8 px-2.5 flex items-center gap-1.5 rounded-md border border-white/[0.08] bg-white/[0.02] touch-manipulation cursor-pointer active:bg-white/[0.04] transition-colors"
                       >
                         <RefreshCw className="h-3 w-3 text-white/70" />
@@ -625,7 +638,10 @@ export default function SiteDiary() {
                           const nudge = coachInsight.portfolioNudges?.[0];
                           if (nudge) {
                             const target = entries.find((e) => e.id === nudge.entryId);
-                            if (target) { setDetailEntry(target); setDetailOpen(true); }
+                            if (target) {
+                              setDetailEntry(target);
+                              setDetailOpen(true);
+                            }
                           }
                         }}
                         className="w-full flex items-start gap-3 px-4 py-3 min-h-[44px] rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] text-left touch-manipulation active:bg-elec-yellow/[0.08] transition-colors"

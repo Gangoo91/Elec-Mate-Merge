@@ -77,6 +77,9 @@ const getTypeLabel = (type: string) => {
     'completion-notice': 'COMPLETION',
     disconnection: 'DISCONN',
     'board-schedule': 'BOARD SCH',
+    'visual-condition': 'VISUAL',
+    'routine-inspection': 'ROUTINE',
+    'pre-purchase-survey': 'SURVEY',
   };
   return labels[type] || type.toUpperCase().replace(/-/g, ' ').slice(0, 8);
 };

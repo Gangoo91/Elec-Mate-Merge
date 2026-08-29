@@ -5,10 +5,8 @@
  * key calculations, BS 7671 regulation hot list, mental prep, resources.
  */
 
-import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
-  ArrowLeft,
   CheckCircle2,
   BookOpen,
   Wrench,
@@ -19,7 +17,8 @@ import {
   Compass,
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
-import { PageFrame, PageHero, itemVariants } from '@/components/college/primitives';
+import { itemVariants } from '@/components/college/primitives';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { Eyebrow, SectionHeader } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
 
 const knowledgeTips = [
@@ -273,254 +272,247 @@ interface ComponentBlockProps {
 }
 
 const PreparationPage = () => {
-  const navigate = useNavigate();
   return (
-    <PageFrame className="px-4 sm:px-6 lg:px-8">
-      <motion.div variants={itemVariants}>
-        <button
-          onClick={() => navigate('/apprentice/toolbox/end-point-assessment')}
-          className="inline-flex items-center gap-2 h-11 -ml-2 px-2 rounded-md text-[12px] uppercase tracking-[0.18em] text-white/55 hover:text-white/85 transition-colors touch-manipulation"
-        >
-          <ArrowLeft className="h-4 w-4" />
-          Back
-        </button>
-      </motion.div>
+    <HubPage>
+      <HubMasthead
+        section="Apprentice · EPA"
+        title="Preparation guide"
+        backTo="/apprentice/toolbox/end-point-assessment"
+      />
+      <HubBody>
+        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
+          {
+            "EPA preparation isn't a last-minute rush. The best results come from consistent prep across the final months. Component-by-component strategy, a 4-phase timeline, and the calculations and regs to know cold."
+          }
+        </p>
 
-      <motion.div variants={itemVariants}>
-        <PageHero
-          eyebrow="Apprentice · EPA"
-          title="Preparation guide"
-          description="EPA preparation isn't a last-minute rush. The best results come from consistent prep across the final months. Component-by-component strategy, a 4-phase timeline, and the calculations and regs to know cold."
-          tone="yellow"
+        {/* ── Applied-knowledge prep ──────────────────────────────── */}
+        <ComponentBlock
+          eyebrow="Applied-knowledge test"
+          title="Study strategy"
+          meta="~1 hour · online multiple choice · ~30 questions"
+          icon={BookOpen}
+          tips={knowledgeTips}
+          extra={
+            <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3 space-y-2">
+              <Eyebrow className="text-elec-yellow/85">Key areas to revise</Eyebrow>
+              <ul className="space-y-1.5">
+                {knowledgeAreas.map((area) => (
+                  <li
+                    key={area}
+                    className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                  >
+                    <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
+                    <span>{area}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          }
         />
-      </motion.div>
 
-      {/* ── Applied-knowledge prep ──────────────────────────────── */}
-      <ComponentBlock
-        eyebrow="Applied-knowledge test"
-        title="Study strategy"
-        meta="~1 hour · online multiple choice · ~30 questions"
-        icon={BookOpen}
-        tips={knowledgeTips}
-        extra={
-          <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3 space-y-2">
-            <Eyebrow className="text-elec-yellow/85">Key areas to revise</Eyebrow>
-            <ul className="space-y-1.5">
-              {knowledgeAreas.map((area) => (
-                <li
-                  key={area}
-                  className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
-                >
-                  <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
-                  <span>{area}</span>
+        {/* ── Practical sections prep ─────────────────────────────── */}
+        <ComponentBlock
+          eyebrow="Practical sections"
+          title="Practice strategy"
+          meta="~15 hours · observed at a NET assessment centre"
+          icon={Wrench}
+          tips={practicalTips}
+          extra={
+            <>
+              <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3 space-y-2">
+                <Eyebrow className="text-elec-yellow/85">Instrument checklist</Eyebrow>
+                <p className="text-[12.5px] text-white/85 leading-relaxed">
+                  Make sure you're proficient with all of these:
+                </p>
+                <ul className="space-y-1.5">
+                  {instruments.map((item) => (
+                    <li
+                      key={item}
+                      className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                    >
+                      <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="rounded-md border border-red-500/30 bg-red-500/[0.04] p-3">
+                <div className="flex items-start gap-2">
+                  <AlertTriangle className="h-3.5 w-3.5 text-red-300 flex-shrink-0 mt-0.5" />
+                  <p className="text-[12.5px] text-white/85 leading-relaxed">
+                    <span className="font-semibold text-red-300">Calibration:</span> All test
+                    instruments must be in calibration (within the last 12 months). Check the
+                    calibration sticker before the day. Out-of-cal = invalid results.
+                  </p>
+                </div>
+              </div>
+            </>
+          }
+        />
+
+        {/* ── Portfolio & Gateway prep ────────────────────────────── */}
+        <ComponentBlock
+          eyebrow="Portfolio & Gateway"
+          title="Portfolio & evidence strategy"
+          meta="Built across your apprenticeship · confirmed at Gateway"
+          icon={MessageSquare}
+          tips={discussionTips}
+          extra={
+            <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3 space-y-2">
+              <Eyebrow className="text-elec-yellow/85">Talking through your work — STAR</Eyebrow>
+              {starExample.map((s) => (
+                <div key={s.label} className="space-y-0.5">
+                  <span className="text-[10.5px] font-medium uppercase tracking-[0.14em] text-elec-yellow/85">
+                    {s.label}
+                  </span>
+                  <p className="text-[12.5px] text-white/85 leading-relaxed">{s.text}</p>
+                </div>
+              ))}
+            </div>
+          }
+        />
+
+        {/* ── Timeline ────────────────────────────────────────────── */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <SectionHeader
+            eyebrow="Preparation timeline"
+            title="Four phases over the final 6 months"
+            meta="Each phase has its own focus and intensity"
+          />
+          <ul className="space-y-2">
+            {timeline.map((phase) => (
+              <li
+                key={phase.period}
+                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-2.5"
+              >
+                <span className="inline-flex items-center h-6 px-2 rounded-md border border-elec-yellow/30 bg-elec-yellow/[0.06] text-[10.5px] font-medium uppercase tracking-[0.14em] text-elec-yellow">
+                  {phase.period}
+                </span>
+                <ul className="space-y-1.5">
+                  {phase.tasks.map((task) => (
+                    <li
+                      key={task}
+                      className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                    >
+                      <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
+                      <span>{task}</span>
+                    </li>
+                  ))}
+                </ul>
+              </li>
+            ))}
+          </ul>
+        </motion.section>
+
+        {/* ── Calculations ───────────────────────────────────────── */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <SectionHeader
+            eyebrow="Key calculations"
+            title="Six formulas to know cold"
+            meta="Frequently appear in the knowledge test and practical"
+          />
+          <ul className="space-y-2">
+            {calculations.map((calc) => (
+              <li
+                key={calc.title}
+                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-1.5"
+              >
+                <div className="flex items-center gap-2">
+                  <Calculator className="h-3.5 w-3.5 text-elec-yellow/85" />
+                  <h3 className="text-[14px] font-semibold text-white tracking-tight">
+                    {calc.title}
+                  </h3>
+                </div>
+                <p className="text-[12.5px] font-mono text-elec-yellow">{calc.formula}</p>
+                <p className="text-[12.5px] text-white/85 leading-relaxed">{calc.explanation}</p>
+              </li>
+            ))}
+          </ul>
+        </motion.section>
+
+        {/* ── BS 7671 regulation hot list ─────────────────────────── */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <SectionHeader
+            eyebrow="BS 7671 regulations"
+            title={`${regs.length} to know where to find quickly`}
+            meta="Bookmark these pages in your Regs book (BS 7671:2018+A4:2026)"
+          />
+          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5">
+            <ul className="space-y-2">
+              {regs.map((item) => (
+                <li key={item.reg} className="flex items-start gap-3">
+                  <span className="text-[12px] font-mono font-semibold text-elec-yellow tabular-nums min-w-[60px] flex-shrink-0">
+                    {item.reg}
+                  </span>
+                  <span className="text-[12.5px] text-white/85 leading-relaxed">{item.topic}</span>
                 </li>
               ))}
             </ul>
           </div>
-        }
-      />
+        </motion.section>
 
-      {/* ── Practical sections prep ─────────────────────────────── */}
-      <ComponentBlock
-        eyebrow="Practical sections"
-        title="Practice strategy"
-        meta="~15 hours · observed at a NET assessment centre"
-        icon={Wrench}
-        tips={practicalTips}
-        extra={
-          <>
-            <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3 space-y-2">
-              <Eyebrow className="text-elec-yellow/85">Instrument checklist</Eyebrow>
-              <p className="text-[12.5px] text-white/85 leading-relaxed">
-                Make sure you're proficient with all of these:
-              </p>
-              <ul className="space-y-1.5">
-                {instruments.map((item) => (
-                  <li
-                    key={item}
-                    className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
-                  >
-                    <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="rounded-md border border-red-500/30 bg-red-500/[0.04] p-3">
-              <div className="flex items-start gap-2">
-                <AlertTriangle className="h-3.5 w-3.5 text-red-300 flex-shrink-0 mt-0.5" />
-                <p className="text-[12.5px] text-white/85 leading-relaxed">
-                  <span className="font-semibold text-red-300">Calibration:</span> All test
-                  instruments must be in calibration (within the last 12 months). Check the
-                  calibration sticker before the day. Out-of-cal = invalid results.
-                </p>
-              </div>
-            </div>
-          </>
-        }
-      />
-
-      {/* ── Portfolio & Gateway prep ────────────────────────────── */}
-      <ComponentBlock
-        eyebrow="Portfolio & Gateway"
-        title="Portfolio & evidence strategy"
-        meta="Built across your apprenticeship · confirmed at Gateway"
-        icon={MessageSquare}
-        tips={discussionTips}
-        extra={
-          <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3 space-y-2">
-            <Eyebrow className="text-elec-yellow/85">Talking through your work — STAR</Eyebrow>
-            {starExample.map((s) => (
-              <div key={s.label} className="space-y-0.5">
-                <span className="text-[10.5px] font-medium uppercase tracking-[0.14em] text-elec-yellow/85">
-                  {s.label}
-                </span>
-                <p className="text-[12.5px] text-white/85 leading-relaxed">{s.text}</p>
-              </div>
-            ))}
-          </div>
-        }
-      />
-
-      {/* ── Timeline ────────────────────────────────────────────── */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <SectionHeader
-          eyebrow="Preparation timeline"
-          title="Four phases over the final 6 months"
-          meta="Each phase has its own focus and intensity"
-        />
-        <ul className="space-y-2">
-          {timeline.map((phase) => (
-            <li
-              key={phase.period}
-              className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-2.5"
-            >
-              <span className="inline-flex items-center h-6 px-2 rounded-md border border-elec-yellow/30 bg-elec-yellow/[0.06] text-[10.5px] font-medium uppercase tracking-[0.14em] text-elec-yellow">
-                {phase.period}
-              </span>
-              <ul className="space-y-1.5">
-                {phase.tasks.map((task) => (
-                  <li
-                    key={task}
-                    className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
-                  >
-                    <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
-                    <span>{task}</span>
-                  </li>
-                ))}
-              </ul>
-            </li>
-          ))}
-        </ul>
-      </motion.section>
-
-      {/* ── Calculations ───────────────────────────────────────── */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <SectionHeader
-          eyebrow="Key calculations"
-          title="Six formulas to know cold"
-          meta="Frequently appear in the knowledge test and practical"
-        />
-        <ul className="space-y-2">
-          {calculations.map((calc) => (
-            <li
-              key={calc.title}
-              className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-1.5"
-            >
-              <div className="flex items-center gap-2">
-                <Calculator className="h-3.5 w-3.5 text-elec-yellow/85" />
-                <h3 className="text-[14px] font-semibold text-white tracking-tight">
-                  {calc.title}
-                </h3>
-              </div>
-              <p className="text-[12.5px] font-mono text-elec-yellow">{calc.formula}</p>
-              <p className="text-[12.5px] text-white/85 leading-relaxed">{calc.explanation}</p>
-            </li>
-          ))}
-        </ul>
-      </motion.section>
-
-      {/* ── BS 7671 regulation hot list ─────────────────────────── */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <SectionHeader
-          eyebrow="BS 7671 regulations"
-          title={`${regs.length} to know where to find quickly`}
-          meta="Bookmark these pages in your Regs book (BS 7671:2018+A4:2026)"
-        />
-        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5">
+        {/* ── Mental prep ─────────────────────────────────────────── */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <SectionHeader
+            eyebrow="Mental preparation"
+            title="EPA is a mental challenge too"
+            meta="Six habits to manage nerves and maintain confidence"
+          />
           <ul className="space-y-2">
-            {regs.map((item) => (
-              <li key={item.reg} className="flex items-start gap-3">
-                <span className="text-[12px] font-mono font-semibold text-elec-yellow tabular-nums min-w-[60px] flex-shrink-0">
-                  {item.reg}
-                </span>
-                <span className="text-[12.5px] text-white/85 leading-relaxed">{item.topic}</span>
+            {mentalPrep.map((item) => (
+              <li
+                key={item.title}
+                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5"
+              >
+                <div className="flex items-start gap-2.5">
+                  <CheckCircle2 className="h-4 w-4 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
+                  <div className="space-y-1">
+                    <h3 className="text-[14px] font-semibold text-elec-yellow tracking-tight">
+                      {item.title}
+                    </h3>
+                    <p className="text-[13px] text-white/85 leading-relaxed">{item.description}</p>
+                  </div>
+                </div>
               </li>
             ))}
           </ul>
-        </div>
-      </motion.section>
+        </motion.section>
 
-      {/* ── Mental prep ─────────────────────────────────────────── */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <SectionHeader
-          eyebrow="Mental preparation"
-          title="EPA is a mental challenge too"
-          meta="Six habits to manage nerves and maintain confidence"
-        />
-        <ul className="space-y-2">
-          {mentalPrep.map((item) => (
-            <li
-              key={item.title}
-              className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5"
-            >
-              <div className="flex items-start gap-2.5">
-                <CheckCircle2 className="h-4 w-4 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
-                <div className="space-y-1">
-                  <h3 className="text-[14px] font-semibold text-elec-yellow tracking-tight">
-                    {item.title}
-                  </h3>
-                  <p className="text-[13px] text-white/85 leading-relaxed">{item.description}</p>
+        {/* ── Resources ───────────────────────────────────────────── */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <SectionHeader
+            eyebrow="Recommended resources"
+            title="Nine references worth having"
+            meta="Build your own EPA library"
+          />
+          <ul className="space-y-2">
+            {resources.map((resource) => (
+              <li
+                key={resource.title}
+                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5"
+              >
+                <div className="flex items-start gap-2.5">
+                  <Library className="h-4 w-4 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
+                  <div className="space-y-0.5">
+                    <h3 className="text-[14px] font-semibold text-white tracking-tight">
+                      {resource.title}
+                    </h3>
+                    <p className="text-[13px] text-white/85 leading-relaxed">
+                      {resource.description}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            </li>
-          ))}
-        </ul>
-      </motion.section>
+              </li>
+            ))}
+          </ul>
+        </motion.section>
 
-      {/* ── Resources ───────────────────────────────────────────── */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <SectionHeader
-          eyebrow="Recommended resources"
-          title="Nine references worth having"
-          meta="Build your own EPA library"
-        />
-        <ul className="space-y-2">
-          {resources.map((resource) => (
-            <li
-              key={resource.title}
-              className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5"
-            >
-              <div className="flex items-start gap-2.5">
-                <Library className="h-4 w-4 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
-                <div className="space-y-0.5">
-                  <h3 className="text-[14px] font-semibold text-white tracking-tight">
-                    {resource.title}
-                  </h3>
-                  <p className="text-[13px] text-white/85 leading-relaxed">
-                    {resource.description}
-                  </p>
-                </div>
-              </div>
-            </li>
-          ))}
-        </ul>
-      </motion.section>
-
-      <span className="hidden">
-        <Compass />
-      </span>
-    </PageFrame>
+        <span className="hidden">
+          <Compass />
+        </span>
+      </HubBody>
+    </HubPage>
   );
 };
 

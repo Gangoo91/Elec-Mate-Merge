@@ -5,10 +5,10 @@
  */
 
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
-import { PageFrame, PageHero } from '@/components/college/primitives';
 import {
   ConceptBlock,
   CommonMistake,
@@ -27,12 +27,7 @@ const quickCheckQuestions = [
     id: 'air-change-rate',
     question:
       'What is the typical air change rate recommended for a general office space according to CIBSE guidelines?',
-    options: [
-      '10-15 ACH',
-      '6-10 ACH',
-      '2-4 ACH',
-      '4-6 ACH',
-    ],
+    options: ['10-15 ACH', '6-10 ACH', '2-4 ACH', '4-6 ACH'],
     correctIndex: 3,
     explanation:
       'CIBSE Guide A recommends 4-6 air changes per hour for general office spaces. This provides adequate fresh air whilst maintaining energy efficiency. Higher ACH rates are required for spaces with higher pollutant loads or occupancy densities.',
@@ -41,12 +36,7 @@ const quickCheckQuestions = [
     id: 'fresh-air-rate',
     question:
       'What is the minimum fresh air supply rate per person specified in Building Regulations Approved Document F for offices?',
-    options: [
-      '15 litres/second',
-      '5 litres/second',
-      '8 litres/second',
-      '10 litres/second',
-    ],
+    options: ['15 litres/second', '5 litres/second', '8 litres/second', '10 litres/second'],
     correctIndex: 3,
     explanation:
       'Approved Document F specifies a minimum of 10 litres/second per person for offices. This ensures adequate dilution of bioeffluents and maintains acceptable indoor air quality. The rate may need increasing for spaces with additional pollutant sources.',
@@ -55,12 +45,7 @@ const quickCheckQuestions = [
     id: 'co2-level',
     question:
       'At what CO2 concentration level does indoor air quality typically become unacceptable according to UK standards?',
-    options: [
-      '1000 ppm',
-      '800 ppm',
-      '1500 ppm',
-      '450 ppm',
-    ],
+    options: ['1000 ppm', '800 ppm', '1500 ppm', '450 ppm'],
     correctIndex: 0,
     explanation:
       'CO2 levels above 1000 ppm indicate inadequate ventilation. Outdoor air contains approximately 400-450 ppm CO2. CIBSE recommends maintaining indoor CO2 below 1000 ppm for good air quality, with 800 ppm being the target for well-ventilated spaces.',
@@ -99,12 +84,7 @@ const quizQuestions = [
     id: 2,
     question:
       'According to CIBSE Guide B, what fresh air supply rate is recommended for a classroom?',
-    options: [
-      '10 L/s per person',
-      '5 L/s per person',
-      '8 L/s per person',
-      '12 L/s per person',
-    ],
+    options: ['10 L/s per person', '5 L/s per person', '8 L/s per person', '12 L/s per person'],
     correctAnswer: 2,
     explanation:
       'CIBSE Guide B recommends 8 L/s per person for classrooms. This accounts for the higher metabolic rates of children and the importance of maintaining good air quality for learning. Schools often require higher ventilation rates due to occupancy density.',
@@ -127,12 +107,7 @@ const quizQuestions = [
     id: 4,
     question:
       'What is the recommended CO2 concentration for a well-ventilated space according to CIBSE guidance?',
-    options: [
-      'Less than 800 ppm',
-      'Less than 600 ppm',
-      'Less than 1000 ppm',
-      'Less than 1500 ppm',
-    ],
+    options: ['Less than 800 ppm', 'Less than 600 ppm', 'Less than 1000 ppm', 'Less than 1500 ppm'],
     correctAnswer: 0,
     explanation:
       'CIBSE recommends maintaining CO2 below 800 ppm for well-ventilated spaces. This provides a significant margin below the 1000 ppm threshold where occupants may begin to experience discomfort or reduced cognitive performance.',
@@ -140,12 +115,7 @@ const quizQuestions = [
   {
     id: 5,
     question: 'What air change rate does CIBSE recommend for hospital operating theatres?',
-    options: [
-      '10-15 ACH',
-      '15-25 ACH',
-      '25-35 ACH',
-      '6-10 ACH',
-    ],
+    options: ['10-15 ACH', '15-25 ACH', '25-35 ACH', '6-10 ACH'],
     correctAnswer: 1,
     explanation:
       'Hospital operating theatres require 15-25 air changes per hour to maintain sterile conditions and remove anaesthetic gases. Ultra-clean ventilation (UCV) theatres for orthopaedic procedures may require even higher rates with laminar flow systems.',
@@ -167,12 +137,7 @@ const quizQuestions = [
     id: 7,
     question:
       'What is the minimum extract rate for a domestic bathroom with no openable window per Building Regulations?',
-    options: [
-      '8 L/s',
-      '60 L/s',
-      '30 L/s',
-      '15 L/s',
-    ],
+    options: ['8 L/s', '60 L/s', '30 L/s', '15 L/s'],
     correctAnswer: 3,
     explanation:
       'An internal bathroom without natural ventilation requires a minimum continuous extract rate of 8 L/s or an intermittent rate of 15 L/s during use. This removes moisture and odours to prevent condensation and maintain hygiene.',
@@ -220,12 +185,7 @@ const quizQuestions = [
     id: 11,
     question:
       'According to CIBSE, what is the recommended ventilation effectiveness factor for displacement ventilation?',
-    options: [
-      '0.5',
-      '0.8-1.0',
-      '1.5-2.0',
-      '1.0-1.2',
-    ],
+    options: ['0.5', '0.8-1.0', '1.5-2.0', '1.0-1.2'],
     correctAnswer: 3,
     explanation:
       'Displacement ventilation achieves ventilation effectiveness of 1.0-1.2 because fresh air is supplied at low level and rises past occupants before being extracted at ceiling level. This creates stratification that improves air quality in the breathing zone compared to mixing ventilation.',
@@ -273,12 +233,7 @@ const quizQuestions = [
   {
     id: 15,
     question: 'For a restaurant dining area, what air change rate does CIBSE recommend?',
-    options: [
-      '15-20 ACH',
-      '6-10 ACH',
-      '4-6 ACH',
-      '10-15 ACH',
-    ],
+    options: ['15-20 ACH', '6-10 ACH', '4-6 ACH', '10-15 ACH'],
     correctAnswer: 3,
     explanation:
       'Restaurant dining areas typically require 10-15 ACH to remove cooking odours that migrate from the kitchen, body odours from high occupancy, and to maintain comfort. Kitchen areas themselves require even higher rates (20-30 ACH) with dedicated extract systems.',
@@ -324,401 +279,761 @@ const HNCModule8Section2_1 = () => {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
-      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
-        <PageFrame>
+    <HubPage>
+      <HubMasthead
+        section="Module 8 · Section 2 · Subsection 1"
+        title="Ventilation Principles"
+        backTo="/study-centre/apprentice/h-n-c-module8-section2"
+      />
+      <HubBody>
+        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
+          Air change rates, fresh air requirements, contaminant control and ventilation standards
+          for building services
+        </p>
+
+        <LearningOutcomes
+          outcomes={[
+            'Calculate air change rates and fresh air requirements',
+            'Understand Building Regulations Part F requirements',
+            'Apply CIBSE Guide B ventilation criteria',
+            'Use CO2 as an indoor air quality indicator',
+            'Design for contaminant dilution and control',
+            'Compare natural and mechanical ventilation strategies',
+            'Specify demand-controlled ventilation systems',
+          ]}
+        />
+
+        <SectionRule />
+
+        <ConceptBlock title="Air Change Rates">
+          <p>
+            The air change rate (ACH) expresses how many times the entire volume of air within a
+            space is replaced per hour. It is a fundamental metric for ventilation system design and
+            performance assessment.
+          </p>
+          <p>
+            <strong>Air Change Rate Formula</strong>
+          </p>
+          <p>ACH = (Q × 3600) / V</p>
+          <p>Where Q = airflow rate (m³/s), V = room volume (m³)</p>
+          <p>
+            <strong>Factors affecting required ACH:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Occupancy density:</strong> Higher densities require more air changes
+            </li>
+            <li>
+              <strong>Activity level:</strong> Exercise areas need more than sedentary spaces
+            </li>
+            <li>
+              <strong>Pollutant sources:</strong> Processes generating contaminants increase
+              requirements
+            </li>
+            <li>
+              <strong>Ceiling height:</strong> Taller spaces may need higher ACH for equivalent air
+              quality
+            </li>
+            <li>
+              <strong>Ventilation effectiveness:</strong> Mixing vs displacement systems affect
+              requirements
+            </li>
+          </ul>
+          <p>
+            <strong>CIBSE Recommended Air Change Rates</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>General offices:</strong> 4-6 — Based on typical occupancy density
+            </li>
+            <li>
+              <strong>Meeting rooms:</strong> 6-8 — Higher density, intermittent use
+            </li>
+            <li>
+              <strong>Classrooms:</strong> 5-8 — CO2 control critical for learning
+            </li>
+            <li>
+              <strong>Retail spaces:</strong> 6-10 — Variable occupancy patterns
+            </li>
+            <li>
+              <strong>Restaurant dining:</strong> 10-15 — Odour control, high occupancy
+            </li>
+            <li>
+              <strong>Commercial kitchens:</strong> 20-30 — Grease, heat, combustion products
+            </li>
+            <li>
+              <strong>Hospital wards:</strong> 6-10 — Infection control considerations
+            </li>
+            <li>
+              <strong>Operating theatres:</strong> 15-25 — Sterility, anaesthetic gas removal
+            </li>
+            <li>
+              <strong>Laboratories:</strong> 6-15 — Depends on hazard classification
+            </li>
+            <li>
+              <strong>Gymnasiums:</strong> 6-10 — High metabolic rates, odour control
+            </li>
+          </ul>
+          <p>
+            <strong>Converting ACH to Flow Rate</strong>
+          </p>
+          <p>Q (L/s) = (ACH × V) / 3.6</p>
+          <p>Where V = room volume (m³)</p>
+          <p>Example: A 150 m³ meeting room requiring 8 ACH needs: Q = (8 × 150) / 3.6 = 333 L/s</p>
+          <p>
+            <strong>Design tip:</strong> Always verify ACH calculations against per-person fresh air
+            rates and select the higher value. A low-occupancy space may need more than the ACH
+            minimum, whilst a high-occupancy small room may exceed ACH requirements.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...quickCheckQuestions[0]} />
+
+        <SectionRule />
+
+        <ConceptBlock title="Fresh Air Requirements">
+          <p>
+            Fresh air requirements ensure adequate outdoor air is supplied to dilute indoor
+            pollutants, primarily human bioeffluents. Requirements are specified per person or per
+            square metre depending on the standard applied.
+          </p>
+          <p>
+            <strong>Building Regulations Approved Document F</strong>
+          </p>
+          <p>
+            Part F sets minimum ventilation requirements for buildings in England and Wales. For
+            non-domestic buildings, fresh air rates are specified based on space type and occupancy.
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Offices:</strong> 10 L/s per person — Or 1.0 L/s per m² floor area
+            </li>
+            <li>
+              <strong>Classrooms:</strong> 8 L/s per person — Higher for science labs
+            </li>
+            <li>
+              <strong>Retail:</strong> 10 L/s per person — Based on typical occupancy
+            </li>
+            <li>
+              <strong>Restaurants:</strong> 10 L/s per person — Plus kitchen extract
+            </li>
+            <li>
+              <strong>Hotels (bedrooms):</strong> 10 L/s per person — Based on 2 occupants
+            </li>
+          </ul>
+          <p>
+            <strong>CIBSE Guide B Fresh Air Recommendations</strong>
+          </p>
+          <p>
+            CIBSE provides more detailed guidance considering activity levels and ventilation
+            effectiveness.
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Sedentary (offices):</strong> 8-10 — 10 m² per person
+            </li>
+            <li>
+              <strong>Light activity (retail):</strong> 10-12 — 5 m² per person
+            </li>
+            <li>
+              <strong>Moderate activity (teaching):</strong> 10-12 — 2 m² per person
+            </li>
+            <li>
+              <strong>Heavy activity (gym):</strong> 15-20 — 5 m² per person
+            </li>
+          </ul>
+          <p>
+            <strong>Domestic Ventilation Requirements (Part F)</strong>
+          </p>
+          <p>
+            <strong>Continuous Extract Rates</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Whole dwelling: 0.3 L/s per m² floor area</li>
+            <li>Kitchen: 13 L/s minimum</li>
+            <li>Bathroom: 8 L/s minimum</li>
+            <li>Utility room: 8 L/s minimum</li>
+          </ul>
+          <p>
+            <strong>Intermittent Extract Rates</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Kitchen (adjacent hob): 30 L/s</li>
+            <li>Kitchen (elsewhere): 60 L/s</li>
+            <li>Bathroom: 15 L/s</li>
+            <li>Utility room: 30 L/s</li>
+          </ul>
+          <p>
+            <strong>Ventilation Calculation Example</strong>
+          </p>
+          <p>
+            <strong>Scenario:</strong> Open-plan office, 500 m² floor area, 50 occupants
+          </p>
+          <p>
+            <strong>Method 1 - Per person:</strong>
+          </p>
+          <p>Q = 50 persons × 10 L/s = 500 L/s</p>
+          <p>
+            <strong>Method 2 - Per floor area:</strong>
+          </p>
+          <p>Q = 500 m² × 1.0 L/s per m² = 500 L/s</p>
+          <p>
+            <strong>Method 3 - Air change rate (assume 3m ceiling, 6 ACH):</strong>
+          </p>
+          <p>Volume = 500 × 3 = 1500 m³</p>
+          <p>Q = (1500 × 6) / 3.6 = 2500 L/s</p>
+          <p>
+            <strong>Design for higher value:</strong> 2500 L/s in this case
+          </p>
+          <p>
+            <strong>Note:</strong> The higher calculated value ensures adequate ventilation under
+            all operating conditions. Demand-controlled ventilation can reduce actual airflow when
+            occupancy is below design levels.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...quickCheckQuestions[1]} />
+
+        <SectionRule />
+
+        <ConceptBlock title="Contaminant Control and CO2 Monitoring">
+          <p>
+            Ventilation serves to dilute and remove indoor air contaminants to maintain acceptable
+            indoor air quality (IAQ). Carbon dioxide (CO2) is widely used as a surrogate indicator
+            for ventilation adequacy in occupied spaces.
+          </p>
+          <p>
+            <strong>Indoor Air Contaminants:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Bioeffluents:</strong> CO2, body odours, moisture from respiration and
+              perspiration
+            </li>
+            <li>
+              <strong>VOCs:</strong> Volatile organic compounds from furnishings, cleaning products,
+              paints
+            </li>
+            <li>
+              <strong>Particulates:</strong> Dust, fibres, pollen, aerosols
+            </li>
+            <li>
+              <strong>Combustion products:</strong> CO, NOx from gas appliances and vehicles
+            </li>
+            <li>
+              <strong>Biological:</strong> Bacteria, viruses, mould spores
+            </li>
+            <li>
+              <strong>Process emissions:</strong> Specific to activity (cooking, printing,
+              manufacturing)
+            </li>
+          </ul>
+          <p>
+            <strong>CO2 as a Ventilation Indicator</strong>
+          </p>
+          <p>
+            Humans exhale approximately 0.005 L/s of CO2 during sedentary activity. Indoor CO2
+            concentration directly correlates with the balance between occupant generation and
+            dilution by outdoor air.
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>&lt;600:</strong> Excellent — Very good ventilation
+            </li>
+            <li>
+              <strong>600-800:</strong> Good — Adequate ventilation
+            </li>
+            <li>
+              <strong>800-1000:</strong> Acceptable — Minimum acceptable level
+            </li>
+            <li>
+              <strong>1000-1500:</strong> Poor — Inadequate - complaints likely
+            </li>
+            <li>
+              <strong>&gt;1500:</strong> Unacceptable — Requires immediate attention
+            </li>
+          </ul>
+          <p>
+            <strong>Steady-State CO2 Calculation</strong>
+          </p>
+          <p>Ci = Co + (N × G) / Q</p>
+          <p>
+            Ci = indoor CO2 (ppm), Co = outdoor CO2 (typically 400-450 ppm), N = number of
+            occupants, G = CO2 generation per person (approximately 18 L/h sedentary), Q = outdoor
+            airflow (L/h)
+          </p>
+          <p>
+            <strong>Demand-Controlled Ventilation (DCV)</strong>
+          </p>
+          <p>
+            DCV systems use CO2 sensors to modulate outdoor air supply based on actual occupancy
+            rather than assumed maximum.
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>CO2 setpoint:</strong> Typically 800-1000 ppm depending on application
+            </li>
+            <li>
+              <strong>Control action:</strong> Modulate outdoor air damper or fan speed
+            </li>
+            <li>
+              <strong>Minimum position:</strong> Maintain baseline ventilation when unoccupied
+            </li>
+            <li>
+              <strong>Energy savings:</strong> Typically 20-30% reduction in ventilation energy
+            </li>
+            <li>
+              <strong>Sensor placement:</strong> Return air duct or within occupied zone at
+              breathing height
+            </li>
+          </ul>
+          <p>
+            <strong>Other IAQ Parameters</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Carbon monoxide (CO):</strong> &lt;9 ppm (8-hour average) — WHO
+            </li>
+            <li>
+              <strong>Formaldehyde (HCHO):</strong> &lt;0.1 ppm — WHO
+            </li>
+            <li>
+              <strong>Total VOCs:</strong> &lt;500 µg/m³ — BREEAM
+            </li>
+            <li>
+              <strong>PM2.5:</strong> &lt;15 µg/m³ (annual) — WHO 2021
+            </li>
+            <li>
+              <strong>PM10:</strong> &lt;45 µg/m³ (annual) — WHO 2021
+            </li>
+            <li>
+              <strong>Relative humidity:</strong> 40-60% — CIBSE
+            </li>
+          </ul>
+          <p>
+            <strong>Important:</strong> CO2 monitoring alone does not detect all contaminants.
+            Additional sensors for particulates, VOCs or specific gases may be required depending on
+            the application. Healthcare and laboratory environments often need comprehensive IAQ
+            monitoring.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...quickCheckQuestions[2]} />
+
+        <SectionRule />
+
+        <ConceptBlock title="Ventilation Strategies and Standards">
+          <p>
+            Ventilation strategies are selected based on building type, climate, energy requirements
+            and indoor environment objectives. The main approaches are natural ventilation,
+            mechanical ventilation and mixed-mode systems.
+          </p>
+          <p>
+            <strong>Natural Ventilation</strong>
+          </p>
+          <p>
+            Relies on wind pressure and buoyancy (stack effect) to drive airflow through openings in
+            the building envelope.
+          </p>
+          <p>
+            <strong>Advantages</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>No fan energy consumption</li>
+            <li>Low maintenance requirements</li>
+            <li>Occupant control and connection to outside</li>
+            <li>No ductwork or plant space required</li>
+          </ul>
+          <p>
+            <strong>Limitations</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Dependent on weather conditions</li>
+            <li>Limited depth (approximately 2.5× ceiling height single-sided)</li>
+            <li>Noise and pollution from outside</li>
+            <li>Security concerns with openable windows</li>
+          </ul>
+          <p>
+            <strong>Natural Ventilation Design Rules</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Single-sided:</strong> Effective depth ≤ 2.5 × ceiling height
+            </li>
+            <li>
+              <strong>Cross-ventilation:</strong> Effective depth ≤ 5 × ceiling height
+            </li>
+            <li>
+              <strong>Stack ventilation:</strong> Requires height difference &gt;3m between inlet
+              and outlet
+            </li>
+            <li>
+              <strong>Openable area:</strong> Typically 5% of floor area for purge ventilation
+            </li>
+          </ul>
+          <p>
+            <strong>Mechanical Ventilation</strong>
+          </p>
+          <p>
+            Uses fans to provide controlled airflow, enabling heat recovery, filtration and precise
+            environmental control.
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Extract only (MEV):</strong> Mechanical extract with natural supply —
+              Dwellings, small commercial
+            </li>
+            <li>
+              <strong>Supply only:</strong> Mechanical supply with natural exhaust — Rare - used for
+              pressurisation
+            </li>
+            <li>
+              <strong>Balanced (MVHR):</strong> Supply and extract with heat recovery —
+              Energy-efficient buildings
+            </li>
+            <li>
+              <strong>VAV:</strong> Variable air volume with zone control — Large commercial
+              buildings
+            </li>
+            <li>
+              <strong>Displacement:</strong> Low-level supply, high-level extract — Atria, theatres,
+              auditoria
+            </li>
+          </ul>
+          <p>
+            <strong>Mixed-Mode Ventilation</strong>
+          </p>
+          <p>
+            Combines natural and mechanical ventilation to optimise comfort and energy performance
+            throughout the year.
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Concurrent:</strong> Natural and mechanical operate simultaneously
+            </li>
+            <li>
+              <strong>Changeover:</strong> Switches between natural and mechanical based on
+              conditions
+            </li>
+            <li>
+              <strong>Zoned:</strong> Different strategies in different parts of building
+            </li>
+          </ul>
+          <p>
+            <strong>Key Ventilation Standards and Guidance</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Building Regs Part F:</strong> Statutory minimum — Minimum ventilation rates
+              for compliance
+            </li>
+            <li>
+              <strong>CIBSE Guide A:</strong> Environmental criteria — Design temperatures, air
+              quality targets
+            </li>
+            <li>
+              <strong>CIBSE Guide B:</strong> HVAC systems — Detailed ventilation design guidance
+            </li>
+            <li>
+              <strong>BS EN 16798-1:</strong> Indoor environment — IEQ categories and criteria
+            </li>
+            <li>
+              <strong>BREEAM:</strong> Sustainability rating — IAQ credits, monitoring requirements
+            </li>
+            <li>
+              <strong>WELL Standard:</strong> Health and wellbeing — Enhanced IAQ requirements
+            </li>
+            <li>
+              <strong>BB101:</strong> Schools — Ventilation criteria for educational buildings
+            </li>
+            <li>
+              <strong>HTM 03-01:</strong> Healthcare — NHS ventilation requirements
+            </li>
+          </ul>
+          <p>
+            <strong>Ventilation Effectiveness</strong>
+          </p>
+          <p>
+            Not all ventilation systems deliver air to occupants equally effectively. The
+            ventilation effectiveness factor accounts for this variation.
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Perfect mixing:</strong> 1.0 — Theoretical ideal
+            </li>
+            <li>
+              <strong>Ceiling supply/return:</strong> 0.8-1.0 — Typical mixing ventilation
+            </li>
+            <li>
+              <strong>Displacement:</strong> 1.0-1.2 — Stratification improves breathing zone
+            </li>
+            <li>
+              <strong>Under-floor air:</strong> 1.0-1.2 — Similar to displacement
+            </li>
+            <li>
+              <strong>Personal ventilation:</strong> 1.5-2.0 — Direct supply to breathing zone
+            </li>
+          </ul>
+          <p>
+            <strong>Design consideration:</strong> Higher ventilation effectiveness allows lower
+            total airflow rates whilst maintaining equivalent air quality at the breathing zone,
+            reducing both capital and operating costs.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...quickCheckQuestions[3]} />
+
+        <SectionRule />
+
+        <ConceptBlock title="Worked Examples">
+          <p>
+            <strong>Example 1: Office Ventilation Calculation</strong>
+          </p>
+          <p>
+            <strong>Question:</strong> Calculate the fresh air supply rate for an open-plan office
+            measuring 25m × 20m with a 2.8m ceiling height. Design occupancy is 1 person per 8 m².
+          </p>
+          <p>
+            <strong>Step 1: Calculate occupancy</strong>
+          </p>
+          <p>Floor area = 25 × 20 = 500 m²</p>
+          <p>Occupancy = 500 / 8 = 62.5, round up to 63 persons</p>
+          <p>
+            <strong>Step 2: Per-person method (Part F)</strong>
+          </p>
+          <p>Q = 63 × 10 L/s = 630 L/s</p>
+          <p>
+            <strong>Step 3: Air change rate method (6 ACH)</strong>
+          </p>
+          <p>Volume = 500 × 2.8 = 1400 m³</p>
+          <p>Q = (1400 × 6) / 3.6 = 2333 L/s</p>
+          <p>
+            <strong>Design requirement:</strong> 2333 L/s (higher value)
+          </p>
+          <p>Note: Total airflow includes recirculated air; minimum 630 L/s must be outdoor air</p>
+          <p>
+            <strong>Example 2: CO2-Based Ventilation Assessment</strong>
+          </p>
+          <p>
+            <strong>Question:</strong> A meeting room has 12 occupants. Outdoor CO2 is 420 ppm. The
+            target indoor CO2 is 800 ppm. Calculate the required outdoor air supply rate.
+          </p>
+          <p>Using: Ci = Co + (N × G) / Q</p>
+          <p>Rearranging: Q = (N × G) / (Ci - Co)</p>
+          <p>Where:</p>
+          <p>N = 12 occupants</p>
+          <p>G = 18 L/h per person (sedentary) = 0.005 L/s = 5 mL/s</p>
+          <p>Ci = 800 ppm (target)</p>
+          <p>Co = 420 ppm (outdoor)</p>
+          <p>Q = (12 × 0.005) / ((800 - 420) × 10⁻⁶)</p>
+          <p>Q = 0.06 / 0.00038 = 158 L/s</p>
+          <p>
+            <strong>Required outdoor air:</strong> 158 L/s (or 13.2 L/s per person)
+          </p>
+          <p>This exceeds the Part F minimum of 10 L/s per person to achieve 800 ppm target</p>
+          <p>
+            <strong>Example 3: Natural Ventilation Assessment</strong>
+          </p>
+          <p>
+            <strong>Question:</strong> Assess whether single-sided natural ventilation is suitable
+            for an office with 3m ceiling height and 12m depth from the window wall.
+          </p>
+          <p>
+            <strong>Single-sided ventilation limit:</strong>
+          </p>
+          <p>Maximum effective depth = 2.5 × ceiling height</p>
+          <p>Maximum depth = 2.5 × 3m = 7.5m</p>
+          <p>
+            <strong>Assessment:</strong>
+          </p>
+          <p>Actual depth (12m) &gt; Maximum for single-sided (7.5m)</p>
+          <p>
+            <strong>Conclusion:</strong> Single-sided natural ventilation NOT suitable
+          </p>
+          <p>
+            <strong>Alternatives:</strong>
+          </p>
+          <p>- Cross-ventilation (if openings on opposite side): max depth = 5 × 3 = 15m ✓</p>
+          <p>- Mechanical ventilation</p>
+          <p>- Mixed-mode system</p>
+          <p>
+            <strong>Example 4: Kitchen Extract Sizing</strong>
+          </p>
+          <p>
+            <strong>Question:</strong> Size the extract system for a commercial kitchen measuring 8m
+            × 6m with a 3m ceiling height.
+          </p>
+          <p>
+            <strong>Step 1: Calculate volume</strong>
+          </p>
+          <p>Volume = 8 × 6 × 3 = 144 m³</p>
+          <p>
+            <strong> Step 2: Apply CIBSE recommended ACH (25 ACH for commercial kitchen) </strong>
+          </p>
+          <p>Q = (144 × 25) / 3.6 = 1000 L/s</p>
+          <p>
+            <strong>Step 3: Check against hood capture velocity</strong>
+          </p>
+          <p>Assuming 2.5m canopy length × 1.2m width = 3m² hood area</p>
+          <p>At 0.5 m/s face velocity: Q = 3 × 0.5 × 1000 = 1500 L/s</p>
+          <p>
+            <strong>Design extract rate:</strong> 1500 L/s (higher value)
+          </p>
+          <p>
+            Supply air must balance extract, typically 80-90% to maintain slight negative pressure
+          </p>
+          <p>
+            <strong>Example 5: Demand Control Ventilation Savings</strong>
+          </p>
+          <p>
+            <strong>Question:</strong> Estimate annual energy savings from DCV in a 100-person
+            office running 50 hours per week at 40% average occupancy versus design maximum.
+          </p>
+          <p>
+            <strong>Design airflow:</strong>
+          </p>
+          <p>Q_design = 100 persons × 10 L/s = 1000 L/s = 1 m³/s</p>
+          <p>
+            <strong>Average actual (40% occupancy):</strong>
+          </p>
+          <p>Q_actual = 40 persons × 10 L/s + background = approximately 500 L/s = 0.5 m³/s</p>
+          <p>
+            <strong>Fan power reduction (cube law):</strong>
+          </p>
+          <p>Power ratio = (0.5/1.0)³ = 0.125 = 12.5% of design power</p>
+          <p>
+            <strong>Assuming 2kW design fan power:</strong>
+          </p>
+          <p>Without DCV: 2kW × 50h × 52 weeks = 5200 kWh/year</p>
+          <p>With DCV: 2kW × 0.125 × 50h × 52 = 650 kWh/year</p>
+          <p>
+            <strong>Annual savings:</strong> 4550 kWh (87.5% reduction in fan energy)
+          </p>
+          <p>Additional savings from reduced heating/cooling of outdoor air</p>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <ConceptBlock title="Practical guidance">
+          <p>
+            <strong>Essential Formulae:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>ACH = (Q × 3600) / V</strong> — Air changes per hour
+            </li>
+            <li>
+              <strong>Q (L/s) = (ACH × V) / 3.6</strong> — Flow rate from ACH
+            </li>
+            <li>
+              <strong>Ci = Co + (N × G) / Q</strong> — Steady-state CO2
+            </li>
+            <li>
+              <strong>Single-sided depth ≤ 2.5 × H</strong> — Natural ventilation limit
+            </li>
+            <li>
+              <strong>Cross-vent depth ≤ 5 × H</strong> — Cross-ventilation limit
+            </li>
+          </ul>
+          <p>
+            <strong>Key Values to Remember:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              Office fresh air: <strong>10 L/s per person</strong> (Part F minimum)
+            </li>
+            <li>
+              Classroom fresh air: <strong>8 L/s per person</strong>
+            </li>
+            <li>
+              Outdoor CO2: <strong>400-450 ppm</strong>
+            </li>
+            <li>
+              Good indoor CO2: <strong>&lt;800 ppm</strong>
+            </li>
+            <li>
+              Maximum acceptable CO2: <strong>1000 ppm</strong>
+            </li>
+            <li>
+              Dwelling background rate: <strong>0.3 L/s per m² floor area</strong>
+            </li>
+          </ul>
+          <p>
+            <strong>BMS Integration Points:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>CO2 sensors in return air and/or occupied zones</li>
+            <li>Temperature and humidity monitoring</li>
+            <li>Outdoor air damper position feedback</li>
+            <li>Filter differential pressure for maintenance alerts</li>
+            <li>Fan speed and power monitoring</li>
+            <li>Occupancy sensor integration for DCV</li>
+          </ul>
+        </ConceptBlock>
+
+        <CommonMistake
+          title="Common mistakes to avoid"
+          whatHappens={
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+              <li>
+                <strong>Confusing total air with fresh air:</strong> Recirculated air does not count
+                towards outdoor air requirements
+              </li>
+              <li>
+                <strong>Ignoring ventilation effectiveness:</strong> Poor diffuser placement reduces
+                actual delivered air quality
+              </li>
+              <li>
+                <strong>Over-relying on CO2:</strong> Does not detect all pollutants; additional
+                monitoring may be needed
+              </li>
+              <li>
+                <strong>Underestimating infiltration losses:</strong> Leaky buildings have
+                uncontrolled ventilation
+              </li>
+              <li>
+                <strong>Neglecting commissioning:</strong> Systems must be balanced and tested to
+                achieve design performance
+              </li>
+            </ul>
+          }
+          doInstead="Cross-check assumptions against published guidance, validate measured values against design intent, and engage the wider team early when interface issues emerge."
+        />
+
+        <SectionRule />
+
+        <FAQ items={faqs} />
+
+        <SectionRule />
+
+        <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+
+        <div className="grid grid-cols-2 gap-3 pt-2">
           <button
-            onClick={() => navigate("/study-centre/apprentice/h-n-c-module8-section2")}
-            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module8-section2')}
+            className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
           >
-            <ArrowLeft className="h-4 w-4" /> Back
+            <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+              <ChevronLeft className="h-3 w-3" /> Back to section
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-white truncate">
+              Ventilation systems
+            </div>
           </button>
-
-          <PageHero
-            eyebrow="Module 8 · Section 2 · Subsection 1"
-            title="Ventilation Principles"
-            description="Air change rates, fresh air requirements, contaminant control and ventilation standards for building services"
-            tone="purple"
-          />
-
-          <LearningOutcomes
-            outcomes={[
-              "Calculate air change rates and fresh air requirements",
-              "Understand Building Regulations Part F requirements",
-              "Apply CIBSE Guide B ventilation criteria",
-              "Use CO2 as an indoor air quality indicator",
-              "Design for contaminant dilution and control",
-              "Compare natural and mechanical ventilation strategies",
-              "Specify demand-controlled ventilation systems",
-            ]}
-          />
-
-          <SectionRule />
-
-          <ConceptBlock title="Air Change Rates">
-            <p>The air change rate (ACH) expresses how many times the entire volume of air within a space is replaced per hour. It is a fundamental metric for ventilation system design and performance assessment.</p>
-            <p><strong>Air Change Rate Formula</strong></p>
-            <p>ACH = (Q × 3600) / V</p>
-            <p>Where Q = airflow rate (m³/s), V = room volume (m³)</p>
-            <p><strong>Factors affecting required ACH:</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Occupancy density:</strong> Higher densities require more air changes</li>
-              <li><strong>Activity level:</strong> Exercise areas need more than sedentary spaces</li>
-              <li><strong>Pollutant sources:</strong> Processes generating contaminants increase requirements</li>
-              <li><strong>Ceiling height:</strong> Taller spaces may need higher ACH for equivalent air quality</li>
-              <li><strong>Ventilation effectiveness:</strong> Mixing vs displacement systems affect requirements</li>
-            </ul>
-            <p><strong>CIBSE Recommended Air Change Rates</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>General offices:</strong> 4-6 — Based on typical occupancy density</li>
-              <li><strong>Meeting rooms:</strong> 6-8 — Higher density, intermittent use</li>
-              <li><strong>Classrooms:</strong> 5-8 — CO2 control critical for learning</li>
-              <li><strong>Retail spaces:</strong> 6-10 — Variable occupancy patterns</li>
-              <li><strong>Restaurant dining:</strong> 10-15 — Odour control, high occupancy</li>
-              <li><strong>Commercial kitchens:</strong> 20-30 — Grease, heat, combustion products</li>
-              <li><strong>Hospital wards:</strong> 6-10 — Infection control considerations</li>
-              <li><strong>Operating theatres:</strong> 15-25 — Sterility, anaesthetic gas removal</li>
-              <li><strong>Laboratories:</strong> 6-15 — Depends on hazard classification</li>
-              <li><strong>Gymnasiums:</strong> 6-10 — High metabolic rates, odour control</li>
-            </ul>
-            <p><strong>Converting ACH to Flow Rate</strong></p>
-            <p>Q (L/s) = (ACH × V) / 3.6</p>
-            <p>Where V = room volume (m³)</p>
-            <p>Example: A 150 m³ meeting room requiring 8 ACH needs: Q = (8 × 150) / 3.6 = 333 L/s</p>
-            <p><strong>Design tip:</strong> Always verify ACH calculations against per-person fresh air rates and select the higher value. A low-occupancy space may need more than the ACH minimum, whilst a high-occupancy small room may exceed ACH requirements.</p>
-          </ConceptBlock>
-
-          <InlineCheck {...quickCheckQuestions[0]} />
-
-          <SectionRule />
-
-          <ConceptBlock title="Fresh Air Requirements">
-            <p>Fresh air requirements ensure adequate outdoor air is supplied to dilute indoor pollutants, primarily human bioeffluents. Requirements are specified per person or per square metre depending on the standard applied.</p>
-            <p><strong>Building Regulations Approved Document F</strong></p>
-            <p>Part F sets minimum ventilation requirements for buildings in England and Wales. For non-domestic buildings, fresh air rates are specified based on space type and occupancy.</p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Offices:</strong> 10 L/s per person — Or 1.0 L/s per m² floor area</li>
-              <li><strong>Classrooms:</strong> 8 L/s per person — Higher for science labs</li>
-              <li><strong>Retail:</strong> 10 L/s per person — Based on typical occupancy</li>
-              <li><strong>Restaurants:</strong> 10 L/s per person — Plus kitchen extract</li>
-              <li><strong>Hotels (bedrooms):</strong> 10 L/s per person — Based on 2 occupants</li>
-            </ul>
-            <p><strong>CIBSE Guide B Fresh Air Recommendations</strong></p>
-            <p>CIBSE provides more detailed guidance considering activity levels and ventilation effectiveness.</p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Sedentary (offices):</strong> 8-10 — 10 m² per person</li>
-              <li><strong>Light activity (retail):</strong> 10-12 — 5 m² per person</li>
-              <li><strong>Moderate activity (teaching):</strong> 10-12 — 2 m² per person</li>
-              <li><strong>Heavy activity (gym):</strong> 15-20 — 5 m² per person</li>
-            </ul>
-            <p><strong>Domestic Ventilation Requirements (Part F)</strong></p>
-            <p><strong>Continuous Extract Rates</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Whole dwelling: 0.3 L/s per m² floor area</li>
-              <li>Kitchen: 13 L/s minimum</li>
-              <li>Bathroom: 8 L/s minimum</li>
-              <li>Utility room: 8 L/s minimum</li>
-            </ul>
-            <p><strong>Intermittent Extract Rates</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Kitchen (adjacent hob): 30 L/s</li>
-              <li>Kitchen (elsewhere): 60 L/s</li>
-              <li>Bathroom: 15 L/s</li>
-              <li>Utility room: 30 L/s</li>
-            </ul>
-            <p><strong>Ventilation Calculation Example</strong></p>
-            <p><strong>Scenario:</strong> Open-plan office, 500 m² floor area, 50 occupants</p>
-            <p><strong>Method 1 - Per person:</strong></p>
-            <p>Q = 50 persons × 10 L/s = 500 L/s</p>
-            <p><strong>Method 2 - Per floor area:</strong></p>
-            <p>Q = 500 m² × 1.0 L/s per m² = 500 L/s</p>
-            <p><strong>Method 3 - Air change rate (assume 3m ceiling, 6 ACH):</strong></p>
-            <p>Volume = 500 × 3 = 1500 m³</p>
-            <p>Q = (1500 × 6) / 3.6 = 2500 L/s</p>
-            <p><strong>Design for higher value:</strong> 2500 L/s in this case</p>
-            <p><strong>Note:</strong> The higher calculated value ensures adequate ventilation under all operating conditions. Demand-controlled ventilation can reduce actual airflow when occupancy is below design levels.</p>
-          </ConceptBlock>
-
-          <InlineCheck {...quickCheckQuestions[1]} />
-
-          <SectionRule />
-
-          <ConceptBlock title="Contaminant Control and CO2 Monitoring">
-            <p>Ventilation serves to dilute and remove indoor air contaminants to maintain acceptable indoor air quality (IAQ). Carbon dioxide (CO2) is widely used as a surrogate indicator for ventilation adequacy in occupied spaces.</p>
-            <p><strong>Indoor Air Contaminants:</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Bioeffluents:</strong> CO2, body odours, moisture from respiration and perspiration</li>
-              <li><strong>VOCs:</strong> Volatile organic compounds from furnishings, cleaning products, paints</li>
-              <li><strong>Particulates:</strong> Dust, fibres, pollen, aerosols</li>
-              <li><strong>Combustion products:</strong> CO, NOx from gas appliances and vehicles</li>
-              <li><strong>Biological:</strong> Bacteria, viruses, mould spores</li>
-              <li><strong>Process emissions:</strong> Specific to activity (cooking, printing, manufacturing)</li>
-            </ul>
-            <p><strong>CO2 as a Ventilation Indicator</strong></p>
-            <p>Humans exhale approximately 0.005 L/s of CO2 during sedentary activity. Indoor CO2 concentration directly correlates with the balance between occupant generation and dilution by outdoor air.</p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>&lt;600:</strong> Excellent — Very good ventilation</li>
-              <li><strong>600-800:</strong> Good — Adequate ventilation</li>
-              <li><strong>800-1000:</strong> Acceptable — Minimum acceptable level</li>
-              <li><strong>1000-1500:</strong> Poor — Inadequate - complaints likely</li>
-              <li><strong>&gt;1500:</strong> Unacceptable — Requires immediate attention</li>
-            </ul>
-            <p><strong>Steady-State CO2 Calculation</strong></p>
-            <p>Ci = Co + (N × G) / Q</p>
-            <p>Ci = indoor CO2 (ppm), Co = outdoor CO2 (typically 400-450 ppm), N = number of occupants, G = CO2 generation per person (approximately 18 L/h sedentary), Q = outdoor airflow (L/h)</p>
-            <p><strong>Demand-Controlled Ventilation (DCV)</strong></p>
-            <p>DCV systems use CO2 sensors to modulate outdoor air supply based on actual occupancy rather than assumed maximum.</p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>CO2 setpoint:</strong> Typically 800-1000 ppm depending on application</li>
-              <li><strong>Control action:</strong> Modulate outdoor air damper or fan speed</li>
-              <li><strong>Minimum position:</strong> Maintain baseline ventilation when unoccupied</li>
-              <li><strong>Energy savings:</strong> Typically 20-30% reduction in ventilation energy</li>
-              <li><strong>Sensor placement:</strong> Return air duct or within occupied zone at breathing height</li>
-            </ul>
-            <p><strong>Other IAQ Parameters</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Carbon monoxide (CO):</strong> &lt;9 ppm (8-hour average) — WHO</li>
-              <li><strong>Formaldehyde (HCHO):</strong> &lt;0.1 ppm — WHO</li>
-              <li><strong>Total VOCs:</strong> &lt;500 µg/m³ — BREEAM</li>
-              <li><strong>PM2.5:</strong> &lt;15 µg/m³ (annual) — WHO 2021</li>
-              <li><strong>PM10:</strong> &lt;45 µg/m³ (annual) — WHO 2021</li>
-              <li><strong>Relative humidity:</strong> 40-60% — CIBSE</li>
-            </ul>
-            <p><strong>Important:</strong> CO2 monitoring alone does not detect all contaminants. Additional sensors for particulates, VOCs or specific gases may be required depending on the application. Healthcare and laboratory environments often need comprehensive IAQ monitoring.</p>
-          </ConceptBlock>
-
-          <InlineCheck {...quickCheckQuestions[2]} />
-
-          <SectionRule />
-
-          <ConceptBlock title="Ventilation Strategies and Standards">
-            <p>Ventilation strategies are selected based on building type, climate, energy requirements and indoor environment objectives. The main approaches are natural ventilation, mechanical ventilation and mixed-mode systems.</p>
-            <p><strong>Natural Ventilation</strong></p>
-            <p>Relies on wind pressure and buoyancy (stack effect) to drive airflow through openings in the building envelope.</p>
-            <p><strong>Advantages</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>No fan energy consumption</li>
-              <li>Low maintenance requirements</li>
-              <li>Occupant control and connection to outside</li>
-              <li>No ductwork or plant space required</li>
-            </ul>
-            <p><strong>Limitations</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Dependent on weather conditions</li>
-              <li>Limited depth (approximately 2.5× ceiling height single-sided)</li>
-              <li>Noise and pollution from outside</li>
-              <li>Security concerns with openable windows</li>
-            </ul>
-            <p><strong>Natural Ventilation Design Rules</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Single-sided:</strong> Effective depth ≤ 2.5 × ceiling height</li>
-              <li><strong>Cross-ventilation:</strong> Effective depth ≤ 5 × ceiling height</li>
-              <li><strong>Stack ventilation:</strong> Requires height difference &gt;3m between inlet and outlet</li>
-              <li><strong>Openable area:</strong> Typically 5% of floor area for purge ventilation</li>
-            </ul>
-            <p><strong>Mechanical Ventilation</strong></p>
-            <p>Uses fans to provide controlled airflow, enabling heat recovery, filtration and precise environmental control.</p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Extract only (MEV):</strong> Mechanical extract with natural supply — Dwellings, small commercial</li>
-              <li><strong>Supply only:</strong> Mechanical supply with natural exhaust — Rare - used for pressurisation</li>
-              <li><strong>Balanced (MVHR):</strong> Supply and extract with heat recovery — Energy-efficient buildings</li>
-              <li><strong>VAV:</strong> Variable air volume with zone control — Large commercial buildings</li>
-              <li><strong>Displacement:</strong> Low-level supply, high-level extract — Atria, theatres, auditoria</li>
-            </ul>
-            <p><strong>Mixed-Mode Ventilation</strong></p>
-            <p>Combines natural and mechanical ventilation to optimise comfort and energy performance throughout the year.</p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Concurrent:</strong> Natural and mechanical operate simultaneously</li>
-              <li><strong>Changeover:</strong> Switches between natural and mechanical based on conditions</li>
-              <li><strong>Zoned:</strong> Different strategies in different parts of building</li>
-            </ul>
-            <p><strong>Key Ventilation Standards and Guidance</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Building Regs Part F:</strong> Statutory minimum — Minimum ventilation rates for compliance</li>
-              <li><strong>CIBSE Guide A:</strong> Environmental criteria — Design temperatures, air quality targets</li>
-              <li><strong>CIBSE Guide B:</strong> HVAC systems — Detailed ventilation design guidance</li>
-              <li><strong>BS EN 16798-1:</strong> Indoor environment — IEQ categories and criteria</li>
-              <li><strong>BREEAM:</strong> Sustainability rating — IAQ credits, monitoring requirements</li>
-              <li><strong>WELL Standard:</strong> Health and wellbeing — Enhanced IAQ requirements</li>
-              <li><strong>BB101:</strong> Schools — Ventilation criteria for educational buildings</li>
-              <li><strong>HTM 03-01:</strong> Healthcare — NHS ventilation requirements</li>
-            </ul>
-            <p><strong>Ventilation Effectiveness</strong></p>
-            <p>Not all ventilation systems deliver air to occupants equally effectively. The ventilation effectiveness factor accounts for this variation.</p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Perfect mixing:</strong> 1.0 — Theoretical ideal</li>
-              <li><strong>Ceiling supply/return:</strong> 0.8-1.0 — Typical mixing ventilation</li>
-              <li><strong>Displacement:</strong> 1.0-1.2 — Stratification improves breathing zone</li>
-              <li><strong>Under-floor air:</strong> 1.0-1.2 — Similar to displacement</li>
-              <li><strong>Personal ventilation:</strong> 1.5-2.0 — Direct supply to breathing zone</li>
-            </ul>
-            <p><strong>Design consideration:</strong> Higher ventilation effectiveness allows lower total airflow rates whilst maintaining equivalent air quality at the breathing zone, reducing both capital and operating costs.</p>
-          </ConceptBlock>
-
-          <InlineCheck {...quickCheckQuestions[3]} />
-
-          <SectionRule />
-
-          <ConceptBlock title="Worked Examples">
-            <p>
-              <strong>Example 1: Office Ventilation Calculation</strong>
-            </p>
-            <p><strong>Question:</strong> Calculate the fresh air supply rate for an open-plan office measuring 25m × 20m with a 2.8m ceiling height. Design occupancy is 1 person per 8 m².</p>
-            <p><strong>Step 1: Calculate occupancy</strong></p>
-            <p>Floor area = 25 × 20 = 500 m²</p>
-            <p>Occupancy = 500 / 8 = 62.5, round up to 63 persons</p>
-            <p><strong>Step 2: Per-person method (Part F)</strong></p>
-            <p>Q = 63 × 10 L/s = 630 L/s</p>
-            <p><strong>Step 3: Air change rate method (6 ACH)</strong></p>
-            <p>Volume = 500 × 2.8 = 1400 m³</p>
-            <p>Q = (1400 × 6) / 3.6 = 2333 L/s</p>
-            <p><strong>Design requirement:</strong> 2333 L/s (higher value)</p>
-            <p>Note: Total airflow includes recirculated air; minimum 630 L/s must be outdoor air</p>
-            <p>
-              <strong>Example 2: CO2-Based Ventilation Assessment</strong>
-            </p>
-            <p><strong>Question:</strong> A meeting room has 12 occupants. Outdoor CO2 is 420 ppm. The target indoor CO2 is 800 ppm. Calculate the required outdoor air supply rate.</p>
-            <p>Using: Ci = Co + (N × G) / Q</p>
-            <p>Rearranging: Q = (N × G) / (Ci - Co)</p>
-            <p>Where:</p>
-            <p>N = 12 occupants</p>
-            <p>G = 18 L/h per person (sedentary) = 0.005 L/s = 5 mL/s</p>
-            <p>Ci = 800 ppm (target)</p>
-            <p>Co = 420 ppm (outdoor)</p>
-            <p>Q = (12 × 0.005) / ((800 - 420) × 10⁻⁶)</p>
-            <p>Q = 0.06 / 0.00038 = 158 L/s</p>
-            <p><strong>Required outdoor air:</strong> 158 L/s (or 13.2 L/s per person)</p>
-            <p>This exceeds the Part F minimum of 10 L/s per person to achieve 800 ppm target</p>
-            <p>
-              <strong>Example 3: Natural Ventilation Assessment</strong>
-            </p>
-            <p><strong>Question:</strong> Assess whether single-sided natural ventilation is suitable for an office with 3m ceiling height and 12m depth from the window wall.</p>
-            <p><strong>Single-sided ventilation limit:</strong></p>
-            <p>Maximum effective depth = 2.5 × ceiling height</p>
-            <p>Maximum depth = 2.5 × 3m = 7.5m</p>
-            <p><strong>Assessment:</strong></p>
-            <p>Actual depth (12m) &gt; Maximum for single-sided (7.5m)</p>
-            <p><strong>Conclusion:</strong> Single-sided natural ventilation NOT suitable</p>
-            <p><strong>Alternatives:</strong></p>
-            <p>- Cross-ventilation (if openings on opposite side): max depth = 5 × 3 = 15m ✓</p>
-            <p>- Mechanical ventilation</p>
-            <p>- Mixed-mode system</p>
-            <p>
-              <strong>Example 4: Kitchen Extract Sizing</strong>
-            </p>
-            <p><strong>Question:</strong> Size the extract system for a commercial kitchen measuring 8m × 6m with a 3m ceiling height.</p>
-            <p><strong>Step 1: Calculate volume</strong></p>
-            <p>Volume = 8 × 6 × 3 = 144 m³</p>
-            <p><strong> Step 2: Apply CIBSE recommended ACH (25 ACH for commercial kitchen) </strong></p>
-            <p>Q = (144 × 25) / 3.6 = 1000 L/s</p>
-            <p><strong>Step 3: Check against hood capture velocity</strong></p>
-            <p>Assuming 2.5m canopy length × 1.2m width = 3m² hood area</p>
-            <p>At 0.5 m/s face velocity: Q = 3 × 0.5 × 1000 = 1500 L/s</p>
-            <p><strong>Design extract rate:</strong> 1500 L/s (higher value)</p>
-            <p>Supply air must balance extract, typically 80-90% to maintain slight negative pressure</p>
-            <p>
-              <strong>Example 5: Demand Control Ventilation Savings</strong>
-            </p>
-            <p><strong>Question:</strong> Estimate annual energy savings from DCV in a 100-person office running 50 hours per week at 40% average occupancy versus design maximum.</p>
-            <p><strong>Design airflow:</strong></p>
-            <p>Q_design = 100 persons × 10 L/s = 1000 L/s = 1 m³/s</p>
-            <p><strong>Average actual (40% occupancy):</strong></p>
-            <p>Q_actual = 40 persons × 10 L/s + background = approximately 500 L/s = 0.5 m³/s</p>
-            <p><strong>Fan power reduction (cube law):</strong></p>
-            <p>Power ratio = (0.5/1.0)³ = 0.125 = 12.5% of design power</p>
-            <p><strong>Assuming 2kW design fan power:</strong></p>
-            <p>Without DCV: 2kW × 50h × 52 weeks = 5200 kWh/year</p>
-            <p>With DCV: 2kW × 0.125 × 50h × 52 = 650 kWh/year</p>
-            <p><strong>Annual savings:</strong> 4550 kWh (87.5% reduction in fan energy)</p>
-            <p>Additional savings from reduced heating/cooling of outdoor air</p>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <ConceptBlock title="Practical guidance">
-            <p>
-              <strong>Essential Formulae:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>ACH = (Q × 3600) / V</strong> — Air changes per hour</li>
-              <li><strong>Q (L/s) = (ACH × V) / 3.6</strong> — Flow rate from ACH</li>
-              <li><strong>Ci = Co + (N × G) / Q</strong> — Steady-state CO2</li>
-              <li><strong>Single-sided depth ≤ 2.5 × H</strong> — Natural ventilation limit</li>
-              <li><strong>Cross-vent depth ≤ 5 × H</strong> — Cross-ventilation limit</li>
-            </ul>
-            <p>
-              <strong>Key Values to Remember:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Office fresh air: <strong>10 L/s per person</strong> (Part F minimum)</li>
-              <li>Classroom fresh air: <strong>8 L/s per person</strong></li>
-              <li>Outdoor CO2: <strong>400-450 ppm</strong></li>
-              <li>Good indoor CO2: <strong>&lt;800 ppm</strong></li>
-              <li>Maximum acceptable CO2: <strong>1000 ppm</strong></li>
-              <li>Dwelling background rate: <strong>0.3 L/s per m² floor area</strong></li>
-            </ul>
-            <p>
-              <strong>BMS Integration Points:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>CO2 sensors in return air and/or occupied zones</li>
-              <li>Temperature and humidity monitoring</li>
-              <li>Outdoor air damper position feedback</li>
-              <li>Filter differential pressure for maintenance alerts</li>
-              <li>Fan speed and power monitoring</li>
-              <li>Occupancy sensor integration for DCV</li>
-            </ul>
-          </ConceptBlock>
-
-          <CommonMistake
-            title="Common mistakes to avoid"
-            whatHappens={
-              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
-                <li><strong>Confusing total air with fresh air:</strong> Recirculated air does not count towards outdoor air requirements</li>
-                <li><strong>Ignoring ventilation effectiveness:</strong> Poor diffuser placement reduces actual delivered air quality</li>
-                <li><strong>Over-relying on CO2:</strong> Does not detect all pollutants; additional monitoring may be needed</li>
-                <li><strong>Underestimating infiltration losses:</strong> Leaky buildings have uncontrolled ventilation</li>
-                <li><strong>Neglecting commissioning:</strong> Systems must be balanced and tested to achieve design performance</li>
-              </ul>
-            }
-            doInstead="Cross-check assumptions against published guidance, validate measured values against design intent, and engage the wider team early when interface issues emerge."
-          />
-
-          <SectionRule />
-
-          <FAQ items={faqs} />
-
-          <SectionRule />
-
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-
-          <div className="grid grid-cols-2 gap-3 pt-2">
-            <button
-              onClick={() => navigate("/study-centre/apprentice/h-n-c-module8-section2")}
-              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
-                <ChevronLeft className="h-3 w-3" /> Back to section
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-white truncate">
-                Ventilation systems
-              </div>
-            </button>
-            <button
-              onClick={() => navigate("/study-centre/apprentice/h-n-c-module8-section2-2")}
-              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
-                Next subsection <ChevronRight className="h-3 w-3" />
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-black truncate">
-                Air handling units
-              </div>
-            </button>
-          </div>
-        </PageFrame>
-      </div>
-    </div>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module8-section2-2')}
+            className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+          >
+            <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+              Next subsection <ChevronRight className="h-3 w-3" />
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-black truncate">
+              Air handling units
+            </div>
+          </button>
+        </div>
+      </HubBody>
+    </HubPage>
   );
 };
 

@@ -40,12 +40,7 @@ const FunctionalSkillsModule5Section2 = () => {
       id: 2,
       question:
         'An electrician charges £45 per hour plus VAT at 20%. A job takes 3 hours and requires £120 of materials (no VAT on materials). What is the total cost?',
-      options: [
-        '£297.00',
-        '£255.00',
-        '£282.00',
-        '£270.00',
-      ],
+      options: ['£297.00', '£255.00', '£282.00', '£270.00'],
       correctAnswer: 2,
       explanation:
         'Labour: 3 x £45 = £135. VAT on labour: £135 x 0.20 = £27. Labour + VAT: £135 + £27 = £162. Total: £162 + £120 materials = £282.00.',
@@ -68,12 +63,7 @@ const FunctionalSkillsModule5Section2 = () => {
       id: 4,
       question:
         'Sand and gravel are mixed in the ratio 2:3. How much gravel is needed for 25 kg of mix?',
-      options: [
-        '15 kg',
-        '12.5 kg',
-        '10 kg',
-        '20 kg',
-      ],
+      options: ['15 kg', '12.5 kg', '10 kg', '20 kg'],
       correctAnswer: 0,
       explanation:
         'Total parts = 2 + 3 = 5. Gravel = 25 divided by 5 x 3 = 15 kg. The gravel makes up 3 out of the 5 total parts of the mixture.',
@@ -82,12 +72,7 @@ const FunctionalSkillsModule5Section2 = () => {
       id: 5,
       question:
         'When writing a formal letter to someone whose name you do not know, how should you sign off?',
-      options: [
-        'Yours sincerely',
-        'Yours faithfully',
-        'Best wishes',
-        'Kind regards',
-      ],
+      options: ['Yours sincerely', 'Yours faithfully', 'Best wishes', 'Kind regards'],
       correctAnswer: 1,
       explanation:
         "Use 'Yours faithfully' when you do not know the recipient's name (i.e. you wrote 'Dear Sir/Madam'). Use 'Yours sincerely' when you do know their name (i.e. you wrote 'Dear Mr Smith').",
@@ -96,12 +81,7 @@ const FunctionalSkillsModule5Section2 = () => {
       id: 6,
       question:
         'A kitchen is 5.4 m by 3.8 m. Tiles cost £28.50 per m² with 15% wastage allowance. What is the total tile cost?',
-      options: [
-        '£584.82',
-        '£653.94',
-        '£684.00',
-        '£710.00',
-      ],
+      options: ['£584.82', '£653.94', '£684.00', '£710.00'],
       correctAnswer: 2,
       explanation:
         'Area = 5.4 x 3.8 = 20.52 m². With 15% wastage: 20.52 x 1.15 = 23.598 m². Round up to 24 m² (cannot buy part-tiles). Cost = 24 x £28.50 = £684.00.',
@@ -409,7 +389,7 @@ const FunctionalSkillsModule5Section2 = () => {
         {/* InlineCheck after 02 */}
         <InlineCheck
           question="On a 1:100 scale drawing, a wall measures 4.5 cm. What is the actual length of the wall?"
-          answer="Actual length = 4.5 x 100 = 450 cm = 4.5 metres. Multiply the drawing measurement by the scale factor to find the real-world dimension."
+          correctAnswer="Actual length = 4.5 x 100 = 450 cm = 4.5 metres. Multiply the drawing measurement by the scale factor to find the real-world dimension."
         />
 
         {/* 03 - Level 2 Maths Practice Questions */}
@@ -742,7 +722,7 @@ const FunctionalSkillsModule5Section2 = () => {
         {/* InlineCheck after 04 */}
         <InlineCheck
           question="When writing a formal letter to someone whose name you do not know, which sign-off should you use?"
-          answer="Use 'Yours faithfully' when you do not know the recipient's name (i.e. you began with 'Dear Sir/Madam'). Use 'Yours sincerely' when you do know their name (i.e. you began with 'Dear Mr Smith')."
+          correctAnswer="Use 'Yours faithfully' when you do not know the recipient's name (i.e. you began with 'Dear Sir/Madam'). Use 'Yours sincerely' when you do know their name (i.e. you began with 'Dear Mr Smith')."
         />
 
         {/* 05 - Level 2 English Practice Questions */}
@@ -1050,7 +1030,7 @@ const FunctionalSkillsModule5Section2 = () => {
         {/* InlineCheck after 06 */}
         <InlineCheck
           question="What is the key difference between Level 1 and Level 2 Digital Skills assessments?"
-          answer="Level 2 requires greater independence, more complex tasks (such as IF functions and conditional formatting in spreadsheets), the ability to combine information from multiple sources, and critical evaluation of online information for reliability and bias."
+          correctAnswer="Level 2 requires greater independence, more complex tasks (such as IF functions and conditional formatting in spreadsheets), the ability to combine information from multiple sources, and critical evaluation of online information for reliability and bias."
         />
 
         {/* 07 - Advanced Problem-Solving */}

@@ -43,10 +43,7 @@ import {
   type VerificationStatus,
 } from '@/hooks/useStudentOtjVerification';
 import { cn } from '@/lib/utils';
-import {
-  Eyebrow,
-  SectionHeader,
-} from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
+import { Eyebrow, SectionHeader } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
 import { SubmitWorkOtjSheet } from '@/components/apprentice-hub/SubmitWorkOtjSheet';
 import { OTJ_STANDARDS } from '@/data/otjStandards';
 import {
@@ -122,8 +119,12 @@ export default function OJTHub() {
   const [showProgrammeSetup, setShowProgrammeSetup] = useState(false);
 
   // Data sources
-  const { breakdown, entries: otjEntries, loading: otjLoading, refresh: refreshOtj } =
-    useApprenticeOtj(user?.id ?? null, weeklyTargetHours * 60);
+  const {
+    breakdown,
+    entries: otjEntries,
+    loading: otjLoading,
+    refresh: refreshOtj,
+  } = useApprenticeOtj(user?.id ?? null, weeklyTargetHours * 60);
   const {
     rows: verificationRows,
     pending_apprentice,
@@ -142,14 +143,16 @@ export default function OJTHub() {
   // verificationRows already include status, so we use them as the primary
   // timeline; the breakdown gives us in-app totals.
   const inAppMinutes =
-    breakdown.by_source.learning_activity.minutes +
-    breakdown.by_source.study_session.minutes;
+    breakdown.by_source.learning_activity.minutes + breakdown.by_source.study_session.minutes;
   const collegeMinutes = breakdown.by_source.college.minutes;
 
   // Derive verified vs pending breakdown
   const sourceBreakdown = useMemo(() => {
     // college_otj_entries split by source_kind × verification_status
-    const byKind: Record<SourceKind, { verifiedMin: number; pendingMin: number; rejectedMin: number }> = {
+    const byKind: Record<
+      SourceKind,
+      { verifiedMin: number; pendingMin: number; rejectedMin: number }
+    > = {
       in_app: { verifiedMin: 0, pendingMin: 0, rejectedMin: 0 },
       apprentice_submitted: { verifiedMin: 0, pendingMin: 0, rejectedMin: 0 },
       tutor_recorded: { verifiedMin: 0, pendingMin: 0, rejectedMin: 0 },
@@ -158,7 +161,10 @@ export default function OJTHub() {
     for (const r of verificationRows) {
       const bucket = byKind[r.source_kind];
       if (!bucket) continue;
-      if (r.verification_status === 'verified' || r.verification_status === 'verified_by_employer') {
+      if (
+        r.verification_status === 'verified' ||
+        r.verification_status === 'verified_by_employer'
+      ) {
         bucket.verifiedMin += r.duration_minutes;
       } else if (r.verification_status === 'pending') {
         bucket.pendingMin += r.duration_minutes;
@@ -247,10 +253,7 @@ export default function OJTHub() {
     }
     // Verified college hours only (pending/rejected excluded)
     for (const r of verificationRows) {
-      if (
-        r.verification_status !== 'verified' &&
-        r.verification_status !== 'verified_by_employer'
-      )
+      if (r.verification_status !== 'verified' && r.verification_status !== 'verified_by_employer')
         continue;
       const at = r.activity_date ? `${r.activity_date}T12:00:00Z` : null;
       if (!at) continue;
@@ -261,9 +264,7 @@ export default function OJTHub() {
   }, [otjEntries, verificationRows]);
 
   const weekPct =
-    weeklyTargetHours > 0
-      ? Math.min(Math.round((weekHours / weeklyTargetHours) * 100), 150)
-      : 0;
+    weeklyTargetHours > 0 ? Math.min(Math.round((weekHours / weeklyTargetHours) * 100), 150) : 0;
   const onPace = weekHours >= weeklyTargetHours;
 
   // Forecast: at current verified weekly rate, where will we be at gateway?
@@ -280,8 +281,7 @@ export default function OJTHub() {
   }, []);
   const fullName = profile?.full_name || user?.email?.split('@')[0] || 'Apprentice';
   const firstName =
-    fullName.split(' ')[0].charAt(0).toUpperCase() +
-    fullName.split(' ')[0].slice(1).toLowerCase();
+    fullName.split(' ')[0].charAt(0).toUpperCase() + fullName.split(' ')[0].slice(1).toLowerCase();
 
   /* ─── Employer attestation link ─────────────────────────────────── */
   const handleEmployerLink = async (row: OtjEntryRow) => {
@@ -340,8 +340,7 @@ export default function OJTHub() {
 
   /* ─── Export evidence pack ──────────────────────────────────────── */
   const buildExportData = useCallback(async (): Promise<OtjExportData> => {
-    const prettify = (t: string) =>
-      t.replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
+    const prettify = (t: string) => t.replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
 
     // In-app auto-tracked (system-attested, verified)
     const inAppEntries: OtjExportEntry[] = otjEntries
@@ -398,8 +397,7 @@ export default function OJTHub() {
       )
       .map((r) => {
         const isEmployer =
-          r.source_kind === 'employer_attested' ||
-          r.verification_status === 'verified_by_employer';
+          r.source_kind === 'employer_attested' || r.verification_status === 'verified_by_employer';
         return {
           date: r.activity_date,
           title: r.title,
@@ -517,8 +515,7 @@ export default function OJTHub() {
     })();
   }, [buildExportData, toast]);
 
-  const canExport =
-    verificationRows.length > 0 || yearHours > 0 || yearPendingHours > 0;
+  const canExport = verificationRows.length > 0 || yearHours > 0 || yearPendingHours > 0;
 
   /* ─── Render ──────────────────────────────────────────────────── */
   return (
@@ -564,8 +561,8 @@ export default function OJTHub() {
             {firstName}'s off-the-job hours
           </h1>
           <p className="text-[13.5px] sm:text-[14px] text-white/70 leading-relaxed max-w-2xl">
-            Every hour with a clear source &amp; verifier — the proof chain checked at
-            gateway. Log it here and your tutor or supervisor signs it off.
+            Every hour with a clear source &amp; verifier — the proof chain checked at gateway. Log
+            it here and your tutor or supervisor signs it off.
           </p>
         </motion.div>
 
@@ -609,11 +606,7 @@ export default function OJTHub() {
           <KpiCell
             label="Pending sign-off"
             value={pending_apprentice.length}
-            sub={
-              pending_apprentice.length === 0
-                ? 'Nothing waiting'
-                : 'With your tutor'
-            }
+            sub={pending_apprentice.length === 0 ? 'Nothing waiting' : 'With your tutor'}
             warn={pending_apprentice.length > 5}
           />
         </div>
@@ -741,9 +734,7 @@ function KpiCell({
         </div>
       )}
       {sub && (
-        <span className="text-[10.5px] sm:text-[11px] text-white/55 block leading-snug">
-          {sub}
-        </span>
+        <span className="text-[10.5px] sm:text-[11px] text-white/55 block leading-snug">{sub}</span>
       )}
     </div>
   );
@@ -837,10 +828,7 @@ function SourceMixBar({
               {segments
                 .filter((s) => s.minutes > 0)
                 .map((s) => (
-                  <li
-                    key={s.label}
-                    className="flex items-center gap-2 text-[12px] text-white/85"
-                  >
+                  <li key={s.label} className="flex items-center gap-2 text-[12px] text-white/85">
                     <span className={cn('h-2 w-2 rounded-sm flex-shrink-0', s.tone)} />
                     <span className="flex-1 truncate">{s.label}</span>
                     <span className="text-white/85 tabular-nums">
@@ -897,14 +885,12 @@ function ComplianceForecast({
             <span className="text-[26px] sm:text-[30px] lg:text-[32px] font-semibold text-elec-yellow tracking-tight tabular-nums leading-none">
               {fmtHours(yearHours)}h
             </span>
-            <span className="text-[12px] sm:text-[13px] text-white/40">
-              / {yearTarget}h ✓
-            </span>
+            <span className="text-[12px] sm:text-[13px] text-white/40">/ {yearTarget}h ✓</span>
           </div>
           <p className="text-[13px] text-white/85 leading-relaxed">
-            You've banked your full off-the-job requirement. You don't need to keep logging
-            hours — front-loading like this is fine. Your apprenticeship still runs to gateway
-            and end-point assessment; keep the evidence safe for your records.
+            You've banked your full off-the-job requirement. You don't need to keep logging hours —
+            front-loading like this is fine. Your apprenticeship still runs to gateway and end-point
+            assessment; keep the evidence safe for your records.
           </p>
         </div>
       </section>
@@ -917,7 +903,7 @@ function ComplianceForecast({
         eyebrow="Off-the-job forecast"
         title={
           onTrack
-            ? "On pace to finish your hours"
+            ? 'On pace to finish your hours'
             : `Projecting ${fmtHours(projectedShortfall)}h short`
         }
         meta={
@@ -964,9 +950,7 @@ function ComplianceForecast({
               >
                 {fmtHours(projectedHours)}h
               </span>
-              <span className="text-[12px] sm:text-[13px] text-white/40">
-                / {yearTarget}h
-              </span>
+              <span className="text-[12px] sm:text-[13px] text-white/40">/ {yearTarget}h</span>
             </div>
           </div>
           <div className="text-right space-y-1 flex-shrink-0">
@@ -987,9 +971,8 @@ function ComplianceForecast({
             </>
           ) : (
             <>
-              You're at{' '}
-              <span className="text-white whitespace-nowrap">{fmtHours(yearHours)}h</span>.
-              To bank your {yearTarget}h, aim for around{' '}
+              You're at <span className="text-white whitespace-nowrap">{fmtHours(yearHours)}h</span>
+              . To bank your {yearTarget}h, aim for around{' '}
               <span className="text-elec-yellow whitespace-nowrap">
                 ~{requiredWeekly.toFixed(1)}h/week
               </span>{' '}
@@ -1036,9 +1019,7 @@ function VerificationPanel({
                 <div className="min-w-0 space-y-1">
                   <div className="flex items-baseline gap-2 flex-wrap">
                     <Eyebrow className="text-red-300">Refer back</Eyebrow>
-                    <span className="text-[11px] text-white/55">
-                      {fmtDate(row.activity_date)}
-                    </span>
+                    <span className="text-[11px] text-white/55">{fmtDate(row.activity_date)}</span>
                     <span className="text-[11px] text-white/55">
                       · {(row.duration_minutes / 60).toFixed(1)}h
                     </span>
@@ -1105,9 +1086,7 @@ function VerificationPanel({
             ))}
           </ul>
           {pending.length > 5 && (
-            <p className="text-[11px] text-white/40">
-              + {pending.length - 5} more
-            </p>
+            <p className="text-[11px] text-white/40">+ {pending.length - 5} more</p>
           )}
         </div>
       )}
@@ -1175,8 +1154,8 @@ function RecentEntries({
         <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-6 text-center space-y-2">
           <Eyebrow>No college-recorded entries yet</Eyebrow>
           <p className="text-[13px] text-white/85 leading-relaxed">
-            In-app activity (videos, study sessions) auto-counts but tutor-verified
-            hours start when you tap "Log time".
+            In-app activity (videos, study sessions) auto-counts but tutor-verified hours start when
+            you tap "Log time".
           </p>
         </div>
       ) : (
@@ -1213,12 +1192,11 @@ function RecentEntries({
                   <p className="text-[13px] font-medium text-white leading-snug break-words">
                     {row.title}
                   </p>
-                  {row.verification_rationale &&
-                    row.verification_status === 'rejected' && (
-                      <p className="text-[12px] text-red-300/85 italic leading-snug">
-                        {row.verification_rationale}
-                      </p>
-                    )}
+                  {row.verification_rationale && row.verification_status === 'rejected' && (
+                    <p className="text-[12px] text-red-300/85 italic leading-snug">
+                      {row.verification_rationale}
+                    </p>
+                  )}
                 </div>
                 <div className="text-right flex-shrink-0">
                   <span className="text-[15px] sm:text-[16px] font-semibold text-white tabular-nums leading-none">

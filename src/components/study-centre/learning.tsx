@@ -28,6 +28,7 @@ import {
 import { Capacitor } from '@capacitor/core';
 import { useQuery } from '@tanstack/react-query';
 import { cn } from '@/lib/utils';
+import { CARD_BASE, CARD_NEUTRAL, CARD_SURFACE } from '@/components/ui/card-recipe';
 import { supabase } from '@/integrations/supabase/client';
 import { useVideoBookmarks } from '@/hooks/learning-videos/useVideoBookmarks';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
@@ -60,11 +61,12 @@ export function TLDR({ points, className }: TLDRProps) {
   return (
     <div
       className={cn(
-        'relative overflow-hidden rounded-2xl bg-[hsl(0_0%_12%)] border border-elec-yellow/20 p-5 sm:p-6',
+        'relative overflow-hidden rounded-2xl border border-elec-yellow/35 p-5 sm:p-6',
+        CARD_SURFACE,
         className
       )}
     >
-      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/70 via-amber-400/70 to-orange-400/70 opacity-80" />
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/70 to-elec-yellow/0" />
       <div className="flex items-center gap-2 mb-3">
         <Sparkles className="h-3.5 w-3.5 text-elec-yellow" />
         <span className="text-[10.5px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
@@ -109,16 +111,16 @@ export function ConceptBlock({
       <h3 className="text-[18px] sm:text-[20px] font-semibold text-white tracking-tight leading-snug">
         {title}
       </h3>
-      <div className="text-[14.5px] text-white/90 leading-relaxed space-y-3">{children}</div>
+      <div className="text-[14.5px] text-white leading-relaxed space-y-3">{children}</div>
 
       {plainEnglish && (
-        <p className="text-[13.5px] text-white/85 leading-relaxed border-l-2 border-blue-400/40 pl-4 italic">
+        <p className="text-[13.5px] text-white leading-relaxed border-l-2 border-blue-400/70 pl-4 italic">
           <span className="not-italic font-semibold text-blue-300 mr-1.5">In plain English:</span>
           {plainEnglish}
         </p>
       )}
       {onSite && (
-        <p className="text-[13.5px] text-white/85 leading-relaxed border-l-2 border-elec-yellow/50 pl-4 italic">
+        <p className="text-[13.5px] text-white leading-relaxed border-l-2 border-elec-yellow/80 pl-4 italic">
           <span className="not-italic font-semibold text-elec-yellow mr-1.5">On site:</span>
           {onSite}
         </p>
@@ -141,11 +143,12 @@ export function RegsCallout({ source, clause, meaning, cite, className }: RegsCa
   return (
     <div
       className={cn(
-        'relative rounded-2xl bg-[hsl(0_0%_10%)] border border-purple-500/25 overflow-hidden',
+        'relative overflow-hidden rounded-2xl border border-purple-500/40',
+        CARD_SURFACE,
         className
       )}
     >
-      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-purple-500/70 via-violet-400/70 to-indigo-400/70 opacity-70" />
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-purple-400/0 via-purple-400/70 to-purple-400/0" />
       <div className="px-5 py-4 sm:px-6 sm:py-5">
         <div className="flex items-center gap-2 mb-3">
           <ScrollText className="h-3.5 w-3.5 text-purple-300" />
@@ -163,7 +166,7 @@ export function RegsCallout({ source, clause, meaning, cite, className }: RegsCa
         </div>
 
         {meaning && (
-          <div className="mt-4 pt-4 border-t border-white/[0.06]">
+          <div className="mt-4 pt-4 border-t border-white/[0.12]">
             <div className="text-[10.5px] font-medium uppercase tracking-[0.18em] text-blue-300 mb-1.5">
               What this means for you
             </div>
@@ -171,7 +174,7 @@ export function RegsCallout({ source, clause, meaning, cite, className }: RegsCa
           </div>
         )}
 
-        {cite && <div className="mt-3 text-[11px] text-white/55">{cite}</div>}
+        {cite && <div className="mt-3 text-[11px] text-white">{cite}</div>}
       </div>
     </div>
   );
@@ -190,13 +193,14 @@ export function CommonMistake({ title, whatHappens, doInstead, className }: Comm
   return (
     <div
       className={cn(
-        'relative rounded-2xl bg-orange-500/[0.06] border border-orange-500/25 p-5 overflow-hidden',
+        'relative overflow-hidden rounded-2xl border border-orange-400/60 p-5',
+        CARD_SURFACE,
         className
       )}
     >
-      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-orange-500/70 via-amber-400/70 to-yellow-400/70 opacity-80" />
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-orange-400/0 via-orange-400/70 to-orange-400/0" />
       <div className="flex items-start gap-3">
-        <div className="shrink-0 h-8 w-8 rounded-lg bg-orange-500/15 border border-orange-500/30 flex items-center justify-center">
+        <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-orange-400/60 bg-white/[0.07]">
           <AlertTriangle className="h-4 w-4 text-orange-300" />
         </div>
         <div className="flex-1 min-w-0">
@@ -205,11 +209,11 @@ export function CommonMistake({ title, whatHappens, doInstead, className }: Comm
           </div>
           <h4 className="mt-1 text-[15px] font-semibold text-white tracking-tight">{title}</h4>
           <div className="mt-3 space-y-2.5 text-[13.5px] leading-relaxed">
-            <p className="text-white/95">
-              <span className="font-semibold text-orange-200">What goes wrong: </span>
+            <p className="text-white">
+              <span className="font-semibold text-orange-300">What goes wrong: </span>
               {whatHappens}
             </p>
-            <p className="text-white/95">
+            <p className="text-white">
               <span className="font-semibold text-emerald-300">Do this instead: </span>
               {doInstead}
             </p>
@@ -232,7 +236,7 @@ interface ScenarioProps {
 
 export function Scenario({ title, situation, whatToDo, whyItMatters, className }: ScenarioProps) {
   return (
-    <section className={cn('space-y-3 border-l-2 border-cyan-400/40 pl-4 sm:pl-5', className)}>
+    <section className={cn('space-y-3 border-l-2 border-cyan-400/70 pl-4 sm:pl-5', className)}>
       <div className="flex items-center gap-2">
         <span className="text-[10.5px] font-medium uppercase tracking-[0.18em] text-cyan-300">
           Scenario
@@ -241,9 +245,9 @@ export function Scenario({ title, situation, whatToDo, whyItMatters, className }
       <h4 className="text-[16px] sm:text-[17px] font-semibold text-white tracking-tight leading-snug">
         {title}
       </h4>
-      <div className="text-[14px] text-white/90 leading-relaxed space-y-2.5">
+      <div className="text-[14px] text-white leading-relaxed space-y-2.5">
         <p>
-          <span className="font-semibold text-white/80">The situation: </span>
+          <span className="font-semibold text-white">The situation: </span>
           {situation}
         </p>
         <p>
@@ -251,8 +255,8 @@ export function Scenario({ title, situation, whatToDo, whyItMatters, className }
           {whatToDo}
         </p>
         {whyItMatters && (
-          <p className="text-[13px] text-white/75 italic">
-            <span className="not-italic font-semibold text-white/70">Why it matters: </span>
+          <p className="text-[13px] text-white italic">
+            <span className="not-italic font-semibold text-white">Why it matters: </span>
             {whyItMatters}
           </p>
         )}
@@ -285,7 +289,7 @@ export function KeyTakeaways({
         {points.map((point, i) => (
           <li key={i} className="flex items-start gap-2.5">
             <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0 mt-0.5" />
-            <span className="text-[14px] text-white/95 leading-relaxed">{point}</span>
+            <span className="text-[14px] text-white leading-relaxed">{point}</span>
           </li>
         ))}
       </ul>
@@ -324,7 +328,7 @@ export function FAQ({ items, title = 'Common questions', className }: FAQProps) 
           {title}
         </span>
       </div>
-      <ul className="divide-y divide-white/[0.06] border-y border-white/[0.06]">
+      <ul className="divide-y divide-white/[0.10] border-y border-white/[0.10]">
         {items.map((item, i) => {
           const isOpen = open.has(i);
           return (
@@ -332,20 +336,20 @@ export function FAQ({ items, title = 'Common questions', className }: FAQProps) 
               <button
                 type="button"
                 onClick={() => toggle(i)}
-                className="w-full flex items-center gap-3 text-left py-3.5 hover:bg-white/[0.02] transition-colors touch-manipulation"
+                className="w-full flex items-center gap-3 text-left py-3.5 transition-colors hover:bg-white/[0.05] touch-manipulation"
               >
                 <span className="flex-1 text-[14.5px] text-white font-medium leading-snug">
                   {item.question}
                 </span>
                 <ChevronDown
                   className={cn(
-                    'h-3.5 w-3.5 text-white/60 shrink-0 transition-transform',
+                    'h-3.5 w-3.5 text-white shrink-0 transition-transform',
                     isOpen && 'rotate-180'
                   )}
                 />
               </button>
               {isOpen && (
-                <div className="pb-4 pr-7 text-[13.5px] text-white/90 leading-relaxed">
+                <div className="pb-4 pr-7 text-[13.5px] text-white leading-relaxed">
                   {item.answer}
                 </div>
               )}
@@ -370,7 +374,7 @@ export function ContentEyebrow({ children }: { children: ReactNode }) {
 /* ── SectionRule — subtle horizontal break between major shifts ──── */
 
 export function SectionRule() {
-  return <hr className="border-0 h-px bg-white/[0.06] my-2" />;
+  return <hr className="my-2 h-px border-0 bg-white/[0.12]" />;
 }
 
 /* ── Pullquote — short anchor phrase for memorability ─────────────── */
@@ -383,12 +387,9 @@ interface PullquoteProps {
 export function Pullquote({ children, className }: PullquoteProps) {
   return (
     <blockquote
-      className={cn(
-        'relative my-3 pl-4 sm:pl-5 border-l-2 border-elec-yellow/60',
-        className
-      )}
+      className={cn('relative my-3 pl-4 sm:pl-5 border-l-2 border-elec-yellow/90', className)}
     >
-      <p className="text-[15px] sm:text-[16px] font-medium italic text-white/95 leading-snug tracking-tight">
+      <p className="text-[15px] sm:text-[16px] font-medium italic text-white leading-snug tracking-tight">
         {children}
       </p>
     </blockquote>
@@ -407,17 +408,15 @@ export function DiagramPlaceholder({ caption, filename, className }: DiagramPlac
   return (
     <figure
       className={cn(
-        'rounded-2xl bg-white/[0.02] border border-dashed border-white/[0.12] p-5 sm:p-6 text-center space-y-2',
+        'rounded-2xl bg-white/[0.05] border border-dashed border-white/[0.20] p-5 sm:p-6 text-center space-y-2',
         className
       )}
     >
-      <div className="text-[10.5px] font-medium uppercase tracking-[0.18em] text-white/55">
+      <div className="text-[10.5px] font-medium uppercase tracking-[0.18em] text-white">
         Diagram
       </div>
-      <figcaption className="text-[13.5px] text-white/85 leading-relaxed">
-        {caption}
-      </figcaption>
-      <div className="text-[11px] text-white/35 font-mono">{filename}</div>
+      <figcaption className="text-[13.5px] text-white leading-relaxed">{caption}</figcaption>
+      <div className="text-[11px] text-white font-mono">{filename}</div>
     </figure>
   );
 }
@@ -489,11 +488,13 @@ export function VideoCard({
   return (
     <div
       className={cn(
-        'relative overflow-hidden rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06] w-full max-w-[520px]',
+        'relative w-full max-w-[520px] overflow-hidden rounded-2xl',
+        CARD_BASE,
+        CARD_NEUTRAL,
         className
       )}
     >
-      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-red-500/70 via-orange-400/70 to-elec-yellow/70 opacity-80" />
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-orange-400/0 via-orange-400/70 to-orange-400/0" />
 
       <div className="px-4 pt-4 sm:px-5 sm:pt-5">
         <div className="text-[10.5px] font-medium uppercase tracking-[0.18em] text-orange-300">
@@ -556,11 +557,11 @@ export function VideoCard({
         <h4 className="text-[15px] sm:text-[16px] font-semibold text-white tracking-tight leading-snug">
           {title}
         </h4>
-        {channel && <div className="mt-1.5 text-[12.5px] text-white/65">{channel}</div>}
+        {channel && <div className="mt-1.5 text-[12.5px] text-white">{channel}</div>}
       </div>
 
       {caption && (
-        <div className="px-4 pb-4 sm:px-5 sm:pb-5 -mt-2 text-[12px] text-white/70 leading-relaxed">
+        <div className="px-4 pb-4 sm:px-5 sm:pb-5 -mt-2 text-[12px] text-white leading-relaxed">
           {caption}
         </div>
       )}
@@ -619,7 +620,7 @@ function VideoListRow({ url, title, channel, duration, topic }: VideoListItem) {
 
   if (isPlaying && videoId) {
     return (
-      <div className="rounded-xl bg-[hsl(0_0%_12%)] border border-white/[0.06] overflow-hidden">
+      <div className={cn(CARD_BASE, CARD_NEUTRAL, 'overflow-hidden rounded-xl')}>
         <div className="relative w-full aspect-video bg-black">
           <iframe
             src={buildEmbedSrc(videoId)}
@@ -638,7 +639,7 @@ function VideoListRow({ url, title, channel, duration, topic }: VideoListItem) {
           <div className="text-[13.5px] font-semibold text-white leading-snug line-clamp-2">
             {title}
           </div>
-          {channel && <div className="mt-1 text-[11.5px] text-white/60 truncate">{channel}</div>}
+          {channel && <div className="mt-1 text-[11.5px] text-white truncate">{channel}</div>}
         </div>
       </div>
     );
@@ -650,7 +651,11 @@ function VideoListRow({ url, title, channel, duration, topic }: VideoListItem) {
       onClick={handlePlay}
       disabled={!videoId}
       aria-label={`Play ${title}`}
-      className="group flex gap-3 rounded-xl bg-[hsl(0_0%_12%)] border border-white/[0.06] p-2.5 hover:border-white/[0.12] transition-colors touch-manipulation w-full text-left"
+      className={cn(
+        CARD_BASE,
+        CARD_NEUTRAL,
+        'group w-full flex-row gap-3 rounded-xl p-2.5 text-left'
+      )}
     >
       {/* Thumbnail — fixed aspect, smaller than the primary card */}
       <div className="relative shrink-0 w-32 sm:w-36 aspect-video rounded-lg overflow-hidden bg-[hsl(0_0%_8%)]">
@@ -689,7 +694,7 @@ function VideoListRow({ url, title, channel, duration, topic }: VideoListItem) {
         <div className="text-[13.5px] font-semibold text-white leading-snug line-clamp-2">
           {title}
         </div>
-        {channel && <div className="mt-1 text-[11.5px] text-white/60 truncate">{channel}</div>}
+        {channel && <div className="mt-1 text-[11.5px] text-white truncate">{channel}</div>}
       </div>
     </button>
   );
@@ -755,9 +760,9 @@ export function AmendmentBadge({
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetContent
           side="bottom"
-          className="h-[85vh] p-0 rounded-t-2xl overflow-hidden bg-[hsl(0_0%_10%)] border-elec-yellow/20"
+          className="h-[85vh] p-0 rounded-t-2xl overflow-hidden bg-[hsl(0_0%_13%)] border-elec-yellow/20"
         >
-          <SheetHeader className="px-5 pt-5 pb-3 border-b border-white/[0.06]">
+          <SheetHeader className="border-b border-white/[0.12] px-5 pb-3 pt-5">
             <div className="flex items-center gap-2 mb-2">
               <Sparkles className="h-3.5 w-3.5 text-elec-yellow" />
               <span className="text-[10.5px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
@@ -774,10 +779,10 @@ export function AmendmentBadge({
               <>
                 {change.was && (
                   <section className="space-y-2">
-                    <div className="text-[10.5px] font-medium uppercase tracking-[0.18em] text-white/55">
+                    <div className="text-[10.5px] font-medium uppercase tracking-[0.18em] text-white">
                       Before A4:2026
                     </div>
-                    <p className="text-[14px] text-white/85 leading-relaxed border-l-2 border-white/15 pl-4">
+                    <p className="text-[14px] text-white leading-relaxed border-l-2 border-white/30 pl-4">
                       {change.was}
                     </p>
                   </section>
@@ -787,20 +792,20 @@ export function AmendmentBadge({
                   <div className="text-[10.5px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
                     Now under A4:2026
                   </div>
-                  <p className="text-[14px] text-white leading-relaxed border-l-2 border-elec-yellow/60 pl-4">
+                  <p className="text-[14px] text-white leading-relaxed border-l-2 border-elec-yellow/90 pl-4">
                     {change.now}
                   </p>
                 </section>
 
-                <section className="space-y-2 pt-2 border-t border-white/[0.06]">
+                <section className="space-y-2 pt-2 border-t border-white/[0.12]">
                   <div className="text-[10.5px] font-medium uppercase tracking-[0.18em] text-blue-300">
                     Why it changed
                   </div>
-                  <p className="text-[13.5px] text-white/85 leading-relaxed">{change.rationale}</p>
+                  <p className="text-[13.5px] text-white leading-relaxed">{change.rationale}</p>
                 </section>
               </>
             ) : (
-              <p className="text-[14px] text-white/85 leading-relaxed">
+              <p className="text-[14px] text-white leading-relaxed">
                 {regs.join(', ')} introduced or modified by BS 7671:2018+{edition}. See Module 8 for
                 the full Amendment 4 (2026) reference.
               </p>
@@ -828,11 +833,12 @@ export function AmendmentDiff({ was, now, regNumber, rationale, className }: Ame
   return (
     <div
       className={cn(
-        'relative rounded-2xl bg-[hsl(0_0%_10%)] border border-elec-yellow/20 overflow-hidden',
+        'relative overflow-hidden rounded-2xl border border-elec-yellow/35',
+        CARD_SURFACE,
         className
       )}
     >
-      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/70 via-amber-400/70 to-orange-400/70 opacity-80" />
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/70 to-elec-yellow/0" />
 
       <div className="px-5 pt-4 sm:px-6 sm:pt-5 flex items-center gap-2">
         <Sparkles className="h-3.5 w-3.5 text-elec-yellow" />
@@ -840,7 +846,7 @@ export function AmendmentDiff({ was, now, regNumber, rationale, className }: Ame
           Amendment 4 (2026) change
         </span>
         {regNumber && (
-          <span className="ml-auto text-[10.5px] font-semibold text-white/65 tracking-wide">
+          <span className="ml-auto text-[10.5px] font-semibold text-white tracking-wide">
             {regNumber}
           </span>
         )}
@@ -848,10 +854,10 @@ export function AmendmentDiff({ was, now, regNumber, rationale, className }: Ame
 
       <div className="px-5 py-4 sm:px-6 sm:py-5 grid gap-4 md:grid-cols-2 md:gap-5">
         <section className="space-y-1.5">
-          <div className="flex items-center gap-1.5 text-[10.5px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <div className="flex items-center gap-1.5 text-[10.5px] font-medium uppercase tracking-[0.18em] text-white">
             Before
           </div>
-          <div className="border-l-2 border-white/15 pl-3 text-[13.5px] text-white/85 leading-relaxed">
+          <div className="border-l-2 border-white/30 pl-3 text-[13.5px] text-white leading-relaxed">
             {was}
           </div>
         </section>
@@ -861,18 +867,18 @@ export function AmendmentDiff({ was, now, regNumber, rationale, className }: Ame
             Now
             <ArrowRight className="h-3 w-3 hidden md:inline" />
           </div>
-          <div className="border-l-2 border-elec-yellow/60 pl-3 text-[13.5px] text-white leading-relaxed">
+          <div className="border-l-2 border-elec-yellow/90 pl-3 text-[13.5px] text-white leading-relaxed">
             {now}
           </div>
         </section>
       </div>
 
       {rationale && (
-        <div className="px-5 pb-4 sm:px-6 sm:pb-5 -mt-1 border-t border-white/[0.06] pt-3">
+        <div className="px-5 pb-4 sm:px-6 sm:pb-5 -mt-1 border-t border-white/[0.12] pt-3">
           <div className="text-[10.5px] font-medium uppercase tracking-[0.18em] text-blue-300 mb-1">
             Why it changed
           </div>
-          <p className="text-[13px] text-white/85 leading-relaxed">{rationale}</p>
+          <p className="text-[13px] text-white leading-relaxed">{rationale}</p>
         </div>
       )}
     </div>
@@ -964,9 +970,9 @@ export function RegBadge({ children, editionId = A4_2026_EDITION_ID, className }
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetContent
           side="bottom"
-          className="h-[85vh] p-0 rounded-t-2xl overflow-hidden bg-[hsl(0_0%_10%)] border-purple-500/25"
+          className="h-[85vh] p-0 rounded-t-2xl overflow-hidden bg-[hsl(0_0%_13%)] border-purple-500/25"
         >
-          <SheetHeader className="px-5 pt-5 pb-3 border-b border-white/[0.06]">
+          <SheetHeader className="border-b border-white/[0.12] px-5 pb-3 pt-5">
             <div className="flex items-center gap-2 mb-2">
               <ScrollText className="h-3.5 w-3.5 text-purple-300" />
               <span className="text-[10.5px] font-medium uppercase tracking-[0.18em] text-purple-300">
@@ -976,7 +982,7 @@ export function RegBadge({ children, editionId = A4_2026_EDITION_ID, className }
             <SheetTitle className="text-white text-[18px] sm:text-[20px] font-semibold tracking-tight leading-snug text-left font-mono">
               {regNumber}
               {data?.reg_title ? (
-                <span className="block mt-1 text-[14.5px] font-sans font-semibold text-white/90">
+                <span className="block mt-1 text-[14.5px] font-sans font-semibold text-white">
                   {data.reg_title}
                 </span>
               ) : null}
@@ -985,7 +991,7 @@ export function RegBadge({ children, editionId = A4_2026_EDITION_ID, className }
 
           <div className="px-4 sm:px-5 py-5 overflow-y-auto h-[calc(85vh-88px)]">
             {isLoading ? (
-              <p className="text-[14px] text-white/65 leading-relaxed">Loading regulation…</p>
+              <p className="text-[14px] text-white leading-relaxed">Loading regulation…</p>
             ) : isError ? (
               <p className="text-[14px] text-orange-300 leading-relaxed">
                 Couldn’t load this regulation right now. Check the printed copy of BS 7671 or try
@@ -994,7 +1000,7 @@ export function RegBadge({ children, editionId = A4_2026_EDITION_ID, className }
             ) : data ? (
               <article className="space-y-4">
                 {(data.part || data.chapter || data.section) && (
-                  <div className="text-[11.5px] uppercase tracking-[0.14em] text-white/55">
+                  <div className="text-[11.5px] uppercase tracking-[0.14em] text-white">
                     {[data.part, data.chapter, data.section].filter(Boolean).join(' · ')}
                   </div>
                 )}
@@ -1006,13 +1012,13 @@ export function RegBadge({ children, editionId = A4_2026_EDITION_ID, className }
                     ))}
                 </blockquote>
                 {data.page_number != null && (
-                  <div className="pt-3 mt-3 border-t border-white/[0.06] text-[11.5px] text-white/55">
+                  <div className="pt-3 mt-3 border-t border-white/[0.12] text-[11.5px] text-white">
                     Page {data.page_number} · BS 7671:2018+A4:2026
                   </div>
                 )}
               </article>
             ) : (
-              <p className="text-[14px] text-white/65 leading-relaxed">
+              <p className="text-[14px] text-white leading-relaxed">
                 No verbatim text on file for {regNumber}. The reg may be a heading or section marker
                 — check the printed copy.
               </p>
@@ -1049,13 +1055,21 @@ export function AppendixTable({
   className,
 }: AppendixTableProps) {
   return (
+    // ⚠️ This is the one card in the file still on a flat `bg-[hsl(0_0%_13%)]`
+    // rather than CARD_SURFACE, and it has to stay that way. The first column is
+    // `sticky left-0` and has to opaquely mask the cells scrolling underneath
+    // it, so the cell fill must match the card fill EXACTLY — see the two
+    // `sticky left-0 bg-[hsl(0_0%_13%)]` cells below. CARD_SURFACE is a
+    // gradient, and a flat colour cannot match a gradient at every row, so
+    // swapping this one leaves the sticky column translucent over moving text.
+    // The grey outline is gone; only the fill is held back.
     <figure
       className={cn(
-        'relative rounded-2xl bg-[hsl(0_0%_10%)] border border-white/[0.06] overflow-hidden',
+        'relative overflow-hidden rounded-2xl border border-elec-yellow/35 bg-[hsl(0_0%_13%)]',
         className
       )}
     >
-      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/40 via-amber-400/40 to-orange-400/40 opacity-70" />
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/55 to-elec-yellow/0" />
 
       <figcaption className="px-5 pt-4 sm:px-6 sm:pt-5 flex flex-wrap items-baseline gap-x-3 gap-y-1">
         <span className="text-[10.5px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
@@ -1064,22 +1078,20 @@ export function AppendixTable({
         <span className="text-[14.5px] sm:text-[15.5px] font-semibold text-white tracking-tight">
           {caption}
         </span>
-        {source && (
-          <span className="ml-auto text-[10.5px] text-white/55 tracking-wide">{source}</span>
-        )}
+        {source && <span className="ml-auto text-[10.5px] text-white tracking-wide">{source}</span>}
       </figcaption>
 
       <div className="px-3 pt-3 pb-3 sm:px-5 sm:pt-4 sm:pb-4 overflow-x-auto">
-        <table className="w-full min-w-[480px] text-left text-[12.5px] sm:text-[13px] text-white/90 border-collapse">
+        <table className="w-full min-w-[480px] text-left text-[12.5px] sm:text-[13px] text-white border-collapse">
           <thead>
-            <tr className="border-b border-white/[0.08]">
+            <tr className="border-b border-white/[0.12]">
               {headers.map((h, i) => (
                 <th
                   key={i}
                   scope="col"
                   className={cn(
                     'px-3 py-2.5 font-semibold text-[11px] sm:text-[11.5px] uppercase tracking-[0.12em] text-elec-yellow/85 align-bottom',
-                    i === 0 && 'sticky left-0 z-10 bg-[hsl(0_0%_10%)] sm:static sm:bg-transparent',
+                    i === 0 && 'sticky left-0 z-10 bg-[hsl(0_0%_13%)] sm:static sm:bg-transparent',
                     i === 0 ? 'min-w-[140px]' : 'min-w-[88px]'
                   )}
                 >
@@ -1088,16 +1100,16 @@ export function AppendixTable({
               ))}
             </tr>
           </thead>
-          <tbody className="divide-y divide-white/[0.04]">
+          <tbody className="divide-y divide-white/[0.09]">
             {rows.map((row, ri) => (
-              <tr key={ri} className="hover:bg-white/[0.02] transition-colors">
+              <tr key={ri} className="transition-colors hover:bg-white/[0.05]">
                 {row.map((cell, ci) => (
                   <td
                     key={ci}
                     className={cn(
                       'px-3 py-2.5 align-top leading-relaxed',
                       ci === 0 &&
-                        'sticky left-0 z-10 bg-[hsl(0_0%_10%)] sm:static sm:bg-transparent font-medium text-white'
+                        'sticky left-0 z-10 bg-[hsl(0_0%_13%)] sm:static sm:bg-transparent font-medium text-white'
                     )}
                   >
                     {cell}
@@ -1110,7 +1122,7 @@ export function AppendixTable({
       </div>
 
       {notes && (
-        <div className="px-5 pb-4 sm:px-6 sm:pb-5 -mt-1 border-t border-white/[0.06] pt-3 text-[12px] text-white/70 leading-relaxed">
+        <div className="px-5 pb-4 sm:px-6 sm:pb-5 -mt-1 border-t border-white/[0.12] pt-3 text-[12px] text-white leading-relaxed">
           {notes}
         </div>
       )}

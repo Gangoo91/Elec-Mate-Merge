@@ -6,7 +6,7 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   // Module 1: Introduction to BS7671 & Electrical Safety (20 questions)
   {
     id: 1,
-    question: 'What is the current edition of BS7671?',
+    question: 'What is the current edition of BS 7671?',
     options: [
       '20th Edition',
       '18th Edition',
@@ -14,7 +14,7 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
       '19th Edition',
     ],
     correctAnswer: 1,
-    explanation: 'BS7671 is currently in its 18th Edition, published in 2018 with amendments.',
+    explanation: 'BS 7671 is currently in its 18th Edition, published in 2018 with amendments.',
     section: 'Introduction',
     difficulty: 'basic',
     topic: 'Edition',
@@ -22,7 +22,7 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 2,
-    question: 'What is the fundamental principle of electrical safety in BS7671?',
+    question: 'What is the fundamental principle of electrical safety in BS 7671?',
     options: [
       'Prevention of energy wastage',
       'Limitation of installation costs',
@@ -39,7 +39,7 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 3,
-    question: 'Which Part of BS7671 covers fundamental principles?',
+    question: 'Which Part of BS 7671 covers fundamental principles?',
     options: [
       'Part 4',
       'Part 2',
@@ -55,7 +55,7 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 4,
-    question: "What does 'skilled person' (electrically) mean in BS7671?",
+    question: "What does 'skilled person' (electrically) mean in BS 7671?",
     options: [
       'A person with technical knowledge and experience to avoid dangers',
       'A person instructed by skilled persons so as to avoid dangers',
@@ -96,7 +96,7 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
       'Chapter 43',
     ],
     correctAnswer: 2,
-    explanation: 'Chapter 41 of BS7671 specifically covers protection against electric shock.',
+    explanation: 'Chapter 41 of BS 7671 specifically covers protection against electric shock.',
     section: 'Introduction',
     difficulty: 'intermediate',
     topic: 'Regulation References',
@@ -137,7 +137,7 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 9,
-    question: 'Which Part of BS7671 contains definitions?',
+    question: 'Which Part of BS 7671 contains definitions?',
     options: [
       'Part 4',
       'Part 2',
@@ -145,7 +145,7 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
       'Part 1',
     ],
     correctAnswer: 1,
-    explanation: 'Part 2 contains definitions of terms used throughout BS7671.',
+    explanation: 'Part 2 contains definitions of terms used throughout BS 7671.',
     section: 'Introduction',
     difficulty: 'basic',
     topic: 'Document Structure',
@@ -178,7 +178,7 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
       '50Hz',
     ],
     correctAnswer: 3,
-    explanation: 'The standard AC frequency in the UK is 50Hz as specified in BS7671.',
+    explanation: 'The standard AC frequency in the UK is 50Hz as specified in BS 7671.',
     section: 'Introduction',
     difficulty: 'basic',
     topic: 'Supply Characteristics',
@@ -186,7 +186,7 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 12,
-    question: 'Which voltage is considered low voltage in BS7671?',
+    question: 'Which voltage is considered low voltage in BS 7671?',
     options: [
       '51V to 1000V AC',
       'Up to 50V AC only',
@@ -285,7 +285,7 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 18,
-    question: 'Which Part of BS7671 covers selection and erection of equipment?',
+    question: 'Which Part of BS 7671 covers selection and erection of equipment?',
     options: [
       'Part 3',
       'Part 6',
@@ -404,7 +404,7 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 25,
-    question: 'Above what earth electrode resistance does BS7671 advise the value may be unstable?',
+    question: 'Above what earth electrode resistance does BS 7671 advise the value may be unstable?',
     options: [
       '20Ω',
       '200Ω',
@@ -413,7 +413,7 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
     ],
     correctAnswer: 1,
     explanation:
-      'BS7671 advises that an earth electrode resistance exceeding 200Ω may be unstable due to changing soil conditions.',
+      'BS 7671 advises that an earth electrode resistance exceeding 200Ω may be unstable due to changing soil conditions.',
     section: 'Earthing & Bonding',
     difficulty: 'intermediate',
     topic: 'Resistance Values',
@@ -1328,7 +1328,7 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
     ],
     correctAnswer: 0,
     explanation:
-      'Visual inspection starts with checking the general condition and compliance with BS7671.',
+      'Visual inspection starts with checking the general condition and compliance with BS 7671.',
     section: 'Inspection',
     difficulty: 'basic',
     topic: 'Inspection Sequence',
@@ -1441,11 +1441,11 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
       'No specific requirement applies',
       'According to the manufacturer',
       'At fixed intervals of every 300mm',
-      'According to BS7671 tables',
+      'According to BS 7671 tables',
     ],
     correctAnswer: 3,
     explanation:
-      'Cable supports should be spaced according to BS7671 tables based on cable type and installation method.',
+      'Cable supports should be spaced according to BS 7671 tables based on cable type and installation method.',
     section: 'Inspection',
     difficulty: 'intermediate',
     topic: 'Installation Standards',
@@ -1559,12 +1559,12 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
     options: [
       'Where the client specifically requests it',
       'Where the installation is over ten years old',
-      'Where they affect compliance with BS7671',
+      'Where they affect compliance with BS 7671',
       'Where an RCD is fitted to the circuit',
     ],
     correctAnswer: 2,
     explanation:
-      'Any non-standard arrangements that affect compliance with BS7671 should be noted and assessed.',
+      'Any non-standard arrangements that affect compliance with BS 7671 should be noted and assessed.',
     section: 'Inspection',
     difficulty: 'intermediate',
     topic: 'Documentation',
@@ -1583,7 +1583,7 @@ export const bs7671QuestionBank: StandardMockQuestion[] = [
     ],
     correctAnswer: 2,
     explanation:
-      'Dead tests follow the BS7671 sequence beginning with continuity of protective conductors, then continuity of ring final circuits, insulation resistance and polarity.',
+      'Dead tests follow the BS 7671 sequence beginning with continuity of protective conductors, then continuity of ring final circuits, insulation resistance and polarity.',
     section: 'Testing',
     difficulty: 'intermediate',
     topic: 'Test Sequence',
@@ -3368,7 +3368,7 @@ export const bs7671Categories = [
 // Configuration for BS7671 mock exam
 export const bs7671MockExamConfig = {
   examId: 'bs7671',
-  examTitle: 'BS7671 Mock Examination',
+  examTitle: '18th Edition (BS 7671) Mock Examination',
   totalQuestions: 30,
   timeLimit: 3600, // 60 minutes
   passThreshold: 60,

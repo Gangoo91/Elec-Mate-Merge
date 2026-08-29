@@ -2,10 +2,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import useSEO from '@/hooks/useSEO';
-import {
-  useApprenticeVoiceSurvey,
-  type SurveyQuestion,
-} from '@/hooks/useApprenticeVoiceSurvey';
+import { useApprenticeVoiceSurvey, type SurveyQuestion } from '@/hooks/useApprenticeVoiceSurvey';
 import { useToast } from '@/hooks/use-toast';
 import { Textarea } from '@/components/ui/textarea';
 import { cn } from '@/lib/utils';
@@ -73,9 +70,7 @@ export default function VoiceSurveyPage() {
           <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-elec-yellow">
             Anonymous monthly check-in
           </div>
-          <h1 className="mt-2 text-2xl sm:text-3xl font-semibold tracking-tight">
-            Your voice
-          </h1>
+          <h1 className="mt-2 text-2xl sm:text-3xl font-semibold tracking-tight">Your voice</h1>
           <p className="mt-2 text-sm text-white/70 max-w-xl">
             Your college reads themes and overall sentiment — they never see who said what.
             Responses are k-anonymised; results only show once 5+ apprentices have answered.
@@ -92,8 +87,8 @@ export default function VoiceSurveyPage() {
 
         {!loading && !survey && (
           <div className="mt-8 rounded-2xl border border-dashed border-white/10 px-5 py-8 text-center text-sm text-white/40">
-            No active survey this month. Check back next month — or speak directly to your tutor
-            if anything's on your mind.
+            No active survey this month. Check back next month — or speak directly to your tutor if
+            anything's on your mind.
           </div>
         )}
 

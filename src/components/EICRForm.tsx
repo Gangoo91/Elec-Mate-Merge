@@ -388,6 +388,8 @@ const EICRFormInner = ({ onBack }: { onBack: () => void }) => {
         onAnalysisComplete={handleBoardScanComplete}
         onClose={() => setShowBoardScan(false)}
         title="Scan distribution board"
+        /* ELE-1606 — so the photo follows the certificate, not the device. */
+        reportId={currentReportId || undefined}
       />
     );
   }

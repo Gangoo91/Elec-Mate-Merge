@@ -2868,7 +2868,7 @@ export const module2Questions: QuestionBank[] = [
     ],
     correctAnswer: 0,
     explanation:
-      'V2H allows electric vehicles to discharge power to supply a home, using the EV battery as energy storage for backup power or time-of-use optimization.',
+      'V2H allows electric vehicles to discharge power to supply a home, using the EV battery as energy storage for backup power or time-of-use optimisation.',
     section: '2.7',
     topic: 'Future Technologies',
     difficulty: 'intermediate',

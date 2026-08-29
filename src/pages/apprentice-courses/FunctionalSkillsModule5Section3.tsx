@@ -54,12 +54,7 @@ const FunctionalSkillsModule5Section3 = () => {
     {
       id: 3,
       question: 'What is the recommended length of a single Pomodoro study session?',
-      options: [
-        '45 minutes',
-        '10 minutes',
-        '60 minutes',
-        '25 minutes',
-      ],
+      options: ['45 minutes', '10 minutes', '60 minutes', '25 minutes'],
       correctAnswer: 3,
       explanation:
         'A standard Pomodoro session is 25 minutes of focused study followed by a 5-minute break. After four Pomodoros, you take a longer 15-30 minute break. This technique prevents mental fatigue and maintains concentration.',
@@ -210,9 +205,7 @@ const FunctionalSkillsModule5Section3 = () => {
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div className="bg-white/5 rounded-lg p-3">
-                  <p className="text-xs font-semibold text-white mb-2">
-                    Passive (Less Effective)
-                  </p>
+                  <p className="text-xs font-semibold text-white mb-2">Passive (Less Effective)</p>
                   <ul className="space-y-1.5 text-xs text-white">
                     <li className="flex items-start gap-2">
                       <span className="text-white mt-0.5">•</span>
@@ -405,7 +398,7 @@ const FunctionalSkillsModule5Section3 = () => {
         {/* InlineCheck after 02 */}
         <InlineCheck
           question="In spaced repetition, what happens to the review intervals as you successfully recall information?"
-          answer="The intervals between reviews increase over time. After your first review (Day 1 to Day 2, just one day apart), the gaps get progressively longer (Day 2 to Day 5 is three days, Day 5 to Day 14 is nine days). This is because each successful recall strengthens the memory, so it takes longer to fade."
+          correctAnswer="The intervals between reviews increase over time. After your first review (Day 1 to Day 2, just one day apart), the gaps get progressively longer (Day 2 to Day 5 is three days, Day 5 to Day 14 is nine days). This is because each successful recall strengthens the memory, so it takes longer to fade."
         />
 
         {/* 03 - Active Recall Techniques */}
@@ -723,7 +716,7 @@ const FunctionalSkillsModule5Section3 = () => {
         {/* InlineCheck after 04 */}
         <InlineCheck
           question="In the Pomodoro Technique, how long is a single focused study session before taking a break?"
-          answer="A single Pomodoro is 25 minutes of focused study followed by a 5-minute break. After completing four Pomodoros (about 2 hours total), you take a longer break of 15-30 minutes. This structure prevents mental fatigue and maintains high concentration throughout your study session."
+          correctAnswer="A single Pomodoro is 25 minutes of focused study followed by a 5-minute break. After completing four Pomodoros (about 2 hours total), you take a longer break of 15-30 minutes. This structure prevents mental fatigue and maintains high concentration throughout your study session."
         />
 
         {/* 05 - Managing Exam Stress */}
@@ -1011,7 +1004,7 @@ const FunctionalSkillsModule5Section3 = () => {
         {/* InlineCheck after 06 */}
         <InlineCheck
           question="In the three-pass strategy for past papers, what is the purpose of the second pass?"
-          answer="The second pass is a practice run under exam conditions. You complete the paper timed, without looking at the mark scheme, then mark it honestly afterwards. This simulates the real exam experience and gives you an accurate picture of your current ability level, including your time management."
+          correctAnswer="The second pass is a practice run under exam conditions. You complete the paper timed, without looking at the mark scheme, then mark it honestly afterwards. This simulates the real exam experience and gives you an accurate picture of your current ability level, including your time management."
         />
 
         {/* 07 - Memory Techniques for Formulae */}

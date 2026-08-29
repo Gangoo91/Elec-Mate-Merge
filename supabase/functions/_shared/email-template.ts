@@ -126,7 +126,12 @@ export function renderEmailShell(opts: ShellOptions): string {
     opts.company.email,
     opts.company.website,
   ]
-    .filter(Boolean)
+    // The type guard, not bare `Boolean`: `.filter(Boolean)` does not narrow
+    // `(string | null | undefined)[]` for TypeScript, so this line failed
+    // `deno check` for every function importing this file. Deploys bundle
+    // without type-checking, which is how it shipped — but it blocked local
+    // verification of anything downstream.
+    .filter((part): part is string => Boolean(part))
     .map(escapeText)
     .join(' &nbsp;·&nbsp; ');
   const legalParts = [

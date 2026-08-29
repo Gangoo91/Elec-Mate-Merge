@@ -6,11 +6,10 @@ import {
   PageFrame,
   PageHero,
   SectionHeader,
-  HubGrid,
-  HubCard,
   itemVariants,
   type Tone,
 } from '@/components/college/primitives';
+import { HubToolGrid } from '@/components/hub/HubPrimitives';
 
 interface Section {
   number: string;
@@ -111,20 +110,18 @@ const StudyTips = () => {
 
       <motion.section variants={itemVariants} className="space-y-5 sm:space-y-6">
         <SectionHeader eyebrow="Sections" title="Six chapters" />
-        <HubGrid columns={3}>
-          {SECTIONS.map((s) => (
-            <HubCard
-              key={s.slug}
-              number={s.number}
-              eyebrow={s.eyebrow}
-              title={s.title}
-              description={s.description}
-              meta={s.meta}
-              tone={s.tone}
-              onClick={() => navigate(`/apprentice/toolbox/study-tips/${s.slug}`)}
-            />
-          ))}
-        </HubGrid>
+        <HubToolGrid
+          label=""
+          columns="three"
+          cards={SECTIONS.map((s) => ({
+            id: s.slug,
+            eyebrow: s.eyebrow,
+            title: s.title,
+            description: s.description,
+            meta: s.meta,
+            onClick: () => navigate(`/apprentice/toolbox/study-tips/${s.slug}`),
+          }))}
+        />
       </motion.section>
     </PageFrame>
   );

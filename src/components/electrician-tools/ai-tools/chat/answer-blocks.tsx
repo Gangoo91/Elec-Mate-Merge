@@ -5,25 +5,26 @@ import React, { useState } from 'react';
  *
  * Used by InspectorMessage to give AI answers a compliance-tool feel:
  * a one-line verdict at the top, and numbered procedure steps that the
- * sparky can tap-complete as they work.
+ * electrician can tap-complete as they work.
  */
 
 // ─── Verdict callout ─────────────────────────────────────────────────────
 
 export function VerdictCallout({ children }: { children: React.ReactNode }) {
-  // Minimal editorial treatment: a thin yellow left-rule, small eyebrow,
-  // then the one-line answer in slightly heavier type. No card, no glow,
-  // no border — the prose itself is the object.
+  // The verdict is the answer — the single most valuable line on the screen.
+  // A solid volt rule (fills stay solid; only washes go muddy on this ground),
+  // a volt eyebrow, then the line itself in display weight. Still no card —
+  // the answer document it sits in carries the surface.
   return (
     <div
-      className="relative mb-5 pl-4 min-w-0"
+      className="relative mb-6 pl-4 min-w-0"
       style={{ overflowWrap: 'anywhere', wordBreak: 'break-word' }}
     >
-      <span className="absolute left-0 top-1 bottom-1 w-[2px] rounded-full bg-white" />
-      <div className="text-[9.5px] uppercase tracking-[0.22em] font-semibold text-white mb-1">
+      <span className="absolute left-0 top-0.5 bottom-0.5 w-[3px] rounded-full bg-elec-yellow" />
+      <div className="text-[10px] uppercase tracking-[0.2em] font-semibold text-elec-yellow mb-1.5">
         Verdict
       </div>
-      <div className="text-[15.5px] sm:text-[17px] leading-relaxed text-white font-medium">
+      <div className="text-[16.5px] sm:text-[19px] leading-snug text-white font-semibold tracking-tight">
         {children}
       </div>
     </div>
@@ -43,7 +44,7 @@ export function ProcedureStep({
   return (
     <li
       className={
-        'flex gap-3 items-start py-1.5 min-w-0 ' +
+        'flex gap-3 items-start py-1.5 min-w-0 transition-opacity duration-150 ' +
         (checked ? 'opacity-55' : '')
       }
     >
@@ -52,12 +53,13 @@ export function ProcedureStep({
         onClick={() => setChecked((v) => !v)}
         aria-pressed={checked}
         className={
-          'mt-[3px] shrink-0 w-5 h-5 rounded-full ' +
+          'mt-[2px] shrink-0 w-6 h-6 rounded-full ' +
           'flex items-center justify-center font-mono text-[11px] font-semibold ' +
-          'transition-colors touch-manipulation cursor-pointer ' +
+          'transition-colors touch-manipulation cursor-pointer active:scale-95 ' +
+          '[-webkit-tap-highlight-color:transparent] ' +
           (checked
-            ? 'bg-white text-black'
-            : 'bg-transparent text-white border border-white/[0.16] hover:border-white/[0.35]')
+            ? 'bg-elec-yellow text-black'
+            : 'bg-transparent text-white border border-elec-yellow/40 hover:border-elec-yellow/70')
         }
       >
         {checked ? (

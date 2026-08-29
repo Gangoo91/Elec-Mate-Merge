@@ -1,8 +1,8 @@
-import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { useNavigate } from 'react-router-dom';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
-import { PageFrame, PageHero } from '@/components/college/primitives';
 import {
   TLDR,
   ConceptBlock,
@@ -69,7 +69,7 @@ const inlineChecks = [
     ],
     correctIndex: 1,
     explanation:
-      'Smoke Control Areas (SCAs) framework: designated under the Clean Air Act 1993 (England + Wales) + Environment Act 2021 + Scottish + NI equivalents. Many UK urban + town local-authority areas are SCAs — within these areas, burning solid fuel (including biomass pellets, logs, chips) is prohibited UNLESS the appliance is on DEFRA\'s list of exempt appliances. DEFRA exemption process: manufacturer tests the appliance for low emissions (particulate matter, NOx); approved appliances listed on DEFRA gov.uk site. UK 2025-26 reality: significant proportion of biomass boilers on the market are DEFRA-exempt; verify the specific model + customer\'s local authority area at quote stage. Customer not in SCA: any biomass boiler can install (subject to other regulations). Customer in SCA: only DEFRA-exempt model allowed. Cert evidence bundle: customer\'s SCA status (verified via local authority website) + boiler model DEFRA exemption status + any DEFRA exemption documentation. Not BS 7671 — but install-deal-breaker if missed. Heating engineer / MCS company typically handles this aspect; electrical installer should verify it\'s been addressed at quote stage.',
+      "Smoke Control Areas (SCAs) framework: designated under the Clean Air Act 1993 (England + Wales) + Environment Act 2021 + Scottish + NI equivalents. Many UK urban + town local-authority areas are SCAs — within these areas, burning solid fuel (including biomass pellets, logs, chips) is prohibited UNLESS the appliance is on DEFRA's list of exempt appliances. DEFRA exemption process: manufacturer tests the appliance for low emissions (particulate matter, NOx); approved appliances listed on DEFRA gov.uk site. UK 2025-26 reality: significant proportion of biomass boilers on the market are DEFRA-exempt; verify the specific model + customer's local authority area at quote stage. Customer not in SCA: any biomass boiler can install (subject to other regulations). Customer in SCA: only DEFRA-exempt model allowed. Cert evidence bundle: customer's SCA status (verified via local authority website) + boiler model DEFRA exemption status + any DEFRA exemption documentation. Not BS 7671 — but install-deal-breaker if missed. Heating engineer / MCS company typically handles this aspect; electrical installer should verify it's been addressed at quote stage.",
   },
 ];
 
@@ -132,7 +132,7 @@ const quizQuestions = [
     ],
     correctAnswer: 3,
     explanation:
-      'Smoke Control Area (SCA) verification for biomass install: (1) Customer\'s SCA status — check local authority website (or DEFRA SCA map). Many urban + town areas in England + Wales are SCAs. Scotland: separate framework under Environment (Scotland) Act + Air Quality (Scotland) Regulations. NI: separate. (2) Proposed boiler model DEFRA-exempt status — DEFRA publishes searchable list at gov.uk/smoke-control-area-rules. Manufacturer-tested for low emissions (particulate matter, NOx, smoke); approved appliances exempt from SCA prohibition. (3) DEFRA-approved fuels — within SCA + on exempt appliance: only DEFRA-approved fuels (specific pellet brands / log moisture content) may be burned. (4) Customer informed at quote stage about ongoing fuel restrictions. (5) Cert evidence bundle includes: SCA verification document + boiler DEFRA exempt status documentation + customer fuel-restriction acknowledgement. Consequence of mis-install: customer can be fined up to £1,000 for unauthorised emissions; installer reputation risk. UK 2025-26 reality: most reputable biomass boilers on the market are DEFRA-exempt; verify the specific model. Not BS 7671 — but install-deal-breaker. MCS company / HETAS installer typically handles this; BS 7671 electrician verifies at quote stage that the issue has been addressed.',
+      "Smoke Control Area (SCA) verification for biomass install: (1) Customer's SCA status — check local authority website (or DEFRA SCA map). Many urban + town areas in England + Wales are SCAs. Scotland: separate framework under Environment (Scotland) Act + Air Quality (Scotland) Regulations. NI: separate. (2) Proposed boiler model DEFRA-exempt status — DEFRA publishes searchable list at gov.uk/smoke-control-area-rules. Manufacturer-tested for low emissions (particulate matter, NOx, smoke); approved appliances exempt from SCA prohibition. (3) DEFRA-approved fuels — within SCA + on exempt appliance: only DEFRA-approved fuels (specific pellet brands / log moisture content) may be burned. (4) Customer informed at quote stage about ongoing fuel restrictions. (5) Cert evidence bundle includes: SCA verification document + boiler DEFRA exempt status documentation + customer fuel-restriction acknowledgement. Consequence of mis-install: customer can be fined up to £1,000 for unauthorised emissions; installer reputation risk. UK 2025-26 reality: most reputable biomass boilers on the market are DEFRA-exempt; verify the specific model. Not BS 7671 — but install-deal-breaker. MCS company / HETAS installer typically handles this; BS 7671 electrician verifies at quote stage that the issue has been addressed.",
   },
   {
     question: 'Biomass-CHP variant — what changes vs heat-only biomass?',
@@ -155,7 +155,7 @@ const faqs = [
       'Different scopes: (1) HETAS — combustion safety, flue / chimney install per BS EN 15287 + Building Regs Part J, ash management. Distinct technical discipline. (2) BS 7671 — electrical install side (dedicated circuit, RCD, cable thermal protection). (3) MCS MIS 3004 — overall installer competence + product approval + customer handover. Each addresses a different safety + quality concern. UK 2025-26: multi-trade delivery is the norm; MCS company coordinates.',
   },
   {
-    question: 'What\'s the pellet storage requirement?',
+    question: "What's the pellet storage requirement?",
     answer:
       'Pellet hopper (close to boiler, typical 250-500 kg) for small installs; pellet silo (separate room or external, 3-15 tonnes) for larger continuous operation. Hopper / silo room must be dry (pellets degrade with moisture), accessible for delivery (typically blower truck delivery), structurally adequate for fuel weight. Not electrical scope but install-planning relevant.',
   },
@@ -186,372 +186,347 @@ export default function RenewableEnergyModule9Section4() {
   });
 
   return (
-    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
-      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
-        <PageFrame>
+    <HubPage>
+      <HubMasthead
+        section="Module 9 · Section 4 · Reg 422.4 + Reg 522.2.1 + Reg 314 + MCS MIS 3004 + HETAS + DEFRA"
+        title="Biomass interfaces"
+        backTo="../renewable-energy-module-9"
+      />
+      <HubBody>
+        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
+          Biomass heating from the BS 7671 electrical install perspective. Wood pellet + log + wood
+          chip boilers. Auger motors + combustion fans + ignition + flue extract + controls. Reg
+          422.4 combustible material proximity + Reg 522.2.1 cable thermal near flue. MCS MIS 3004
+          installer + HETAS combustion competence + DEFRA Smoke Control Area + BS EN 303-5 product
+          standard.
+        </p>
+
+        <TLDR
+          points={[
+            'Biomass heating (wood pellet, log, wood chip) is heat-only on the BS 7671 side — NOT in Reg 551.1.1 (no electrical generation). Biomass-CHP variants add Section 551 (covered §9.5 + §9.6).',
+            'Electrical scope per boiler: dedicated 16 A single-phase circuit; 1-2 kW total electrical demand (auger motor + combustion fan + flue extract + ignition + controls + circulation pump).',
+            'BS 7671 anchors: Reg 314 dedicated circuit, Reg 411.4 ADS, Reg 415.1 30 mA RCD, Reg 422.4 combustible material proximity, Reg 522.2.1 cable thermal protection near flue + pipework, Section 554 if cylinder immersion backup retained.',
+            'Multi-trade install: MCS company (MIS 3004) + HETAS-qualified biomass installer (combustion + flue) + plumbing/heating engineer (hydraulic loop) + BS 7671 electrical installer.',
+            'DEFRA Smoke Control Area verification mandatory in SCA areas — only DEFRA-exempt appliance + approved fuels permitted. Verify customer SCA status + boiler exempt status at quote stage.',
+            'BS EN 303-5 = solid fuel boiler product standard; 5-star efficiency class typical for grant eligibility (where applicable). MCS MIS 3004 references.',
+            'Flue exceeds 250 °C in normal operation — Reg 522.2.1 cable thermal protection essential. Boiler body + primary pipework all elevated temperature.',
+            'UK 2025-26 grant landscape: Boiler Upgrade Scheme heat-pump-focused; limited biomass eligibility (rural off-gas-grid typically). Verify current scheme rules.',
+          ]}
+        />
+
+        <LearningOutcomes
+          outcomes={[
+            'Distinguish wood pellet vs log vs wood chip biomass boilers + their electrical scope.',
+            'Apply Reg 314 dedicated circuit + Reg 411.4 ADS + Reg 415.1 30 mA RCD to biomass install.',
+            'Apply Reg 422.4 combustible material proximity + Reg 522.2.1 cable thermal protection near flue.',
+            'Coordinate with HETAS biomass / flue competence + MCS MIS 3004 installer framework.',
+            'Verify customer DEFRA Smoke Control Area status + boiler exempt status.',
+            'Apply BS EN 303-5 product standard + manufacturer commissioning procedure.',
+            'Integrate existing immersion as DHW backup per Section 554 + Reg 554.2.1 thermal cut-out.',
+            'Distinguish biomass-CHP (Section 551 applies) from heat-only biomass (BS 7671 general framework only).',
+          ]}
+          initialVisibleCount={3}
+        />
+
+        <Pullquote>
+          Biomass install is mostly mechanical + combustion. The electrical scope is small + bounded
+          — a dedicated 16 A circuit + Reg 522.2.1 thermal protection. The hot bit is the flue, not
+          the cable.
+        </Pullquote>
+
+        <ContentEyebrow>Biomass technologies + electrical scope</ContentEyebrow>
+
+        <ConceptBlock
+          title="UK 2025-26 biomass technologies"
+          plainEnglish="UK 2025-26 biomass heating: wood pellet boilers (automatic auger feed, dominant for domestic + light-commercial), log boilers (manual fuel + thermal store), wood chip boilers (commercial / agricultural). Each is heat-only on the BS 7671 side. Biomass-CHP variants (engine-driven generator OR steam / ORC) add electrical generation under Section 551 — covered in §9.5-§9.6."
+          onSite="UK domestic biomass market shifted post-2014 vs heat pump expansion. Rural off-gas-grid properties + farms + larger heritage buildings continue to install. Pellet boilers dominate domestic; log boilers preferred by customers with woodland fuel supply; chip boilers commercial / district heating."
+        >
+          <p>Biomass technology comparison:</p>
+          <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+            <li>
+              <strong className="text-white">Wood pellet boilers</strong> — automatic auger feed
+              from hopper (250-500 kg) or silo (3-15 tonnes). Domestic + light-commercial scale
+              (5-50 kW thermal). UK brands: ÖkoFEN, KWB, Windhager, Hargassner, Solarfocus, Grant
+              Spira
+            </li>
+            <li>
+              <strong className="text-white">Log boilers</strong> — manual fuel load;
+              high-efficiency gasification combustion; large thermal store (1000-3000 L) for
+              time-shifting. Domestic + farm scale. Brands: HDG, Fröling, ETA, Atmos
+            </li>
+            <li>
+              <strong className="text-white">Wood chip boilers</strong> — auger feed from chip silo.
+              Commercial / agricultural / district heating (50 kW - 5+ MW). Brands: Talbott,
+              Hargassner commercial, KWB commercial
+            </li>
+            <li>
+              <strong className="text-white">Pellet quality</strong> — EN Plus A1 (premium) or A2
+              grade; affects efficiency + emissions
+            </li>
+            <li>
+              <strong className="text-white">Log moisture content</strong> — &lt;20% for efficient
+              combustion (seasoned wood). Above 25% reduces efficiency + increases emissions
+            </li>
+            <li>
+              <strong className="text-white">Thermal store</strong>— buffer cylinder between boiler
+              + heating system; smooths boiler output vs demand; essential for log boilers
+              (1000-3000 L)
+            </li>
+            <li>
+              <strong className="text-white">Pure heat-only</strong>— no electrical generation, no
+              Section 551, no anti-islanding. Just BS 7671 general framework for the electrical
+              install scope
+            </li>
+            <li>
+              <strong className="text-white">Biomass-CHP variants</strong>— engine-driven generator
+              OR steam / ORC turbine. Adds Section 551 framework. Covered §9.5-§9.6
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="Wood pellet boiler electrical scope"
+          plainEnglish="Wood pellet boiler typical UK 2025-26 install: 5-50 kW thermal output. Electrical demand 1-2 kW continuous + peak. Dedicated 16 A single-phase circuit + Type A RCBO C-curve (for motor starts). Components powered by boiler controls."
+          onSite="Boiler arrives factory-wired with controller + components; installer connects dedicated supply to the boiler\'s electrical interface terminal. Manufacturer-specific commissioning procedure. HETAS-qualified commissioner handles combustion side; BS 7671 electrician handles the electrical scope."
+        >
+          <p>Wood pellet boiler electrical components:</p>
+          <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+            <li>
+              <strong className="text-white">Auger motor</strong>— conveys pellets from hopper /
+              silo to combustion chamber. Typically 200-500 W single-phase; 10-30% duty cycle in
+              normal operation
+            </li>
+            <li>
+              <strong className="text-white">Combustion fan</strong>— primary + secondary air for
+              combustion. 80-150 W; continuous when running
+            </li>
+            <li>
+              <strong className="text-white">Flue extract fan</strong>— induced draught to maintain
+              combustion + safe flue gas emission. 60-120 W; continuous when running
+            </li>
+            <li>
+              <strong className="text-white">Ignition glow plug</strong>— initial pellet ignition.
+              300-500 W during 3-5 min start cycle; off in normal operation (combustion sustains
+              itself)
+            </li>
+            <li>
+              <strong className="text-white">Controls + display</strong>— boiler controller +
+              interface. 30-50 W continuous
+            </li>
+            <li>
+              <strong className="text-white">Circulation pump</strong>— primary heat circuit (boiler
+              → thermal store / heating system). 60-100 W typical
+            </li>
+            <li>
+              <strong className="text-white">Ash auger (some models)</strong> — removes ash to
+              disposal pan. Brief motor on duty cycle. 50-100 W when running
+            </li>
+            <li>
+              <strong className="text-white">Total typical</strong>— 0.5-1 kW continuous when
+              running; 1.5-2 kW peak during ignition. Dedicated 16 A circuit + Type A RCBO C-curve
+              handles this comfortably
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <RegsCallout
+          source="BS 7671:2018+A4:2026 · Reg 422.4 — Combustible constructional materials (CA2 conditions)"
+          clause="The requirements of this regulation shall be applied in addition to those of Section 421 in locations where CA2 conditions exist. NOTE: CA2 conditions exist where a building is mainly constructed of combustible materials."
+          meaning="Reg 422.4 applies the Section 421 thermal-protection framework with additional emphasis in buildings of combustible construction (timber framing, plasterboard, insulation — CA2 conditions). Biomass installs are inherently high-thermal-output: boiler body 50-80 °C exterior, flue path 60-120 °C surface, combustion chamber 600+ °C internal. Reg 422.4 requires: (1) Boiler clearance from combustible elements per manufacturer install manual (typically 200-1000 mm depending on boiler type + face); (2) Boiler-room construction with fire-resistant boundary if adjacent to combustible structures (Building Regs Part J also applies); (3) Flue thermal protection — insulated chimney lining, thermal sleeves through combustible structures per BS EN 15287 / BS EN 1856; (4) Cable routing per Reg 522.2.1 keeps wiring distance from flue + hot pipework. HETAS competence handles the combustion + flue + fire-safety side; BS 7671 electrician verifies the electrical install respects the clearance + cable thermal requirements. Cert evidence bundle records Reg 422.4 + Reg 421 + HETAS commissioning + Building Regs Part J compliance."
+        />
+
+        <InlineCheck {...inlineChecks[0]} />
+
+        <InlineCheck {...inlineChecks[1]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>HETAS + MCS + DEFRA — the wider framework</ContentEyebrow>
+
+        <Pullquote>
+          Biomass is a multi-competence install. HETAS for the fire, MCS for the customer, BS 7671
+          for the electric. Stay in your lane.
+        </Pullquote>
+
+        <ConceptBlock
+          title="HETAS competence + scope boundary"
+          plainEnglish="HETAS (Heating Equipment Testing and Approvals Scheme) is the UK competence + certification body for solid fuel + biomass heating installers. HETAS-registered installer handles the combustion + flue + fire-safety side. NOT electrical — that\'s BS 7671 electrician scope."
+          onSite="UK 2025-26 biomass install: HETAS installer is the combustion specialist. They self-certify Building Regs Part J (combustion appliances + flue) under the Competent Person Scheme. BS 7671 electrician self-certifies Part P. Both certs feed into the MCS handover pack + customer documentation."
+        >
+          <p>HETAS scope:</p>
+          <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+            <li>
+              <strong className="text-white">Boiler combustion install</strong> — physical install
+              of biomass boiler per BS EN 303-5 + manufacturer instructions
+            </li>
+            <li>
+              <strong className="text-white">Flue / chimney</strong>— install per BS EN 15287 + BS
+              EN 1856 (metal flue) / BS EN 1857 (concrete liner). Flue height + draught requirements
+              per Building Regs Part J
+            </li>
+            <li>
+              <strong className="text-white">Combustion safety</strong> — air supply (combustion air
+              + ventilation); carbon monoxide alarm install per BS EN 50291; safe combustion
+              commissioning
+            </li>
+            <li>
+              <strong className="text-white">Ash + emissions management</strong> — ash disposal,
+              flue gas analysis at commissioning, emissions verification
+            </li>
+            <li>
+              <strong className="text-white">Building Regs Part J</strong> — self-certified under
+              HETAS Competent Person Scheme; avoids separate Local Authority notification
+            </li>
+            <li>
+              <strong className="text-white">DEFRA SCA verification</strong> — HETAS installer
+              typically verifies customer SCA status + boiler exempt status
+            </li>
+            <li>
+              <strong className="text-white">NOT in HETAS scope</strong> — electrical install (BS
+              7671 electrician), MCS sizing + customer handover (MCS company), hydraulic loop
+              (heating engineer / plumber)
+            </li>
+            <li>
+              <strong className="text-white">Cert evidence bundle</strong> — HETAS commissioning
+              record separate from BS 7671 EIC; both integrated in MCS handover pack
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="DEFRA Smoke Control Area framework"
+          plainEnglish="UK Smoke Control Areas (SCAs) restrict solid fuel burning to DEFRA-exempt appliances + approved fuels. Many urban + town areas are SCAs. Verify customer SCA status + boiler model exempt status at quote stage."
+          onSite="Not BS 7671 — but install-deal-breaker if missed. Customer fines up to £1,000 for unauthorised emissions in SCA. MCS / HETAS installer typically handles this; BS 7671 electrician verifies at quote stage."
+        >
+          <p>SCA verification process:</p>
+          <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+            <li>
+              <strong className="text-white">SCA designation</strong>— Clean Air Act 1993 +
+              Environment Act 2021 (England + Wales); Environment (Scotland) Act + Air Quality Regs
+              (Scotland); NI separate
+            </li>
+            <li>
+              <strong className="text-white">Customer SCA check</strong> — local authority website
+              (or DEFRA SCA map at gov.uk). Many urban + town areas designated
+            </li>
+            <li>
+              <strong className="text-white">DEFRA exempt appliance list</strong> — searchable at
+              gov.uk; manufacturer-tested for low emissions (particulate matter, NOx, smoke). Most
+              reputable UK biomass boilers DEFRA-exempt
+            </li>
+            <li>
+              <strong className="text-white">Approved fuels</strong>— within SCA + on exempt
+              appliance: only DEFRA-approved fuels (specific pellet brands / log moisture content).
+              List published at gov.uk
+            </li>
+            <li>
+              <strong className="text-white">Customer expectations</strong> — informed at quote
+              stage that fuel choice is restricted ongoing; pellet supply chain limited to approved
+              brands
+            </li>
+            <li>
+              <strong className="text-white">Non-exempt + SCA = illegal</strong> — must refuse
+              install OR re-spec to DEFRA-exempt model. Customer fines + reputation risk
+            </li>
+            <li>
+              <strong className="text-white">Outside SCA</strong>— any biomass boiler can install
+              (subject to other regulations: Building Regs Part J, Environment Agency permits for
+              larger commercial, MCS if grant funded)
+            </li>
+            <li>
+              <strong className="text-white">Cert evidence bundle</strong> — SCA verification +
+              boiler DEFRA exempt status + customer acknowledgement
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <RegsCallout
+          source="BS 7671:2018+A4:2026 · Reg 522.2.1 — Cable thermal protection on biomass install"
+          clause="In order to avoid the effects of heat from external sources, one or more of the following methods or an equally effective method shall be used to protect a wiring system: (a) shielding; (b) placing sufficiently far from the source of heat; (c) selecting a system with due regard for the additional temperature rise which may occur; (d) local reinforcement or substitution of insulating material."
+          meaning="Reg 522.2.1 is the operative regulation for cable thermal protection on biomass installs — and biomass has the highest thermal demands of any M9 technology. Heat sources: (1) Flue path through building / chimney — flue surface 60-120 °C, flue gases 200-300 °C internally; (2) Boiler body — 50-80 °C exterior; (3) Primary flow pipework — 70-90 °C; (4) Boiler-room ambient — 25-35 °C. Protection methods per zone: (a) shielding via heat-resistant sleeve for cable forced close; (b) distance — route control + supply cable away from hot zones (most common method); (c) higher-rated cable with Appendix 4 Ca correction factor (Table 4B1) for cables in higher-ambient zones; (d) local reinforcement / substitution at specific points. Cert evidence bundle: cable route survey per zone + heat source proximity + chosen protection method per Reg 522.2.1 + photographs at commissioning."
+        />
+
+        <InlineCheck {...inlineChecks[2]} />
+
+        <InlineCheck {...inlineChecks[3]} />
+
+        <SectionRule />
+
+        <Scenario
+          title="20 kW wood pellet boiler — rural off-gas-grid retrofit"
+          situation="Rural cottage off the gas grid. Replacing oil boiler with 20 kW wood pellet boiler (ÖkoFEN Pellematic Compact 20 — DEFRA-exempt, EN Plus A1 pellet compatible). Existing 300 L cylinder retained with immersion backup. NOT in Smoke Control Area (rural). Customer eligible for Boiler Upgrade Scheme (~£5,000 for biomass in off-gas-grid; verify current rules)."
+          whatToDo="Multi-trade: MCS company (MIS 3004) coordinates + holds customer relationship; HETAS installer handles boiler + flue + Building Regs Part J self-certification; heating engineer fits hydraulic loop + 500 L thermal store; BS 7671 electrician scope: (1) Dedicated 16 A circuit from CU; Type A RCBO C-curve; 2.5 mm² T+E. (2) Cable route per Reg 522.2.1 — boiler room contains pellet hopper + boiler + flue + thermal store; route control cable along cool side of room away from flue + primary pipework. (3) Existing 16 A immersion circuit retained per Section 554 + Reg 554.2.1 thermal cut-out (functional test at commissioning); cylinder thermostat coordinates with new biomass primary control. (4) HETAS installer commissions combustion + verifies flue + emissions; provides HETAS commissioning record (separate from EIC); self-certifies Part J. (5) BS 7671 commissioning per Reg 643: continuity, IR, polarity, ADS / Zs, RCD trip-time, functional test of boiler controls + integration. Cert evidence bundle: BS 7671 EIC + HETAS commissioning record + MCS MIS 3004 handover + Building Regs Part J cert + DEFRA exempt status documentation (kept on file even though not in SCA — future-proofs if SCA designation expands) + customer handover (operating instructions + fuel supply + service schedule + ash management). Total project ~£15-22k; electrical scope ~£500-700; BUS grant ~£5,000 (verify current scheme)."
+          whyItMatters="Rural off-gas-grid is the dominant viable use case for biomass in UK 2025-26 — heat pump may not suit (older building fabric, customer fuel preference), gas not available, oil being phased out. Biomass + BUS grant + customer fuel choice. Cert evidence bundle integrates multi-trade scopes cleanly."
+        />
+
+        <Scenario
+          title="Light commercial wood chip CHP — agricultural site"
+          situation="100 kW thermal + 30 kWe electrical wood chip biomass-CHP for a large farm. Heat output to farm buildings (workshop, barns, farmhouse) + electrical export to grid. Three-phase supply already at site. Customer has woodland for fuel."
+          whatToDo="Biomass-CHP = Section 551 generating set applies (combustion engine driving generator). Multi-trade: MCS company + HETAS installer + commercial biomass-CHP specialist + heating engineer + BS 7671 electrician. Electrical scope larger: (1) Dedicated three-phase 63 A circuit (CHP electrical generation 30 kWe = ~45 A continuous export per phase); (2) 4-pole 63 A Type A RCBO (or larger device per manufacturer DoC); (3) Reg 551.7.5 anti-islanding via CHP control system (DNO-witnessed test typical for commercial scale); (4) Reg 551.7.2.1 supply-side connection; (5) Reg 551.4.2 multi-source RCD coordination (CHP + existing site supply); (6) EREC G99 formal application (30 kWe export well above G98 threshold; commercial-scale process); (7) BS EN 62305-3 lightning protection if chimney exposed; (8) Cable per Reg 525.202 voltage drop calc for site cable run. Plus heat-only biomass scope (auger, fans, controls, Reg 422.4). HETAS for combustion + flue + emissions. Commercial-CHP specialist commissions engine + generator. Cert evidence bundle: Section 551 compliance + Reg 551.7.5 commissioning test + EREC G99 reference + BS 7671 EIC + HETAS record + MCS handover + commercial-CHP specialist commissioning + heat-network integration. Total project ~£250-400k; electrical scope ~£15-30k; grid services revenue opportunity (covered §9.6). Detailed in §9.6 (Commercial CHP)."
+          whyItMatters="Biomass-CHP at agricultural scale is a real UK 2025-26 commercial install pattern — woodland-managed farms, agricultural biogas combined operations, larger rural commercial. Section 551 framework applies + adds substantial electrical scope beyond heat-only biomass. Cert evidence bundle integrates commercial-CHP + biomass + electrical + heat-network. Cross-references §9.6 for the commercial-CHP detail."
+        />
+
+        <CommonMistake
+          title="Routing cable across the flue path"
+          whatHappens="Lazy cable installer routes the boiler controls cable through the loft directly over the flue chimney exit path. Flue surface in normal operation 60-100 °C, in extended high-output 120 °C. Cable insulation thermally degrades over years. Eventual sensor reading errors, controls failure, or insulation breakdown causing fault."
+          doInstead="Reg 522.2.1 cable thermal protection. Route cable distance from flue + hot pipework — method (b), most common. If forced close: heat-resistant sleeve method (a); or rated cable with Appendix 4 Ca correction method (c). Visual cable route inspection at commissioning + photograph. Cert evidence bundle records route + chosen protection method."
+        />
+
+        <CommonMistake
+          title="Installing in SCA without DEFRA exempt verification"
+          whatHappens="Customer in town SCA wants biomass. Installer ignores DEFRA exempt check, fits non-exempt model. Months later, neighbour complaints about smoke; local authority enforcement; customer fined £500 per offence; install removed; reputation damaged."
+          doInstead="DEFRA SCA verification at quote stage. (1) Check customer\'s SCA status via local authority website. (2) If in SCA: verify proposed boiler on DEFRA exempt appliance list at gov.uk. (3) Customer educated about restricted fuel ongoing. (4) Cert evidence bundle records SCA verification + boiler exempt status + customer acknowledgement. If model NOT exempt: refuse or re-spec."
+        />
+
+        <SectionRule />
+
+        <KeyTakeaways
+          points={[
+            'Biomass heating (wood pellet, log, wood chip) is heat-only — NOT in Reg 551.1.1. Biomass-CHP variants add Section 551 (covered §9.5-§9.6).',
+            'Electrical scope: dedicated 16 A single-phase circuit; 1-2 kW total demand (auger + fans + ignition + controls + circulation pump).',
+            'BS 7671 framework: Reg 314, Reg 411.4, Reg 415.1, Reg 422.4 combustible material proximity, Reg 522.2.1 cable thermal protection, Section 554 immersion retention.',
+            'Multi-trade: MCS MIS 3004 + HETAS (combustion + flue + Building Regs Part J) + heating engineer (hydraulic) + BS 7671 electrician.',
+            'Reg 422.4 applies in CA2 conditions (combustible building structure) — additional thermal protection emphasis per Section 421 framework.',
+            'Reg 522.2.1 cable thermal protection critical — flue path 60-120 °C surface, primary pipework 70-90 °C, boiler body 50-80 °C exterior.',
+            'BS EN 303-5 = solid fuel boiler product standard; 5-star efficiency class typical for grant eligibility. BS EN 15287 flue install + BS EN 1856/1857 lining.',
+            'DEFRA Smoke Control Area verification: customer status + boiler exempt status + approved fuels. Many urban / town areas SCAs; non-exempt + SCA = illegal install.',
+            'HETAS competence handles combustion + flue + Building Regs Part J self-cert. BS 7671 electrician handles electrical. Two distinct competencies; both required.',
+            'UK 2025-26 grant landscape: BUS heat-pump-focused; limited biomass eligibility (rural off-gas-grid typically). RHI closed 2022. Verify current rules.',
+            'Wood pellet boilers dominate domestic (auger automatic); log boilers preferred where customer has woodland (manual fuel + thermal store); wood chip commercial / agricultural.',
+          ]}
+        />
+
+        <FAQ items={faqs} />
+
+        <Quiz questions={quizQuestions} title="Section 4 · Knowledge check" />
+
+        <div className="grid grid-cols-2 gap-3 pt-2">
           <button
             type="button"
-            onClick={() => navigate('../renewable-energy-module-9')}
-            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            onClick={() => navigate('/electrician/upskilling/renewable-energy-module-9-section-3')}
+            className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
           >
-            <ArrowLeft className="h-4 w-4" /> Module 9
+            <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+              <ChevronLeft className="h-3 w-3" /> Section 3
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-white truncate">
+              Solar thermal (collectors + electrical scope)
+            </div>
           </button>
-
-          <PageHero
-            eyebrow="Module 9 · Section 4 · Reg 422.4 + Reg 522.2.1 + Reg 314 + MCS MIS 3004 + HETAS + DEFRA"
-            title="Biomass interfaces"
-            description="Biomass heating from the BS 7671 electrical install perspective. Wood pellet + log + wood chip boilers. Auger motors + combustion fans + ignition + flue extract + controls. Reg 422.4 combustible material proximity + Reg 522.2.1 cable thermal near flue. MCS MIS 3004 installer + HETAS combustion competence + DEFRA Smoke Control Area + BS EN 303-5 product standard."
-            tone="yellow"
-          />
-
-          <TLDR
-            points={[
-              'Biomass heating (wood pellet, log, wood chip) is heat-only on the BS 7671 side — NOT in Reg 551.1.1 (no electrical generation). Biomass-CHP variants add Section 551 (covered §9.5 + §9.6).',
-              'Electrical scope per boiler: dedicated 16 A single-phase circuit; 1-2 kW total electrical demand (auger motor + combustion fan + flue extract + ignition + controls + circulation pump).',
-              'BS 7671 anchors: Reg 314 dedicated circuit, Reg 411.4 ADS, Reg 415.1 30 mA RCD, Reg 422.4 combustible material proximity, Reg 522.2.1 cable thermal protection near flue + pipework, Section 554 if cylinder immersion backup retained.',
-              'Multi-trade install: MCS company (MIS 3004) + HETAS-qualified biomass installer (combustion + flue) + plumbing/heating engineer (hydraulic loop) + BS 7671 electrical installer.',
-              'DEFRA Smoke Control Area verification mandatory in SCA areas — only DEFRA-exempt appliance + approved fuels permitted. Verify customer SCA status + boiler exempt status at quote stage.',
-              'BS EN 303-5 = solid fuel boiler product standard; 5-star efficiency class typical for grant eligibility (where applicable). MCS MIS 3004 references.',
-              'Flue exceeds 250 °C in normal operation — Reg 522.2.1 cable thermal protection essential. Boiler body + primary pipework all elevated temperature.',
-              'UK 2025-26 grant landscape: Boiler Upgrade Scheme heat-pump-focused; limited biomass eligibility (rural off-gas-grid typically). Verify current scheme rules.',
-            ]}
-          />
-
-          <LearningOutcomes
-            outcomes={[
-              'Distinguish wood pellet vs log vs wood chip biomass boilers + their electrical scope.',
-              'Apply Reg 314 dedicated circuit + Reg 411.4 ADS + Reg 415.1 30 mA RCD to biomass install.',
-              'Apply Reg 422.4 combustible material proximity + Reg 522.2.1 cable thermal protection near flue.',
-              'Coordinate with HETAS biomass / flue competence + MCS MIS 3004 installer framework.',
-              'Verify customer DEFRA Smoke Control Area status + boiler exempt status.',
-              'Apply BS EN 303-5 product standard + manufacturer commissioning procedure.',
-              'Integrate existing immersion as DHW backup per Section 554 + Reg 554.2.1 thermal cut-out.',
-              'Distinguish biomass-CHP (Section 551 applies) from heat-only biomass (BS 7671 general framework only).',
-            ]}
-            initialVisibleCount={3}
-          />
-
-          <Pullquote>
-            Biomass install is mostly mechanical + combustion. The electrical scope is small + bounded — a dedicated 16 A circuit + Reg 522.2.1 thermal protection. The hot bit is the flue, not the cable.
-          </Pullquote>
-
-          <ContentEyebrow>Biomass technologies + electrical scope</ContentEyebrow>
-
-          <ConceptBlock
-            title="UK 2025-26 biomass technologies"
-            plainEnglish="UK 2025-26 biomass heating: wood pellet boilers (automatic auger feed, dominant for domestic + light-commercial), log boilers (manual fuel + thermal store), wood chip boilers (commercial / agricultural). Each is heat-only on the BS 7671 side. Biomass-CHP variants (engine-driven generator OR steam / ORC) add electrical generation under Section 551 — covered in §9.5-§9.6."
-            onSite="UK domestic biomass market shifted post-2014 vs heat pump expansion. Rural off-gas-grid properties + farms + larger heritage buildings continue to install. Pellet boilers dominate domestic; log boilers preferred by customers with woodland fuel supply; chip boilers commercial / district heating."
+          <button
+            type="button"
+            onClick={() => navigate('/electrician/upskilling/renewable-energy-module-9-section-5')}
+            className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
           >
-            <p>Biomass technology comparison:</p>
-            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
-              <li>
-                <strong className="text-white">Wood pellet boilers</strong> —
-                automatic auger feed from hopper (250-500 kg) or silo (3-15 tonnes).
-                Domestic + light-commercial scale (5-50 kW thermal). UK brands: ÖkoFEN,
-                KWB, Windhager, Hargassner, Solarfocus, Grant Spira
-              </li>
-              <li>
-                <strong className="text-white">Log boilers</strong> — manual
-                fuel load; high-efficiency gasification combustion; large thermal
-                store (1000-3000 L) for time-shifting. Domestic + farm scale. Brands:
-                HDG, Fröling, ETA, Atmos
-              </li>
-              <li>
-                <strong className="text-white">Wood chip boilers</strong> —
-                auger feed from chip silo. Commercial / agricultural / district
-                heating (50 kW - 5+ MW). Brands: Talbott, Hargassner commercial, KWB
-                commercial
-              </li>
-              <li>
-                <strong className="text-white">Pellet quality</strong> —
-                EN Plus A1 (premium) or A2 grade; affects efficiency + emissions
-              </li>
-              <li>
-                <strong className="text-white">Log moisture
-                  content</strong> — &lt;20% for efficient combustion (seasoned wood).
-                Above 25% reduces efficiency + increases emissions
-              </li>
-              <li>
-                <strong className="text-white">Thermal store</strong>
-                — buffer cylinder between boiler + heating system; smooths boiler
-                output vs demand; essential for log boilers (1000-3000 L)
-              </li>
-              <li>
-                <strong className="text-white">Pure heat-only</strong>
-                — no electrical generation, no Section 551, no anti-islanding. Just BS
-                7671 general framework for the electrical install scope
-              </li>
-              <li>
-                <strong className="text-white">Biomass-CHP variants</strong>
-                — engine-driven generator OR steam / ORC turbine. Adds Section 551
-                framework. Covered §9.5-§9.6
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <ConceptBlock
-            title="Wood pellet boiler electrical scope"
-            plainEnglish="Wood pellet boiler typical UK 2025-26 install: 5-50 kW thermal output. Electrical demand 1-2 kW continuous + peak. Dedicated 16 A single-phase circuit + Type A RCBO C-curve (for motor starts). Components powered by boiler controls."
-            onSite="Boiler arrives factory-wired with controller + components; installer connects dedicated supply to the boiler\'s electrical interface terminal. Manufacturer-specific commissioning procedure. HETAS-qualified commissioner handles combustion side; BS 7671 electrician handles the electrical scope."
-          >
-            <p>Wood pellet boiler electrical components:</p>
-            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
-              <li>
-                <strong className="text-white">Auger motor</strong>
-                — conveys pellets from hopper / silo to combustion chamber. Typically
-                200-500 W single-phase; 10-30% duty cycle in normal operation
-              </li>
-              <li>
-                <strong className="text-white">Combustion fan</strong>
-                — primary + secondary air for combustion. 80-150 W; continuous when
-                running
-              </li>
-              <li>
-                <strong className="text-white">Flue extract fan</strong>
-                — induced draught to maintain combustion + safe flue gas emission.
-                60-120 W; continuous when running
-              </li>
-              <li>
-                <strong className="text-white">Ignition glow plug</strong>
-                — initial pellet ignition. 300-500 W during 3-5 min start cycle; off
-                in normal operation (combustion sustains itself)
-              </li>
-              <li>
-                <strong className="text-white">Controls + display</strong>
-                — boiler controller + interface. 30-50 W continuous
-              </li>
-              <li>
-                <strong className="text-white">Circulation pump</strong>
-                — primary heat circuit (boiler → thermal store / heating system).
-                60-100 W typical
-              </li>
-              <li>
-                <strong className="text-white">Ash auger (some
-                  models)</strong> — removes ash to disposal pan. Brief motor on duty
-                cycle. 50-100 W when running
-              </li>
-              <li>
-                <strong className="text-white">Total typical</strong>
-                — 0.5-1 kW continuous when running; 1.5-2 kW peak during ignition.
-                Dedicated 16 A circuit + Type A RCBO C-curve handles this comfortably
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <RegsCallout
-            source="BS 7671:2018+A4:2026 · Reg 422.4 — Combustible constructional materials (CA2 conditions)"
-            clause="The requirements of this regulation shall be applied in addition to those of Section 421 in locations where CA2 conditions exist. NOTE: CA2 conditions exist where a building is mainly constructed of combustible materials."
-            meaning="Reg 422.4 applies the Section 421 thermal-protection framework with additional emphasis in buildings of combustible construction (timber framing, plasterboard, insulation — CA2 conditions). Biomass installs are inherently high-thermal-output: boiler body 50-80 °C exterior, flue path 60-120 °C surface, combustion chamber 600+ °C internal. Reg 422.4 requires: (1) Boiler clearance from combustible elements per manufacturer install manual (typically 200-1000 mm depending on boiler type + face); (2) Boiler-room construction with fire-resistant boundary if adjacent to combustible structures (Building Regs Part J also applies); (3) Flue thermal protection — insulated chimney lining, thermal sleeves through combustible structures per BS EN 15287 / BS EN 1856; (4) Cable routing per Reg 522.2.1 keeps wiring distance from flue + hot pipework. HETAS competence handles the combustion + flue + fire-safety side; BS 7671 electrician verifies the electrical install respects the clearance + cable thermal requirements. Cert evidence bundle records Reg 422.4 + Reg 421 + HETAS commissioning + Building Regs Part J compliance."
-          />
-
-          <InlineCheck {...inlineChecks[0]} />
-
-          <InlineCheck {...inlineChecks[1]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>HETAS + MCS + DEFRA — the wider framework</ContentEyebrow>
-
-          <Pullquote>
-            Biomass is a multi-competence install. HETAS for the fire, MCS for the customer, BS 7671 for the electric. Stay in your lane.
-          </Pullquote>
-
-          <ConceptBlock
-            title="HETAS competence + scope boundary"
-            plainEnglish="HETAS (Heating Equipment Testing and Approvals Scheme) is the UK competence + certification body for solid fuel + biomass heating installers. HETAS-registered installer handles the combustion + flue + fire-safety side. NOT electrical — that\'s BS 7671 electrician scope."
-            onSite="UK 2025-26 biomass install: HETAS installer is the combustion specialist. They self-certify Building Regs Part J (combustion appliances + flue) under the Competent Person Scheme. BS 7671 electrician self-certifies Part P. Both certs feed into the MCS handover pack + customer documentation."
-          >
-            <p>HETAS scope:</p>
-            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
-              <li>
-                <strong className="text-white">Boiler combustion
-                  install</strong> — physical install of biomass boiler per BS EN 303-5
-                + manufacturer instructions
-              </li>
-              <li>
-                <strong className="text-white">Flue / chimney</strong>
-                — install per BS EN 15287 + BS EN 1856 (metal flue) / BS EN 1857
-                (concrete liner). Flue height + draught requirements per Building Regs
-                Part J
-              </li>
-              <li>
-                <strong className="text-white">Combustion
-                  safety</strong> — air supply (combustion air + ventilation); carbon
-                monoxide alarm install per BS EN 50291; safe combustion commissioning
-              </li>
-              <li>
-                <strong className="text-white">Ash + emissions
-                  management</strong> — ash disposal, flue gas analysis at
-                commissioning, emissions verification
-              </li>
-              <li>
-                <strong className="text-white">Building Regs Part
-                  J</strong> — self-certified under HETAS Competent Person Scheme;
-                avoids separate Local Authority notification
-              </li>
-              <li>
-                <strong className="text-white">DEFRA SCA
-                  verification</strong> — HETAS installer typically verifies customer
-                SCA status + boiler exempt status
-              </li>
-              <li>
-                <strong className="text-white">NOT in HETAS
-                  scope</strong> — electrical install (BS 7671 electrician), MCS sizing
-                + customer handover (MCS company), hydraulic loop (heating engineer /
-                plumber)
-              </li>
-              <li>
-                <strong className="text-white">Cert evidence
-                  bundle</strong> — HETAS commissioning record separate from BS 7671
-                EIC; both integrated in MCS handover pack
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <ConceptBlock
-            title="DEFRA Smoke Control Area framework"
-            plainEnglish="UK Smoke Control Areas (SCAs) restrict solid fuel burning to DEFRA-exempt appliances + approved fuels. Many urban + town areas are SCAs. Verify customer SCA status + boiler model exempt status at quote stage."
-            onSite="Not BS 7671 — but install-deal-breaker if missed. Customer fines up to £1,000 for unauthorised emissions in SCA. MCS / HETAS installer typically handles this; BS 7671 electrician verifies at quote stage."
-          >
-            <p>SCA verification process:</p>
-            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
-              <li>
-                <strong className="text-white">SCA designation</strong>
-                — Clean Air Act 1993 + Environment Act 2021 (England + Wales);
-                Environment (Scotland) Act + Air Quality Regs (Scotland); NI separate
-              </li>
-              <li>
-                <strong className="text-white">Customer SCA
-                  check</strong> — local authority website (or DEFRA SCA map at
-                gov.uk). Many urban + town areas designated
-              </li>
-              <li>
-                <strong className="text-white">DEFRA exempt
-                  appliance list</strong> — searchable at gov.uk; manufacturer-tested
-                for low emissions (particulate matter, NOx, smoke). Most reputable
-                UK biomass boilers DEFRA-exempt
-              </li>
-              <li>
-                <strong className="text-white">Approved fuels</strong>
-                — within SCA + on exempt appliance: only DEFRA-approved fuels (specific
-                pellet brands / log moisture content). List published at gov.uk
-              </li>
-              <li>
-                <strong className="text-white">Customer
-                  expectations</strong> — informed at quote stage that fuel choice is
-                restricted ongoing; pellet supply chain limited to approved brands
-              </li>
-              <li>
-                <strong className="text-white">Non-exempt + SCA =
-                  illegal</strong> — must refuse install OR re-spec to DEFRA-exempt
-                model. Customer fines + reputation risk
-              </li>
-              <li>
-                <strong className="text-white">Outside SCA</strong>
-                — any biomass boiler can install (subject to other regulations:
-                Building Regs Part J, Environment Agency permits for larger commercial,
-                MCS if grant funded)
-              </li>
-              <li>
-                <strong className="text-white">Cert evidence
-                  bundle</strong> — SCA verification + boiler DEFRA exempt status +
-                customer acknowledgement
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <RegsCallout
-            source="BS 7671:2018+A4:2026 · Reg 522.2.1 — Cable thermal protection on biomass install"
-            clause="In order to avoid the effects of heat from external sources, one or more of the following methods or an equally effective method shall be used to protect a wiring system: (a) shielding; (b) placing sufficiently far from the source of heat; (c) selecting a system with due regard for the additional temperature rise which may occur; (d) local reinforcement or substitution of insulating material."
-            meaning="Reg 522.2.1 is the operative regulation for cable thermal protection on biomass installs — and biomass has the highest thermal demands of any M9 technology. Heat sources: (1) Flue path through building / chimney — flue surface 60-120 °C, flue gases 200-300 °C internally; (2) Boiler body — 50-80 °C exterior; (3) Primary flow pipework — 70-90 °C; (4) Boiler-room ambient — 25-35 °C. Protection methods per zone: (a) shielding via heat-resistant sleeve for cable forced close; (b) distance — route control + supply cable away from hot zones (most common method); (c) higher-rated cable with Appendix 4 Ca correction factor (Table 4B1) for cables in higher-ambient zones; (d) local reinforcement / substitution at specific points. Cert evidence bundle: cable route survey per zone + heat source proximity + chosen protection method per Reg 522.2.1 + photographs at commissioning."
-          />
-
-          <InlineCheck {...inlineChecks[2]} />
-
-          <InlineCheck {...inlineChecks[3]} />
-
-          <SectionRule />
-
-          <Scenario
-            title="20 kW wood pellet boiler — rural off-gas-grid retrofit"
-            situation="Rural cottage off the gas grid. Replacing oil boiler with 20 kW wood pellet boiler (ÖkoFEN Pellematic Compact 20 — DEFRA-exempt, EN Plus A1 pellet compatible). Existing 300 L cylinder retained with immersion backup. NOT in Smoke Control Area (rural). Customer eligible for Boiler Upgrade Scheme (~£5,000 for biomass in off-gas-grid; verify current rules)."
-            whatToDo="Multi-trade: MCS company (MIS 3004) coordinates + holds customer relationship; HETAS installer handles boiler + flue + Building Regs Part J self-certification; heating engineer fits hydraulic loop + 500 L thermal store; BS 7671 electrician scope: (1) Dedicated 16 A circuit from CU; Type A RCBO C-curve; 2.5 mm² T+E. (2) Cable route per Reg 522.2.1 — boiler room contains pellet hopper + boiler + flue + thermal store; route control cable along cool side of room away from flue + primary pipework. (3) Existing 16 A immersion circuit retained per Section 554 + Reg 554.2.1 thermal cut-out (functional test at commissioning); cylinder thermostat coordinates with new biomass primary control. (4) HETAS installer commissions combustion + verifies flue + emissions; provides HETAS commissioning record (separate from EIC); self-certifies Part J. (5) BS 7671 commissioning per Reg 643: continuity, IR, polarity, ADS / Zs, RCD trip-time, functional test of boiler controls + integration. Cert evidence bundle: BS 7671 EIC + HETAS commissioning record + MCS MIS 3004 handover + Building Regs Part J cert + DEFRA exempt status documentation (kept on file even though not in SCA — future-proofs if SCA designation expands) + customer handover (operating instructions + fuel supply + service schedule + ash management). Total project ~£15-22k; electrical scope ~£500-700; BUS grant ~£5,000 (verify current scheme)."
-            whyItMatters="Rural off-gas-grid is the dominant viable use case for biomass in UK 2025-26 — heat pump may not suit (older building fabric, customer fuel preference), gas not available, oil being phased out. Biomass + BUS grant + customer fuel choice. Cert evidence bundle integrates multi-trade scopes cleanly."
-          />
-
-          <Scenario
-            title="Light commercial wood chip CHP — agricultural site"
-            situation="100 kW thermal + 30 kWe electrical wood chip biomass-CHP for a large farm. Heat output to farm buildings (workshop, barns, farmhouse) + electrical export to grid. Three-phase supply already at site. Customer has woodland for fuel."
-            whatToDo="Biomass-CHP = Section 551 generating set applies (combustion engine driving generator). Multi-trade: MCS company + HETAS installer + commercial biomass-CHP specialist + heating engineer + BS 7671 electrician. Electrical scope larger: (1) Dedicated three-phase 63 A circuit (CHP electrical generation 30 kWe = ~45 A continuous export per phase); (2) 4-pole 63 A Type A RCBO (or larger device per manufacturer DoC); (3) Reg 551.7.5 anti-islanding via CHP control system (DNO-witnessed test typical for commercial scale); (4) Reg 551.7.2.1 supply-side connection; (5) Reg 551.4.2 multi-source RCD coordination (CHP + existing site supply); (6) EREC G99 formal application (30 kWe export well above G98 threshold; commercial-scale process); (7) BS EN 62305-3 lightning protection if chimney exposed; (8) Cable per Reg 525.202 voltage drop calc for site cable run. Plus heat-only biomass scope (auger, fans, controls, Reg 422.4). HETAS for combustion + flue + emissions. Commercial-CHP specialist commissions engine + generator. Cert evidence bundle: Section 551 compliance + Reg 551.7.5 commissioning test + EREC G99 reference + BS 7671 EIC + HETAS record + MCS handover + commercial-CHP specialist commissioning + heat-network integration. Total project ~£250-400k; electrical scope ~£15-30k; grid services revenue opportunity (covered §9.6). Detailed in §9.6 (Commercial CHP)."
-            whyItMatters="Biomass-CHP at agricultural scale is a real UK 2025-26 commercial install pattern — woodland-managed farms, agricultural biogas combined operations, larger rural commercial. Section 551 framework applies + adds substantial electrical scope beyond heat-only biomass. Cert evidence bundle integrates commercial-CHP + biomass + electrical + heat-network. Cross-references §9.6 for the commercial-CHP detail."
-          />
-
-          <CommonMistake
-            title="Routing cable across the flue path"
-            whatHappens="Lazy cable installer routes the boiler controls cable through the loft directly over the flue chimney exit path. Flue surface in normal operation 60-100 °C, in extended high-output 120 °C. Cable insulation thermally degrades over years. Eventual sensor reading errors, controls failure, or insulation breakdown causing fault."
-            doInstead="Reg 522.2.1 cable thermal protection. Route cable distance from flue + hot pipework — method (b), most common. If forced close: heat-resistant sleeve method (a); or rated cable with Appendix 4 Ca correction method (c). Visual cable route inspection at commissioning + photograph. Cert evidence bundle records route + chosen protection method."
-          />
-
-          <CommonMistake
-            title="Installing in SCA without DEFRA exempt verification"
-            whatHappens="Customer in town SCA wants biomass. Installer ignores DEFRA exempt check, fits non-exempt model. Months later, neighbour complaints about smoke; local authority enforcement; customer fined £500 per offence; install removed; reputation damaged."
-            doInstead="DEFRA SCA verification at quote stage. (1) Check customer\'s SCA status via local authority website. (2) If in SCA: verify proposed boiler on DEFRA exempt appliance list at gov.uk. (3) Customer educated about restricted fuel ongoing. (4) Cert evidence bundle records SCA verification + boiler exempt status + customer acknowledgement. If model NOT exempt: refuse or re-spec."
-          />
-
-          <SectionRule />
-
-          <KeyTakeaways
-            points={[
-              'Biomass heating (wood pellet, log, wood chip) is heat-only — NOT in Reg 551.1.1. Biomass-CHP variants add Section 551 (covered §9.5-§9.6).',
-              'Electrical scope: dedicated 16 A single-phase circuit; 1-2 kW total demand (auger + fans + ignition + controls + circulation pump).',
-              'BS 7671 framework: Reg 314, Reg 411.4, Reg 415.1, Reg 422.4 combustible material proximity, Reg 522.2.1 cable thermal protection, Section 554 immersion retention.',
-              'Multi-trade: MCS MIS 3004 + HETAS (combustion + flue + Building Regs Part J) + heating engineer (hydraulic) + BS 7671 electrician.',
-              'Reg 422.4 applies in CA2 conditions (combustible building structure) — additional thermal protection emphasis per Section 421 framework.',
-              'Reg 522.2.1 cable thermal protection critical — flue path 60-120 °C surface, primary pipework 70-90 °C, boiler body 50-80 °C exterior.',
-              'BS EN 303-5 = solid fuel boiler product standard; 5-star efficiency class typical for grant eligibility. BS EN 15287 flue install + BS EN 1856/1857 lining.',
-              'DEFRA Smoke Control Area verification: customer status + boiler exempt status + approved fuels. Many urban / town areas SCAs; non-exempt + SCA = illegal install.',
-              'HETAS competence handles combustion + flue + Building Regs Part J self-cert. BS 7671 electrician handles electrical. Two distinct competencies; both required.',
-              'UK 2025-26 grant landscape: BUS heat-pump-focused; limited biomass eligibility (rural off-gas-grid typically). RHI closed 2022. Verify current rules.',
-              'Wood pellet boilers dominate domestic (auger automatic); log boilers preferred where customer has woodland (manual fuel + thermal store); wood chip commercial / agricultural.',
-            ]}
-          />
-
-          <FAQ items={faqs} />
-
-          <Quiz questions={quizQuestions} title="Section 4 · Knowledge check" />
-
-          <div className="grid grid-cols-2 gap-3 pt-2">
-            <button
-              type="button"
-              onClick={() =>
-                navigate('/electrician/upskilling/renewable-energy-module-9-section-3')
-              }
-              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
-                <ChevronLeft className="h-3 w-3" /> Section 3
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-white truncate">
-                Solar thermal (collectors + electrical scope)
-              </div>
-            </button>
-            <button
-              type="button"
-              onClick={() =>
-                navigate('/electrician/upskilling/renewable-energy-module-9-section-5')
-              }
-              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
-                Next section <ChevronRight className="h-3 w-3" />
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-black truncate">
-                9.5 Micro-CHP (domestic) + Section 551
-              </div>
-            </button>
-          </div>
-        </PageFrame>
-      </div>
-    </div>
+            <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+              Next section <ChevronRight className="h-3 w-3" />
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-black truncate">
+              9.5 Micro-CHP (domestic) + Section 551
+            </div>
+          </button>
+        </div>
+      </HubBody>
+    </HubPage>
   );
 }

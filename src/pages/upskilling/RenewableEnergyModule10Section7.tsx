@@ -1,8 +1,8 @@
-import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { useNavigate } from 'react-router-dom';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
-import { PageFrame, PageHero } from '@/components/college/primitives';
 import {
   TLDR,
   ConceptBlock,
@@ -118,8 +118,7 @@ const quizQuestions = [
       'Comprehensive commissioning checklist for UK 2025-26 4-source PEI: (1) Reg 643 Part 6 — continuity, insulation resistance, polarity, earth fault loop impedance, RCD operation, functional testing per circuit. Standard BS 7671 commissioning, expanded across the multi-source install. (2) Reg 551.7.5 anti-islanding — simulated grid-loss test per inverter (PV inverter, BESS inverter, V2G charger). Verify disconnect within ENA G98 / G99 specified time. (3) Reg 551.4.2 RCD effectiveness — controlled fault test in each source combination. PV-only direct-feeding, PV+BESS, PV+BESS+V2G, all in island (if island-capable), etc. (4) Reg 826.1.1.2.2 N-E switching — simulated grid-loss + N-E continuity measurement in each state + transition timing verification (if backup gateway present). (5) Reg 826.1.1.4 multi-source isolation — walk through the documented isolation procedure + verify each switch operates + warning notice in place. (6) Reg 826.1.2.1 overcurrent — verification of max + min per configuration (via fault-level instrument or analytical study + spot-check). (7) EREC G99 commissioning — DNO-witnessed test (if required by connection offer) or self-certified per manufacturer DoC. (8) EREC G100 — deliberate over-generation + ELS curtailment / hard-limit verification (if export-limited). (9) EMS commissioning — priority logic verification, ToU schedule active, load shedding behaviour, degraded-mode behaviour (EMS offline) confirmed safe. (10) Customer handover — walk through procedures + warnings + operating modes + emergency contacts; signed acknowledgement. Total time: 2-3 days for a comprehensive 4-source PEI; £2-5k commissioning cost. Cert evidence: integrated commissioning record covering all above with test results + signatures + photographs.',
   },
   {
-    question:
-      'For a multi-source PEI, the warning notice at the main consumer unit must convey:',
+    question: 'For a multi-source PEI, the warning notice at the main consumer unit must convey:',
     options: [
       'A "multiple sources" warning listing every source-isolator and stressing ALL must be switched off',
       'A "Danger" label alone is sufficient; listing the individual isolators is not required',
@@ -196,445 +195,395 @@ export default function RenewableEnergyModule10Section7() {
   });
 
   return (
-    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
-      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
-        <PageFrame>
+    <HubPage>
+      <HubMasthead
+        section="Module 10 · Section 7 · BS 7671:2018+A4:2026 · Chapter 82 deep-dive"
+        title="Multi-source coordination at scale (Chapter 82 deep)"
+        backTo="../renewable-energy-module-10"
+      />
+      <HubBody>
+        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
+          The integration challenge of 4+ source PEI sites: why it’s NOT the sum of 4 single-source
+          installs. Reg 826.1.1.4 isolation across multiple sources with consolidated warning
+          notices. Reg 826.1.2.1 overcurrent at every PEI point for every configuration + min + max
+          current magnitudes. Reg 551.4.2 multi-source RCD effectiveness. Collective + shared PEI
+          (defined in the Reg 826.7 contents) for apartment blocks + community schemes. EREC G99
+          amendment process when adding sources.
+        </p>
+
+        <TLDR
+          points={[
+            'Multi-source PEI is NOT the sum of single-source installs. Each added source multiplies the configurations + interactions to verify under Chapter 82.',
+            'Reg 826.1.2.1 requires overcurrent calculation at EVERY PEI protective device location, for ALL configurations, + for BOTH minimum AND maximum current magnitudes. Max sizes breakers; min verifies ADS especially in island.',
+            'Reg 826.1.1.4 multi-source isolation: per-source main switch + consolidated warning notice listing ALL switches that must be operated to isolate the installation.',
+            'Reg 551.4.2 multi-source RCD effectiveness: RCD architecture must remain effective across every intended combination of sources. Per-source RCD + central architecture + Type B where smooth-DC fault current.',
+            'Multi-source PEI commissioning: 2-3 days typical labour. 10+ distinct verification activities across Reg 643 + Reg 551.7.5 + Reg 551.4.2 + Reg 826.1.1.2.2 + Reg 826.1.1.4 + Reg 826.1.2.1 + EREC G99/G100 + EMS + customer handover.',
+            'EREC G99 amendment required when adding any new generating source to an existing PEI. Without amendment: contractual breach + DNO disconnection risk.',
+            'Collective PEI (a type defined in the Reg 826.7 contents): apartment block / community schemes with shared generation feeding multiple legal entities. Adds: ownership clarity, metering architecture, private-wire / Ofgem considerations, lease + maintenance responsibilities, multiple EICs + coordinating document.',
+            'Documented isolation procedure: step-by-step sequence + verification + lockout / tagout + capacitor wait time + reverse-restoration. Customer handover pack contains.',
+            'Cert evidence bundle structure: integrated PEI EIC + per-technology DoCs + EREC correspondence + MCS handover packs + Reg 826 commissioning records + EMS architecture + customer handover signatures. Typical 30-60 pages.',
+            'Distribution: customer copy (handover) + DNO copy (G99/G100 closure) + installer archive (6-10 years minimum). Future engineer reads BEFORE attending.',
+          ]}
+        />
+
+        <LearningOutcomes
+          outcomes={[
+            'Apply Reg 826.1.2.1 — overcurrent at every PEI point for all configurations + min + max current magnitudes.',
+            'Apply Reg 826.1.1.4 multi-source isolation with consolidated warning notice + documented isolation procedure.',
+            'Apply Reg 551.4.2 multi-source RCD effectiveness across every source combination + commissioning verification.',
+            'Configure a comprehensive multi-source PEI commissioning sequence covering Reg 643 + 551 + 826 + EREC + EMS + customer handover.',
+            'Apply EREC G99 amendment process when adding generating sources to an existing PEI.',
+            'Identify collective + shared PEI scenarios (the types of PEI defined in the Reg 826.7 contents) + the additional considerations beyond individual residential.',
+            'Compose the cert evidence bundle for a multi-source PEI: structure, content, distribution, retention.',
+            'Articulate why a 4-source PEI commissioning is 2-3 days + £2-5k labour rather than half a day.',
+          ]}
+          initialVisibleCount={3}
+        />
+
+        <Pullquote>
+          The single most expensive design assumption you can make on a multi-source PEI is that
+          it’s "PV + BESS + EV done separately, stuck together". Chapter 82 exists because that
+          assumption is wrong.
+        </Pullquote>
+
+        <ContentEyebrow>Why multi-source is categorically different</ContentEyebrow>
+
+        <ConceptBlock
+          title="Reg 826.1.2.1 — overcurrent at every point for every configuration"
+          plainEnglish="Reg 826.1.2.1 is the most operationally-demanding clause of Chapter 82. It requires overcurrent calculation at EVERY PEI protective device location, for ALL possible configurations of the PEI, AND for BOTH minimum and maximum current magnitudes. Practical effect: a single 4-source PEI has 6-8 practically-reachable configurations + 5-15 protective device locations = 30-120 overcurrent calculations + verifications."
+          onSite="UK 2025-26 design tool support: spreadsheet-based studies + commercial software (Amtech Pro Design, Trimble Electrical, Hevacomp Electrical). The PEI overcurrent study is a deliverable in the cert evidence bundle. Commissioning verifies representative configurations + spot-checks the calculations."
+        >
+          <p>Reg 826.1.2.1 in practice:</p>
+          <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+            <li>
+              <strong className="text-white">Every PEI protective device point</strong> — main
+              switch, main RCD, distribution board, sub-DB, RCBOs per final circuit, source-side
+              breakers, inverter AC isolators. Each location needs overcurrent calculation. UK
+              2025-26 typical 4-source PEI: 5-15 locations
+            </li>
+            <li>
+              <strong className="text-white">All possible configurations</strong> — enumerate which
+              sources are actively contributing. 4-source PEI: 2⁴ = 16 mathematical combinations but
+              ≈7-9 practically reachable (DNO almost always present in direct-feeding; some
+              configurations require island operation; etc.). List + analyse each
+            </li>
+            <li>
+              <strong className="text-white">Maximum current magnitudes</strong> — highest aggregate
+              fault current any source combination can deliver to a fault at each protective device
+              location. Direct-feeding all-sources-active is usually the max. Used for: Reg 434.5.1
+              breaker breaking capacity; Reg 433 cable thermal protection; Reg 533.4 / 536
+              discrimination
+            </li>
+            <li>
+              <strong className="text-white">Minimum current magnitudes</strong> — lowest aggregate
+              fault current any source combination can deliver to a fault at each location.
+              Island-mode single-source is usually the min. Used for: Reg 411.3 ADS verification —
+              must achieve disconnection time at this current; if not, rely on RCD or other ADS path
+            </li>
+            <li>
+              <strong className="text-white">Per-configuration per-location matrix</strong> — each
+              configuration × each location = one PSCC entry + one min fault entry. Build the matrix
+              as a spreadsheet or in design software. UK 2025-26 typical 4-source PEI: 30-120
+              entries
+            </li>
+            <li>
+              <strong className="text-white">Worst case</strong>— from the matrix, identify the
+              worst-case max + min per protective device location. Worst max sizes breaker; worst
+              min verifies ADS
+            </li>
+            <li>
+              <strong className="text-white">Commissioning verification</strong> — representative
+              configurations tested. Direct-feeding max (induced fault, measure trip); island min
+              (controlled fault simulation, verify RCD trip). Cannot practically verify all 30-120
+              entries; spot-check + calculation evidence
+            </li>
+            <li>
+              <strong className="text-white">Cert evidence bundle</strong> — PEI overcurrent study
+              (the matrix + analysis + worst-case identification) + commissioning test results
+              (representative configurations) + per-device-location analysis summary on the EIC
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="Multi-source RCD architecture (Reg 551.4.2)"
+          plainEnglish="Reg 551.4.2: “The generating set shall be connected so that any provision within the installation for protection by RCDs in accordance with Chapter 41 remains effective for every intended combination of sources of supply.” Multi-source PEI requires careful RCD architecture: per-source RCD + central RCD coordination + Type B where smooth-DC fault current + commissioning verification across every source combination."
+          onSite="The challenge: each source influences the fault-current path + the RCD’s view of residual current. Without per-source RCDs + central coordination, a fault near one source may not be seen by an RCD; or an RCD may false-trip due to circulating residual current between sources. Multi-source RCD design is engineering work, not boilerplate."
+        >
+          <p>Multi-source RCD architecture considerations:</p>
+          <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+            <li>
+              <strong className="text-white">Per-source RCD</strong>— each generating source has its
+              own RCD on its supply-side connection. Typical 30 mA Type A or Type B per Reg 415.1 +
+              Reg 531.3.3. Type depends on source electronics (VSD wind, hybrid inverter, V2G → Type
+              B where manufacturer DoC declares smooth-DC)
+            </li>
+            <li>
+              <strong className="text-white">Central RCD architecture</strong> — main RCD (Type S
+              100 mA upstream) + 30 mA RCBO per final circuit. Provides discrimination per Reg
+              531.3.6 + Reg 415.1 additional protection
+            </li>
+            <li>
+              <strong className="text-white">Reg 551.7.1(d) prohibition</strong> — source must NOT
+              be connected on load side of an RCD under certain conditions (the RCD would not
+              correctly see the source’s contribution to residual current)
+            </li>
+            <li>
+              <strong className="text-white">Type B for smooth-DC sources</strong> — V2G chargers,
+              BESS hybrid inverters, VSD wind / hydro / CHP can produce smooth-DC residual at fault.
+              Type A RCDs saturate; Type B detects. Manufacturer DoC declares the requirement. UK
+              2025-26 modern hardware: Type B integrated or RDC-DD per BS EN 61851-1 (Reg 722.531.3)
+            </li>
+            <li>
+              <strong className="text-white">Source-combination verification</strong> — at
+              commissioning, induce a controlled residual fault in each practically-reachable source
+              combination + verify the appropriate RCD trips. UK 2025-26 4-source PEI: ~6-8
+              combinations tested representative
+            </li>
+            <li>
+              <strong className="text-white">Island-mode RCD operation</strong> — reliant on local
+              N-E bond per Reg 826.1.1.2.2. Verified at commissioning via simulated grid-loss +
+              controlled fault in island
+            </li>
+            <li>
+              <strong className="text-white">Discrimination</strong>— upstream Type S + downstream
+              30 mA RCBO. Time-graded so downstream trips first on local faults; upstream remains
+              intact for the rest of the installation. Verified at commissioning
+            </li>
+            <li>
+              <strong className="text-white">Cert evidence</strong>— RCD architecture diagram +
+              per-source RCD type / In / IΔn + commissioning test results per source combination +
+              manufacturer DoC declarations + island-mode RCD verification
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <RegsCallout
+          source="BS 7671:2018+A4:2026 · Reg 826.1.1.4 — Multi-source isolation deep-dive"
+          clause="Where an installation is supplied from more than one source, a main switch suitable for isolation (for example, switch-disconnector) shall be provided for each source of supply. A durable warning notice shall be permanently fixed in the vicinity of these main switches in such a position that any person seeking to operate any of these main switches will be warned of the need to operate all such switches to achieve isolation of the installation. Alternatively, a single switching device may be used provided that it is capable of isolating all sources simultaneously and meets the requirements of Regulation 537.1.2."
+          meaning="Reg 826.1.1.4 + its alternative clause: TWO compliant approaches. (1) Multiple-switch approach — one main switch per source (DNO + PV AC + PV DC + BESS AC + BESS DC + V2G + etc.) + consolidated warning notice. UK 2025-26 retrofit-friendly: existing consumer unit retained + per-source isolators added. (2) Single-device approach — a single switching device per Reg 537.1.2 capable of isolating ALL sources simultaneously. Practical: modern integrated PEI panels (Tesla Backup Gateway 2 + Powerwall, SolarEdge Backup Interface + StorEdge, GivEnergy Whole Home Backup + AIO) provide this in vendor-integrated form. New-build / major-retrofit-friendly. Either approach requires: switching device(s) suitable for isolation per Reg 537.2; durable warning notice per Reg 514 family; documented isolation procedure in customer handover pack; commissioning verification that each switch isolates its source. UK 2025-26 customer-facing reality: ensure consumer can perform safe isolation in emergency; trained-person isolation procedure documented for engineer attendance; periodic verification (annual + after equipment changes). Cert evidence: isolation schematic + warning notice photograph + procedure document + commissioning test of each switch + collective-PEI considerations (Reg 826.7 contents) if applicable."
+        />
+
+        <InlineCheck {...inlineChecks[0]} />
+
+        <InlineCheck {...inlineChecks[1]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>Collective PEI + EREC G99 amendments</ContentEyebrow>
+
+        <Pullquote>
+          The multi-source PEI didn’t spring fully-formed. Each addition triggered an EREC G99
+          amendment, a Chapter 82 re-evaluation, a cert evidence bundle update. The integrating EIC
+          is a living document, not a static deliverable.
+        </Pullquote>
+
+        <ConceptBlock
+          title="EREC G99 amendments — when adding sources"
+          plainEnglish="A G99 connection agreement is sized at the customer’s DECLARED GENERATING CAPACITY at original application. Adding any new source (V2G, additional PV string, BESS expansion, wind / hydro) requires a G99 AMENDMENT — the DNO reassesses network impact + issues an updated connection offer + recommissioning may be required. Without amendment: contractual breach + DNO disconnection risk."
+          onSite="UK 2025-26 typical: customer’s PEI evolves year-by-year. Year 1: PV + BESS (initial G99). Year 2: V2G addition (G99 amendment). Year 3: PV expansion (further G99 amendment). The integrating PEI EIC + cert evidence bundle accumulates the changes. Installer scope on each addition: G99 amendment management as part of the install."
+        >
+          <p>G99 amendment process:</p>
+          <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+            <li>
+              <strong className="text-white">Trigger</strong> — ANY change to declared generating
+              capacity, source type, source mode (e.g. PV inverter replacement, V2G addition, BESS
+              expansion). The installer assesses whether the change requires G99 amendment vs simple
+              notification
+            </li>
+            <li>
+              <strong className="text-white">Application content</strong> — amendment form to DNO
+              listing: existing generating capacity + sources; new source details (type,
+              manufacturer, ENA type-test approval, rated capacity, intended mode); updated network
+              connection requirements (any change to G100 limit, anti-islanding behaviour); customer
+              details + site location + MPAN
+            </li>
+            <li>
+              <strong className="text-white">DNO assessment</strong>— DNO reassesses: voltage rise
+              impact, reverse-power-flow constraint, transformer + cable capacity,
+              neighbouring-customer constraints. May require network model rerun. UK 2025-26 typical
+              4-12 week timeline depending on DNO + change scope
+            </li>
+            <li>
+              <strong className="text-white">Updated connection offer</strong> — DNO issues
+              amendment-conditional offer. Possible outcomes: (a) accepted at existing terms (no
+              impact); (b) accepted with new G100 limit (added export limitation); (c) accepted with
+              reinforcement requirement (rare for incremental additions); (d) rejected (network
+              truly cannot support)
+            </li>
+            <li>
+              <strong className="text-white">Customer acceptance</strong> — customer signs + accepts
+              the updated connection agreement. Any payment / connection-charge variation resolved
+            </li>
+            <li>
+              <strong className="text-white">Commissioning</strong>— standard BS 7671 +
+              per-technology commissioning + Reg 551.7.5 anti-islanding test on new source + Reg
+              551.4.2 multi-source RCD effectiveness verification + G100 recommissioning if
+              export-limited
+            </li>
+            <li>
+              <strong className="text-white">Cert evidence update</strong> — integrated PEI EIC
+              updated; per-technology EIC for new source; G99 amendment correspondence filed;
+              multi-source isolation procedure + warning notice updated; customer handover pack
+              updated
+            </li>
+            <li>
+              <strong className="text-white">Breach consequences</strong> — customer fails to amend
+              + DNO routine audit / voltage-rise complaint catches: revoked connection agreement,
+              retrospective amendment + recommissioning, customer disruption + reputational damage
+              to installer
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="Collective PEI (Reg 826.7 contents) — apartment blocks + community schemes"
+          plainEnglish="The Chapter 82 contents (Reg 826.7) define the types of PEI — individual, collective and shared. Collective + Shared PEI: installations where local generation is shared by multiple separate electrical installations (apartment block tenants + landlord common areas + master meter, community generation co-ops, hospital-campus schemes). Additional considerations beyond individual PEI: ownership clarity, master + sub-metering, ESQCR / Ofgem private-wire-supply rules, lease + maintenance responsibilities, multiple EICs + a coordinating document."
+          onSite="UK 2025-26 use cases: social housing rooftop PV (council / housing association programmes); apartment build-to-rent shared solar (Greystar, Quintain); community energy co-ops (Brixton Energy, Repowering London); hospital campus CHP / shared generation; light-industrial park shared assets. Installer scope expands beyond standard residential."
+        >
+          <p>Collective + shared PEI complexity:</p>
+          <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+            <li>
+              <strong className="text-white">Ownership clarity</strong> — generation asset (rooftop
+              PV + BESS) owned by landlord / community / co-op; tenants have separate DNO supplies +
+              MPANs. Lease document defines responsibilities, payment flows, maintenance
+            </li>
+            <li>
+              <strong className="text-white">Metering architecture</strong> — master meter at
+              building DNO point measures gross import + export; sub-meters or smart-meter
+              aggregation determines distribution. UK 2025-26 typical: master MPAN for landlord;
+              tenant MPANs separate; community-generated kWh distributed via private-wire or
+              notional allocation
+            </li>
+            <li>
+              <strong className="text-white">ESQCR + Ofgem private-wire</strong> — if landlord
+              supplies tenant flats via cables NOT through public DNO network (private-wire supply),
+              Ofgem licence exemption + ESQCR (Electricity Safety, Quality + Continuity Regulations
+              2002) considerations. Outside strict BS 7671 scope but adjacent. UK 2025-26
+              increasingly common
+            </li>
+            <li>
+              <strong className="text-white">EREC G99 single-site registration</strong> — collective
+              generation typically registered as a SINGLE generating site at the building DNO point.
+              Capacity = total generation aggregate; G99 application covers all sources together.
+              SEG payable to landlord / community owner per their tariff arrangement
+            </li>
+            <li>
+              <strong className="text-white">Multiple EICs</strong>— each tenant flat = one EIC
+              (Section 712 PV if private- wire-fed, otherwise standard residential EIC). Plus the
+              shared rooftop / BESS install EIC (commercial + Section 712 + Chapter 57 scope). Plus
+              the coordinating document (collective PEI compliance summary, Reg 826.7 contents)
+            </li>
+            <li>
+              <strong className="text-white">Safety + isolation coordination</strong> — work on
+              shared assets requires landlord + tenant access coordination. Isolation procedure
+              involves multiple parties. Warning notice at each tenant’s consumer unit if
+              private-wire-fed
+            </li>
+            <li>
+              <strong className="text-white">Maintenance + life cycle</strong> — landlord
+              responsible for shared-asset maintenance; tenant responsible for their own electrical
+              installation. Lease defines who pays for what. Cert evidence bundle records each
+            </li>
+            <li>
+              <strong className="text-white">Cert evidence bundle for collective PEI</strong> —
+              substantial: multiple EICs + shared-asset EIC + collective PEI compliance summary (Reg
+              826.7 contents) + ownership documentation + private-wire arrangement if applicable +
+              maintenance responsibility document + each EREC reference + landlord + tenant handover
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <RegsCallout
+          source="BS 7671:2018+A4:2026 · Reg 826.7 contents — Collective + Shared PEI scope"
+          clause="Within Chapter 82 contents: TYPES OF PEI — General; Operating modes; Individual PEI; Collective PEI; Shared PEI. Recognises three PEI categories: Individual (one customer, one electrical installation, local generation); Collective (multiple individual electrical installations behind a common point, sharing local generation — e.g. apartment block); Shared (generation assets shared across legally-separate entities — e.g. community solar co-operative)."
+          meaning="The Reg 826.7 contents explicitly recognise three types of PEI — Individual, Collective, Shared. Practical scope expansion: (1) Individual PEI — the case most M10 sections have implicitly assumed. One customer, one electrical install, one DNO connection, one MPAN. Section 712 + Chapter 57 + Section 722 + Chapter 82 anchor apply uniformly. (2) Collective PEI — multiple electrical installations behind a common point, sharing local generation. UK 2025-26 examples: apartment block with rooftop PV feeding common areas + (private-wire) tenant supplies; care home shared CHP. Additional considerations: ownership, metering architecture, private-wire supply where applicable, multiple EICs. (3) Shared PEI — generation assets shared across legally-separate entities. UK 2025-26 examples: community solar co-op (multiple households co-own + share generation), hospital-campus CHP shared across departments / suppliers. Additional considerations: legal ownership structure, allocation rules, ESQCR / Ofgem framework, supply licence considerations. Cert evidence bundle scope expands accordingly: per-installation EIC + shared-asset EIC + collective PEI compliance summary (Reg 826.7 contents) + ownership / lease / co-op governance document + each EREC reference + private-wire arrangement if applicable. UK 2025-26 reality: collective + shared PEI are growing categories as community energy + apartment-block decarbonisation accelerate. Installer scope expands beyond standard residential into adjacent regulatory frameworks."
+        />
+
+        <InlineCheck {...inlineChecks[2]} />
+
+        <InlineCheck {...inlineChecks[3]} />
+
+        <SectionRule />
+
+        <Scenario
+          title="Year-by-year multi-source PEI build-out + EREC amendment cycle"
+          situation="Suburban detached home, customer’s renewable build-out across 4 years. Year 1: 4 kWp PV install (G98 fast-track, single source). Year 2: 10 kWh BESS retrofit. Year 3: 7 kW EV charger install. Year 4: V2G upgrade of EV charger. Final state: 4-source PEI under Chapter 82. Each year’s install must trigger the appropriate EREC + BS 7671 + cert updates."
+          whatToDo="Multi-year evolution under Chapter 82 framework. Year 1: G98 fast-track post-installation notification (4 kWp single-phase fits ≤16 A). Section 712 EIC + customer handover. Year 2: G99 application required — BESS as second generating source per Reg 551.7.2.1 takes site above G98 fast-track scope. DNO connection offer + acceptance. Integrated PEI EIC supersedes year-1 PV-only EIC. Chapter 82 multi-source isolation introduced (DNO + PV + BESS = 3 isolation points + warning notice). Reg 826.1.2.1 overcurrent recalculated. Reg 551.4.2 multi-source RCD verification. Year 3: EV charger added (Section 722 — LOAD only, not generating). G99 not triggered (no new generating capacity). But DNO load notification typical (heat-pump-equivalent max-demand consideration). Section 722 EIC. Multi-source isolation procedure updated for completeness even though EV is load (not source). Reg 311.1 max demand recalculated. Year 4: V2G upgrade. EV transitions from pure load to bidirectional source. G99 AMENDMENT required — declared generating capacity now PV (4 kW) + BESS (5 kW) + V2G (7 kW) = 16 kW total. DNO reassesses + may impose G100 limit (likely on suburban network). New G100 commissioning cert if applicable. Reg 551.7.5 anti-islanding test on V2G charger. Reg 551.4.2 multi-source RCD verification expanded to include V2G combinations. Reg 826.1.1.4 isolation procedure updated to include V2G charger isolator (now 4-source isolation: DNO + PV + BESS + V2G). Reg 826.1.2.1 overcurrent matrix expanded — V2G discharge contribution at MET added. Integrated PEI EIC supersedes year-3 version. EMS reconfigured. Customer handover updated. Cert evidence bundle now contains 4 years of updates: 4 EICs in succession + per-technology DoCs + 3 G99-related communications + G100 cert (if applicable) + MCS handover packs + Reg 826 commissioning records + EMS evolution + customer acknowledgements across 4 years."
+          whyItMatters="UK 2025-26 multi-year PEI build-out is the dominant retrofit pattern — customers add capability over time. Each addition is NOT a fresh standalone install; it’s a transition to a more-complex PEI under Chapter 82. The installer’s scope includes the G99 amendment process + cert evidence bundle update + Reg 826 multi-source recommissioning + customer handover update. Without disciplined evolution: customer accumulates inconsistent paperwork, DNO breach risk, future-engineer confusion. The integrating PEI EIC is a living document."
+        />
+
+        <Scenario
+          title="Apartment-block collective PEI — 60 flats with rooftop PV + community BESS + private-wire to common areas"
+          situation="60-flat apartment block, build-to-rent operator-owned. Landlord installs 80 kWp rooftop PV + 100 kWh BESS feeding the building common-area circuit (lifts, lighting, communal heating, comms) + offering surplus generation to tenants via private-wire supply at reduced rate. Tenants retain their own DNO supplies for in-flat use. Building has separate MPAN for common-area; each flat has its own MPAN."
+          whatToDo="Collective PEI scope (a type of PEI defined in the Reg 826.7 contents). (1) Asset structure: rooftop PV + BESS owned by landlord; common-area circuit owned by landlord; tenant flats have own DNO supplies; private-wire supply to tenant flats from landlord’s generation. (2) BS 7671 scope: Section 712 PV install (commercial scale, 80 kWp) + Chapter 57 BESS install (100 kWh — substantial) + Chapter 82 PEI integration (the entire common-area + private-wire installation). Each tenant flat: standard residential EIC under its own electrical installation scope. (3) EREC G99 — single application for the rooftop generation aggregate (80 kWp + 100 kWh BESS). DNO assesses building DNO point capacity. Likely G100 export limit imposed (urban network constrained). (4) collective PEI considerations (Reg 826.7 contents) — ownership clarity in lease, master + sub-metering architecture, private-wire supply licence exemption from Ofgem (since landlord supplies tenants on-site), ESQCR compliance for private-wire cable installation. (5) Multi-source isolation — landlord-side: DNO common-area + PV AC + PV DC + BESS AC + BESS DC = 5 isolation points + warning notice + comprehensive isolation procedure. Tenant-side: standard residential isolation but private-wire feeds from landlord generation must be isolatable by tenant in emergency (additional isolator at each tenant flat). (6) Cert evidence bundle: commercial PEI EIC (rooftop + common-area + private-wire infrastructure) + 60 × residential EICs (each tenant flat) + landlord-tenant lease excerpt referencing private-wire arrangement + collective PEI compliance summary (Reg 826.7 contents) + EREC G99 + G100 commissioning + MCS commercial PV handover + EMS architecture + safety procedures for shared-asset maintenance + customer (tenant) handover at each flat + landlord handover. (7) Economics: landlord saves £35,000-50,000/year on common-area electricity import (self-consumed PV × £0.25/kWh × 80% self-consumption); tenants saved £100-200/year each via private-wire reduced rate; SEG income limited by G100 export limit. Capex £150,000-250,000 PV + BESS install + £50,000-100,000 EMS + private-wire infrastructure + £20,000-30,000 cert + commissioning."
+          whyItMatters="Apartment-block collective PEI is a growing UK 2025-26 use case driven by ESG / net-zero commitments of build-to-rent operators + social housing programmes. The collective PEI framework (Reg 826.7 contents) + private-wire supply licence + multi-EIC management + commercial-scale Chapter 82 design all converge. The installer’s scope expands substantially beyond ‘residential PV + BESS’ — commercial PEI design + private-wire infrastructure + community-scale cert evidence bundle. Cert evidence is the document trail that supports everything: insurance, audit, ESG reporting, future-engineer attendance, tenant + landlord rights + responsibilities."
+        />
+
+        <CommonMistake
+          title="Adding source to existing PEI without G99 amendment"
+          whatHappens="Customer with existing PV+BESS PEI adds a 7 kW V2G charger. Installer fits the V2G hardware + commissions per Section 722 + Section 551 + Chapter 82 BUT doesn’t notify the DNO. DNO’s routine audit (or voltage-rise complaint on the local network) catches the discrepancy 12 months later. DNO revokes the connection agreement; customer faces disconnection; retrospective G99 amendment + recommissioning cost £5,000-10,000 + customer disruption + installer reputational damage."
+          doInstead="ANY new generating source addition to an existing PEI triggers G99 amendment. Process: at quote stage, identify the source addition + budget G99 amendment lead time (typically 4-12 weeks) + cost; pre-submission consultation with DNO if uncertain about acceptability; G99 amendment submission as part of project plan; commissioning held until DNO acceptance; G100 recommissioning if site export-limited; cert evidence bundle updated with G99 amendment correspondence. Customer-facing: build the G99 amendment into the install timeline + cost. Don’t treat it as optional admin."
+        />
+
+        <CommonMistake
+          title="Reusing the original PEI EIC after substantial source addition"
+          whatHappens="Customer’s year-1 PV+BESS EIC remains the only cert evidence after year-4 V2G addition. Future engineer attending in year 6 reads the EIC + sees only PV + BESS — doesn’t notice V2G exists. Performs work assuming 2-source PEI; V2G isn’t isolated; persons-at-risk on live V2G feed. Real near-miss / accident scenario."
+          doInstead="Integrating PEI EIC is a LIVING document. Each substantial change (new source, source removal, ELS reconfiguration, EMS architectural change, backup-gateway retrofit) supersedes the prior EIC. Cert evidence bundle: chronologically-ordered EIC succession, each clearly marked with effective date + supersedes-prior-version reference. Future engineer reads the LATEST EIC, understands current PEI configuration. Customer handover: deliver new EIC + emphasise to customer that prior EIC is now superseded + recommend storage of complete history but use of latest as the operative document. Cert evidence bundle: latest integrated PEI EIC + per-technology DoCs + EREC correspondence chronology + Reg 826 commissioning history + EMS architecture evolution."
+        />
+
+        <SectionRule />
+
+        <KeyTakeaways
+          points={[
+            'Multi-source PEI is categorically different from single-source: NOT the sum of N × 1-source installs. Chapter 82 integration framework + Reg 826.x family addresses the difference.',
+            'Reg 826.1.2.1: overcurrent calculation at EVERY PEI protective device location for ALL configurations + BOTH minimum + maximum current magnitudes. UK 2025-26 typical 4-source PEI = 30-120 calculations.',
+            'Reg 826.1.1.4 multi-source isolation: per-source main switch + consolidated warning notice + documented isolation procedure + customer handover pack inclusion.',
+            'Reg 551.4.2 multi-source RCD: per-source RCD + central architecture + Type B where smooth-DC fault current + commissioning verification per source combination.',
+            'Reg 826.1.1.4 alternative: a single switching device per Reg 537.1.2 capable of isolating all sources simultaneously (vendor-integrated backup gateway approach).',
+            'EREC G99 amendment required for ANY new generating source addition. Lead time 4-12 weeks. Without amendment: contractual breach + DNO disconnection risk.',
+            'EREC G100 recommissioning required when adding generating source to export-limited site. ELS hierarchy updated. New commissioning cert filed.',
+            'Collective PEI (a type defined in the Reg 826.7 contents): apartment blocks + community schemes + shared assets. Adds ownership clarity, master + sub-metering, ESQCR / Ofgem private-wire-supply, multiple EICs + coordinating document.',
+            'Multi-source PEI commissioning: 2-3 days labour + £2-5k cost. 10+ distinct verification activities: Reg 643 Part 6 + Reg 551.7.5 + Reg 551.4.2 + Reg 826.1.1.2.2 + Reg 826.1.1.4 + Reg 826.1.2.1 + EREC G99 + G100 + EMS + customer handover.',
+            'Documented multi-source isolation procedure: step-by-step + verification + lockout / tagout + capacitor wait time + reverse-restoration. Customer handover pack contains.',
+            'Cert evidence bundle structure: integrated PEI EIC + per-technology DoCs + EREC correspondence + MCS handover packs + Reg 826 commissioning records + EMS architecture + customer handover signatures. Typical 30-60 pages.',
+            'Cert evidence distribution: customer copy (handover) + DNO copy (G99/G100 closure) + installer archive (6-10 years minimum). Future engineer reads BEFORE attending.',
+            'Integrating PEI EIC is a LIVING document. Each substantial change supersedes prior EIC. Chronological succession in cert evidence bundle. Customer handover: latest = operative.',
+            'Year-by-year PEI build-out: each addition triggers G99 amendment + Chapter 82 re-evaluation + cert evidence update. Installer scope includes the regulatory + paperwork evolution.',
+          ]}
+        />
+
+        <FAQ items={faqs} />
+
+        <Quiz questions={quizQuestions} title="Section 7 · Knowledge check" />
+
+        <div className="grid grid-cols-2 gap-3 pt-2">
           <button
             type="button"
-            onClick={() => navigate('../renewable-energy-module-10')}
-            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            onClick={() => navigate('/electrician/upskilling/renewable-energy-module-10-section-6')}
+            className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
           >
-            <ArrowLeft className="h-4 w-4" /> Module 10
+            <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+              <ChevronLeft className="h-3 w-3" /> Section 6
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-white truncate">
+              10.6 Grid-forming vs grid-following
+            </div>
           </button>
-
-          <PageHero
-            eyebrow="Module 10 · Section 7 · BS 7671:2018+A4:2026 · Chapter 82 deep-dive"
-            title="Multi-source coordination at scale (Chapter 82 deep)"
-            description="The integration challenge of 4+ source PEI sites: why it’s NOT the sum of 4 single-source installs. Reg 826.1.1.4 isolation across multiple sources with consolidated warning notices. Reg 826.1.2.1 overcurrent at every PEI point for every configuration + min + max current magnitudes. Reg 551.4.2 multi-source RCD effectiveness. Collective + shared PEI (defined in the Reg 826.7 contents) for apartment blocks + community schemes. EREC G99 amendment process when adding sources."
-            tone="yellow"
-          />
-
-          <TLDR
-            points={[
-              'Multi-source PEI is NOT the sum of single-source installs. Each added source multiplies the configurations + interactions to verify under Chapter 82.',
-              'Reg 826.1.2.1 requires overcurrent calculation at EVERY PEI protective device location, for ALL configurations, + for BOTH minimum AND maximum current magnitudes. Max sizes breakers; min verifies ADS especially in island.',
-              'Reg 826.1.1.4 multi-source isolation: per-source main switch + consolidated warning notice listing ALL switches that must be operated to isolate the installation.',
-              'Reg 551.4.2 multi-source RCD effectiveness: RCD architecture must remain effective across every intended combination of sources. Per-source RCD + central architecture + Type B where smooth-DC fault current.',
-              'Multi-source PEI commissioning: 2-3 days typical labour. 10+ distinct verification activities across Reg 643 + Reg 551.7.5 + Reg 551.4.2 + Reg 826.1.1.2.2 + Reg 826.1.1.4 + Reg 826.1.2.1 + EREC G99/G100 + EMS + customer handover.',
-              'EREC G99 amendment required when adding any new generating source to an existing PEI. Without amendment: contractual breach + DNO disconnection risk.',
-              'Collective PEI (a type defined in the Reg 826.7 contents): apartment block / community schemes with shared generation feeding multiple legal entities. Adds: ownership clarity, metering architecture, private-wire / Ofgem considerations, lease + maintenance responsibilities, multiple EICs + coordinating document.',
-              'Documented isolation procedure: step-by-step sequence + verification + lockout / tagout + capacitor wait time + reverse-restoration. Customer handover pack contains.',
-              'Cert evidence bundle structure: integrated PEI EIC + per-technology DoCs + EREC correspondence + MCS handover packs + Reg 826 commissioning records + EMS architecture + customer handover signatures. Typical 30-60 pages.',
-              'Distribution: customer copy (handover) + DNO copy (G99/G100 closure) + installer archive (6-10 years minimum). Future engineer reads BEFORE attending.',
-            ]}
-          />
-
-          <LearningOutcomes
-            outcomes={[
-              'Apply Reg 826.1.2.1 — overcurrent at every PEI point for all configurations + min + max current magnitudes.',
-              'Apply Reg 826.1.1.4 multi-source isolation with consolidated warning notice + documented isolation procedure.',
-              'Apply Reg 551.4.2 multi-source RCD effectiveness across every source combination + commissioning verification.',
-              'Configure a comprehensive multi-source PEI commissioning sequence covering Reg 643 + 551 + 826 + EREC + EMS + customer handover.',
-              'Apply EREC G99 amendment process when adding generating sources to an existing PEI.',
-              'Identify collective + shared PEI scenarios (the types of PEI defined in the Reg 826.7 contents) + the additional considerations beyond individual residential.',
-              'Compose the cert evidence bundle for a multi-source PEI: structure, content, distribution, retention.',
-              'Articulate why a 4-source PEI commissioning is 2-3 days + £2-5k labour rather than half a day.',
-            ]}
-            initialVisibleCount={3}
-          />
-
-          <Pullquote>
-            The single most expensive design assumption you can make on a multi-source PEI is that it’s "PV + BESS + EV done separately, stuck together". Chapter 82 exists because that assumption is wrong.
-          </Pullquote>
-
-          <ContentEyebrow>Why multi-source is categorically different</ContentEyebrow>
-
-          <ConceptBlock
-            title="Reg 826.1.2.1 — overcurrent at every point for every configuration"
-            plainEnglish="Reg 826.1.2.1 is the most operationally-demanding clause of Chapter 82. It requires overcurrent calculation at EVERY PEI protective device location, for ALL possible configurations of the PEI, AND for BOTH minimum and maximum current magnitudes. Practical effect: a single 4-source PEI has 6-8 practically-reachable configurations + 5-15 protective device locations = 30-120 overcurrent calculations + verifications."
-            onSite="UK 2025-26 design tool support: spreadsheet-based studies + commercial software (Amtech Pro Design, Trimble Electrical, Hevacomp Electrical). The PEI overcurrent study is a deliverable in the cert evidence bundle. Commissioning verifies representative configurations + spot-checks the calculations."
+          <button
+            type="button"
+            onClick={() => navigate('/electrician/upskilling/renewable-energy-module-10-section-8')}
+            className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
           >
-            <p>Reg 826.1.2.1 in practice:</p>
-            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
-              <li>
-                <strong className="text-white">Every PEI protective
-                  device point</strong> — main switch, main RCD, distribution
-                board, sub-DB, RCBOs per final circuit, source-side breakers,
-                inverter AC isolators. Each location needs overcurrent
-                calculation. UK 2025-26 typical 4-source PEI: 5-15 locations
-              </li>
-              <li>
-                <strong className="text-white">All possible
-                  configurations</strong> — enumerate which sources are
-                actively contributing. 4-source PEI: 2⁴ = 16 mathematical
-                combinations but ≈7-9 practically reachable (DNO almost always
-                present in direct-feeding; some configurations require island
-                operation; etc.). List + analyse each
-              </li>
-              <li>
-                <strong className="text-white">Maximum current
-                  magnitudes</strong> — highest aggregate fault current any
-                source combination can deliver to a fault at each protective
-                device location. Direct-feeding all-sources-active is usually
-                the max. Used for: Reg 434.5.1 breaker breaking capacity; Reg
-                433 cable thermal protection; Reg 533.4 / 536 discrimination
-              </li>
-              <li>
-                <strong className="text-white">Minimum current
-                  magnitudes</strong> — lowest aggregate fault current any
-                source combination can deliver to a fault at each location.
-                Island-mode single-source is usually the min. Used for: Reg
-                411.3 ADS verification — must achieve disconnection time at
-                this current; if not, rely on RCD or other ADS path
-              </li>
-              <li>
-                <strong className="text-white">Per-configuration
-                  per-location matrix</strong> — each configuration ×
-                each location = one PSCC entry + one min fault entry. Build the
-                matrix as a spreadsheet or in design software. UK 2025-26
-                typical 4-source PEI: 30-120 entries
-              </li>
-              <li>
-                <strong className="text-white">Worst case</strong>
-                — from the matrix, identify the worst-case max + min per
-                protective device location. Worst max sizes breaker; worst min
-                verifies ADS
-              </li>
-              <li>
-                <strong className="text-white">Commissioning
-                  verification</strong> — representative configurations
-                tested. Direct-feeding max (induced fault, measure trip); island
-                min (controlled fault simulation, verify RCD trip). Cannot
-                practically verify all 30-120 entries; spot-check + calculation
-                evidence
-              </li>
-              <li>
-                <strong className="text-white">Cert evidence
-                  bundle</strong> — PEI overcurrent study (the matrix +
-                analysis + worst-case identification) + commissioning test
-                results (representative configurations) + per-device-location
-                analysis summary on the EIC
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <ConceptBlock
-            title="Multi-source RCD architecture (Reg 551.4.2)"
-            plainEnglish="Reg 551.4.2: “The generating set shall be connected so that any provision within the installation for protection by RCDs in accordance with Chapter 41 remains effective for every intended combination of sources of supply.” Multi-source PEI requires careful RCD architecture: per-source RCD + central RCD coordination + Type B where smooth-DC fault current + commissioning verification across every source combination."
-            onSite="The challenge: each source influences the fault-current path + the RCD’s view of residual current. Without per-source RCDs + central coordination, a fault near one source may not be seen by an RCD; or an RCD may false-trip due to circulating residual current between sources. Multi-source RCD design is engineering work, not boilerplate."
-          >
-            <p>Multi-source RCD architecture considerations:</p>
-            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
-              <li>
-                <strong className="text-white">Per-source RCD</strong>
-                — each generating source has its own RCD on its supply-side
-                connection. Typical 30 mA Type A or Type B per Reg 415.1 + Reg
-                531.3.3. Type depends on source electronics (VSD wind, hybrid
-                inverter, V2G → Type B where manufacturer DoC declares
-                smooth-DC)
-              </li>
-              <li>
-                <strong className="text-white">Central RCD
-                  architecture</strong> — main RCD (Type S 100 mA upstream)
-                + 30 mA RCBO per final circuit. Provides discrimination per Reg
-                531.3.6 + Reg 415.1 additional protection
-              </li>
-              <li>
-                <strong className="text-white">Reg 551.7.1(d)
-                  prohibition</strong> — source must NOT be connected on
-                load side of an RCD under certain conditions (the RCD would not
-                correctly see the source’s contribution to residual current)
-              </li>
-              <li>
-                <strong className="text-white">Type B for
-                  smooth-DC sources</strong> — V2G chargers, BESS hybrid
-                inverters, VSD wind / hydro / CHP can produce smooth-DC
-                residual at fault. Type A RCDs saturate; Type B detects.
-                Manufacturer DoC declares the requirement. UK 2025-26 modern
-                hardware: Type B integrated or RDC-DD per BS EN 61851-1 (Reg
-                722.531.3)
-              </li>
-              <li>
-                <strong className="text-white">Source-combination
-                  verification</strong> — at commissioning, induce a
-                controlled residual fault in each practically-reachable source
-                combination + verify the appropriate RCD trips. UK 2025-26
-                4-source PEI: ~6-8 combinations tested representative
-              </li>
-              <li>
-                <strong className="text-white">Island-mode RCD
-                  operation</strong> — reliant on local N-E bond per Reg
-                826.1.1.2.2. Verified at commissioning via simulated grid-loss
-                + controlled fault in island
-              </li>
-              <li>
-                <strong className="text-white">Discrimination</strong>
-                — upstream Type S + downstream 30 mA RCBO. Time-graded so
-                downstream trips first on local faults; upstream remains intact
-                for the rest of the installation. Verified at commissioning
-              </li>
-              <li>
-                <strong className="text-white">Cert evidence</strong>
-                — RCD architecture diagram + per-source RCD type / In /
-                IΔn + commissioning test results per source combination +
-                manufacturer DoC declarations + island-mode RCD verification
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <RegsCallout
-            source="BS 7671:2018+A4:2026 · Reg 826.1.1.4 — Multi-source isolation deep-dive"
-            clause="Where an installation is supplied from more than one source, a main switch suitable for isolation (for example, switch-disconnector) shall be provided for each source of supply. A durable warning notice shall be permanently fixed in the vicinity of these main switches in such a position that any person seeking to operate any of these main switches will be warned of the need to operate all such switches to achieve isolation of the installation. Alternatively, a single switching device may be used provided that it is capable of isolating all sources simultaneously and meets the requirements of Regulation 537.1.2."
-            meaning="Reg 826.1.1.4 + its alternative clause: TWO compliant approaches. (1) Multiple-switch approach — one main switch per source (DNO + PV AC + PV DC + BESS AC + BESS DC + V2G + etc.) + consolidated warning notice. UK 2025-26 retrofit-friendly: existing consumer unit retained + per-source isolators added. (2) Single-device approach — a single switching device per Reg 537.1.2 capable of isolating ALL sources simultaneously. Practical: modern integrated PEI panels (Tesla Backup Gateway 2 + Powerwall, SolarEdge Backup Interface + StorEdge, GivEnergy Whole Home Backup + AIO) provide this in vendor-integrated form. New-build / major-retrofit-friendly. Either approach requires: switching device(s) suitable for isolation per Reg 537.2; durable warning notice per Reg 514 family; documented isolation procedure in customer handover pack; commissioning verification that each switch isolates its source. UK 2025-26 customer-facing reality: ensure consumer can perform safe isolation in emergency; trained-person isolation procedure documented for engineer attendance; periodic verification (annual + after equipment changes). Cert evidence: isolation schematic + warning notice photograph + procedure document + commissioning test of each switch + collective-PEI considerations (Reg 826.7 contents) if applicable."
-          />
-
-          <InlineCheck {...inlineChecks[0]} />
-
-          <InlineCheck {...inlineChecks[1]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>Collective PEI + EREC G99 amendments</ContentEyebrow>
-
-          <Pullquote>
-            The multi-source PEI didn’t spring fully-formed. Each addition triggered an EREC G99 amendment, a Chapter 82 re-evaluation, a cert evidence bundle update. The integrating EIC is a living document, not a static deliverable.
-          </Pullquote>
-
-          <ConceptBlock
-            title="EREC G99 amendments — when adding sources"
-            plainEnglish="A G99 connection agreement is sized at the customer’s DECLARED GENERATING CAPACITY at original application. Adding any new source (V2G, additional PV string, BESS expansion, wind / hydro) requires a G99 AMENDMENT — the DNO reassesses network impact + issues an updated connection offer + recommissioning may be required. Without amendment: contractual breach + DNO disconnection risk."
-            onSite="UK 2025-26 typical: customer’s PEI evolves year-by-year. Year 1: PV + BESS (initial G99). Year 2: V2G addition (G99 amendment). Year 3: PV expansion (further G99 amendment). The integrating PEI EIC + cert evidence bundle accumulates the changes. Installer scope on each addition: G99 amendment management as part of the install."
-          >
-            <p>G99 amendment process:</p>
-            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
-              <li>
-                <strong className="text-white">Trigger</strong> — ANY
-                change to declared generating capacity, source type, source mode
-                (e.g. PV inverter replacement, V2G addition, BESS expansion).
-                The installer assesses whether the change requires G99
-                amendment vs simple notification
-              </li>
-              <li>
-                <strong className="text-white">Application
-                  content</strong> — amendment form to DNO listing: existing
-                generating capacity + sources; new source details (type,
-                manufacturer, ENA type-test approval, rated capacity, intended
-                mode); updated network connection requirements (any change to
-                G100 limit, anti-islanding behaviour); customer details + site
-                location + MPAN
-              </li>
-              <li>
-                <strong className="text-white">DNO assessment</strong>
-                — DNO reassesses: voltage rise impact, reverse-power-flow
-                constraint, transformer + cable capacity, neighbouring-customer
-                constraints. May require network model rerun. UK 2025-26
-                typical 4-12 week timeline depending on DNO + change scope
-              </li>
-              <li>
-                <strong className="text-white">Updated connection
-                  offer</strong> — DNO issues amendment-conditional offer.
-                Possible outcomes: (a) accepted at existing terms (no impact);
-                (b) accepted with new G100 limit (added export limitation);
-                (c) accepted with reinforcement requirement (rare for incremental
-                additions); (d) rejected (network truly cannot support)
-              </li>
-              <li>
-                <strong className="text-white">Customer
-                  acceptance</strong> — customer signs + accepts the updated
-                connection agreement. Any payment / connection-charge variation
-                resolved
-              </li>
-              <li>
-                <strong className="text-white">Commissioning</strong>
-                — standard BS 7671 + per-technology commissioning + Reg
-                551.7.5 anti-islanding test on new source + Reg 551.4.2
-                multi-source RCD effectiveness verification + G100
-                recommissioning if export-limited
-              </li>
-              <li>
-                <strong className="text-white">Cert evidence
-                  update</strong> — integrated PEI EIC updated; per-technology
-                EIC for new source; G99 amendment correspondence filed;
-                multi-source isolation procedure + warning notice updated;
-                customer handover pack updated
-              </li>
-              <li>
-                <strong className="text-white">Breach
-                  consequences</strong> — customer fails to amend + DNO
-                routine audit / voltage-rise complaint catches: revoked
-                connection agreement, retrospective amendment + recommissioning,
-                customer disruption + reputational damage to installer
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <ConceptBlock
-            title="Collective PEI (Reg 826.7 contents) — apartment blocks + community schemes"
-            plainEnglish="The Chapter 82 contents (Reg 826.7) define the types of PEI — individual, collective and shared. Collective + Shared PEI: installations where local generation is shared by multiple separate electrical installations (apartment block tenants + landlord common areas + master meter, community generation co-ops, hospital-campus schemes). Additional considerations beyond individual PEI: ownership clarity, master + sub-metering, ESQCR / Ofgem private-wire-supply rules, lease + maintenance responsibilities, multiple EICs + a coordinating document."
-            onSite="UK 2025-26 use cases: social housing rooftop PV (council / housing association programmes); apartment build-to-rent shared solar (Greystar, Quintain); community energy co-ops (Brixton Energy, Repowering London); hospital campus CHP / shared generation; light-industrial park shared assets. Installer scope expands beyond standard residential."
-          >
-            <p>Collective + shared PEI complexity:</p>
-            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
-              <li>
-                <strong className="text-white">Ownership
-                  clarity</strong> — generation asset (rooftop PV + BESS)
-                owned by landlord / community / co-op; tenants have separate DNO
-                supplies + MPANs. Lease document defines responsibilities,
-                payment flows, maintenance
-              </li>
-              <li>
-                <strong className="text-white">Metering
-                  architecture</strong> — master meter at building DNO
-                point measures gross import + export; sub-meters or smart-meter
-                aggregation determines distribution. UK 2025-26 typical: master
-                MPAN for landlord; tenant MPANs separate; community-generated
-                kWh distributed via private-wire or notional allocation
-              </li>
-              <li>
-                <strong className="text-white">ESQCR + Ofgem
-                  private-wire</strong> — if landlord supplies tenant flats
-                via cables NOT through public DNO network (private-wire
-                supply), Ofgem licence exemption + ESQCR (Electricity Safety,
-                Quality + Continuity Regulations 2002) considerations. Outside
-                strict BS 7671 scope but adjacent. UK 2025-26 increasingly
-                common
-              </li>
-              <li>
-                <strong className="text-white">EREC G99 single-site
-                  registration</strong> — collective generation typically
-                registered as a SINGLE generating site at the building DNO
-                point. Capacity = total generation aggregate; G99 application
-                covers all sources together. SEG payable to landlord / community
-                owner per their tariff arrangement
-              </li>
-              <li>
-                <strong className="text-white">Multiple EICs</strong>
-                — each tenant flat = one EIC (Section 712 PV if private-
-                wire-fed, otherwise standard residential EIC). Plus the shared
-                rooftop / BESS install EIC (commercial + Section 712 + Chapter
-                57 scope). Plus the coordinating document (collective PEI compliance
-                summary, Reg 826.7 contents)
-              </li>
-              <li>
-                <strong className="text-white">Safety + isolation
-                  coordination</strong> — work on shared assets requires
-                landlord + tenant access coordination. Isolation procedure
-                involves multiple parties. Warning notice at each tenant’s
-                consumer unit if private-wire-fed
-              </li>
-              <li>
-                <strong className="text-white">Maintenance + life
-                  cycle</strong> — landlord responsible for shared-asset
-                maintenance; tenant responsible for their own electrical
-                installation. Lease defines who pays for what. Cert evidence
-                bundle records each
-              </li>
-              <li>
-                <strong className="text-white">Cert evidence
-                  bundle for collective PEI</strong> — substantial: multiple
-                EICs + shared-asset EIC + collective PEI compliance summary (Reg 826.7 contents) +
-                ownership documentation + private-wire arrangement if
-                applicable + maintenance responsibility document + each EREC
-                reference + landlord + tenant handover
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <RegsCallout
-            source="BS 7671:2018+A4:2026 · Reg 826.7 contents — Collective + Shared PEI scope"
-            clause="Within Chapter 82 contents: TYPES OF PEI — General; Operating modes; Individual PEI; Collective PEI; Shared PEI. Recognises three PEI categories: Individual (one customer, one electrical installation, local generation); Collective (multiple individual electrical installations behind a common point, sharing local generation — e.g. apartment block); Shared (generation assets shared across legally-separate entities — e.g. community solar co-operative)."
-            meaning="The Reg 826.7 contents explicitly recognise three types of PEI — Individual, Collective, Shared. Practical scope expansion: (1) Individual PEI — the case most M10 sections have implicitly assumed. One customer, one electrical install, one DNO connection, one MPAN. Section 712 + Chapter 57 + Section 722 + Chapter 82 anchor apply uniformly. (2) Collective PEI — multiple electrical installations behind a common point, sharing local generation. UK 2025-26 examples: apartment block with rooftop PV feeding common areas + (private-wire) tenant supplies; care home shared CHP. Additional considerations: ownership, metering architecture, private-wire supply where applicable, multiple EICs. (3) Shared PEI — generation assets shared across legally-separate entities. UK 2025-26 examples: community solar co-op (multiple households co-own + share generation), hospital-campus CHP shared across departments / suppliers. Additional considerations: legal ownership structure, allocation rules, ESQCR / Ofgem framework, supply licence considerations. Cert evidence bundle scope expands accordingly: per-installation EIC + shared-asset EIC + collective PEI compliance summary (Reg 826.7 contents) + ownership / lease / co-op governance document + each EREC reference + private-wire arrangement if applicable. UK 2025-26 reality: collective + shared PEI are growing categories as community energy + apartment-block decarbonisation accelerate. Installer scope expands beyond standard residential into adjacent regulatory frameworks."
-          />
-
-          <InlineCheck {...inlineChecks[2]} />
-
-          <InlineCheck {...inlineChecks[3]} />
-
-          <SectionRule />
-
-          <Scenario
-            title="Year-by-year multi-source PEI build-out + EREC amendment cycle"
-            situation="Suburban detached home, customer’s renewable build-out across 4 years. Year 1: 4 kWp PV install (G98 fast-track, single source). Year 2: 10 kWh BESS retrofit. Year 3: 7 kW EV charger install. Year 4: V2G upgrade of EV charger. Final state: 4-source PEI under Chapter 82. Each year’s install must trigger the appropriate EREC + BS 7671 + cert updates."
-            whatToDo="Multi-year evolution under Chapter 82 framework. Year 1: G98 fast-track post-installation notification (4 kWp single-phase fits ≤16 A). Section 712 EIC + customer handover. Year 2: G99 application required — BESS as second generating source per Reg 551.7.2.1 takes site above G98 fast-track scope. DNO connection offer + acceptance. Integrated PEI EIC supersedes year-1 PV-only EIC. Chapter 82 multi-source isolation introduced (DNO + PV + BESS = 3 isolation points + warning notice). Reg 826.1.2.1 overcurrent recalculated. Reg 551.4.2 multi-source RCD verification. Year 3: EV charger added (Section 722 — LOAD only, not generating). G99 not triggered (no new generating capacity). But DNO load notification typical (heat-pump-equivalent max-demand consideration). Section 722 EIC. Multi-source isolation procedure updated for completeness even though EV is load (not source). Reg 311.1 max demand recalculated. Year 4: V2G upgrade. EV transitions from pure load to bidirectional source. G99 AMENDMENT required — declared generating capacity now PV (4 kW) + BESS (5 kW) + V2G (7 kW) = 16 kW total. DNO reassesses + may impose G100 limit (likely on suburban network). New G100 commissioning cert if applicable. Reg 551.7.5 anti-islanding test on V2G charger. Reg 551.4.2 multi-source RCD verification expanded to include V2G combinations. Reg 826.1.1.4 isolation procedure updated to include V2G charger isolator (now 4-source isolation: DNO + PV + BESS + V2G). Reg 826.1.2.1 overcurrent matrix expanded — V2G discharge contribution at MET added. Integrated PEI EIC supersedes year-3 version. EMS reconfigured. Customer handover updated. Cert evidence bundle now contains 4 years of updates: 4 EICs in succession + per-technology DoCs + 3 G99-related communications + G100 cert (if applicable) + MCS handover packs + Reg 826 commissioning records + EMS evolution + customer acknowledgements across 4 years."
-            whyItMatters="UK 2025-26 multi-year PEI build-out is the dominant retrofit pattern — customers add capability over time. Each addition is NOT a fresh standalone install; it’s a transition to a more-complex PEI under Chapter 82. The installer’s scope includes the G99 amendment process + cert evidence bundle update + Reg 826 multi-source recommissioning + customer handover update. Without disciplined evolution: customer accumulates inconsistent paperwork, DNO breach risk, future-engineer confusion. The integrating PEI EIC is a living document."
-          />
-
-          <Scenario
-            title="Apartment-block collective PEI — 60 flats with rooftop PV + community BESS + private-wire to common areas"
-            situation="60-flat apartment block, build-to-rent operator-owned. Landlord installs 80 kWp rooftop PV + 100 kWh BESS feeding the building common-area circuit (lifts, lighting, communal heating, comms) + offering surplus generation to tenants via private-wire supply at reduced rate. Tenants retain their own DNO supplies for in-flat use. Building has separate MPAN for common-area; each flat has its own MPAN."
-            whatToDo="Collective PEI scope (a type of PEI defined in the Reg 826.7 contents). (1) Asset structure: rooftop PV + BESS owned by landlord; common-area circuit owned by landlord; tenant flats have own DNO supplies; private-wire supply to tenant flats from landlord’s generation. (2) BS 7671 scope: Section 712 PV install (commercial scale, 80 kWp) + Chapter 57 BESS install (100 kWh — substantial) + Chapter 82 PEI integration (the entire common-area + private-wire installation). Each tenant flat: standard residential EIC under its own electrical installation scope. (3) EREC G99 — single application for the rooftop generation aggregate (80 kWp + 100 kWh BESS). DNO assesses building DNO point capacity. Likely G100 export limit imposed (urban network constrained). (4) collective PEI considerations (Reg 826.7 contents) — ownership clarity in lease, master + sub-metering architecture, private-wire supply licence exemption from Ofgem (since landlord supplies tenants on-site), ESQCR compliance for private-wire cable installation. (5) Multi-source isolation — landlord-side: DNO common-area + PV AC + PV DC + BESS AC + BESS DC = 5 isolation points + warning notice + comprehensive isolation procedure. Tenant-side: standard residential isolation but private-wire feeds from landlord generation must be isolatable by tenant in emergency (additional isolator at each tenant flat). (6) Cert evidence bundle: commercial PEI EIC (rooftop + common-area + private-wire infrastructure) + 60 × residential EICs (each tenant flat) + landlord-tenant lease excerpt referencing private-wire arrangement + collective PEI compliance summary (Reg 826.7 contents) + EREC G99 + G100 commissioning + MCS commercial PV handover + EMS architecture + safety procedures for shared-asset maintenance + customer (tenant) handover at each flat + landlord handover. (7) Economics: landlord saves £35,000-50,000/year on common-area electricity import (self-consumed PV × £0.25/kWh × 80% self-consumption); tenants saved £100-200/year each via private-wire reduced rate; SEG income limited by G100 export limit. Capex £150,000-250,000 PV + BESS install + £50,000-100,000 EMS + private-wire infrastructure + £20,000-30,000 cert + commissioning."
-            whyItMatters="Apartment-block collective PEI is a growing UK 2025-26 use case driven by ESG / net-zero commitments of build-to-rent operators + social housing programmes. The collective PEI framework (Reg 826.7 contents) + private-wire supply licence + multi-EIC management + commercial-scale Chapter 82 design all converge. The installer’s scope expands substantially beyond ‘residential PV + BESS’ — commercial PEI design + private-wire infrastructure + community-scale cert evidence bundle. Cert evidence is the document trail that supports everything: insurance, audit, ESG reporting, future-engineer attendance, tenant + landlord rights + responsibilities."
-          />
-
-          <CommonMistake
-            title="Adding source to existing PEI without G99 amendment"
-            whatHappens="Customer with existing PV+BESS PEI adds a 7 kW V2G charger. Installer fits the V2G hardware + commissions per Section 722 + Section 551 + Chapter 82 BUT doesn’t notify the DNO. DNO’s routine audit (or voltage-rise complaint on the local network) catches the discrepancy 12 months later. DNO revokes the connection agreement; customer faces disconnection; retrospective G99 amendment + recommissioning cost £5,000-10,000 + customer disruption + installer reputational damage."
-            doInstead="ANY new generating source addition to an existing PEI triggers G99 amendment. Process: at quote stage, identify the source addition + budget G99 amendment lead time (typically 4-12 weeks) + cost; pre-submission consultation with DNO if uncertain about acceptability; G99 amendment submission as part of project plan; commissioning held until DNO acceptance; G100 recommissioning if site export-limited; cert evidence bundle updated with G99 amendment correspondence. Customer-facing: build the G99 amendment into the install timeline + cost. Don’t treat it as optional admin."
-          />
-
-          <CommonMistake
-            title="Reusing the original PEI EIC after substantial source addition"
-            whatHappens="Customer’s year-1 PV+BESS EIC remains the only cert evidence after year-4 V2G addition. Future engineer attending in year 6 reads the EIC + sees only PV + BESS — doesn’t notice V2G exists. Performs work assuming 2-source PEI; V2G isn’t isolated; persons-at-risk on live V2G feed. Real near-miss / accident scenario."
-            doInstead="Integrating PEI EIC is a LIVING document. Each substantial change (new source, source removal, ELS reconfiguration, EMS architectural change, backup-gateway retrofit) supersedes the prior EIC. Cert evidence bundle: chronologically-ordered EIC succession, each clearly marked with effective date + supersedes-prior-version reference. Future engineer reads the LATEST EIC, understands current PEI configuration. Customer handover: deliver new EIC + emphasise to customer that prior EIC is now superseded + recommend storage of complete history but use of latest as the operative document. Cert evidence bundle: latest integrated PEI EIC + per-technology DoCs + EREC correspondence chronology + Reg 826 commissioning history + EMS architecture evolution."
-          />
-
-          <SectionRule />
-
-          <KeyTakeaways
-            points={[
-              'Multi-source PEI is categorically different from single-source: NOT the sum of N × 1-source installs. Chapter 82 integration framework + Reg 826.x family addresses the difference.',
-              'Reg 826.1.2.1: overcurrent calculation at EVERY PEI protective device location for ALL configurations + BOTH minimum + maximum current magnitudes. UK 2025-26 typical 4-source PEI = 30-120 calculations.',
-              'Reg 826.1.1.4 multi-source isolation: per-source main switch + consolidated warning notice + documented isolation procedure + customer handover pack inclusion.',
-              'Reg 551.4.2 multi-source RCD: per-source RCD + central architecture + Type B where smooth-DC fault current + commissioning verification per source combination.',
-              'Reg 826.1.1.4 alternative: a single switching device per Reg 537.1.2 capable of isolating all sources simultaneously (vendor-integrated backup gateway approach).',
-              'EREC G99 amendment required for ANY new generating source addition. Lead time 4-12 weeks. Without amendment: contractual breach + DNO disconnection risk.',
-              'EREC G100 recommissioning required when adding generating source to export-limited site. ELS hierarchy updated. New commissioning cert filed.',
-              'Collective PEI (a type defined in the Reg 826.7 contents): apartment blocks + community schemes + shared assets. Adds ownership clarity, master + sub-metering, ESQCR / Ofgem private-wire-supply, multiple EICs + coordinating document.',
-              'Multi-source PEI commissioning: 2-3 days labour + £2-5k cost. 10+ distinct verification activities: Reg 643 Part 6 + Reg 551.7.5 + Reg 551.4.2 + Reg 826.1.1.2.2 + Reg 826.1.1.4 + Reg 826.1.2.1 + EREC G99 + G100 + EMS + customer handover.',
-              'Documented multi-source isolation procedure: step-by-step + verification + lockout / tagout + capacitor wait time + reverse-restoration. Customer handover pack contains.',
-              'Cert evidence bundle structure: integrated PEI EIC + per-technology DoCs + EREC correspondence + MCS handover packs + Reg 826 commissioning records + EMS architecture + customer handover signatures. Typical 30-60 pages.',
-              'Cert evidence distribution: customer copy (handover) + DNO copy (G99/G100 closure) + installer archive (6-10 years minimum). Future engineer reads BEFORE attending.',
-              'Integrating PEI EIC is a LIVING document. Each substantial change supersedes prior EIC. Chronological succession in cert evidence bundle. Customer handover: latest = operative.',
-              'Year-by-year PEI build-out: each addition triggers G99 amendment + Chapter 82 re-evaluation + cert evidence update. Installer scope includes the regulatory + paperwork evolution.',
-            ]}
-          />
-
-          <FAQ items={faqs} />
-
-          <Quiz questions={quizQuestions} title="Section 7 · Knowledge check" />
-
-          <div className="grid grid-cols-2 gap-3 pt-2">
-            <button
-              type="button"
-              onClick={() =>
-                navigate('/electrician/upskilling/renewable-energy-module-10-section-6')
-              }
-              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
-                <ChevronLeft className="h-3 w-3" /> Section 6
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-white truncate">
-                10.6 Grid-forming vs grid-following
-              </div>
-            </button>
-            <button
-              type="button"
-              onClick={() =>
-                navigate('/electrician/upskilling/renewable-energy-module-10-section-8')
-              }
-              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
-                Next section <ChevronRight className="h-3 w-3" />
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-black truncate">
-                10.8 Commissioning + handover
-              </div>
-            </button>
-          </div>
-        </PageFrame>
-      </div>
-    </div>
+            <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+              Next section <ChevronRight className="h-3 w-3" />
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-black truncate">
+              10.8 Commissioning + handover
+            </div>
+          </button>
+        </div>
+      </HubBody>
+    </HubPage>
   );
 }

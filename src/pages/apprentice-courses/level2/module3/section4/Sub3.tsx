@@ -8,11 +8,11 @@
  */
 
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
-import { PageFrame, PageHero } from '@/components/college/primitives';
 import {
   TLDR,
   ConceptBlock,
@@ -34,8 +34,7 @@ const DESCRIPTION =
 const checks = [
   {
     id: 'm3-s4-sub3-define-ecp',
-    question:
-      'Per BS 7671 Part 2, an exposed-conductive-part is best described as:',
+    question: 'Per BS 7671 Part 2, an exposed-conductive-part is best described as:',
     options: [
       'Any metal part of a building that could introduce earth potential from outside the installation.',
       'A conductor that is normally live in service, such as the line or neutral of a circuit.',
@@ -79,8 +78,7 @@ const checks = [
 const quizQuestions = [
   {
     id: 1,
-    question:
-      'Which of these is NOT an exposed-conductive-part?',
+    question: 'Which of these is NOT an exposed-conductive-part?',
     options: [
       'The metal casing of an electric shower.',
       'A copper water pipe carrying mains water through the kitchen.',
@@ -218,7 +216,8 @@ const faqs = [
       'A structural RSJ isn’t equipment, so it can’t be an exposed-conductive-part. But it might be an extraneous-conductive-part if it could introduce a potential into the installation — particularly if it spans into ground via foundations and creates a parallel earth path. Sub 4.4 covers the test for that. The two categories don’t overlap.',
   },
   {
-    question: 'I’ve seen an old installation with no earth at all on the lighting circuit. What now?',
+    question:
+      'I’ve seen an old installation with no earth at all on the lighting circuit. What now?',
     answer:
       'Pre-1966 installations sometimes wired lighting in 2-core (no CPC) on the basis that all the accessories were Class II / non-metallic. On an EICR today this would typically be a C2 — potentially dangerous — because any future replacement of a fitting with a metal one creates an unearthed exposed-conductive-part with no easy fix. The recommendation is rewiring of the lighting circuit so the CPC is available at every point.',
   },
@@ -229,393 +228,383 @@ export default function Sub3() {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
-      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
-        <PageFrame>
+    <HubPage>
+      <HubMasthead
+        section="Module 3 · Section 4 · Subsection 3"
+        title="Exposed conductive parts"
+        backTo=".."
+      />
+      <HubBody>
+        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
+          Metalwork of equipment that is not normally live but can become live under fault
+          conditions. Strict BS 7671 Part 2 definition — most apprentices over-apply it on first
+          reading.
+        </p>
+
+        <TLDR
+          points={[
+            'Exposed-conductive-part (BS 7671 Part 2): a conductive part of equipment which can be touched and which is not normally live but which can become live under fault conditions.',
+            'Three tests must all be true: it’s conductive, it’s part of equipment, and a single fault could make it live. Building structure (pipes, RSJs, walls) isn’t equipment — those go in the extraneous category (Sub 4.4).',
+            'Every exposed-conductive-part needs a CPC connection back to the MET (Reg 411.3.1.1). The one exception: a Class II lampholder with no exposed-conductive-parts suspended from a Class II pendant.',
+          ]}
+        />
+
+        <LearningOutcomes
+          outcomes={[
+            'State the BS 7671 Part 2 definition of an exposed-conductive-part verbatim.',
+            'Identify common exposed-conductive-parts in domestic and commercial installations.',
+            'Distinguish exposed-conductive-parts from extraneous-conductive-parts (covered in Sub 4.4) and from unrelated metalwork.',
+            'Recognise Class II equipment by the concentric-squares symbol and explain why it requires no CPC.',
+            'Cite Reg 411.3.1.1 and identify its single exception (Class II lampholder).',
+            'Apply the "simultaneously accessible" rule (411.3.1.1) when bonding adjacent exposed-conductive-parts.',
+          ]}
+          initialVisibleCount={3}
+        />
+
+        <ContentEyebrow>The BS 7671 definition — read it slowly</ContentEyebrow>
+
+        <ConceptBlock
+          title="What an exposed-conductive-part actually is"
+          plainEnglish="Metal that’s part of an electrical thing, that you can touch, that isn’t live in normal use but COULD go live if something inside breaks."
+          onSite="If a single internal fault could put it at line voltage, and you can touch it without tools, it’s an exposed-conductive-part — and it needs an earth."
+        >
+          <p>
+            The BS 7671 Part 2 definition is short and worth memorising: an{' '}
+            <strong>exposed-conductive-part</strong> is "a conductive part of equipment which can be
+            touched and which is not normally live but which can become live under fault
+            conditions". Three things have to be true at once for the label to apply:
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Conductive</strong> — metal, basically. Plastic doesn’t qualify.
+            </li>
+            <li>
+              <strong>Part of equipment</strong> — it has to be a piece of an electrical fitting,
+              accessory, appliance or wiring system. Building structure, pipework and unrelated
+              metalwork are excluded (they sit in the extraneous category — Sub 4.4).
+            </li>
+            <li>
+              <strong>Not normally live but can become live under fault</strong> — there’s a
+              credible single fault inside the equipment that would put the touchable part at supply
+              voltage. If no plausible single fault could make it live (e.g. it’s isolated from
+              internal live parts by double insulation), it isn’t exposed.
+            </li>
+          </ul>
+          <p>
+            All three together. Miss any one and you’re looking at something else — a building part,
+            an extraneous part, or a Class II piece of kit that needs no CPC.
+          </p>
+        </ConceptBlock>
+
+        <RegsCallout
+          source="BS 7671:2018+A4:2026 — Regulation 411.3.1.1 (Protective earthing)"
+          clause="Exposed-conductive-parts shall be connected to a protective conductor under the specific conditions for each type of system earthing as specified in Regulations 411.4 to 411.6. Simultaneously accessible exposed-conductive-parts shall be connected to the same earthing system individually, in groups or collectively. Conductors for protective earthing shall comply with Chapter 54. A circuit protective conductor shall be run to and terminated at each point in wiring and at each accessory except a lampholder having no exposed-conductive-parts and suspended from such a point."
+          meaning={
+            <>
+              Every exposed-conductive-part on an installation requires a CPC connection back to the
+              MET — full stop. Two extra rules: any two exposed-conductive-parts within simultaneous
+              reach must be on the same earthing system (so a fault doesn’t create a touch voltage
+              between them); and the single carve-out for a Class II pendant from a Class II rose.
+              There are no other exceptions.
+            </>
+          }
+          cite="Source: BS 7671:2018+A4:2026 Part 4, Chapter 41, Regulation 411.3.1.1."
+        />
+
+        <InlineCheck
+          id={checks[0].id}
+          question={checks[0].question}
+          options={checks[0].options}
+          correctIndex={checks[0].correctIndex}
+          explanation={checks[0].explanation}
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>What counts on a real installation</ContentEyebrow>
+
+        <ConceptBlock
+          title="The everyday list — exposed-conductive-parts you’ll meet daily"
+          onSite="Every one of these needs a CPC connection back to the MET. No CPC = the part can sit at line voltage during a fault and the MCB never trips."
+        >
+          <p>
+            On a typical UK domestic or commercial installation, the exposed-conductive-parts
+            include all of the following:
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Metal back-boxes</strong> — single-gang, twin-gang, deep boxes, surface-mount
+              pattresses. All count.
+            </li>
+            <li>
+              <strong>Metal-clad accessories</strong> — switches, sockets, FCUs, isolators, cooker
+              outlets. The faceplate is an exposed-conductive-part; the switch mechanism inside is
+              normally live.
+            </li>
+            <li>
+              <strong>Metal luminaire bodies</strong> — chandelier frames, downlight cans (where
+              metal), spotlight bars, surface-mount strip lights, IP-rated bulkheads.
+            </li>
+            <li>
+              <strong>Motor casings</strong> — extractor fans (where metal), pump bodies, garage
+              door motors, lift machinery.
+            </li>
+            <li>
+              <strong>Appliance casings (Class I)</strong> — electric showers, ovens, dishwashers,
+              washing machines, hobs. Anything supplied with a 3-core flex (L, N, E) and no Class II
+              marking.
+            </li>
+            <li>
+              <strong>Metal CU enclosures</strong> — required by BS 7671 (as amended) for domestic.
+              The whole CU body is an exposed-conductive-part.
+            </li>
+            <li>
+              <strong>Metal junction boxes and adaptable boxes.</strong>
+            </li>
+            <li>
+              <strong>SWA armour</strong> when used as a CPC, and metallic conduit / tray when used
+              as a CPC. The wiring system itself becomes part of the exposed-conductive category.
+            </li>
+            <li>
+              <strong>RCBO and MCB casings</strong> in metal-bodied DIN rail products.
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="What’s NOT an exposed-conductive-part"
+          plainEnglish="If it’s building fabric, it’s not equipment. If it’s plastic, it’s not conductive. If it’s Class II, no single fault can make it live."
+        >
+          <p>
+            Equally important is knowing what doesn’t qualify — over-applying the label leads to
+            over-bonding and the parallel-earth issues that brings:
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Building structure</strong> — RSJs, lintels, joists, brickwork ties.
+              Conductive but not part of equipment. Might be extraneous (Sub 4.4) but never exposed.
+            </li>
+            <li>
+              <strong>Pipework carrying water/gas/oil</strong> — same logic. It’s plumbing, not
+              electrical equipment. Might be extraneous (Sub 4.4); never exposed.
+            </li>
+            <li>
+              <strong>All-plastic accessories</strong> — moulded-plastic switches, sockets, ceiling
+              roses. No metal touchable surface = no exposed-conductive-part. CPC still pulled into
+              the back of the accessory for future-proofing, but no terminal needs connection.
+            </li>
+            <li>
+              <strong>Class II equipment</strong> — kettles, hairdryers, drills, vacuums marked with
+              the concentric-squares symbol. Double insulation means no single fault can make the
+              casing live.
+            </li>
+            <li>
+              <strong>SELV equipment</strong> — touchable parts of separated extra-low-voltage kit
+              (e.g. low-voltage downlights, doorbell transformers’ secondary side) operate at
+              voltages too low to cause shock. Different protective measure entirely.
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <ContentEyebrow>The Class II exception — and the symbol</ContentEyebrow>
+
+        <ConceptBlock
+          title="Class II — double insulation does the protection"
+          onSite="Two concentric squares (□ inside □) marked on the rating label. That’s your visual cue — no earth needed, don’t try to add one."
+        >
+          <p>
+            Class II equipment is built so that touchable parts can never become live under a single
+            fault. There are two layers of insulation between any internal live part and any
+            touchable surface — basic insulation plus supplementary insulation, or a single layer of
+            "reinforced" insulation that’s tested as if it were two. Either way, one fault can’t
+            bridge both layers.
+          </p>
+          <p>
+            Because no single fault makes the casing live, there’s nothing for a CPC to protect.
+            Class II equipment ships with a 2-core flex (L and N only — no earth pin in the moulded
+            plug, or a plastic earth dummy pin). The protective measure here is "Class II equipment
+            or equivalent insulation" (Reg 412), entirely separate from ADS.
+          </p>
+          <p>
+            Recognise it by the symbol — two concentric squares (BS EN 60417-5172) on the rating
+            plate. It’s the only legitimate reason to install fixed equipment with no CPC on the
+            casing. Three things to remember:
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Don’t add an earth wire to a Class II appliance.</strong> Drilling into the
+              casing or splicing into the supply lead can compromise the double insulation and turn
+              a safe appliance into a hazard.
+            </li>
+            <li>
+              <strong>Don’t fit a Class II appliance into a Class I-only socket arrangement</strong>{' '}
+              where the surrounding installation needs RCD protection on a different basis. Read the
+              manufacturer’s install instructions.
+            </li>
+            <li>
+              <strong>Don’t assume "no earth pin = broken plug".</strong> A factory-fitted plug with
+              no earth pin on a Class II appliance is correct. A 3-pin plug with a plastic dummy
+              earth pin is also correct (the pin is just for socket-shutter operation).
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <CommonMistake
+          title="Treating a Class II accessory as needing a CPC"
+          whatHappens={
+            <>
+              You’re fitting a Class II all-plastic ceiling rose with a Class II pendant lampholder.
+              There’s a CPC core in the supply T&E. The previous electrician connected the CPC into
+              the lamp itself, drilling a small hole in the plastic to reach a metal screw. Months
+              later, vibration and humidity work the screw loose; the loose screw contacts the live
+              conductor inside; the rose’s plastic body is now electrified and the customer’s child
+              gets a shock changing a bulb.
+            </>
+          }
+          doInstead={
+            <>
+              If a Class II accessory has no exposed-conductive-parts and no provided earth
+              terminal, leave the CPC neatly terminated in an insulated terminal block inside the
+              ceiling rose for future use, but DO NOT connect it to the rose body or improvise a
+              connection. Reg 411.3.1.1 explicitly carves out this case — it’s the one accessory
+              that is permitted to have no CPC connected.
+            </>
+          }
+        />
+
+        <InlineCheck
+          id={checks[1].id}
+          question={checks[1].question}
+          options={checks[1].options}
+          correctIndex={checks[1].correctIndex}
+          explanation={checks[1].explanation}
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>Practical earthing — back-boxes and faceplates</ContentEyebrow>
+
+        <ConceptBlock
+          title="Metal back-box, metal faceplate — both are exposed parts"
+          onSite="Standard fix: a green/yellow earth fly-lead from the back-box earth terminal to the faceplate earth terminal. Or rely on the metal fixing screws if continuity is verified at test — but most manufacturers and supervisors want the fly-lead in regardless."
+        >
+          <p>
+            A metal back-box is itself an exposed-conductive-part. Inside it, the wiring includes
+            live conductors that could chafe against the box under vibration, repeated insertion/
+            removal of the accessory, or a future installer’s clumsy stripping. So the back-box
+            needs its own connection to the CPC — usually via the dedicated earth terminal moulded
+            into the back-box (a single brass screw + threaded boss).
+          </p>
+          <p>Two valid arrangements for connecting the metal accessory to the back-box CPC:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Earth fly-lead</strong> — a short green/yellow conductor from the back-box
+              earth terminal to the accessory’s earth terminal. Always compliant. Standard practice
+              on metal-clad sockets and switches.
+            </li>
+            <li>
+              <strong>Fixing-screw bonding</strong> — where a metal accessory is securely fixed to a
+              metal back-box by metal screws and continuity is verified at initial verification (R2
+              test from the box to the faceplate to the MET), the screws can act as the CPC
+              connection per IET guidance. Less common in practice — most installers fly-lead anyway
+              because it’s cheap insurance.
+            </li>
+          </ul>
+          <p>
+            Plastic accessory in metal back-box: the back-box still needs a CPC connection (it’s
+            still an exposed-conductive-part), but the plastic faceplate doesn’t. Plastic accessory
+            in plastic back-box: no CPC connection on either, though the CPC core should still be
+            terminated in an insulated block for future use.
+          </p>
+        </ConceptBlock>
+
+        <Scenario
+          title="Faulty SWA gland — exposed armour with broken CPC"
+          situation={
+            <>
+              You’re testing a sub-main run on a small commercial unit. The SWA cable feeds a
+              downstream board 30 m away, and the armour is meant to be the CPC. Your R2 test from
+              the MET to the downstream board reads 18 Ω — way higher than expected for a SWA armour
+              over 30 m, which should be a fraction of an Ohm. You crack open the downstream gland
+              and find the SWA gland’s earth tag is loose, and the armour isn’t making proper
+              contact with the metal gland body.
+            </>
+          }
+          whatToDo={
+            <>
+              Make safe — isolate the sub-main. Strip back, re-make the SWA gland properly with the
+              correct compression sequence, fit a new earth tag and tighten to the manufacturer’s
+              torque spec. Re-test R2 — should now be well under 1 Ω. Document the fault on the EICR
+              or commissioning sheet. The armour is the only CPC on this sub-main; without a solid
+              earth-tag connection, every exposed-conductive-part on the downstream board sat at 18
+              Ω from the MET. A line-to-armour fault would generate barely any fault current and the
+              upstream MCB wouldn’t trip.
+            </>
+          }
+          whyItMatters={
+            <>
+              The SWA armour is itself an exposed-conductive-part — and when it’s also being used as
+              a CPC, its termination quality is doubly critical. A loose gland is the single most
+              common cause of high R2 / Zs readings on commercial sub-mains. Always check by hand
+              and by meter.
+            </>
+          }
+        />
+
+        <InlineCheck
+          id={checks[2].id}
+          question={checks[2].question}
+          options={checks[2].options}
+          correctIndex={checks[2].correctIndex}
+          explanation={checks[2].explanation}
+        />
+
+        <SectionRule />
+
+        <FAQ items={faqs} />
+
+        <SectionRule />
+
+        <KeyTakeaways
+          points={[
+            'BS 7671 Part 2 definition: exposed-conductive-part = conductive part of equipment, touchable, not normally live but can become live under fault. All three must be true.',
+            'Common examples: metal back-boxes, metal accessories, metal luminaire bodies, motor casings, Class I appliances, metal CU enclosures, SWA armour when used as CPC.',
+            'Not exposed: building structure, pipework, all-plastic accessories, Class II equipment, SELV equipment.',
+            'Every exposed-conductive-part needs a CPC connection back to the MET (Reg 411.3.1.1). The one exception: a Class II lampholder with no exposed-conductive-parts on a Class II pendant.',
+            'Class II = concentric-squares symbol. Double insulation. No CPC required. Don’t add an earth wire — you’ll compromise the protection.',
+            'Simultaneously accessible exposed-conductive-parts must be on the same earthing system to prevent dangerous touch voltage between them during a fault.',
+          ]}
+        />
+
+        <Quiz title="Exposed conductive parts — knowledge check" questions={quizQuestions} />
+
+        <div className="grid grid-cols-2 gap-3 pt-2">
           <button
-            onClick={() => navigate('..')}
-            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            onClick={() => navigate('/study-centre/apprentice/level2/module3/section4/4-2')}
+            className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
           >
-            <ArrowLeft className="h-4 w-4" /> Section 4
+            <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+              <ChevronLeft className="h-3 w-3" /> Previous subsection
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-white truncate">
+              Component parts of ADS
+            </div>
           </button>
-
-          <PageHero
-            eyebrow="Module 3 · Section 4 · Subsection 3"
-            title="Exposed conductive parts"
-            description="Metalwork of equipment that is not normally live but can become live under fault conditions. Strict BS 7671 Part 2 definition — most apprentices over-apply it on first reading."
-            tone="emerald"
-          />
-
-          <TLDR
-            points={[
-              'Exposed-conductive-part (BS 7671 Part 2): a conductive part of equipment which can be touched and which is not normally live but which can become live under fault conditions.',
-              'Three tests must all be true: it’s conductive, it’s part of equipment, and a single fault could make it live. Building structure (pipes, RSJs, walls) isn’t equipment — those go in the extraneous category (Sub 4.4).',
-              'Every exposed-conductive-part needs a CPC connection back to the MET (Reg 411.3.1.1). The one exception: a Class II lampholder with no exposed-conductive-parts suspended from a Class II pendant.',
-            ]}
-          />
-
-          <LearningOutcomes
-            outcomes={[
-              'State the BS 7671 Part 2 definition of an exposed-conductive-part verbatim.',
-              'Identify common exposed-conductive-parts in domestic and commercial installations.',
-              'Distinguish exposed-conductive-parts from extraneous-conductive-parts (covered in Sub 4.4) and from unrelated metalwork.',
-              'Recognise Class II equipment by the concentric-squares symbol and explain why it requires no CPC.',
-              'Cite Reg 411.3.1.1 and identify its single exception (Class II lampholder).',
-              'Apply the "simultaneously accessible" rule (411.3.1.1) when bonding adjacent exposed-conductive-parts.',
-            ]}
-            initialVisibleCount={3}
-          />
-
-          <ContentEyebrow>The BS 7671 definition — read it slowly</ContentEyebrow>
-
-          <ConceptBlock
-            title="What an exposed-conductive-part actually is"
-            plainEnglish="Metal that’s part of an electrical thing, that you can touch, that isn’t live in normal use but COULD go live if something inside breaks."
-            onSite="If a single internal fault could put it at line voltage, and you can touch it without tools, it’s an exposed-conductive-part — and it needs an earth."
+          <button
+            onClick={() => navigate('/study-centre/apprentice/level2/module3/section4/4-4')}
+            className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
           >
-            <p>
-              The BS 7671 Part 2 definition is short and worth memorising: an{' '}
-              <strong>exposed-conductive-part</strong> is "a conductive part of equipment which
-              can be touched and which is not normally live but which can become live under fault
-              conditions". Three things have to be true at once for the label to apply:
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Conductive</strong> — metal, basically. Plastic doesn’t qualify.
-              </li>
-              <li>
-                <strong>Part of equipment</strong> — it has to be a piece of an electrical fitting,
-                accessory, appliance or wiring system. Building structure, pipework and unrelated
-                metalwork are excluded (they sit in the extraneous category — Sub 4.4).
-              </li>
-              <li>
-                <strong>Not normally live but can become live under fault</strong> — there’s a
-                credible single fault inside the equipment that would put the touchable part at
-                supply voltage. If no plausible single fault could make it live (e.g. it’s isolated
-                from internal live parts by double insulation), it isn’t exposed.
-              </li>
-            </ul>
-            <p>
-              All three together. Miss any one and you’re looking at something else — a building
-              part, an extraneous part, or a Class II piece of kit that needs no CPC.
-            </p>
-          </ConceptBlock>
-
-          <RegsCallout
-            source="BS 7671:2018+A4:2026 — Regulation 411.3.1.1 (Protective earthing)"
-            clause="Exposed-conductive-parts shall be connected to a protective conductor under the specific conditions for each type of system earthing as specified in Regulations 411.4 to 411.6. Simultaneously accessible exposed-conductive-parts shall be connected to the same earthing system individually, in groups or collectively. Conductors for protective earthing shall comply with Chapter 54. A circuit protective conductor shall be run to and terminated at each point in wiring and at each accessory except a lampholder having no exposed-conductive-parts and suspended from such a point."
-            meaning={
-              <>
-                Every exposed-conductive-part on an installation requires a CPC connection back to
-                the MET — full stop. Two extra rules: any two exposed-conductive-parts within
-                simultaneous reach must be on the same earthing system (so a fault doesn’t create a
-                touch voltage between them); and the single carve-out for a Class II pendant from a
-                Class II rose. There are no other exceptions.
-              </>
-            }
-            cite="Source: BS 7671:2018+A4:2026 Part 4, Chapter 41, Regulation 411.3.1.1."
-          />
-
-          <InlineCheck
-            id={checks[0].id}
-            question={checks[0].question}
-            options={checks[0].options}
-            correctIndex={checks[0].correctIndex}
-            explanation={checks[0].explanation}
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>What counts on a real installation</ContentEyebrow>
-
-          <ConceptBlock
-            title="The everyday list — exposed-conductive-parts you’ll meet daily"
-            onSite="Every one of these needs a CPC connection back to the MET. No CPC = the part can sit at line voltage during a fault and the MCB never trips."
-          >
-            <p>
-              On a typical UK domestic or commercial installation, the exposed-conductive-parts
-              include all of the following:
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Metal back-boxes</strong> — single-gang, twin-gang, deep boxes,
-                surface-mount pattresses. All count.
-              </li>
-              <li>
-                <strong>Metal-clad accessories</strong> — switches, sockets, FCUs, isolators,
-                cooker outlets. The faceplate is an exposed-conductive-part; the switch mechanism
-                inside is normally live.
-              </li>
-              <li>
-                <strong>Metal luminaire bodies</strong> — chandelier frames, downlight cans (where
-                metal), spotlight bars, surface-mount strip lights, IP-rated bulkheads.
-              </li>
-              <li>
-                <strong>Motor casings</strong> — extractor fans (where metal), pump bodies, garage
-                door motors, lift machinery.
-              </li>
-              <li>
-                <strong>Appliance casings (Class I)</strong> — electric showers, ovens, dishwashers,
-                washing machines, hobs. Anything supplied with a 3-core flex (L, N, E) and no
-                Class II marking.
-              </li>
-              <li>
-                <strong>Metal CU enclosures</strong> — required by BS 7671 (as amended) for
-                domestic. The whole CU body is an exposed-conductive-part.
-              </li>
-              <li>
-                <strong>Metal junction boxes and adaptable boxes.</strong>
-              </li>
-              <li>
-                <strong>SWA armour</strong> when used as a CPC, and metallic conduit / tray when
-                used as a CPC. The wiring system itself becomes part of the exposed-conductive
-                category.
-              </li>
-              <li>
-                <strong>RCBO and MCB casings</strong> in metal-bodied DIN rail products.
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <ConceptBlock
-            title="What’s NOT an exposed-conductive-part"
-            plainEnglish="If it’s building fabric, it’s not equipment. If it’s plastic, it’s not conductive. If it’s Class II, no single fault can make it live."
-          >
-            <p>
-              Equally important is knowing what doesn’t qualify — over-applying the label leads to
-              over-bonding and the parallel-earth issues that brings:
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Building structure</strong> — RSJs, lintels, joists, brickwork ties.
-                Conductive but not part of equipment. Might be extraneous (Sub 4.4) but never
-                exposed.
-              </li>
-              <li>
-                <strong>Pipework carrying water/gas/oil</strong> — same logic. It’s plumbing, not
-                electrical equipment. Might be extraneous (Sub 4.4); never exposed.
-              </li>
-              <li>
-                <strong>All-plastic accessories</strong> — moulded-plastic switches, sockets,
-                ceiling roses. No metal touchable surface = no exposed-conductive-part. CPC still
-                pulled into the back of the accessory for future-proofing, but no terminal needs
-                connection.
-              </li>
-              <li>
-                <strong>Class II equipment</strong> — kettles, hairdryers, drills, vacuums marked
-                with the concentric-squares symbol. Double insulation means no single fault can
-                make the casing live.
-              </li>
-              <li>
-                <strong>SELV equipment</strong> — touchable parts of separated extra-low-voltage
-                kit (e.g. low-voltage downlights, doorbell transformers’ secondary side) operate at
-                voltages too low to cause shock. Different protective measure entirely.
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <ContentEyebrow>The Class II exception — and the symbol</ContentEyebrow>
-
-          <ConceptBlock
-            title="Class II — double insulation does the protection"
-            onSite="Two concentric squares (□ inside □) marked on the rating label. That’s your visual cue — no earth needed, don’t try to add one."
-          >
-            <p>
-              Class II equipment is built so that touchable parts can never become live under a
-              single fault. There are two layers of insulation between any internal live part and
-              any touchable surface — basic insulation plus supplementary insulation, or a single
-              layer of "reinforced" insulation that’s tested as if it were two. Either way, one
-              fault can’t bridge both layers.
-            </p>
-            <p>
-              Because no single fault makes the casing live, there’s nothing for a CPC to protect.
-              Class II equipment ships with a 2-core flex (L and N only — no earth pin in the
-              moulded plug, or a plastic earth dummy pin). The protective measure here is "Class II
-              equipment or equivalent insulation" (Reg 412), entirely separate from ADS.
-            </p>
-            <p>
-              Recognise it by the symbol — two concentric squares (BS EN 60417-5172) on the rating
-              plate. It’s the only legitimate reason to install fixed equipment with no CPC on the
-              casing. Three things to remember:
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Don’t add an earth wire to a Class II appliance.</strong> Drilling into the
-                casing or splicing into the supply lead can compromise the double insulation and
-                turn a safe appliance into a hazard.
-              </li>
-              <li>
-                <strong>Don’t fit a Class II appliance into a Class I-only socket arrangement</strong>{' '}
-                where the surrounding installation needs RCD protection on a different basis. Read
-                the manufacturer’s install instructions.
-              </li>
-              <li>
-                <strong>Don’t assume "no earth pin = broken plug".</strong> A factory-fitted plug
-                with no earth pin on a Class II appliance is correct. A 3-pin plug with a plastic
-                dummy earth pin is also correct (the pin is just for socket-shutter operation).
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <CommonMistake
-            title="Treating a Class II accessory as needing a CPC"
-            whatHappens={
-              <>
-                You’re fitting a Class II all-plastic ceiling rose with a Class II pendant
-                lampholder. There’s a CPC core in the supply T&E. The previous electrician connected the
-                CPC into the lamp itself, drilling a small hole in the plastic to reach a metal
-                screw. Months later, vibration and humidity work the screw loose; the loose screw
-                contacts the live conductor inside; the rose’s plastic body is now electrified and
-                the customer’s child gets a shock changing a bulb.
-              </>
-            }
-            doInstead={
-              <>
-                If a Class II accessory has no exposed-conductive-parts and no provided earth
-                terminal, leave the CPC neatly terminated in an insulated terminal block inside the
-                ceiling rose for future use, but DO NOT connect it to the rose body or improvise a
-                connection. Reg 411.3.1.1 explicitly carves out this case — it’s the one accessory
-                that is permitted to have no CPC connected.
-              </>
-            }
-          />
-
-          <InlineCheck
-            id={checks[1].id}
-            question={checks[1].question}
-            options={checks[1].options}
-            correctIndex={checks[1].correctIndex}
-            explanation={checks[1].explanation}
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>Practical earthing — back-boxes and faceplates</ContentEyebrow>
-
-          <ConceptBlock
-            title="Metal back-box, metal faceplate — both are exposed parts"
-            onSite="Standard fix: a green/yellow earth fly-lead from the back-box earth terminal to the faceplate earth terminal. Or rely on the metal fixing screws if continuity is verified at test — but most manufacturers and supervisors want the fly-lead in regardless."
-          >
-            <p>
-              A metal back-box is itself an exposed-conductive-part. Inside it, the wiring includes
-              live conductors that could chafe against the box under vibration, repeated insertion/
-              removal of the accessory, or a future installer’s clumsy stripping. So the back-box
-              needs its own connection to the CPC — usually via the dedicated earth terminal moulded
-              into the back-box (a single brass screw + threaded boss).
-            </p>
-            <p>
-              Two valid arrangements for connecting the metal accessory to the back-box CPC:
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Earth fly-lead</strong> — a short green/yellow conductor from the back-box
-                earth terminal to the accessory’s earth terminal. Always compliant. Standard
-                practice on metal-clad sockets and switches.
-              </li>
-              <li>
-                <strong>Fixing-screw bonding</strong> — where a metal accessory is securely fixed
-                to a metal back-box by metal screws and continuity is verified at initial
-                verification (R2 test from the box to the faceplate to the MET), the screws can act
-                as the CPC connection per IET guidance. Less common in practice — most installers
-                fly-lead anyway because it’s cheap insurance.
-              </li>
-            </ul>
-            <p>
-              Plastic accessory in metal back-box: the back-box still needs a CPC connection (it’s
-              still an exposed-conductive-part), but the plastic faceplate doesn’t. Plastic
-              accessory in plastic back-box: no CPC connection on either, though the CPC core
-              should still be terminated in an insulated block for future use.
-            </p>
-          </ConceptBlock>
-
-          <Scenario
-            title="Faulty SWA gland — exposed armour with broken CPC"
-            situation={
-              <>
-                You’re testing a sub-main run on a small commercial unit. The SWA cable feeds a
-                downstream board 30 m away, and the armour is meant to be the CPC. Your R2 test
-                from the MET to the downstream board reads 18 Ω — way higher than expected for a
-                SWA armour over 30 m, which should be a fraction of an Ohm. You crack open the
-                downstream gland and find the SWA gland’s earth tag is loose, and the armour
-                isn’t making proper contact with the metal gland body.
-              </>
-            }
-            whatToDo={
-              <>
-                Make safe — isolate the sub-main. Strip back, re-make the SWA gland properly with
-                the correct compression sequence, fit a new earth tag and tighten to the
-                manufacturer’s torque spec. Re-test R2 — should now be well under 1 Ω. Document the
-                fault on the EICR or commissioning sheet. The armour is the only CPC on this
-                sub-main; without a solid earth-tag connection, every exposed-conductive-part on
-                the downstream board sat at 18 Ω from the MET. A line-to-armour fault would
-                generate barely any fault current and the upstream MCB wouldn’t trip.
-              </>
-            }
-            whyItMatters={
-              <>
-                The SWA armour is itself an exposed-conductive-part — and when it’s also being used
-                as a CPC, its termination quality is doubly critical. A loose gland is the single
-                most common cause of high R2 / Zs readings on commercial sub-mains. Always check by
-                hand and by meter.
-              </>
-            }
-          />
-
-          <InlineCheck
-            id={checks[2].id}
-            question={checks[2].question}
-            options={checks[2].options}
-            correctIndex={checks[2].correctIndex}
-            explanation={checks[2].explanation}
-          />
-
-          <SectionRule />
-
-          <FAQ items={faqs} />
-
-          <SectionRule />
-
-          <KeyTakeaways
-            points={[
-              'BS 7671 Part 2 definition: exposed-conductive-part = conductive part of equipment, touchable, not normally live but can become live under fault. All three must be true.',
-              'Common examples: metal back-boxes, metal accessories, metal luminaire bodies, motor casings, Class I appliances, metal CU enclosures, SWA armour when used as CPC.',
-              'Not exposed: building structure, pipework, all-plastic accessories, Class II equipment, SELV equipment.',
-              'Every exposed-conductive-part needs a CPC connection back to the MET (Reg 411.3.1.1). The one exception: a Class II lampholder with no exposed-conductive-parts on a Class II pendant.',
-              'Class II = concentric-squares symbol. Double insulation. No CPC required. Don’t add an earth wire — you’ll compromise the protection.',
-              'Simultaneously accessible exposed-conductive-parts must be on the same earthing system to prevent dangerous touch voltage between them during a fault.',
-            ]}
-          />
-
-          <Quiz title="Exposed conductive parts — knowledge check" questions={quizQuestions} />
-
-          <div className="grid grid-cols-2 gap-3 pt-2">
-            <button
-              onClick={() => navigate('/study-centre/apprentice/level2/module3/section4/4-2')}
-              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
-                <ChevronLeft className="h-3 w-3" /> Previous subsection
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-white truncate">
-                Component parts of ADS
-              </div>
-            </button>
-            <button
-              onClick={() => navigate('/study-centre/apprentice/level2/module3/section4/4-4')}
-              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
-                Next subsection <ChevronRight className="h-3 w-3" />
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-black truncate">
-                Extraneous conductive parts
-              </div>
-            </button>
-          </div>
-        </PageFrame>
-      </div>
-    </div>
+            <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+              Next subsection <ChevronRight className="h-3 w-3" />
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-black truncate">
+              Extraneous conductive parts
+            </div>
+          </button>
+        </div>
+      </HubBody>
+    </HubPage>
   );
 }

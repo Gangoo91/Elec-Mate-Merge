@@ -30,6 +30,33 @@ export type ReportType =
   | 'smoke-co-alarm'
   | 'heat-pump'
   | 'testing-only'
+  /*
+   * A visual condition report (ELE-1262). Visual inspection only, no testing —
+   * requested because a Minor Works Certificate is the wrong document for work
+   * that is neither an addition nor an alteration.
+   *
+   * 🔴 It is NOT a BS 7671 model form and the app must never imply it is.
+   */
+  | 'visual-condition'
+  /*
+   * A routine maintenance visit record, with an optional thermographic survey
+   * (ELE-1110). For the yearly service-contract work electricians sell.
+   *
+   * 🔴 Also NOT a BS 7671 model form — nothing in BS 7671 governs thermography
+   * at all. Its standing is Regulation 4(2) of the Electricity at Work
+   * Regulations 1989.
+   */
+  | 'routine-inspection'
+  /*
+   * An advisory, photo-led survey for someone BUYING a house (ELE-1634). Runs
+   * on the visual condition chassis with an AI drafting a note against each
+   * photograph, which the electrician then edits and accepts.
+   *
+   * 🔴 Also not a BS 7671 model form, and the one type whose reader is not a
+   * tradesperson — a buyer has no way to tell a visual survey from a condition
+   * report unless the document says so, so it says so on every copy.
+   */
+  | 'pre-purchase-survey'
   // A board schedule is issued to a client, kept on file and emailed exactly
   // like a certificate, so it is a report row rather than a parallel mechanism
   // (ELE-1615). It is the record of a board's layout, not a declaration of
@@ -136,7 +163,13 @@ const reportInspectorName = (data: Record<string, any>): string | null =>
  */
 const reportTypeFromId = (reportId: string): string => {
   const lc = reportId.toLowerCase();
-  return lc.startsWith('board-schedule')
+  return lc.startsWith('pre-purchase-survey')
+    ? 'pre-purchase-survey'
+    : lc.startsWith('visual-condition')
+    ? 'visual-condition'
+    : lc.startsWith('routine-inspection')
+    ? 'routine-inspection'
+    : lc.startsWith('board-schedule')
     ? 'board-schedule'
     : lc.startsWith('fire-alarm-modification')
     ? 'fire-alarm-modification'
@@ -296,6 +329,51 @@ const calculateReportStatus = ({
     data.boardRef &&
     Array.isArray(data.circuits) &&
     data.circuits.some((c: { description?: string }) => c?.description)
+  )
+    return 'completed';
+  /*
+   * A visual condition report completes on being SIGNED after the walk round —
+   * both, deliberately. A signature with no inspection is a signed blank form,
+   * and a completed schedule nobody put their name to is not issued work.
+   */
+  if (
+    reportType === 'visual-condition' &&
+    data.inspectorSignature &&
+    Array.isArray(data.inspectionItems) &&
+    data.inspectionItems.some((i: { outcome?: string }) => i?.outcome)
+  )
+    return 'completed';
+  /*
+   * A routine inspection completes on the same two-part test: SIGNED after the
+   * visit actually happened. A signature with no schedule is a signed blank
+   * form; a walked schedule nobody put their name to is not issued work.
+   *
+   * The thermal survey is deliberately NOT part of this. Most visits will not
+   * include one, and requiring it would leave the majority of genuinely
+   * finished reports stuck as drafts.
+   */
+  if (
+    reportType === 'routine-inspection' &&
+    data.inspectorSignature &&
+    Array.isArray(data.inspectionItems) &&
+    data.inspectionItems.some((i: { outcome?: string }) => i?.outcome)
+  )
+    return 'completed';
+  /*
+   * A pre-purchase survey completes on being SIGNED with at least one finding
+   * the surveyor has ACCEPTED.
+   *
+   * 🔴 `accepted` is the point, not `findings.length`. A report can hold twenty
+   * photographs carrying nothing but an AI's unreviewed guesses, and counting
+   * those as a finished report is exactly the outcome this feature must not
+   * produce — the buyer would be relying on something no electrician read.
+   * Mirrors `acceptedFindings()` in types/pre-purchase-survey.ts.
+   */
+  if (
+    reportType === 'pre-purchase-survey' &&
+    data.surveyorSignature &&
+    Array.isArray(data.findings) &&
+    data.findings.some((f: { accepted?: boolean }) => f?.accepted)
   )
     return 'completed';
   if (reportType === 'disconnection' && data.inspectorSignature && data.workDate)

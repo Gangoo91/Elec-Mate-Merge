@@ -63,6 +63,12 @@ export interface InvoiceSendData {
   customSubject?: string | null;
   /** Optional override of the email body paragraph. */
   customMessage?: string | null;
+  /**
+   * "Hold until paid" — the certificate is withheld from this email and
+   * released automatically on payment. When set, a small card tells the
+   * customer their certificate follows once they've paid.
+   */
+  heldCertificateType?: string | null;
   /** Review-request settings from the company profile. */
   reviewEnabled?: boolean | null;
   reviewLinks?: ReviewLink[] | null;
@@ -236,7 +242,16 @@ export function buildInvoiceSendEmail(data: InvoiceSendData): InvoiceSendEmail {
     message: data.reviewMessage,
   });
 
-  const sectionsAfterCta = `${bankCard}${totalsCard}${notesCard}${reviewCard}`;
+  // Deliberately unconditional wording — never tie a safety certificate to
+  // payment in writing to the customer (Andrew, 2026-08-29).
+  const heldCertCard = data.heldCertificateType
+    ? renderCard({
+        label: 'Your certificate',
+        body: `<p style="margin:0;font-size:14px;color:#334155;line-height:1.65;">Your ${data.heldCertificateType} certificate will follow by email shortly.</p>`,
+      })
+    : '';
+
+  const sectionsAfterCta = `${bankCard}${totalsCard}${heldCertCard}${notesCard}${reviewCard}`;
 
   const signoff = `<tr>
     <td style="padding:0 36px 36px;">

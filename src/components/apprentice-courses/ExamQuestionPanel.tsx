@@ -198,7 +198,9 @@ export function ExamQuestionPanel({
                   <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-elec-yellow lg:text-[12px]">
                     Question {index + 1} of {total}
                   </p>
-                  {topic && <p className="mt-1 text-[12.5px] text-white lg:text-[13.5px]">{topic}</p>}
+                  {topic && (
+                    <p className="mt-1 text-[12.5px] text-white lg:text-[13.5px]">{topic}</p>
+                  )}
                 </div>
                 <button
                   type="button"
@@ -254,7 +256,9 @@ export function ExamQuestionPanel({
                       >
                         {String.fromCharCode(65 + i)}
                       </span>
-                      <span className="flex-1 text-[15px] leading-snug text-white sm:text-[16px] lg:text-[17px]">{option}</span>
+                      <span className="flex-1 text-[15px] leading-snug text-white sm:text-[16px] lg:text-[17px]">
+                        {option}
+                      </span>
                     </button>
                   );
                 })}
@@ -301,7 +305,7 @@ export function ExamQuestionPanel({
         {/* Navigator. On desktop it is a fixed column whose grid scrolls in
             place. On a phone it becomes a single horizontal strip above the
             footer rather than 60 buttons pushing the question off screen. */}
-        <aside className="hidden min-h-0 flex-col border-l border-white/[0.1] bg-[hsl(0_0%_9%)] lg:flex">
+        <aside className="hidden min-h-0 flex-col border-l border-elec-yellow/25 bg-[hsl(0_0%_9%)] lg:flex">
           <div className="shrink-0 border-b border-white/[0.08] px-4 py-3">
             <div className="flex items-baseline justify-between">
               <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white">
@@ -318,9 +322,7 @@ export function ExamQuestionPanel({
               />
             </div>
             {flagged.size > 0 && (
-              <p className="mt-2 text-[11.5px] text-white">
-                {flagged.size} flagged for review
-              </p>
+              <p className="mt-2 text-[11.5px] text-white">{flagged.size} flagged for review</p>
             )}
           </div>
 
@@ -360,7 +362,7 @@ export function ExamQuestionPanel({
           Above it, the two moves that a 40-question paper actually needs on a
           phone: skip to what you have not answered, and finish from anywhere
           instead of pressing Next to the very end. */}
-      <div className="shrink-0 border-t border-white/[0.1] bg-[hsl(0_0%_9%)] px-4 py-2 lg:hidden">
+      <div className="shrink-0 border-t border-elec-yellow/25 bg-[hsl(0_0%_9%)] px-4 py-2 lg:hidden">
         <div className="mb-2 flex items-center gap-2">
           <span className="text-[12px] tabular-nums text-white">
             {unansweredCount === 0 ? 'All answered' : `${unansweredCount} left`}

@@ -1,0 +1,561 @@
+<!--
+  Routine Inspection & Thermal Imaging Report — PDFMonkey template SEED (ELE-1110).
+
+  🔴 THIS FILE IS THE SEED ONLY. Once provisioned, the LIVE template on PDFMonkey
+  is the source of truth and can be ahead of this copy. Fetch and patch the live
+  template — never paste this over it.
+
+  🔴 Page size and margins are NOT set here. PDFMonkey ignores the CSS @page rule;
+  they live in the `settings` blob on the API resource. See the provisioning
+  function for the values used (A4 portrait, 12mm bottom for the footer band).
+
+  🔴 The limitations block must not be removed or softened. This document is not
+  a BS 7671 model form, nothing in BS 7671 governs thermography, and its standing
+  is Regulation 4(2) of the Electricity at Work Regulations 1989.
+
+  ⚠️ Liquid: an empty string is TRUTHY and `for` silently drops nils. Every
+  conditional below keys off an explicit boolean from the payload
+  (has_observations, has_priority, is_quantitative…) rather than testing a string.
+-->
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 9pt;
+    line-height: 1.45;
+    color: #0F172A;
+    margin: 0;
+  }
+  h1, h2, h3 { margin: 0; }
+
+  /* ── Masthead ───────────────────────────────────────────────────── */
+  .masthead {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10mm;
+    border-bottom: 2.5pt solid {{ company.primary_color }};
+    padding-bottom: 4mm;
+    margin-bottom: 5mm;
+  }
+  .brand-logo { max-height: 18mm; max-width: 52mm; object-fit: contain; }
+  .brand-name { font-size: 13pt; font-weight: bold; color: {{ company.primary_color }}; }
+  .brand-lines { font-size: 7.5pt; color: #475569; line-height: 1.5; }
+  .doc-title {
+    text-align: right;
+    font-size: 13pt;
+    font-weight: bold;
+    color: {{ company.primary_color }};
+    text-transform: uppercase;
+    letter-spacing: 0.4pt;
+  }
+  .doc-sub { text-align: right; font-size: 7.5pt; color: #475569; margin-top: 1mm; }
+  .doc-ref { text-align: right; font-size: 10pt; font-weight: bold; margin-top: 2mm; }
+
+  /* ── Sections ───────────────────────────────────────────────────── */
+  .section { margin-bottom: 5mm; }
+  .section-title {
+    font-size: 9.5pt;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.3pt;
+    color: {{ company.primary_color }};
+    border-bottom: 0.75pt solid #CBD5E1;
+    padding-bottom: 1mm;
+    margin-bottom: 2.5mm;
+  }
+  .avoid-break { page-break-inside: avoid; }
+
+  /* ── Key/value grid ─────────────────────────────────────────────── */
+  table.kv { width: 100%; border-collapse: collapse; }
+  table.kv td { padding: 1.1mm 2mm 1.1mm 0; vertical-align: top; font-size: 8.5pt; }
+  td.kv-key { width: 34mm; color: #64748B; }
+  td.kv-val { font-weight: bold; }
+
+  /* ── Data tables ────────────────────────────────────────────────── */
+  table.grid { width: 100%; border-collapse: collapse; margin-bottom: 2mm; }
+  table.grid th {
+    background: #F1F5F9;
+    border: 0.5pt solid #CBD5E1;
+    padding: 1.4mm 1.8mm;
+    font-size: 7.5pt;
+    text-align: left;
+    text-transform: uppercase;
+    letter-spacing: 0.2pt;
+    color: #334155;
+  }
+  table.grid td {
+    border: 0.5pt solid #CBD5E1;
+    padding: 1.4mm 1.8mm;
+    font-size: 8pt;
+    vertical-align: top;
+  }
+  /*
+    ⚠️ Scoped to `td` deliberately. A bare `.c-num { width: …; color: #0F172A }`
+    also matches the `th` in the same column and paints the header text the same
+    colour as its own dark fill — an invisible heading. That has now been shipped
+    twice; it is not a hypothetical.
+  */
+  td.c-num { width: 11mm; font-weight: bold; }
+  td.c-out { width: 24mm; text-align: center; font-weight: bold; }
+  .group-row td {
+    background: #E2E8F0;
+    font-weight: bold;
+    font-size: 7.5pt;
+    text-transform: uppercase;
+    letter-spacing: 0.2pt;
+  }
+  .note { display: block; font-size: 7.5pt; color: #475569; margin-top: 0.6mm; }
+
+  /* ── Outcome chips ──────────────────────────────────────────────── */
+  .verdict {
+    text-align: center;
+    padding: 4mm;
+    border-radius: 2mm;
+    border: 1.5pt solid;
+    margin-bottom: 3mm;
+  }
+  .verdict-word { font-size: 16pt; font-weight: bold; letter-spacing: 0.6pt; }
+  .v-sat { border-color: #059669; background: #ECFDF5; color: #047857; }
+  .v-att { border-color: #D97706; background: #FFFBEB; color: #B45309; }
+  .v-uns { border-color: #DC2626; background: #FEF2F2; color: #B91C1C; }
+
+  .counts { display: flex; gap: 2mm; flex-wrap: wrap; }
+  .count-pill {
+    border: 0.5pt solid #CBD5E1;
+    border-radius: 1.5mm;
+    padding: 1.5mm 2.5mm;
+    font-size: 7.5pt;
+    min-width: 17mm;
+    text-align: center;
+  }
+  .count-n { display: block; font-size: 11pt; font-weight: bold; }
+
+  /* ── Observations / findings ────────────────────────────────────── */
+  .finding {
+    border: 0.5pt solid #CBD5E1;
+    border-left: 2.5pt solid {{ company.accent_color }};
+    border-radius: 1.5mm;
+    padding: 2.5mm 3mm;
+    margin-bottom: 2.5mm;
+    page-break-inside: avoid;
+  }
+  .finding-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 4mm;
+    margin-bottom: 1.2mm;
+  }
+  .finding-no { font-weight: bold; font-size: 8.5pt; }
+  .code-chip {
+    font-weight: bold;
+    font-size: 8pt;
+    padding: 0.6mm 2mm;
+    border-radius: 1mm;
+    border: 0.5pt solid #94A3B8;
+  }
+  .c-C1, .p-1 { background: #FEE2E2; color: #B91C1C; border-color: #DC2626; }
+  .c-C2, .p-2 { background: #FFEDD5; color: #C2410C; border-color: #EA580C; }
+  .c-C3, .p-3 { background: #FEF3C7; color: #A16207; border-color: #D97706; }
+  .c-FI, .p-4 { background: #E0F2FE; color: #0369A1; border-color: #0284C7; }
+
+  /*
+    ⚠️ Both dimensions fixed, with object-fit: cover. Setting only `height` and
+    a `max-width` lets each photo's aspect ratio drive its width, so a row of
+    evidence comes out ragged and the page reflows unpredictably.
+  */
+  .shots { display: flex; flex-wrap: wrap; gap: 2mm; margin-top: 2mm; }
+  .shot { width: 42mm; height: 32mm; object-fit: cover; border: 0.5pt solid #CBD5E1; border-radius: 1mm; }
+  .shot-label { font-size: 7pt; color: #64748B; margin-top: 1.5mm; font-weight: bold; text-transform: uppercase; letter-spacing: 0.2pt; }
+
+  /* ── Limitations ────────────────────────────────────────────────── */
+  .limits {
+    border: 0.75pt solid #94A3B8;
+    background: #F8FAFC;
+    border-radius: 1.5mm;
+    padding: 3mm;
+    font-size: 7.5pt;
+    line-height: 1.5;
+    color: #1E293B;
+  }
+  .limits p { margin: 0 0 2mm 0; }
+  .limits p:last-child { margin-bottom: 0; }
+
+  /* ── Declaration ────────────────────────────────────────────────── */
+  .sig-box { border: 0.5pt solid #CBD5E1; border-radius: 1.5mm; padding: 3mm; }
+  .sig-img { max-height: 18mm; max-width: 60mm; object-fit: contain; display: block; }
+  .sig-rule { border-top: 0.5pt solid #94A3B8; margin-top: 1.5mm; padding-top: 1mm; font-size: 7.5pt; color: #64748B; }
+</style>
+
+<!-- ══ Masthead ══════════════════════════════════════════════════════ -->
+<div class="masthead">
+  <div>
+    {% if company.logo_url != blank %}
+      <img class="brand-logo" src="{{ company.logo_url }}" alt="">
+    {% else %}
+      <div class="brand-name">{{ company.name }}</div>
+    {% endif %}
+    <div class="brand-lines">
+      {% if company.logo_url != blank %}<strong>{{ company.name }}</strong><br>{% endif %}
+      {{ company.address }}{% if company.postcode != blank %}, {{ company.postcode }}{% endif %}<br>
+      {% if company.phone != blank %}{{ company.phone }}{% endif %}
+      {% if company.email != blank %} · {{ company.email }}{% endif %}
+      {% if company.website != blank %}<br>{{ company.website }}{% endif %}
+      {% if company.registration_scheme != blank %}
+        <br>{{ company.registration_scheme }} {{ company.registration_number }}
+      {% endif %}
+    </div>
+  </div>
+  <div>
+    <div class="doc-title">Routine Inspection Report</div>
+    <div class="doc-sub">
+      Planned maintenance visit{% if thermal.carried_out %} with thermographic survey{% endif %}<br>
+      Supports EAWR 1989 Regulation 4(2) · Not an EICR
+    </div>
+    <div class="doc-ref">{{ metadata.certificate_number }}</div>
+    {% if company.scheme_logo_url != blank %}
+      <img src="{{ company.scheme_logo_url }}" alt="" style="max-height:12mm;max-width:34mm;object-fit:contain;margin-top:2mm;">
+    {% endif %}
+  </div>
+</div>
+
+<!-- ══ Client, installation, visit ═══════════════════════════════════ -->
+<div class="section avoid-break">
+  <div class="section-title">Client and installation</div>
+  <table class="kv">
+    <tr>
+      <td class="kv-key">Client</td><td class="kv-val">{{ client.name }}</td>
+      <td class="kv-key">Date of visit</td><td class="kv-val">{{ metadata.inspection_date }}</td>
+    </tr>
+    <tr>
+      <td class="kv-key">Client address</td><td class="kv-val">{{ client.address }}</td>
+      <td class="kv-key">Premises</td><td class="kv-val">{{ installation.premises_type }}</td>
+    </tr>
+    <tr>
+      <td class="kv-key">Installation address</td><td class="kv-val">{{ installation.address }}</td>
+      <td class="kv-key">Supply</td><td class="kv-val">{{ installation.supply_type }}</td>
+    </tr>
+    {% if client.occupier != blank %}
+    <tr>
+      <td class="kv-key">Occupier</td><td class="kv-val">{{ client.occupier }}</td>
+      <td class="kv-key">Contact</td>
+      <td class="kv-val">{{ client.phone }}{% if client.email != blank %} · {{ client.email }}{% endif %}</td>
+    </tr>
+    {% endif %}
+    {% if installation.boards_covered != blank %}
+    <tr>
+      <td class="kv-key">Boards covered</td>
+      <td class="kv-val" colspan="3">{{ installation.boards_covered }}</td>
+    </tr>
+    {% endif %}
+  </table>
+</div>
+
+<div class="section avoid-break">
+  <div class="section-title">Purpose and extent</div>
+  <table class="kv">
+    <tr><td class="kv-key">Purpose</td><td class="kv-val">{{ scope.purpose }}</td></tr>
+    <tr><td class="kv-key">Extent</td><td class="kv-val">{{ scope.extent }}</td></tr>
+    {% if scope.limitations != blank %}
+    <tr><td class="kv-key">Limitations agreed</td><td class="kv-val">{{ scope.limitations }}</td></tr>
+    {% endif %}
+    <tr>
+      <td class="kv-key">Connection tightness</td>
+      <td class="kv-val">
+        {% if torque.checked %}
+          Terminations checked with a torque instrument{% if torque.instrument != blank %} — {{ torque.instrument }}{% endif %}{% if torque.settings != blank %}, {{ torque.settings }}{% endif %}
+        {% else %}
+          Not checked with a torque instrument on this visit
+        {% endif %}
+      </td>
+    </tr>
+  </table>
+</div>
+
+<!-- ══ Outcome ═══════════════════════════════════════════════════════ -->
+<div class="section avoid-break">
+  <div class="section-title">Result of this visit</div>
+  <div class="verdict {% if outcome.is_satisfactory %}v-sat{% elsif outcome.requires_attention %}v-att{% else %}v-uns{% endif %}">
+    <div class="verdict-word">{{ outcome.assessment }}</div>
+    <div style="font-size:7.5pt;margin-top:1.5mm;color:#334155;">
+      {% if outcome.is_unsatisfactory %}
+        A C1, a C2 or a Priority 1 thermal finding was recorded. Action is required now.
+      {% elsif outcome.requires_attention %}
+        Defects or thermal findings were recorded that need attention, but nothing requiring immediate action.
+      {% else %}
+        No defects or thermal findings were recorded during this visit.
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="counts">
+    <div class="count-pill"><span class="count-n">{{ outcome.counts.c1 }}</span>C1</div>
+    <div class="count-pill"><span class="count-n">{{ outcome.counts.c2 }}</span>C2</div>
+    <div class="count-pill"><span class="count-n">{{ outcome.counts.c3 }}</span>C3</div>
+    <div class="count-pill"><span class="count-n">{{ outcome.counts.fi }}</span>FI</div>
+    <div class="count-pill"><span class="count-n">{{ outcome.counts.defects }}</span>{% if outcome.counts.defects == 1 %}Defect{% else %}Defects{% endif %}</div>
+    {% if thermal.carried_out %}
+      <div class="count-pill"><span class="count-n">{{ outcome.counts.p1 }}</span>Thermal P1</div>
+      <div class="count-pill"><span class="count-n">{{ outcome.counts.p2 }}</span>Thermal P2</div>
+      <div class="count-pill"><span class="count-n">{{ outcome.counts.p3 }}</span>Thermal P3</div>
+      <div class="count-pill"><span class="count-n">{{ outcome.counts.p4 }}</span>Thermal P4</div>
+    {% endif %}
+  </div>
+
+  {% if outcome.general_condition != blank %}
+    <table class="kv" style="margin-top:2.5mm;">
+      <tr><td class="kv-key">General condition</td><td class="kv-val">{{ outcome.general_condition }}</td></tr>
+    </table>
+  {% endif %}
+  {% if outcome.recommendations != blank %}
+    <table class="kv">
+      <tr><td class="kv-key">Recommendations</td><td class="kv-val">{{ outcome.recommendations }}</td></tr>
+    </table>
+  {% endif %}
+</div>
+
+<!-- ══ Maintenance schedule ══════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-title">Schedule of maintenance inspection</div>
+  <table class="grid">
+    <thead>
+      <tr><th style="width:11mm;">Item</th><th>Checked</th><th style="width:24mm;">Result</th></tr>
+    </thead>
+    <tbody>
+      {% assign current_group = '' %}
+      {% for i in inspection %}
+        {% if i.group != current_group %}
+          <tr class="group-row"><td colspan="3">{{ i.group }}</td></tr>
+          {% assign current_group = i.group %}
+        {% endif %}
+        <tr>
+          <td class="c-num">{{ i.item }}</td>
+          <td>
+            {{ i.description }}
+            {% if i.notes != blank %}<span class="note">{{ i.notes }}</span>{% endif %}
+          </td>
+          <td class="c-out">{{ i.outcome }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<!-- ══ Observations ══════════════════════════════════════════════════ -->
+{% if has_observations %}
+<div class="section">
+  <div class="section-title">Observations</div>
+  {% for o in observations %}
+    <div class="finding">
+      <div class="finding-head">
+        <span class="finding-no">
+          {{ o.number }}. {% if o.location != blank %}{{ o.location }}{% endif %}
+        </span>
+        {% if o.code != blank %}<span class="code-chip c-{{ o.code }}">{{ o.code }}</span>{% endif %}
+      </div>
+      <div>{{ o.description }}</div>
+      {% if o.has_photos %}
+        <div class="shots">
+          {% for p in o.photos %}<img class="shot" src="{{ p.src }}" alt="">{% endfor %}
+        </div>
+      {% endif %}
+    </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+<!-- ══ Thermal survey ════════════════════════════════════════════════ -->
+{% if thermal.carried_out %}
+<div class="section">
+  <div class="section-title">Thermographic survey</div>
+
+  <table class="kv avoid-break">
+    <tr>
+      <td class="kv-key">Type of survey</td>
+      <td class="kv-val">
+        {% if thermal.is_quantitative %}Quantitative — measured temperatures{% else %}Qualitative — thermal pattern only, no calibrated temperatures{% endif %}
+      </td>
+      <td class="kv-key">Imager</td><td class="kv-val">{{ thermal.camera }}</td>
+    </tr>
+    <tr>
+      <!--
+        §8.1. Without the load the survey result cannot be interpreted at all,
+        so it is given the same weight as the verdict itself.
+      -->
+      <td class="kv-key">Load at survey</td><td class="kv-val">{{ thermal.load_at_survey }}</td>
+      <td class="kv-key">Ambient</td>
+      <td class="kv-val">{% if thermal.ambient_temp != blank %}{{ thermal.ambient_temp }} °C{% endif %}</td>
+    </tr>
+    {% if thermal.thermographer_qualification != blank %}
+    <tr>
+      <td class="kv-key">Thermographer</td>
+      <td class="kv-val" colspan="3">{{ thermal.thermographer_qualification }}</td>
+    </tr>
+    {% endif %}
+    {% if thermal.environmental_conditions != blank %}
+    <tr>
+      <td class="kv-key">Conditions</td>
+      <td class="kv-val" colspan="3">{{ thermal.environmental_conditions }}</td>
+    </tr>
+    {% endif %}
+  </table>
+
+  {% if thermal.nothing_found %}
+    <div class="limits" style="margin-top:2.5mm;">
+      The thermographic survey was carried out and no thermal anomalies were
+      identified at the load stated above. A survey carried out at reduced load
+      may not reveal a developing fault.
+    </div>
+  {% endif %}
+
+  {% for a in thermal.anomalies %}
+    <div class="finding">
+      <div class="finding-head">
+        <span class="finding-no">
+          {{ a.number }}. {{ a.location }}{% if a.equipment != blank %} — {{ a.equipment }}{% endif %}
+        </span>
+        {% if a.has_priority %}
+          <span class="code-chip p-{{ a.priority }}">Priority {{ a.priority }}</span>
+        {% endif %}
+      </div>
+
+      <div>{{ a.description }}</div>
+
+      {% if a.has_delta_t %}
+        <table class="kv" style="margin-top:1.5mm;">
+          <tr>
+            <!--
+              ΔT is never printed without what it was measured AGAINST. An
+              18 °C rise is a Priority 3 over ambient and a Priority 1 over a
+              similar component — the reference is the whole meaning.
+            -->
+            <td class="kv-key">Temperature rise</td>
+            <td class="kv-val">{{ a.delta_t }} °C {{ a.reference_label }}</td>
+            <td class="kv-key">Measured / reference</td>
+            <td class="kv-val">{{ a.measured_temp }} °C / {{ a.reference_temp }} °C</td>
+          </tr>
+          {% if a.has_optics %}
+          <tr>
+            <td class="kv-key">Emissivity</td><td class="kv-val">{{ a.emissivity }}</td>
+            <td class="kv-key">Reflected temp.</td>
+            <td class="kv-val">{% if a.reflected_temp != blank %}{{ a.reflected_temp }} °C{% endif %}</td>
+          </tr>
+          {% endif %}
+          {% if a.load_percent != blank %}
+          <tr>
+            <td class="kv-key">Load at reading</td>
+            <td class="kv-val" colspan="3">
+              {{ a.measured_load }} A of {{ a.rated_load }} A rated — {{ a.load_percent }}%
+            </td>
+          </tr>
+          {% endif %}
+        </table>
+      {% endif %}
+
+      {% if a.has_priority %}
+        <div style="margin-top:1.5mm;font-size:8pt;">
+          <strong>Priority {{ a.priority }}</strong>{% if a.priority_range != blank %} ({{ a.priority_range }}){% endif %} — {{ a.priority_action }}
+          {% if a.priority_overridden %}
+            <span class="note">Severity assigned by the thermographer rather than taken from the temperature-rise criteria.</span>
+          {% endif %}
+        </div>
+      {% endif %}
+
+      {% if a.action != blank %}
+        <div style="margin-top:1.5mm;font-size:8pt;"><strong>Action:</strong> {{ a.action }}</div>
+      {% endif %}
+
+      {% if a.has_thermal_photos %}
+        <div class="shot-label">Thermal image</div>
+        <div class="shots">
+          {% for p in a.thermal_photos %}<img class="shot" src="{{ p.src }}" alt="">{% endfor %}
+        </div>
+      {% endif %}
+      {% if a.has_visible_photos %}
+        <div class="shot-label">Visible light</div>
+        <div class="shots">
+          {% for p in a.visible_photos %}<img class="shot" src="{{ p.src }}" alt="">{% endfor %}
+        </div>
+      {% endif %}
+    </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+<!-- ══ Not inspected ═════════════════════════════════════════════════ -->
+{% if scope.has_not_seen %}
+<div class="section avoid-break">
+  <div class="section-title">Not inspected on this visit</div>
+  <table class="grid">
+    <thead><tr><th style="width:11mm;">Item</th><th>Description</th><th style="width:60mm;">Reason</th></tr></thead>
+    <tbody>
+      {% for n in scope.not_seen %}
+        <tr>
+          <td class="c-num">{{ n.item }}</td>
+          <td>{{ n.description }}</td>
+          <td>{{ n.reason }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endif %}
+
+<!-- ══ Next inspection ═══════════════════════════════════════════════ -->
+<div class="section avoid-break">
+  <div class="section-title">Next inspection</div>
+  <table class="kv">
+    <tr>
+      <td class="kv-key">Recommended date</td>
+      <td class="kv-val">{% if outcome.next_inspection_date != blank %}{{ outcome.next_inspection_date }}{% else %}Not stated{% endif %}</td>
+    </tr>
+    {% if outcome.next_inspection_reasoning != blank %}
+    <tr>
+      <td class="kv-key">Reasoning</td>
+      <td class="kv-val">{{ outcome.next_inspection_reasoning }}</td>
+    </tr>
+    {% endif %}
+  </table>
+  <div style="font-size:7.5pt;color:#475569;margin-top:1.5mm;">
+    The interval is determined by the type of installation, how it is used, the
+    frequency and quality of maintenance, external influences, and the findings
+    of previous reports. It is a judgement for the duty holder, informed by this
+    recommendation.
+  </div>
+</div>
+
+<!-- ══ Limitations — must not be removed ═════════════════════════════ -->
+<div class="section avoid-break">
+  <div class="section-title">Limitations of this report</div>
+  <div class="limits">
+    <p>{{ scope.standard_limitations }}</p>
+    {% if scope.has_thermal_limitations %}<p>{{ scope.thermal_limitations }}</p>{% endif %}
+  </div>
+</div>
+
+<!-- ══ Declaration ═══════════════════════════════════════════════════ -->
+<div class="section avoid-break">
+  <div class="section-title">Declaration</div>
+  <div class="sig-box">
+    <div style="font-size:8pt;margin-bottom:2.5mm;">
+      I certify that the routine maintenance inspection described above was
+      carried out by me on the date stated, and that the findings recorded are an
+      accurate account of what was found on that visit.
+    </div>
+    <table class="kv">
+      <tr>
+        <td class="kv-key">Name</td><td class="kv-val">{{ inspector.name }}</td>
+        <td class="kv-key">Position</td><td class="kv-val">{{ inspector.position }}</td>
+      </tr>
+      <tr>
+        <td class="kv-key">For and on behalf of</td><td class="kv-val">{{ inspector.company }}</td>
+        <td class="kv-key">Date</td><td class="kv-val">{{ inspector.date }}</td>
+      </tr>
+    </table>
+    {% if inspector.signature != blank %}
+      <img class="sig-img" src="{{ inspector.signature }}" alt="" style="margin-top:2mm;">
+    {% endif %}
+    <div class="sig-rule">Signature</div>
+  </div>
+</div>

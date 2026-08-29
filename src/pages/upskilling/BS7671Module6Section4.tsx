@@ -1,8 +1,8 @@
-import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { useNavigate } from 'react-router-dom';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
-import { PageFrame, PageHero } from '@/components/college/primitives';
 import {
   TLDR,
   ConceptBlock,
@@ -70,7 +70,7 @@ const inlineChecks = [
       'Satisfactory — a single C2 sits below the failure threshold',
       'Satisfactory with observations — the C3 items are advisory only',
       'Unsatisfactory — any C1, C2 or FI makes the result unsatisfactory',
-      'Pending — the result awaits the client\'s written approval first',
+      "Pending — the result awaits the client's written approval first",
     ],
     correctIndex: 2,
     explanation:
@@ -198,7 +198,7 @@ const quizQuestions = [
       "Record the manufacturer's nameplate impedance for the protective device fitted",
       'Record the supply earth-fault loop impedance Ze, measured at the origin only',
       "Record the test instrument's internal lead impedance used for the measurement",
-      "Record the maximum permitted Zs for that device, so measured Zs can be compared",
+      'Record the maximum permitted Zs for that device, so measured Zs can be compared',
     ],
     correctAnswer: 3,
     explanation:
@@ -225,7 +225,7 @@ const quizQuestions = [
     options: [
       'Recording the result of inspection and testing of an existing installation',
       'Identifying departures from BS 7671 that may give rise to danger to persons',
-      "Certifying the design parameters of new work under the Reg 132 design duty",
+      'Certifying the design parameters of new work under the Reg 132 design duty',
       'Providing recommendations on the actions required to remedy unsafe conditions',
     ],
     correctAnswer: 2,
@@ -294,406 +294,403 @@ const BS7671Module6Section4 = () => {
   });
 
   return (
-    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
-      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
-        <PageFrame>
+    <HubPage>
+      <HubMasthead
+        section="Module 6 · Section 4 · Updated for A4:2026"
+        title="Model forms and certification (EIC, MEIWC, EICR)"
+        backTo="../bs7671-module-6"
+      />
+      <HubBody>
+        <div className="max-w-3xl text-[13px] leading-relaxed text-white">
+          {
+            'Appendix 6 of BS 7671:2018+A4:2026 — the three certificates the regulations recognise, who signs each, what the Schedule of Inspection and Schedule of Test Results actually capture, the EICR coding system (C1/C2/C3/FI) and the new A4 cert-form columns (PNB, AFDD, max permitted Zs).'
+          }
+        </div>
+
+        <div className="flex flex-wrap items-center gap-2">
+          {
+            <>
+              <RegBadge>644.1</RegBadge>
+              <RegBadge>651.1</RegBadge>
+              <RegBadge>653.1</RegBadge>
+              <AmendmentBadge regs={['411.3.4', '421.1.7', '722.312.2.1']} />
+            </>
+          }
+        </div>
+
+        <TLDR
+          points={[
+            'Three certificates, three jobs. EIC for new installations and additions/alterations that introduce a new circuit. MEIWC for additions/alterations to an existing circuit (no new circuit). EICR for periodic inspection of an existing installation.',
+            'EIC carries three separate signature blocks — Designer (Reg 132), Installer/Constructor (Reg 134.1) and Inspector/Tester (Chapter 64). One competent person can sign all three but each declaration stands alone.',
+            'EICR observations are coded C1 (danger present, immediate action), C2 (potentially dangerous, urgent remedial), C3 (improvement recommended) or FI (further investigation). Any C1, C2 or FI = Unsatisfactory overall.',
+            'A4:2026 cert-form changes: TN-C-S (PNB) drop-down, Item 4.23 AFDD inspection, Column 30 AFDD test, max permitted Zs column, reference method column, SPD type per board, supplied-from and max demand.',
+            'A3 cert forms are not valid for new works after 15 April 2026 — the form columns and items differ. Issue against A4 from that date forward.',
+          ]}
+        />
+
+        <LearningOutcomes
+          outcomes={[
+            'State the three BS 7671 model forms (EIC, MEIWC, EICR) and pick the correct one for a given scope of work, citing Reg 644.1 and Appendix 6.',
+            'Identify the three signature blocks on an EIC (Designer, Installer/Constructor, Inspector/Tester) and explain what each declaration covers under Regs 132 and 134.1 and Chapter 64.',
+            'Describe what the Schedule of Inspection and Schedule of Test Results capture and which certificates they form part of (EIC and EICR — not MEIWC).',
+            'Apply the EICR observation codes (C1, C2, C3, FI) correctly using IET GN3 Section K and Best Practice Guide 4, and translate a list of observations into the deterministic Satisfactory / Unsatisfactory overall assessment.',
+            'Recognise the A4:2026 cert-form changes (TN-C-S (PNB), AFDD inspection and test, max permitted Zs, reference method, SPD per board, supplied-from, max demand) and stop using A3 forms for works completed on or after 15 April 2026.',
+            "Determine the recommended period to next inspection in line with IET GN3 Table 3.2, and recognise where statutory ceilings (e.g. PRS England 2020) override the inspector's recommendation.",
+            'Identify who must receive copies of the certificate (customer, tenant where applicable, Building Control for notifiable works) and how long to retain copies.',
+          ]}
+          initialVisibleCount={3}
+        />
+
+        <ContentEyebrow>The three certificates — what each is for</ContentEyebrow>
+
+        <ConceptBlock
+          title="EIC, MEIWC, EICR — picking the right form"
+          plainEnglish="EIC = new installation, or addition/alteration that includes a new circuit. MEIWC = addition or alteration to an existing circuit only (no new circuit). EICR = periodic inspection and condition report of an existing installation."
+          onSite="The decision is rarely subjective once you frame it correctly. Did the works create a new final circuit? EIC. Did the works extend or modify an existing circuit only? MEIWC. Did the works consist of inspecting and testing an installation that was already in service, with no new work? EICR. CU change = EIC (every circuit is recommissioned at the new board). New EV charge-point with a new dedicated circuit = EIC. Adding a fused spur from an existing socket = MEIWC. Five-yearly landlord inspection = EICR."
+        >
+          <p>
+            Reg 644.1 and Appendix 6 of BS 7671:2018+A4:2026 set out the three model forms. The EIC
+            certifies that a new installation, or an addition/alteration that introduces a new
+            circuit, has been designed, constructed, inspected and tested in accordance with BS
+            7671. The MEIWC certifies that minor works to an existing circuit (an addition or
+            alteration that does not include the provision of a new circuit) comply with the
+            Regulations. The EICR records the condition of an existing installation against the
+            current edition of BS 7671 — it does NOT certify new design or construction.
+          </p>
+        </ConceptBlock>
+
+        <RegsCallout
+          source="BS 7671:2018+A4:2026 · Reg 644.1 — Certification of new installations, additions and alterations"
+          clause="Upon completion of the inspection and testing of a new installation or changes to an existing installation, an Electrical Installation Certificate together with a Schedule of Inspection and a Schedule of Test Results shall be given to the person ordering the work. For an addition or alteration which does not include the provision of a new circuit, a Minor Electrical Installation Works Certificate, OR an Electrical Installation Certificate, may be provided."
+          meaning="The trigger for an EIC is a new circuit. Without a new circuit, MEIWC is sufficient (and is the normal choice) — but the regulation explicitly allows the contractor to issue an EIC instead if they wish. The choice is contractor-led. What is not permitted is to issue no certificate at all for an addition or alteration."
+          cite="BS 7671:2018+A4:2026, Reg 644.1 (Appendix 6 — model forms)"
+        />
+
+        <InlineCheck {...inlineChecks[0]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>The three signatures on an EIC</ContentEyebrow>
+
+        <ConceptBlock
+          title="Designer, Installer/Constructor, Inspector/Tester"
+          plainEnglish="Three separate declarations, three responsibilities. One competent person can sign all three blocks if they did all three roles, but each declaration stands alone — they are not merged."
+          onSite="Designer = the person who specified what was to be installed (cable size, protective device, layout). Installer/Constructor = the person who built it. Inspector/Tester = the person who carried out the initial verification (Chapter 64) and recorded the results. On a domestic rewire, this is often one electrician filling all three blocks. On a commercial fit-out, it is typically three different parties."
+        >
+          <p>
+            Reg 132 places the design responsibility on a named designer. Reg 134.1 places the
+            construction (installation) responsibility on the named constructor/installer. Chapter
+            64 (initial verification) places the inspection and testing responsibility on the named
+            inspector/tester. The EIC has three signature blocks because BS 7671 records these three
+            responsibilities separately. Departures under Reg 120.3 are recorded against the
+            Designer declaration — the designer carries the burden of justification.
+          </p>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="Why three blocks even when one person did everything"
+          plainEnglish="The cert is a legal record of which competent person took which responsibility. Even when the same person fills all three roles, the regulations want each responsibility identified separately so that future readers (insurers, courts, subsequent contractors) can see which duty was discharged when."
+          onSite="Sign each block fully — name printed, signature, date, position. Do NOT write 'as above' in the second and third blocks. The three blocks are independently retrievable evidence and each must stand on its own. If you handle the inspection and testing for someone else's design and install, only sign the Inspector/Tester block — leave the others for the named designer and installer to complete."
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>The Schedule of Inspection</ContentEyebrow>
+
+        <ConceptBlock
+          title="What the Schedule of Inspection captures"
+          plainEnglish="A structured tick-list of every inspection requirement from Chapter 64 — methods of basic and fault protection, identification of conductors, presence of the right protective devices, presence of safety-critical labelling, accessibility for operation and maintenance, and (new in A4) AFDD presence and operation."
+          onSite="The schedule covers consumer unit and main switchgear, distribution boards, accessories (sockets, switches, isolators), final circuits, special locations and AFDD/SPD presence. Every line is a yes / no / N/A entry — there is no narrative box on the Schedule of Inspection. Narrative goes on the EIC face under 'comments on existing installation' or under departures."
+        >
+          <p>
+            The Schedule of Inspection forms part of both the EIC and the EICR (Reg 644.1 and Reg
+            653.1). It is the structured inspection record — distinct from the test results which
+            sit on the Schedule of Test Results. A4:2026 adds Item 4.23 (AFDD presence and
+            operation) to the Schedule of Inspection, alongside the existing items for SPD,
+            earthing, bonding, RCD additional protection and labelling. MEIWC does NOT carry a
+            separate Schedule of Inspection — the inspection items are condensed into the body of
+            the MEIWC.
+          </p>
+        </ConceptBlock>
+
+        <RegsCallout
+          source="BS 7671:2018+A4:2026 · Appendix 6 · Schedule of Inspection (A4 changes)"
+          clause="A4 introduces Item 4.23 — confirmation of AFDD inspection where AFDDs are required by Reg 421.1.7, in addition to the existing items for SPD, earthing arrangement, bonding, basic protection, fault protection, additional protection, identification of conductors and warning notices."
+          meaning="Item 4.23 is the inspection counterpart to the new Column 30 on the Schedule of Test Results (AFDD test). Together they record that the AFDD is both correctly installed (inspection) and tested in accordance with the manufacturer\'s test button procedure (test). Reg 421.1.7 names the locations where AFDDs are required."
+          cite="BS 7671:2018+A4:2026, Appendix 6 — Schedule of Inspection · Item 4.23"
+        />
+
+        <InlineCheck {...inlineChecks[1]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>The Schedule of Test Results</ContentEyebrow>
+
+        <ConceptBlock
+          title="What the Schedule of Test Results captures"
+          plainEnglish="A row per circuit. Conductor sizes, protective device, test instrument readings (insulation resistance, continuity, Zs, RCD operating time), and pass/fail. Under A4 it now also captures Max permitted Zs (so the limit and the measurement appear side-by-side), reference method, SPD presence, AFDD test, and the supplied-from / maximum demand."
+          onSite="The Schedule of Test Results is the cert face that any future inspector reads first. It must be legible, complete and self-consistent. A4 adds columns specifically to make the cert-face evidence clearer: Max permitted Zs (so the inspector\'s App 3 lookup is on the cert, not in their head), Reference Method (so the cable installation method is recorded), AFDD test (so the new device is verified)."
+        >
+          <p>
+            The Schedule of Test Results forms part of both the EIC and the EICR. Each row
+            represents a circuit and captures: circuit description, conductor size (live and CPC),
+            reference method (A4 — new column), protective device type and rating, max permitted Zs
+            (A4 — new column), measured Zs, RCD type and rating, RCD operating time at IΔn and 5
+            IΔn, AFDD test (A4 — new column 30), continuity (R1+R2 or R2), insulation resistance,
+            polarity, and pass/fail. MEIWC carries its own condensed test-results section — there is
+            no separate Schedule of Test Results for minor works.
+          </p>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="The new A4 columns — what they mean for the inspector"
+          plainEnglish="Max permitted Zs makes the limit explicit on the cert face. Reference Method records cable installation method (A, B, C, D, E, F, G — App 4). AFDD test records the new arc-fault device verification. SPD type per board records surge protection at each distribution board (rather than a single 'yes' for the installation). Supplied-from and max demand record the upstream supply context."
+          onSite="A4-only items: TN-C-S (PNB) drop-down on the supply details box; Item 4.23 on the Schedule of Inspection (AFDD presence/operation); Column 30 on the Schedule of Test Results (AFDD test); Max permitted Zs column; Reference Method column; SPD type column per board; Supplied-from box; Max demand box. If the cert form does not have these — it is an A3 form. From 15 April 2026 it is not the in-force form for new works."
+        />
+
+        <InlineCheck {...inlineChecks[4]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>The MEIWC — minor works</ContentEyebrow>
+
+        <ConceptBlock
+          title="What MEIWC actually covers"
+          plainEnglish="A single-page certificate for additions and alterations to an existing circuit that do not introduce a new circuit. Adding a socket to a ring. Adding a light point to a lighting circuit. Replacing an accessory with a different specification. Adding a fused connection unit to feed a new appliance from an existing circuit."
+          onSite="MEIWC is one page. It records: scope of the works, observations on the existing installation that the new works rely on, test results for the modified circuit (Zs, R1+R2, insulation resistance, RCD operating time where applicable), and a single signature for the competent person who designed, constructed and inspected the works. Crucially, MEIWC does NOT separately certify the existing installation — it certifies the new works only."
+        >
+          <p>
+            Reg 644.1 permits MEIWC for additions/alterations not introducing a new circuit. The
+            cert form (Appendix 6) is condensed: the inspection items and test results are on the
+            same single page as the declaration, and one signature covers all three competent person
+            roles. The MEIWC also requires an entry for the existing CPC continuity, earthing,
+            bonding and protective device for the modified circuit — because the new works rely on
+            those existing arrangements being adequate. If they are not adequate, that is recorded
+            as an observation on the MEIWC and the customer is advised of the remedial requirement
+            before the new works are energised.
+          </p>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <ContentEyebrow>EICR — purpose, scope, coding</ContentEyebrow>
+
+        <ConceptBlock
+          title="What an EICR is for (Reg 651.1)"
+          plainEnglish="A periodic inspection and test of an EXISTING installation, recording its condition against the current edition of BS 7671 and identifying any departures that give rise to danger. The EICR does not certify new work."
+          onSite="The EICR is requested by landlords (statutory requirement in PRS England), insurers, mortgage lenders, employers (EAWR 1989 duty), buyers and sellers, and as a routine periodic inspection (IET GN3 Table 3.2). The inspector examines the installation, records observations against current BS 7671, codes them C1/C2/C3/FI, gives an overall Satisfactory/Unsatisfactory result, and recommends a period to next inspection."
+        >
+          <p>
+            Reg 651.1 sets the purpose of the EICR: to determine, so far as is reasonably
+            practicable, whether the installation is in a satisfactory condition for continued
+            service. Reg 653.1 defines what the EICR records: the result of the inspection and
+            testing, identification of departures from the current edition that give rise to danger,
+            and recommended actions. Reg 653.2 sets out limitations — the inspector records the
+            agreed extent and the agreed limitations of the inspection (e.g. live testing not
+            undertaken, areas not accessible).
+          </p>
+        </ConceptBlock>
+
+        <RegsCallout
+          source="BS 7671:2018+A4:2026 · Reg 653.1 — Periodic inspection and testing"
+          clause="Where required by other Regulations, or where it has been agreed between parties, an inspection and testing of an existing electrical installation shall be carried out at appropriate intervals to determine whether the installation is in a satisfactory condition for continued service. An Electrical Installation Condition Report shall be produced based on the inspection and testing, classifying any observed departures from the current edition of this Standard."
+          meaning="EICR records condition, not design. The inspector\'s job is to identify departures and code them by safety implication — not to redesign the installation. A C2 observation (e.g. missing 30 mA RCD on a domestic socket circuit) records the departure and triggers the urgent-remedial-action duty; the remedial works themselves are then certified separately by an EIC or MEIWC."
+          cite="BS 7671:2018+A4:2026, Reg 653.1"
+        />
+
+        <ConceptBlock
+          title="Observation codes — C1, C2, C3, FI"
+          plainEnglish="C1 = danger present, immediate action required (e.g. exposed live conductors). C2 = potentially dangerous, urgent remedial action required (e.g. missing RCD where current edition requires it). C3 = improvement recommended (e.g. outdated cable colours without warning labels). FI = further investigation required without delay (e.g. unidentifiable circuit, suspected concealed damage)."
+          onSite="Every observation gets exactly ONE code. Not zero. Not two. The code is chosen by reference to IET GN3 Section K and Best Practice Guide 4 (Electrical Safety First). 'It looks fine but the install is old' is not C3 by default — C3 is for genuine improvement recommendations against the current edition. 'I am not sure' is not C2 — that is FI. The discipline of one observation = one code is what makes the EICR coding system useful and defensible."
+        >
+          <p>
+            The four codes are mutually exclusive. C1 = unsafe now. C2 = unsafe under foreseeable
+            conditions. C3 = compliant historically but the current edition would do this
+            differently and the customer should know. FI = the inspector cannot assess the risk from
+            the available evidence and recommends a focused follow-up. The overall assessment is
+            mechanical: any C1, C2 or FI = Unsatisfactory. C3 alone = Satisfactory but with
+            observations recorded. The inspector does not get to override this with a gut-feel "I
+            think this is OK".
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...inlineChecks[2]} />
+
+        <ConceptBlock
+          title="Satisfactory vs Unsatisfactory — the deterministic rule"
+          plainEnglish="Any C1, any C2, any FI = overall Unsatisfactory. C3 only = overall Satisfactory (with C3 observations listed). No observations = overall Satisfactory."
+          onSite="The overall box is not the inspector\'s personal verdict. It is the deterministic output of the C1/C2/FI tally. A landlord\'s EICR with one C2 is Unsatisfactory full stop — no amount of explanation softens it on the cert. The inspector\'s judgement is exercised in deciding the code on each observation; the overall result follows mechanically. This is what makes the EICR usable as a regulatory document — the customer, the council and the insurer all read the overall box the same way."
+        />
+
+        <InlineCheck {...inlineChecks[3]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>Recommended period to next inspection</ContentEyebrow>
+
+        <ConceptBlock
+          title="Where the recommended period comes from"
+          plainEnglish="IET GN3 Table 3.2 sets typical recommended periods by installation type — 10 years for owner-occupied dwellings, 5 years for commercial premises, shorter for high-occupancy or harsh environments. Statute can shorten this. The cert recommends the period; statute sets a maximum."
+          onSite="Owner-occupied dwelling: 10 years (or change of occupancy). Private-rented dwelling (England): 5 years (or change of occupancy) — STATUTORY ceiling under the 2020 Regulations. Commercial premises: typically 5 years. Construction sites, swimming pools, marinas, agricultural: 1 to 3 years. High-risk industrial: site-specific. The inspector can shorten the period if the installation\'s condition warrants it. The inspector cannot lengthen it past the statutory ceiling."
+        >
+          <p>
+            The recommended period is an inspector-led judgement informed by IET GN3 Table 3.2, the
+            installation\'s condition, the age of the equipment, the use of the premises and any
+            statutory ceiling. The Electrical Safety Standards in the Private Rented Sector
+            (England) Regulations 2020 set a statutory ceiling of 5 years or change of occupancy
+            (whichever is sooner) for PRS dwellings in England — irrespective of the inspector\'s
+            opinion. Scotland and Wales have parallel rules. The cert records the recommended date;
+            the statutory date overrides it where shorter.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...inlineChecks[6]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>A4:2026 cert-form changes — at a glance</ContentEyebrow>
+
+        <ConceptBlock
+          title="What is new on the A4 cert form vs A3"
+          plainEnglish="TN-C-S (PNB) is now an explicit drop-down. AFDD inspection has its own item (4.23). AFDD test has its own column (30). Max permitted Zs is now a separate column from measured Zs. Reference Method is now a column on the test results. SPD type is recorded per board. Supplied-from and Max Demand are explicit boxes."
+          onSite="The visual diff between A3 and A4: A3 had one Zs column on the test results sheet; A4 has two (max permitted, measured). A3 had no AFDD line; A4 has Item 4.23 on inspection and Column 30 on test results. A3 grouped TN-C-S; A4 splits PME and PNB. A3 had a single SPD entry for the installation; A4 records SPD type per board. If your cert pad does not show these — it is A3 and out of date for new works after 15 April 2026."
+        >
+          <p>
+            The amendment changes (Reg 411.3.4 luminaire RCD in domestic premises, Reg 421.1.7 AFDD
+            requirements, Reg 722.312.2.1 EV PEN prohibition) drive the cert-form changes. The form
+            must record evidence that the new regulations have been complied with. Item 4.23
+            evidences AFDD presence and operation. Column 30 evidences AFDD operation under test.
+            The Max Permitted Zs column makes the disconnection-time analysis explicit on the cert
+            face. The TN-C-S (PNB) drop-down lets the inspector record the supply earthing
+            arrangement accurately rather than collapsing PNB into PME.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...inlineChecks[5]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>Distribution — who gets the certificate</ContentEyebrow>
+
+        <ConceptBlock
+          title="Who must receive copies"
+          plainEnglish="The person ordering the work is the primary recipient. Tenants of PRS dwellings (England) must receive a copy within 28 days of inspection. Building Control receive a copy where the works are notifiable under Building Regulations Part P. The contractor keeps their own copy."
+          onSite="Standard distribution: customer (the person ordering the work) gets the original; contractor keeps a copy for at least 6 years (Limitation Act 1980); for PRS England, landlord must give tenant a copy within 28 days; for notifiable Part P works (England and Wales), Building Control receive a copy via the competent-person scheme registration. Best practice is digital storage with multi-site backup. Paper-only retention is the source of every 'we lost the cert' dispute."
+        >
+          <p>
+            Reg 644.5 / 644.6 (EIC) and Reg 653.4 (EICR) place the copy-distribution duty on the
+            contractor. The customer\'s copy is the legal copy. The contractor\'s retained copy is
+            evidence in a future dispute. Insurers, mortgage lenders and conveyancers will ask for
+            the EIC or EICR at point of sale or remortgage, sometimes years after the work was
+            completed. A retention period of 6 years aligns with the simple-contract limitation
+            period; lifetime retention is best practice. Digital storage with redundancy is now the
+            norm.
+          </p>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <ContentEyebrow>Where it goes wrong</ContentEyebrow>
+
+        <CommonMistake
+          title="Issuing a MEIWC for works that introduce a new circuit"
+          whatHappens="An electrician adds a new dedicated 32 A circuit for an EV charger and issues a MEIWC. Reg 644.1 is unambiguous: a new circuit requires an EIC. The MEIWC is invalid for these works. On a later EICR, the lack of an EIC for the EV circuit is recorded as a documentary non-compliance, and where the new circuit is found to depart from the current edition the absence of a Designer declaration leaves the responsibility unclaimed."
+          doInstead="If the works create a new final circuit — by definition a circuit with its own protective device originating at a distribution board or consumer unit — the cert is an EIC, not a MEIWC. The EIC carries the three signature blocks (Designer, Installer, Inspector) and the Schedule of Inspection and Schedule of Test Results. CU change = EIC. New EV circuit = EIC. New shower circuit = EIC. New socket on existing ring = MEIWC."
+        />
+
+        <CommonMistake
+          title="Recording a C2 observation but ticking Satisfactory overall"
+          whatHappens="The inspector lists a C2 observation (missing 30 mA RCD on a domestic kitchen socket circuit) in the body of the EICR but ticks Satisfactory overall, reasoning that 'the rest of the install is fine'. This is a coding system failure. Reg 653.1 + Appendix 6 EICR model form make the overall result deterministic — any C2 = Unsatisfactory."
+          doInstead="The overall result is mechanical, not subjective. C1 / C2 / FI present → Unsatisfactory. C3 only → Satisfactory with observations. No observations → Satisfactory. Apply the rule. If the inspector believes the installation is genuinely safe, the observation should be recoded (C3 if it really is improvement-only) or the C2 stands and the overall result is Unsatisfactory. The inspector cannot have both."
+        />
+
+        <CommonMistake
+          title="Issuing an A3 cert form for works completed after 15 April 2026"
+          whatHappens="A contractor with a stockpile of pre-printed A3 cert pads continues to use them after 15 April 2026 to 'use them up'. The A3 form lacks the Item 4.23 AFDD inspection line, Column 30 AFDD test, Max Permitted Zs column, Reference Method column, SPD per board entries, supplied-from box and TN-C-S (PNB) option. The cert is documentary non-compliance with App 6 of the in-force edition — even if the underlying work is sound."
+          doInstead="From 15 April 2026, issue against A4. Reorder pads or, ideally, switch to digital cert software that pulls the in-force form template automatically. The form columns matter — they evidence compliance with the new Regs (Reg 411.3.4 luminaire RCD, Reg 421.1.7 AFDD, Reg 722.312.2.1 EV PEN). A cert that cannot record those is a cert that cannot evidence compliance with them. Old pads can be donated to a teaching scrapbook — not used in service."
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>Scenarios — applying it on the day</ContentEyebrow>
+
+        <Scenario
+          title="Consumer unit replacement on a 1990s domestic property"
+          situation="Customer wants the existing 17th edition split-load CU replaced with a modern A4-compliant board (RCBOs throughout, SPD, AFDDs on bedroom and living-area circuits per Reg 421.1.7). All existing circuits are recommissioned at the new board. No new circuits added at this visit. The customer asks whether this is a 'minor works' job."
+          whatToDo="This is an EIC, not a MEIWC. Reg 644.1: a CU change recommissions every circuit at the new board — every circuit has a new protective device, and the design responsibility for the protective coordination is fresh. Issue an EIC with the three signature blocks. Complete the Schedule of Inspection (including new Item 4.23 for AFDDs). Complete the Schedule of Test Results (including Column 30 AFDD test, Max Permitted Zs, Reference Method per circuit). Record any departures under Reg 120.3 against the Designer declaration."
+          whyItMatters="Treating a CU change as 'minor works' is one of the most common cert-form errors at audit. The MEIWC has no Schedule of Inspection or Schedule of Test Results as separate documents — issuing one for a CU change loses the structured evidence of inspection and test that a new board demands. Insurers and PRS regulators will treat a CU change documented only by MEIWC as inadequate evidence."
+        />
+
+        <Scenario
+          title="Five-yearly EICR on a private rented flat"
+          situation="EICR on a 2-bed flat let to tenants. You find: one cracked socket-outlet face in the kitchen with no exposed live (C2), no 30 mA RCD on the lighting circuit (C2 in this property given foreseeable use), an old harmonised cable colour scheme with no warning label at the CU (C3), and one circuit at the CU that is unlabelled and you cannot positively trace from the test results alone (FI)."
+          whatToDo="Code each observation discretely: socket = C2; lighting RCD = C2; cable colours = C3; unidentified circuit = FI. Overall result = Unsatisfactory (any C2 or FI triggers it). Recommended period to next inspection: 5 years OR change of occupancy (statutory ceiling — PRS England 2020), but given the C2s, the practical date is when the C2s are remedied and a re-inspection / NICEIC re-cert visit is undertaken. Issue the EICR to the landlord; landlord must provide a copy to the tenant within 28 days; council on request."
+          whyItMatters="The PRS England 2020 Regulations make the 5-year ceiling statutory and the 28-day tenant-copy duty statutory. An EICR with C2s on a PRS dwelling triggers landlord remedial-works duty within 28 days. The C2s are not optional — they are the cert\'s record of the legal trigger. Coding a C2 down to C3 because the landlord wants a Satisfactory result is a serious professional failure and exposes the inspector to discipline by their certification body and to civil liability if a tenant is injured."
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>Worked example — three certs on three jobs</ContentEyebrow>
+
+        <ConceptBlock
+          title="Three jobs in one week — picking the right cert each time"
+          plainEnglish="Job 1: full rewire of a 1960s semi. Job 2: add a fused spur from an existing kitchen ring to feed a new fridge-freezer. Job 3: five-yearly periodic on a 30-flat HMO."
+          onSite="Job 1 (rewire): EIC. New installation. Three signature blocks. Full Schedule of Inspection (with Item 4.23 AFDD where required by Reg 421.1.7). Full Schedule of Test Results (with Column 30 AFDD test, Max Permitted Zs, Reference Method). Reg 120.3 departure log if any. Job 2 (fused spur): MEIWC. Addition to existing circuit, no new circuit. Single page. Tests for the modified circuit. Single signature for the competent person. Confirm existing CPC continuity, RCD operation and Zs are adequate before energising. Job 3 (HMO periodic): EICR. Schedule of Inspection. Schedule of Test Results. Observations coded C1/C2/C3/FI per IET GN3 Section K and BPG4. Overall Satisfactory or Unsatisfactory by the deterministic rule. Recommended period to next inspection per IET GN3 Table 3.2 with statutory ceiling check."
+        >
+          <p>
+            The discipline is to ask 'does this work introduce a new circuit?' for additions and
+            alterations (yes = EIC, no = MEIWC), and to default to EICR for periodic inspection of
+            installations already in service. Edge cases — partial rewires, like-for-like CU
+            replacements, accessory upgrades — are resolved by the same question. New circuit? EIC.
+            No new circuit, just touching existing? MEIWC. Just looking, not doing? EICR. Three
+            certificates, three jobs, three tests of which is which.
+          </p>
+        </ConceptBlock>
+
+        <FAQ items={faqItems} />
+
+        <KeyTakeaways
+          points={[
+            'Three certs, three jobs. EIC = new install or addition with a new circuit. MEIWC = addition or alteration to an existing circuit only. EICR = periodic inspection of an existing installation. Reg 644.1 / Reg 651.1 / App 6.',
+            'EIC carries three signature blocks: Designer (Reg 132), Installer/Constructor (Reg 134.1), Inspector/Tester (Chapter 64). One competent person can sign all three but the declarations stand alone.',
+            'Schedule of Inspection and Schedule of Test Results form part of EIC and EICR — not MEIWC. MEIWC is a single-page condensed cert.',
+            "EICR codes are C1 (danger present), C2 (potentially dangerous), C3 (improvement recommended), FI (further investigation). Any C1, C2 or FI = Unsatisfactory overall. C3 alone = Satisfactory. The overall box is deterministic, not the inspector's gut feel.",
+            'A4:2026 cert-form changes: TN-C-S (PNB) drop-down, Item 4.23 AFDD inspection, Column 30 AFDD test, Max Permitted Zs column, Reference Method column, SPD per board, supplied-from, max demand. A3 forms are not valid for new works after 15 April 2026.',
+            'Recommended period to next inspection comes from IET GN3 Table 3.2 — but statute (e.g. PRS England 5-year ceiling) overrides where shorter.',
+            'Distribution: customer gets the original; PRS tenants must receive a copy within 28 days; Building Control where notifiable; contractor retains a copy for at least 6 years (Limitation Act 1980), ideally for the life of the installation.',
+          ]}
+        />
+
+        <Quiz questions={quizQuestions} />
+
+        <div className="grid grid-cols-2 gap-3 pt-2">
           <button
             type="button"
-            onClick={() => navigate('../bs7671-module-6')}
-            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            onClick={() => navigate('/electrician/upskilling/bs7671-module-6')}
+            className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
           >
-            <ArrowLeft className="h-4 w-4" /> Module 6
+            <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+              <ChevronLeft className="h-3 w-3" /> Module 6
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-white truncate">
+              Module overview
+            </div>
           </button>
-
-          <PageHero
-            eyebrow="Module 6 · Section 4 · Updated for A4:2026"
-            title="Model forms and certification (EIC, MEIWC, EICR)"
-            description="Appendix 6 of BS 7671:2018+A4:2026 — the three certificates the regulations recognise, who signs each, what the Schedule of Inspection and Schedule of Test Results actually capture, the EICR coding system (C1/C2/C3/FI) and the new A4 cert-form columns (PNB, AFDD, max permitted Zs)."
-            actions={
-              <>
-                <RegBadge>644.1</RegBadge>
-                <RegBadge>651.1</RegBadge>
-                <RegBadge>653.1</RegBadge>
-                <AmendmentBadge regs={['411.3.4', '421.1.7', '722.312.2.1']} />
-              </>
-            }
-            tone="yellow"
-          />
-
-          <TLDR
-            points={[
-              'Three certificates, three jobs. EIC for new installations and additions/alterations that introduce a new circuit. MEIWC for additions/alterations to an existing circuit (no new circuit). EICR for periodic inspection of an existing installation.',
-              'EIC carries three separate signature blocks — Designer (Reg 132), Installer/Constructor (Reg 134.1) and Inspector/Tester (Chapter 64). One competent person can sign all three but each declaration stands alone.',
-              'EICR observations are coded C1 (danger present, immediate action), C2 (potentially dangerous, urgent remedial), C3 (improvement recommended) or FI (further investigation). Any C1, C2 or FI = Unsatisfactory overall.',
-              'A4:2026 cert-form changes: TN-C-S (PNB) drop-down, Item 4.23 AFDD inspection, Column 30 AFDD test, max permitted Zs column, reference method column, SPD type per board, supplied-from and max demand.',
-              'A3 cert forms are not valid for new works after 15 April 2026 — the form columns and items differ. Issue against A4 from that date forward.',
-            ]}
-          />
-
-          <LearningOutcomes
-            outcomes={[
-              'State the three BS 7671 model forms (EIC, MEIWC, EICR) and pick the correct one for a given scope of work, citing Reg 644.1 and Appendix 6.',
-              'Identify the three signature blocks on an EIC (Designer, Installer/Constructor, Inspector/Tester) and explain what each declaration covers under Regs 132 and 134.1 and Chapter 64.',
-              'Describe what the Schedule of Inspection and Schedule of Test Results capture and which certificates they form part of (EIC and EICR — not MEIWC).',
-              'Apply the EICR observation codes (C1, C2, C3, FI) correctly using IET GN3 Section K and Best Practice Guide 4, and translate a list of observations into the deterministic Satisfactory / Unsatisfactory overall assessment.',
-              'Recognise the A4:2026 cert-form changes (TN-C-S (PNB), AFDD inspection and test, max permitted Zs, reference method, SPD per board, supplied-from, max demand) and stop using A3 forms for works completed on or after 15 April 2026.',
-              "Determine the recommended period to next inspection in line with IET GN3 Table 3.2, and recognise where statutory ceilings (e.g. PRS England 2020) override the inspector's recommendation.",
-              'Identify who must receive copies of the certificate (customer, tenant where applicable, Building Control for notifiable works) and how long to retain copies.',
-            ]}
-            initialVisibleCount={3}
-          />
-
-          <ContentEyebrow>The three certificates — what each is for</ContentEyebrow>
-
-          <ConceptBlock
-            title="EIC, MEIWC, EICR — picking the right form"
-            plainEnglish="EIC = new installation, or addition/alteration that includes a new circuit. MEIWC = addition or alteration to an existing circuit only (no new circuit). EICR = periodic inspection and condition report of an existing installation."
-            onSite="The decision is rarely subjective once you frame it correctly. Did the works create a new final circuit? EIC. Did the works extend or modify an existing circuit only? MEIWC. Did the works consist of inspecting and testing an installation that was already in service, with no new work? EICR. CU change = EIC (every circuit is recommissioned at the new board). New EV charge-point with a new dedicated circuit = EIC. Adding a fused spur from an existing socket = MEIWC. Five-yearly landlord inspection = EICR."
+          <button
+            type="button"
+            onClick={() => navigate('/electrician/upskilling/bs7671-module-6-section-5')}
+            className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
           >
-            <p>
-              Reg 644.1 and Appendix 6 of BS 7671:2018+A4:2026 set out the three model forms. The
-              EIC certifies that a new installation, or an addition/alteration that introduces a new
-              circuit, has been designed, constructed, inspected and tested in accordance with BS
-              7671. The MEIWC certifies that minor works to an existing circuit (an addition or
-              alteration that does not include the provision of a new circuit) comply with the
-              Regulations. The EICR records the condition of an existing installation against the
-              current edition of BS 7671 — it does NOT certify new design or construction.
-            </p>
-          </ConceptBlock>
-
-          <RegsCallout
-            source="BS 7671:2018+A4:2026 · Reg 644.1 — Certification of new installations, additions and alterations"
-            clause="Upon completion of the inspection and testing of a new installation or changes to an existing installation, an Electrical Installation Certificate together with a Schedule of Inspection and a Schedule of Test Results shall be given to the person ordering the work. For an addition or alteration which does not include the provision of a new circuit, a Minor Electrical Installation Works Certificate, OR an Electrical Installation Certificate, may be provided."
-            meaning="The trigger for an EIC is a new circuit. Without a new circuit, MEIWC is sufficient (and is the normal choice) — but the regulation explicitly allows the contractor to issue an EIC instead if they wish. The choice is contractor-led. What is not permitted is to issue no certificate at all for an addition or alteration."
-            cite="BS 7671:2018+A4:2026, Reg 644.1 (Appendix 6 — model forms)"
-          />
-
-          <InlineCheck {...inlineChecks[0]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>The three signatures on an EIC</ContentEyebrow>
-
-          <ConceptBlock
-            title="Designer, Installer/Constructor, Inspector/Tester"
-            plainEnglish="Three separate declarations, three responsibilities. One competent person can sign all three blocks if they did all three roles, but each declaration stands alone — they are not merged."
-            onSite="Designer = the person who specified what was to be installed (cable size, protective device, layout). Installer/Constructor = the person who built it. Inspector/Tester = the person who carried out the initial verification (Chapter 64) and recorded the results. On a domestic rewire, this is often one electrician filling all three blocks. On a commercial fit-out, it is typically three different parties."
-          >
-            <p>
-              Reg 132 places the design responsibility on a named designer. Reg 134.1 places the
-              construction (installation) responsibility on the named constructor/installer. Chapter
-              64 (initial verification) places the inspection and testing responsibility on the
-              named inspector/tester. The EIC has three signature blocks because BS 7671 records
-              these three responsibilities separately. Departures under Reg 120.3 are recorded
-              against the Designer declaration — the designer carries the burden of justification.
-            </p>
-          </ConceptBlock>
-
-          <ConceptBlock
-            title="Why three blocks even when one person did everything"
-            plainEnglish="The cert is a legal record of which competent person took which responsibility. Even when the same person fills all three roles, the regulations want each responsibility identified separately so that future readers (insurers, courts, subsequent contractors) can see which duty was discharged when."
-            onSite="Sign each block fully — name printed, signature, date, position. Do NOT write 'as above' in the second and third blocks. The three blocks are independently retrievable evidence and each must stand on its own. If you handle the inspection and testing for someone else's design and install, only sign the Inspector/Tester block — leave the others for the named designer and installer to complete."
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>The Schedule of Inspection</ContentEyebrow>
-
-          <ConceptBlock
-            title="What the Schedule of Inspection captures"
-            plainEnglish="A structured tick-list of every inspection requirement from Chapter 64 — methods of basic and fault protection, identification of conductors, presence of the right protective devices, presence of safety-critical labelling, accessibility for operation and maintenance, and (new in A4) AFDD presence and operation."
-            onSite="The schedule covers consumer unit and main switchgear, distribution boards, accessories (sockets, switches, isolators), final circuits, special locations and AFDD/SPD presence. Every line is a yes / no / N/A entry — there is no narrative box on the Schedule of Inspection. Narrative goes on the EIC face under 'comments on existing installation' or under departures."
-          >
-            <p>
-              The Schedule of Inspection forms part of both the EIC and the EICR (Reg 644.1 and Reg
-              653.1). It is the structured inspection record — distinct from the test results which
-              sit on the Schedule of Test Results. A4:2026 adds Item 4.23 (AFDD presence and
-              operation) to the Schedule of Inspection, alongside the existing items for SPD,
-              earthing, bonding, RCD additional protection and labelling. MEIWC does NOT carry a
-              separate Schedule of Inspection — the inspection items are condensed into the body of
-              the MEIWC.
-            </p>
-          </ConceptBlock>
-
-          <RegsCallout
-            source="BS 7671:2018+A4:2026 · Appendix 6 · Schedule of Inspection (A4 changes)"
-            clause="A4 introduces Item 4.23 — confirmation of AFDD inspection where AFDDs are required by Reg 421.1.7, in addition to the existing items for SPD, earthing arrangement, bonding, basic protection, fault protection, additional protection, identification of conductors and warning notices."
-            meaning="Item 4.23 is the inspection counterpart to the new Column 30 on the Schedule of Test Results (AFDD test). Together they record that the AFDD is both correctly installed (inspection) and tested in accordance with the manufacturer\'s test button procedure (test). Reg 421.1.7 names the locations where AFDDs are required."
-            cite="BS 7671:2018+A4:2026, Appendix 6 — Schedule of Inspection · Item 4.23"
-          />
-
-          <InlineCheck {...inlineChecks[1]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>The Schedule of Test Results</ContentEyebrow>
-
-          <ConceptBlock
-            title="What the Schedule of Test Results captures"
-            plainEnglish="A row per circuit. Conductor sizes, protective device, test instrument readings (insulation resistance, continuity, Zs, RCD operating time), and pass/fail. Under A4 it now also captures Max permitted Zs (so the limit and the measurement appear side-by-side), reference method, SPD presence, AFDD test, and the supplied-from / maximum demand."
-            onSite="The Schedule of Test Results is the cert face that any future inspector reads first. It must be legible, complete and self-consistent. A4 adds columns specifically to make the cert-face evidence clearer: Max permitted Zs (so the inspector\'s App 3 lookup is on the cert, not in their head), Reference Method (so the cable installation method is recorded), AFDD test (so the new device is verified)."
-          >
-            <p>
-              The Schedule of Test Results forms part of both the EIC and the EICR. Each row
-              represents a circuit and captures: circuit description, conductor size (live and CPC),
-              reference method (A4 — new column), protective device type and rating, max permitted
-              Zs (A4 — new column), measured Zs, RCD type and rating, RCD operating time at IΔn and
-              5 IΔn, AFDD test (A4 — new column 30), continuity (R1+R2 or R2), insulation
-              resistance, polarity, and pass/fail. MEIWC carries its own condensed test-results
-              section — there is no separate Schedule of Test Results for minor works.
-            </p>
-          </ConceptBlock>
-
-          <ConceptBlock
-            title="The new A4 columns — what they mean for the inspector"
-            plainEnglish="Max permitted Zs makes the limit explicit on the cert face. Reference Method records cable installation method (A, B, C, D, E, F, G — App 4). AFDD test records the new arc-fault device verification. SPD type per board records surge protection at each distribution board (rather than a single 'yes' for the installation). Supplied-from and max demand record the upstream supply context."
-            onSite="A4-only items: TN-C-S (PNB) drop-down on the supply details box; Item 4.23 on the Schedule of Inspection (AFDD presence/operation); Column 30 on the Schedule of Test Results (AFDD test); Max permitted Zs column; Reference Method column; SPD type column per board; Supplied-from box; Max demand box. If the cert form does not have these — it is an A3 form. From 15 April 2026 it is not the in-force form for new works."
-          />
-
-          <InlineCheck {...inlineChecks[4]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>The MEIWC — minor works</ContentEyebrow>
-
-          <ConceptBlock
-            title="What MEIWC actually covers"
-            plainEnglish="A single-page certificate for additions and alterations to an existing circuit that do not introduce a new circuit. Adding a socket to a ring. Adding a light point to a lighting circuit. Replacing an accessory with a different specification. Adding a fused connection unit to feed a new appliance from an existing circuit."
-            onSite="MEIWC is one page. It records: scope of the works, observations on the existing installation that the new works rely on, test results for the modified circuit (Zs, R1+R2, insulation resistance, RCD operating time where applicable), and a single signature for the competent person who designed, constructed and inspected the works. Crucially, MEIWC does NOT separately certify the existing installation — it certifies the new works only."
-          >
-            <p>
-              Reg 644.1 permits MEIWC for additions/alterations not introducing a new circuit. The
-              cert form (Appendix 6) is condensed: the inspection items and test results are on the
-              same single page as the declaration, and one signature covers all three competent
-              person roles. The MEIWC also requires an entry for the existing CPC continuity,
-              earthing, bonding and protective device for the modified circuit — because the new
-              works rely on those existing arrangements being adequate. If they are not adequate,
-              that is recorded as an observation on the MEIWC and the customer is advised of the
-              remedial requirement before the new works are energised.
-            </p>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <ContentEyebrow>EICR — purpose, scope, coding</ContentEyebrow>
-
-          <ConceptBlock
-            title="What an EICR is for (Reg 651.1)"
-            plainEnglish="A periodic inspection and test of an EXISTING installation, recording its condition against the current edition of BS 7671 and identifying any departures that give rise to danger. The EICR does not certify new work."
-            onSite="The EICR is requested by landlords (statutory requirement in PRS England), insurers, mortgage lenders, employers (EAWR 1989 duty), buyers and sellers, and as a routine periodic inspection (IET GN3 Table 3.2). The inspector examines the installation, records observations against current BS 7671, codes them C1/C2/C3/FI, gives an overall Satisfactory/Unsatisfactory result, and recommends a period to next inspection."
-          >
-            <p>
-              Reg 651.1 sets the purpose of the EICR: to determine, so far as is reasonably
-              practicable, whether the installation is in a satisfactory condition for continued
-              service. Reg 653.1 defines what the EICR records: the result of the inspection and
-              testing, identification of departures from the current edition that give rise to
-              danger, and recommended actions. Reg 653.2 sets out limitations — the inspector
-              records the agreed extent and the agreed limitations of the inspection (e.g. live
-              testing not undertaken, areas not accessible).
-            </p>
-          </ConceptBlock>
-
-          <RegsCallout
-            source="BS 7671:2018+A4:2026 · Reg 653.1 — Periodic inspection and testing"
-            clause="Where required by other Regulations, or where it has been agreed between parties, an inspection and testing of an existing electrical installation shall be carried out at appropriate intervals to determine whether the installation is in a satisfactory condition for continued service. An Electrical Installation Condition Report shall be produced based on the inspection and testing, classifying any observed departures from the current edition of this Standard."
-            meaning="EICR records condition, not design. The inspector\'s job is to identify departures and code them by safety implication — not to redesign the installation. A C2 observation (e.g. missing 30 mA RCD on a domestic socket circuit) records the departure and triggers the urgent-remedial-action duty; the remedial works themselves are then certified separately by an EIC or MEIWC."
-            cite="BS 7671:2018+A4:2026, Reg 653.1"
-          />
-
-          <ConceptBlock
-            title="Observation codes — C1, C2, C3, FI"
-            plainEnglish="C1 = danger present, immediate action required (e.g. exposed live conductors). C2 = potentially dangerous, urgent remedial action required (e.g. missing RCD where current edition requires it). C3 = improvement recommended (e.g. outdated cable colours without warning labels). FI = further investigation required without delay (e.g. unidentifiable circuit, suspected concealed damage)."
-            onSite="Every observation gets exactly ONE code. Not zero. Not two. The code is chosen by reference to IET GN3 Section K and Best Practice Guide 4 (Electrical Safety First). 'It looks fine but the install is old' is not C3 by default — C3 is for genuine improvement recommendations against the current edition. 'I am not sure' is not C2 — that is FI. The discipline of one observation = one code is what makes the EICR coding system useful and defensible."
-          >
-            <p>
-              The four codes are mutually exclusive. C1 = unsafe now. C2 = unsafe under foreseeable
-              conditions. C3 = compliant historically but the current edition would do this
-              differently and the customer should know. FI = the inspector cannot assess the risk
-              from the available evidence and recommends a focused follow-up. The overall assessment
-              is mechanical: any C1, C2 or FI = Unsatisfactory. C3 alone = Satisfactory but with
-              observations recorded. The inspector does not get to override this with a gut-feel "I
-              think this is OK".
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...inlineChecks[2]} />
-
-          <ConceptBlock
-            title="Satisfactory vs Unsatisfactory — the deterministic rule"
-            plainEnglish="Any C1, any C2, any FI = overall Unsatisfactory. C3 only = overall Satisfactory (with C3 observations listed). No observations = overall Satisfactory."
-            onSite="The overall box is not the inspector\'s personal verdict. It is the deterministic output of the C1/C2/FI tally. A landlord\'s EICR with one C2 is Unsatisfactory full stop — no amount of explanation softens it on the cert. The inspector\'s judgement is exercised in deciding the code on each observation; the overall result follows mechanically. This is what makes the EICR usable as a regulatory document — the customer, the council and the insurer all read the overall box the same way."
-          />
-
-          <InlineCheck {...inlineChecks[3]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>Recommended period to next inspection</ContentEyebrow>
-
-          <ConceptBlock
-            title="Where the recommended period comes from"
-            plainEnglish="IET GN3 Table 3.2 sets typical recommended periods by installation type — 10 years for owner-occupied dwellings, 5 years for commercial premises, shorter for high-occupancy or harsh environments. Statute can shorten this. The cert recommends the period; statute sets a maximum."
-            onSite="Owner-occupied dwelling: 10 years (or change of occupancy). Private-rented dwelling (England): 5 years (or change of occupancy) — STATUTORY ceiling under the 2020 Regulations. Commercial premises: typically 5 years. Construction sites, swimming pools, marinas, agricultural: 1 to 3 years. High-risk industrial: site-specific. The inspector can shorten the period if the installation\'s condition warrants it. The inspector cannot lengthen it past the statutory ceiling."
-          >
-            <p>
-              The recommended period is an inspector-led judgement informed by IET GN3 Table 3.2,
-              the installation\'s condition, the age of the equipment, the use of the premises and
-              any statutory ceiling. The Electrical Safety Standards in the Private Rented Sector
-              (England) Regulations 2020 set a statutory ceiling of 5 years or change of occupancy
-              (whichever is sooner) for PRS dwellings in England — irrespective of the inspector\'s
-              opinion. Scotland and Wales have parallel rules. The cert records the recommended
-              date; the statutory date overrides it where shorter.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...inlineChecks[6]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>A4:2026 cert-form changes — at a glance</ContentEyebrow>
-
-          <ConceptBlock
-            title="What is new on the A4 cert form vs A3"
-            plainEnglish="TN-C-S (PNB) is now an explicit drop-down. AFDD inspection has its own item (4.23). AFDD test has its own column (30). Max permitted Zs is now a separate column from measured Zs. Reference Method is now a column on the test results. SPD type is recorded per board. Supplied-from and Max Demand are explicit boxes."
-            onSite="The visual diff between A3 and A4: A3 had one Zs column on the test results sheet; A4 has two (max permitted, measured). A3 had no AFDD line; A4 has Item 4.23 on inspection and Column 30 on test results. A3 grouped TN-C-S; A4 splits PME and PNB. A3 had a single SPD entry for the installation; A4 records SPD type per board. If your cert pad does not show these — it is A3 and out of date for new works after 15 April 2026."
-          >
-            <p>
-              The amendment changes (Reg 411.3.4 luminaire RCD in domestic premises, Reg 421.1.7
-              AFDD requirements, Reg 722.312.2.1 EV PEN prohibition) drive the cert-form changes.
-              The form must record evidence that the new regulations have been complied with. Item
-              4.23 evidences AFDD presence and operation. Column 30 evidences AFDD operation under
-              test. The Max Permitted Zs column makes the disconnection-time analysis explicit on
-              the cert face. The TN-C-S (PNB) drop-down lets the inspector record the supply
-              earthing arrangement accurately rather than collapsing PNB into PME.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...inlineChecks[5]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>Distribution — who gets the certificate</ContentEyebrow>
-
-          <ConceptBlock
-            title="Who must receive copies"
-            plainEnglish="The person ordering the work is the primary recipient. Tenants of PRS dwellings (England) must receive a copy within 28 days of inspection. Building Control receive a copy where the works are notifiable under Building Regulations Part P. The contractor keeps their own copy."
-            onSite="Standard distribution: customer (the person ordering the work) gets the original; contractor keeps a copy for at least 6 years (Limitation Act 1980); for PRS England, landlord must give tenant a copy within 28 days; for notifiable Part P works (England and Wales), Building Control receive a copy via the competent-person scheme registration. Best practice is digital storage with multi-site backup. Paper-only retention is the source of every 'we lost the cert' dispute."
-          >
-            <p>
-              Reg 644.5 / 644.6 (EIC) and Reg 653.4 (EICR) place the copy-distribution duty on the
-              contractor. The customer\'s copy is the legal copy. The contractor\'s retained copy is
-              evidence in a future dispute. Insurers, mortgage lenders and conveyancers will ask for
-              the EIC or EICR at point of sale or remortgage, sometimes years after the work was
-              completed. A retention period of 6 years aligns with the simple-contract limitation
-              period; lifetime retention is best practice. Digital storage with redundancy is now
-              the norm.
-            </p>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <ContentEyebrow>Where it goes wrong</ContentEyebrow>
-
-          <CommonMistake
-            title="Issuing a MEIWC for works that introduce a new circuit"
-            whatHappens="An electrician adds a new dedicated 32 A circuit for an EV charger and issues a MEIWC. Reg 644.1 is unambiguous: a new circuit requires an EIC. The MEIWC is invalid for these works. On a later EICR, the lack of an EIC for the EV circuit is recorded as a documentary non-compliance, and where the new circuit is found to depart from the current edition the absence of a Designer declaration leaves the responsibility unclaimed."
-            doInstead="If the works create a new final circuit — by definition a circuit with its own protective device originating at a distribution board or consumer unit — the cert is an EIC, not a MEIWC. The EIC carries the three signature blocks (Designer, Installer, Inspector) and the Schedule of Inspection and Schedule of Test Results. CU change = EIC. New EV circuit = EIC. New shower circuit = EIC. New socket on existing ring = MEIWC."
-          />
-
-          <CommonMistake
-            title="Recording a C2 observation but ticking Satisfactory overall"
-            whatHappens="The inspector lists a C2 observation (missing 30 mA RCD on a domestic kitchen socket circuit) in the body of the EICR but ticks Satisfactory overall, reasoning that 'the rest of the install is fine'. This is a coding system failure. Reg 653.1 + Appendix 6 EICR model form make the overall result deterministic — any C2 = Unsatisfactory."
-            doInstead="The overall result is mechanical, not subjective. C1 / C2 / FI present → Unsatisfactory. C3 only → Satisfactory with observations. No observations → Satisfactory. Apply the rule. If the inspector believes the installation is genuinely safe, the observation should be recoded (C3 if it really is improvement-only) or the C2 stands and the overall result is Unsatisfactory. The inspector cannot have both."
-          />
-
-          <CommonMistake
-            title="Issuing an A3 cert form for works completed after 15 April 2026"
-            whatHappens="A contractor with a stockpile of pre-printed A3 cert pads continues to use them after 15 April 2026 to 'use them up'. The A3 form lacks the Item 4.23 AFDD inspection line, Column 30 AFDD test, Max Permitted Zs column, Reference Method column, SPD per board entries, supplied-from box and TN-C-S (PNB) option. The cert is documentary non-compliance with App 6 of the in-force edition — even if the underlying work is sound."
-            doInstead="From 15 April 2026, issue against A4. Reorder pads or, ideally, switch to digital cert software that pulls the in-force form template automatically. The form columns matter — they evidence compliance with the new Regs (Reg 411.3.4 luminaire RCD, Reg 421.1.7 AFDD, Reg 722.312.2.1 EV PEN). A cert that cannot record those is a cert that cannot evidence compliance with them. Old pads can be donated to a teaching scrapbook — not used in service."
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>Scenarios — applying it on the day</ContentEyebrow>
-
-          <Scenario
-            title="Consumer unit replacement on a 1990s domestic property"
-            situation="Customer wants the existing 17th edition split-load CU replaced with a modern A4-compliant board (RCBOs throughout, SPD, AFDDs on bedroom and living-area circuits per Reg 421.1.7). All existing circuits are recommissioned at the new board. No new circuits added at this visit. The customer asks whether this is a 'minor works' job."
-            whatToDo="This is an EIC, not a MEIWC. Reg 644.1: a CU change recommissions every circuit at the new board — every circuit has a new protective device, and the design responsibility for the protective coordination is fresh. Issue an EIC with the three signature blocks. Complete the Schedule of Inspection (including new Item 4.23 for AFDDs). Complete the Schedule of Test Results (including Column 30 AFDD test, Max Permitted Zs, Reference Method per circuit). Record any departures under Reg 120.3 against the Designer declaration."
-            whyItMatters="Treating a CU change as 'minor works' is one of the most common cert-form errors at audit. The MEIWC has no Schedule of Inspection or Schedule of Test Results as separate documents — issuing one for a CU change loses the structured evidence of inspection and test that a new board demands. Insurers and PRS regulators will treat a CU change documented only by MEIWC as inadequate evidence."
-          />
-
-          <Scenario
-            title="Five-yearly EICR on a private rented flat"
-            situation="EICR on a 2-bed flat let to tenants. You find: one cracked socket-outlet face in the kitchen with no exposed live (C2), no 30 mA RCD on the lighting circuit (C2 in this property given foreseeable use), an old harmonised cable colour scheme with no warning label at the CU (C3), and one circuit at the CU that is unlabelled and you cannot positively trace from the test results alone (FI)."
-            whatToDo="Code each observation discretely: socket = C2; lighting RCD = C2; cable colours = C3; unidentified circuit = FI. Overall result = Unsatisfactory (any C2 or FI triggers it). Recommended period to next inspection: 5 years OR change of occupancy (statutory ceiling — PRS England 2020), but given the C2s, the practical date is when the C2s are remedied and a re-inspection / NICEIC re-cert visit is undertaken. Issue the EICR to the landlord; landlord must provide a copy to the tenant within 28 days; council on request."
-            whyItMatters="The PRS England 2020 Regulations make the 5-year ceiling statutory and the 28-day tenant-copy duty statutory. An EICR with C2s on a PRS dwelling triggers landlord remedial-works duty within 28 days. The C2s are not optional — they are the cert\'s record of the legal trigger. Coding a C2 down to C3 because the landlord wants a Satisfactory result is a serious professional failure and exposes the inspector to discipline by their certification body and to civil liability if a tenant is injured."
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>Worked example — three certs on three jobs</ContentEyebrow>
-
-          <ConceptBlock
-            title="Three jobs in one week — picking the right cert each time"
-            plainEnglish="Job 1: full rewire of a 1960s semi. Job 2: add a fused spur from an existing kitchen ring to feed a new fridge-freezer. Job 3: five-yearly periodic on a 30-flat HMO."
-            onSite="Job 1 (rewire): EIC. New installation. Three signature blocks. Full Schedule of Inspection (with Item 4.23 AFDD where required by Reg 421.1.7). Full Schedule of Test Results (with Column 30 AFDD test, Max Permitted Zs, Reference Method). Reg 120.3 departure log if any. Job 2 (fused spur): MEIWC. Addition to existing circuit, no new circuit. Single page. Tests for the modified circuit. Single signature for the competent person. Confirm existing CPC continuity, RCD operation and Zs are adequate before energising. Job 3 (HMO periodic): EICR. Schedule of Inspection. Schedule of Test Results. Observations coded C1/C2/C3/FI per IET GN3 Section K and BPG4. Overall Satisfactory or Unsatisfactory by the deterministic rule. Recommended period to next inspection per IET GN3 Table 3.2 with statutory ceiling check."
-          >
-            <p>
-              The discipline is to ask 'does this work introduce a new circuit?' for additions and
-              alterations (yes = EIC, no = MEIWC), and to default to EICR for periodic inspection of
-              installations already in service. Edge cases — partial rewires, like-for-like CU
-              replacements, accessory upgrades — are resolved by the same question. New circuit?
-              EIC. No new circuit, just touching existing? MEIWC. Just looking, not doing? EICR.
-              Three certificates, three jobs, three tests of which is which.
-            </p>
-          </ConceptBlock>
-
-          <FAQ items={faqItems} />
-
-          <KeyTakeaways
-            points={[
-              'Three certs, three jobs. EIC = new install or addition with a new circuit. MEIWC = addition or alteration to an existing circuit only. EICR = periodic inspection of an existing installation. Reg 644.1 / Reg 651.1 / App 6.',
-              'EIC carries three signature blocks: Designer (Reg 132), Installer/Constructor (Reg 134.1), Inspector/Tester (Chapter 64). One competent person can sign all three but the declarations stand alone.',
-              'Schedule of Inspection and Schedule of Test Results form part of EIC and EICR — not MEIWC. MEIWC is a single-page condensed cert.',
-              "EICR codes are C1 (danger present), C2 (potentially dangerous), C3 (improvement recommended), FI (further investigation). Any C1, C2 or FI = Unsatisfactory overall. C3 alone = Satisfactory. The overall box is deterministic, not the inspector's gut feel.",
-              'A4:2026 cert-form changes: TN-C-S (PNB) drop-down, Item 4.23 AFDD inspection, Column 30 AFDD test, Max Permitted Zs column, Reference Method column, SPD per board, supplied-from, max demand. A3 forms are not valid for new works after 15 April 2026.',
-              'Recommended period to next inspection comes from IET GN3 Table 3.2 — but statute (e.g. PRS England 5-year ceiling) overrides where shorter.',
-              'Distribution: customer gets the original; PRS tenants must receive a copy within 28 days; Building Control where notifiable; contractor retains a copy for at least 6 years (Limitation Act 1980), ideally for the life of the installation.',
-            ]}
-          />
-
-          <Quiz questions={quizQuestions} />
-
-          <div className="grid grid-cols-2 gap-3 pt-2">
-            <button
-              type="button"
-              onClick={() => navigate('/electrician/upskilling/bs7671-module-6')}
-              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
-                <ChevronLeft className="h-3 w-3" /> Module 6
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-white truncate">
-                Module overview
-              </div>
-            </button>
-            <button
-              type="button"
-              onClick={() => navigate('/electrician/upskilling/bs7671-module-6-section-5')}
-              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
-                Next section <ChevronRight className="h-3 w-3" />
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-black truncate">
-                6.5 Certification errors and common pitfalls
-              </div>
-            </button>
-          </div>
-        </PageFrame>
-      </div>
-    </div>
+            <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+              Next section <ChevronRight className="h-3 w-3" />
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-black truncate">
+              6.5 Certification errors and common pitfalls
+            </div>
+          </button>
+        </div>
+      </HubBody>
+    </HubPage>
   );
 };
 

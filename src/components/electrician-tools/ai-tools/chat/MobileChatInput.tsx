@@ -1,5 +1,7 @@
 import React, { memo, useRef, useEffect, useCallback, useState } from 'react';
+import { Plus } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { SURFACE_DEPTH } from '@/components/ui/card-recipe';
 import { useHaptic } from '@/hooks/useHaptic';
 import { VoiceInputButton } from './VoiceInputButton';
 
@@ -49,6 +51,13 @@ interface MobileChatInputProps {
    * message rather than wait for the model to finish.
    */
   onStop?: () => void;
+  /**
+   * Optional attach toggle — renders a round "+" at the start of the composer
+   * row. The parent owns what opens (Elec-AI shows its Camera/Photo/Document
+   * strip); `attachActive` rotates the plus into a close affordance.
+   */
+  onAttachPress?: () => void;
+  attachActive?: boolean;
 }
 
 /**
@@ -62,19 +71,18 @@ export const MobileChatInput = memo(function MobileChatInput({
   value,
   onChange,
   onSubmit,
-  onClear,
   onCameraPress,
   cameraDisabled = false,
   isStreaming = false,
   placeholder = 'Ask Elec-AI…',
   maxLength = 2000,
-  showClearButton = true,
-  messageCount = 0,
   className,
   voiceEnabled = true,
   onTranscript,
   canSubmitWithoutText = false,
   onStop,
+  onAttachPress,
+  attachActive = false,
 }: MobileChatInputProps) {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [isFocused, setIsFocused] = useState(false);
@@ -179,48 +187,59 @@ export const MobileChatInput = memo(function MobileChatInput({
     [onChange, onTranscript, value]
   );
 
-  const handleClear = useCallback(() => {
-    if (messageCount === 0) return;
-    haptic.warning();
-    onClear?.();
-  }, [messageCount, haptic, onClear]);
-
   const canSend = (value.trim().length > 0 || canSubmitWithoutText) && !isStreaming;
 
   return (
     <div className={cn('', className)}>
-      {/* Inline conversation meta — hidden on mobile (wasted vertical space);
-          Clear lives as a trailing action on the input row instead. */}
-      {messageCount > 0 && (
-        <div className="hidden sm:flex mb-2 items-center justify-between px-1 text-[11px]">
-          <span className="uppercase tracking-[0.18em] text-white">Continuing conversation</span>
-          {showClearButton && onClear && (
-            <button
-              onClick={handleClear}
-              className="font-medium text-white hover:text-white transition-colors touch-manipulation"
-            >
-              Clear
-            </button>
-          )}
-        </div>
-      )}
+      {/* No conversation meta row. "Continuing conversation / Clear" duplicated
+          the masthead's New action and put an eyebrow between the transcript
+          and the composer; both callers already carry their own new-chat
+          control. (onClear/showClearButton stay accepted for compatibility.) */}
 
-      {/* Input row — textarea + Send pill */}
+      {/* Input row — textarea + Send pill, on the shared card material so the
+          composer is made of the same stuff as the answer cards above it.
+          Focus lifts the volt edge rather than adding a ring. */}
       <div
         className={cn(
-          'flex items-end gap-2 rounded-2xl bg-[hsl(0_0%_12%)] border transition-colors',
-          isFocused ? 'border-elec-yellow/60' : 'border-white/[0.10]',
-          'p-1.5'
+          'flex items-end gap-2 rounded-2xl border p-1.5',
+          'bg-gradient-to-br from-white/[0.10] via-white/[0.06] to-white/[0.04]',
+          SURFACE_DEPTH,
+          'transition-[border-color,box-shadow] duration-150 ease-out',
+          isFocused ? 'border-elec-yellow/70' : 'border-elec-yellow/30'
         )}
       >
+        {onAttachPress && (
+          <button
+            type="button"
+            onClick={() => {
+              haptic.selection();
+              onAttachPress();
+            }}
+            disabled={isStreaming}
+            className={cn(
+              'shrink-0 h-11 w-11 rounded-full inline-flex items-center justify-center',
+              'border border-white/[0.12] bg-white/[0.05] text-white',
+              'hover:bg-white/[0.10] hover:border-white/[0.22] active:scale-95',
+              'transition-all touch-manipulation [-webkit-tap-highlight-color:transparent]',
+              'disabled:opacity-40 disabled:cursor-not-allowed',
+              attachActive && 'rotate-45 border-elec-yellow/50 text-elec-yellow'
+            )}
+            aria-label={attachActive ? 'Close attachment options' : 'Add a photo or document'}
+            aria-expanded={attachActive}
+          >
+            <Plus className="h-5 w-5" strokeWidth={2.25} />
+          </button>
+        )}
+
         {onCameraPress && (
           <button
             onClick={onCameraPress}
             disabled={isStreaming || cameraDisabled}
             className={cn(
-              'shrink-0 h-11 px-3 rounded-full text-[12px] font-medium',
-              'bg-white/[0.04] border border-white/[0.08] text-white',
-              'hover:bg-white/[0.08] transition-colors touch-manipulation',
+              'shrink-0 h-11 px-3.5 rounded-full text-[12px] font-medium',
+              'bg-white/[0.05] border border-white/[0.12] text-white',
+              'hover:bg-white/[0.10] hover:border-white/[0.22] transition-colors touch-manipulation',
+              '[-webkit-tap-highlight-color:transparent]',
               'disabled:opacity-40 disabled:cursor-not-allowed'
             )}
             aria-label="Take or attach photo"
@@ -261,7 +280,7 @@ export const MobileChatInput = memo(function MobileChatInput({
           enterKeyHint={isTouch ? 'enter' : 'send'}
           className={cn(
             'flex-1 bg-transparent border-none outline-none resize-none',
-            'text-white placeholder:text-white',
+            'text-white placeholder:text-white/40 caret-elec-yellow',
             'min-h-[40px] max-h-[120px]',
             'leading-relaxed py-2 px-2.5'
           )}
@@ -279,7 +298,7 @@ export const MobileChatInput = memo(function MobileChatInput({
             className={cn(
               'shrink-0 h-11 w-11 rounded-full inline-flex items-center justify-center',
               'bg-elec-yellow text-black hover:bg-elec-yellow/90',
-              'active:scale-[0.98] transition-all touch-manipulation'
+              'active:scale-[0.98] transition-all touch-manipulation [-webkit-tap-highlight-color:transparent]'
             )}
             aria-label="Stop generating"
             title="Stop generating"
@@ -288,14 +307,21 @@ export const MobileChatInput = memo(function MobileChatInput({
             <span className="block h-3 w-3 rounded-[2px] bg-black" />
           </button>
         ) : (
+          /* Solid volt, lit from the top — the CARD_PRIMARY treatment. The old
+             white pill was the only primary action in the app not wearing the
+             accent. Volt fills stay fully opaque; the disabled state falls back
+             to a neutral wash instead of a translucent yellow. */
           <button
             onClick={handleSubmit}
             disabled={!canSend}
             className={cn(
-              'shrink-0 h-11 px-5 rounded-full text-[13px] font-semibold',
-              'bg-white text-black hover:bg-white/90',
-              'active:scale-[0.98] transition-all touch-manipulation',
-              'disabled:bg-white/[0.10] disabled:text-white/40 disabled:opacity-100',
+              'shrink-0 h-11 px-5 rounded-full text-[13px] font-semibold text-black',
+              'bg-gradient-to-b from-[hsl(47_100%_57%)] to-[hsl(47_100%_47%)]',
+              'shadow-[inset_0_1px_0_0_rgba(255,255,255,0.35)]',
+              'hover:from-[hsl(47_100%_61%)] hover:to-[hsl(47_100%_50%)]',
+              'active:from-[hsl(47_100%_52%)] active:to-[hsl(47_100%_44%)]',
+              'active:scale-[0.98] transition-all touch-manipulation [-webkit-tap-highlight-color:transparent]',
+              'disabled:bg-none disabled:bg-white/[0.10] disabled:text-white/40 disabled:shadow-none',
               'disabled:active:scale-100 disabled:cursor-not-allowed'
             )}
             aria-label="Send message"

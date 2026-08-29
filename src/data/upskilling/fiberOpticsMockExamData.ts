@@ -15,7 +15,7 @@ export const fiberOpticsCategories = [
 // Configuration for Fiber Optics mock exam
 export const fiberOpticsMockExamConfig = {
   examId: 'fiber-optics',
-  examTitle: 'Fiber Optics Mock Examination',
+  examTitle: 'Fibre Optics Mock Examination',
   totalQuestions: 30,
   timeLimit: 2700, // 45 minutes
   passThreshold: 60,

@@ -1,8 +1,8 @@
-import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { useNavigate } from 'react-router-dom';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
-import { PageFrame, PageHero } from '@/components/college/primitives';
 import {
   TLDR,
   ConceptBlock,
@@ -76,7 +76,8 @@ const inlineChecks = [
 
 const quizQuestions = [
   {
-    question: 'Domestic install: 1 kWe Viessmann Vitovalor fuel cell micro-CHP + existing gas boiler — what scope?',
+    question:
+      'Domestic install: 1 kWe Viessmann Vitovalor fuel cell micro-CHP + existing gas boiler — what scope?',
     options: [
       'A plug-in unit on a standard 13 A socket-outlet needing no dedicated circuit or notification',
       'A gas-only job where the electrician simply connects it to an existing spare socket-outlet',
@@ -109,7 +110,7 @@ const quizQuestions = [
     ],
     correctAnswer: 0,
     explanation:
-      'Reg 551.7.2.1 — generating set on supply side of all protective devices. Practical meaning for micro-CHP install: CHP electrical output cable connects to the installation\'s electrical infrastructure at the CONSUMER UNIT INCOMING busbar OR a dedicated supply-side bus arrangement — BEFORE any RCD / RCBO / MCB protecting load circuits. NOT on the load side of any protective device. Reasons: (1) Fault current contribution from CHP must be visible to protective devices for correct coordination — if CHP is load-side of an RCD, an upstream fault may not see the CHP\'s contribution; (2) RCDs in the installation must remain effective for every combination of sources (Reg 551.4.2) — load-side connection breaks this; (3) Isolation works in both energy directions — CHP isolated correctly when the supply-side switch operates. Implementation: typically a dedicated supply-side terminal or a sub-distribution panel between meter + main CU. Reg 551.7.1 prohibits source connection on load side of certain RCDs (specifically). BESS classification per Reg 551.7.2.1 = generating set (not load) — same rule applies. PV inverter + wind inverter + hydro inverter + CHP + BESS all sit on supply side. Cert evidence bundle records connection topology + protective device hierarchy verification + Reg 551.4.2 multi-source RCD test result.',
+      "Reg 551.7.2.1 — generating set on supply side of all protective devices. Practical meaning for micro-CHP install: CHP electrical output cable connects to the installation's electrical infrastructure at the CONSUMER UNIT INCOMING busbar OR a dedicated supply-side bus arrangement — BEFORE any RCD / RCBO / MCB protecting load circuits. NOT on the load side of any protective device. Reasons: (1) Fault current contribution from CHP must be visible to protective devices for correct coordination — if CHP is load-side of an RCD, an upstream fault may not see the CHP's contribution; (2) RCDs in the installation must remain effective for every combination of sources (Reg 551.4.2) — load-side connection breaks this; (3) Isolation works in both energy directions — CHP isolated correctly when the supply-side switch operates. Implementation: typically a dedicated supply-side terminal or a sub-distribution panel between meter + main CU. Reg 551.7.1 prohibits source connection on load side of certain RCDs (specifically). BESS classification per Reg 551.7.2.1 = generating set (not load) — same rule applies. PV inverter + wind inverter + hydro inverter + CHP + BESS all sit on supply side. Cert evidence bundle records connection topology + protective device hierarchy verification + Reg 551.4.2 multi-source RCD test result.",
   },
   {
     question: 'UK 2025-26 micro-CHP market reality — what should an installer know?',
@@ -121,7 +122,7 @@ const quizQuestions = [
     ],
     correctAnswer: 2,
     explanation:
-      'UK 2025-26 micro-CHP market is niche + selective. (1) Stirling engine variant largely exited the market 2014-2018: Whispergen wound down; Baxi Ecogen discontinued for new sales (replacements / spares ongoing). Reasons: high upfront cost vs heat pump + PV combination; declining FIT support; reliability concerns; market preference shift. (2) Fuel cell variant ongoing but premium / niche: Viessmann Vitovalor PT2 (~£14-18k installed) + BlueGen BG-15 (~£15-20k installed) — limited UK service network; longer payback. (3) Internal combustion variant: Honda Ecowill widespread in Japan + parts of Europe; limited UK install presence. (4) Market displacement: heat pump dominant for low-carbon heating (M8); PV + BESS dominant for low-carbon electricity (M2-M5). Micro-CHP gets squeezed in the middle. Genuine niche viable use cases: customers with high simultaneous heat + electrical demand (B&B, hospitality, residential care); off-grid properties (no grid to connect heat pump electrical demand to); customers anticipating hydrogen-ready future (some fuel cells are hydrogen-compatible). Honest installer answer: most customers better served by heat pump + PV + BESS combination than micro-CHP. Cert evidence bundle records the customer\'s informed choice + sizing rationale.',
+      "UK 2025-26 micro-CHP market is niche + selective. (1) Stirling engine variant largely exited the market 2014-2018: Whispergen wound down; Baxi Ecogen discontinued for new sales (replacements / spares ongoing). Reasons: high upfront cost vs heat pump + PV combination; declining FIT support; reliability concerns; market preference shift. (2) Fuel cell variant ongoing but premium / niche: Viessmann Vitovalor PT2 (~£14-18k installed) + BlueGen BG-15 (~£15-20k installed) — limited UK service network; longer payback. (3) Internal combustion variant: Honda Ecowill widespread in Japan + parts of Europe; limited UK install presence. (4) Market displacement: heat pump dominant for low-carbon heating (M8); PV + BESS dominant for low-carbon electricity (M2-M5). Micro-CHP gets squeezed in the middle. Genuine niche viable use cases: customers with high simultaneous heat + electrical demand (B&B, hospitality, residential care); off-grid properties (no grid to connect heat pump electrical demand to); customers anticipating hydrogen-ready future (some fuel cells are hydrogen-compatible). Honest installer answer: most customers better served by heat pump + PV + BESS combination than micro-CHP. Cert evidence bundle records the customer's informed choice + sizing rationale.",
   },
   {
     question: 'Fuel cell hydrogen-ready upgrade path — UK 2025-26 reality?',
@@ -133,7 +134,7 @@ const quizQuestions = [
     ],
     correctAnswer: 3,
     explanation:
-      'Fuel cell hydrogen-ready capability: some current PEM + SOFC fuel cell models are designed for natural gas now, with documented upgrade paths to hydrogen-blend (typical 20% blend per HyDeploy spec) or pure hydrogen via firmware / hardware update. Hydrogen-ready marketing common 2024-2026. UK 2025-26 hydrogen reality: predominantly POLICY DIRECTION + LIMITED TRIALS, NOT widespread deployment. (1) HyDeploy trials at Keele University + Winlaton — 20% hydrogen blend in natural gas at limited sites; continues at trial scale. (2) Hydrogen heating village trials (Whitby, Redcar) cancelled / scaled back over public + technical concerns. (3) Strategic decision on UK hydrogen for heating deferred — originally targeted 2026, now later or possibly no widespread deployment. (4) Customer\'s actual gas supply unlikely to be hydrogen-blended or pure-hydrogen in foreseeable future. Honest customer position: hydrogen-ready capability is future-proofing value; current operation is on natural gas. Don\'t oversell the hydrogen narrative. Cert evidence bundle records the fuel cell\'s hydrogen-ready specification + upgrade path documentation + customer expectations.',
+      "Fuel cell hydrogen-ready capability: some current PEM + SOFC fuel cell models are designed for natural gas now, with documented upgrade paths to hydrogen-blend (typical 20% blend per HyDeploy spec) or pure hydrogen via firmware / hardware update. Hydrogen-ready marketing common 2024-2026. UK 2025-26 hydrogen reality: predominantly POLICY DIRECTION + LIMITED TRIALS, NOT widespread deployment. (1) HyDeploy trials at Keele University + Winlaton — 20% hydrogen blend in natural gas at limited sites; continues at trial scale. (2) Hydrogen heating village trials (Whitby, Redcar) cancelled / scaled back over public + technical concerns. (3) Strategic decision on UK hydrogen for heating deferred — originally targeted 2026, now later or possibly no widespread deployment. (4) Customer's actual gas supply unlikely to be hydrogen-blended or pure-hydrogen in foreseeable future. Honest customer position: hydrogen-ready capability is future-proofing value; current operation is on natural gas. Don't oversell the hydrogen narrative. Cert evidence bundle records the fuel cell's hydrogen-ready specification + upgrade path documentation + customer expectations.",
   },
   {
     question: 'Commissioning a fuel cell micro-CHP — what differs from a Stirling engine?',
@@ -158,7 +159,7 @@ const faqs = [
   {
     question: 'Can micro-CHP integrate with PV + BESS + heat pump on the same site?',
     answer:
-      'Yes — Chapter 82 PEI (Prosumer\'s Electrical Installation) framework integrates multiple sources. Reg 826.x family covers. Each source under Section 551; Reg 551.4.2 RCD multi-source effectiveness; per-source anti-islanding; EREC G99 formal application for the aggregate site. UK 2025-26 reality: micro-CHP + PV + BESS combinations rare due to overlapping function (CHP+heat pump both heat; CHP+PV both generate); customer typically picks one approach.',
+      "Yes — Chapter 82 PEI (Prosumer's Electrical Installation) framework integrates multiple sources. Reg 826.x family covers. Each source under Section 551; Reg 551.4.2 RCD multi-source effectiveness; per-source anti-islanding; EREC G99 formal application for the aggregate site. UK 2025-26 reality: micro-CHP + PV + BESS combinations rare due to overlapping function (CHP+heat pump both heat; CHP+PV both generate); customer typically picks one approach.",
   },
   {
     question: 'EICR cycle for micro-CHP install?',
@@ -168,7 +169,7 @@ const faqs = [
   {
     question: 'Smart Export Guarantee (SEG) tariff + micro-CHP?',
     answer:
-      'SEG = UK Government tariff for renewable / low-carbon electricity export. Applies to PV, wind, hydro, anaerobic digestion, micro-CHP. Tariff rates vary by supplier (Octopus, Bulb (Octopus), OVO, Drax, Good Energy etc.) — typically 4-15p / kWh exported. Customer signs SEG contract with supplier; export metering installed (smart meter typical); supplier pays for exported energy. Doesn\'t apply when CHP consumed on-site (only export). M10 covers SEG in detail.',
+      "SEG = UK Government tariff for renewable / low-carbon electricity export. Applies to PV, wind, hydro, anaerobic digestion, micro-CHP. Tariff rates vary by supplier (Octopus, Bulb (Octopus), OVO, Drax, Good Energy etc.) — typically 4-15p / kWh exported. Customer signs SEG contract with supplier; export metering installed (smart meter typical); supplier pays for exported energy. Doesn't apply when CHP consumed on-site (only export). M10 covers SEG in detail.",
   },
   {
     question: 'Reg 551.4.2 RCD effectiveness — practical micro-CHP example?',
@@ -187,396 +188,365 @@ export default function RenewableEnergyModule9Section5() {
   });
 
   return (
-    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
-      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
-        <PageFrame>
+    <HubPage>
+      <HubMasthead
+        section="Module 9 · Section 5 · BS 7671:2018+A4:2026 · Section 551 + Reg 551.7.5 + MCS MIS 3007 + BS EN 50549"
+        title="Micro-CHP (domestic) + Section 551 deep"
+        backTo="../renewable-energy-module-9"
+      />
+      <HubBody>
+        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
+          Micro-CHP (Combined Heat and Power) for domestic + light-commercial — Stirling engine,
+          fuel cell (PEM + SOFC), internal combustion variants. BS 7671 Section 551 framework deep —
+          Reg 551.1.1 power source + Reg 551.7.5 anti-islanding + Reg 551.7.2.1 supply-side
+          connection + Reg 551.4.2 multi-source RCD effectiveness. MCS MIS 3007 + EREC G98 / G99 +
+          BS EN 50549 grid-connection standard.
+        </p>
+
+        <TLDR
+          points={[
+            'CHP = Combined Heat and Power. Generates BOTH electricity AND useful heat from a single fuel source. Combined efficiency 80-90% (~2× separate grid + boiler).',
+            'Section 551 framework applies — Reg 551.1.1(a) combustion engines (Stirling + IC) or (f) other suitable sources (fuel cells). Reg 551.7.5 anti-islanding mandatory.',
+            'Micro-CHP scope (this section): ≤50 kWe — domestic + light-commercial. MCS MIS 3007 installer standard. Commercial CHP >50 kWe covered §9.6.',
+            'Three technology variants: Stirling engine (market largely exited UK), fuel cell (PEM + SOFC — niche premium), internal combustion (limited UK presence).',
+            'Typical micro-CHP: 0.7-2 kWe + 1-25 kWth (heat-led sizing). Single-phase typical. EREC G98 fast-track for ≤16 A; G99 for larger / multi-source.',
+            'Reg 551.7.5 anti-islanding verified at commissioning via simulated grid-loss test (manufacturer self-test feature OR open main supply isolator + observe disconnect within manufacturer time spec).',
+            'Reg 551.7.2.1 supply-side connection — CHP electrical output sits on supply side of all protective devices; never load-side.',
+            'UK 2025-26 market reality: micro-CHP is niche. Heat pump + PV + BESS dominates low-carbon residential. Micro-CHP niche: high simultaneous heat + electrical demand (B&B, hospitality), off-grid, hydrogen-ready future.',
+          ]}
+        />
+
+        <LearningOutcomes
+          outcomes={[
+            'Define CHP + understand the combined heat + electrical generation value proposition.',
+            'Distinguish Stirling engine / fuel cell / IC micro-CHP technology variants + UK 2025-26 market reality.',
+            'Apply Section 551 framework deep — Reg 551.1.1 + 551.7.5 + 551.7.2.1 + 551.4.2 — to micro-CHP install.',
+            'Verify Reg 551.7.5 anti-islanding at commissioning via simulated grid-loss test.',
+            'Apply Reg 551.7.2.1 supply-side connection topology in practice.',
+            'Apply MCS MIS 3007 installer framework + BS EN 50549 grid-connection product standard.',
+            'Choose EREC G98 vs G99 path per micro-CHP output size.',
+            'Recognise UK 2025-26 niche use cases for micro-CHP vs the dominant heat pump + PV alternative.',
+          ]}
+          initialVisibleCount={3}
+        />
+
+        <Pullquote>
+          CHP is the only Section 551 technology that does heat AND electricity from one fuel. The
+          double duty makes Section 551 + heat-network integration intersect — manage both or fail
+          both.
+        </Pullquote>
+
+        <ContentEyebrow>CHP value proposition + technology variants</ContentEyebrow>
+
+        <ConceptBlock
+          title="What CHP is + why it matters"
+          plainEnglish="CHP (Combined Heat and Power) generates both electricity AND useful heat from a single fuel source. Combined efficiency 80-90% (vs grid electricity ~35-40% + boiler heat ~85% separately) = roughly 2× primary-energy efficiency. The waste heat from electrical generation is captured + used locally for space heating + DHW."
+          onSite="UK 2025-26 micro-CHP market is niche but real. Customer use cases: high simultaneous heat + electrical demand (always running heat = always running CHP = high utilisation), off-grid properties (CHP provides electrical generation where no grid; less common than PV + battery), hydrogen-ready future investment."
+        >
+          <p>CHP value comparison:</p>
+          <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+            <li>
+              <strong className="text-white">Separate grid + gas boiler</strong> — grid electricity
+              ~35-40% efficient at point of generation (centralised power station + transmission
+              losses); gas boiler ~85-90% efficient for heat. Combined ~50% primary-energy efficient
+              overall (depending on demand split)
+            </li>
+            <li>
+              <strong className="text-white">CHP combined</strong>— single fuel converts to
+              electricity (~25-30%) + heat (~55-65%) = total useful output ~80-90% of fuel input.
+              Roughly 2× primary-energy efficiency vs separate
+            </li>
+            <li>
+              <strong className="text-white">Heat-led sizing</strong>— typical micro-CHP design:
+              size CHP to match site heat demand; electrical output is the by-product. Avoids
+              dumping excess heat (which negates the CHP value proposition)
+            </li>
+            <li>
+              <strong className="text-white">Electrical output</strong> — typical micro-CHP 0.7-2
+              kWe; mostly consumed on-site (powering lights / appliances) with small surplus export
+              to grid
+            </li>
+            <li>
+              <strong className="text-white">Heat output</strong>— typical micro-CHP 1-25 kWth
+              depending on technology. Matches domestic central heating + DHW demand
+            </li>
+            <li>
+              <strong className="text-white">Fuel</strong> — natural gas dominant; biogas / biofuel
+              / hydrogen variants emerging
+            </li>
+            <li>
+              <strong className="text-white">UK 2025-26 reality</strong>— micro-CHP niche; heat pump
+              + PV + BESS dominates residential low-carbon. CHP commercial / industrial widespread
+              (covered §9.6)
+            </li>
+            <li>
+              <strong className="text-white">Customer appropriateness</strong> — high simultaneous
+              heat + electrical demand sites (B&B, residential care, off-grid properties,
+              hospitality)
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <MicroChpFlow caption="Micro-CHP makes electricity and useful heat from one fuel input — a grid-parallel generating set." />
+
+        <ConceptBlock
+          title="Three micro-CHP technology variants"
+          plainEnglish="Three main micro-CHP architectures: Stirling engine (external combustion + piston generator — market largely exited UK), fuel cell (electrochemical — PEM + SOFC variants — niche premium), internal combustion engine (Otto / Diesel cycle + generator — limited UK)."
+          onSite="UK 2025-26: fuel cell variant has the most ongoing market presence (Viessmann Vitovalor, BlueGen — premium). Stirling: replacement / spares only. IC: limited UK installs."
+        >
+          <p>Variant comparison:</p>
+          <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+            <li>
+              <strong className="text-white">Stirling engine micro-CHP</strong> — external
+              combustion (gas flame heats sealed working fluid) + piston-driven generator. 1-2 kWe +
+              5-25 kWth. UK market largely exited 2014-2018: Whispergen wound down, Baxi Ecogen
+              discontinued. Reg 551.1.1(a) combustion engine
+            </li>
+            <li>
+              <strong className="text-white">Fuel cell micro-CHP — PEM</strong> — Proton Exchange
+              Membrane fuel cell; operates 60-80 °C; hydrogen-rich reformate from natural gas reacts
+              with oxygen at electrolyte → DC electricity + heat. 0.7-1.5 kWe + 1-3 kWth typical.
+              UK: Viessmann Vitovalor PT2 (~£14-18k installed). Reg 551.1.1(f) other suitable
+              sources
+            </li>
+            <li>
+              <strong className="text-white">Fuel cell micro-CHP — SOFC</strong> — Solid Oxide Fuel
+              Cell; high temperature (600-1000 °C); higher efficiency. UK: BlueGen BG-15 1.5 kWe
+              (~£15-20k installed). Reg 551.1.1(f)
+            </li>
+            <li>
+              <strong className="text-white">IC micro-CHP</strong>— internal combustion engine (Otto
+              / Diesel) + generator. Honda Ecowill globally widespread; limited UK presence. 1-3 kWe
+              + 2-8 kWth. Reg 551.1.1(a) combustion engine
+            </li>
+            <li>
+              <strong className="text-white">Hydrogen-ready variant</strong> — some fuel cell models
+              documented hydrogen-blend or pure-hydrogen upgrade path (firmware / hardware).
+              Marketing position; UK hydrogen supply largely unavailable to date
+            </li>
+            <li>
+              <strong className="text-white">Section 551 applicability</strong> — all three
+              variants: Reg 551.7.5 anti-islanding, Reg 551.7.2.1 supply-side, Reg 551.4.2 RCD
+            </li>
+            <li>
+              <strong className="text-white">EREC notification</strong>— most micro-CHP at ≤16 A per
+              phase export → G98 fast-track. Larger / multi-source / co-located generation → G99
+              formal
+            </li>
+            <li>
+              <strong className="text-white">MCS competence</strong>— MIS 3007 micro-CHP installer
+              standard
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <RegsCallout
+          source="BS 7671:2018+A4:2026 · Reg 551.7.5 — Anti-islanding for micro-CHP (verified by simulated grid-loss test)"
+          clause="Means shall be provided to prevent the connection of a generating set to the system for distribution of electricity to the public in the event of loss of that supply or deviation of the voltage or frequency at the supply terminals from values required by Regulation 551.7.4. NOTE: For a generating set with an output not exceeding 16 A intended to operate in parallel with a system for distribution of electricity to the public, the requirements are given in BS EN 50549-1. Separately, the ENA Engineering Recommendations — G98 (up to and including 16 A per phase) and G99 (greater than 16 A per phase) — set the DNO notification and connection framework for parallel operation; they are the connection-process route, not a deemed-to-satisfy substitute for Reg 551.7."
+          meaning="Reg 551.7.5 applies to every micro-CHP generating set. Anti-islanding device typically integrated in the CHP control electronics (inverter or generator controller); detection methods include ROCOF + voltage / frequency deviation + active anti-islanding methods. Note: G99 disallows Vector Shift for type-tested generation, so RoCoF (with voltage / frequency protection) is the standard required LoM method for the type-tested micro-CHP / inverter units used in virtually all LCT installs; Vector Shift is legacy and only appears on older or non-type-tested sites. Commissioning verification mandatory: simulated grid-loss test (open main supply isolator OR manufacturer self-test feature) → observe CHP disconnect from grid within manufacturer-specified time (typical 200ms-1s per ENA EREC G99 + G98). Verify CHP stops generating (no continued export at meter). Restore supply; verify reconnect delay (typical 1-3 min). The NOTE clarifies that G98 compliance deems Reg 551.7 satisfied for ≤16 A small generators. Cert evidence bundle: anti-islanding device per manufacturer DoC + commissioning test method + result. For commercial CHP >50 kWe + G99: DNO-witnessed test typical (covered §9.6)."
+        />
+
+        <InlineCheck {...inlineChecks[0]} />
+
+        <InlineCheck {...inlineChecks[1]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>Section 551 framework applied + RCD coordination</ContentEyebrow>
+
+        <Pullquote>
+          Anti-islanding, supply-side connection, multi-source RCD. Three Section 551 rules;
+          non-negotiable on every CHP install.
+        </Pullquote>
+
+        <ConceptBlock
+          title="Reg 551.7.2.1 supply-side connection — practical implementation"
+          plainEnglish="CHP electrical output connects to the supply side of all protective devices in the installation — typically at the consumer unit incoming busbar before any RCD / RCBO / MCB. NOT on the load side of any protective device. Ensures correct protective device coordination + RCD effectiveness across source combinations."
+          onSite="Practical install: dedicated supply-side terminal at the CU OR a sub-distribution panel between meter + main CU. Some CUs have a dedicated generation incoming way; others require additional supply-side terminal block. Cert evidence bundle documents the connection topology."
+        >
+          <p>Supply-side connection in practice:</p>
+          <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+            <li>
+              <strong className="text-white">Connection point</strong>— CHP electrical output cable
+              terminates at: (a) dedicated generation incoming terminal at the CU (some modern CUs
+              have this), OR (b) sub-distribution / Henley block between meter + main CU, OR (c)
+              supply-side terminal block at the meter tails
+            </li>
+            <li>
+              <strong className="text-white">Protective device hierarchy</strong> — CHP supply
+              enters before main RCD + RCBOs. Fault current contribution from CHP visible to all
+              downstream protective devices
+            </li>
+            <li>
+              <strong className="text-white">Reg 551.7.1 prohibition</strong> — source must NOT be
+              connected on the load side of an RCD under certain conditions. Practical: never put
+              CHP output downstream of an RCD that protects load circuits
+            </li>
+            <li>
+              <strong className="text-white">AC isolator</strong>— between CHP electrical output +
+              supply-side connection point. Lockable in OFF position (BS EN 60947-3). For service /
+              maintenance isolation
+            </li>
+            <li>
+              <strong className="text-white">Per-source protective device</strong> — typically a
+              dedicated 16 A or 20 A Type A RCBO C-curve on the CHP supply line; provides
+              over-current + fault protection for the CHP cable. Coordinates with the main RCD
+              architecture
+            </li>
+            <li>
+              <strong className="text-white">BESS classification</strong>— Reg 551.7.2.1 explicitly:
+              BESS treated as generating set, not load. Same supply-side connection topology applies
+              (covered M5 BESS)
+            </li>
+            <li>
+              <strong className="text-white">Multi-source site</strong> — PV + BESS + CHP + grid all
+              coexist on supply side. Coordinated protective device hierarchy + Reg 551.4.2 RCD
+              effectiveness verification at commissioning
+            </li>
+            <li>
+              <strong className="text-white">Cert evidence bundle</strong> — connection topology
+              diagram + protective device hierarchy + commissioning test result
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="Reg 551.4.2 multi-source RCD effectiveness"
+          plainEnglish="Reg 551.4.2: any RCD protection in the installation must remain effective for every intended combination of sources operating. Practical: induce fault under each combination at commissioning; verify the appropriate RCD trips. Multi-source CHP install requires this verification."
+          onSite="UK 2025-26 multi-source domestic install commonly = PV + BESS + CHP + grid. Four sources. Each combination must trigger RCD correctly. Per-source RCD + central RCD architecture + commissioning test under each combination."
+        >
+          <p>Multi-source RCD considerations:</p>
+          <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+            <li>
+              <strong className="text-white">Per-source RCD</strong>— each generator has its own RCD
+              on its supply connection. CHP: 30 mA Type A typical (or Type B per manufacturer DoC
+              for VSD electronics). PV / BESS: 30 mA Type B per manufacturer DoC (modern inverters
+              declare Type B per BS EN 62423)
+            </li>
+            <li>
+              <strong className="text-white">Central RCD architecture</strong> — main RCD Type S 100
+              mA (time-delayed upstream) + per-circuit 30 mA RCBOs. Reg 531.3.6 discrimination
+            </li>
+            <li>
+              <strong className="text-white">Combinations to test at commissioning</strong> — induce
+              fault on a sample circuit under: grid-only, grid + PV, grid + CHP, grid + BESS, grid +
+              PV + CHP, grid + PV + CHP + BESS, etc. Verify appropriate RCD trips for each
+            </li>
+            <li>
+              <strong className="text-white">RCD type selection</strong> — Reg 531.3.3 prohibits
+              Type AC where DC components present (CHP with VSD electronics produces pulsating DC).
+              Type A minimum; Type F or B per manufacturer DoC
+            </li>
+            <li>
+              <strong className="text-white">Reg 551.7.1(d) prohibition</strong> — source must NOT
+              be connected on load side of an RCD under certain conditions. Practical: never put CHP
+              load-side of any RCD that would not see the CHP\'s fault contribution
+            </li>
+            <li>
+              <strong className="text-white">Type B for fuel cell + IC variants</strong> — VSD
+              electronics in modern micro-CHP produce smooth DC fault current; Type B RCD per
+              manufacturer DoC if declared
+            </li>
+            <li>
+              <strong className="text-white">Coordination verification</strong> — sequential
+              trip-time test (downstream RCBO trips first; upstream Type S follows after delay only
+              if downstream fails)
+            </li>
+            <li>
+              <strong className="text-white">Cert evidence bundle</strong> — RCD architecture
+              diagram + per-source RCD + central RCD + per-combination commissioning test result +
+              Reg 551.4.2 compliance verified
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <RegsCallout
+          source="BS 7671:2018+A4:2026 · Reg 551.7.2.1 — Generating set on supply side"
+          clause="The generating set is to be installed on the supply side of all the protective devices for the final circuits of a distribution board, and stationary batteries (Chapter 57) are to be considered a generating set and not a load."
+          meaning="Reg 551.7.2.1 is the fundamental electrical-architecture rule for Section 551 generating sets — applies to micro-CHP equally with PV, wind, hydro, BESS. CHP electrical output enters the installation on the supply side of all protective devices (at the CU incoming busbar, OR a sub-distribution panel between meter + main CU). NEVER on the load side of any protective device. Reasons: (1) protective devices coordinate correctly with CHP fault contribution; (2) RCDs see all relevant fault paths per Reg 551.4.2; (3) isolation works correctly when energy flows in either direction. BESS explicitly: treated as generating set (not load) per the same rule — covered in M5. Multi-source sites: all generation sources on supply side, coordinated central + per-source protective device architecture. Cert evidence bundle: connection topology diagram + protective device hierarchy + multi-source RCD verification at commissioning."
+        />
+
+        <InlineCheck {...inlineChecks[2]} />
+
+        <InlineCheck {...inlineChecks[3]} />
+
+        <SectionRule />
+
+        <Scenario
+          title="Domestic Viessmann Vitovalor PT2 fuel cell micro-CHP retrofit"
+          situation="4-bed detached. Existing gas combi boiler being supplemented with a fuel cell micro-CHP for primary baseload heat + electricity. Customer is hydrogen-ready / future-proofing motivated; accepts premium upfront cost (£14-18k). Existing PV + BESS already installed (Chapter 82 PEI site). UK 2025-26."
+          whatToDo="Multi-trade: MCS company (MIS 3007) + gas-safe engineer (fuel cell gas supply + reformer) + heating engineer (heat output integration with existing boiler + cylinder) + BS 7671 electrician. Electrical scope: (1) Dedicated 16 A single-phase circuit from CU; Type A RCBO C-curve + 30 mA additional protection per Reg 415.1; 2.5 mm² T+E. (2) CHP electrical output to dedicated supply-side terminal at CU (existing PV + BESS already supply-side connected from the M2-M5 install — fuel cell joins the same supply-side bus). (3) AC isolator at CHP unit (BS EN 60947-3 lockable OFF) for service / maintenance. (4) Section 551 compliance: Reg 551.7.5 anti-islanding integrated in fuel cell controller (verify at commissioning via simulated grid-loss test); Reg 551.7.2.1 supply-side connection; Reg 551.4.2 RCD effectiveness verified across PV + BESS + CHP + grid combinations. (5) EREC G98 fast-track notification (1 kWe = ~4 A < 16 A per phase) — though existing PV + BESS site may already be on G99; verify with DNO whether new G99 amendment needed or G98 amendment to existing G99 reference. Multi-trade integration: gas-safe engineer commissions fuel cell gas supply + reformer; heating engineer integrates heat output with existing cylinder + heating; MCS company orchestrates handover. Cert evidence bundle: BS 7671 EIC + Section 551 compliance + Reg 551.4.2 multi-source RCD test + MCS MIS 3007 handover + Gas Safe + heating engineer integration. Total project ~£14-18k; electrical scope ~£500-800. Customer expectation: ~1 kWe electrical generation continuous (typical winter); export to grid via SEG tariff (covered M10); hydrogen-ready future capability documented."
+          whyItMatters="Hydrogen-ready fuel cell + multi-source PEI is one of the more sophisticated UK 2025-26 domestic Section 551 + Chapter 82 installs. Customer motivation is future-proofing + sustainability + the value of high simultaneous heat + electrical generation. Cert evidence bundle integrates Section 712 (PV) + Chapter 57 (BESS) + Section 551 (CHP) + Chapter 82 (PEI) coherently. Demonstrates the multi-trade coordination + the BS 7671 electrician\'s scope within the wider install."
+        />
+
+        <Scenario
+          title="Off-grid Highland cottage — 2 kWe IC engine CHP + BESS"
+          situation="Remote Highland cottage with no grid connection. Customer has decided against grid-connection cost (~£40k for 2 km supply extension) + chosen off-grid renewable. Existing PV array (4 kWp) + small wind (~3 kW) + 20 kWh lead-acid BESS. Heating need + winter electrical demand exceeding PV / wind capacity → adding 2 kWe IC engine CHP (LPG-fuelled) as winter / dark-day backup."
+          whatToDo="Off-grid Section 551 install — no EREC G98 / G99 (no grid). Section 551 framework still applies (Reg 551.1.1(a) combustion engine; Reg 551.4.2 RCD effectiveness across PV + wind + CHP + BESS combinations). Reg 551.7.5 anti-islanding NOT applicable (no public supply to island against) BUT dump load / over-speed protection per manufacturer design. Electrical scope: dedicated 16 A circuit from off-grid AC supply panel; Type A RCBO C-curve; AC isolator at CHP for service. Heat output integrated with existing DHW cylinder + heating circuit. LPG fuel supply per Gas Safe / LPGA. CHP electrical output integrates with grid-forming inverter architecture (off-grid sites use grid-forming inverters, not grid-following — covered M10). Cert evidence bundle: BS 7671 EIC + Section 551 compliance + off-grid AC supply architecture + Gas Safe LPG commissioning + heating engineer integration + multi-source RCD verification. Total project ~£8-12k; electrical scope ~£400-600."
+          whyItMatters="Off-grid sites with diversified renewable + CHP backup are a real UK 2025-26 niche — remote Highland / island properties, agricultural sites, conservation properties. Section 551 framework applies fully but EREC G98 / G99 + grid-tied anti-islanding don\'t (no grid). Cert evidence bundle documents the off-grid architecture + multi-source coordination. Grid-forming inverter detail covered M10."
+        />
+
+        <CommonMistake
+          title="Connecting CHP load-side of an RCD"
+          whatHappens="Lazy install routes CHP electrical output through an existing RCD-protected sub-circuit (treating CHP as just another load). Reg 551.7.2.1 violation. Reg 551.4.2 RCD effectiveness compromised — fault current contribution from CHP may not be seen correctly by the protective devices. Safety + compliance failure. EICR finding C1 / C2 depending on severity."
+          doInstead="Reg 551.7.2.1 is non-negotiable: CHP on supply side of ALL protective devices. Install at CU incoming busbar OR dedicated supply-side terminal between meter + main CU. AC isolator + per-source 16 A RCBO on the CHP supply line. NEVER load-side of an RCD. Cert evidence bundle documents the connection topology + protective device hierarchy + Reg 551.4.2 RCD effectiveness test."
+        />
+
+        <CommonMistake
+          title="Skipping Reg 551.4.2 multi-source RCD test at commissioning"
+          whatHappens="Multi-source site (PV + BESS + CHP + grid). Commissioning verifies each source individually but doesn\'t test fault scenarios under the combinations. Months later, real fault occurs with PV + CHP + grid active simultaneously — RCD response is non-optimal; either over-trips (loses too much) or fails to trip cleanly. Customer issue + reputation."
+          doInstead="Reg 551.4.2 requires RCD effectiveness for EVERY intended combination of sources operating. Commissioning sequence: (1) Test each source individually (PV-only, BESS-only, CHP-only); (2) Test each pair (PV+CHP, PV+BESS, BESS+CHP, PV+grid, BESS+grid, CHP+grid); (3) Test combinations (PV+BESS+grid, PV+CHP+grid, BESS+CHP+grid, all-active). Induce sample fault under each + verify trip. Cert evidence bundle records per-combination test result + Reg 551.4.2 compliance."
+        />
+
+        <SectionRule />
+
+        <KeyTakeaways
+          points={[
+            'CHP = Combined Heat and Power. Generates electricity + heat from single fuel. Combined efficiency 80-90% (~2× separate grid + boiler).',
+            'Reg 551.1.1(a) combustion engines (Stirling + IC variants) OR Reg 551.1.1(f) other suitable sources (fuel cell variants). All Section 551 generating sets.',
+            'Three micro-CHP technology variants: Stirling engine (UK market largely exited), fuel cell (PEM + SOFC — niche premium), internal combustion (limited UK).',
+            'Typical micro-CHP: 0.7-2 kWe + 1-25 kWth (heat-led sizing). Single-phase typical. ≤16 A per phase usually fits EREC G98 fast-track.',
+            'Reg 551.7.5 anti-islanding mandatory + verified at commissioning via simulated grid-loss test. Anti-islanding device integrated in CHP control.',
+            'Reg 551.7.2.1 supply-side connection — CHP at CU incoming busbar OR dedicated supply-side terminal, NEVER load-side of protective devices.',
+            'Reg 551.4.2 RCD effectiveness across every combination of sources. Multi-source commissioning tests each combination.',
+            'RCD type per manufacturer DoC: Type A typical, Type B if VSD electronics produce smooth DC. Reg 531.3.3 prohibits Type AC where DC components.',
+            'MCS MIS 3007 micro-CHP ≤50 kWe installer standard. BS EN 50549-1 + -2 grid-connection product standards.',
+            'UK 2025-26 market reality: micro-CHP niche; heat pump + PV + BESS dominates residential low-carbon. Customer niche: high simultaneous heat + electrical demand, off-grid, hydrogen-ready future.',
+            'Commercial CHP (>50 kWe) covered §9.6 — biofuel, biogas, hydrogen variants + grid services revenue + heat-network integration.',
+          ]}
+        />
+
+        <FAQ items={faqs} />
+
+        <Quiz questions={quizQuestions} title="Section 5 · Knowledge check" />
+
+        <div className="grid grid-cols-2 gap-3 pt-2">
           <button
             type="button"
-            onClick={() => navigate('../renewable-energy-module-9')}
-            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            onClick={() => navigate('/electrician/upskilling/renewable-energy-module-9-section-4')}
+            className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
           >
-            <ArrowLeft className="h-4 w-4" /> Module 9
+            <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+              <ChevronLeft className="h-3 w-3" /> Section 4
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-white truncate">
+              Biomass interfaces
+            </div>
           </button>
-
-          <PageHero
-            eyebrow="Module 9 · Section 5 · BS 7671:2018+A4:2026 · Section 551 + Reg 551.7.5 + MCS MIS 3007 + BS EN 50549"
-            title="Micro-CHP (domestic) + Section 551 deep"
-            description="Micro-CHP (Combined Heat and Power) for domestic + light-commercial — Stirling engine, fuel cell (PEM + SOFC), internal combustion variants. BS 7671 Section 551 framework deep — Reg 551.1.1 power source + Reg 551.7.5 anti-islanding + Reg 551.7.2.1 supply-side connection + Reg 551.4.2 multi-source RCD effectiveness. MCS MIS 3007 + EREC G98 / G99 + BS EN 50549 grid-connection standard."
-            tone="yellow"
-          />
-
-          <TLDR
-            points={[
-              'CHP = Combined Heat and Power. Generates BOTH electricity AND useful heat from a single fuel source. Combined efficiency 80-90% (~2× separate grid + boiler).',
-              'Section 551 framework applies — Reg 551.1.1(a) combustion engines (Stirling + IC) or (f) other suitable sources (fuel cells). Reg 551.7.5 anti-islanding mandatory.',
-              'Micro-CHP scope (this section): ≤50 kWe — domestic + light-commercial. MCS MIS 3007 installer standard. Commercial CHP >50 kWe covered §9.6.',
-              'Three technology variants: Stirling engine (market largely exited UK), fuel cell (PEM + SOFC — niche premium), internal combustion (limited UK presence).',
-              'Typical micro-CHP: 0.7-2 kWe + 1-25 kWth (heat-led sizing). Single-phase typical. EREC G98 fast-track for ≤16 A; G99 for larger / multi-source.',
-              'Reg 551.7.5 anti-islanding verified at commissioning via simulated grid-loss test (manufacturer self-test feature OR open main supply isolator + observe disconnect within manufacturer time spec).',
-              'Reg 551.7.2.1 supply-side connection — CHP electrical output sits on supply side of all protective devices; never load-side.',
-              'UK 2025-26 market reality: micro-CHP is niche. Heat pump + PV + BESS dominates low-carbon residential. Micro-CHP niche: high simultaneous heat + electrical demand (B&B, hospitality), off-grid, hydrogen-ready future.',
-            ]}
-          />
-
-          <LearningOutcomes
-            outcomes={[
-              'Define CHP + understand the combined heat + electrical generation value proposition.',
-              'Distinguish Stirling engine / fuel cell / IC micro-CHP technology variants + UK 2025-26 market reality.',
-              'Apply Section 551 framework deep — Reg 551.1.1 + 551.7.5 + 551.7.2.1 + 551.4.2 — to micro-CHP install.',
-              'Verify Reg 551.7.5 anti-islanding at commissioning via simulated grid-loss test.',
-              'Apply Reg 551.7.2.1 supply-side connection topology in practice.',
-              'Apply MCS MIS 3007 installer framework + BS EN 50549 grid-connection product standard.',
-              'Choose EREC G98 vs G99 path per micro-CHP output size.',
-              'Recognise UK 2025-26 niche use cases for micro-CHP vs the dominant heat pump + PV alternative.',
-            ]}
-            initialVisibleCount={3}
-          />
-
-          <Pullquote>
-            CHP is the only Section 551 technology that does heat AND electricity from one fuel. The double duty makes Section 551 + heat-network integration intersect — manage both or fail both.
-          </Pullquote>
-
-          <ContentEyebrow>CHP value proposition + technology variants</ContentEyebrow>
-
-          <ConceptBlock
-            title="What CHP is + why it matters"
-            plainEnglish="CHP (Combined Heat and Power) generates both electricity AND useful heat from a single fuel source. Combined efficiency 80-90% (vs grid electricity ~35-40% + boiler heat ~85% separately) = roughly 2× primary-energy efficiency. The waste heat from electrical generation is captured + used locally for space heating + DHW."
-            onSite="UK 2025-26 micro-CHP market is niche but real. Customer use cases: high simultaneous heat + electrical demand (always running heat = always running CHP = high utilisation), off-grid properties (CHP provides electrical generation where no grid; less common than PV + battery), hydrogen-ready future investment."
+          <button
+            type="button"
+            onClick={() => navigate('/electrician/upskilling/renewable-energy-module-9-section-6')}
+            className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
           >
-            <p>CHP value comparison:</p>
-            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
-              <li>
-                <strong className="text-white">Separate grid + gas
-                  boiler</strong> — grid electricity ~35-40% efficient at point of
-                generation (centralised power station + transmission losses); gas
-                boiler ~85-90% efficient for heat. Combined ~50% primary-energy
-                efficient overall (depending on demand split)
-              </li>
-              <li>
-                <strong className="text-white">CHP combined</strong>
-                — single fuel converts to electricity (~25-30%) + heat (~55-65%) =
-                total useful output ~80-90% of fuel input. Roughly 2× primary-energy
-                efficiency vs separate
-              </li>
-              <li>
-                <strong className="text-white">Heat-led sizing</strong>
-                — typical micro-CHP design: size CHP to match site heat demand;
-                electrical output is the by-product. Avoids dumping excess heat (which
-                negates the CHP value proposition)
-              </li>
-              <li>
-                <strong className="text-white">Electrical
-                  output</strong> — typical micro-CHP 0.7-2 kWe; mostly consumed
-                on-site (powering lights / appliances) with small surplus export to
-                grid
-              </li>
-              <li>
-                <strong className="text-white">Heat output</strong>
-                — typical micro-CHP 1-25 kWth depending on technology. Matches
-                domestic central heating + DHW demand
-              </li>
-              <li>
-                <strong className="text-white">Fuel</strong> —
-                natural gas dominant; biogas / biofuel / hydrogen variants emerging
-              </li>
-              <li>
-                <strong className="text-white">UK 2025-26 reality</strong>
-                — micro-CHP niche; heat pump + PV + BESS dominates residential
-                low-carbon. CHP commercial / industrial widespread (covered §9.6)
-              </li>
-              <li>
-                <strong className="text-white">Customer
-                  appropriateness</strong> — high simultaneous heat + electrical
-                demand sites (B&B, residential care, off-grid properties, hospitality)
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <MicroChpFlow caption="Micro-CHP makes electricity and useful heat from one fuel input — a grid-parallel generating set." />
-
-          <ConceptBlock
-            title="Three micro-CHP technology variants"
-            plainEnglish="Three main micro-CHP architectures: Stirling engine (external combustion + piston generator — market largely exited UK), fuel cell (electrochemical — PEM + SOFC variants — niche premium), internal combustion engine (Otto / Diesel cycle + generator — limited UK)."
-            onSite="UK 2025-26: fuel cell variant has the most ongoing market presence (Viessmann Vitovalor, BlueGen — premium). Stirling: replacement / spares only. IC: limited UK installs."
-          >
-            <p>Variant comparison:</p>
-            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
-              <li>
-                <strong className="text-white">Stirling engine
-                  micro-CHP</strong> — external combustion (gas flame heats sealed
-                working fluid) + piston-driven generator. 1-2 kWe + 5-25 kWth. UK
-                market largely exited 2014-2018: Whispergen wound down, Baxi Ecogen
-                discontinued. Reg 551.1.1(a) combustion engine
-              </li>
-              <li>
-                <strong className="text-white">Fuel cell
-                  micro-CHP — PEM</strong> — Proton Exchange Membrane fuel cell;
-                operates 60-80 °C; hydrogen-rich reformate from natural gas reacts
-                with oxygen at electrolyte → DC electricity + heat. 0.7-1.5 kWe + 1-3
-                kWth typical. UK: Viessmann Vitovalor PT2 (~£14-18k installed).
-                Reg 551.1.1(f) other suitable sources
-              </li>
-              <li>
-                <strong className="text-white">Fuel cell
-                  micro-CHP — SOFC</strong> — Solid Oxide Fuel Cell; high temperature
-                (600-1000 °C); higher efficiency. UK: BlueGen BG-15 1.5 kWe (~£15-20k
-                installed). Reg 551.1.1(f)
-              </li>
-              <li>
-                <strong className="text-white">IC micro-CHP</strong>
-                — internal combustion engine (Otto / Diesel) + generator. Honda
-                Ecowill globally widespread; limited UK presence. 1-3 kWe + 2-8 kWth.
-                Reg 551.1.1(a) combustion engine
-              </li>
-              <li>
-                <strong className="text-white">Hydrogen-ready
-                  variant</strong> — some fuel cell models documented hydrogen-blend
-                or pure-hydrogen upgrade path (firmware / hardware). Marketing
-                position; UK hydrogen supply largely unavailable to date
-              </li>
-              <li>
-                <strong className="text-white">Section 551
-                  applicability</strong> — all three variants: Reg 551.7.5
-                anti-islanding, Reg 551.7.2.1 supply-side, Reg 551.4.2 RCD
-              </li>
-              <li>
-                <strong className="text-white">EREC notification</strong>
-                — most micro-CHP at ≤16 A per phase export → G98 fast-track. Larger /
-                multi-source / co-located generation → G99 formal
-              </li>
-              <li>
-                <strong className="text-white">MCS competence</strong>
-                — MIS 3007 micro-CHP installer standard
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <RegsCallout
-            source="BS 7671:2018+A4:2026 · Reg 551.7.5 — Anti-islanding for micro-CHP (verified by simulated grid-loss test)"
-            clause="Means shall be provided to prevent the connection of a generating set to the system for distribution of electricity to the public in the event of loss of that supply or deviation of the voltage or frequency at the supply terminals from values required by Regulation 551.7.4. NOTE: For a generating set with an output not exceeding 16 A intended to operate in parallel with a system for distribution of electricity to the public, the requirements are given in BS EN 50549-1. Separately, the ENA Engineering Recommendations — G98 (up to and including 16 A per phase) and G99 (greater than 16 A per phase) — set the DNO notification and connection framework for parallel operation; they are the connection-process route, not a deemed-to-satisfy substitute for Reg 551.7."
-            meaning="Reg 551.7.5 applies to every micro-CHP generating set. Anti-islanding device typically integrated in the CHP control electronics (inverter or generator controller); detection methods include ROCOF + voltage / frequency deviation + active anti-islanding methods. Note: G99 disallows Vector Shift for type-tested generation, so RoCoF (with voltage / frequency protection) is the standard required LoM method for the type-tested micro-CHP / inverter units used in virtually all LCT installs; Vector Shift is legacy and only appears on older or non-type-tested sites. Commissioning verification mandatory: simulated grid-loss test (open main supply isolator OR manufacturer self-test feature) → observe CHP disconnect from grid within manufacturer-specified time (typical 200ms-1s per ENA EREC G99 + G98). Verify CHP stops generating (no continued export at meter). Restore supply; verify reconnect delay (typical 1-3 min). The NOTE clarifies that G98 compliance deems Reg 551.7 satisfied for ≤16 A small generators. Cert evidence bundle: anti-islanding device per manufacturer DoC + commissioning test method + result. For commercial CHP >50 kWe + G99: DNO-witnessed test typical (covered §9.6)."
-          />
-
-          <InlineCheck {...inlineChecks[0]} />
-
-          <InlineCheck {...inlineChecks[1]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>Section 551 framework applied + RCD coordination</ContentEyebrow>
-
-          <Pullquote>
-            Anti-islanding, supply-side connection, multi-source RCD. Three Section 551 rules; non-negotiable on every CHP install.
-          </Pullquote>
-
-          <ConceptBlock
-            title="Reg 551.7.2.1 supply-side connection — practical implementation"
-            plainEnglish="CHP electrical output connects to the supply side of all protective devices in the installation — typically at the consumer unit incoming busbar before any RCD / RCBO / MCB. NOT on the load side of any protective device. Ensures correct protective device coordination + RCD effectiveness across source combinations."
-            onSite="Practical install: dedicated supply-side terminal at the CU OR a sub-distribution panel between meter + main CU. Some CUs have a dedicated generation incoming way; others require additional supply-side terminal block. Cert evidence bundle documents the connection topology."
-          >
-            <p>Supply-side connection in practice:</p>
-            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
-              <li>
-                <strong className="text-white">Connection point</strong>
-                — CHP electrical output cable terminates at: (a) dedicated
-                generation incoming terminal at the CU (some modern CUs have this),
-                OR (b) sub-distribution / Henley block between meter + main CU, OR
-                (c) supply-side terminal block at the meter tails
-              </li>
-              <li>
-                <strong className="text-white">Protective device
-                  hierarchy</strong> — CHP supply enters before main RCD + RCBOs.
-                Fault current contribution from CHP visible to all downstream
-                protective devices
-              </li>
-              <li>
-                <strong className="text-white">Reg 551.7.1
-                  prohibition</strong> — source must NOT be connected on the load
-                side of an RCD under certain conditions. Practical: never put CHP
-                output downstream of an RCD that protects load circuits
-              </li>
-              <li>
-                <strong className="text-white">AC isolator</strong>
-                — between CHP electrical output + supply-side connection point.
-                Lockable in OFF position (BS EN 60947-3). For service / maintenance
-                isolation
-              </li>
-              <li>
-                <strong className="text-white">Per-source
-                  protective device</strong> — typically a dedicated 16 A or 20 A
-                Type A RCBO C-curve on the CHP supply line; provides over-current +
-                fault protection for the CHP cable. Coordinates with the main RCD
-                architecture
-              </li>
-              <li>
-                <strong className="text-white">BESS classification</strong>
-                — Reg 551.7.2.1 explicitly: BESS treated as generating set, not load.
-                Same supply-side connection topology applies (covered M5 BESS)
-              </li>
-              <li>
-                <strong className="text-white">Multi-source
-                  site</strong> — PV + BESS + CHP + grid all coexist on supply side.
-                Coordinated protective device hierarchy + Reg 551.4.2 RCD
-                effectiveness verification at commissioning
-              </li>
-              <li>
-                <strong className="text-white">Cert evidence
-                  bundle</strong> — connection topology diagram + protective device
-                hierarchy + commissioning test result
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <ConceptBlock
-            title="Reg 551.4.2 multi-source RCD effectiveness"
-            plainEnglish="Reg 551.4.2: any RCD protection in the installation must remain effective for every intended combination of sources operating. Practical: induce fault under each combination at commissioning; verify the appropriate RCD trips. Multi-source CHP install requires this verification."
-            onSite="UK 2025-26 multi-source domestic install commonly = PV + BESS + CHP + grid. Four sources. Each combination must trigger RCD correctly. Per-source RCD + central RCD architecture + commissioning test under each combination."
-          >
-            <p>Multi-source RCD considerations:</p>
-            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
-              <li>
-                <strong className="text-white">Per-source RCD</strong>
-                — each generator has its own RCD on its supply connection. CHP: 30 mA
-                Type A typical (or Type B per manufacturer DoC for VSD electronics).
-                PV / BESS: 30 mA Type B per manufacturer DoC (modern inverters declare
-                Type B per BS EN 62423)
-              </li>
-              <li>
-                <strong className="text-white">Central RCD
-                  architecture</strong> — main RCD Type S 100 mA (time-delayed
-                upstream) + per-circuit 30 mA RCBOs. Reg 531.3.6 discrimination
-              </li>
-              <li>
-                <strong className="text-white">Combinations to
-                  test at commissioning</strong> — induce fault on a sample circuit
-                under: grid-only, grid + PV, grid + CHP, grid + BESS, grid + PV + CHP,
-                grid + PV + CHP + BESS, etc. Verify appropriate RCD trips for each
-              </li>
-              <li>
-                <strong className="text-white">RCD type
-                  selection</strong> — Reg 531.3.3 prohibits Type AC where DC
-                components present (CHP with VSD electronics produces pulsating DC).
-                Type A minimum; Type F or B per manufacturer DoC
-              </li>
-              <li>
-                <strong className="text-white">Reg 551.7.1(d)
-                  prohibition</strong> — source must NOT be connected on load side of
-                an RCD under certain conditions. Practical: never put CHP load-side
-                of any RCD that would not see the CHP\'s fault contribution
-              </li>
-              <li>
-                <strong className="text-white">Type B for fuel
-                  cell + IC variants</strong> — VSD electronics in modern micro-CHP
-                produce smooth DC fault current; Type B RCD per manufacturer DoC if
-                declared
-              </li>
-              <li>
-                <strong className="text-white">Coordination
-                  verification</strong> — sequential trip-time test (downstream RCBO
-                trips first; upstream Type S follows after delay only if downstream
-                fails)
-              </li>
-              <li>
-                <strong className="text-white">Cert evidence
-                  bundle</strong> — RCD architecture diagram + per-source RCD + central
-                RCD + per-combination commissioning test result + Reg 551.4.2
-                compliance verified
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <RegsCallout
-            source="BS 7671:2018+A4:2026 · Reg 551.7.2.1 — Generating set on supply side"
-            clause="The generating set is to be installed on the supply side of all the protective devices for the final circuits of a distribution board, and stationary batteries (Chapter 57) are to be considered a generating set and not a load."
-            meaning="Reg 551.7.2.1 is the fundamental electrical-architecture rule for Section 551 generating sets — applies to micro-CHP equally with PV, wind, hydro, BESS. CHP electrical output enters the installation on the supply side of all protective devices (at the CU incoming busbar, OR a sub-distribution panel between meter + main CU). NEVER on the load side of any protective device. Reasons: (1) protective devices coordinate correctly with CHP fault contribution; (2) RCDs see all relevant fault paths per Reg 551.4.2; (3) isolation works correctly when energy flows in either direction. BESS explicitly: treated as generating set (not load) per the same rule — covered in M5. Multi-source sites: all generation sources on supply side, coordinated central + per-source protective device architecture. Cert evidence bundle: connection topology diagram + protective device hierarchy + multi-source RCD verification at commissioning."
-          />
-
-          <InlineCheck {...inlineChecks[2]} />
-
-          <InlineCheck {...inlineChecks[3]} />
-
-          <SectionRule />
-
-          <Scenario
-            title="Domestic Viessmann Vitovalor PT2 fuel cell micro-CHP retrofit"
-            situation="4-bed detached. Existing gas combi boiler being supplemented with a fuel cell micro-CHP for primary baseload heat + electricity. Customer is hydrogen-ready / future-proofing motivated; accepts premium upfront cost (£14-18k). Existing PV + BESS already installed (Chapter 82 PEI site). UK 2025-26."
-            whatToDo="Multi-trade: MCS company (MIS 3007) + gas-safe engineer (fuel cell gas supply + reformer) + heating engineer (heat output integration with existing boiler + cylinder) + BS 7671 electrician. Electrical scope: (1) Dedicated 16 A single-phase circuit from CU; Type A RCBO C-curve + 30 mA additional protection per Reg 415.1; 2.5 mm² T+E. (2) CHP electrical output to dedicated supply-side terminal at CU (existing PV + BESS already supply-side connected from the M2-M5 install — fuel cell joins the same supply-side bus). (3) AC isolator at CHP unit (BS EN 60947-3 lockable OFF) for service / maintenance. (4) Section 551 compliance: Reg 551.7.5 anti-islanding integrated in fuel cell controller (verify at commissioning via simulated grid-loss test); Reg 551.7.2.1 supply-side connection; Reg 551.4.2 RCD effectiveness verified across PV + BESS + CHP + grid combinations. (5) EREC G98 fast-track notification (1 kWe = ~4 A < 16 A per phase) — though existing PV + BESS site may already be on G99; verify with DNO whether new G99 amendment needed or G98 amendment to existing G99 reference. Multi-trade integration: gas-safe engineer commissions fuel cell gas supply + reformer; heating engineer integrates heat output with existing cylinder + heating; MCS company orchestrates handover. Cert evidence bundle: BS 7671 EIC + Section 551 compliance + Reg 551.4.2 multi-source RCD test + MCS MIS 3007 handover + Gas Safe + heating engineer integration. Total project ~£14-18k; electrical scope ~£500-800. Customer expectation: ~1 kWe electrical generation continuous (typical winter); export to grid via SEG tariff (covered M10); hydrogen-ready future capability documented."
-            whyItMatters="Hydrogen-ready fuel cell + multi-source PEI is one of the more sophisticated UK 2025-26 domestic Section 551 + Chapter 82 installs. Customer motivation is future-proofing + sustainability + the value of high simultaneous heat + electrical generation. Cert evidence bundle integrates Section 712 (PV) + Chapter 57 (BESS) + Section 551 (CHP) + Chapter 82 (PEI) coherently. Demonstrates the multi-trade coordination + the BS 7671 electrician\'s scope within the wider install."
-          />
-
-          <Scenario
-            title="Off-grid Highland cottage — 2 kWe IC engine CHP + BESS"
-            situation="Remote Highland cottage with no grid connection. Customer has decided against grid-connection cost (~£40k for 2 km supply extension) + chosen off-grid renewable. Existing PV array (4 kWp) + small wind (~3 kW) + 20 kWh lead-acid BESS. Heating need + winter electrical demand exceeding PV / wind capacity → adding 2 kWe IC engine CHP (LPG-fuelled) as winter / dark-day backup."
-            whatToDo="Off-grid Section 551 install — no EREC G98 / G99 (no grid). Section 551 framework still applies (Reg 551.1.1(a) combustion engine; Reg 551.4.2 RCD effectiveness across PV + wind + CHP + BESS combinations). Reg 551.7.5 anti-islanding NOT applicable (no public supply to island against) BUT dump load / over-speed protection per manufacturer design. Electrical scope: dedicated 16 A circuit from off-grid AC supply panel; Type A RCBO C-curve; AC isolator at CHP for service. Heat output integrated with existing DHW cylinder + heating circuit. LPG fuel supply per Gas Safe / LPGA. CHP electrical output integrates with grid-forming inverter architecture (off-grid sites use grid-forming inverters, not grid-following — covered M10). Cert evidence bundle: BS 7671 EIC + Section 551 compliance + off-grid AC supply architecture + Gas Safe LPG commissioning + heating engineer integration + multi-source RCD verification. Total project ~£8-12k; electrical scope ~£400-600."
-            whyItMatters="Off-grid sites with diversified renewable + CHP backup are a real UK 2025-26 niche — remote Highland / island properties, agricultural sites, conservation properties. Section 551 framework applies fully but EREC G98 / G99 + grid-tied anti-islanding don\'t (no grid). Cert evidence bundle documents the off-grid architecture + multi-source coordination. Grid-forming inverter detail covered M10."
-          />
-
-          <CommonMistake
-            title="Connecting CHP load-side of an RCD"
-            whatHappens="Lazy install routes CHP electrical output through an existing RCD-protected sub-circuit (treating CHP as just another load). Reg 551.7.2.1 violation. Reg 551.4.2 RCD effectiveness compromised — fault current contribution from CHP may not be seen correctly by the protective devices. Safety + compliance failure. EICR finding C1 / C2 depending on severity."
-            doInstead="Reg 551.7.2.1 is non-negotiable: CHP on supply side of ALL protective devices. Install at CU incoming busbar OR dedicated supply-side terminal between meter + main CU. AC isolator + per-source 16 A RCBO on the CHP supply line. NEVER load-side of an RCD. Cert evidence bundle documents the connection topology + protective device hierarchy + Reg 551.4.2 RCD effectiveness test."
-          />
-
-          <CommonMistake
-            title="Skipping Reg 551.4.2 multi-source RCD test at commissioning"
-            whatHappens="Multi-source site (PV + BESS + CHP + grid). Commissioning verifies each source individually but doesn\'t test fault scenarios under the combinations. Months later, real fault occurs with PV + CHP + grid active simultaneously — RCD response is non-optimal; either over-trips (loses too much) or fails to trip cleanly. Customer issue + reputation."
-            doInstead="Reg 551.4.2 requires RCD effectiveness for EVERY intended combination of sources operating. Commissioning sequence: (1) Test each source individually (PV-only, BESS-only, CHP-only); (2) Test each pair (PV+CHP, PV+BESS, BESS+CHP, PV+grid, BESS+grid, CHP+grid); (3) Test combinations (PV+BESS+grid, PV+CHP+grid, BESS+CHP+grid, all-active). Induce sample fault under each + verify trip. Cert evidence bundle records per-combination test result + Reg 551.4.2 compliance."
-          />
-
-          <SectionRule />
-
-          <KeyTakeaways
-            points={[
-              'CHP = Combined Heat and Power. Generates electricity + heat from single fuel. Combined efficiency 80-90% (~2× separate grid + boiler).',
-              'Reg 551.1.1(a) combustion engines (Stirling + IC variants) OR Reg 551.1.1(f) other suitable sources (fuel cell variants). All Section 551 generating sets.',
-              'Three micro-CHP technology variants: Stirling engine (UK market largely exited), fuel cell (PEM + SOFC — niche premium), internal combustion (limited UK).',
-              'Typical micro-CHP: 0.7-2 kWe + 1-25 kWth (heat-led sizing). Single-phase typical. ≤16 A per phase usually fits EREC G98 fast-track.',
-              'Reg 551.7.5 anti-islanding mandatory + verified at commissioning via simulated grid-loss test. Anti-islanding device integrated in CHP control.',
-              'Reg 551.7.2.1 supply-side connection — CHP at CU incoming busbar OR dedicated supply-side terminal, NEVER load-side of protective devices.',
-              'Reg 551.4.2 RCD effectiveness across every combination of sources. Multi-source commissioning tests each combination.',
-              'RCD type per manufacturer DoC: Type A typical, Type B if VSD electronics produce smooth DC. Reg 531.3.3 prohibits Type AC where DC components.',
-              'MCS MIS 3007 micro-CHP ≤50 kWe installer standard. BS EN 50549-1 + -2 grid-connection product standards.',
-              'UK 2025-26 market reality: micro-CHP niche; heat pump + PV + BESS dominates residential low-carbon. Customer niche: high simultaneous heat + electrical demand, off-grid, hydrogen-ready future.',
-              'Commercial CHP (>50 kWe) covered §9.6 — biofuel, biogas, hydrogen variants + grid services revenue + heat-network integration.',
-            ]}
-          />
-
-          <FAQ items={faqs} />
-
-          <Quiz questions={quizQuestions} title="Section 5 · Knowledge check" />
-
-          <div className="grid grid-cols-2 gap-3 pt-2">
-            <button
-              type="button"
-              onClick={() =>
-                navigate('/electrician/upskilling/renewable-energy-module-9-section-4')
-              }
-              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
-                <ChevronLeft className="h-3 w-3" /> Section 4
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-white truncate">
-                Biomass interfaces
-              </div>
-            </button>
-            <button
-              type="button"
-              onClick={() =>
-                navigate('/electrician/upskilling/renewable-energy-module-9-section-6')
-              }
-              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
-                Next section <ChevronRight className="h-3 w-3" />
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-black truncate">
-                9.6 Commercial CHP + biofuel / biogas / hydrogen
-              </div>
-            </button>
-          </div>
-        </PageFrame>
-      </div>
-    </div>
+            <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+              Next section <ChevronRight className="h-3 w-3" />
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-black truncate">
+              9.6 Commercial CHP + biofuel / biogas / hydrogen
+            </div>
+          </button>
+        </div>
+      </HubBody>
+    </HubPage>
   );
 }

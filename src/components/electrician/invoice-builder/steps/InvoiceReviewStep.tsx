@@ -2,13 +2,26 @@ import { Invoice } from '@/types/invoice';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
+import {
+  LinkCertificateCard,
+  type LinkableCertificate,
+} from '@/components/electrician/invoice-builder/LinkCertificateCard';
 
 interface InvoiceReviewStepProps {
   invoice: Partial<Invoice>;
   showSummaryOnly?: boolean;
+  /** "Hold until paid" — when provided, the Linked Document card shows the release-mode choice. */
+  onSetCertificateReleaseMode?: (mode: 'with_invoice' | 'on_payment') => void;
+  /** Link/unlink a certificate — when provided, the picker card shows if nothing is linked. */
+  onSetLinkedCertificate?: (cert: LinkableCertificate | null) => void;
 }
 
-export const InvoiceReviewStep = ({ invoice, showSummaryOnly = false }: InvoiceReviewStepProps) => {
+export const InvoiceReviewStep = ({
+  invoice,
+  showSummaryOnly = false,
+  onSetCertificateReleaseMode,
+  onSetLinkedCertificate,
+}: InvoiceReviewStepProps) => {
   const [showItems, setShowItems] = useState(true);
 
   const formatCurrency = (amount: number) =>
@@ -222,17 +235,17 @@ export const InvoiceReviewStep = ({ invoice, showSummaryOnly = false }: InvoiceR
       </div>
 
       {/* Linked Certificate */}
-      {(invoice as any).linked_certificate_id && (
+      {invoice.linked_certificate_id && (
         <div className="border-t border-white/[0.12] pt-4">
           <p className="text-[11px] text-white uppercase tracking-wider mb-2">Linked Document</p>
           <div className="flex items-center gap-3 p-3 rounded-xl bg-blue-500/[0.08] border border-blue-500/20">
             <div className="flex-1 min-w-0">
-              <p className="text-[14px] font-medium text-white">{(invoice as any).linked_certificate_type}</p>
-              <p className="text-[12px] text-white">{(invoice as any).linked_certificate_reference}</p>
+              <p className="text-[14px] font-medium text-white">{invoice.linked_certificate_type}</p>
+              <p className="text-[12px] text-white">{invoice.linked_certificate_reference}</p>
             </div>
-            {(invoice as any).linked_certificate_pdf_url && (
+            {invoice.linked_certificate_pdf_url && (
               <a
-                href={(invoice as any).linked_certificate_pdf_url}
+                href={invoice.linked_certificate_pdf_url}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-[12px] font-medium text-blue-400 touch-manipulation flex-shrink-0"
@@ -240,8 +253,61 @@ export const InvoiceReviewStep = ({ invoice, showSummaryOnly = false }: InvoiceR
                 View PDF
               </a>
             )}
+            {onSetLinkedCertificate && (
+              <button
+                type="button"
+                onClick={() => onSetLinkedCertificate(null)}
+                className="text-[12px] font-medium text-white touch-manipulation flex-shrink-0 px-1 py-2"
+              >
+                Remove
+              </button>
+            )}
           </div>
+
+          {onSetCertificateReleaseMode && (
+            <div className="mt-2 grid grid-cols-2 gap-2">
+              {(
+                [
+                  { mode: 'with_invoice', label: 'Send with invoice' },
+                  { mode: 'on_payment', label: 'Hold until paid' },
+                ] as const
+              ).map((opt) => {
+                const active =
+                  (invoice.certificate_release_mode || 'with_invoice') === opt.mode;
+                return (
+                  <button
+                    key={opt.mode}
+                    type="button"
+                    onClick={() => onSetCertificateReleaseMode(opt.mode)}
+                    className={cn(
+                      'h-11 rounded-xl border text-[12.5px] touch-manipulation transition-colors',
+                      active
+                        ? 'bg-elec-yellow border-elec-yellow text-black font-semibold'
+                        : 'bg-white/[0.06] border-white/[0.12] text-white font-medium'
+                    )}
+                  >
+                    {opt.label}
+                  </button>
+                );
+              })}
+              <p className="col-span-2 text-[11.5px] leading-snug text-white">
+                {(invoice.certificate_release_mode || 'with_invoice') === 'on_payment'
+                  ? 'The certificate stays back — it emails itself to the customer the moment this invoice is paid.'
+                  : 'The certificate PDF goes out attached to the invoice email.'}
+              </p>
+            </div>
+          )}
         </div>
+      )}
+
+      {/* No certificate linked yet — surface the option (and any matching
+          certs for this customer) instead of hiding the feature on cert
+          screens where nobody found it. */}
+      {!invoice.linked_certificate_id && onSetLinkedCertificate && (
+        <LinkCertificateCard
+          clientName={invoice.client?.name}
+          onLink={(cert) => onSetLinkedCertificate(cert)}
+        />
       )}
     </div>
   );

@@ -9,11 +9,11 @@
  */
 
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
-import { PageFrame, PageHero } from '@/components/college/primitives';
 import {
   TLDR,
   ConceptBlock,
@@ -28,8 +28,7 @@ import {
 } from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
-const TITLE =
-  'Maintain safe working practices (3.6) | Level 2 Module 4.3.6 | Elec-Mate';
+const TITLE = 'Maintain safe working practices (3.6) | Level 2 Module 4.3.6 | Elec-Mate';
 const DESCRIPTION =
   'Workplace discipline that runs the full length of the install — tidy as you go, lockout-tagout on upstream devices, communication with other trades and customers, welfare, fatigue management, end-of-shift sign-off. (JIB safe isolation procedure is in Sub 7.)';
 
@@ -81,8 +80,7 @@ const checks = [
 const quizQuestions = [
   {
     id: 1,
-    question:
-      'HASAWA section 7 places duties on every employee including:',
+    question: 'HASAWA section 7 places duties on every employee including:',
     options: [
       'Carrying out their own written risk assessment for every task before the employer provides one.',
       'Taking reasonable care for themselves and others, and co-operating with the employer on safety.',
@@ -95,8 +93,7 @@ const quizQuestions = [
   },
   {
     id: 2,
-    question:
-      'CDM 2015 (Construction Design and Management) Regulations apply to:',
+    question: 'CDM 2015 (Construction Design and Management) Regulations apply to:',
     options: [
       'Only commercial and industrial projects above a contract value of £100,000.',
       'Only projects involving more than one contractor on site at the same time.',
@@ -109,8 +106,7 @@ const quizQuestions = [
   },
   {
     id: 3,
-    question:
-      'A "permit to work" system is typically required for:',
+    question: 'A "permit to work" system is typically required for:',
     options: [
       'All routine domestic installation work, as a record that the customer authorised the job.',
       'Any task carried out by an apprentice, to confirm they are being supervised correctly throughout.',
@@ -123,8 +119,7 @@ const quizQuestions = [
   },
   {
     id: 4,
-    question:
-      'Hot works on a construction site (welding, soldering, brazing) require:',
+    question: 'Hot works on a construction site (welding, soldering, brazing) require:',
     options: [
       'A hot works permit, fire watch after work, cleared combustibles and a post-work inspection.',
       'A fire extinguisher within reach and a verbal note to the customer, but no permit.',
@@ -137,8 +132,7 @@ const quizQuestions = [
   },
   {
     id: 5,
-    question:
-      'Welfare facilities on a CDM-regulated construction site must include:',
+    question: 'Welfare facilities on a CDM-regulated construction site must include:',
     options: [
       'A dedicated site office, a canteen with hot food and on-site sleeping accommodation.',
       'Toilets, washing facilities, drinking water, an eating area and clothing storage, proportionate to the project.',
@@ -179,8 +173,7 @@ const quizQuestions = [
   },
   {
     id: 8,
-    question:
-      'End-of-shift sign-off on a multi-day commercial install typically includes:',
+    question: 'End-of-shift sign-off on a multi-day commercial install typically includes:',
     options: [
       'Securing isolations, closing enclosures, stowing tools, sweeping the area and briefing the next shift.',
       'Restoring every isolation to live so the building’s services work overnight, whatever the work state.',
@@ -231,467 +224,463 @@ export default function Sub6() {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
-      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
-        <PageFrame>
+    <HubPage>
+      <HubMasthead
+        section="Module 4 · Section 3 · Subsection 6"
+        title="Maintain safe working practices"
+        backTo=".."
+      />
+      <HubBody>
+        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
+          Workplace discipline that runs the full length of the install — tidy as you go, lockout on
+          upstream devices, communication with other trades and customers, working hours, welfare,
+          fatigue management, end-of-shift sign-off. The habits that turn a competent install into a
+          safe one. (The JIB safe isolation procedure has its own dedicated Sub 7.)
+        </p>
+
+        <TLDR
+          points={[
+            'Safe working is procedural — tidy as you go, lockout upstream devices before working downstream, communicate every move to other trades and the customer.',
+            'CDM 2015 applies to ALL construction projects including small domestic — RAMS, welfare, escape routes, hot works, working hours all scale to project size.',
+            'Fatigue causes the majority of late-shift accidents. Stop work, secure the site, come back fresh — never push through tiredness on live equipment.',
+          ]}
+        />
+
+        <LearningOutcomes
+          outcomes={[
+            'Maintain safe working practices — verbatim AC 3.6 from City & Guilds 2365-02 Unit 204.',
+            'Apply tidy-as-you-go discipline throughout the install — offcuts, sharps, food waste, dust segregated and removed continuously, not at end of shift only.',
+            'Apply lockout-tagout on upstream devices when working on downstream circuits, using a physical lockout device, padlock and warning notice.',
+            'Maintain communication with other trades, the principal contractor, the customer and the household occupants — briefings, handovers, escape route management.',
+            'Manage working hours, welfare and fatigue under HASAWA s.7 (employee duties) and Mgmt H&S Regs Reg 14 — recognise own limits and stop work when judgement is compromised.',
+            'Secure the work area at end of shift — isolations maintained or reverted, enclosures closed, tools stowed, area swept, paperwork signed.',
+          ]}
+          initialVisibleCount={3}
+        />
+
+        <ContentEyebrow>Tidy as you go — discipline, not optional</ContentEyebrow>
+
+        <ConceptBlock
+          title="Continuous housekeeping vs end-of-shift cleanup"
+          plainEnglish="Tidy as you go means cleaning up continuously through the day, not at the end. After every termination, the offcut goes in the bag. After every drilling, the dust gets vacuumed. After every break, the rubbish goes to the bin. Two effects — first, the work area never accumulates a hazardous mess; second, you can find your tools because they are not buried under offcuts."
+          onSite="The fastest electricians on a job are usually the tidiest. Untidy work creates lost-tool time (looking for the wire stripper that was definitely on the box five minutes ago), trip-hazard time (stepping over offcuts), and morale damage (other trades complain). Tidy work compounds — every minute spent putting a tool back saves three minutes finding it later."
+        >
+          <p>Tidy-as-you-go in practice:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Cable offcuts</strong> in a separate bag — copper recovery is worth real money
+              to your employer (a wholesaler will buy clean copper offcuts; some electricians fund
+              their own training from offcut sales).
+            </li>
+            <li>
+              <strong>Sharps</strong> (used Stanley blades, broken plate edges, snipped pin
+              terminals) into a sharps tube. Never into a normal waste bag where the next person can
+              cut themselves. NHS / construction first-aid data show sharps cuts as a leading injury
+              type.
+            </li>
+            <li>
+              <strong>Dust</strong> vacuumed at the source (M-class HEPA vac for any work disturbing
+              potential silica or asbestos-containing materials). HSE expects on-tool dust
+              extraction for chasing, drilling, sanding.
+            </li>
+            <li>
+              <strong>Plastic packaging</strong> in a recycling bag. Cardboard flat-packed separate.
+              Clean cardboard is recyclable; mixed waste is not.
+            </li>
+            <li>
+              <strong>Food and drink waste</strong> in a separate bag, removed at every break.
+              Attracts pests, creates smells, and looks unprofessional.
+            </li>
+            <li>
+              <strong>Tools</strong> back in roll / case after each use. Loose tools on a horizontal
+              surface get knocked off, get lost, get stolen.
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <InlineCheck {...checks[0]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>Lockout-tagout — working downstream</ContentEyebrow>
+
+        <ConceptBlock
+          title="Lock off the upstream device before working on the downstream circuit"
+          plainEnglish="Before working on a circuit you isolate it at the upstream device (MCB, RCBO, isolator, switch fuse). The device is then physically locked off with a lockout device + padlock + warning notice — physical, not just turned off. Even if you are alone on site, your own attention can lapse, the customer might want to 'just check the lights' elsewhere, or another trade might not realise the implications. The lockout is what stops the supply being switched back on."
+          onSite="The full JIB 9-step safe isolation procedure is in Sub 7 — this Sub covers the why and the discipline. The kit you carry: MCB lockout devices (snap-on plastic clips for various device profiles), padlocks (small, ideally each technician has their own colour-coded ones), warning notices ('Caution: do not switch — work in progress'), and a permit log to record what was isolated when by whom."
+        >
+          <p>Why lock instead of just turning off:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Forgetfulness</strong> — your own. You do not realise you have left the device
+              off; an hour later you go back and switch it on without thinking, before the work is
+              complete.
+            </li>
+            <li>
+              <strong>Customer interference</strong> — "I just wanted to put the kettle on while you
+              were upstairs". Customers do not understand the implications and will switch breakers
+              back on without asking.
+            </li>
+            <li>
+              <strong>Other trades</strong> — the plasterer or the painter sees an MCB in the off
+              position, assumes someone tripped it earlier, switches it back on "to help".
+            </li>
+            <li>
+              <strong>Family members</strong> — children, partners, anyone in the household. They do
+              not see the hazard.
+            </li>
+            <li>
+              <strong>Site personnel on commercial</strong> — facilities staff, security staff,
+              other contractors all touch the panels.
+            </li>
+          </ul>
+          <p>
+            EAWR Reg 13 places a positive duty on the worker to ensure that conductors and equipment
+            are not made live during work. A lockout is the tangible mechanism that satisfies that
+            duty.
+          </p>
+        </ConceptBlock>
+
+        <RegsCallout
+          source="Electricity at Work Regulations 1989 — Regulation 13 (Precautions for work on equipment made dead)"
+          clause="(Paraphrased.) Adequate precautions shall be taken to prevent electrical equipment, which has been made dead in order to prevent danger while work is carried out on or near that equipment, from becoming electrically charged during that work if danger may thereby arise."
+          meaning={
+            <>
+              EAWR Reg 13 is the regulation that requires lockout. It is not enough to turn the
+              device off; you must take "adequate precautions" to prevent it being made live again
+              during the work. A physical lockout device + padlock + warning notice is the practical
+              interpretation. A device left in the off position with no physical lockout is a Reg 13
+              fail because nothing prevents someone else switching it on. The lockout is small kit
+              (£15-30) and the discipline is daily.
+            </>
+          }
+          cite="Source: Electricity at Work Regulations 1989, Regulation 13 (paraphrased — see legislation.gov.uk for full text)."
+        />
+
+        <InlineCheck {...checks[1]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>Communication — other trades, customers, household</ContentEyebrow>
+
+        <ConceptBlock
+          title="Brief, brief, brief — three-way communication on every install"
+          plainEnglish="On every install you have three communication channels open at once. Other trades on site (plasterer, plumber, joiner, painter) — they need to know what you are doing and when, you need to know what they are doing and when. The customer / principal contractor — they need updates on progress, problems, variations. The household / occupants — they need to know which rooms are exclusion zones and which are safe."
+          onSite="The trade that communicates well is the trade that gets re-hired. The trade that turns up, ignores everyone, and leaves a mess is the one that is not on the next phase. Communication takes 5 % of your time and earns 50 % of your repeat work."
+        >
+          <p>The communication patterns:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Daily morning briefing with other trades</strong> — what each trade is doing
+              today, where the conflicts will be, who needs the same room when. Often a 5-minute
+              conversation over coffee, but worth half a day of avoided conflict.
+            </li>
+            <li>
+              <strong>Real-time conflict resolution</strong> — when a clash develops (plasterer
+              needs the wall first-fixed; you need the wall plastered before second-fix), agree a
+              sequence on the spot, document in WhatsApp.
+            </li>
+            <li>
+              <strong>Customer end-of-day update</strong> — what got done today, what is planned for
+              tomorrow, any issues, any variations needed. A 3-minute conversation that prevents a
+              30-minute complaint email.
+            </li>
+            <li>
+              <strong>Household occupant brief</strong> — at the start of each day, which rooms are
+              work zones, which are safe, what hazards exist, when the supply will be off / on.
+              Particularly important for households with children, elderly residents, or anyone with
+              mobility constraints.
+            </li>
+            <li>
+              <strong>Variation logging</strong> — every change to scope (customer adds a circuit,
+              you find an unforeseen condition) goes in a written log, signed off by the customer,
+              before the work is done.
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="Escape routes — keep them clear, every minute, no exceptions"
+          plainEnglish="Every building has escape routes — corridors, stair cores, exit doors. Under the Regulatory Reform (Fire Safety) Order 2005, the responsible person must keep escape routes clear at all times. As the contractor in occupation you become a duty holder. A toolbox in the corridor, a cable run across a doorway, a temporary ladder blocking an escape route — all RRO breaches AND all genuine fire-safety risks."
+        >
+          <p>
+            On a domestic job, the escape routes are usually the front door + main hallway + stairs.
+            On a commercial fit-out, they are the corridors, stairwells and exit doors marked on the
+            building&rsquo;s fire safety plan. Keep them clear:
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Tools and materials staged in the work room, not in the corridor.</li>
+            <li>Cable runs across doorways — temporary cable protectors / cable ramps.</li>
+            <li>Ladders / steps / hop-ups out of the corridor when not in use.</li>
+            <li>
+              Skip / waste bag inside the work room or outside the property, never blocking the
+              route.
+            </li>
+            <li>
+              If a customer or other party blocks the route (mobility scooter, furniture moved into
+              the corridor), you stop, brief them, restore the clearance — every time.
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <ContentEyebrow>Working hours, welfare, fatigue</ContentEyebrow>
+
+        <ConceptBlock
+          title="Working hours respect the building and the people in it"
+          plainEnglish="Construction noise hours are typically 08:00-18:00 weekdays, 08:00-13:00 Saturdays, no work on Sundays or bank holidays. Local authority by-laws vary; check before quoting. For occupied buildings (HMOs, flats, customer in residence) impact on neighbours dictates earlier finish or pre-warned working windows."
+        >
+          <p>Practical rules:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Confirm working hours with the customer in writing as part of the quote.</li>
+            <li>
+              Notify neighbours of any unusual noise (chasing, breaking out concrete) at least 24
+              hours in advance — letter through the door is standard.
+            </li>
+            <li>
+              For occupied buildings, plan noisy work for short windows in the middle of the day;
+              quieter work (terminations, testing) in the morning and evening.
+            </li>
+            <li>
+              Respect customer routines — children napping, elderly residents resting, shift workers
+              sleeping.
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="Welfare facilities — proportionate to the project"
+          plainEnglish="CDM 2015 Schedule 2 requires welfare facilities on every construction project. Scale to size — a one-day domestic install can use the customer’s facilities (with permission); a multi-week refurb where the customer is in residence needs a clear arrangement; an unoccupied refurb needs you to bring welfare with you (porta-loo hire, water, kettle, break area)."
+        >
+          <p>The CDM Schedule 2 list:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>WC — adequate for the number of workers, separated by sex where practicable.</li>
+            <li>Washing facilities — running water (hot AND cold), soap, means of drying.</li>
+            <li>Drinking water — clearly marked, fresh.</li>
+            <li>Eating area — separated from the work area, clean, somewhere to sit.</li>
+            <li>Clothing — somewhere to store and dry work clothes.</li>
+          </ul>
+          <p>
+            For a single-day single-operative domestic install you do not need a welfare unit, but
+            you do need reasonable access to the customer&rsquo;s facilities (or your own kit if the
+            customer is not in residence). For a multi-week site the principal contractor provides;
+            for a smaller project the contractor in charge does.
+          </p>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="Fatigue — recognise your limits, stop when judgement slips"
+          plainEnglish="Fatigue is the silent cause of most late-shift mistakes that lead to electrical accidents. The 16-hour day, the rushed last termination, the 'just one more circuit' — that is when conductors get nicked, terminations get over-torqued, and isolations get missed. The discipline is to recognise your own state and stop when you are no longer at full attention."
+          onSite="The brain’s decision-making capacity drops sharply after 8-10 hours of focused technical work. By hour 12 you are making errors you would never make at hour 4. Stop, lock the site down, come back tomorrow — your future self will thank you."
+        >
+          <p>Practical fatigue management:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Plan to a realistic day length (8-10 hours of productive work, plus travel).</li>
+            <li>Take regular breaks — short break every 90 minutes, longer break at lunch.</li>
+            <li>Eat properly — sandwich and water, not just energy drinks.</li>
+            <li>Sleep — 7-8 hours / night minimum during the working week.</li>
+            <li>
+              Recognise the signs of fatigue — slower decision making, irritability, missing small
+              details, eye strain.
+            </li>
+            <li>
+              Stop work on safety-critical tasks (terminations on incoming supply, live testing,
+              work at height) when fatigue compromises attention.
+            </li>
+            <li>
+              Communicate with your supervisor / contracts manager about programme pressure that is
+              causing unsustainable hours.
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <RegsCallout
+          source="Health and Safety at Work etc Act 1974 — Section 7 (Duties of employees)"
+          clause="It shall be the duty of every employee while at work — (a) to take reasonable care for the health and safety of himself and of other persons who may be affected by his acts or omissions at work; and (b) as regards any duty or requirement imposed on his employer or any other person by or under any of the relevant statutory provisions, to co-operate with him so far as is necessary to enable that duty or requirement to be performed or complied with."
+          meaning={
+            <>
+              HASAWA s.7 places legal duties on every employee. "Reasonable care" for yourself AND
+              for others affected by your acts or omissions. This is the statutory basis for
+              tidy-as-you-go (your offcuts can hurt someone else), for lockout (someone else could
+              be electrocuted by your unlocked breaker), for fatigue management (an exhausted
+              electrician makes mistakes that hurt others), and for stopping work when conditions
+              are unsafe. The "duty of co-operation" with the employer means following the company
+              RAMS, the client&rsquo;s site rules, and the principal contractor&rsquo;s briefings —
+              which is what makes safe working procedural rather than a matter of personal style.
+            </>
+          }
+          cite="Source: Health and Safety at Work etc Act 1974, section 7 (verbatim — see legislation.gov.uk)."
+        />
+
+        <RegsCallout
+          source="Management of Health and Safety at Work Regulations 1999 — Regulation 14 (Employee duties)"
+          clause="(Paraphrased.) Every employee shall use any machinery, equipment, dangerous substance, transport equipment, means of production or safety device provided to him by his employer in accordance with both any training and the instructions which may have been provided. Every employee shall inform his employer or any other employee with specific responsibility of (a) any work situation which a person with the first-mentioned employee’s training and instruction would reasonably consider represented a serious and immediate danger to health and safety; (b) any matter which a person with the first-mentioned employee’s training and instruction would reasonably consider represented a shortcoming in the employer’s protection arrangements."
+          meaning={
+            <>
+              Mgmt H&S Regs Reg 14 expands HASAWA s.7 with two specific duties — use equipment per
+              training, AND report situations of serious / immediate danger AND report shortcomings
+              in protection arrangements. As an apprentice or junior electrician you are obliged to
+              report — to your supervisor, your employer, the principal contractor — when you see a
+              serious danger or a gap in safety provision. Saying nothing because "it’s not my job"
+              is a breach of Reg 14.
+            </>
+          }
+          cite="Source: Management of Health and Safety at Work Regulations 1999, Regulation 14 (paraphrased)."
+        />
+
+        <InlineCheck {...checks[2]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>End-of-shift sign-off</ContentEyebrow>
+
+        <ConceptBlock
+          title="Securing the site at the end of every day"
+          plainEnglish="End-of-shift discipline scales with the project. Domestic single-day install — pack tools, sweep area, brief customer. Multi-day domestic — cover work-in-progress, isolate as needed, lock front door. Commercial multi-week — secure all isolations, close all enclosures, sweep the area, sign permit and RAMS, brief next shift."
+        >
+          <p>The standard end-of-shift sequence:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Isolations</strong> — either reverted (work complete and tested, supply
+              restored) or maintained (lockout in place, warning notice updated, next-day
+              continuation noted in the permit).
+            </li>
+            <li>
+              <strong>Enclosures</strong> — every CU, JB, isolator, switch fuse closed and secured.
+              No live conductors exposed. No partially-installed equipment left open overnight.
+            </li>
+            <li>
+              <strong>Tools</strong> — collected, counted, packed in van or locked store. Power
+              tools off, batteries on charge, sharps in tube.
+            </li>
+            <li>
+              <strong>Materials</strong> — secured against weather and theft. Cable drums covered.
+              Loose accessories in box. Test gear in flight case.
+            </li>
+            <li>
+              <strong>Work area</strong> — swept, dust vacuumed, debris removed, trip hazards
+              cleared. Leave the area cleaner than you found it.
+            </li>
+            <li>
+              <strong>Documentation</strong> — permits signed, RAMS reviewed, day&rsquo;s progress
+              logged, variations recorded, photos taken of completed first-fix / second-fix work.
+            </li>
+            <li>
+              <strong>Communication</strong> — brief next-day team or next shift on progress,
+              hazards, items needing attention.
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <CommonMistake
+          title="Leaving an open consumer unit overnight to 'continue tomorrow'"
+          whatHappens={
+            <>
+              You finish first-fix on a kitchen rewire at the end of a long day. The consumer unit
+              door is open, three RCBOs are partially terminated with bare conductors visible. You
+              think "I&rsquo;ll close it up and finish tomorrow morning". Overnight, the
+              customer&rsquo;s curious child opens the cupboard, reaches into the open CU, and
+              contacts the live supply side of the partially-terminated MCBs. Everything else about
+              the install is competent — but the open enclosure was the one mistake.
+            </>
+          }
+          doInstead={
+            <>
+              Never leave a consumer unit open overnight. End-of-shift means every enclosure closed,
+              every door secured, every potentially-exposed conductor safe. If the work is genuinely
+              incomplete, isolate the supply at the incomer, lockout-tagout the incomer, close the
+              CU door (even loosely), and post a warning notice on the cupboard. Better still —
+              finish the terminations, button up, test, and start fresh on the next circuit
+              tomorrow. The discipline is procedural; the consequences of skipping it are
+              catastrophic.
+            </>
+          }
+        />
+
+        <Scenario
+          title="Plasterer arrives and the kitchen is a mess from your first-fix"
+          situation={
+            <>
+              You have first-fixed a kitchen rewire — chases cut, cables pulled, back boxes fixed.
+              Cable offcuts are scattered across the kitchen floor. There is brick dust on every
+              surface from the chasing. A used Stanley blade is on the worktop. A coffee cup is on
+              the floor. The plasterer arrives at 14:00 to skim, expecting a clean and ready
+              kitchen.
+            </>
+          }
+          whatToDo={
+            <>
+              Stop. Apologise to the plasterer (it is on you). Vacuum the dust (you should have used
+              on-tool extraction during chasing — either way, fix it now). Bag the offcuts (separate
+              copper bag — the offcuts have value). Sharps to a sharps tube, not a normal bag.
+              Coffee cup binned. Wipe worktops. Brief the plasterer on which back-boxes need to be
+              skimmed up to (depth setting from Sub 3) and which areas to leave clear for second
+              fix. Document the half-hour delay in your day log; if it eats into the programme, flag
+              it with the supervisor. Then leave the room cleaner than you found it.
+            </>
+          }
+          whyItMatters={
+            <>
+              Other trades remember the trades that left them a mess. The plasterer tells the
+              joiner, the joiner tells the painter, and a year later you are not on the next phase
+              of work because the chain of trades remembers. Tidy handover is the cheapest
+              professional reputation builder available. Conversely, the trade that arrives to a
+              tidy and ready area is the trade that recommends the previous trade to the next
+              customer. It compounds.
+            </>
+          }
+        />
+
+        <SectionRule />
+
+        <FAQ items={faqs} />
+
+        <SectionRule />
+
+        <KeyTakeaways
+          points={[
+            'Tidy as you go is procedural, not optional — offcuts in a copper bag, sharps in a tube, dust extracted at source, area cleaner than you found it.',
+            'Lock off upstream devices physically (lockout device + padlock + warning notice) before working downstream. EAWR Reg 13 mandates "adequate precautions".',
+            'Communicate three ways — other trades, customer / contracts manager, household occupants. Daily briefings, written variations, end-of-day updates.',
+            'Escape routes clear at all times — RRO 2005 places duty on the responsible person, and as contractor in occupation you become the duty holder.',
+            'Working hours respect local by-laws and household occupants — typically 08:00-18:00 weekdays, no Sunday work, neighbour notification for noisy work.',
+            'CDM 2015 welfare scales with project size — proportionate WC / washing / drinking water / eating area / clothing storage.',
+            'Fatigue causes late-shift accidents — recognise your limits, stop on safety-critical tasks, sleep properly. HASAWA s.7 + Mgmt H&S Reg 14 expect this.',
+            'End-of-shift discipline — isolations secured / reverted, enclosures closed, tools packed, area swept, paperwork signed. Never leave a CU open overnight.',
+          ]}
+        />
+
+        <Quiz
+          title="Maintaining safe working practices — knowledge check"
+          questions={quizQuestions}
+        />
+
+        <div className="grid grid-cols-2 gap-3 pt-2">
           <button
-            onClick={() => navigate('..')}
-            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            onClick={() => navigate('/study-centre/apprentice/level2/module4/section3/3-5')}
+            className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
           >
-            <ArrowLeft className="h-4 w-4" /> Section 3
+            <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+              <ChevronLeft className="h-3 w-3" /> Previous subsection
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-white truncate">
+              3.5 Terminating wiring systems
+            </div>
           </button>
-
-          <PageHero
-            eyebrow="Module 4 · Section 3 · Subsection 6"
-            title="Maintain safe working practices"
-            description="Workplace discipline that runs the full length of the install — tidy as you go, lockout on upstream devices, communication with other trades and customers, working hours, welfare, fatigue management, end-of-shift sign-off. The habits that turn a competent install into a safe one. (The JIB safe isolation procedure has its own dedicated Sub 7.)"
-            tone="emerald"
-          />
-
-          <TLDR
-            points={[
-              'Safe working is procedural — tidy as you go, lockout upstream devices before working downstream, communicate every move to other trades and the customer.',
-              'CDM 2015 applies to ALL construction projects including small domestic — RAMS, welfare, escape routes, hot works, working hours all scale to project size.',
-              'Fatigue causes the majority of late-shift accidents. Stop work, secure the site, come back fresh — never push through tiredness on live equipment.',
-            ]}
-          />
-
-          <LearningOutcomes
-            outcomes={[
-              'Maintain safe working practices — verbatim AC 3.6 from City & Guilds 2365-02 Unit 204.',
-              'Apply tidy-as-you-go discipline throughout the install — offcuts, sharps, food waste, dust segregated and removed continuously, not at end of shift only.',
-              'Apply lockout-tagout on upstream devices when working on downstream circuits, using a physical lockout device, padlock and warning notice.',
-              'Maintain communication with other trades, the principal contractor, the customer and the household occupants — briefings, handovers, escape route management.',
-              'Manage working hours, welfare and fatigue under HASAWA s.7 (employee duties) and Mgmt H&S Regs Reg 14 — recognise own limits and stop work when judgement is compromised.',
-              'Secure the work area at end of shift — isolations maintained or reverted, enclosures closed, tools stowed, area swept, paperwork signed.',
-            ]}
-            initialVisibleCount={3}
-          />
-
-          <ContentEyebrow>Tidy as you go — discipline, not optional</ContentEyebrow>
-
-          <ConceptBlock
-            title="Continuous housekeeping vs end-of-shift cleanup"
-            plainEnglish="Tidy as you go means cleaning up continuously through the day, not at the end. After every termination, the offcut goes in the bag. After every drilling, the dust gets vacuumed. After every break, the rubbish goes to the bin. Two effects — first, the work area never accumulates a hazardous mess; second, you can find your tools because they are not buried under offcuts."
-            onSite="The fastest electricians on a job are usually the tidiest. Untidy work creates lost-tool time (looking for the wire stripper that was definitely on the box five minutes ago), trip-hazard time (stepping over offcuts), and morale damage (other trades complain). Tidy work compounds — every minute spent putting a tool back saves three minutes finding it later."
+          <button
+            onClick={() => navigate('/study-centre/apprentice/level2/module4/section3/3-7')}
+            className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
           >
-            <p>
-              Tidy-as-you-go in practice:
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Cable offcuts</strong> in a separate bag — copper recovery is worth
-                real money to your employer (a wholesaler will buy clean copper offcuts;
-                some electricians fund their own training from offcut sales).
-              </li>
-              <li>
-                <strong>Sharps</strong> (used Stanley blades, broken plate edges, snipped
-                pin terminals) into a sharps tube. Never into a normal waste bag where
-                the next person can cut themselves. NHS / construction first-aid data show
-                sharps cuts as a leading injury type.
-              </li>
-              <li>
-                <strong>Dust</strong> vacuumed at the source (M-class HEPA vac for any
-                work disturbing potential silica or asbestos-containing materials). HSE
-                expects on-tool dust extraction for chasing, drilling, sanding.
-              </li>
-              <li>
-                <strong>Plastic packaging</strong> in a recycling bag. Cardboard flat-packed
-                separate. Clean cardboard is recyclable; mixed waste is not.
-              </li>
-              <li>
-                <strong>Food and drink waste</strong> in a separate bag, removed at every
-                break. Attracts pests, creates smells, and looks unprofessional.
-              </li>
-              <li>
-                <strong>Tools</strong> back in roll / case after each use. Loose tools on
-                a horizontal surface get knocked off, get lost, get stolen.
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <InlineCheck {...checks[0]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>Lockout-tagout — working downstream</ContentEyebrow>
-
-          <ConceptBlock
-            title="Lock off the upstream device before working on the downstream circuit"
-            plainEnglish="Before working on a circuit you isolate it at the upstream device (MCB, RCBO, isolator, switch fuse). The device is then physically locked off with a lockout device + padlock + warning notice — physical, not just turned off. Even if you are alone on site, your own attention can lapse, the customer might want to 'just check the lights' elsewhere, or another trade might not realise the implications. The lockout is what stops the supply being switched back on."
-            onSite="The full JIB 9-step safe isolation procedure is in Sub 7 — this Sub covers the why and the discipline. The kit you carry: MCB lockout devices (snap-on plastic clips for various device profiles), padlocks (small, ideally each technician has their own colour-coded ones), warning notices ('Caution: do not switch — work in progress'), and a permit log to record what was isolated when by whom."
-          >
-            <p>
-              Why lock instead of just turning off:
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Forgetfulness</strong> — your own. You do not realise you have left
-                the device off; an hour later you go back and switch it on without
-                thinking, before the work is complete.
-              </li>
-              <li>
-                <strong>Customer interference</strong> — "I just wanted to put the kettle on
-                while you were upstairs". Customers do not understand the implications and
-                will switch breakers back on without asking.
-              </li>
-              <li>
-                <strong>Other trades</strong> — the plasterer or the painter sees an MCB in
-                the off position, assumes someone tripped it earlier, switches it back on
-                "to help".
-              </li>
-              <li>
-                <strong>Family members</strong> — children, partners, anyone in the
-                household. They do not see the hazard.
-              </li>
-              <li>
-                <strong>Site personnel on commercial</strong> — facilities staff, security
-                staff, other contractors all touch the panels.
-              </li>
-            </ul>
-            <p>
-              EAWR Reg 13 places a positive duty on the worker to ensure that conductors
-              and equipment are not made live during work. A lockout is the tangible
-              mechanism that satisfies that duty.
-            </p>
-          </ConceptBlock>
-
-          <RegsCallout
-            source="Electricity at Work Regulations 1989 — Regulation 13 (Precautions for work on equipment made dead)"
-            clause="(Paraphrased.) Adequate precautions shall be taken to prevent electrical equipment, which has been made dead in order to prevent danger while work is carried out on or near that equipment, from becoming electrically charged during that work if danger may thereby arise."
-            meaning={
-              <>
-                EAWR Reg 13 is the regulation that requires lockout. It is not enough to
-                turn the device off; you must take "adequate precautions" to prevent it
-                being made live again during the work. A physical lockout device + padlock +
-                warning notice is the practical interpretation. A device left in the off
-                position with no physical lockout is a Reg 13 fail because nothing prevents
-                someone else switching it on. The lockout is small kit (£15-30) and the
-                discipline is daily.
-              </>
-            }
-            cite="Source: Electricity at Work Regulations 1989, Regulation 13 (paraphrased — see legislation.gov.uk for full text)."
-          />
-
-          <InlineCheck {...checks[1]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>Communication — other trades, customers, household</ContentEyebrow>
-
-          <ConceptBlock
-            title="Brief, brief, brief — three-way communication on every install"
-            plainEnglish="On every install you have three communication channels open at once. Other trades on site (plasterer, plumber, joiner, painter) — they need to know what you are doing and when, you need to know what they are doing and when. The customer / principal contractor — they need updates on progress, problems, variations. The household / occupants — they need to know which rooms are exclusion zones and which are safe."
-            onSite="The trade that communicates well is the trade that gets re-hired. The trade that turns up, ignores everyone, and leaves a mess is the one that is not on the next phase. Communication takes 5 % of your time and earns 50 % of your repeat work."
-          >
-            <p>
-              The communication patterns:
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Daily morning briefing with other trades</strong> — what each trade
-                is doing today, where the conflicts will be, who needs the same room when.
-                Often a 5-minute conversation over coffee, but worth half a day of avoided
-                conflict.
-              </li>
-              <li>
-                <strong>Real-time conflict resolution</strong> — when a clash develops
-                (plasterer needs the wall first-fixed; you need the wall plastered before
-                second-fix), agree a sequence on the spot, document in WhatsApp.
-              </li>
-              <li>
-                <strong>Customer end-of-day update</strong> — what got done today, what is
-                planned for tomorrow, any issues, any variations needed. A 3-minute
-                conversation that prevents a 30-minute complaint email.
-              </li>
-              <li>
-                <strong>Household occupant brief</strong> — at the start of each day, which
-                rooms are work zones, which are safe, what hazards exist, when the
-                supply will be off / on. Particularly important for households with
-                children, elderly residents, or anyone with mobility constraints.
-              </li>
-              <li>
-                <strong>Variation logging</strong> — every change to scope (customer adds
-                a circuit, you find an unforeseen condition) goes in a written log,
-                signed off by the customer, before the work is done.
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <ConceptBlock
-            title="Escape routes — keep them clear, every minute, no exceptions"
-            plainEnglish="Every building has escape routes — corridors, stair cores, exit doors. Under the Regulatory Reform (Fire Safety) Order 2005, the responsible person must keep escape routes clear at all times. As the contractor in occupation you become a duty holder. A toolbox in the corridor, a cable run across a doorway, a temporary ladder blocking an escape route — all RRO breaches AND all genuine fire-safety risks."
-          >
-            <p>
-              On a domestic job, the escape routes are usually the front door + main hallway
-              + stairs. On a commercial fit-out, they are the corridors, stairwells and exit
-              doors marked on the building&rsquo;s fire safety plan. Keep them clear:
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Tools and materials staged in the work room, not in the corridor.</li>
-              <li>Cable runs across doorways — temporary cable protectors / cable ramps.</li>
-              <li>Ladders / steps / hop-ups out of the corridor when not in use.</li>
-              <li>Skip / waste bag inside the work room or outside the property, never blocking the route.</li>
-              <li>If a customer or other party blocks the route (mobility scooter, furniture moved into the corridor), you stop, brief them, restore the clearance — every time.</li>
-            </ul>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <ContentEyebrow>Working hours, welfare, fatigue</ContentEyebrow>
-
-          <ConceptBlock
-            title="Working hours respect the building and the people in it"
-            plainEnglish="Construction noise hours are typically 08:00-18:00 weekdays, 08:00-13:00 Saturdays, no work on Sundays or bank holidays. Local authority by-laws vary; check before quoting. For occupied buildings (HMOs, flats, customer in residence) impact on neighbours dictates earlier finish or pre-warned working windows."
-          >
-            <p>
-              Practical rules:
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Confirm working hours with the customer in writing as part of the quote.</li>
-              <li>Notify neighbours of any unusual noise (chasing, breaking out concrete) at least 24 hours in advance — letter through the door is standard.</li>
-              <li>For occupied buildings, plan noisy work for short windows in the middle of the day; quieter work (terminations, testing) in the morning and evening.</li>
-              <li>Respect customer routines — children napping, elderly residents resting, shift workers sleeping.</li>
-            </ul>
-          </ConceptBlock>
-
-          <ConceptBlock
-            title="Welfare facilities — proportionate to the project"
-            plainEnglish="CDM 2015 Schedule 2 requires welfare facilities on every construction project. Scale to size — a one-day domestic install can use the customer’s facilities (with permission); a multi-week refurb where the customer is in residence needs a clear arrangement; an unoccupied refurb needs you to bring welfare with you (porta-loo hire, water, kettle, break area)."
-          >
-            <p>
-              The CDM Schedule 2 list:
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>WC — adequate for the number of workers, separated by sex where practicable.</li>
-              <li>Washing facilities — running water (hot AND cold), soap, means of drying.</li>
-              <li>Drinking water — clearly marked, fresh.</li>
-              <li>Eating area — separated from the work area, clean, somewhere to sit.</li>
-              <li>Clothing — somewhere to store and dry work clothes.</li>
-            </ul>
-            <p>
-              For a single-day single-operative domestic install you do not need a welfare
-              unit, but you do need reasonable access to the customer&rsquo;s facilities (or
-              your own kit if the customer is not in residence). For a multi-week site
-              the principal contractor provides; for a smaller project the contractor in
-              charge does.
-            </p>
-          </ConceptBlock>
-
-          <ConceptBlock
-            title="Fatigue — recognise your limits, stop when judgement slips"
-            plainEnglish="Fatigue is the silent cause of most late-shift mistakes that lead to electrical accidents. The 16-hour day, the rushed last termination, the 'just one more circuit' — that is when conductors get nicked, terminations get over-torqued, and isolations get missed. The discipline is to recognise your own state and stop when you are no longer at full attention."
-            onSite="The brain’s decision-making capacity drops sharply after 8-10 hours of focused technical work. By hour 12 you are making errors you would never make at hour 4. Stop, lock the site down, come back tomorrow — your future self will thank you."
-          >
-            <p>
-              Practical fatigue management:
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Plan to a realistic day length (8-10 hours of productive work, plus travel).</li>
-              <li>Take regular breaks — short break every 90 minutes, longer break at lunch.</li>
-              <li>Eat properly — sandwich and water, not just energy drinks.</li>
-              <li>Sleep — 7-8 hours / night minimum during the working week.</li>
-              <li>Recognise the signs of fatigue — slower decision making, irritability, missing small details, eye strain.</li>
-              <li>Stop work on safety-critical tasks (terminations on incoming supply, live testing, work at height) when fatigue compromises attention.</li>
-              <li>Communicate with your supervisor / contracts manager about programme pressure that is causing unsustainable hours.</li>
-            </ul>
-          </ConceptBlock>
-
-          <RegsCallout
-            source="Health and Safety at Work etc Act 1974 — Section 7 (Duties of employees)"
-            clause="It shall be the duty of every employee while at work — (a) to take reasonable care for the health and safety of himself and of other persons who may be affected by his acts or omissions at work; and (b) as regards any duty or requirement imposed on his employer or any other person by or under any of the relevant statutory provisions, to co-operate with him so far as is necessary to enable that duty or requirement to be performed or complied with."
-            meaning={
-              <>
-                HASAWA s.7 places legal duties on every employee. "Reasonable care" for
-                yourself AND for others affected by your acts or omissions. This is the
-                statutory basis for tidy-as-you-go (your offcuts can hurt someone else),
-                for lockout (someone else could be electrocuted by your unlocked breaker),
-                for fatigue management (an exhausted electrician makes mistakes that hurt
-                others), and for stopping work when conditions are unsafe. The "duty of
-                co-operation" with the employer means following the company RAMS, the
-                client&rsquo;s site rules, and the principal contractor&rsquo;s briefings —
-                which is what makes safe working procedural rather than a matter of
-                personal style.
-              </>
-            }
-            cite="Source: Health and Safety at Work etc Act 1974, section 7 (verbatim — see legislation.gov.uk)."
-          />
-
-          <RegsCallout
-            source="Management of Health and Safety at Work Regulations 1999 — Regulation 14 (Employee duties)"
-            clause="(Paraphrased.) Every employee shall use any machinery, equipment, dangerous substance, transport equipment, means of production or safety device provided to him by his employer in accordance with both any training and the instructions which may have been provided. Every employee shall inform his employer or any other employee with specific responsibility of (a) any work situation which a person with the first-mentioned employee’s training and instruction would reasonably consider represented a serious and immediate danger to health and safety; (b) any matter which a person with the first-mentioned employee’s training and instruction would reasonably consider represented a shortcoming in the employer’s protection arrangements."
-            meaning={
-              <>
-                Mgmt H&S Regs Reg 14 expands HASAWA s.7 with two specific duties — use
-                equipment per training, AND report situations of serious / immediate
-                danger AND report shortcomings in protection arrangements. As an apprentice
-                or junior electrician you are obliged to report — to your supervisor, your
-                employer, the principal contractor — when you see a serious danger or a
-                gap in safety provision. Saying nothing because "it’s not my job" is
-                a breach of Reg 14.
-              </>
-            }
-            cite="Source: Management of Health and Safety at Work Regulations 1999, Regulation 14 (paraphrased)."
-          />
-
-          <InlineCheck {...checks[2]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>End-of-shift sign-off</ContentEyebrow>
-
-          <ConceptBlock
-            title="Securing the site at the end of every day"
-            plainEnglish="End-of-shift discipline scales with the project. Domestic single-day install — pack tools, sweep area, brief customer. Multi-day domestic — cover work-in-progress, isolate as needed, lock front door. Commercial multi-week — secure all isolations, close all enclosures, sweep the area, sign permit and RAMS, brief next shift."
-          >
-            <p>
-              The standard end-of-shift sequence:
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Isolations</strong> — either reverted (work complete and tested,
-                supply restored) or maintained (lockout in place, warning notice updated,
-                next-day continuation noted in the permit).
-              </li>
-              <li>
-                <strong>Enclosures</strong> — every CU, JB, isolator, switch fuse closed
-                and secured. No live conductors exposed. No partially-installed equipment
-                left open overnight.
-              </li>
-              <li>
-                <strong>Tools</strong> — collected, counted, packed in van or locked
-                store. Power tools off, batteries on charge, sharps in tube.
-              </li>
-              <li>
-                <strong>Materials</strong> — secured against weather and theft. Cable
-                drums covered. Loose accessories in box. Test gear in flight case.
-              </li>
-              <li>
-                <strong>Work area</strong> — swept, dust vacuumed, debris removed, trip
-                hazards cleared. Leave the area cleaner than you found it.
-              </li>
-              <li>
-                <strong>Documentation</strong> — permits signed, RAMS reviewed, day&rsquo;s
-                progress logged, variations recorded, photos taken of completed first-fix
-                / second-fix work.
-              </li>
-              <li>
-                <strong>Communication</strong> — brief next-day team or next shift on
-                progress, hazards, items needing attention.
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <CommonMistake
-            title="Leaving an open consumer unit overnight to 'continue tomorrow'"
-            whatHappens={
-              <>
-                You finish first-fix on a kitchen rewire at the end of a long day. The
-                consumer unit door is open, three RCBOs are partially terminated with
-                bare conductors visible. You think "I&rsquo;ll close it up and finish
-                tomorrow morning". Overnight, the customer&rsquo;s curious child opens the
-                cupboard, reaches into the open CU, and contacts the live supply side of
-                the partially-terminated MCBs. Everything else about the install is
-                competent — but the open enclosure was the one mistake.
-              </>
-            }
-            doInstead={
-              <>
-                Never leave a consumer unit open overnight. End-of-shift means every
-                enclosure closed, every door secured, every potentially-exposed conductor
-                safe. If the work is genuinely incomplete, isolate the supply at the
-                incomer, lockout-tagout the incomer, close the CU door (even loosely),
-                and post a warning notice on the cupboard. Better still — finish the
-                terminations, button up, test, and start fresh on the next circuit
-                tomorrow. The discipline is procedural; the consequences of skipping it
-                are catastrophic.
-              </>
-            }
-          />
-
-          <Scenario
-            title="Plasterer arrives and the kitchen is a mess from your first-fix"
-            situation={
-              <>
-                You have first-fixed a kitchen rewire — chases cut, cables pulled, back
-                boxes fixed. Cable offcuts are scattered across the kitchen floor. There
-                is brick dust on every surface from the chasing. A used Stanley blade is
-                on the worktop. A coffee cup is on the floor. The plasterer arrives at
-                14:00 to skim, expecting a clean and ready kitchen.
-              </>
-            }
-            whatToDo={
-              <>
-                Stop. Apologise to the plasterer (it is on you). Vacuum the dust (you
-                should have used on-tool extraction during chasing — either way, fix it
-                now). Bag the offcuts (separate copper bag — the offcuts have value).
-                Sharps to a sharps tube, not a normal bag. Coffee cup binned. Wipe
-                worktops. Brief the plasterer on which back-boxes need to be skimmed up
-                to (depth setting from Sub 3) and which areas to leave clear for second
-                fix. Document the half-hour delay in your day log; if it eats into the
-                programme, flag it with the supervisor. Then leave the room cleaner than
-                you found it.
-              </>
-            }
-            whyItMatters={
-              <>
-                Other trades remember the trades that left them a mess. The plasterer
-                tells the joiner, the joiner tells the painter, and a year later you are
-                not on the next phase of work because the chain of trades remembers. Tidy
-                handover is the cheapest professional reputation builder available.
-                Conversely, the trade that arrives to a tidy and ready area is the trade
-                that recommends the previous trade to the next customer. It compounds.
-              </>
-            }
-          />
-
-          <SectionRule />
-
-          <FAQ items={faqs} />
-
-          <SectionRule />
-
-          <KeyTakeaways
-            points={[
-              'Tidy as you go is procedural, not optional — offcuts in a copper bag, sharps in a tube, dust extracted at source, area cleaner than you found it.',
-              'Lock off upstream devices physically (lockout device + padlock + warning notice) before working downstream. EAWR Reg 13 mandates "adequate precautions".',
-              'Communicate three ways — other trades, customer / contracts manager, household occupants. Daily briefings, written variations, end-of-day updates.',
-              'Escape routes clear at all times — RRO 2005 places duty on the responsible person, and as contractor in occupation you become the duty holder.',
-              'Working hours respect local by-laws and household occupants — typically 08:00-18:00 weekdays, no Sunday work, neighbour notification for noisy work.',
-              'CDM 2015 welfare scales with project size — proportionate WC / washing / drinking water / eating area / clothing storage.',
-              'Fatigue causes late-shift accidents — recognise your limits, stop on safety-critical tasks, sleep properly. HASAWA s.7 + Mgmt H&S Reg 14 expect this.',
-              'End-of-shift discipline — isolations secured / reverted, enclosures closed, tools packed, area swept, paperwork signed. Never leave a CU open overnight.',
-            ]}
-          />
-
-          <Quiz title="Maintaining safe working practices — knowledge check" questions={quizQuestions} />
-
-          <div className="grid grid-cols-2 gap-3 pt-2">
-            <button
-              onClick={() => navigate('/study-centre/apprentice/level2/module4/section3/3-5')}
-              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
-                <ChevronLeft className="h-3 w-3" /> Previous subsection
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-white truncate">
-                3.5 Terminating wiring systems
-              </div>
-            </button>
-            <button
-              onClick={() => navigate('/study-centre/apprentice/level2/module4/section3/3-7')}
-              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
-                Next subsection <ChevronRight className="h-3 w-3" />
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-black truncate">
-                3.7 JIB safe isolation procedures
-              </div>
-            </button>
-          </div>
-        </PageFrame>
-      </div>
-    </div>
+            <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+              Next subsection <ChevronRight className="h-3 w-3" />
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-black truncate">
+              3.7 JIB safe isolation procedures
+            </div>
+          </button>
+        </div>
+      </HubBody>
+    </HubPage>
   );
 }

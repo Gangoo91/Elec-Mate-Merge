@@ -5,10 +5,10 @@
  */
 
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
-import { PageFrame, PageHero } from '@/components/college/primitives';
 import {
   CommonMistake,
   ConceptBlock,
@@ -43,12 +43,7 @@ const quickCheckQuestions = [
   {
     id: 'defects-liability-typical',
     question: 'What is the typical defects liability period for building services installations?',
-    options: [
-      '36 months',
-      '6 months',
-      '12 months',
-      '24 months',
-    ],
+    options: ['36 months', '6 months', '12 months', '24 months'],
     correctIndex: 2,
     explanation:
       'The defects liability period (also called rectification period) is typically 12 months for building services, allowing one full seasonal cycle to identify any operational defects.',
@@ -98,12 +93,7 @@ const quizQuestions = [
   {
     id: 2,
     question: 'What percentage of retention is typically released at practical completion?',
-    options: [
-      '75%',
-      '25%',
-      '50%',
-      '100%',
-    ],
+    options: ['75%', '25%', '50%', '100%'],
     correctAnswer: 2,
     explanation:
       "Half (50%) of the retention is typically released at practical completion, with the remaining 50% held until the end of the defects liability period (often called 'making good defects' certificate).",
@@ -256,554 +246,560 @@ const HNCModule5Section6_6 = () => {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
-      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
-        <PageFrame>
+    <HubPage>
+      <HubMasthead
+        section="Module 5 · Section 6 · Subsection 6"
+        title="Practical Completion"
+        backTo="/study-centre/apprentice/h-n-c-module5-section6"
+      />
+      <HubBody>
+        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
+          Completion requirements, defects liability period, sectional completion and handover
+          procedures.
+        </p>
+
+        <TLDR
+          points={[
+            'Practical Completion (PC) = the works are sufficiently complete that the client can take possession and use the building, with only minor defects to rectify.',
+            'PC triggers: DLP starts, half retention released, LADs end, insurance transfers, occupancy can begin.',
+            'Sectional completion: phased PC where parts of the building hand over at different times — each section follows full PC procedure.',
+            'PC certificate issued by contract administrator (JCT) or stated in NEC by Project Manager — formal contractual milestone.',
+            'Common PC pitfall: "PC with snags" — most contracts allow only minor outstanding items; substantial defects defer PC.',
+          ]}
+        />
+
+        <RegsCallout
+          source="JCT Standard Building Contract 2024 — Clause 2.30 (Practical Completion)"
+          clause="When in the opinion of the Architect/Contract Administrator practical completion of the Works or a Section is achieved and, where applicable, the Contractor has complied sufficiently with clause 2.40 (information for the health and safety file) and clause 3.18.4 (as-built drawings), the Architect/Contract Administrator shall forthwith issue a certificate to that effect, and practical completion of the Works or Section shall be deemed to have taken place on the date stated in that certificate."
+          meaning={
+            <>
+              JCT 2.30 makes PC a function of the CA's opinion AND compliance with information
+              delivery (H&S file content, as-built drawings). Many contractors fail to deliver these
+              in time, so even if the works are physically complete, the certificate is delayed.
+              Treat the H&S file and as-builts as PC deliverables, not post-PC tidy-up.
+            </>
+          }
+          cite="Source: JCT Standard Building Contract 2024 (refer to JCT published text for verbatim clauses)."
+        />
+
+        <LearningOutcomes
+          outcomes={[
+            'Define practical completion and its contractual significance',
+            'Understand defects liability period obligations',
+            'Distinguish between sectional completion and partial possession',
+            'Apply pre-completion inspection procedures',
+            'Identify handover documentation requirements',
+            'Manage the making good of defects process',
+          ]}
+        />
+
+        <SectionRule />
+
+        <ConceptBlock title="Practical Completion Fundamentals">
+          <p>
+            Practical completion is a pivotal milestone in construction contracts, marking when the
+            works are substantially complete and the building is fit for occupation or use. For
+            building services contractors, this moment triggers significant contractual and
+            commercial consequences.
+          </p>
+          <p>
+            <strong>Key characteristics of practical completion:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Substantial completion:</strong> Works complete except minor defects
+            </li>
+            <li>
+              <strong>Fit for purpose:</strong> Building can be safely occupied and used
+            </li>
+            <li>
+              <strong>Not perfection:</strong> Minor snagging items do not prevent certification
+            </li>
+            <li>
+              <strong>Contractually defined:</strong> Certificate issued by contract administrator
+            </li>
+          </ul>
+          <p>
+            <strong>Contractual effects of practical completion:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Possession transfers:</strong> Client takes control of building — Access for
+              defects only
+            </li>
+            <li>
+              <strong>Half retention released:</strong> Typically 50% of retention fund — Improves
+              cash flow
+            </li>
+            <li>
+              <strong>DLP commences:</strong> Defects liability period starts — 12-month defects
+              obligation
+            </li>
+            <li>
+              <strong>LADs cease:</strong> Liquidated damages no longer apply — Financial risk
+              reduces
+            </li>
+            <li>
+              <strong>Insurance responsibility:</strong> Client insures the works — Contractor
+              liability changes
+            </li>
+          </ul>
+          <p>
+            <strong>Key principle:</strong> Practical completion is a matter of fact, not opinion.
+            The contract administrator must certify when works objectively meet the criteria, not
+            when it is convenient.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...quickCheckQuestions[0]} />
+
+        <SectionRule />
+
+        <ConceptBlock title="Pre-Completion Inspections and Snagging">
+          <p>
+            Before practical completion can be certified, systematic inspections identify any
+            outstanding defects or incomplete works. For building services, these inspections cover
+            installation quality, commissioning status, and documentation completeness.
+          </p>
+          <p>
+            <strong>Contractor self-inspection:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Internal quality check before handover</li>
+            <li>Verify all systems commissioned</li>
+            <li>Confirm documentation complete</li>
+            <li>Rectify defects before formal inspection</li>
+          </ul>
+          <p>
+            <strong>Formal pre-completion inspection:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Contract administrator leads walkthrough</li>
+            <li>Client representative attends</li>
+            <li>Building services engineer inspects systems</li>
+            <li>Snagging list produced</li>
+          </ul>
+          <p>
+            <strong>Building services inspection checklist:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Electrical:</strong> Distribution boards, accessories, containment — EIC, test
+              results, as-builts
+            </li>
+            <li>
+              <strong>HVAC:</strong> Plant operation, controls, air balancing — Commissioning certs,
+              BMS log
+            </li>
+            <li>
+              <strong>Fire alarm:</strong> Detection coverage, sounders, cause and effect — BS 5839
+              certificate, zone plan
+            </li>
+            <li>
+              <strong>Emergency lighting:</strong> Luminaire positions, duration test — BS 5266
+              certificate, test log
+            </li>
+            <li>
+              <strong>Data/comms:</strong> Outlet installation, patch panels — Test results,
+              schedule
+            </li>
+          </ul>
+          <p>
+            <strong>Snagging vs prevention of practical completion:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Snagging items:</strong> Minor defects that do not prevent occupation - can be
+              listed for rectification
+            </li>
+            <li>
+              <strong>Preventing items:</strong> Significant defects affecting safety, compliance,
+              or usability - must be completed first
+            </li>
+            <li>
+              <strong>Example:</strong> Missing socket outlet cover = snagging; non-functional fire
+              alarm = preventing
+            </li>
+          </ul>
+          <p>
+            <strong>Best practice:</strong> Conduct internal snagging 2-3 weeks before target
+            completion to allow time for rectification before formal inspection.
+          </p>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <ConceptBlock title="Sectional Completion and Partial Possession">
+          <p>
+            Large building projects are often completed in phases, allowing clients to occupy and
+            use parts of the building before overall completion. Understanding the distinction
+            between sectional completion and partial possession is essential for managing
+            contractual obligations.
+          </p>
+          <p>
+            <strong>Sectional completion vs partial possession:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Planning — Sectional:</strong> Defined in contract from start. Partial: Arises
+              during construction
+            </li>
+            <li>
+              <strong>Completion dates — Sectional:</strong> Each section has defined date. Partial:
+              No pre-defined dates
+            </li>
+            <li>
+              <strong>LADs — Sectional:</strong> Apply to each section separately. Partial: Reduced
+              proportionally
+            </li>
+            <li>
+              <strong>DLP — Sectional:</strong> Starts for each section separately. Partial:
+              Proportionate period for possessed part
+            </li>
+            <li>
+              <strong>Consent — Sectional:</strong> Part of contract. Partial: Requires contractor
+              consent
+            </li>
+          </ul>
+          <p>
+            <strong>Building services considerations for phased handover:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>System isolation:</strong> Sections must be independently operable - separate
+              distribution boards, controls
+            </li>
+            <li>
+              <strong>Commissioning:</strong> Each section requires full commissioning before
+              handover
+            </li>
+            <li>
+              <strong>Fire systems:</strong> Fire alarm zones may need temporary modifications for
+              phased occupation
+            </li>
+            <li>
+              <strong>Shared plant:</strong> Central plant serving multiple sections creates
+              interface complexity
+            </li>
+          </ul>
+          <p>
+            <strong>
+              Example — hospital wing sectional completion. A new hospital building with three
+              wings:
+            </strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Section 1 (Outpatients):</strong> Completion 1st March - Must have independent
+              power, lighting, fire alarm, HVAC
+            </li>
+            <li>
+              <strong>Section 2 (Diagnostics):</strong> Completion 1st June - Medical gas,
+              specialist ventilation, UPS systems
+            </li>
+            <li>
+              <strong>Section 3 (Wards):</strong> Completion 1st September - Nurse call, bed-head
+              services, final plantroom handover
+            </li>
+            <li>Each section has its own 12-month DLP running from its completion date.</li>
+          </ul>
+          <p>
+            <strong>Planning tip:</strong> Sectional completion requires careful coordination of
+            building services - ensure contract documents clearly define what systems and
+            documentation are required for each section.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...quickCheckQuestions[1]} />
+
+        <SectionRule />
+
+        <ConceptBlock title="Defects Liability Period and Making Good">
+          <p>
+            The defects liability period (DLP), also called the rectification period, runs from
+            practical completion and provides the client with protection against defects in
+            materials or workmanship. For building services, this period is critical for identifying
+            operational defects that only become apparent during normal use.
+          </p>
+          <p>
+            <strong>Typical duration:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              Building services: <strong>12 months</strong>
+            </li>
+            <li>General building: 12 months</li>
+            <li>Infrastructure: Up to 24 months</li>
+            <li>Some specialist: 6 months</li>
+          </ul>
+          <p>
+            <strong>Contractor obligations:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Make good notified defects</li>
+            <li>At own cost</li>
+            <li>Within reasonable time</li>
+            <li>Defects from workmanship/materials</li>
+          </ul>
+          <p>
+            <strong>Client responsibilities:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Routine maintenance</li>
+            <li>Prompt notification of defects</li>
+            <li>Allow reasonable access</li>
+            <li>Not cause damage</li>
+          </ul>
+          <p>
+            <strong>Contractor liability — what constitutes a defect:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Poor workmanship (loose connections, incorrect installation)</li>
+            <li>Defective materials (faulty component, sub-standard cable)</li>
+            <li>Non-compliance with specification</li>
+            <li>Incomplete commissioning</li>
+          </ul>
+          <p>
+            <strong>Not contractor liability:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Normal wear and tear</li>
+            <li>User damage or misuse</li>
+            <li>Consumables (lamps, filters, fuses)</li>
+            <li>Lack of routine maintenance</li>
+          </ul>
+          <p>
+            <strong>Building services — common DLP defects:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Electrical:</strong> Nuisance tripping, loose connections — Poor terminations,
+              incorrect protection
+            </li>
+            <li>
+              <strong>Lighting controls:</strong> Sensor failures, incorrect zoning — Commissioning
+              issues, component quality
+            </li>
+            <li>
+              <strong>HVAC:</strong> Temperature control problems, noise — Balancing, control
+              strategy, vibration
+            </li>
+            <li>
+              <strong>Fire alarm:</strong> False alarms, non-detection — Detector selection, cause
+              and effect
+            </li>
+            <li>
+              <strong>BMS:</strong> Control failures, communication errors — Programming,
+              integration, sensors
+            </li>
+          </ul>
+          <p>
+            <strong>Certificate of making good defects:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Issued by contract administrator at end of DLP</li>
+            <li>Confirms all notified defects have been rectified</li>
+            <li>Triggers release of remaining retention (typically 50%)</li>
+            <li>Does not end liability - Limitation Act still applies</li>
+          </ul>
+          <p>
+            <strong>Commercial tip:</strong> Maintain detailed records of all defect notifications,
+            responses, and rectification work. Disputes often arise about whether defects were
+            notified within the DLP.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...quickCheckQuestions[2]} />
+
+        <SectionRule />
+
+        <ConceptBlock title="Worked Examples">
+          <p>
+            <strong>Example 1 — Practical completion documentation:</strong> Electrical
+            subcontractor preparing for practical completion of a 10,000m² office building.
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>1. Electrical Installation Certificate (BS 7671)</li>
+            <li>2. Schedule of test results - all circuits</li>
+            <li>3. As-built drawings - distribution, small power, lighting</li>
+            <li>4. O&M manuals - all equipment with data sheets</li>
+            <li>5. Fire alarm BS 5839 certificate and zone plan</li>
+            <li>6. Emergency lighting BS 5266 certificate</li>
+            <li>7. Commissioning certificates - lighting controls, BMS points</li>
+            <li>8. Warranty certificates and spare parts lists</li>
+            <li>All documentation must be compiled and submitted before formal inspection.</li>
+          </ul>
+          <p>
+            <strong>Example 2 — Defects liability calculation:</strong> Building with sectional
+            completion - when does each section's DLP end?
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Section A practical completion: 15th January 2024</li>
+            <li>Section B practical completion: 1st April 2024</li>
+            <li>Section C practical completion: 1st July 2024</li>
+            <li>
+              <strong>Section A DLP ends:</strong> 15th January 2025
+            </li>
+            <li>
+              <strong>Section B DLP ends:</strong> 1st April 2025
+            </li>
+            <li>
+              <strong>Section C DLP ends:</strong> 1st July 2025
+            </li>
+            <li>Each section has independent retention release dates.</li>
+          </ul>
+          <p>
+            <strong>Example 3 — Partial possession effect:</strong> Client takes early possession of
+            ground floor (25% of building value) 8 weeks before planned completion.
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Contract value: £4,000,000</li>
+            <li>Retention: 3% = £120,000</li>
+            <li>Liquidated damages: £10,000 per week</li>
+            <li>1. Retention released proportionally: 25% × £120,000 = £30,000</li>
+            <li>2. LADs reduced: 25% × £10,000 = £7,500 per week applies to remaining works</li>
+            <li>3. Ground floor DLP starts from possession date</li>
+            <li>4. Insurance responsibility transfers for ground floor</li>
+            <li>Ground floor requires fully commissioned, independent building services.</li>
+          </ul>
+        </ConceptBlock>
+
+        <InlineCheck {...quickCheckQuestions[3]} />
+
+        <SectionRule />
+
+        <ConceptBlock title="Practical guidance">
+          <p>
+            <strong>Pre-completion checklist:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Complete internal snagging 2-3 weeks before target date</li>
+            <li>Compile all documentation in building manual format</li>
+            <li>Verify all systems commissioned with certificates</li>
+            <li>Arrange staff training sessions</li>
+            <li>Prepare health and safety file contribution</li>
+            <li>Confirm all statutory compliance certificates obtained</li>
+          </ul>
+          <p>
+            <strong>Key values to remember:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              Typical DLP: <strong>12 months</strong> for building services
+            </li>
+            <li>
+              Retention at PC: <strong>50%</strong> released
+            </li>
+            <li>
+              Limitation period: <strong>6 years</strong> (simple contract) /{' '}
+              <strong>12 years</strong> (deed)
+            </li>
+            <li>
+              Certificate issuer: <strong>Contract administrator</strong>
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <CommonMistake
+          title="Common mistakes to avoid"
+          whatHappens={
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+              <li>
+                <strong>Incomplete documentation</strong> - Delays certification and retention
+                release
+              </li>
+              <li>
+                <strong>Late snagging</strong> - Insufficient time to rectify before handover
+              </li>
+              <li>
+                <strong>Poor defects records</strong> - Disputes about liability and timing
+              </li>
+              <li>
+                <strong>Ignoring seasonal commissioning</strong> - Systems fail when conditions
+                change
+              </li>
+            </ul>
+          }
+          doInstead="Compile all certificates, O&M, as-builts and training records before the formal inspection, snag internally 2-3 weeks early, log every DLP defect with dates, and book seasonal commissioning visits into the DLP calendar."
+        />
+
+        <SectionRule />
+
+        <Scenario
+          title="PC declined for missing H&S file content"
+          situation={
+            <>
+              The works are physically complete. You request PC. The CA inspects, finds 23 minor
+              snags (acceptable), but declines PC on the basis that the H&S file lacks: as-built
+              electrical drawings, commissioning records for the BMS, manufacturer's O&M for the
+              AHUs, asbestos register update, residual risk register from the design team. PC slips
+              by three weeks while the documentation is gathered. LADs accrue at £15k/week.
+            </>
+          }
+          whatToDo={
+            <>
+              Treat PC as a deliverable with a checklist: physical completion, H&S file content,
+              as-built drawings, commissioning records, training, O&Ms, certificates. Run the
+              checklist 4 weeks before target PC; chase missing items aggressively. Engage the
+              principal designer early on H&S file requirements — they often own deliverables you
+              need to compile. PC is not when the work stops; it is when the deliverables stop.
+            </>
+          }
+          whyItMatters={
+            <>
+              PC is the project's major commercial milestone. Late PC means continuing LADs, delayed
+              retention release, extended preliminaries cost, and a soured client relationship.
+              Disciplined PC preparation — including the documentation as a deliverable — protects
+              the project's margin and reputation.
+            </>
+          }
+        />
+
+        <SectionRule />
+
+        <FAQ items={faqs} />
+
+        <SectionRule />
+
+        <KeyTakeaways
+          points={[
+            'PC = works sufficiently complete that client can take possession; minor defects only.',
+            'PC triggers DLP start, half retention release, end of LADs, insurance transfer.',
+            'Sectional completion: phased PC for parts of the building — full procedure for each section.',
+            'PC certificate issued by CA (JCT) or stated by PM (NEC) — formal milestone.',
+            '"PC with snags" only for minor items — substantial defects defer PC.',
+            'JCT 2.30 makes PC contingent on H&S file content and as-built delivery.',
+            'Documentation is a PC deliverable — start production at Stage 4, not after PC.',
+            'Pre-PC checklist 4 weeks out; missing items become the critical path to handover.',
+          ]}
+        />
+
+        <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+
+        <div className="grid grid-cols-2 gap-3 pt-2">
           <button
             onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section6')}
-            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
           >
-            <ArrowLeft className="h-4 w-4" /> Back
+            <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+              <ChevronLeft className="h-3 w-3" /> Back to section
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-white truncate">
+              Site management and CDM
+            </div>
           </button>
-
-          <PageHero
-            eyebrow="Module 5 · Section 6 · Subsection 6"
-            title="Practical Completion"
-            description="Completion requirements, defects liability period, sectional completion and handover procedures."
-            tone="purple"
-          />
-
-          <TLDR
-            points={[
-              "Practical Completion (PC) = the works are sufficiently complete that the client can take possession and use the building, with only minor defects to rectify.",
-              "PC triggers: DLP starts, half retention released, LADs end, insurance transfers, occupancy can begin.",
-              "Sectional completion: phased PC where parts of the building hand over at different times — each section follows full PC procedure.",
-              "PC certificate issued by contract administrator (JCT) or stated in NEC by Project Manager — formal contractual milestone.",
-              "Common PC pitfall: \"PC with snags\" — most contracts allow only minor outstanding items; substantial defects defer PC.",
-            ]}
-          />
-
-          <RegsCallout
-            source="JCT Standard Building Contract 2024 — Clause 2.30 (Practical Completion)"
-            clause="When in the opinion of the Architect/Contract Administrator practical completion of the Works or a Section is achieved and, where applicable, the Contractor has complied sufficiently with clause 2.40 (information for the health and safety file) and clause 3.18.4 (as-built drawings), the Architect/Contract Administrator shall forthwith issue a certificate to that effect, and practical completion of the Works or Section shall be deemed to have taken place on the date stated in that certificate."
-            meaning={
-              <>
-                JCT 2.30 makes PC a function of the CA's opinion AND compliance with information delivery (H&S file content, as-built drawings). Many contractors fail to deliver these in time, so even if the works are physically complete, the certificate is delayed. Treat the H&S file and as-builts as PC deliverables, not post-PC tidy-up.
-              </>
-            }
-            cite="Source: JCT Standard Building Contract 2024 (refer to JCT published text for verbatim clauses)."
-          />
-
-
-          <LearningOutcomes
-            outcomes={[
-              'Define practical completion and its contractual significance',
-              'Understand defects liability period obligations',
-              'Distinguish between sectional completion and partial possession',
-              'Apply pre-completion inspection procedures',
-              'Identify handover documentation requirements',
-              'Manage the making good of defects process',
-            ]}
-          />
-
-          <SectionRule />
-
-          <ConceptBlock title="Practical Completion Fundamentals">
-            <p>
-              Practical completion is a pivotal milestone in construction contracts, marking when
-              the works are substantially complete and the building is fit for occupation or use.
-              For building services contractors, this moment triggers significant contractual and
-              commercial consequences.
-            </p>
-            <p>
-              <strong>Key characteristics of practical completion:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Substantial completion:</strong> Works complete except minor defects
-              </li>
-              <li>
-                <strong>Fit for purpose:</strong> Building can be safely occupied and used
-              </li>
-              <li>
-                <strong>Not perfection:</strong> Minor snagging items do not prevent certification
-              </li>
-              <li>
-                <strong>Contractually defined:</strong> Certificate issued by contract administrator
-              </li>
-            </ul>
-            <p>
-              <strong>Contractual effects of practical completion:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Possession transfers:</strong> Client takes control of building — Access for
-                defects only
-              </li>
-              <li>
-                <strong>Half retention released:</strong> Typically 50% of retention fund — Improves
-                cash flow
-              </li>
-              <li>
-                <strong>DLP commences:</strong> Defects liability period starts — 12-month defects
-                obligation
-              </li>
-              <li>
-                <strong>LADs cease:</strong> Liquidated damages no longer apply — Financial risk
-                reduces
-              </li>
-              <li>
-                <strong>Insurance responsibility:</strong> Client insures the works — Contractor
-                liability changes
-              </li>
-            </ul>
-            <p>
-              <strong>Key principle:</strong> Practical completion is a matter of fact, not opinion.
-              The contract administrator must certify when works objectively meet the criteria, not
-              when it is convenient.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...quickCheckQuestions[0]} />
-
-          <SectionRule />
-
-          <ConceptBlock title="Pre-Completion Inspections and Snagging">
-            <p>
-              Before practical completion can be certified, systematic inspections identify any
-              outstanding defects or incomplete works. For building services, these inspections
-              cover installation quality, commissioning status, and documentation completeness.
-            </p>
-            <p>
-              <strong>Contractor self-inspection:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Internal quality check before handover</li>
-              <li>Verify all systems commissioned</li>
-              <li>Confirm documentation complete</li>
-              <li>Rectify defects before formal inspection</li>
-            </ul>
-            <p>
-              <strong>Formal pre-completion inspection:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Contract administrator leads walkthrough</li>
-              <li>Client representative attends</li>
-              <li>Building services engineer inspects systems</li>
-              <li>Snagging list produced</li>
-            </ul>
-            <p>
-              <strong>Building services inspection checklist:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Electrical:</strong> Distribution boards, accessories, containment — EIC,
-                test results, as-builts
-              </li>
-              <li>
-                <strong>HVAC:</strong> Plant operation, controls, air balancing — Commissioning
-                certs, BMS log
-              </li>
-              <li>
-                <strong>Fire alarm:</strong> Detection coverage, sounders, cause and effect — BS
-                5839 certificate, zone plan
-              </li>
-              <li>
-                <strong>Emergency lighting:</strong> Luminaire positions, duration test — BS 5266
-                certificate, test log
-              </li>
-              <li>
-                <strong>Data/comms:</strong> Outlet installation, patch panels — Test results,
-                schedule
-              </li>
-            </ul>
-            <p>
-              <strong>Snagging vs prevention of practical completion:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Snagging items:</strong> Minor defects that do not prevent occupation - can
-                be listed for rectification
-              </li>
-              <li>
-                <strong>Preventing items:</strong> Significant defects affecting safety, compliance,
-                or usability - must be completed first
-              </li>
-              <li>
-                <strong>Example:</strong> Missing socket outlet cover = snagging; non-functional
-                fire alarm = preventing
-              </li>
-            </ul>
-            <p>
-              <strong>Best practice:</strong> Conduct internal snagging 2-3 weeks before target
-              completion to allow time for rectification before formal inspection.
-            </p>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <ConceptBlock title="Sectional Completion and Partial Possession">
-            <p>
-              Large building projects are often completed in phases, allowing clients to occupy and
-              use parts of the building before overall completion. Understanding the distinction
-              between sectional completion and partial possession is essential for managing
-              contractual obligations.
-            </p>
-            <p>
-              <strong>Sectional completion vs partial possession:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Planning — Sectional:</strong> Defined in contract from start. Partial:
-                Arises during construction
-              </li>
-              <li>
-                <strong>Completion dates — Sectional:</strong> Each section has defined date.
-                Partial: No pre-defined dates
-              </li>
-              <li>
-                <strong>LADs — Sectional:</strong> Apply to each section separately. Partial:
-                Reduced proportionally
-              </li>
-              <li>
-                <strong>DLP — Sectional:</strong> Starts for each section separately. Partial:
-                Proportionate period for possessed part
-              </li>
-              <li>
-                <strong>Consent — Sectional:</strong> Part of contract. Partial: Requires
-                contractor consent
-              </li>
-            </ul>
-            <p>
-              <strong>Building services considerations for phased handover:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>System isolation:</strong> Sections must be independently operable -
-                separate distribution boards, controls
-              </li>
-              <li>
-                <strong>Commissioning:</strong> Each section requires full commissioning before
-                handover
-              </li>
-              <li>
-                <strong>Fire systems:</strong> Fire alarm zones may need temporary modifications for
-                phased occupation
-              </li>
-              <li>
-                <strong>Shared plant:</strong> Central plant serving multiple sections creates
-                interface complexity
-              </li>
-            </ul>
-            <p>
-              <strong>Example — hospital wing sectional completion. A new hospital building with
-              three wings:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Section 1 (Outpatients):</strong> Completion 1st March - Must have
-                independent power, lighting, fire alarm, HVAC
-              </li>
-              <li>
-                <strong>Section 2 (Diagnostics):</strong> Completion 1st June - Medical gas,
-                specialist ventilation, UPS systems
-              </li>
-              <li>
-                <strong>Section 3 (Wards):</strong> Completion 1st September - Nurse call, bed-head
-                services, final plantroom handover
-              </li>
-              <li>Each section has its own 12-month DLP running from its completion date.</li>
-            </ul>
-            <p>
-              <strong>Planning tip:</strong> Sectional completion requires careful coordination of
-              building services - ensure contract documents clearly define what systems and
-              documentation are required for each section.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...quickCheckQuestions[1]} />
-
-          <SectionRule />
-
-          <ConceptBlock title="Defects Liability Period and Making Good">
-            <p>
-              The defects liability period (DLP), also called the rectification period, runs from
-              practical completion and provides the client with protection against defects in
-              materials or workmanship. For building services, this period is critical for
-              identifying operational defects that only become apparent during normal use.
-            </p>
-            <p>
-              <strong>Typical duration:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                Building services: <strong>12 months</strong>
-              </li>
-              <li>General building: 12 months</li>
-              <li>Infrastructure: Up to 24 months</li>
-              <li>Some specialist: 6 months</li>
-            </ul>
-            <p>
-              <strong>Contractor obligations:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Make good notified defects</li>
-              <li>At own cost</li>
-              <li>Within reasonable time</li>
-              <li>Defects from workmanship/materials</li>
-            </ul>
-            <p>
-              <strong>Client responsibilities:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Routine maintenance</li>
-              <li>Prompt notification of defects</li>
-              <li>Allow reasonable access</li>
-              <li>Not cause damage</li>
-            </ul>
-            <p>
-              <strong>Contractor liability — what constitutes a defect:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Poor workmanship (loose connections, incorrect installation)</li>
-              <li>Defective materials (faulty component, sub-standard cable)</li>
-              <li>Non-compliance with specification</li>
-              <li>Incomplete commissioning</li>
-            </ul>
-            <p>
-              <strong>Not contractor liability:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Normal wear and tear</li>
-              <li>User damage or misuse</li>
-              <li>Consumables (lamps, filters, fuses)</li>
-              <li>Lack of routine maintenance</li>
-            </ul>
-            <p>
-              <strong>Building services — common DLP defects:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Electrical:</strong> Nuisance tripping, loose connections — Poor
-                terminations, incorrect protection
-              </li>
-              <li>
-                <strong>Lighting controls:</strong> Sensor failures, incorrect zoning —
-                Commissioning issues, component quality
-              </li>
-              <li>
-                <strong>HVAC:</strong> Temperature control problems, noise — Balancing, control
-                strategy, vibration
-              </li>
-              <li>
-                <strong>Fire alarm:</strong> False alarms, non-detection — Detector selection, cause
-                and effect
-              </li>
-              <li>
-                <strong>BMS:</strong> Control failures, communication errors — Programming,
-                integration, sensors
-              </li>
-            </ul>
-            <p>
-              <strong>Certificate of making good defects:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Issued by contract administrator at end of DLP</li>
-              <li>Confirms all notified defects have been rectified</li>
-              <li>Triggers release of remaining retention (typically 50%)</li>
-              <li>Does not end liability - Limitation Act still applies</li>
-            </ul>
-            <p>
-              <strong>Commercial tip:</strong> Maintain detailed records of all defect
-              notifications, responses, and rectification work. Disputes often arise about whether
-              defects were notified within the DLP.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...quickCheckQuestions[2]} />
-
-          <SectionRule />
-
-          <ConceptBlock title="Worked Examples">
-            <p>
-              <strong>Example 1 — Practical completion documentation:</strong> Electrical
-              subcontractor preparing for practical completion of a 10,000m² office building.
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>1. Electrical Installation Certificate (BS 7671)</li>
-              <li>2. Schedule of test results - all circuits</li>
-              <li>3. As-built drawings - distribution, small power, lighting</li>
-              <li>4. O&M manuals - all equipment with data sheets</li>
-              <li>5. Fire alarm BS 5839 certificate and zone plan</li>
-              <li>6. Emergency lighting BS 5266 certificate</li>
-              <li>7. Commissioning certificates - lighting controls, BMS points</li>
-              <li>8. Warranty certificates and spare parts lists</li>
-              <li>All documentation must be compiled and submitted before formal inspection.</li>
-            </ul>
-            <p>
-              <strong>Example 2 — Defects liability calculation:</strong> Building with sectional
-              completion - when does each section's DLP end?
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Section A practical completion: 15th January 2024</li>
-              <li>Section B practical completion: 1st April 2024</li>
-              <li>Section C practical completion: 1st July 2024</li>
-              <li>
-                <strong>Section A DLP ends:</strong> 15th January 2025
-              </li>
-              <li>
-                <strong>Section B DLP ends:</strong> 1st April 2025
-              </li>
-              <li>
-                <strong>Section C DLP ends:</strong> 1st July 2025
-              </li>
-              <li>Each section has independent retention release dates.</li>
-            </ul>
-            <p>
-              <strong>Example 3 — Partial possession effect:</strong> Client takes early possession
-              of ground floor (25% of building value) 8 weeks before planned completion.
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Contract value: £4,000,000</li>
-              <li>Retention: 3% = £120,000</li>
-              <li>Liquidated damages: £10,000 per week</li>
-              <li>1. Retention released proportionally: 25% × £120,000 = £30,000</li>
-              <li>2. LADs reduced: 25% × £10,000 = £7,500 per week applies to remaining works</li>
-              <li>3. Ground floor DLP starts from possession date</li>
-              <li>4. Insurance responsibility transfers for ground floor</li>
-              <li>Ground floor requires fully commissioned, independent building services.</li>
-            </ul>
-          </ConceptBlock>
-
-          <InlineCheck {...quickCheckQuestions[3]} />
-
-          <SectionRule />
-
-          <ConceptBlock title="Practical guidance">
-            <p>
-              <strong>Pre-completion checklist:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Complete internal snagging 2-3 weeks before target date</li>
-              <li>Compile all documentation in building manual format</li>
-              <li>Verify all systems commissioned with certificates</li>
-              <li>Arrange staff training sessions</li>
-              <li>Prepare health and safety file contribution</li>
-              <li>Confirm all statutory compliance certificates obtained</li>
-            </ul>
-            <p>
-              <strong>Key values to remember:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                Typical DLP: <strong>12 months</strong> for building services
-              </li>
-              <li>
-                Retention at PC: <strong>50%</strong> released
-              </li>
-              <li>
-                Limitation period: <strong>6 years</strong> (simple contract) /{' '}
-                <strong>12 years</strong> (deed)
-              </li>
-              <li>
-                Certificate issuer: <strong>Contract administrator</strong>
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <CommonMistake
-            title="Common mistakes to avoid"
-            whatHappens={
-              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
-                <li>
-                  <strong>Incomplete documentation</strong> - Delays certification and retention
-                  release
-                </li>
-                <li>
-                  <strong>Late snagging</strong> - Insufficient time to rectify before handover
-                </li>
-                <li>
-                  <strong>Poor defects records</strong> - Disputes about liability and timing
-                </li>
-                <li>
-                  <strong>Ignoring seasonal commissioning</strong> - Systems fail when conditions
-                  change
-                </li>
-              </ul>
-            }
-            doInstead="Compile all certificates, O&M, as-builts and training records before the formal inspection, snag internally 2-3 weeks early, log every DLP defect with dates, and book seasonal commissioning visits into the DLP calendar."
-          />
-
-          <SectionRule />
-
-          <Scenario
-            title="PC declined for missing H&S file content"
-            situation={
-              <>
-                The works are physically complete. You request PC. The CA inspects, finds 23 minor snags (acceptable), but declines PC on the basis that the H&S file lacks: as-built electrical drawings, commissioning records for the BMS, manufacturer's O&M for the AHUs, asbestos register update, residual risk register from the design team. PC slips by three weeks while the documentation is gathered. LADs accrue at £15k/week.
-              </>
-            }
-            whatToDo={
-              <>
-                Treat PC as a deliverable with a checklist: physical completion, H&S file content, as-built drawings, commissioning records, training, O&Ms, certificates. Run the checklist 4 weeks before target PC; chase missing items aggressively. Engage the principal designer early on H&S file requirements — they often own deliverables you need to compile. PC is not when the work stops; it is when the deliverables stop.
-              </>
-            }
-            whyItMatters={
-              <>
-                PC is the project's major commercial milestone. Late PC means continuing LADs, delayed retention release, extended preliminaries cost, and a soured client relationship. Disciplined PC preparation — including the documentation as a deliverable — protects the project's margin and reputation.
-              </>
-            }
-          />
-
-          <SectionRule />
-
-          <FAQ items={faqs} />
-
-          <SectionRule />
-
-                    <KeyTakeaways
-            points={[
-              "PC = works sufficiently complete that client can take possession; minor defects only.",
-              "PC triggers DLP start, half retention release, end of LADs, insurance transfer.",
-              "Sectional completion: phased PC for parts of the building — full procedure for each section.",
-              "PC certificate issued by CA (JCT) or stated by PM (NEC) — formal milestone.",
-              "\"PC with snags\" only for minor items — substantial defects defer PC.",
-              "JCT 2.30 makes PC contingent on H&S file content and as-built delivery.",
-              "Documentation is a PC deliverable — start production at Stage 4, not after PC.",
-              "Pre-PC checklist 4 weeks out; missing items become the critical path to handover.",
-            ]}
-          />
-
-
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-
-          <div className="grid grid-cols-2 gap-3 pt-2">
-            <button
-              onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section6')}
-              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
-                <ChevronLeft className="h-3 w-3" /> Back to section
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-white truncate">
-                Site management and CDM
-              </div>
-            </button>
-            <button
-              onClick={() => navigate('/study-centre/apprentice/h-n-c-module6')}
-              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
-                Next module <ChevronRight className="h-3 w-3" />
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-black truncate">
-                HNC Module 6
-              </div>
-            </button>
-          </div>
-        </PageFrame>
-      </div>
-    </div>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module6')}
+            className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+          >
+            <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+              Next module <ChevronRight className="h-3 w-3" />
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-black truncate">HNC Module 6</div>
+          </button>
+        </div>
+      </HubBody>
+    </HubPage>
   );
 };
 

@@ -11,11 +11,11 @@
  */
 
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
-import { PageFrame, PageHero } from '@/components/college/primitives';
 import {
   TLDR,
   ConceptBlock,
@@ -39,10 +39,10 @@ const checks = [
     id: 'mod7-s5-sub4-estimate-vs-quote',
     question: 'What is the key difference between an estimate and a quotation?',
     options: [
-      "An estimate is an approximate cost that may change as scope clarifies; a quotation is a fixed price for defined work, binding once accepted.",
-      "An estimate is the figure given to commercial clients and a quotation the figure for domestic clients — the words reflect who the customer is, not how binding the price is.",
-      "An estimate is always lower because it excludes VAT, whereas a quotation is the same figure with VAT added — the same job at different tax-inclusive points.",
-      "An estimate is binding on the customer and a quotation binding on the contractor — once estimated the customer must accept, but a quote can be withdrawn anytime.",
+      'An estimate is an approximate cost that may change as scope clarifies; a quotation is a fixed price for defined work, binding once accepted.',
+      'An estimate is the figure given to commercial clients and a quotation the figure for domestic clients — the words reflect who the customer is, not how binding the price is.',
+      'An estimate is always lower because it excludes VAT, whereas a quotation is the same figure with VAT added — the same job at different tax-inclusive points.',
+      'An estimate is binding on the customer and a quotation binding on the contractor — once estimated the customer must accept, but a quote can be withdrawn anytime.',
     ],
     correctIndex: 0,
     explanation:
@@ -52,10 +52,10 @@ const checks = [
     id: 'mod7-s5-sub4-charge-out',
     question: 'Which costs should you include when calculating your charge-out rate?',
     options: [
-      "Only the materials you fit on the job — your time is free to you, so the rate just needs to cover the parts plus a small mark-up.",
-      "Only your former employee hourly wage — charge the customer the same rate you used to earn as an employee, since that is what your labour is worth.",
-      "All costs — wage, on-costs, vehicle, insurance, tools, training, scheme fees, admin and profit — divided by realistic chargeable hours (~1,500-1,800).",
-      "Only whatever the cheapest local competitor charges — match the lowest price in your area so you never lose a job and your costs look after themselves.",
+      'Only the materials you fit on the job — your time is free to you, so the rate just needs to cover the parts plus a small mark-up.',
+      'Only your former employee hourly wage — charge the customer the same rate you used to earn as an employee, since that is what your labour is worth.',
+      'All costs — wage, on-costs, vehicle, insurance, tools, training, scheme fees, admin and profit — divided by realistic chargeable hours (~1,500-1,800).',
+      'Only whatever the cheapest local competitor charges — match the lowest price in your area so you never lose a job and your costs look after themselves.',
     ],
     correctIndex: 2,
     explanation:
@@ -65,7 +65,7 @@ const checks = [
     id: 'mod7-s5-sub4-survey',
     question: 'What should you do before pricing a complex job?',
     options: [
-      'Price it over the phone from the customer\'s description to save a journey, since a site visit rarely changes the figure and the time is better spent on chargeable work.',
+      "Price it over the phone from the customer's description to save a journey, since a site visit rarely changes the figure and the time is better spent on chargeable work.",
       'Conduct a site survey to assess installation condition, access, cable routes, finishes, client requirements, hidden risks and feasibility before committing to a price.',
       'Quote high to be safe and refund anything left over at the end — padding the price covers surprises without the effort of surveying the site first.',
       'Copy the price from a similar job you did before, since jobs of the same type cost roughly the same and a previous quote is a reliable basis without inspecting.',
@@ -81,10 +81,10 @@ const quizQuestions = [
     id: 1,
     question: "What does 'daywork' or 'day rate' pricing typically mean?",
     options: [
-      "Charging only for the daylight hours worked, with any work after dark billed at a separate evening rate regardless of the type of job.",
-      "Charging a set rate per day or hour plus materials at cost (or cost-plus-markup), rather than a fixed job price, when scope is uncertain.",
-      "A fixed all-inclusive price agreed for the whole job before work starts, with no separate charge for materials or time however long it takes.",
-      "A discounted rate for booking a full day in advance, where the customer pays less per hour in return for guaranteeing a whole day of work.",
+      'Charging only for the daylight hours worked, with any work after dark billed at a separate evening rate regardless of the type of job.',
+      'Charging a set rate per day or hour plus materials at cost (or cost-plus-markup), rather than a fixed job price, when scope is uncertain.',
+      'A fixed all-inclusive price agreed for the whole job before work starts, with no separate charge for materials or time however long it takes.',
+      'A discounted rate for booking a full day in advance, where the customer pays less per hour in return for guaranteeing a whole day of work.',
     ],
     correctAnswer: 1,
     explanation:
@@ -95,8 +95,8 @@ const quizQuestions = [
     question: "What is a 'bill of quantities' (BoQ) in tendering?",
     options: [
       "The final invoice a contractor submits at the end of a job, totalling all labour and materials actually used so the client sees exactly what they're paying for.",
-      "A stock list of the materials a contractor keeps in the van, used to track inventory and decide when to reorder consumables from the wholesaler.",
-      "An itemised document listing every item of work — quantities, units, descriptions — with blank rate columns for tenderers to insert unit prices.",
+      'A stock list of the materials a contractor keeps in the van, used to track inventory and decide when to reorder consumables from the wholesaler.',
+      'An itemised document listing every item of work — quantities, units, descriptions — with blank rate columns for tenderers to insert unit prices.',
       "A schedule of test results listing every circuit and its readings, submitted with the tender to prove the contractor's previous work met BS 7671.",
     ],
     correctAnswer: 2,
@@ -105,16 +105,16 @@ const quizQuestions = [
   },
   {
     id: 3,
-    question: "When pricing materials, what is a typical markup range?",
+    question: 'When pricing materials, what is a typical markup range?',
     options: [
-      "No markup at all — materials should be passed on at exactly what you paid, because adding to the wholesaler price is dishonest and customers can check online.",
-      "A fixed 100% markup on every item — doubling the cost of all materials is the standard trade rule and applies regardless of the item or order size.",
-      "A markup set by your CPS scheme — NICEIC and NAPIT publish the percentage members must add, and charging anything different breaches scheme rules.",
-      "Typically 15-30% on top of cost — covering the time sourcing, collecting, returning and managing stock, plus wastage, varying by item and order size.",
+      'No markup at all — materials should be passed on at exactly what you paid, because adding to the wholesaler price is dishonest and customers can check online.',
+      'A fixed 100% markup on every item — doubling the cost of all materials is the standard trade rule and applies regardless of the item or order size.',
+      'A markup set by your CPS scheme — NICEIC and NAPIT publish the percentage members must add, and charging anything different breaches scheme rules.',
+      'Typically 15-30% on top of cost — covering the time sourcing, collecting, returning and managing stock, plus wastage, varying by item and order size.',
     ],
     correctAnswer: 3,
     explanation:
-      "Markup covers your overhead in sourcing materials — wholesaler runs, account management, inventory holding, returns and wastage. 15-30% is the working range. Pure pass-through cost is unsustainable because you absorb the sourcing time for free. Special-order items at customer request might be lower markup (5-15%) where you add little value; stocked van-inventory items might be higher (25-40%) since you carry the working capital. Be transparent if asked — most customers understand reasonable markup if explained.",
+      'Markup covers your overhead in sourcing materials — wholesaler runs, account management, inventory holding, returns and wastage. 15-30% is the working range. Pure pass-through cost is unsustainable because you absorb the sourcing time for free. Special-order items at customer request might be lower markup (5-15%) where you add little value; stocked van-inventory items might be higher (25-40%) since you carry the working capital. Be transparent if asked — most customers understand reasonable markup if explained.',
   },
   {
     id: 4,
@@ -122,8 +122,8 @@ const quizQuestions = [
     options: [
       "Work outside the quoted scope — making good, other trades' work, separately-charged fees, scaffolding, and unforeseen issues like asbestos or hidden services.",
       "Your hourly labour rate and the profit margin you've added, so the customer sees exactly how the total was calculated and can check you aren't overcharging.",
-      "A list of the other firms who also quoted for the job and the prices they offered, so the customer can compare and see that yours is competitive.",
-      "The names and contact details of previous customers who can act as references, so the client can verify the quality of your past work before accepting.",
+      'A list of the other firms who also quoted for the job and the prices they offered, so the customer can compare and see that yours is competitive.',
+      'The names and contact details of previous customers who can act as references, so the client can verify the quality of your past work before accepting.',
     ],
     correctAnswer: 0,
     explanation:
@@ -133,10 +133,10 @@ const quizQuestions = [
     id: 5,
     question: "What is 'value engineering' in tendering and project pricing?",
     options: [
-      "Substituting cheaper, lower-rated materials than the design specifies to win the job on price, accepting that the installation will fall short of BS 7671 in places the client is unlikely to notice.",
-      "Identifying ways to deliver the required functionality and quality at lower cost — alternative materials with equivalent performance, alternative installation methods, alternative design approaches. Done collaboratively with the client / design team. Different from corner-cutting (which reduces quality).",
-      "Adding extra margin to every line of the tender so that the headline price looks competitive but the contractor recovers a healthy profit through the detail.",
-      "Charging separately for every minor task that was originally assumed included, so the final account is significantly higher than the tendered figure.",
+      'Substituting cheaper, lower-rated materials than the design specifies to win the job on price, accepting that the installation will fall short of BS 7671 in places the client is unlikely to notice.',
+      'Identifying ways to deliver the required functionality and quality at lower cost — alternative materials with equivalent performance, alternative installation methods, alternative design approaches. Done collaboratively with the client / design team. Different from corner-cutting (which reduces quality).',
+      'Adding extra margin to every line of the tender so that the headline price looks competitive but the contractor recovers a healthy profit through the detail.',
+      'Charging separately for every minor task that was originally assumed included, so the final account is significantly higher than the tendered figure.',
     ],
     correctAnswer: 1,
     explanation:
@@ -146,36 +146,37 @@ const quizQuestions = [
     id: 6,
     question: 'How should you handle material price increases during a long project?',
     options: [
-      "Absorb every increase yourself once the quotation is accepted — a quoted price is a quoted price, and passing on any rise looks unprofessional.",
+      'Absorb every increase yourself once the quotation is accepted — a quoted price is a quoted price, and passing on any rise looks unprofessional.',
       "Add the difference quietly to the final invoice — the customer agreed to a finished job, so they'll expect to pay whatever the materials ended up costing.",
-      "Include a price variation clause allowing adjustment for significant material price changes above a clear threshold, defining the calculation method.",
-      "Buy all the materials for the whole project up front on day one and store them, so no later price change can ever affect the job whatever the market does.",
+      'Include a price variation clause allowing adjustment for significant material price changes above a clear threshold, defining the calculation method.',
+      'Buy all the materials for the whole project up front on day one and store them, so no later price change can ever affect the job whatever the market does.',
     ],
     correctAnswer: 2,
     explanation:
-      "Material price volatility (copper, aluminium, raw materials) has been significant since 2020. For projects running more than 3-6 months from quote to completion, a price-variation clause is reasonable and standard: state the threshold (e.g. 5% movement triggers adjustment), the index used (manufacturer list price, LME copper price, etc.) and the calculation method. Apply it to key items like copper, aluminium and key brands. Be transparent rather than hiding the clause — clients understand it on long projects; surprise extras at the end damage trust.",
+      'Material price volatility (copper, aluminium, raw materials) has been significant since 2020. For projects running more than 3-6 months from quote to completion, a price-variation clause is reasonable and standard: state the threshold (e.g. 5% movement triggers adjustment), the index used (manufacturer list price, LME copper price, etc.) and the calculation method. Apply it to key items like copper, aluminium and key brands. Be transparent rather than hiding the clause — clients understand it on long projects; surprise extras at the end damage trust.',
   },
   {
     id: 7,
     question: 'When responding to a formal tender, what must you ensure?',
     options: [
-      "Submit the lowest possible price and worry about the paperwork later — on a competitive tender the cheapest bid always wins, so price is all that matters.",
-      "Leave awkward documents out and supply them only if you win — clients understand gathering insurance certificates and accounts takes time, so it can follow.",
-      "Pad the price with a large contingency and round it to a memorable figure — a confident, clean number stands out and signals a well-run firm to the assessor.",
-      "Follow all instructions exactly, submit on time, include every required document, price every BoQ line, and sign and bind the submission as required.",
+      'Submit the lowest possible price and worry about the paperwork later — on a competitive tender the cheapest bid always wins, so price is all that matters.',
+      'Leave awkward documents out and supply them only if you win — clients understand gathering insurance certificates and accounts takes time, so it can follow.',
+      'Pad the price with a large contingency and round it to a memorable figure — a confident, clean number stands out and signals a well-run firm to the assessor.',
+      'Follow all instructions exactly, submit on time, include every required document, price every BoQ line, and sign and bind the submission as required.',
     ],
     correctAnswer: 3,
     explanation:
-      "Formal tenders are strict. Late submissions are typically rejected without consideration. Missing documents (method statements, H&S policy, RAMS, insurance certificates, ISO accreditations if requested, references, financial accounts) usually disqualify the tender. Pricing every BoQ line is essential — missed lines often mean automatic rejection. Read the tender instructions twice; build a checklist; submit a day early. Public-sector tenders especially are administratively unforgiving.",
+      'Formal tenders are strict. Late submissions are typically rejected without consideration. Missing documents (method statements, H&S policy, RAMS, insurance certificates, ISO accreditations if requested, references, financial accounts) usually disqualify the tender. Pricing every BoQ line is essential — missed lines often mean automatic rejection. Read the tender instructions twice; build a checklist; submit a day early. Public-sector tenders especially are administratively unforgiving.',
   },
   {
     id: 8,
-    question: 'How should you handle a customer who says your quote is too high vs cheaper competitors?',
+    question:
+      'How should you handle a customer who says your quote is too high vs cheaper competitors?',
     options: [
       "Ask what they're comparing against — cheap quotes often exclude things yours includes, so walk through your quotation, then let them go gracefully if the gap stands.",
-      "Immediately match the cheaper quote to secure the job — winning the work is what matters, and you can recover the margin by economising on materials.",
-      "Tell the customer the cheaper firm is incompetent and will do dangerous work — undermining the competitor makes your own quote look like the safe choice.",
-      "Beat the cheaper quote by a further ten per cent to be certain of winning — being the lowest price in the room guarantees the job and builds your reputation.",
+      'Immediately match the cheaper quote to secure the job — winning the work is what matters, and you can recover the margin by economising on materials.',
+      'Tell the customer the cheaper firm is incompetent and will do dangerous work — undermining the competitor makes your own quote look like the safe choice.',
+      'Beat the cheaper quote by a further ten per cent to be certain of winning — being the lowest price in the room guarantees the job and builds your reputation.',
     ],
     correctAnswer: 0,
     explanation:
@@ -192,7 +193,7 @@ const faqs = [
   {
     question: 'Should I price hourly or fixed-price?',
     answer:
-      "Depends on the work. Fixed-price suits well-defined scope where you can accurately estimate time and materials — consumer unit upgrades, new socket runs, defined fit-outs. Daywork (time + materials) suits uncertain scope — fault-finding, maintenance, reactive work, complex inspections. Many contractors offer both: fixed-price for the defined scope, daywork rates for variations and unforeseen work. Clients generally prefer fixed-price certainty; daywork is sometimes the honest answer to an uncertain job.",
+      'Depends on the work. Fixed-price suits well-defined scope where you can accurately estimate time and materials — consumer unit upgrades, new socket runs, defined fit-outs. Daywork (time + materials) suits uncertain scope — fault-finding, maintenance, reactive work, complex inspections. Many contractors offer both: fixed-price for the defined scope, daywork rates for variations and unforeseen work. Clients generally prefer fixed-price certainty; daywork is sometimes the honest answer to an uncertain job.',
   },
   {
     question: 'How do I compete with much cheaper local competitors?',
@@ -231,465 +232,468 @@ export default function Sub4() {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
-      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
-        <PageFrame>
+    <HubPage>
+      <HubMasthead
+        section="Module 7 · Section 5 · Subsection 4"
+        title="Pricing and estimating"
+        backTo="/study-centre/apprentice/level3-module7-section5"
+      />
+      <HubBody>
+        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
+          Calculating a sustainable charge-out rate, estimates vs quotations, fixed price vs
+          daywork, materials markup, site surveys, quotation structure and tendering.
+        </p>
+
+        <TLDR
+          points={[
+            'Charge-out rate must cover all annual costs (labour, vehicle, insurance, tools, training, scheme fees, admin time) ÷ chargeable hours per year (~1,500-1,800, not 2,000+). Add profit margin.',
+            'Estimate = approximate, may change; quotation = fixed price for defined scope. Customers and the Consumer Rights Act 2015 treat them differently.',
+            'Materials markup typical range 15-30% — covers sourcing time, stock holding, wastage.',
+            "Site survey on any non-trivial job costs an hour or two; saves dozens of hours of variation disputes. What you can't see before you start, you can't price accurately.",
+            'Quotation structure: clear scope, inclusions, exclusions, assumptions, payment terms, validity period. Variations agreed in writing as they arise.',
+            "Don't race competitors to the bottom — let cheap-only customers go to cheap-only competitors; build your business on customers who value the quality difference.",
+          ]}
+        />
+
+        <LearningOutcomes
+          outcomes={[
+            'Maps to C&G 2365-03 / Unit 308 / LO3 — identify methods of pricing and estimating electrical work.',
+            'Calculate a sustainable hourly or daily charge-out rate covering all business costs plus profit.',
+            'Distinguish between an estimate, a quotation and a tender — and the legal effect of each.',
+            'Conduct a site survey to inform pricing of non-trivial jobs.',
+            'Structure a quotation with clear scope, inclusions, exclusions, assumptions and payment terms.',
+            'Apply appropriate materials markup ranges and explain the rationale to clients.',
+            'Handle variations and material price changes through clear written processes.',
+            'Respond professionally to price objections without undercutting sustainable rates.',
+          ]}
+          initialVisibleCount={3}
+        />
+
+        <ContentEyebrow>Calculating your charge-out rate</ContentEyebrow>
+
+        <ConceptBlock
+          title="The full-cost calculation — every cost in, every chargeable hour out"
+          plainEnglish="Charge-out rate = total annual cost base ÷ chargeable hours per year, plus profit margin. The trap most new contractors fall into is underestimating the cost base and overestimating chargeable hours. Cost base: target take-home wage, NI (employer + employee if Ltd), pension, vehicle (purchase / lease, fuel, insurance, repairs, MOT, depreciation), insurance stack (PL, EL, tools, professional indemnity), tools and test equipment (replacement cycle + annual calibration), training and CPD (annual budget + amendment-year peaks), CPS scheme fees, accountancy, software subscriptions, marketing, office costs, mobile, professional memberships. Add a profit margin (typical 10-25%). Chargeable hours: typically 1,500-1,800 per year, not 2,000+ — because of admin time, training, sick days, weather, slow periods, equipment downtime."
+          onSite="Most new contractors underprice by 20-40% in year 1 because they miss costs (forget annual calibration, underprovision for equipment replacement, ignore admin / non-chargeable time). Build the full calculation in a spreadsheet; update annually. Re-check your charge-out rate every 12 months — costs creep up; rates need to creep up to match. Most established contractors' charge-out rates are 2-3× their hourly wage equivalent because of the overhead and non-chargeable factor."
+        >
+          <p>The full cost base for a sole trader (approximate, varies):</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Target take-home pay: e.g. &pound;40,000.</li>
+            <li>Tax + NI on that take-home (work backwards): e.g. &pound;12,000.</li>
+            <li>Vehicle (lease / fuel / insurance / repairs / MOT): &pound;5,000-8,000.</li>
+            <li>Insurance stack (PL, vehicle, tools): &pound;1,500-3,000.</li>
+            <li>Tools and test equipment (replacement + calibration): &pound;1,500-3,000.</li>
+            <li>Training and CPD (incl. amendment-year peaks): &pound;500-2,000.</li>
+            <li>CPS scheme fees: &pound;500-800.</li>
+            <li>Accountancy: &pound;500-1,500.</li>
+            <li>Software (accounting, certificates, design tools): &pound;500-1,500.</li>
+            <li>Marketing (website, ads, signwriting): &pound;500-2,000.</li>
+            <li>Office / phone / sundries: &pound;500-1,500.</li>
+            <li>
+              <strong>Total annual cost base: &pound;63,000-&pound;76,000</strong> (approx).
+            </li>
+            <li>Chargeable hours: ~1,650 per year (after admin, training, sick, weather).</li>
+            <li>
+              <strong>Minimum sustainable hourly rate: &pound;38-46</strong> (before profit margin).
+            </li>
+            <li>
+              Add 15-20% profit margin: <strong>charge-out rate &pound;44-55/hr</strong>.
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="Day rates, hourly rates, and the 'call-out plus' model"
+          plainEnglish="Three common rate structures. Hourly rate — best for short jobs and reactive work; typical £40-65/hour for working sole traders in most UK areas. Day rate — best for predictable full days; typical £350-500/day; usually 8-hour day with travel included. Call-out plus — common for reactive / emergency work; flat call-out fee (£60-90) covers the first 1-2 hours including travel, then hourly thereafter; minimum charge protects against the 30-minute job that loses money. Premium rates for out-of-hours, weekends, urgent emergency — typically 1.5× standard hours, 2× weekend, 2.5× nights. State the rate structure clearly on quotations and on your website."
+          onSite="Different rates for different work types is normal. EICR / inspection-and-testing work might be priced flat-rate per certificate or hourly. Consumer unit upgrades typically fixed-price. Maintenance call-outs use the call-out-plus model. Design / advisory work hourly. Decide your structures per work type; price each accordingly; explain to customers when they ask."
+        >
+          <p>Common rate structures:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Hourly</strong> &mdash; short / variable work; &pound;40-65/hr typical.
+            </li>
+            <li>
+              <strong>Day rate</strong> &mdash; full-day predictable work; &pound;350-500/day
+              typical.
+            </li>
+            <li>
+              <strong>Call-out plus hourly</strong> &mdash; reactive / emergency; flat fee + hourly
+              after.
+            </li>
+            <li>
+              <strong>Fixed-price</strong> &mdash; defined-scope jobs; reflects all components in
+              one number.
+            </li>
+            <li>
+              <strong>Out-of-hours premium</strong> &mdash; 1.5x / 2x / 2.5x for evenings, weekends,
+              nights.
+            </li>
+            <li>
+              <strong>Certificate-rate</strong> &mdash; flat fee per EIC / EICR / Minor Works.
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <InlineCheck
+          id={checks[0].id}
+          question={checks[0].question}
+          options={checks[0].options}
+          correctIndex={checks[0].correctIndex}
+          explanation={checks[0].explanation}
+        />
+
+        <InlineCheck
+          id={checks[1].id}
+          question={checks[1].question}
+          options={checks[1].options}
+          correctIndex={checks[1].correctIndex}
+          explanation={checks[1].explanation}
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>Estimates, quotations and tenders</ContentEyebrow>
+
+        <ConceptBlock
+          title="The three pricing instruments — estimate, quotation, tender"
+          plainEnglish="Three pricing instruments with distinct legal effects. Estimate: approximate cost, may change as scope clarifies; no binding commitment to the figure; used when scope is genuinely uncertain. Quotation: fixed price for a clearly-defined scope; once accepted, contractually binding at that price; only changeable for genuine scope variations agreed in writing. Tender: formal competitive submission against defined scope (typically BoQ); usually for commercial / public-sector work; tightly procedural with strict instructions, deadlines and required documents. Most domestic and small commercial work uses quotations; large commercial and public-sector work uses tenders; estimates are reserved for genuinely uncertain scope."
+          onSite="Use the right word on the document. Calling something an 'estimate' when you mean a quotation creates ambiguity that hurts you at invoice stage. Calling something a 'quotation' when you don't have enough scope clarity to fix the price creates exposure to the binding price. If scope is unclear, do a proper site survey first, then quote — don't paper over uncertainty with an estimate-but-also-binding fudge."
+        >
+          <p>Side-by-side:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Estimate</strong> &mdash; approximate; can change; used for genuinely
+              uncertain scope.
+            </li>
+            <li>
+              <strong>Quotation</strong> &mdash; fixed price for defined scope; binding once
+              accepted.
+            </li>
+            <li>
+              <strong>Tender</strong> &mdash; formal competitive submission against pre-defined
+              scope (BoQ).
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="The site survey — what you can't see before you start, you can't price accurately"
+          plainEnglish="A proper site survey on any non-trivial job is the difference between a quotation that holds and one that bleeds variations. What to check: existing installation type, age and condition (consumer unit type, cable types, evident damage); access difficulties (loft, cellar, cable routes through finished spaces); floor types and finishes (chipboard floors lift; tiled bathrooms don't); client-specific constraints (working hours, decor protection requirements); hidden risks (asbestos in older properties — pre-2000 builds; existing-defect remediation likely needed; structural issues; non-electrical services in walls). Document the survey in notes and photos; refer to findings in the quotation; list explicit assumptions about what wasn't visible."
+          onSite="Charge for the site survey on commercial / complex jobs (typical: half-day rate, deductible from job price if the quote is accepted). Domestic site surveys are usually free as part of the quotation process but should still be done properly. Bring a torch, a meter, a phone for photos, a notebook. Spend 30-60 minutes on a typical domestic survey, more on commercial. The survey is the difference between professional and amateur pricing."
+        >
+          <p>Site survey checklist:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Existing consumer unit &mdash; type, age, capacity, condition.</li>
+            <li>Cable types and condition &mdash; visible runs, age, evident damage.</li>
+            <li>
+              Earthing arrangement &mdash; TN-C-S / TN-S / TT; condition of earthing conductor.
+            </li>
+            <li>Special locations &mdash; bathrooms, outdoors, sauna; zone considerations.</li>
+            <li>
+              Access &mdash; loft, cellar, ceiling void, floor cavity, chipboard vs joist
+              construction.
+            </li>
+            <li>Finishes affecting cable routes &mdash; tiled bathrooms, plastered ceilings.</li>
+            <li>
+              Asbestos risk &mdash; pre-2000 builds; potential ACMs in airing cupboards, ceiling
+              boards.
+            </li>
+            <li>Customer-specific constraints &mdash; working hours, decor protection, parking.</li>
+            <li>Photographs &mdash; document conditions encountered.</li>
+          </ul>
+        </ConceptBlock>
+
+        <InlineCheck
+          id={checks[2].id}
+          question={checks[2].question}
+          options={checks[2].options}
+          correctIndex={checks[2].correctIndex}
+          explanation={checks[2].explanation}
+        />
+
+        <RegsCallout
+          source="Consumer Rights Act 2015 — Sections 49, 50, 51 (services)"
+          clause={
+            <>
+              <p className="mb-2">
+                The Consumer Rights Act 2015 implies three statutory terms into consumer contracts
+                for services:
+              </p>
+              <ul className="space-y-1 list-disc pl-5 text-[14px]">
+                <li>Section 49 &mdash; service to be performed with reasonable care and skill.</li>
+                <li>
+                  Section 51 &mdash; if no price is fixed by the contract, a reasonable price is to
+                  be paid.
+                </li>
+                <li>
+                  Section 52 &mdash; if no time is fixed, the service must be performed within a
+                  reasonable time.
+                </li>
+              </ul>
+              <p className="mt-2">
+                Where the consumer makes clear before the contract that the price, timing or
+                performance is a key reason for entering, statements about those become binding
+                contract terms (s.50).
+              </p>
+            </>
+          }
+          meaning={
+            <>
+              The CRA 2015 governs the consumer-side contractual baseline. A fixed quotation
+              accepted by the consumer is a contract term at that price (s.50). An estimate is not a
+              fixed term &mdash; but a wildly different final invoice will be tested against
+              &quot;reasonable price&quot; (s.51). Reasonable care and skill (s.49) is the
+              substantive performance standard. Clear quotations with scope, inclusions and
+              exclusions reduce disputes at invoice stage by leveraging s.50.
+            </>
+          }
+          cite="Source: Consumer Rights Act 2015, ss.49-52."
+        />
+
+        <RegsCallout
+          source="Late Payment of Commercial Debts (Interest) Act 1998"
+          clause={
+            <>
+              <p className="mb-2">
+                For B2B contracts where payment is overdue (i.e. past the agreed term or, where no
+                term is agreed, 30 days from invoice), the supplier has a statutory right to:
+              </p>
+              <ul className="space-y-1 list-disc pl-5 text-[14px]">
+                <li>Interest at 8% over the Bank of England base rate from the due date.</li>
+                <li>
+                  Fixed recovery costs banded by invoice value: &pound;40 (invoice &lt;
+                  &pound;1,000), &pound;70 (&pound;1,000-&pound;10,000), &pound;100 (over
+                  &pound;10,000).
+                </li>
+                <li>Reasonable additional debt recovery costs beyond the fixed amount.</li>
+              </ul>
+            </>
+          }
+          meaning={
+            <>
+              The Late Payment Act 1998 (amended 2013) gives B2B suppliers real leverage on overdue
+              invoices. The interest rate is meaningful; the fixed recovery costs add up across
+              multiple invoices. Reference the Act in your terms and conditions; apply the interest
+              and costs on overdue commercial invoices; the existence of the Act often nudges payers
+              to settle without you having to formally invoke it. Does not apply to consumer (B2C)
+              invoices &mdash; those run under the CRA 2015 framework and small claims court.
+            </>
+          }
+          cite="Source: Late Payment of Commercial Debts (Interest) Act 1998 as amended by the Late Payment of Commercial Debts Regulations 2013 (SI 2013/395)."
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>Quotation structure</ContentEyebrow>
+
+        <ConceptBlock
+          title="Inclusions, exclusions, assumptions — the three structural elements"
+          plainEnglish="A professional quotation has three structural elements beyond the price itself. Inclusions: what's covered — scope, materials list, certifications issued, post-completion support period. Exclusions: what's NOT covered — making good (plastering, decorating), other trades' work, building control fees, scaffolding, remedial work to existing defects. Assumptions: what the price is based on — existing earthing arrangement adequate; loft access available; circuits accessible without disturbing fitted units; no asbestos encountered. If assumptions prove false, that's a variation. Together, these three elements define the contractual scope precisely and reduce disputes about what was included in the price."
+          onSite="Spend time on the inclusions / exclusions / assumptions on every non-trivial quote. Vague scope = disputes at invoice stage; precise scope = clear understanding both sides. Most professional contracts also include: validity period (typical: 30 days); payment terms (clear deposit, stage and final payment structure); variation procedure (how changes are agreed and priced); cancellation terms (especially for materials already ordered); contact and warranty details."
+        >
+          <p>Standard quotation structure:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Header &mdash; your business details, customer details, quote reference, date.</li>
+            <li>Scope description &mdash; what work will be done.</li>
+            <li>Itemised inclusions &mdash; specific work elements, certifications.</li>
+            <li>Materials list (or summary) &mdash; key brands / specifications.</li>
+            <li>Total price &mdash; excluding or including VAT (state which).</li>
+            <li>Exclusions &mdash; explicit list of what&apos;s NOT included.</li>
+            <li>Assumptions &mdash; what the price is based on.</li>
+            <li>Payment terms &mdash; deposit, stages, final, timescale.</li>
+            <li>Validity period &mdash; typical 30 days.</li>
+            <li>Variation procedure &mdash; how changes are handled.</li>
+            <li>Standard terms and conditions &mdash; reference your full T&amp;Cs.</li>
+          </ul>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="Variations — the process that protects both parties"
+          plainEnglish="A variation is a change to the agreed scope after the quotation is accepted. The professional process: customer requests change (or you encounter a hidden issue requiring extra work); you document the variation in writing — what's being added, what it costs, what time impact it has; customer agrees in writing (email or signed variation order); work proceeds; invoiced separately or added to final invoice with the variation evidence attached. Hidden cost additions at the final invoice stage are a leading cause of disputes — transparent real-time variation handling avoids almost all of them."
+          onSite="Use a simple variation order template — 'On [date] you asked for [change]; this adds [cost] and [time]; please confirm to proceed.' Email is fine for written agreement; signed paper or a brief signed PDF is better for larger variations. Don't do the extra work first and bill later — many customers will dispute the price when they see it. Get agreement before the extra work; the customer can always say no and stick to the original scope."
+        >
+          <p>The variation process:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Request raised (customer ask or contractor-discovered need).</li>
+            <li>Scope of variation defined &mdash; what work, what materials, what time.</li>
+            <li>Cost estimated &mdash; using your standard rates.</li>
+            <li>Written variation order issued &mdash; email, PDF or template.</li>
+            <li>Customer agreement in writing before work proceeds.</li>
+            <li>Work carried out.</li>
+            <li>Variation invoiced separately or added to final invoice with evidence.</li>
+          </ul>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <ContentEyebrow>Where it goes wrong</ContentEyebrow>
+
+        <CommonMistake
+          title="Pricing without doing a site survey — invisible-condition surprises eat the margin"
+          whatHappens={
+            <>
+              Contractor quotes a consumer unit upgrade over the phone based on customer
+              description: &quot;3-bed semi, want to upgrade from old fuseboard to RCBO unit.&quot;
+              &pound;1,200 quoted, accepted. Arrives on the day: 1962 fuseboard, dead earth from a
+              buried clip in the wall, old TRS cable up to two circuits, asbestos lining behind the
+              consumer-unit cupboard. Extra labour for remedial works pushes the job up to 2 days
+              instead of 1; copper-earthing-conductor replacement costs &pound;300; asbestos
+              assessment delays start. Final job cost &pound;800 over quoted price; customer
+              challenges every penny because they accepted &pound;1,200; relationship damaged;
+              contractor swallows much of the overage.
+            </>
+          }
+          doInstead={
+            <>
+              Always do a 30-60 minute site survey before quoting any non-trivial work. Check the
+              consumer unit, the earthing, the cable types, the access, the existing-defect
+              indicators. Document explicit assumptions about what wasn&apos;t visible (e.g.
+              &quot;assumes existing earthing conductor adequate; remedial works charged as
+              variation if not&quot;). For older properties (pre-2000) include asbestos-survey
+              assumption explicitly. The survey hour saves the &pound;800 overage that probably
+              results from not doing it.
+            </>
+          }
+        />
+
+        <CommonMistake
+          title='No variation paper trail — the "you said you&apos;d throw it in" dispute'
+          whatHappens={
+            <>
+              During a domestic rewire the customer asks for an extra ceiling light to be added in
+              the hallway. Contractor agrees verbally &mdash; &quot;sure, I&apos;ll sort that&quot;
+              &mdash; doesn&apos;t document the variation. Final invoice includes the extra light;
+              customer disputes it: &quot;you said you&apos;d throw it in.&quot; Without a paper
+              trail it&apos;s the contractor&apos;s word against the customer&apos;s. Most
+              contractors give in to avoid escalation; the variation is unpaid. Small amount on this
+              job; compounds across many jobs into a meaningful cash bleed.
+            </>
+          }
+          doInstead={
+            <>
+              Every variation gets a written confirmation. Even a 30-second text or email &mdash;
+              &quot;Just to confirm, you asked for the extra hall ceiling light, that&apos;s an
+              extra &pound;75 added to the final, OK to proceed?&quot;. Customer replies yes; you
+              have your evidence. Five seconds of effort per variation eliminates 95% of these
+              disputes. Make it a habit.
+            </>
+          }
+        />
+
+        <Scenario
+          title="A customer says your quote is £600 more than your nearest competitor — how do you respond?"
+          situation={
+            <>
+              You&apos;ve quoted &pound;2,400 for a consumer unit upgrade + 4 new circuits in a
+              3-bed semi. Customer phones: &quot;You&apos;re &pound;600 more than the other guy
+              I&apos;ve had quote. Can you do it for &pound;1,800?&quot; The other quote is
+              &pound;1,800. What do you do?
+            </>
+          }
+          whatToDo={
+            <>
+              <strong>Step 1 &mdash; don&apos;t race to drop your price</strong>. Pause; ask
+              politely: &quot;What does the &pound;1,800 quote include exactly &mdash; do you have
+              it in writing?&quot;
+              <br />
+              <br />
+              <strong>Step 2 &mdash; identify the gap</strong>. Compare line-by-line. Typically the
+              cheap quote excludes things yours includes. Common gaps: no CPS certificate (the cheap
+              quote is from someone unregistered &mdash; non-compliant under Part P); generic-brand
+              consumer unit (your quote: branded Wylex / MK / Hager); no proper
+              inspection-and-testing line items; no clean-up / making-good included; no workmanship
+              warranty. Walk the customer through what your &pound;2,400 covers that their
+              &pound;1,800 likely doesn&apos;t.
+              <br />
+              <br />
+              <strong>Step 3 &mdash; explain compliance</strong>. If the cheap quoter isn&apos;t
+              CPS-registered, the work won&apos;t be notifiable under Part P; the customer will have
+              a problem at property sale. If the cheap quoter isn&apos;t doing proper inspection and
+              testing, the certificate is unreliable. These are concrete concerns, not sales
+              pitches.
+              <br />
+              <br />
+              <strong>Step 4 &mdash; offer the customer a real choice</strong>. &quot;If you want to
+              go with the &pound;1,800 quote, I understand &mdash; you should check they&apos;re
+              CPS-registered, ask to see their PL insurance and current calibration certificate, and
+              confirm what brand of consumer unit they&apos;re fitting. If those check out and you
+              trust them, &pound;1,800 might be fine. If they don&apos;t, my &pound;2,400 includes
+              those things, and I&apos;d be happy to do the job for you.&quot;
+              <br />
+              <br />
+              <strong>Step 5 &mdash; don&apos;t cave</strong>. If after the conversation the
+              customer still wants &pound;1,800, let them go. They&apos;re not your customer;
+              they&apos;ll be cheap-quote-shopping the next job too. Dropping &pound;600 to win them
+              puts you below your sustainable rate &mdash; you&apos;d be working at a loss on the
+              job AND they&apos;ll expect &pound;1,800 every time after. Better to lose the job
+              today than build a business at a loss.
+              <br />
+              <br />
+              <strong>Step 6 &mdash; finish well</strong>. &quot;Thanks for coming back to me on
+              that; appreciate you being open about the comparison. If you go with the other quote
+              and have any issues, please do come back &mdash; happy to help in future anyway.&quot;
+              You&apos;ve held your price, explained your value, left the relationship intact for
+              next time.
+            </>
+          }
+          whyItMatters={
+            <>
+              The &pound;600 gap is the difference between profitable work and loss-making work on a
+              typical consumer unit upgrade. Drop the price; you take home less than the cost-base
+              of doing the job; you&apos;ve worked for less than nothing. Hold the price; explain
+              the value; let the customer choose. Some say yes; some say no; the ones who say yes
+              are profitable customers who value the difference. Build the business on those, not on
+              the price-shoppers.
+            </>
+          }
+        />
+
+        <SectionRule />
+
+        <FAQ items={faqs} />
+
+        <SectionRule />
+
+        <KeyTakeaways
+          points={[
+            "Charge-out rate = full annual cost base ÷ chargeable hours (1,500-1,800 not 2,000+) + profit margin. Most contractors' rates are 2-3× their hourly wage equivalent.",
+            'Estimate (approximate) vs quotation (fixed-price binding under CRA 2015) vs tender (formal procedural submission against BoQ). Use the right word on the document.',
+            "Site survey on any non-trivial job — 30-60 minutes saves dozens of hours of variation disputes. What you can't see, you can't price accurately.",
+            'Quotation structure: scope, inclusions, exclusions, assumptions, payment terms, validity period, variation procedure.',
+            'Materials markup typical 15-30% — covers sourcing time, stock holding, wastage. Be transparent if asked.',
+            'Variations agreed in writing before extra work — email, PDF or signed variation order. Eliminates most invoice disputes.',
+            'Late Payment of Commercial Debts (Interest) Act 1998 gives 8% + base statutory interest plus fixed recovery costs on overdue B2B invoices.',
+            "Don't race competitors to the bottom — explain your value; let cheap-only customers go; build on customers who value the difference.",
+          ]}
+        />
+
+        <Quiz title="Pricing and estimating — knowledge check" questions={quizQuestions} />
+
+        <div className="grid grid-cols-2 gap-3 pt-2">
           <button
-            onClick={() => navigate('/study-centre/apprentice/level3-module7-section5')}
-            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            onClick={() => navigate('/study-centre/apprentice/level3-module7-section5-3')}
+            className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
           >
-            <ArrowLeft className="h-4 w-4" /> Section 5
+            <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+              <ChevronLeft className="h-3 w-3" /> Previous
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-white truncate">
+              5.3 Setting up self-employed
+            </div>
           </button>
-
-          <PageHero
-            eyebrow="Module 7 · Section 5 · Subsection 4"
-            title="Pricing and estimating"
-            description="Calculating a sustainable charge-out rate, estimates vs quotations, fixed price vs daywork, materials markup, site surveys, quotation structure and tendering."
-            tone="blue"
-          />
-
-          <TLDR
-            points={[
-              "Charge-out rate must cover all annual costs (labour, vehicle, insurance, tools, training, scheme fees, admin time) ÷ chargeable hours per year (~1,500-1,800, not 2,000+). Add profit margin.",
-              "Estimate = approximate, may change; quotation = fixed price for defined scope. Customers and the Consumer Rights Act 2015 treat them differently.",
-              "Materials markup typical range 15-30% — covers sourcing time, stock holding, wastage.",
-              "Site survey on any non-trivial job costs an hour or two; saves dozens of hours of variation disputes. What you can't see before you start, you can't price accurately.",
-              "Quotation structure: clear scope, inclusions, exclusions, assumptions, payment terms, validity period. Variations agreed in writing as they arise.",
-              "Don't race competitors to the bottom — let cheap-only customers go to cheap-only competitors; build your business on customers who value the quality difference.",
-            ]}
-          />
-
-          <LearningOutcomes
-            outcomes={[
-              "Maps to C&G 2365-03 / Unit 308 / LO3 — identify methods of pricing and estimating electrical work.",
-              "Calculate a sustainable hourly or daily charge-out rate covering all business costs plus profit.",
-              "Distinguish between an estimate, a quotation and a tender — and the legal effect of each.",
-              "Conduct a site survey to inform pricing of non-trivial jobs.",
-              "Structure a quotation with clear scope, inclusions, exclusions, assumptions and payment terms.",
-              "Apply appropriate materials markup ranges and explain the rationale to clients.",
-              "Handle variations and material price changes through clear written processes.",
-              "Respond professionally to price objections without undercutting sustainable rates.",
-            ]}
-            initialVisibleCount={3}
-          />
-
-          <ContentEyebrow>Calculating your charge-out rate</ContentEyebrow>
-
-          <ConceptBlock
-            title="The full-cost calculation — every cost in, every chargeable hour out"
-            plainEnglish="Charge-out rate = total annual cost base ÷ chargeable hours per year, plus profit margin. The trap most new contractors fall into is underestimating the cost base and overestimating chargeable hours. Cost base: target take-home wage, NI (employer + employee if Ltd), pension, vehicle (purchase / lease, fuel, insurance, repairs, MOT, depreciation), insurance stack (PL, EL, tools, professional indemnity), tools and test equipment (replacement cycle + annual calibration), training and CPD (annual budget + amendment-year peaks), CPS scheme fees, accountancy, software subscriptions, marketing, office costs, mobile, professional memberships. Add a profit margin (typical 10-25%). Chargeable hours: typically 1,500-1,800 per year, not 2,000+ — because of admin time, training, sick days, weather, slow periods, equipment downtime."
-            onSite="Most new contractors underprice by 20-40% in year 1 because they miss costs (forget annual calibration, underprovision for equipment replacement, ignore admin / non-chargeable time). Build the full calculation in a spreadsheet; update annually. Re-check your charge-out rate every 12 months — costs creep up; rates need to creep up to match. Most established contractors' charge-out rates are 2-3× their hourly wage equivalent because of the overhead and non-chargeable factor."
+          <button
+            onClick={() => navigate('/study-centre/apprentice/level3-module7-section5-5')}
+            className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
           >
-            <p>
-              The full cost base for a sole trader (approximate, varies):
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Target take-home pay: e.g. &pound;40,000.</li>
-              <li>Tax + NI on that take-home (work backwards): e.g. &pound;12,000.</li>
-              <li>Vehicle (lease / fuel / insurance / repairs / MOT): &pound;5,000-8,000.</li>
-              <li>Insurance stack (PL, vehicle, tools): &pound;1,500-3,000.</li>
-              <li>Tools and test equipment (replacement + calibration): &pound;1,500-3,000.</li>
-              <li>Training and CPD (incl. amendment-year peaks): &pound;500-2,000.</li>
-              <li>CPS scheme fees: &pound;500-800.</li>
-              <li>Accountancy: &pound;500-1,500.</li>
-              <li>Software (accounting, certificates, design tools): &pound;500-1,500.</li>
-              <li>Marketing (website, ads, signwriting): &pound;500-2,000.</li>
-              <li>Office / phone / sundries: &pound;500-1,500.</li>
-              <li>
-                <strong>Total annual cost base: &pound;63,000-&pound;76,000</strong> (approx).
-              </li>
-              <li>Chargeable hours: ~1,650 per year (after admin, training, sick, weather).</li>
-              <li>
-                <strong>Minimum sustainable hourly rate: &pound;38-46</strong> (before profit margin).
-              </li>
-              <li>Add 15-20% profit margin: <strong>charge-out rate &pound;44-55/hr</strong>.</li>
-            </ul>
-          </ConceptBlock>
-
-          <ConceptBlock
-            title="Day rates, hourly rates, and the 'call-out plus' model"
-            plainEnglish="Three common rate structures. Hourly rate — best for short jobs and reactive work; typical £40-65/hour for working sole traders in most UK areas. Day rate — best for predictable full days; typical £350-500/day; usually 8-hour day with travel included. Call-out plus — common for reactive / emergency work; flat call-out fee (£60-90) covers the first 1-2 hours including travel, then hourly thereafter; minimum charge protects against the 30-minute job that loses money. Premium rates for out-of-hours, weekends, urgent emergency — typically 1.5× standard hours, 2× weekend, 2.5× nights. State the rate structure clearly on quotations and on your website."
-            onSite="Different rates for different work types is normal. EICR / inspection-and-testing work might be priced flat-rate per certificate or hourly. Consumer unit upgrades typically fixed-price. Maintenance call-outs use the call-out-plus model. Design / advisory work hourly. Decide your structures per work type; price each accordingly; explain to customers when they ask."
-          >
-            <p>
-              Common rate structures:
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Hourly</strong> &mdash; short / variable work; &pound;40-65/hr typical.
-              </li>
-              <li>
-                <strong>Day rate</strong> &mdash; full-day predictable work; &pound;350-500/day typical.
-              </li>
-              <li>
-                <strong>Call-out plus hourly</strong> &mdash; reactive / emergency; flat fee + hourly after.
-              </li>
-              <li>
-                <strong>Fixed-price</strong> &mdash; defined-scope jobs; reflects all components in one number.
-              </li>
-              <li>
-                <strong>Out-of-hours premium</strong> &mdash; 1.5x / 2x / 2.5x for evenings, weekends, nights.
-              </li>
-              <li>
-                <strong>Certificate-rate</strong> &mdash; flat fee per EIC / EICR / Minor Works.
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <InlineCheck
-            id={checks[0].id}
-            question={checks[0].question}
-            options={checks[0].options}
-            correctIndex={checks[0].correctIndex}
-            explanation={checks[0].explanation}
-          />
-
-          <InlineCheck
-            id={checks[1].id}
-            question={checks[1].question}
-            options={checks[1].options}
-            correctIndex={checks[1].correctIndex}
-            explanation={checks[1].explanation}
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>Estimates, quotations and tenders</ContentEyebrow>
-
-          <ConceptBlock
-            title="The three pricing instruments — estimate, quotation, tender"
-            plainEnglish="Three pricing instruments with distinct legal effects. Estimate: approximate cost, may change as scope clarifies; no binding commitment to the figure; used when scope is genuinely uncertain. Quotation: fixed price for a clearly-defined scope; once accepted, contractually binding at that price; only changeable for genuine scope variations agreed in writing. Tender: formal competitive submission against defined scope (typically BoQ); usually for commercial / public-sector work; tightly procedural with strict instructions, deadlines and required documents. Most domestic and small commercial work uses quotations; large commercial and public-sector work uses tenders; estimates are reserved for genuinely uncertain scope."
-            onSite="Use the right word on the document. Calling something an 'estimate' when you mean a quotation creates ambiguity that hurts you at invoice stage. Calling something a 'quotation' when you don't have enough scope clarity to fix the price creates exposure to the binding price. If scope is unclear, do a proper site survey first, then quote — don't paper over uncertainty with an estimate-but-also-binding fudge."
-          >
-            <p>
-              Side-by-side:
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Estimate</strong> &mdash; approximate; can change; used for genuinely uncertain scope.
-              </li>
-              <li>
-                <strong>Quotation</strong> &mdash; fixed price for defined scope; binding once accepted.
-              </li>
-              <li>
-                <strong>Tender</strong> &mdash; formal competitive submission against pre-defined scope (BoQ).
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <ConceptBlock
-            title="The site survey — what you can't see before you start, you can't price accurately"
-            plainEnglish="A proper site survey on any non-trivial job is the difference between a quotation that holds and one that bleeds variations. What to check: existing installation type, age and condition (consumer unit type, cable types, evident damage); access difficulties (loft, cellar, cable routes through finished spaces); floor types and finishes (chipboard floors lift; tiled bathrooms don't); client-specific constraints (working hours, decor protection requirements); hidden risks (asbestos in older properties — pre-2000 builds; existing-defect remediation likely needed; structural issues; non-electrical services in walls). Document the survey in notes and photos; refer to findings in the quotation; list explicit assumptions about what wasn't visible."
-            onSite="Charge for the site survey on commercial / complex jobs (typical: half-day rate, deductible from job price if the quote is accepted). Domestic site surveys are usually free as part of the quotation process but should still be done properly. Bring a torch, a meter, a phone for photos, a notebook. Spend 30-60 minutes on a typical domestic survey, more on commercial. The survey is the difference between professional and amateur pricing."
-          >
-            <p>
-              Site survey checklist:
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Existing consumer unit &mdash; type, age, capacity, condition.</li>
-              <li>Cable types and condition &mdash; visible runs, age, evident damage.</li>
-              <li>Earthing arrangement &mdash; TN-C-S / TN-S / TT; condition of earthing conductor.</li>
-              <li>Special locations &mdash; bathrooms, outdoors, sauna; zone considerations.</li>
-              <li>Access &mdash; loft, cellar, ceiling void, floor cavity, chipboard vs joist construction.</li>
-              <li>Finishes affecting cable routes &mdash; tiled bathrooms, plastered ceilings.</li>
-              <li>Asbestos risk &mdash; pre-2000 builds; potential ACMs in airing cupboards, ceiling boards.</li>
-              <li>Customer-specific constraints &mdash; working hours, decor protection, parking.</li>
-              <li>Photographs &mdash; document conditions encountered.</li>
-            </ul>
-          </ConceptBlock>
-
-          <InlineCheck
-            id={checks[2].id}
-            question={checks[2].question}
-            options={checks[2].options}
-            correctIndex={checks[2].correctIndex}
-            explanation={checks[2].explanation}
-          />
-
-          <RegsCallout
-            source="Consumer Rights Act 2015 — Sections 49, 50, 51 (services)"
-            clause={
-              <>
-                <p className="mb-2">
-                  The Consumer Rights Act 2015 implies three statutory terms into consumer contracts
-                  for services:
-                </p>
-                <ul className="space-y-1 list-disc pl-5 text-[14px]">
-                  <li>Section 49 &mdash; service to be performed with reasonable care and skill.</li>
-                  <li>
-                    Section 51 &mdash; if no price is fixed by the contract, a reasonable price is
-                    to be paid.
-                  </li>
-                  <li>
-                    Section 52 &mdash; if no time is fixed, the service must be performed within a
-                    reasonable time.
-                  </li>
-                </ul>
-                <p className="mt-2">
-                  Where the consumer makes clear before the contract that the price, timing or
-                  performance is a key reason for entering, statements about those become binding
-                  contract terms (s.50).
-                </p>
-              </>
-            }
-            meaning={
-              <>
-                The CRA 2015 governs the consumer-side contractual baseline. A fixed quotation
-                accepted by the consumer is a contract term at that price (s.50). An estimate is
-                not a fixed term &mdash; but a wildly different final invoice will be tested against
-                &quot;reasonable price&quot; (s.51). Reasonable care and skill (s.49) is the
-                substantive performance standard. Clear quotations with scope, inclusions and
-                exclusions reduce disputes at invoice stage by leveraging s.50.
-              </>
-            }
-            cite="Source: Consumer Rights Act 2015, ss.49-52."
-          />
-
-          <RegsCallout
-            source="Late Payment of Commercial Debts (Interest) Act 1998"
-            clause={
-              <>
-                <p className="mb-2">
-                  For B2B contracts where payment is overdue (i.e. past the agreed term or, where no
-                  term is agreed, 30 days from invoice), the supplier has a statutory right to:
-                </p>
-                <ul className="space-y-1 list-disc pl-5 text-[14px]">
-                  <li>Interest at 8% over the Bank of England base rate from the due date.</li>
-                  <li>
-                    Fixed recovery costs banded by invoice value: &pound;40 (invoice &lt;
-                    &pound;1,000), &pound;70 (&pound;1,000-&pound;10,000), &pound;100 (over
-                    &pound;10,000).
-                  </li>
-                  <li>Reasonable additional debt recovery costs beyond the fixed amount.</li>
-                </ul>
-              </>
-            }
-            meaning={
-              <>
-                The Late Payment Act 1998 (amended 2013) gives B2B suppliers real leverage on
-                overdue invoices. The interest rate is meaningful; the fixed recovery costs add up
-                across multiple invoices. Reference the Act in your terms and conditions; apply
-                the interest and costs on overdue commercial invoices; the existence of the Act
-                often nudges payers to settle without you having to formally invoke it. Does not
-                apply to consumer (B2C) invoices &mdash; those run under the CRA 2015 framework
-                and small claims court.
-              </>
-            }
-            cite="Source: Late Payment of Commercial Debts (Interest) Act 1998 as amended by the Late Payment of Commercial Debts Regulations 2013 (SI 2013/395)."
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>Quotation structure</ContentEyebrow>
-
-          <ConceptBlock
-            title="Inclusions, exclusions, assumptions — the three structural elements"
-            plainEnglish="A professional quotation has three structural elements beyond the price itself. Inclusions: what's covered — scope, materials list, certifications issued, post-completion support period. Exclusions: what's NOT covered — making good (plastering, decorating), other trades' work, building control fees, scaffolding, remedial work to existing defects. Assumptions: what the price is based on — existing earthing arrangement adequate; loft access available; circuits accessible without disturbing fitted units; no asbestos encountered. If assumptions prove false, that's a variation. Together, these three elements define the contractual scope precisely and reduce disputes about what was included in the price."
-            onSite="Spend time on the inclusions / exclusions / assumptions on every non-trivial quote. Vague scope = disputes at invoice stage; precise scope = clear understanding both sides. Most professional contracts also include: validity period (typical: 30 days); payment terms (clear deposit, stage and final payment structure); variation procedure (how changes are agreed and priced); cancellation terms (especially for materials already ordered); contact and warranty details."
-          >
-            <p>
-              Standard quotation structure:
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Header &mdash; your business details, customer details, quote reference, date.</li>
-              <li>Scope description &mdash; what work will be done.</li>
-              <li>Itemised inclusions &mdash; specific work elements, certifications.</li>
-              <li>Materials list (or summary) &mdash; key brands / specifications.</li>
-              <li>Total price &mdash; excluding or including VAT (state which).</li>
-              <li>Exclusions &mdash; explicit list of what&apos;s NOT included.</li>
-              <li>Assumptions &mdash; what the price is based on.</li>
-              <li>Payment terms &mdash; deposit, stages, final, timescale.</li>
-              <li>Validity period &mdash; typical 30 days.</li>
-              <li>Variation procedure &mdash; how changes are handled.</li>
-              <li>Standard terms and conditions &mdash; reference your full T&amp;Cs.</li>
-            </ul>
-          </ConceptBlock>
-
-          <ConceptBlock
-            title="Variations — the process that protects both parties"
-            plainEnglish="A variation is a change to the agreed scope after the quotation is accepted. The professional process: customer requests change (or you encounter a hidden issue requiring extra work); you document the variation in writing — what's being added, what it costs, what time impact it has; customer agrees in writing (email or signed variation order); work proceeds; invoiced separately or added to final invoice with the variation evidence attached. Hidden cost additions at the final invoice stage are a leading cause of disputes — transparent real-time variation handling avoids almost all of them."
-            onSite="Use a simple variation order template — 'On [date] you asked for [change]; this adds [cost] and [time]; please confirm to proceed.' Email is fine for written agreement; signed paper or a brief signed PDF is better for larger variations. Don't do the extra work first and bill later — many customers will dispute the price when they see it. Get agreement before the extra work; the customer can always say no and stick to the original scope."
-          >
-            <p>
-              The variation process:
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Request raised (customer ask or contractor-discovered need).</li>
-              <li>Scope of variation defined &mdash; what work, what materials, what time.</li>
-              <li>Cost estimated &mdash; using your standard rates.</li>
-              <li>Written variation order issued &mdash; email, PDF or template.</li>
-              <li>Customer agreement in writing before work proceeds.</li>
-              <li>Work carried out.</li>
-              <li>Variation invoiced separately or added to final invoice with evidence.</li>
-            </ul>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <ContentEyebrow>Where it goes wrong</ContentEyebrow>
-
-          <CommonMistake
-            title="Pricing without doing a site survey — invisible-condition surprises eat the margin"
-            whatHappens={
-              <>
-                Contractor quotes a consumer unit upgrade over the phone based on customer
-                description: &quot;3-bed semi, want to upgrade from old fuseboard to RCBO unit.&quot;
-                &pound;1,200 quoted, accepted. Arrives on the day: 1962 fuseboard, dead earth from a
-                buried clip in the wall, old TRS cable up to two circuits, asbestos lining behind the
-                consumer-unit cupboard. Extra labour for remedial works pushes the job up to 2 days
-                instead of 1; copper-earthing-conductor replacement costs &pound;300; asbestos
-                assessment delays start. Final job cost &pound;800 over quoted price; customer
-                challenges every penny because they accepted &pound;1,200; relationship damaged;
-                contractor swallows much of the overage.
-              </>
-            }
-            doInstead={
-              <>
-                Always do a 30-60 minute site survey before quoting any non-trivial work. Check the
-                consumer unit, the earthing, the cable types, the access, the existing-defect
-                indicators. Document explicit assumptions about what wasn&apos;t visible (e.g.
-                &quot;assumes existing earthing conductor adequate; remedial works charged as
-                variation if not&quot;). For older properties (pre-2000) include asbestos-survey
-                assumption explicitly. The survey hour saves the &pound;800 overage that probably
-                results from not doing it.
-              </>
-            }
-          />
-
-          <CommonMistake
-            title="No variation paper trail — the &quot;you said you'd throw it in&quot; dispute"
-            whatHappens={
-              <>
-                During a domestic rewire the customer asks for an extra ceiling light to be added
-                in the hallway. Contractor agrees verbally &mdash; &quot;sure, I&apos;ll sort that&quot;
-                &mdash; doesn&apos;t document the variation. Final invoice includes the extra light;
-                customer disputes it: &quot;you said you&apos;d throw it in.&quot; Without a paper
-                trail it&apos;s the contractor&apos;s word against the customer&apos;s. Most
-                contractors give in to avoid escalation; the variation is unpaid. Small amount on
-                this job; compounds across many jobs into a meaningful cash bleed.
-              </>
-            }
-            doInstead={
-              <>
-                Every variation gets a written confirmation. Even a 30-second text or email &mdash;
-                &quot;Just to confirm, you asked for the extra hall ceiling light, that&apos;s an
-                extra &pound;75 added to the final, OK to proceed?&quot;. Customer replies yes; you
-                have your evidence. Five seconds of effort per variation eliminates 95% of these
-                disputes. Make it a habit.
-              </>
-            }
-          />
-
-          <Scenario
-            title="A customer says your quote is £600 more than your nearest competitor — how do you respond?"
-            situation={
-              <>
-                You&apos;ve quoted &pound;2,400 for a consumer unit upgrade + 4 new circuits in a
-                3-bed semi. Customer phones: &quot;You&apos;re &pound;600 more than the other guy
-                I&apos;ve had quote. Can you do it for &pound;1,800?&quot; The other quote is
-                &pound;1,800. What do you do?
-              </>
-            }
-            whatToDo={
-              <>
-                <strong>Step 1 &mdash; don&apos;t race to drop your price</strong>. Pause; ask
-                politely: &quot;What does the &pound;1,800 quote include exactly &mdash; do you
-                have it in writing?&quot;
-                <br /><br />
-                <strong>Step 2 &mdash; identify the gap</strong>. Compare line-by-line. Typically
-                the cheap quote excludes things yours includes. Common gaps: no CPS certificate
-                (the cheap quote is from someone unregistered &mdash; non-compliant under Part P);
-                generic-brand consumer unit (your quote: branded Wylex / MK / Hager); no proper
-                inspection-and-testing line items; no clean-up / making-good included; no
-                workmanship warranty. Walk the customer through what your &pound;2,400 covers that
-                their &pound;1,800 likely doesn&apos;t.
-                <br /><br />
-                <strong>Step 3 &mdash; explain compliance</strong>. If the cheap quoter isn&apos;t
-                CPS-registered, the work won&apos;t be notifiable under Part P; the customer will
-                have a problem at property sale. If the cheap quoter isn&apos;t doing proper
-                inspection and testing, the certificate is unreliable. These are concrete
-                concerns, not sales pitches.
-                <br /><br />
-                <strong>Step 4 &mdash; offer the customer a real choice</strong>. &quot;If you want
-                to go with the &pound;1,800 quote, I understand &mdash; you should check they&apos;re
-                CPS-registered, ask to see their PL insurance and current calibration certificate,
-                and confirm what brand of consumer unit they&apos;re fitting. If those check out
-                and you trust them, &pound;1,800 might be fine. If they don&apos;t, my &pound;2,400
-                includes those things, and I&apos;d be happy to do the job for you.&quot;
-                <br /><br />
-                <strong>Step 5 &mdash; don&apos;t cave</strong>. If after the conversation the
-                customer still wants &pound;1,800, let them go. They&apos;re not your customer;
-                they&apos;ll be cheap-quote-shopping the next job too. Dropping &pound;600 to win
-                them puts you below your sustainable rate &mdash; you&apos;d be working at a loss
-                on the job AND they&apos;ll expect &pound;1,800 every time after. Better to lose
-                the job today than build a business at a loss.
-                <br /><br />
-                <strong>Step 6 &mdash; finish well</strong>. &quot;Thanks for coming back to me on
-                that; appreciate you being open about the comparison. If you go with the other
-                quote and have any issues, please do come back &mdash; happy to help in future
-                anyway.&quot; You&apos;ve held your price, explained your value, left the
-                relationship intact for next time.
-              </>
-            }
-            whyItMatters={
-              <>
-                The &pound;600 gap is the difference between profitable work and loss-making work
-                on a typical consumer unit upgrade. Drop the price; you take home less than the
-                cost-base of doing the job; you&apos;ve worked for less than nothing. Hold the
-                price; explain the value; let the customer choose. Some say yes; some say no; the
-                ones who say yes are profitable customers who value the difference. Build the
-                business on those, not on the price-shoppers.
-              </>
-            }
-          />
-
-          <SectionRule />
-
-          <FAQ items={faqs} />
-
-          <SectionRule />
-
-          <KeyTakeaways
-            points={[
-              "Charge-out rate = full annual cost base ÷ chargeable hours (1,500-1,800 not 2,000+) + profit margin. Most contractors' rates are 2-3× their hourly wage equivalent.",
-              "Estimate (approximate) vs quotation (fixed-price binding under CRA 2015) vs tender (formal procedural submission against BoQ). Use the right word on the document.",
-              "Site survey on any non-trivial job — 30-60 minutes saves dozens of hours of variation disputes. What you can't see, you can't price accurately.",
-              "Quotation structure: scope, inclusions, exclusions, assumptions, payment terms, validity period, variation procedure.",
-              "Materials markup typical 15-30% — covers sourcing time, stock holding, wastage. Be transparent if asked.",
-              "Variations agreed in writing before extra work — email, PDF or signed variation order. Eliminates most invoice disputes.",
-              "Late Payment of Commercial Debts (Interest) Act 1998 gives 8% + base statutory interest plus fixed recovery costs on overdue B2B invoices.",
-              "Don't race competitors to the bottom — explain your value; let cheap-only customers go; build on customers who value the difference.",
-            ]}
-          />
-
-          <Quiz title="Pricing and estimating — knowledge check" questions={quizQuestions} />
-
-          <div className="grid grid-cols-2 gap-3 pt-2">
-            <button
-              onClick={() => navigate('/study-centre/apprentice/level3-module7-section5-3')}
-              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
-                <ChevronLeft className="h-3 w-3" /> Previous
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-white truncate">
-                5.3 Setting up self-employed
-              </div>
-            </button>
-            <button
-              onClick={() => navigate('/study-centre/apprentice/level3-module7-section5-5')}
-              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
-                Next <ChevronRight className="h-3 w-3" />
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-black truncate">
-                5.5 Legal requirements
-              </div>
-            </button>
-          </div>
-        </PageFrame>
-      </div>
-    </div>
+            <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+              Next <ChevronRight className="h-3 w-3" />
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-black truncate">
+              5.5 Legal requirements
+            </div>
+          </button>
+        </div>
+      </HubBody>
+    </HubPage>
   );
 }

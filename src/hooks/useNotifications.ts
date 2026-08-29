@@ -18,6 +18,15 @@ export interface Notification {
   local_authority_submitted: boolean;
   created_at: string;
   submitted_at: string | null;
+  /*
+   * ELE-1616 — the certificate the SCHEME returns after submission (the PDF
+   * NAPIT hands back). Nullable: most rows will never have one, and it is
+   * attached long after the notification row is created.
+   */
+  scheme_certificate_url: string | null;
+  scheme_certificate_name: string | null;
+  scheme_certificate_ref: string | null;
+  scheme_certificate_uploaded_at: string | null;
   reports?: {
     id: string;
     report_id: string;
@@ -73,10 +82,17 @@ export const useNotifications = () => {
       }
 
       // Combine notifications with their reports
+      /*
+       * ⚠️ `as unknown as` — the generated `types.ts` predates the ELE-1616
+       * `scheme_certificate_*` columns, so the row type no longer overlaps
+       * `Notification`. Regenerating types.ts wholesale would drag in unrelated
+       * schema drift, which is the same call made for the numbering RPC. The
+       * columns are real; the query is `select('*')` and returns them.
+       */
       return (notificationsData || []).map((notification) => ({
         ...notification,
         reports: reportsMap[notification.report_id] || undefined,
-      })) as Notification[];
+      })) as unknown as Notification[];
     },
   });
 
@@ -84,7 +100,8 @@ export const useNotifications = () => {
     try {
       const { data, error } = await supabase
         .from('part_p_notifications')
-        .update(updates)
+        // Same reason as the cast above — the generated row type is behind.
+        .update(updates as never)
         .eq('id', id)
         .select()
         .single();

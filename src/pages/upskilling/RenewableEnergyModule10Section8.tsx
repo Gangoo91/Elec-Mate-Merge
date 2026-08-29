@@ -1,8 +1,8 @@
-import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { useNavigate } from 'react-router-dom';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
-import { PageFrame, PageHero } from '@/components/college/primitives';
 import {
   TLDR,
   ConceptBlock,
@@ -35,8 +35,7 @@ const inlineChecks = [
   },
   {
     id: 'm10s8-anti-islanding-test',
-    question:
-      'How is Reg 551.7.5 anti-islanding verified at commissioning for a 4-source PEI?',
+    question: 'How is Reg 551.7.5 anti-islanding verified at commissioning for a 4-source PEI?',
     options: [
       'A per-source simulated grid-loss test: each inverter disconnects within ENA time, no export at the meter, then resynchronises on restore',
       'No test is needed, because anti-islanding is a factory-set inverter function verified at manufacture',
@@ -63,8 +62,7 @@ const inlineChecks = [
   },
   {
     id: 'm10s8-cert-distribution',
-    question:
-      'How is the cert evidence bundle distributed at commissioning?',
+    question: 'How is the cert evidence bundle distributed at commissioning?',
     options: [
       'A single copy held by the installer, with the customer given access only on request',
       'Three copies — a customer copy at commissioning, a DNO copy closing the EREC loop, and an installer archive kept for audit',
@@ -196,478 +194,426 @@ export default function RenewableEnergyModule10Section8() {
   });
 
   return (
-    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
-      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
-        <PageFrame>
+    <HubPage>
+      <HubMasthead
+        section="Module 10 · Section 8 · BS 7671:2018+A4:2026 · Reg 643 Part 6 + Chapter 82 closure"
+        title="Commissioning + handover for hybrid systems"
+        backTo="../renewable-energy-module-10"
+      />
+      <HubBody>
+        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
+          The integrating closer of Module 10. Multi-source PEI commissioning sequence: Reg 643 Part
+          6 testing per circuit + Reg 551.7.5 anti-islanding per source + Reg 551.4.2 multi-source
+          RCD effectiveness + Reg 826.1.1.2.2 N-E switching if island-capable + Reg 826.1.1.4
+          multi-source isolation + Reg 826.1.2.1 overcurrent + EREC G99 / G100 commissioning + EMS
+          commissioning + customer handover. Cert evidence bundle composition + distribution +
+          retention. The integration of everything Module 10 has covered.
+        </p>
+
+        <TLDR
+          points={[
+            'Multi-source PEI commissioning is a 2-3 day labour + £2-5k cost activity covering 10+ distinct verification streams across BS 7671 + EREC + MCS + EMS.',
+            'Reg 643 Part 6 testing per circuit + per practical source configuration. Standard continuity, IR, polarity, EFLI, RCD, functional verification — extended across sources.',
+            'Reg 551.7.5 anti-islanding test per grid-following inverter: simulated grid-loss + timing verification + MET no-export confirmation. Per-source.',
+            'Reg 551.4.2 multi-source RCD effectiveness: controlled fault induction in each practical source combination + appropriate RCD trip verification.',
+            'Reg 826.1.1.2.2 N-E switching test (if island-capable): simulated grid-loss + transition timing + N-E continuity per state + reverse-restoration.',
+            'Reg 826.1.1.4 multi-source isolation walkthrough: each isolator operates + warning notice in place + isolation procedure document accurate.',
+            'Reg 826.1.2.1 overcurrent verification: spot-checks of PSCC at protective device locations + comparison to PEI overcurrent study.',
+            'EREC G99 commissioning cert (DNO-witnessed or self-certified) + EREC G100 commissioning cert if export-limited.',
+            'EMS commissioning: priority logic verification, ToU schedule active, load shedding, degraded-mode (EMS-offline) behaviour confirmed safe.',
+            'Customer handover meeting: 60-90 mins face-to-face, installation tour + EMS app demo + isolation walkthrough + operating modes + SEG steps + emergency contacts + handover pack delivery + acknowledgement signature.',
+            'Cert evidence bundle: integrated PEI EIC + per-technology DoCs + EREC correspondence + MCS handover + Reg 826 commissioning records + EMS architecture + photographs + customer handover signatures. Typical 30-60 pages.',
+            'Distribution: customer copy (handover) + DNO copy (G99/G100 closure) + installer archive (6-10 years). Future engineer reads BEFORE attending.',
+            'Resilience: customer-held copy is the operative document if installer ceases trading. Digital cloud + printed binder + USB backup. UK 2025-26 emerging: independent digital cert evidence platforms.',
+            'Property sale handover: full cert evidence bundle transfers to new owner; supports BUS / SEG continuity, insurance, conveyancing, future engineer attendance. Multi-source PEI adds property value £5-15k typical.',
+          ]}
+        />
+
+        <LearningOutcomes
+          outcomes={[
+            'Plan a complete commissioning sequence for a multi-source PEI covering BS 7671 Part 6 + Reg 551 + Reg 826 + EREC + EMS + customer handover.',
+            'Execute Reg 551.7.5 anti-islanding tests per grid-following inverter with timing + MET verification.',
+            'Verify Reg 551.4.2 multi-source RCD effectiveness across practical source combinations.',
+            'Verify Reg 826.1.1.2.2 N-E switching non-overlap + transition timing for island-capable PEI.',
+            'Compose + present the cert evidence bundle: integrated PEI EIC + per-technology DoCs + EREC + MCS + Reg 826 + EMS + photographs.',
+            'Conduct a comprehensive customer handover meeting covering installation tour + EMS demo + isolation walkthrough + operating modes + SEG + emergency contacts.',
+            'Plan cert evidence bundle distribution + retention + property-sale handover continuity.',
+            'Troubleshoot multi-source-specific issues: smooth-DC RCD trips, EMS coordination, multi-source RCD effectiveness, source-state correlations.',
+          ]}
+          initialVisibleCount={3}
+        />
+
+        <Pullquote>
+          Commissioning is not the end of the install. It’s the bridge between ‘what was built’ and
+          ‘what the customer can operate + the next engineer can maintain’. The cert evidence bundle
+          is the bridge itself.
+        </Pullquote>
+
+        <ContentEyebrow>The integrated commissioning workflow</ContentEyebrow>
+
+        <ConceptBlock
+          title="The 10+ verification streams of a multi-source PEI"
+          plainEnglish="Multi-source PEI commissioning is substantial. UK 2025-26 typical 4-source PEI (PV + BESS + V2G + heat pump) requires 10+ distinct verification streams across BS 7671 + Section 551 + Chapter 82 + EREC + MCS + EMS + customer handover. 2-3 day labour. £2-5k commissioning cost portion of the install."
+          onSite="The mental model: don’t batch commissioning. Sequence the streams; document each; aggregate into the integrated cert evidence bundle. Customer handover at the end after everything verified. Don’t hand over a half-commissioned PEI; the customer needs to know everything passes."
+        >
+          <p>Complete commissioning streams + typical sequence:</p>
+          <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+            <li>
+              <strong className="text-white">Stream 1: Reg 643 Part 6 per circuit</strong> —
+              continuity, IR, polarity, EFLI, RCD, functional verification per circuit + per
+              source-side connection. Standard BS 7671 commissioning, extended across the
+              multi-source install. Time: ≈1 day for typical 4-source PEI
+            </li>
+            <li>
+              <strong className="text-white">Stream 2: Reg 551.7.5 per inverter</strong> —
+              anti-islanding test per grid-following inverter. Simulated grid-loss + timing within
+              ENA spec + MET no-export verification + restoration check. Per source. Time: ½ day
+            </li>
+            <li>
+              <strong className="text-white">Stream 3: Reg 551.4.2 per source combination</strong> —
+              multi-source RCD effectiveness. Controlled fault induction in each practical
+              combination + verify appropriate RCD trips. Time: ½ day
+            </li>
+            <li>
+              <strong className="text-white">Stream 4: Reg 826.1.1.2.2 N-E switching</strong> — if
+              island-capable. Simulated grid-loss + transition timing + N-E continuity per state +
+              reverse transition. Time: 1-2 hours
+            </li>
+            <li>
+              <strong className="text-white">Stream 5: Reg 826.1.1.4 multi-source isolation</strong>{' '}
+              — isolator walkthrough + warning notice verification + isolation procedure document
+              accuracy. Time: 1 hour
+            </li>
+            <li>
+              <strong className="text-white">Stream 6: Reg 826.1.2.1 overcurrent</strong> —
+              spot-checks of PSCC at protective device locations + comparison to overcurrent study.
+              Time: ½ day
+            </li>
+            <li>
+              <strong className="text-white">Stream 7: EREC G99 commissioning</strong> — cert filed
+              with DNO. DNO-witnessed test if required, otherwise self-certified per manufacturer
+              DoC + ENA type-test approval. Time: ½ day (more if DNO witness)
+            </li>
+            <li>
+              <strong className="text-white">Stream 8: EREC G100 commissioning</strong> — if
+              export-limited. ELS device approval verification + soft / hard limit configuration
+              check + deliberate over-generation test + curtailment timing measurement + cert filed
+              with DNO. Time: ½ day
+            </li>
+            <li>
+              <strong className="text-white">Stream 9: EMS commissioning</strong> — priority logic
+              verification, ToU schedule active, load shedding behaviour, degraded-mode
+              (EMS-offline) behaviour confirmed safe. Time: ½ day
+            </li>
+            <li>
+              <strong className="text-white">Stream 10: MCS handover</strong> — MCS company
+              collates: MCS cert per technology, commissioning per technology, BS 7671 EIC, customer
+              handover pack contribution. Time: integrated across other streams
+            </li>
+            <li>
+              <strong className="text-white">Stream 11: Customer handover meeting</strong> — 60-90
+              mins face-to-face. Installation tour + EMS app demo + isolation walkthrough +
+              operating modes + SEG steps + emergency contacts + handover pack delivery +
+              acknowledgement signature
+            </li>
+            <li>
+              <strong className="text-white">Aggregate cert evidence</strong> — integrated PEI EIC +
+              per-technology DoCs + EREC correspondence + MCS handover packs + Reg 826 commissioning
+              records + EMS architecture + photographs + customer signatures. 30-60 pages
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="Anti-islanding + RCD multi-source testing methodology"
+          plainEnglish="The two most safety-critical multi-source-specific commissioning tests: Reg 551.7.5 anti-islanding (each grid-following inverter must disconnect on DNO loss within ENA spec) + Reg 551.4.2 multi-source RCD effectiveness (RCD architecture works across every practical source combination). Both verified by controlled physical tests + documented with timing + readings."
+          onSite="Practical testing kit: multifunction tester for standard Reg 643 + RCD instrument + clamp ammeter for MET export verification + (optional) oscilloscope for anti-islanding timing measurement. Vendor commissioning apps capture inverter self-test results. Photograph each test instrument reading; date-stamp via instrument or smartphone."
+        >
+          <p>Anti-islanding + multi-source RCD test methodology:</p>
+          <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+            <li>
+              <strong className="text-white">Anti-islanding test setup</strong> — inverter operating
+              in direct-feeding mode + clamp ammeter on supply tail at MET + (optional) oscilloscope
+              across inverter AC output for timing measurement + commissioning record sheet
+            </li>
+            <li>
+              <strong className="text-white">Anti-islanding test execution</strong> — (a) open DNO
+              main switch (controlled grid-loss simulation); (b) measure time from DNO open to
+              inverter disconnect (typically 200-500ms; note G99 disallows Vector Shift for
+              type-tested generation, so RoCoF — with voltage / frequency monitoring — is the
+              required loss-of-mains method on the type-tested inverters used in virtually all LCT
+              installs, Vector Shift being legacy / non-type-tested only); (c) verify MET clamp
+              ammeter shows zero current within &lt;2 s; (d) restore DNO + verify inverter
+              resynchronises within ENA-specified window (typically a fixed reconnection delay of
+              around 60s after supply restoration); (e) repeat per inverter (PV, BESS, V2G)
+            </li>
+            <li>
+              <strong className="text-white">Anti-islanding evidence</strong> — per-inverter test
+              result with method + timing + MET verification + restoration check + signed by
+              commissioning person + (if applicable) DNO witness signature. Photograph oscilloscope
+              screen / commissioning app result
+            </li>
+            <li>
+              <strong className="text-white">Multi-source RCD test setup</strong> — RCD test
+              instrument (e.g. multifunction tester) on each protective device +
+              controlled-source-state ability (turn each source on/off independently) + Reg 643.8
+              RCD test settings
+            </li>
+            <li>
+              <strong className="text-white">Multi-source RCD test execution</strong> — enumerate
+              practical source combinations: DNO+PV, DNO+PV+BESS, DNO+PV+BESS+V2G, BESS+PV island
+              (if applicable), etc. For each combination: (a) configure sources to active state; (b)
+              deliberately induce residual current via RCD test instrument (or controlled-current
+              path); (c) verify appropriate RCD trips within Reg 415.1 specified time; (d) reset +
+              continue
+            </li>
+            <li>
+              <strong className="text-white">Multi-source RCD evidence</strong> — per-combination
+              test result with trip time + RCD identifier + source combination + signed. Tabulated
+              in cert evidence
+            </li>
+            <li>
+              <strong className="text-white">Type B verification</strong>— if any source has
+              smooth-DC fault current capability per manufacturer DoC, verify RCD type is
+              appropriate (Type B or Type A + integrated RDC-DD). Photograph RCD label
+            </li>
+            <li>
+              <strong className="text-white">Cert evidence consolidation</strong> — anti-islanding
+              test record + RCD multi-source effectiveness table + photographs + signed
+              commissioning record + EREC G99 commissioning evidence including the anti-islanding
+              verification
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <RegsCallout
+          source="BS 7671:2018+A4:2026 · Reg 643 Part 6 (entire) + Reg 643.7.3 RCD verification"
+          clause="Verification of the characteristics and/or the effectiveness of the associated protective device shall be made for overcurrent protective devices by visual inspection or other appropriate methods (i.e. short-time or instantaneous tripping setting for circuit-breakers, current rating and type for fuses); and for RCDs, by visual inspection and testing. The effectiveness of automatic disconnection of supply by RCDs shall be verified using suitable test instruments."
+          meaning="Reg 643 Part 6 is the BS 7671 testing framework, applied to multi-source PEI with extensions. Reg 643.7.3 specifically addresses RCD verification: visual inspection (correct type, rating, sensitivity per design) + testing (using suitable test instruments — multifunction tester or dedicated RCD test instrument). For multi-source PEI: (1) Standard Reg 643 Part 6 — continuity (Reg 643.2), IR (Reg 643.3), polarity (Reg 643.4), EFLI (Reg 643.7), RCD operation (Reg 643.7.3 + 643.8), functional verification (Reg 643.10) per circuit. (2) Multi-source extensions — RCD verification per Reg 551.4.2 across every practical source combination (the per-source-combination test described above). Anti-islanding verification per Reg 551.7.5 per grid-following inverter (the simulated grid-loss test described above). Multi-source isolation walkthrough per Reg 826.1.1.4. N-E switching test per Reg 826.1.1.2.2 if island-capable. Overcurrent spot-check per Reg 826.1.2.1. (3) Cert evidence — the EIC schedule of test results captures per-circuit per-source-configuration entries; commissioning record captures the verification streams + signatures + photographs. UK 2025-26 typical 4-source PEI: 30-60 individual test entries; 60-100 pages cert evidence bundle including all supporting documentation."
+        />
+
+        <InlineCheck {...inlineChecks[0]} />
+
+        <InlineCheck {...inlineChecks[1]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>Cert evidence bundle + customer handover</ContentEyebrow>
+
+        <Pullquote>
+          The cert evidence bundle is the document that survives the install. Customer holds a copy,
+          DNO holds a subset, installer holds the archive. When something matters — sale, audit,
+          fault, future upgrade — someone reads the bundle. Make it readable.
+        </Pullquote>
+
+        <ConceptBlock
+          title="Cert evidence bundle structure + content"
+          plainEnglish="The integrated cert evidence bundle ties together everything: BS 7671 compliance (EIC + DoCs) + DNO interface (EREC G99 + G100) + technology certification (MCS) + integration design (Reg 826 + EMS) + customer handover signatures. Typical UK 2025-26 4-source PEI bundle: 30-60 pages PDF, structured + indexed, customer + DNO + installer copies."
+          onSite="Practical structure: cover sheet + index, integrated PEI EIC, per-technology DoCs, EREC correspondence, MCS handover packs, commissioning records per Reg 826 stream, EMS architecture, photographs, customer handover acknowledgement signatures. Format: digital PDF (primary) + printed if customer requests. Cloud-archived + USB-backed-up + on-property reference copy."
+        >
+          <p>Cert evidence bundle structure detail:</p>
+          <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+            <li>
+              <strong className="text-white">1. Cover sheet + index</strong> — customer + site +
+              sources + commissioning date + installer details + sources contact + version control
+            </li>
+            <li>
+              <strong className="text-white">2. Integrated PEI EIC</strong> — the master BS 7671
+              EIC. References per-technology sub-sections; carries Chapter 82 compliance summary;
+              schedule of test results
+            </li>
+            <li>
+              <strong className="text-white">3. Per-technology DoCs + product manuals</strong> — PV
+              inverter, BESS, V2G charger, EMS controller, backup gateway, ELS device if G100. Each
+              with ENA / BS EN / IEC reference
+            </li>
+            <li>
+              <strong className="text-white">4. Multi-source isolation evidence</strong> — isolation
+              schematic + photo of installed warning notice + isolation procedure document +
+              customer handover acknowledgement
+            </li>
+            <li>
+              <strong className="text-white">5. Operating modes + EMS</strong> — direct-feeding
+              default behaviour + island if applicable + EMS architecture diagram + tariff schedule
+              + priority logic + degraded-mode behaviour
+            </li>
+            <li>
+              <strong className="text-white">6. EREC correspondence</strong> — G99 application +
+              connection offer + acceptance + amendment correspondence + G100 cert if applicable +
+              DNO contact information
+            </li>
+            <li>
+              <strong className="text-white">7. MCS handover packs</strong> — per-technology MCS
+              certs (MIS 3002 PV + MIS 3005 heat pump + etc.) + commissioning per technology +
+              customer’s SEG application guidance
+            </li>
+            <li>
+              <strong className="text-white">8. Reg 826 commissioning records</strong> — Reg 551.7.5
+              anti-islanding per source + Reg 551.4.2 multi-source RCD per combination + Reg
+              826.1.1.2.2 N-E switching if applicable + Reg 826.1.2.1 overcurrent spot-checks
+            </li>
+            <li>
+              <strong className="text-white">9. Photographs</strong>— warning notice, isolators,
+              main consumer unit, inverter / BESS / V2G + their DC isolators, backup gateway, ELS
+              device, commissioning test instrument readings for representative tests
+            </li>
+            <li>
+              <strong className="text-white">10. SEG + tariff + smart meter</strong> — SEG
+              registration steps + customer’s chosen supplier + smart meter MPAN + commissioning
+              verification of export reading
+            </li>
+            <li>
+              <strong className="text-white">11. Maintenance + warranty</strong> — service intervals
+              per component + warranty terms + escalation contacts + replacement-after-fault process
+            </li>
+            <li>
+              <strong className="text-white">12. Customer handover acknowledgement</strong> — signed
+              by customer confirming receipt + understanding + acceptance of operating modes + any
+              questions raised
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="Customer handover meeting + future-engineer briefing"
+          plainEnglish="The customer handover is the final step of commissioning. 60-90 mins face-to-face with the customer at site. Cover: installation tour + EMS app demo + multi-source isolation walkthrough + operating modes + SEG registration + emergency contacts + handover pack delivery + signature. Goal: customer can safely operate + understand + isolate the PEI; future engineer can attend without context-loss."
+          onSite="Pace the meeting at the customer’s level: technical customer wants detail; non-technical customer wants confidence. Always: physical walkthrough of isolators + warning notice (don’t skip); EMS app demo with customer driving (not just installer showing); emergency contacts handed over in writing + verbally. Follow-up call at first month + 6 months."
+        >
+          <p>Customer handover meeting agenda:</p>
+          <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+            <li>
+              <strong className="text-white">0-10 mins: Installation tour</strong> — walk customer
+              to each physical location: PV inverter + DC isolator, BESS + AC + DC isolators, V2G
+              charger + isolator, EMS controller, backup gateway if installed, main consumer unit +
+              DNO main switch, multi-source warning notice. Customer sees + touches everything
+            </li>
+            <li>
+              <strong className="text-white">10-25 mins: EMS app demonstration</strong> — customer
+              logs in (sets password if not yet done); installer shows: current generation /
+              consumption / BESS state + how to read; tariff schedule + how to change ToU windows;
+              load-shedding configuration; alerts + notifications. Customer operates the app
+              supervised once
+            </li>
+            <li>
+              <strong className="text-white">25-40 mins: Multi-source isolation walkthrough</strong>{' '}
+              — customer reads isolation procedure aloud + installer walks them to each isolator +
+              customer operates one isolator under supervision (then restores). Customer understands
+              sequence + verification + emergency steps
+            </li>
+            <li>
+              <strong className="text-white">40-55 mins: Operating modes explanation</strong> —
+              direct-feeding default behaviour; island mode (if capable) duration + critical loads +
+              load shedding; what happens during a power cut step by step; how customer experiences
+              it
+            </li>
+            <li>
+              <strong className="text-white">55-70 mins: SEG + emergency contacts</strong> —
+              customer’s steps to register SEG with chosen supplier; smart meter MPAN + MCS cert
+              handed over; emergency contacts in writing: installer out-of-hours, vendor support per
+              component, DNO emergency 105, gas emergency if applicable
+            </li>
+            <li>
+              <strong className="text-white">70-80 mins: Handover pack delivery</strong> — digital
+              (USB / cloud) + printed (binder); installer walks customer through index + key
+              sections; customer asks any questions; customer signs acknowledgement
+            </li>
+            <li>
+              <strong className="text-white">80-90 mins: Q&A + follow-up commitment</strong> —
+              customer asks anything; installer answers honestly; installer commits to first-month
+              phone check-in (‘how is the system performing? any concerns?’); 6-month follow-up;
+              annual visit option discussed
+            </li>
+            <li>
+              <strong className="text-white">Cert evidence</strong>— customer handover meeting date
+              + attendees + signed acknowledgement + topics covered + customer questions raised +
+              follow-up commitment recorded in cert evidence bundle
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <RegsCallout
+          source="BS 7671:2018+A4:2026 · Part 6 + Reg 132 design + customer-facing duties"
+          clause="The installer / designer’s responsibility extends to: provision of the necessary documentation (Reg 132.13); verification of the installation in accordance with Part 6; and provision of the safety information necessary for the installation to be used safely (Reg 514 family). For a multi-source PEI under Chapter 82, this scope expands to include: Section 826 compliance summary, multi-source isolation procedure, operating-mode documentation, EMS architecture, EREC correspondence, and a customer handover that ensures the customer understands how to operate + isolate + maintain the installation safely."
+          meaning="The cert evidence bundle + customer handover are not optional administrative tasks — they are the BS 7671 + Chapter 82 mandate. Reg 132.13 + Reg 514 family establish the documentation + safety-information duties; Chapter 82 + Reg 826 family extend these to multi-source PEI specifics. For a UK 2025-26 multi-source PEI commissioning: (1) Documentation that must be provided — integrated PEI EIC, per-technology DoCs, Reg 826.1.1.4 isolation procedure, warning notice content + location, operating-mode documentation, EREC G99 + G100 if applicable, MCS handover packs per technology, EMS architecture, maintenance + warranty information. (2) Safety information that must be conveyed — multi-source isolation procedure; what to do during a power cut (island behaviour); emergency contacts; isolation in fault; lockout / tagout best practice; future-engineer briefing. (3) Customer handover that must occur — 60-90 mins face-to-face, signed acknowledgement, follow-up commitment. Without this: installer is exposed to liability for incomplete compliance; customer is exposed to safety risk + operational confusion; insurance + property-sale + audit chain breaks down. The cert evidence bundle + handover meeting are the operationalisation of Chapter 82 + Reg 132 + Reg 514 in a multi-source PEI context. UK 2025-26 reality: this is part of professional install practice; budget time + cost accordingly."
+        />
+
+        <InlineCheck {...inlineChecks[2]} />
+
+        <InlineCheck {...inlineChecks[3]} />
+
+        <SectionRule />
+
+        <Scenario
+          title="Final integrated commissioning — 4-source PEI (PV + BESS + V2G + heat pump) with backup capability"
+          situation="The closing scenario for Module 10. UK 2025-26 suburban semi-detached. Final state: 5 kWp PV (Section 712) + 10 kWh BESS (Chapter 57) + 7 kW V2G charger (Section 722 + 551) + 8 kW ASHP (M8 fixed equipment) + Tesla Backup Gateway 2 for island capability + Octopus Intelligent Octopus Go tariff + Octopus Power Pack successor for V2G grid services. Year-4 PEI build-out completed."
+          whatToDo="Comprehensive 2-3 day commissioning of the full PEI. Day 1: BS 7671 Reg 643 Part 6 per circuit (continuity, IR, polarity, EFLI, RCD operation, functional verification) on all circuits + Reg 551.7.5 anti-islanding test on PV inverter + BESS inverter + V2G charger (each: simulated DNO loss, timing within ENA G99 spec, MET no-export verification, restoration check; photograph each result). Day 2: Reg 551.4.2 multi-source RCD effectiveness across each practical source combination (DNO+PV, DNO+PV+BESS, DNO+PV+BESS+V2G, BESS+PV island, BESS+V2G island; controlled fault induction; verify appropriate RCD trips within Reg 415.1 time) + Reg 826.1.1.2.2 N-E switching test (simulated grid-loss, transition timing < 500ms, N-E continuity in direct-feeding vs island states, reverse transition, photograph) + Reg 826.1.1.4 multi-source isolation walkthrough (each isolator operates correctly, consolidated warning notice in place + legible, isolation procedure document accurate) + Reg 826.1.2.1 overcurrent spot-checks at MET (clamp ammeter during simulated peak event, comparison to overcurrent study). Day 3: EREC G99 commissioning cert (filed with UKPN, including the V2G amendment correspondence) + EREC G100 commissioning if export-limited (ELS curtailment test, soft / hard limit configuration, certificate filed with DNO) + EMS commissioning (Tesla + SolarEdge + Octopus tariff integration, priority logic verification, ToU schedule active, load-shedding behaviour test, degraded-mode test) + MCS handover collation + customer handover meeting (90 mins face-to-face: installation tour + EMS app demo + multi-source isolation walkthrough + operating modes + SEG registration steps with Octopus Outgoing Fixed + emergency contacts + handover pack delivery + signed acknowledgement). Final cert evidence bundle: integrated PEI EIC + per-technology DoCs (Tesla Powerwall 3 + Tesla Backup Gateway 2 + SolarEdge inverter + Wallbox Quasar 2 + Octopus EMS) + EREC G99 correspondence + G100 cert + MCS MIS 3002 PV + MIS 3005 heat pump handover + Reg 826 commissioning records + EMS architecture + 30+ photographs + customer handover acknowledgement = 60-page PDF. Distribution: customer digital + cloud + printed binder + USB; UKPN G99 closure; installer archive. Total commissioning labour: 2.5 days + 1 day cert prep + 0.5 day customer handover = 4 days. Commissioning cost £4,500. Customer’s integrated PEI: £30-50k total installed value; £5,000-15,000 added property value; annual operational benefit £2,500-3,500."
+          whyItMatters="This is the closing canonical scenario of Module 10 — a UK 2025-26 advanced multi-source PEI commissioned end-to-end with full Chapter 82 compliance + future-engineer-readable cert evidence + customer-operatable handover. Captures everything Module 10 has covered: Chapter 82 PEI integration (10.1) + EMS coordination (10.2) + SEG (10.3) + G100 if applicable (10.4) + V2G with OEM warranty (10.5) + grid-forming backup (10.6) + multi-source coordination (10.7) + integrated commissioning + cert evidence + handover (10.8). The installer’s scope at this level is distinct from ‘BS 7671 install’ — it’s ‘multi-source PEI integration + DNO interface + commercial tariffs + EMS + customer handover’. Different commercial model, different competencies, different cert evidence. Module 10 closes Module M10 of the Renewable Energy Systems course; M11 (Chapter 81 + lightning + fault levels) + M12 (testing + commissioning + handover) build on this foundation."
+        />
+
+        <CommonMistake
+          title="Treating commissioning as a single-day formality"
+          whatHappens="Installer budgets 1 day for commissioning of a 4-source PEI + skips through verification streams to meet the timeline. Reg 551.7.5 anti-islanding tested on one inverter not all; Reg 551.4.2 multi-source RCD tested in one combination not all; Reg 826.1.1.2.2 N-E switching not tested at all (assumed working from vendor commissioning); customer handover compressed to 15 mins of paperwork signing. Future engineer attending year 6 finds undocumented multi-source behaviour + spurious RCD trips because effectiveness across combinations wasn’t verified."
+          doInstead="Budget commissioning at 2-3 days for a 4-source PEI; £2-5k labour cost; comprehensive verification streams covered with photographic + signed evidence per stream. Customer handover at 60-90 mins face-to-face with installation tour + EMS demo + isolation walkthrough + operating modes + SEG + emergency contacts + signed acknowledgement. Cert evidence bundle 30-60 pages comprehensive. Don’t cut corners — the regulatory + safety + insurance + future-engineer exposure is real. Customer-facing: quote commissioning at the right price; explain why it’s 2-3 days; the customer benefits from comprehensive verification + a future-ready cert evidence bundle."
+        />
+
+        <CommonMistake
+          title="Skipping the customer-held cert evidence copy"
+          whatHappens="Installer files cert evidence in their cloud archive only; gives customer just the EIC paper sheet + 5-minute handover. 18 months later installer ceases trading; cloud archive becomes inaccessible. Customer experiences a fault, attempts to call vendor support; vendor needs the installation reference + commissioning details to provide effective support; customer has nothing to provide. Customer-engaged independent engineer cannot reconstruct the install history; performs fresh PIR / EICR as the only available recourse. Cert evidence ecosystem collapses."
+          doInstead="Treat customer-held cert evidence as the primary resilience layer. Hand over comprehensive bundle: digital PDF (USB or cloud link) + printed binder + on-fridge emergency contact card. Customer briefed on retention: ‘keep in 2 places — cloud + USB or printed copy. Treat it like property deeds.’ Cert evidence bundle accessible to future engineer + insurance + property sale + audit without dependence on installer’s business continuity. UK 2025-26 emerging: digital cert evidence platforms (Elec-Mate, NAPIT cert portal) with independent cloud-resilient archive + customer role-based access. Recommend customer enrol if applicable."
+        />
+
+        <SectionRule />
+
+        <KeyTakeaways
+          points={[
+            'Multi-source PEI commissioning = 2-3 days labour + £2-5k cost. 10+ distinct verification streams across BS 7671 + Section 551 + Chapter 82 + EREC + MCS + EMS + customer handover.',
+            'Reg 643 Part 6 testing per circuit + per practical source configuration. Standard tests (continuity, IR, polarity, EFLI, RCD operation, functional verification) extended across sources.',
+            'Reg 551.7.5 anti-islanding test per grid-following inverter: simulated grid-loss + timing within ENA spec + MET no-export verification + restoration check. Per source.',
+            'Reg 551.4.2 multi-source RCD effectiveness: controlled fault induction in each practical source combination + verify appropriate RCD trips within Reg 415.1 time.',
+            'Reg 826.1.1.2.2 N-E switching test (if island-capable): simulated grid-loss + transition timing < 500ms + N-E continuity per state + reverse transition. Backup gateway commissioning.',
+            'Reg 826.1.1.4 multi-source isolation walkthrough: each isolator operates + consolidated warning notice in place + isolation procedure document accurate.',
+            'Reg 826.1.2.1 overcurrent verification: spot-checks of PSCC at protective device locations + comparison to PEI overcurrent study.',
+            'EREC G99 commissioning cert (DNO-witnessed or self-certified) + EREC G100 commissioning if export-limited — ELS device approval + soft / hard configuration + commissioning test + cert filed.',
+            'EMS commissioning: priority logic + ToU schedule + load shedding + degraded-mode (EMS-offline) verification. Both vendor + third-party EMS where applicable.',
+            'Customer handover meeting: 60-90 mins face-to-face. Installation tour + EMS app demo + multi-source isolation walkthrough + operating modes + SEG registration + emergency contacts + handover pack delivery + signed acknowledgement + follow-up commitment.',
+            'Cert evidence bundle structure: cover sheet + integrated PEI EIC + per-technology DoCs + multi-source isolation evidence + operating modes / EMS + EREC correspondence + MCS handover packs + Reg 826 commissioning records + photographs + SEG / tariff + maintenance / warranty + customer acknowledgement. 30-60 pages.',
+            'Distribution: customer copy (digital + printed + USB; cloud backup) + DNO copy (G99 / G100 closure subset) + installer archive (6-10 years minimum). UK 2025-26 emerging: independent digital cert evidence platforms.',
+            'Future-engineer reads cert evidence BEFORE attending. Customer-held copy is operative if installer ceases trading. Property sale transfers complete bundle. Insurance + audit + warranty + conveyancing depends on resilient cert evidence.',
+            'Module 10 closes here. Builds foundation for M11 (Chapter 81 + lightning + fault levels) + M12 (full integrated testing + handover) within the Renewable Energy Systems course.',
+          ]}
+        />
+
+        <FAQ items={faqs} />
+
+        <Quiz questions={quizQuestions} title="Section 8 · Knowledge check" />
+
+        <div className="grid grid-cols-2 gap-3 pt-2">
           <button
             type="button"
-            onClick={() => navigate('../renewable-energy-module-10')}
-            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            onClick={() => navigate('/electrician/upskilling/renewable-energy-module-10-section-7')}
+            className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
           >
-            <ArrowLeft className="h-4 w-4" /> Module 10
+            <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+              <ChevronLeft className="h-3 w-3" /> Section 7
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-white truncate">
+              10.7 Multi-source coordination
+            </div>
           </button>
-
-          <PageHero
-            eyebrow="Module 10 · Section 8 · BS 7671:2018+A4:2026 · Reg 643 Part 6 + Chapter 82 closure"
-            title="Commissioning + handover for hybrid systems"
-            description="The integrating closer of Module 10. Multi-source PEI commissioning sequence: Reg 643 Part 6 testing per circuit + Reg 551.7.5 anti-islanding per source + Reg 551.4.2 multi-source RCD effectiveness + Reg 826.1.1.2.2 N-E switching if island-capable + Reg 826.1.1.4 multi-source isolation + Reg 826.1.2.1 overcurrent + EREC G99 / G100 commissioning + EMS commissioning + customer handover. Cert evidence bundle composition + distribution + retention. The integration of everything Module 10 has covered."
-            tone="yellow"
-          />
-
-          <TLDR
-            points={[
-              'Multi-source PEI commissioning is a 2-3 day labour + £2-5k cost activity covering 10+ distinct verification streams across BS 7671 + EREC + MCS + EMS.',
-              'Reg 643 Part 6 testing per circuit + per practical source configuration. Standard continuity, IR, polarity, EFLI, RCD, functional verification — extended across sources.',
-              'Reg 551.7.5 anti-islanding test per grid-following inverter: simulated grid-loss + timing verification + MET no-export confirmation. Per-source.',
-              'Reg 551.4.2 multi-source RCD effectiveness: controlled fault induction in each practical source combination + appropriate RCD trip verification.',
-              'Reg 826.1.1.2.2 N-E switching test (if island-capable): simulated grid-loss + transition timing + N-E continuity per state + reverse-restoration.',
-              'Reg 826.1.1.4 multi-source isolation walkthrough: each isolator operates + warning notice in place + isolation procedure document accurate.',
-              'Reg 826.1.2.1 overcurrent verification: spot-checks of PSCC at protective device locations + comparison to PEI overcurrent study.',
-              'EREC G99 commissioning cert (DNO-witnessed or self-certified) + EREC G100 commissioning cert if export-limited.',
-              'EMS commissioning: priority logic verification, ToU schedule active, load shedding, degraded-mode (EMS-offline) behaviour confirmed safe.',
-              'Customer handover meeting: 60-90 mins face-to-face, installation tour + EMS app demo + isolation walkthrough + operating modes + SEG steps + emergency contacts + handover pack delivery + acknowledgement signature.',
-              'Cert evidence bundle: integrated PEI EIC + per-technology DoCs + EREC correspondence + MCS handover + Reg 826 commissioning records + EMS architecture + photographs + customer handover signatures. Typical 30-60 pages.',
-              'Distribution: customer copy (handover) + DNO copy (G99/G100 closure) + installer archive (6-10 years). Future engineer reads BEFORE attending.',
-              'Resilience: customer-held copy is the operative document if installer ceases trading. Digital cloud + printed binder + USB backup. UK 2025-26 emerging: independent digital cert evidence platforms.',
-              'Property sale handover: full cert evidence bundle transfers to new owner; supports BUS / SEG continuity, insurance, conveyancing, future engineer attendance. Multi-source PEI adds property value £5-15k typical.',
-            ]}
-          />
-
-          <LearningOutcomes
-            outcomes={[
-              'Plan a complete commissioning sequence for a multi-source PEI covering BS 7671 Part 6 + Reg 551 + Reg 826 + EREC + EMS + customer handover.',
-              'Execute Reg 551.7.5 anti-islanding tests per grid-following inverter with timing + MET verification.',
-              'Verify Reg 551.4.2 multi-source RCD effectiveness across practical source combinations.',
-              'Verify Reg 826.1.1.2.2 N-E switching non-overlap + transition timing for island-capable PEI.',
-              'Compose + present the cert evidence bundle: integrated PEI EIC + per-technology DoCs + EREC + MCS + Reg 826 + EMS + photographs.',
-              'Conduct a comprehensive customer handover meeting covering installation tour + EMS demo + isolation walkthrough + operating modes + SEG + emergency contacts.',
-              'Plan cert evidence bundle distribution + retention + property-sale handover continuity.',
-              'Troubleshoot multi-source-specific issues: smooth-DC RCD trips, EMS coordination, multi-source RCD effectiveness, source-state correlations.',
-            ]}
-            initialVisibleCount={3}
-          />
-
-          <Pullquote>
-            Commissioning is not the end of the install. It’s the bridge between ‘what was built’ and ‘what the customer can operate + the next engineer can maintain’. The cert evidence bundle is the bridge itself.
-          </Pullquote>
-
-          <ContentEyebrow>The integrated commissioning workflow</ContentEyebrow>
-
-          <ConceptBlock
-            title="The 10+ verification streams of a multi-source PEI"
-            plainEnglish="Multi-source PEI commissioning is substantial. UK 2025-26 typical 4-source PEI (PV + BESS + V2G + heat pump) requires 10+ distinct verification streams across BS 7671 + Section 551 + Chapter 82 + EREC + MCS + EMS + customer handover. 2-3 day labour. £2-5k commissioning cost portion of the install."
-            onSite="The mental model: don’t batch commissioning. Sequence the streams; document each; aggregate into the integrated cert evidence bundle. Customer handover at the end after everything verified. Don’t hand over a half-commissioned PEI; the customer needs to know everything passes."
+          <button
+            type="button"
+            onClick={() => navigate('/electrician/upskilling/renewable-energy-module-10')}
+            className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
           >
-            <p>Complete commissioning streams + typical sequence:</p>
-            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
-              <li>
-                <strong className="text-white">Stream 1: Reg 643 Part 6
-                  per circuit</strong> — continuity, IR, polarity, EFLI, RCD,
-                functional verification per circuit + per source-side connection.
-                Standard BS 7671 commissioning, extended across the multi-source
-                install. Time: ≈1 day for typical 4-source PEI
-              </li>
-              <li>
-                <strong className="text-white">Stream 2: Reg 551.7.5
-                  per inverter</strong> — anti-islanding test per grid-following
-                inverter. Simulated grid-loss + timing within ENA spec + MET
-                no-export verification + restoration check. Per source. Time:
-                ½ day
-              </li>
-              <li>
-                <strong className="text-white">Stream 3: Reg 551.4.2
-                  per source combination</strong> — multi-source RCD
-                effectiveness. Controlled fault induction in each practical
-                combination + verify appropriate RCD trips. Time: ½ day
-              </li>
-              <li>
-                <strong className="text-white">Stream 4: Reg
-                  826.1.1.2.2 N-E switching</strong> — if island-capable.
-                Simulated grid-loss + transition timing + N-E continuity per state
-                + reverse transition. Time: 1-2 hours
-              </li>
-              <li>
-                <strong className="text-white">Stream 5: Reg
-                  826.1.1.4 multi-source isolation</strong> — isolator
-                walkthrough + warning notice verification + isolation procedure
-                document accuracy. Time: 1 hour
-              </li>
-              <li>
-                <strong className="text-white">Stream 6: Reg
-                  826.1.2.1 overcurrent</strong> — spot-checks of PSCC at
-                protective device locations + comparison to overcurrent study.
-                Time: ½ day
-              </li>
-              <li>
-                <strong className="text-white">Stream 7: EREC G99
-                  commissioning</strong> — cert filed with DNO. DNO-witnessed
-                test if required, otherwise self-certified per manufacturer DoC +
-                ENA type-test approval. Time: ½ day (more if DNO witness)
-              </li>
-              <li>
-                <strong className="text-white">Stream 8: EREC G100
-                  commissioning</strong> — if export-limited. ELS device
-                approval verification + soft / hard limit configuration check +
-                deliberate over-generation test + curtailment timing measurement
-                + cert filed with DNO. Time: ½ day
-              </li>
-              <li>
-                <strong className="text-white">Stream 9: EMS
-                  commissioning</strong> — priority logic verification, ToU
-                schedule active, load shedding behaviour, degraded-mode
-                (EMS-offline) behaviour confirmed safe. Time: ½ day
-              </li>
-              <li>
-                <strong className="text-white">Stream 10: MCS
-                  handover</strong> — MCS company collates: MCS cert per
-                technology, commissioning per technology, BS 7671 EIC, customer
-                handover pack contribution. Time: integrated across other streams
-              </li>
-              <li>
-                <strong className="text-white">Stream 11: Customer
-                  handover meeting</strong> — 60-90 mins face-to-face.
-                Installation tour + EMS app demo + isolation walkthrough +
-                operating modes + SEG steps + emergency contacts + handover pack
-                delivery + acknowledgement signature
-              </li>
-              <li>
-                <strong className="text-white">Aggregate cert
-                  evidence</strong> — integrated PEI EIC + per-technology DoCs
-                + EREC correspondence + MCS handover packs + Reg 826 commissioning
-                records + EMS architecture + photographs + customer signatures.
-                30-60 pages
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <ConceptBlock
-            title="Anti-islanding + RCD multi-source testing methodology"
-            plainEnglish="The two most safety-critical multi-source-specific commissioning tests: Reg 551.7.5 anti-islanding (each grid-following inverter must disconnect on DNO loss within ENA spec) + Reg 551.4.2 multi-source RCD effectiveness (RCD architecture works across every practical source combination). Both verified by controlled physical tests + documented with timing + readings."
-            onSite="Practical testing kit: multifunction tester for standard Reg 643 + RCD instrument + clamp ammeter for MET export verification + (optional) oscilloscope for anti-islanding timing measurement. Vendor commissioning apps capture inverter self-test results. Photograph each test instrument reading; date-stamp via instrument or smartphone."
-          >
-            <p>Anti-islanding + multi-source RCD test methodology:</p>
-            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
-              <li>
-                <strong className="text-white">Anti-islanding test
-                  setup</strong> — inverter operating in direct-feeding mode +
-                clamp ammeter on supply tail at MET + (optional) oscilloscope
-                across inverter AC output for timing measurement + commissioning
-                record sheet
-              </li>
-              <li>
-                <strong className="text-white">Anti-islanding test
-                  execution</strong> — (a) open DNO main switch (controlled
-                grid-loss simulation); (b) measure time from DNO open to inverter
-                disconnect (typically 200-500ms; note G99 disallows Vector
-                Shift for type-tested generation, so RoCoF — with voltage / frequency
-                monitoring — is the required loss-of-mains method on the type-tested
-                inverters used in virtually all LCT installs, Vector Shift being legacy
-                / non-type-tested only); (c) verify MET clamp ammeter shows zero current within
-                &lt;2 s; (d) restore DNO + verify inverter resynchronises within
-                ENA-specified window (typically a fixed reconnection delay of around
-                60s after supply restoration); (e) repeat
-                per inverter (PV, BESS, V2G)
-              </li>
-              <li>
-                <strong className="text-white">Anti-islanding
-                  evidence</strong> — per-inverter test result with method +
-                timing + MET verification + restoration check + signed by
-                commissioning person + (if applicable) DNO witness signature.
-                Photograph oscilloscope screen / commissioning app result
-              </li>
-              <li>
-                <strong className="text-white">Multi-source RCD test
-                  setup</strong> — RCD test instrument (e.g. multifunction
-                tester) on each protective device + controlled-source-state
-                ability (turn each source on/off independently) + Reg 643.8 RCD
-                test settings
-              </li>
-              <li>
-                <strong className="text-white">Multi-source RCD test
-                  execution</strong> — enumerate practical source
-                combinations: DNO+PV, DNO+PV+BESS, DNO+PV+BESS+V2G, BESS+PV
-                island (if applicable), etc. For each combination: (a) configure
-                sources to active state; (b) deliberately induce residual current
-                via RCD test instrument (or controlled-current path); (c) verify
-                appropriate RCD trips within Reg 415.1 specified time; (d) reset +
-                continue
-              </li>
-              <li>
-                <strong className="text-white">Multi-source RCD
-                  evidence</strong> — per-combination test result with trip
-                time + RCD identifier + source combination + signed. Tabulated
-                in cert evidence
-              </li>
-              <li>
-                <strong className="text-white">Type B verification</strong>
-                — if any source has smooth-DC fault current capability per
-                manufacturer DoC, verify RCD type is appropriate (Type B or Type
-                A + integrated RDC-DD). Photograph RCD label
-              </li>
-              <li>
-                <strong className="text-white">Cert evidence
-                  consolidation</strong> — anti-islanding test record + RCD
-                multi-source effectiveness table + photographs + signed
-                commissioning record + EREC G99 commissioning evidence including
-                the anti-islanding verification
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <RegsCallout
-            source="BS 7671:2018+A4:2026 · Reg 643 Part 6 (entire) + Reg 643.7.3 RCD verification"
-            clause="Verification of the characteristics and/or the effectiveness of the associated protective device shall be made for overcurrent protective devices by visual inspection or other appropriate methods (i.e. short-time or instantaneous tripping setting for circuit-breakers, current rating and type for fuses); and for RCDs, by visual inspection and testing. The effectiveness of automatic disconnection of supply by RCDs shall be verified using suitable test instruments."
-            meaning="Reg 643 Part 6 is the BS 7671 testing framework, applied to multi-source PEI with extensions. Reg 643.7.3 specifically addresses RCD verification: visual inspection (correct type, rating, sensitivity per design) + testing (using suitable test instruments — multifunction tester or dedicated RCD test instrument). For multi-source PEI: (1) Standard Reg 643 Part 6 — continuity (Reg 643.2), IR (Reg 643.3), polarity (Reg 643.4), EFLI (Reg 643.7), RCD operation (Reg 643.7.3 + 643.8), functional verification (Reg 643.10) per circuit. (2) Multi-source extensions — RCD verification per Reg 551.4.2 across every practical source combination (the per-source-combination test described above). Anti-islanding verification per Reg 551.7.5 per grid-following inverter (the simulated grid-loss test described above). Multi-source isolation walkthrough per Reg 826.1.1.4. N-E switching test per Reg 826.1.1.2.2 if island-capable. Overcurrent spot-check per Reg 826.1.2.1. (3) Cert evidence — the EIC schedule of test results captures per-circuit per-source-configuration entries; commissioning record captures the verification streams + signatures + photographs. UK 2025-26 typical 4-source PEI: 30-60 individual test entries; 60-100 pages cert evidence bundle including all supporting documentation."
-          />
-
-          <InlineCheck {...inlineChecks[0]} />
-
-          <InlineCheck {...inlineChecks[1]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>Cert evidence bundle + customer handover</ContentEyebrow>
-
-          <Pullquote>
-            The cert evidence bundle is the document that survives the install. Customer holds a copy, DNO holds a subset, installer holds the archive. When something matters — sale, audit, fault, future upgrade — someone reads the bundle. Make it readable.
-          </Pullquote>
-
-          <ConceptBlock
-            title="Cert evidence bundle structure + content"
-            plainEnglish="The integrated cert evidence bundle ties together everything: BS 7671 compliance (EIC + DoCs) + DNO interface (EREC G99 + G100) + technology certification (MCS) + integration design (Reg 826 + EMS) + customer handover signatures. Typical UK 2025-26 4-source PEI bundle: 30-60 pages PDF, structured + indexed, customer + DNO + installer copies."
-            onSite="Practical structure: cover sheet + index, integrated PEI EIC, per-technology DoCs, EREC correspondence, MCS handover packs, commissioning records per Reg 826 stream, EMS architecture, photographs, customer handover acknowledgement signatures. Format: digital PDF (primary) + printed if customer requests. Cloud-archived + USB-backed-up + on-property reference copy."
-          >
-            <p>Cert evidence bundle structure detail:</p>
-            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
-              <li>
-                <strong className="text-white">1. Cover sheet +
-                  index</strong> — customer + site + sources + commissioning
-                date + installer details + sources contact + version control
-              </li>
-              <li>
-                <strong className="text-white">2. Integrated PEI
-                  EIC</strong> — the master BS 7671 EIC. References
-                per-technology sub-sections; carries Chapter 82 compliance summary;
-                schedule of test results
-              </li>
-              <li>
-                <strong className="text-white">3. Per-technology
-                  DoCs + product manuals</strong> — PV inverter, BESS, V2G
-                charger, EMS controller, backup gateway, ELS device if G100. Each
-                with ENA / BS EN / IEC reference
-              </li>
-              <li>
-                <strong className="text-white">4. Multi-source
-                  isolation evidence</strong> — isolation schematic + photo
-                of installed warning notice + isolation procedure document +
-                customer handover acknowledgement
-              </li>
-              <li>
-                <strong className="text-white">5. Operating modes
-                  + EMS</strong> — direct-feeding default behaviour + island
-                if applicable + EMS architecture diagram + tariff schedule +
-                priority logic + degraded-mode behaviour
-              </li>
-              <li>
-                <strong className="text-white">6. EREC
-                  correspondence</strong> — G99 application + connection
-                offer + acceptance + amendment correspondence + G100 cert if
-                applicable + DNO contact information
-              </li>
-              <li>
-                <strong className="text-white">7. MCS handover
-                  packs</strong> — per-technology MCS certs (MIS 3002 PV +
-                MIS 3005 heat pump + etc.) + commissioning per technology +
-                customer’s SEG application guidance
-              </li>
-              <li>
-                <strong className="text-white">8. Reg 826
-                  commissioning records</strong> — Reg 551.7.5 anti-islanding
-                per source + Reg 551.4.2 multi-source RCD per combination + Reg
-                826.1.1.2.2 N-E switching if applicable + Reg 826.1.2.1
-                overcurrent spot-checks
-              </li>
-              <li>
-                <strong className="text-white">9. Photographs</strong>
-                — warning notice, isolators, main consumer unit, inverter /
-                BESS / V2G + their DC isolators, backup gateway, ELS device,
-                commissioning test instrument readings for representative tests
-              </li>
-              <li>
-                <strong className="text-white">10. SEG + tariff +
-                  smart meter</strong> — SEG registration steps + customer’s
-                chosen supplier + smart meter MPAN + commissioning verification
-                of export reading
-              </li>
-              <li>
-                <strong className="text-white">11. Maintenance +
-                  warranty</strong> — service intervals per component +
-                warranty terms + escalation contacts + replacement-after-fault
-                process
-              </li>
-              <li>
-                <strong className="text-white">12. Customer handover
-                  acknowledgement</strong> — signed by customer confirming
-                receipt + understanding + acceptance of operating modes + any
-                questions raised
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <ConceptBlock
-            title="Customer handover meeting + future-engineer briefing"
-            plainEnglish="The customer handover is the final step of commissioning. 60-90 mins face-to-face with the customer at site. Cover: installation tour + EMS app demo + multi-source isolation walkthrough + operating modes + SEG registration + emergency contacts + handover pack delivery + signature. Goal: customer can safely operate + understand + isolate the PEI; future engineer can attend without context-loss."
-            onSite="Pace the meeting at the customer’s level: technical customer wants detail; non-technical customer wants confidence. Always: physical walkthrough of isolators + warning notice (don’t skip); EMS app demo with customer driving (not just installer showing); emergency contacts handed over in writing + verbally. Follow-up call at first month + 6 months."
-          >
-            <p>Customer handover meeting agenda:</p>
-            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
-              <li>
-                <strong className="text-white">0-10 mins:
-                  Installation tour</strong> — walk customer to each
-                physical location: PV inverter + DC isolator, BESS + AC + DC
-                isolators, V2G charger + isolator, EMS controller, backup
-                gateway if installed, main consumer unit + DNO main switch,
-                multi-source warning notice. Customer sees + touches everything
-              </li>
-              <li>
-                <strong className="text-white">10-25 mins: EMS app
-                  demonstration</strong> — customer logs in (sets password
-                if not yet done); installer shows: current generation /
-                consumption / BESS state + how to read; tariff schedule + how
-                to change ToU windows; load-shedding configuration; alerts +
-                notifications. Customer operates the app supervised once
-              </li>
-              <li>
-                <strong className="text-white">25-40 mins:
-                  Multi-source isolation walkthrough</strong> — customer
-                reads isolation procedure aloud + installer walks them to each
-                isolator + customer operates one isolator under supervision
-                (then restores). Customer understands sequence + verification +
-                emergency steps
-              </li>
-              <li>
-                <strong className="text-white">40-55 mins:
-                  Operating modes explanation</strong> — direct-feeding
-                default behaviour; island mode (if capable) duration + critical
-                loads + load shedding; what happens during a power cut step by
-                step; how customer experiences it
-              </li>
-              <li>
-                <strong className="text-white">55-70 mins: SEG +
-                  emergency contacts</strong> — customer’s steps to
-                register SEG with chosen supplier; smart meter MPAN + MCS cert
-                handed over; emergency contacts in writing: installer out-of-hours,
-                vendor support per component, DNO emergency 105, gas emergency if
-                applicable
-              </li>
-              <li>
-                <strong className="text-white">70-80 mins: Handover
-                  pack delivery</strong> — digital (USB / cloud) + printed
-                (binder); installer walks customer through index + key sections;
-                customer asks any questions; customer signs acknowledgement
-              </li>
-              <li>
-                <strong className="text-white">80-90 mins: Q&A +
-                  follow-up commitment</strong> — customer asks anything;
-                installer answers honestly; installer commits to first-month
-                phone check-in (‘how is the system performing? any
-                concerns?’); 6-month follow-up; annual visit option discussed
-              </li>
-              <li>
-                <strong className="text-white">Cert evidence</strong>
-                — customer handover meeting date + attendees + signed
-                acknowledgement + topics covered + customer questions raised +
-                follow-up commitment recorded in cert evidence bundle
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <RegsCallout
-            source="BS 7671:2018+A4:2026 · Part 6 + Reg 132 design + customer-facing duties"
-            clause="The installer / designer’s responsibility extends to: provision of the necessary documentation (Reg 132.13); verification of the installation in accordance with Part 6; and provision of the safety information necessary for the installation to be used safely (Reg 514 family). For a multi-source PEI under Chapter 82, this scope expands to include: Section 826 compliance summary, multi-source isolation procedure, operating-mode documentation, EMS architecture, EREC correspondence, and a customer handover that ensures the customer understands how to operate + isolate + maintain the installation safely."
-            meaning="The cert evidence bundle + customer handover are not optional administrative tasks — they are the BS 7671 + Chapter 82 mandate. Reg 132.13 + Reg 514 family establish the documentation + safety-information duties; Chapter 82 + Reg 826 family extend these to multi-source PEI specifics. For a UK 2025-26 multi-source PEI commissioning: (1) Documentation that must be provided — integrated PEI EIC, per-technology DoCs, Reg 826.1.1.4 isolation procedure, warning notice content + location, operating-mode documentation, EREC G99 + G100 if applicable, MCS handover packs per technology, EMS architecture, maintenance + warranty information. (2) Safety information that must be conveyed — multi-source isolation procedure; what to do during a power cut (island behaviour); emergency contacts; isolation in fault; lockout / tagout best practice; future-engineer briefing. (3) Customer handover that must occur — 60-90 mins face-to-face, signed acknowledgement, follow-up commitment. Without this: installer is exposed to liability for incomplete compliance; customer is exposed to safety risk + operational confusion; insurance + property-sale + audit chain breaks down. The cert evidence bundle + handover meeting are the operationalisation of Chapter 82 + Reg 132 + Reg 514 in a multi-source PEI context. UK 2025-26 reality: this is part of professional install practice; budget time + cost accordingly."
-          />
-
-          <InlineCheck {...inlineChecks[2]} />
-
-          <InlineCheck {...inlineChecks[3]} />
-
-          <SectionRule />
-
-          <Scenario
-            title="Final integrated commissioning — 4-source PEI (PV + BESS + V2G + heat pump) with backup capability"
-            situation="The closing scenario for Module 10. UK 2025-26 suburban semi-detached. Final state: 5 kWp PV (Section 712) + 10 kWh BESS (Chapter 57) + 7 kW V2G charger (Section 722 + 551) + 8 kW ASHP (M8 fixed equipment) + Tesla Backup Gateway 2 for island capability + Octopus Intelligent Octopus Go tariff + Octopus Power Pack successor for V2G grid services. Year-4 PEI build-out completed."
-            whatToDo="Comprehensive 2-3 day commissioning of the full PEI. Day 1: BS 7671 Reg 643 Part 6 per circuit (continuity, IR, polarity, EFLI, RCD operation, functional verification) on all circuits + Reg 551.7.5 anti-islanding test on PV inverter + BESS inverter + V2G charger (each: simulated DNO loss, timing within ENA G99 spec, MET no-export verification, restoration check; photograph each result). Day 2: Reg 551.4.2 multi-source RCD effectiveness across each practical source combination (DNO+PV, DNO+PV+BESS, DNO+PV+BESS+V2G, BESS+PV island, BESS+V2G island; controlled fault induction; verify appropriate RCD trips within Reg 415.1 time) + Reg 826.1.1.2.2 N-E switching test (simulated grid-loss, transition timing < 500ms, N-E continuity in direct-feeding vs island states, reverse transition, photograph) + Reg 826.1.1.4 multi-source isolation walkthrough (each isolator operates correctly, consolidated warning notice in place + legible, isolation procedure document accurate) + Reg 826.1.2.1 overcurrent spot-checks at MET (clamp ammeter during simulated peak event, comparison to overcurrent study). Day 3: EREC G99 commissioning cert (filed with UKPN, including the V2G amendment correspondence) + EREC G100 commissioning if export-limited (ELS curtailment test, soft / hard limit configuration, certificate filed with DNO) + EMS commissioning (Tesla + SolarEdge + Octopus tariff integration, priority logic verification, ToU schedule active, load-shedding behaviour test, degraded-mode test) + MCS handover collation + customer handover meeting (90 mins face-to-face: installation tour + EMS app demo + multi-source isolation walkthrough + operating modes + SEG registration steps with Octopus Outgoing Fixed + emergency contacts + handover pack delivery + signed acknowledgement). Final cert evidence bundle: integrated PEI EIC + per-technology DoCs (Tesla Powerwall 3 + Tesla Backup Gateway 2 + SolarEdge inverter + Wallbox Quasar 2 + Octopus EMS) + EREC G99 correspondence + G100 cert + MCS MIS 3002 PV + MIS 3005 heat pump handover + Reg 826 commissioning records + EMS architecture + 30+ photographs + customer handover acknowledgement = 60-page PDF. Distribution: customer digital + cloud + printed binder + USB; UKPN G99 closure; installer archive. Total commissioning labour: 2.5 days + 1 day cert prep + 0.5 day customer handover = 4 days. Commissioning cost £4,500. Customer’s integrated PEI: £30-50k total installed value; £5,000-15,000 added property value; annual operational benefit £2,500-3,500."
-            whyItMatters="This is the closing canonical scenario of Module 10 — a UK 2025-26 advanced multi-source PEI commissioned end-to-end with full Chapter 82 compliance + future-engineer-readable cert evidence + customer-operatable handover. Captures everything Module 10 has covered: Chapter 82 PEI integration (10.1) + EMS coordination (10.2) + SEG (10.3) + G100 if applicable (10.4) + V2G with OEM warranty (10.5) + grid-forming backup (10.6) + multi-source coordination (10.7) + integrated commissioning + cert evidence + handover (10.8). The installer’s scope at this level is distinct from ‘BS 7671 install’ — it’s ‘multi-source PEI integration + DNO interface + commercial tariffs + EMS + customer handover’. Different commercial model, different competencies, different cert evidence. Module 10 closes Module M10 of the Renewable Energy Systems course; M11 (Chapter 81 + lightning + fault levels) + M12 (testing + commissioning + handover) build on this foundation."
-          />
-
-          <CommonMistake
-            title="Treating commissioning as a single-day formality"
-            whatHappens="Installer budgets 1 day for commissioning of a 4-source PEI + skips through verification streams to meet the timeline. Reg 551.7.5 anti-islanding tested on one inverter not all; Reg 551.4.2 multi-source RCD tested in one combination not all; Reg 826.1.1.2.2 N-E switching not tested at all (assumed working from vendor commissioning); customer handover compressed to 15 mins of paperwork signing. Future engineer attending year 6 finds undocumented multi-source behaviour + spurious RCD trips because effectiveness across combinations wasn’t verified."
-            doInstead="Budget commissioning at 2-3 days for a 4-source PEI; £2-5k labour cost; comprehensive verification streams covered with photographic + signed evidence per stream. Customer handover at 60-90 mins face-to-face with installation tour + EMS demo + isolation walkthrough + operating modes + SEG + emergency contacts + signed acknowledgement. Cert evidence bundle 30-60 pages comprehensive. Don’t cut corners — the regulatory + safety + insurance + future-engineer exposure is real. Customer-facing: quote commissioning at the right price; explain why it’s 2-3 days; the customer benefits from comprehensive verification + a future-ready cert evidence bundle."
-          />
-
-          <CommonMistake
-            title="Skipping the customer-held cert evidence copy"
-            whatHappens="Installer files cert evidence in their cloud archive only; gives customer just the EIC paper sheet + 5-minute handover. 18 months later installer ceases trading; cloud archive becomes inaccessible. Customer experiences a fault, attempts to call vendor support; vendor needs the installation reference + commissioning details to provide effective support; customer has nothing to provide. Customer-engaged independent engineer cannot reconstruct the install history; performs fresh PIR / EICR as the only available recourse. Cert evidence ecosystem collapses."
-            doInstead="Treat customer-held cert evidence as the primary resilience layer. Hand over comprehensive bundle: digital PDF (USB or cloud link) + printed binder + on-fridge emergency contact card. Customer briefed on retention: ‘keep in 2 places — cloud + USB or printed copy. Treat it like property deeds.’ Cert evidence bundle accessible to future engineer + insurance + property sale + audit without dependence on installer’s business continuity. UK 2025-26 emerging: digital cert evidence platforms (Elec-Mate, NAPIT cert portal) with independent cloud-resilient archive + customer role-based access. Recommend customer enrol if applicable."
-          />
-
-          <SectionRule />
-
-          <KeyTakeaways
-            points={[
-              'Multi-source PEI commissioning = 2-3 days labour + £2-5k cost. 10+ distinct verification streams across BS 7671 + Section 551 + Chapter 82 + EREC + MCS + EMS + customer handover.',
-              'Reg 643 Part 6 testing per circuit + per practical source configuration. Standard tests (continuity, IR, polarity, EFLI, RCD operation, functional verification) extended across sources.',
-              'Reg 551.7.5 anti-islanding test per grid-following inverter: simulated grid-loss + timing within ENA spec + MET no-export verification + restoration check. Per source.',
-              'Reg 551.4.2 multi-source RCD effectiveness: controlled fault induction in each practical source combination + verify appropriate RCD trips within Reg 415.1 time.',
-              'Reg 826.1.1.2.2 N-E switching test (if island-capable): simulated grid-loss + transition timing < 500ms + N-E continuity per state + reverse transition. Backup gateway commissioning.',
-              'Reg 826.1.1.4 multi-source isolation walkthrough: each isolator operates + consolidated warning notice in place + isolation procedure document accurate.',
-              'Reg 826.1.2.1 overcurrent verification: spot-checks of PSCC at protective device locations + comparison to PEI overcurrent study.',
-              'EREC G99 commissioning cert (DNO-witnessed or self-certified) + EREC G100 commissioning if export-limited — ELS device approval + soft / hard configuration + commissioning test + cert filed.',
-              'EMS commissioning: priority logic + ToU schedule + load shedding + degraded-mode (EMS-offline) verification. Both vendor + third-party EMS where applicable.',
-              'Customer handover meeting: 60-90 mins face-to-face. Installation tour + EMS app demo + multi-source isolation walkthrough + operating modes + SEG registration + emergency contacts + handover pack delivery + signed acknowledgement + follow-up commitment.',
-              'Cert evidence bundle structure: cover sheet + integrated PEI EIC + per-technology DoCs + multi-source isolation evidence + operating modes / EMS + EREC correspondence + MCS handover packs + Reg 826 commissioning records + photographs + SEG / tariff + maintenance / warranty + customer acknowledgement. 30-60 pages.',
-              'Distribution: customer copy (digital + printed + USB; cloud backup) + DNO copy (G99 / G100 closure subset) + installer archive (6-10 years minimum). UK 2025-26 emerging: independent digital cert evidence platforms.',
-              'Future-engineer reads cert evidence BEFORE attending. Customer-held copy is operative if installer ceases trading. Property sale transfers complete bundle. Insurance + audit + warranty + conveyancing depends on resilient cert evidence.',
-              'Module 10 closes here. Builds foundation for M11 (Chapter 81 + lightning + fault levels) + M12 (full integrated testing + handover) within the Renewable Energy Systems course.',
-            ]}
-          />
-
-          <FAQ items={faqs} />
-
-          <Quiz questions={quizQuestions} title="Section 8 · Knowledge check" />
-
-          <div className="grid grid-cols-2 gap-3 pt-2">
-            <button
-              type="button"
-              onClick={() =>
-                navigate('/electrician/upskilling/renewable-energy-module-10-section-7')
-              }
-              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
-                <ChevronLeft className="h-3 w-3" /> Section 7
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-white truncate">
-                10.7 Multi-source coordination
-              </div>
-            </button>
-            <button
-              type="button"
-              onClick={() => navigate('/electrician/upskilling/renewable-energy-module-10')}
-              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
-                Module overview <ChevronRight className="h-3 w-3" />
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-black truncate">
-                Module 10 complete
-              </div>
-            </button>
-          </div>
-        </PageFrame>
-      </div>
-    </div>
+            <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+              Module overview <ChevronRight className="h-3 w-3" />
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-black truncate">
+              Module 10 complete
+            </div>
+          </button>
+        </div>
+      </HubBody>
+    </HubPage>
   );
 }

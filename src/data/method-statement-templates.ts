@@ -254,7 +254,7 @@ export const methodTemplates: MethodTemplate[] = [
       },
       {
         title: 'Dead Testing',
-        description: 'Complete dead testing sequence per BS7671',
+        description: 'Complete dead testing sequence per BS 7671',
         safetyRequirements: ['Isolation procedures', 'Safe isolation verification'],
         equipmentNeeded: ['Multifunction tester', 'Low resistance ohmmeter', 'Insulation tester'],
         qualifications: ['Testing competence'],
@@ -644,11 +644,11 @@ export const methodTemplates: MethodTemplate[] = [
     workType: 'Fire Safety Installation',
     estimatedDuration: '1-3 days',
     difficultyLevel: 'advanced',
-    requiredQualifications: ['18th Edition', 'Fire Alarm Competence', 'BS5839 Training'],
+    requiredQualifications: ['18th Edition', 'Fire Alarm Competence', 'BS 5839 Training'],
     steps: [
       {
         title: 'System Design & Planning',
-        description: 'Design fire alarm system to BS5839 requirements',
+        description: 'Design fire alarm system to BS 5839 requirements',
         safetyRequirements: ['Zone planning', 'Escape route coverage', 'Cause and effect'],
         equipmentNeeded: ['Design software', 'Site plans', 'Fire risk assessment'],
         qualifications: ['Fire alarm design'],
@@ -705,7 +705,7 @@ export const methodTemplates: MethodTemplate[] = [
     steps: [
       {
         title: 'Lighting Design',
-        description: 'Design emergency lighting to BS5266 requirements',
+        description: 'Design emergency lighting to BS 5266 requirements',
         safetyRequirements: ['Escape route illumination', 'Anti-panic requirements'],
         equipmentNeeded: ['Lux meter', 'Design software', 'Site drawings'],
         qualifications: ['Emergency lighting design'],

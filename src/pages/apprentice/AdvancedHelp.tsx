@@ -47,7 +47,9 @@ export default function AdvancedHelp() {
           </button>
 
           <div className="min-w-0">
-            <div className="truncate text-[14px] font-semibold leading-none text-white">Ask Dave</div>
+            <div className="truncate text-[14px] font-semibold leading-none text-white">
+              Ask Dave
+            </div>
             <div className="mt-0.5 truncate text-[9px] uppercase tracking-[0.16em] text-white/40">
               Master sparky · BS 7671 A4:2026
             </div>
@@ -76,7 +78,15 @@ export default function AdvancedHelp() {
   );
 }
 
-function SegBtn({ active, onClick, label }: { active: boolean; onClick: () => void; label: string }) {
+function SegBtn({
+  active,
+  onClick,
+  label,
+}: {
+  active: boolean;
+  onClick: () => void;
+  label: string;
+}) {
   return (
     <button
       type="button"

@@ -7,7 +7,7 @@
  * three-phase confirmation flow.
  */
 
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import { Sheet, SheetContent, SheetTitle, SheetDescription } from '@/components/ui/sheet';
 import { BoardPhotoCapture } from './BoardPhotoCapture';
 import {
@@ -16,6 +16,11 @@ import {
 } from './BoardScannerStream';
 import { trackFeatureUse } from '@/components/ActivityTracker';
 import { supabase } from '@/integrations/supabase/client';
+import {
+  uploadBoardPhotos,
+  loadBoardPhotos,
+  BOARD_PHOTOS_FIELD,
+} from '@/utils/board-photo-storage';
 
 export type AnalysisStage =
   | 'idle'
@@ -26,6 +31,15 @@ export type AnalysisStage =
   | 'complete';
 
 interface BoardScannerOverlayProps {
+  /**
+   * ELE-1606 — the report these photos belong to.
+   *
+   * Without it the capture lives only in memory on the device that took it, so
+   * scanning at the board on an iPad and finishing the certificate at a desktop
+   * loses the photo. Optional: call sites that have no report (a scratch scan)
+   * still work exactly as before, just without persistence.
+   */
+  reportId?: string;
   onAnalysisComplete: (data: {
     board: any;
     circuits: any[];
@@ -46,14 +60,66 @@ export const BoardScannerOverlay: React.FC<BoardScannerOverlayProps> = ({
   onAnalysisComplete,
   onClose,
   title = 'Board scanner',
+  reportId,
 }) => {
   const [imageUrls, setImageUrls] = useState<string[] | null>(null);
   const [showStream, setShowStream] = useState(false);
 
-  const handlePhotosReady = useCallback((urls: string[]) => {
-    setImageUrls(urls);
-    setShowStream(true);
-  }, []);
+  /*
+   * Pull back anything captured for this report on another device. This is the
+   * half that actually answers the report — uploading alone would persist the
+   * photo without ever showing it to the person who moved desks.
+   */
+  const [storedPhotos, setStoredPhotos] = useState<string[] | null>(null);
+  useEffect(() => {
+    if (!reportId) {
+      setStoredPhotos([]);
+      return;
+    }
+    let cancelled = false;
+    loadBoardPhotos(reportId).then((urls) => {
+      if (!cancelled) setStoredPhotos(urls);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [reportId]);
+
+  const handlePhotosReady = useCallback(
+    (urls: string[]) => {
+      /*
+       * Analysis starts immediately off the in-memory data URLs — persistence
+       * must never make the electrician wait at the board. The upload runs
+       * behind it and is entirely best-effort: if it fails, this degrades to
+       * exactly today's behaviour rather than breaking the scan.
+       */
+      setImageUrls(urls);
+      setShowStream(true);
+      if (reportId) {
+        void uploadBoardPhotos(reportId, urls).then(async (stored) => {
+          if (!stored.length) return;
+          /*
+           * 🔴 An RPC, NOT a read-modify-write of `reports.data`.
+           *
+           * The first version read the whole data blob, spread it and wrote it
+           * back. Autosave writes that same column every 30 seconds while the
+           * form is open, so anything typed between the read and the write was
+           * silently overwritten by a stale copy — on the busiest form in the
+           * app, while the electrician was working in it. `append_board_photos`
+           * merges inside the database, so only `boardImages` is ever touched.
+           */
+          const { error } = await supabase.rpc('append_board_photos' as never, {
+            p_report_id: reportId,
+            p_urls: stored,
+          } as never);
+          if (error) {
+            console.warn('[BoardScannerOverlay] could not record board photos:', error.message);
+          }
+        });
+      }
+    },
+    [reportId]
+  );
 
   const handleConfirm = useCallback(
     (circuits: ConfirmedCircuit[], board: any) => {
@@ -200,7 +266,10 @@ export const BoardScannerOverlay: React.FC<BoardScannerOverlayProps> = ({
               reads as one composed viewport, never a scroll */}
           <div className="flex-1 overflow-auto">
             <div className="mx-auto flex min-h-full w-full max-w-3xl flex-col px-5 py-5 pb-8 sm:justify-center sm:px-8">
-              <BoardPhotoCapture onPhotosReady={handlePhotosReady} />
+              <BoardPhotoCapture
+                onPhotosReady={handlePhotosReady}
+                initialPhotos={storedPhotos ?? undefined}
+              />
             </div>
           </div>
         </SheetContent>

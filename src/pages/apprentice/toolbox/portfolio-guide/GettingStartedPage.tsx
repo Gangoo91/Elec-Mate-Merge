@@ -5,10 +5,10 @@
  * when to start, digital vs physical, common mistakes, top tips.
  */
 
-import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft, CheckCircle2, AlertTriangle } from 'lucide-react';
-import { PageFrame, PageHero, itemVariants } from '@/components/college/primitives';
+import { CheckCircle2, AlertTriangle } from 'lucide-react';
+import { itemVariants } from '@/components/college/primitives';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { Eyebrow, SectionHeader } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
 
 const whyMatters = [
@@ -119,235 +119,228 @@ const topTips = [
 ];
 
 const GettingStartedPage = () => {
-  const navigate = useNavigate();
   return (
-    <PageFrame className="px-4 sm:px-6 lg:px-8">
-      <motion.div variants={itemVariants}>
-        <button
-          onClick={() => navigate('/apprentice/toolbox/portfolio-building')}
-          className="inline-flex items-center gap-2 h-11 -ml-2 px-2 rounded-md text-[12px] uppercase tracking-[0.18em] text-white/55 hover:text-white/85 transition-colors touch-manipulation"
-        >
-          <ArrowLeft className="h-4 w-4" />
-          Back
-        </button>
-      </motion.div>
+    <HubPage>
+      <HubMasthead
+        section="Apprentice · Portfolio · Start"
+        title="Getting started"
+        backTo="/apprentice/toolbox/portfolio-building"
+      />
+      <HubBody>
+        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
+          {
+            'What an apprenticeship portfolio actually is, what it has to prove, and the early habits that turn paperwork chore into a real record of your work.'
+          }
+        </p>
 
-      <motion.div variants={itemVariants}>
-        <PageHero
-          eyebrow="Apprentice · Portfolio · Start"
-          title="Getting started"
-          description="What an apprenticeship portfolio actually is, what it has to prove, and the early habits that turn paperwork chore into a real record of your work."
-          tone="yellow"
-        />
-      </motion.div>
+        {/* ── What is a portfolio ─────────────────────────────────── */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <SectionHeader
+            eyebrow="What it is"
+            title="A structured record of your competence"
+            meta="Not a folder of paperwork — a living document"
+          />
+          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-2">
+            <p className="text-[13.5px] text-white/85 leading-relaxed">
+              Your apprenticeship portfolio is a structured collection of evidence proving you're
+              competent against the Level 3 Installation / Maintenance Electrician standard (ST0152
+              v1.2). It tells the story of your development from day one to gateway readiness,
+              typically across 3.5–4 years (42–48 months).
+            </p>
+            <p className="text-[13px] text-white/85 leading-relaxed">
+              It's an on-programme record. Your training provider and assessor use it to confirm
+              your NVQ competence and sign you off at gateway. The End-Point Assessment itself is
+              the AM2S practical assessment — a synoptic test of safe isolation, installation,
+              inspection and testing, fault diagnosis and an embedded applied-knowledge test, not a
+              review of your portfolio.
+            </p>
+          </div>
+        </motion.section>
 
-      {/* ── What is a portfolio ─────────────────────────────────── */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <SectionHeader
-          eyebrow="What it is"
-          title="A structured record of your competence"
-          meta="Not a folder of paperwork — a living document"
-        />
-        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-2">
-          <p className="text-[13.5px] text-white/85 leading-relaxed">
-            Your apprenticeship portfolio is a structured collection of evidence proving you're
-            competent against the Level 3 Installation / Maintenance Electrician standard (ST0152
-            v1.2). It tells the story of your development from day one to gateway readiness,
-            typically across 3.5–4 years (42–48 months).
-          </p>
-          <p className="text-[13px] text-white/85 leading-relaxed">
-            It's an on-programme record. Your training provider and assessor use it to confirm your
-            NVQ competence and sign you off at gateway. The End-Point Assessment itself is the AM2S
-            practical assessment — a synoptic test of safe isolation, installation, inspection and
-            testing, fault diagnosis and an embedded applied-knowledge test, not a review of your
-            portfolio.
-          </p>
-        </div>
-      </motion.section>
+        {/* ── Why it matters ──────────────────────────────────────── */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <SectionHeader
+            eyebrow="Why it matters"
+            title="Six reasons it's non-negotiable"
+            meta="From EPA gateway to lifetime CV asset"
+          />
+          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5">
+            <ul className="space-y-1.5">
+              {whyMatters.map((item) => (
+                <li
+                  key={item}
+                  className="flex items-start gap-2 text-[13px] text-white/85 leading-relaxed"
+                >
+                  <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </motion.section>
 
-      {/* ── Why it matters ──────────────────────────────────────── */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <SectionHeader
-          eyebrow="Why it matters"
-          title="Six reasons it's non-negotiable"
-          meta="From EPA gateway to lifetime CV asset"
-        />
-        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5">
-          <ul className="space-y-1.5">
-            {whyMatters.map((item) => (
+        {/* ── Evidence types ──────────────────────────────────────── */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <SectionHeader
+            eyebrow="What goes in"
+            title="Six evidence types"
+            meta="A mix is what proves your full range"
+          />
+          <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+            {evidenceTypes.map((item) => (
               <li
-                key={item}
-                className="flex items-start gap-2 text-[13px] text-white/85 leading-relaxed"
+                key={item.title}
+                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-1.5"
               >
-                <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
-                <span>{item}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </motion.section>
-
-      {/* ── Evidence types ──────────────────────────────────────── */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <SectionHeader
-          eyebrow="What goes in"
-          title="Six evidence types"
-          meta="A mix is what proves your full range"
-        />
-        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-          {evidenceTypes.map((item) => (
-            <li
-              key={item.title}
-              className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-1.5"
-            >
-              <h3 className="text-[13.5px] font-semibold text-elec-yellow tracking-tight">
-                {item.title}
-              </h3>
-              <p className="text-[12.5px] text-white/85 leading-relaxed">{item.desc}</p>
-            </li>
-          ))}
-        </ul>
-      </motion.section>
-
-      {/* ── KSBs explained ─────────────────────────────────────── */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <SectionHeader
-          eyebrow="Understanding KSBs"
-          title="Knowledge · Skills · Behaviours"
-          meta="Every piece of evidence should map to at least one — see your ST0152 v1.2 standard for the full numbered KSB list"
-        />
-        <ul className="space-y-2">
-          {ksbAreas.map((area) => (
-            <li
-              key={area.code}
-              className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-2"
-            >
-              <div className="flex items-baseline justify-between gap-3 flex-wrap">
-                <h3 className="text-[14px] font-semibold text-elec-yellow tracking-tight">
-                  {area.title}
+                <h3 className="text-[13.5px] font-semibold text-elec-yellow tracking-tight">
+                  {item.title}
                 </h3>
-                <span className="text-[11px] font-mono tabular-nums text-elec-yellow">
-                  {area.code}
-                </span>
-              </div>
-              <p className="text-[13px] text-white/85 leading-relaxed">{area.description}</p>
-            </li>
-          ))}
-        </ul>
-      </motion.section>
-
-      {/* ── When to start ───────────────────────────────────────── */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <SectionHeader
-          eyebrow="When to start"
-          title="Right now — not Year 3"
-          meta="The biggest mistake is leaving it until the end"
-        />
-        <div className="rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-3">
-          <p className="text-[13.5px] text-white/85 leading-relaxed">
-            By Year 3 or 4 you've forgotten details, lost photos, and can't get witness statements
-            for work done years ago. Start now.
-          </p>
-          <div className="space-y-2 pt-2 border-t border-elec-yellow/15">
-            <Eyebrow className="text-elec-yellow/85">Recommended timeline</Eyebrow>
-            <ul className="space-y-1.5">
-              {timeline.map((item) => (
-                <li
-                  key={item}
-                  className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
-                >
-                  <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </motion.section>
-
-      {/* ── Digital vs Physical ─────────────────────────────────── */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <SectionHeader
-          eyebrow="Digital vs physical"
-          title="Most providers now prefer digital"
-          meta="Check what your provider requires"
-        />
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3">
-            <Eyebrow>Digital portfolio</Eyebrow>
-            <ul className="space-y-1.5">
-              {digitalPros.map((item) => (
-                <li
-                  key={item}
-                  className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
-                >
-                  <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3">
-            <Eyebrow>Physical portfolio</Eyebrow>
-            <ul className="space-y-1.5">
-              {physicalPros.map((item) => (
-                <li
-                  key={item}
-                  className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
-                >
-                  <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </motion.section>
-
-      {/* ── Common early mistakes ──────────────────────────────── */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <SectionHeader
-          eyebrow="Common early mistakes"
-          title="Eight traps to avoid"
-          meta="What catches most apprentices in year 1"
-        />
-        <div className="rounded-xl border border-red-500/25 bg-red-500/[0.04] p-4 sm:p-5">
-          <ul className="space-y-1.5">
-            {commonMistakes.map((item) => (
-              <li
-                key={item}
-                className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
-              >
-                <AlertTriangle className="h-3.5 w-3.5 text-red-300 flex-shrink-0 mt-0.5" />
-                <span>{item}</span>
+                <p className="text-[12.5px] text-white/85 leading-relaxed">{item.desc}</p>
               </li>
             ))}
           </ul>
-        </div>
-      </motion.section>
+        </motion.section>
 
-      {/* ── Top tips ────────────────────────────────────────────── */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <SectionHeader
-          eyebrow="Top tips"
-          title="Eight habits that compound"
-          meta="The ones distinction-grade apprentices recommend"
-        />
-        <div className="rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.04] p-4 sm:p-5">
-          <ul className="space-y-1.5">
-            {topTips.map((item) => (
+        {/* ── KSBs explained ─────────────────────────────────────── */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <SectionHeader
+            eyebrow="Understanding KSBs"
+            title="Knowledge · Skills · Behaviours"
+            meta="Every piece of evidence should map to at least one — see your ST0152 v1.2 standard for the full numbered KSB list"
+          />
+          <ul className="space-y-2">
+            {ksbAreas.map((area) => (
               <li
-                key={item}
-                className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                key={area.code}
+                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-2"
               >
-                <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow flex-shrink-0 mt-0.5" />
-                <span>{item}</span>
+                <div className="flex items-baseline justify-between gap-3 flex-wrap">
+                  <h3 className="text-[14px] font-semibold text-elec-yellow tracking-tight">
+                    {area.title}
+                  </h3>
+                  <span className="text-[11px] font-mono tabular-nums text-elec-yellow">
+                    {area.code}
+                  </span>
+                </div>
+                <p className="text-[13px] text-white/85 leading-relaxed">{area.description}</p>
               </li>
             ))}
           </ul>
-        </div>
-      </motion.section>
-    </PageFrame>
+        </motion.section>
+
+        {/* ── When to start ───────────────────────────────────────── */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <SectionHeader
+            eyebrow="When to start"
+            title="Right now — not Year 3"
+            meta="The biggest mistake is leaving it until the end"
+          />
+          <div className="rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-3">
+            <p className="text-[13.5px] text-white/85 leading-relaxed">
+              By Year 3 or 4 you've forgotten details, lost photos, and can't get witness statements
+              for work done years ago. Start now.
+            </p>
+            <div className="space-y-2 pt-2 border-t border-elec-yellow/15">
+              <Eyebrow className="text-elec-yellow/85">Recommended timeline</Eyebrow>
+              <ul className="space-y-1.5">
+                {timeline.map((item) => (
+                  <li
+                    key={item}
+                    className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                  >
+                    <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </motion.section>
+
+        {/* ── Digital vs Physical ─────────────────────────────────── */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <SectionHeader
+            eyebrow="Digital vs physical"
+            title="Most providers now prefer digital"
+            meta="Check what your provider requires"
+          />
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+            <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3">
+              <Eyebrow>Digital portfolio</Eyebrow>
+              <ul className="space-y-1.5">
+                {digitalPros.map((item) => (
+                  <li
+                    key={item}
+                    className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                  >
+                    <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3">
+              <Eyebrow>Physical portfolio</Eyebrow>
+              <ul className="space-y-1.5">
+                {physicalPros.map((item) => (
+                  <li
+                    key={item}
+                    className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                  >
+                    <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </motion.section>
+
+        {/* ── Common early mistakes ──────────────────────────────── */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <SectionHeader
+            eyebrow="Common early mistakes"
+            title="Eight traps to avoid"
+            meta="What catches most apprentices in year 1"
+          />
+          <div className="rounded-xl border border-red-500/25 bg-red-500/[0.04] p-4 sm:p-5">
+            <ul className="space-y-1.5">
+              {commonMistakes.map((item) => (
+                <li
+                  key={item}
+                  className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                >
+                  <AlertTriangle className="h-3.5 w-3.5 text-red-300 flex-shrink-0 mt-0.5" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </motion.section>
+
+        {/* ── Top tips ────────────────────────────────────────────── */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <SectionHeader
+            eyebrow="Top tips"
+            title="Eight habits that compound"
+            meta="The ones distinction-grade apprentices recommend"
+          />
+          <div className="rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.04] p-4 sm:p-5">
+            <ul className="space-y-1.5">
+              {topTips.map((item) => (
+                <li
+                  key={item}
+                  className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                >
+                  <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow flex-shrink-0 mt-0.5" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </motion.section>
+      </HubBody>
+    </HubPage>
   );
 };
 

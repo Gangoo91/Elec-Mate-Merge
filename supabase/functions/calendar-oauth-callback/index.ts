@@ -54,10 +54,16 @@ serve(async (req: Request) => {
     }
 
     const userId = stateData.user_id;
+    const provider: 'google' | 'outlook' = stateData.provider === 'outlook' ? 'outlook' : 'google';
 
     // Exchange code for tokens
     const tokenData = await withRetry(
-      () => withTimeout(exchangeGoogleCode(code), Timeouts.STANDARD, 'Google token exchange'),
+      () =>
+        withTimeout(
+          provider === 'outlook' ? exchangeMicrosoftCode(code) : exchangeGoogleCode(code),
+          Timeouts.STANDARD,
+          `${provider} token exchange`
+        ),
       RetryPresets.STANDARD
     );
 
@@ -70,23 +76,37 @@ serve(async (req: Request) => {
     const expiresAt = new Date(Date.now() + tokenData.expires_in * 1000);
 
     // Get user email from token
-    const emailAddress = await getGoogleEmail(tokenData.access_token);
+    const emailAddress =
+      provider === 'outlook'
+        ? await getMicrosoftEmail(tokenData.access_token)
+        : await getGoogleEmail(tokenData.access_token);
 
     // Store in database (upsert)
-    const { error: upsertError } = await supabase.from('google_calendar_tokens').upsert(
-      {
-        user_id: userId,
-        encrypted_access_token: encryptedAccessToken,
-        encrypted_refresh_token: encryptedRefreshToken,
-        token_expires_at: expiresAt.toISOString(),
-        google_email: emailAddress,
-        calendar_id: 'primary',
-        sync_enabled: true,
-      },
-      {
-        onConflict: 'user_id',
-      }
-    );
+    const { error: upsertError } =
+      provider === 'outlook'
+        ? await supabase.from('outlook_calendar_tokens').upsert(
+            {
+              user_id: userId,
+              encrypted_access_token: encryptedAccessToken,
+              encrypted_refresh_token: encryptedRefreshToken,
+              token_expires_at: expiresAt.toISOString(),
+              outlook_email: emailAddress,
+              sync_enabled: true,
+            },
+            { onConflict: 'user_id' }
+          )
+        : await supabase.from('google_calendar_tokens').upsert(
+            {
+              user_id: userId,
+              encrypted_access_token: encryptedAccessToken,
+              encrypted_refresh_token: encryptedRefreshToken,
+              token_expires_at: expiresAt.toISOString(),
+              google_email: emailAddress,
+              calendar_id: 'primary',
+              sync_enabled: true,
+            },
+            { onConflict: 'user_id' }
+          );
 
     if (upsertError) {
       console.error('Failed to store calendar tokens:', upsertError);
@@ -121,7 +141,13 @@ serve(async (req: Request) => {
 });
 
 async function exchangeGoogleCode(code: string) {
-  const redirectUri = `${SUPABASE_URL}/functions/v1/calendar-oauth-callback`;
+  // Prefer the public elec-mate.com redirect (set CALENDAR_OAUTH_REDIRECT once
+    // the Vercel rewrite is live — i.e. at THE PUSH); until then fall back to
+    // the Supabase URL so connects made today actually complete. Both URIs are
+    // registered on the Google client. Must match authorize + token exchange.
+    const redirectUri =
+      Deno.env.get('CALENDAR_OAUTH_REDIRECT') ||
+      `${Deno.env.get('SUPABASE_URL')}/functions/v1/calendar-oauth-callback`;
 
   const response = await fetch('https://oauth2.googleapis.com/token', {
     method: 'POST',
@@ -141,6 +167,44 @@ async function exchangeGoogleCode(code: string) {
   }
 
   return await response.json();
+}
+
+async function exchangeMicrosoftCode(code: string) {
+  // Prefer the public elec-mate.com redirect (set CALENDAR_OAUTH_REDIRECT once
+    // the Vercel rewrite is live — i.e. at THE PUSH); until then fall back to
+    // the Supabase URL so connects made today actually complete. Both URIs are
+    // registered on the Google client. Must match authorize + token exchange.
+    const redirectUri =
+      Deno.env.get('CALENDAR_OAUTH_REDIRECT') ||
+      `${Deno.env.get('SUPABASE_URL')}/functions/v1/calendar-oauth-callback`;
+
+  const response = await fetch('https://login.microsoftonline.com/common/oauth2/v2.0/token', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams({
+      code,
+      client_id: Deno.env.get('MICROSOFT_CLIENT_ID')!,
+      client_secret: Deno.env.get('MICROSOFT_CLIENT_SECRET')!,
+      redirect_uri: redirectUri,
+      grant_type: 'authorization_code',
+      scope: 'Calendars.ReadWrite User.Read offline_access',
+    }),
+  });
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new ExternalAPIError('Microsoft OAuth', { error: errorText });
+  }
+
+  return await response.json();
+}
+
+async function getMicrosoftEmail(accessToken: string): Promise<string> {
+  const response = await fetch('https://graph.microsoft.com/v1.0/me', {
+    headers: { Authorization: `Bearer ${accessToken}` },
+  });
+  const data = await response.json();
+  return data.mail || data.userPrincipalName || 'connected';
 }
 
 async function getGoogleEmail(accessToken: string): Promise<string> {

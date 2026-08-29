@@ -7,11 +7,11 @@
  */
 
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
-import { PageFrame, PageHero } from '@/components/college/primitives';
 import {
   TLDR,
   ConceptBlock,
@@ -60,12 +60,7 @@ const quickCheckQuestions = [
   {
     id: 'ghs-pictogram',
     question: 'Which GHS pictogram indicates a substance is harmful to the environment?',
-    options: [
-      'Dead fish and tree',
-      'Flame',
-      'Skull and crossbones',
-      'Exclamation mark',
-    ],
+    options: ['Dead fish and tree', 'Flame', 'Skull and crossbones', 'Exclamation mark'],
     correctIndex: 0,
     explanation:
       'The GHS pictogram showing a dead fish and tree indicates environmental hazards. This warns that the substance is dangerous to aquatic life and should not be released into drains or watercourses.',
@@ -286,310 +281,352 @@ const HNCModule1Section1_4 = () => {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
-      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
-        <PageFrame>
-          <button
-            onClick={() => navigate('../h-n-c-module1-section1')}
-            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
-          >
-            <ArrowLeft className="h-4 w-4" /> Section 1
-          </button>
+    <HubPage>
+      <HubMasthead
+        section="Module 1.1.4"
+        title="COSHH and Hazardous Substances"
+        backTo="../h-n-c-module1-section1"
+      />
+      <HubBody>
+        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
+          Understanding the Control of Substances Hazardous to Health and protecting workers in
+          building services
+        </p>
 
-          <PageHero
-            eyebrow="Module 1.1.4"
-            title="COSHH and Hazardous Substances"
-            description="Understanding the Control of Substances Hazardous to Health and protecting workers in building services"
-            tone="purple"
-          />
+        <TLDR
+          points={[
+            'You will treat COSHH 2002 as a parallel duty to BS 7671 — every refrigerant, solvent, sealant, lubricant or battery electrolyte specified is also a COSHH item.',
+            'You can step through the eight-stage COSHH process — assess, plan, train, monitor, surveil, review — on a building services project.',
+            'You apply the hierarchy of control (eliminate, substitute, engineer, administer, PPE) and reject any plan that leaps straight to PPE.',
+            'You recognise notifiable substances (asbestos, lead, isocyanates, silica) and trigger the right separate regimes (CAR, CLAW, ACoP L132).',
+          ]}
+        />
 
-          <TLDR
-            points={[
-              'You will treat COSHH 2002 as a parallel duty to BS 7671 — every refrigerant, solvent, sealant, lubricant or battery electrolyte specified is also a COSHH item.',
-              'You can step through the eight-stage COSHH process — assess, plan, train, monitor, surveil, review — on a building services project.',
-              'You apply the hierarchy of control (eliminate, substitute, engineer, administer, PPE) and reject any plan that leaps straight to PPE.',
-              'You recognise notifiable substances (asbestos, lead, isocyanates, silica) and trigger the right separate regimes (CAR, CLAW, ACoP L132).',
-            ]}
-          />
+        <RegsCallout
+          source="COSHH 2002 — Regulation 7(1)"
+          clause="Every employer shall ensure that the exposure of his employees to substances hazardous to health is either prevented or, where this is not reasonably practicable, adequately controlled."
+          meaning={
+            <>
+              Reg 7 hard-codes the prevention-first principle into UK law. As a building services
+              HNC engineer your first design move on any product specification with a hazardous
+              substance is to ask: can we eliminate or substitute? Only when both fail do you move
+              down the hierarchy to engineering controls and finally PPE.
+            </>
+          }
+          cite="Source: Control of Substances Hazardous to Health Regulations 2002, Reg 7(1) — legislation.gov.uk"
+        />
 
-          <RegsCallout
-            source="COSHH 2002 — Regulation 7(1)"
-            clause="Every employer shall ensure that the exposure of his employees to substances hazardous to health is either prevented or, where this is not reasonably practicable, adequately controlled."
-            meaning={
+        <LearningOutcomes
+          outcomes={[
+            'Define what constitutes a hazardous substance under COSHH',
+            'Explain the five steps of COSHH assessment',
+            'Apply the hierarchy of control measures correctly',
+            'Identify when health surveillance is required',
+            'Recognise hazardous substances in building services work',
+            'Interpret Safety Data Sheets and GHS/CLP labelling',
+          ]}
+          initialVisibleCount={3}
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>What Are Hazardous Substances?</ContentEyebrow>
+
+        <ConceptBlock title="What Are Hazardous Substances?">
+          <p>
+            The Control of Substances Hazardous to Health Regulations 2002 (COSHH) requires
+            employers to control exposure to hazardous substances to prevent ill health. A hazardous
+            substance is any substance that can cause harm to health.
+          </p>
+
+          <p className="text-sm font-medium text-white mb-2">Substances covered by COSHH:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Chemicals:</strong> Acids, alkalis, solvents, adhesives
+            </li>
+            <li>
+              <strong>Fumes:</strong> Welding fumes, soldering flux fumes
+            </li>
+            <li>
+              <strong>Dusts:</strong> Wood dust, silica dust, insulation fibres
+            </li>
+            <li>
+              <strong>Vapours and mists:</strong> Paint spray, cleaning agent vapours
+            </li>
+            <li>
+              <strong>Gases:</strong> Refrigerants, carbon monoxide, nitrogen
+            </li>
+            <li>
+              <strong>Biological agents:</strong> Bacteria, viruses (e.g., legionella in water
+              systems)
+            </li>
+          </ul>
+
+          <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            Routes of Entry into the Body
+          </p>
+
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Inhalation</strong> — Description: Breathing in fumes, dusts, gases. Building
+              Services Examples: Soldering flux fumes, refrigerant gases, silica dust
+            </li>
+            <li>
+              <strong>Skin absorption</strong> — Description: Contact with skin allowing
+              penetration. Building Services Examples: Solvents, oils, some adhesives
+            </li>
+            <li>
+              <strong>Ingestion</strong> — Description: Swallowing (often from contaminated hands).
+              Building Services Examples: Lead from older solder, contamination from poor hygiene
+            </li>
+            <li>
+              <strong>Injection</strong> — Description: Entry through cuts or puncture wounds.
+              Building Services Examples: Contaminated sharps, high-pressure injection
+            </li>
+          </ul>
+
+          <CommonMistake
+            title="strongNot covered by COSHH:/strong Lead (Control of Lead at Work Regulations 2002), asbestos (Control of Asbestos Regulations 2012), radioactive substances, and physical hazards such as high pressure, temperature extremes, or explosive properties."
+            whatHappens={
               <>
-                Reg 7 hard-codes the prevention-first principle into UK law. As a building services
-                HNC engineer your first design move on any product specification with a hazardous
-                substance is to ask: can we eliminate or substitute? Only when both fail do you
-                move down the hierarchy to engineering controls and finally PPE.
+                <p>See guidance.</p>
               </>
             }
-            cite="Source: Control of Substances Hazardous to Health Regulations 2002, Reg 7(1) — legislation.gov.uk"
+            doInstead={
+              <>
+                Follow the safe-system procedure: stop work, escalate, document, and only resume
+                once controls are verified.
+              </>
+            }
           />
+        </ConceptBlock>
 
-          <LearningOutcomes
-            outcomes={[
-              "Define what constitutes a hazardous substance under COSHH",
-              "Explain the five steps of COSHH assessment",
-              "Apply the hierarchy of control measures correctly",
-              "Identify when health surveillance is required",
-              "Recognise hazardous substances in building services work",
-              "Interpret Safety Data Sheets and GHS/CLP labelling",
-            ]}
-            initialVisibleCount={3}
-          />
+        <InlineCheck {...quickCheckQuestions[0]} />
 
-          <SectionRule />
+        <SectionRule />
 
-          <ContentEyebrow>What Are Hazardous Substances?</ContentEyebrow>
+        <ContentEyebrow>COSHH Assessment Process</ContentEyebrow>
 
-          <ConceptBlock title="What Are Hazardous Substances?">
-            <p>
-            The Control of Substances Hazardous to Health Regulations 2002 (COSHH) requires
-            employers to control exposure to hazardous substances to prevent ill health. A
-            hazardous substance is any substance that can cause harm to health.
-            </p>
-
-            
-            <p className="text-sm font-medium text-white mb-2">Substances covered by COSHH:</p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-            <li>
-            <strong>Chemicals:</strong> Acids, alkalis, solvents, adhesives
-            </li>
-            <li>
-            <strong>Fumes:</strong> Welding fumes, soldering flux fumes
-            </li>
-            <li>
-            <strong>Dusts:</strong> Wood dust, silica dust, insulation fibres
-            </li>
-            <li>
-            <strong>Vapours and mists:</strong> Paint spray, cleaning agent vapours
-            </li>
-            <li>
-            <strong>Gases:</strong> Refrigerants, carbon monoxide, nitrogen
-            </li>
-            <li>
-            <strong>Biological agents:</strong> Bacteria, viruses (e.g., legionella in water
-            systems)
-            </li>
-            </ul>
-            
-
-            
-            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-            Routes of Entry into the Body
-            </p>
-            
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-            <li><strong>Inhalation</strong> — Description: Breathing in fumes, dusts, gases. Building Services Examples: Soldering flux fumes, refrigerant gases, silica dust</li>
-            <li><strong>Skin absorption</strong> — Description: Contact with skin allowing penetration. Building Services Examples: Solvents, oils, some adhesives</li>
-            <li><strong>Ingestion</strong> — Description: Swallowing (often from contaminated hands). Building Services Examples: Lead from older solder, contamination from poor hygiene</li>
-            <li><strong>Injection</strong> — Description: Entry through cuts or puncture wounds. Building Services Examples: Contaminated sharps, high-pressure injection</li>
-            </ul>
-            
-            
-
-            <CommonMistake
-            title="strongNot covered by COSHH:/strong Lead (Control of Lead at Work Regulations 2002), asbestos (Control of Asbestos Regulations 2012), radioactive substances, and physical hazards such as high pressure, temperature extremes, or explosive properties."
-            whatHappens={<><p>See guidance.</p></>}
-            doInstead={<>Follow the safe-system procedure: stop work, escalate, document, and only resume once controls are verified.</>}
-            />
-          </ConceptBlock>
-
-          <InlineCheck {...quickCheckQuestions[0]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>COSHH Assessment Process</ContentEyebrow>
-
-          <ConceptBlock title="COSHH Assessment Process">
-            <p>
+        <ConceptBlock title="COSHH Assessment Process">
+          <p>
             Employers must carry out a suitable and sufficient assessment of health risks from
-            hazardous substances. The assessment must be reviewed when circumstances change or
-            there is reason to believe it is no longer valid.
-            </p>
+            hazardous substances. The assessment must be reviewed when circumstances change or there
+            is reason to believe it is no longer valid.
+          </p>
 
-            
-            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+          <p className="text-sm font-medium text-elec-yellow/80 mb-2">
             The Five Steps of COSHH Assessment
-            </p>
-            
-            
-            <p className="font-medium text-elec-yellow mb-1">Step 1: Identify the Hazards</p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+          </p>
+
+          <p className="font-medium text-elec-yellow mb-1">Step 1: Identify the Hazards</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
             <li>List all substances used, produced, or encountered</li>
             <li>Obtain Safety Data Sheets from suppliers</li>
             <li>Consider by-products (fumes from heating materials)</li>
             <li>Include substances brought on site by others</li>
-            </ul>
-            
-            
-            <p className="font-medium text-elec-yellow mb-1">Step 2: Evaluate the Risks</p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+          </ul>
+
+          <p className="font-medium text-elec-yellow mb-1">Step 2: Evaluate the Risks</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
             <li>Who might be exposed and how?</li>
             <li>What is the level and duration of exposure?</li>
             <li>Compare to Workplace Exposure Limits (WELs)</li>
             <li>Consider combined effects of multiple substances</li>
-            </ul>
-            
-            
-            <p className="font-medium text-elec-yellow mb-1">Step 3: Control the Risks</p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+          </ul>
+
+          <p className="font-medium text-elec-yellow mb-1">Step 3: Control the Risks</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
             <li>Apply hierarchy of control measures</li>
             <li>Select appropriate controls for each substance</li>
             <li>Document control measures in writing</li>
             <li>Ensure controls are properly implemented</li>
-            </ul>
-            
-            
-            <p className="font-medium text-elec-yellow mb-1">Step 4: Record and Implement</p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+          </ul>
+
+          <p className="font-medium text-elec-yellow mb-1">Step 4: Record and Implement</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
             <li>Document assessment findings</li>
             <li>Communicate to all affected workers</li>
             <li>Provide information, instruction and training</li>
             <li>Ensure adequate supervision</li>
-            </ul>
-            
-            
-            <p className="font-medium text-elec-yellow mb-1">Step 5: Review and Update</p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+          </ul>
+
+          <p className="font-medium text-elec-yellow mb-1">Step 5: Review and Update</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
             <li>Review when no longer valid</li>
             <li>Update when processes or substances change</li>
             <li>Review after incidents or ill health reports</li>
             <li>Consider new information about hazards</li>
-            </ul>
-            
-            
-            
+          </ul>
 
-            
-            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+          <p className="text-sm font-medium text-elec-yellow/80 mb-2">
             Workplace Exposure Limits (WELs)
-            </p>
-            <p className="text-sm text-white mb-3">
-            WELs are published in HSE document EH40 and set the maximum concentration of
-            hazardous substances in workplace air. Two types exist:
-            </p>
-            
-            
-            <p className="font-medium text-white mb-1">Long-term (8-hour TWA)</p>
-            <p className="text-sm text-white">
-            Time-weighted average over 8-hour reference period
-            </p>
-            
-            
-            <p className="font-medium text-white mb-1">Short-term (15-minute)</p>
-            <p className="text-sm text-white">
-            Maximum for any 15-minute period during the day
-            </p>
-            
-            
-            
+          </p>
+          <p className="text-sm text-white mb-3">
+            WELs are published in HSE document EH40 and set the maximum concentration of hazardous
+            substances in workplace air. Two types exist:
+          </p>
 
-            <p className="text-sm text-elec-yellow/70">
-            <strong>Remember:</strong> A COSHH assessment is site-specific. A generic assessment
-            may be a starting point, but must be adapted to actual working conditions.
-            </p>
-          </ConceptBlock>
+          <p className="font-medium text-white mb-1">Long-term (8-hour TWA)</p>
+          <p className="text-sm text-white">Time-weighted average over 8-hour reference period</p>
 
-          <SectionRule />
+          <p className="font-medium text-white mb-1">Short-term (15-minute)</p>
+          <p className="text-sm text-white">Maximum for any 15-minute period during the day</p>
 
-          <ContentEyebrow>Control Measures Hierarchy</ContentEyebrow>
+          <p className="text-sm text-elec-yellow/70">
+            <strong>Remember:</strong> A COSHH assessment is site-specific. A generic assessment may
+            be a starting point, but must be adapted to actual working conditions.
+          </p>
+        </ConceptBlock>
 
-          <ConceptBlock title="Control Measures Hierarchy">
-            <p>
-            Control measures must be applied in order of preference. Higher-level controls are
-            more effective as they address the hazard at source rather than relying on human
-            behaviour or protective equipment.
-            </p>
+        <SectionRule />
 
-            
-            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+        <ContentEyebrow>Control Measures Hierarchy</ContentEyebrow>
+
+        <ConceptBlock title="Control Measures Hierarchy">
+          <p>
+            Control measures must be applied in order of preference. Higher-level controls are more
+            effective as they address the hazard at source rather than relying on human behaviour or
+            protective equipment.
+          </p>
+
+          <p className="text-sm font-medium text-elec-yellow/80 mb-2">
             Hierarchy of Control (Most to Least Effective)
-            </p>
-            
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-            <li><strong>1st</strong> — Control Type: <strong>Elimination</strong>. Building Services Examples: Use mechanical joints instead of soldering; prefabricate off-site</li>
-            <li><strong>2nd</strong> — Control Type: <strong>Substitution</strong>. Building Services Examples: Water-based adhesives instead of solvent-based; lead-free solder</li>
-            <li><strong>3rd</strong> — Control Type: <strong>Engineering controls</strong>. Building Services Examples: Local exhaust ventilation; enclosure; wet cutting to suppress dust</li>
-            <li><strong>4th</strong> — Control Type: <strong>Administrative controls</strong>. Building Services Examples: Safe systems of work; job rotation; warning signs; training</li>
-            <li><strong>5th</strong> — Control Type: <strong>PPE (last resort)</strong>. Building Services Examples: Respirators; gloves; goggles; protective clothing</li>
-            </ul>
-            
-            
+          </p>
 
-            
-            <div>
-            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-            Engineering Control Examples
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
             <li>
-            <strong>LEV:</strong> Fume extraction for soldering
+              <strong>1st</strong> — Control Type: <strong>Elimination</strong>. Building Services
+              Examples: Use mechanical joints instead of soldering; prefabricate off-site
             </li>
             <li>
-            <strong>Enclosure:</strong> Dust extraction at cutting point
+              <strong>2nd</strong> — Control Type: <strong>Substitution</strong>. Building Services
+              Examples: Water-based adhesives instead of solvent-based; lead-free solder
             </li>
             <li>
-            <strong>Isolation:</strong> Separate storage for chemicals
+              <strong>3rd</strong> — Control Type: <strong>Engineering controls</strong>. Building
+              Services Examples: Local exhaust ventilation; enclosure; wet cutting to suppress dust
             </li>
             <li>
-            <strong>Dilution ventilation:</strong> General air exchange
+              <strong>4th</strong> — Control Type: <strong>Administrative controls</strong>.
+              Building Services Examples: Safe systems of work; job rotation; warning signs;
+              training
             </li>
-            </ul>
-            </div>
-            <div>
-            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-            PPE Selection Factors
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-            <li>Suitable for the hazard (check protection factor)</li>
-            <li>Correctly fitted (face-fit testing for RPE)</li>
-            <li>Compatible with other PPE</li>
-            <li>Properly maintained and stored</li>
-            </ul>
-            </div>
-            
+            <li>
+              <strong>5th</strong> — Control Type: <strong>PPE (last resort)</strong>. Building
+              Services Examples: Respirators; gloves; goggles; protective clothing
+            </li>
+          </ul>
 
-            <CommonMistake
+          <div>
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+              Engineering Control Examples
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>LEV:</strong> Fume extraction for soldering
+              </li>
+              <li>
+                <strong>Enclosure:</strong> Dust extraction at cutting point
+              </li>
+              <li>
+                <strong>Isolation:</strong> Separate storage for chemicals
+              </li>
+              <li>
+                <strong>Dilution ventilation:</strong> General air exchange
+              </li>
+            </ul>
+          </div>
+          <div>
+            <p className="text-sm font-medium text-elec-yellow/80 mb-2">PPE Selection Factors</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Suitable for the hazard (check protection factor)</li>
+              <li>Correctly fitted (face-fit testing for RPE)</li>
+              <li>Compatible with other PPE</li>
+              <li>Properly maintained and stored</li>
+            </ul>
+          </div>
+
+          <CommonMistake
             title="strongPPE Limitation:/strong PPE only protects the individual wearing it and only when worn correctly. It can fail, be uncomfortable, and requires training, maintenance and supervision. Always exhaust higher-level controls first."
-            whatHappens={<><p>See guidance.</p></>}
-            doInstead={<>Follow the safe-system procedure: stop work, escalate, document, and only resume once controls are verified.</>}
-            />
-          </ConceptBlock>
+            whatHappens={
+              <>
+                <p>See guidance.</p>
+              </>
+            }
+            doInstead={
+              <>
+                Follow the safe-system procedure: stop work, escalate, document, and only resume
+                once controls are verified.
+              </>
+            }
+          />
+        </ConceptBlock>
 
-          <InlineCheck {...quickCheckQuestions[1]} />
+        <InlineCheck {...quickCheckQuestions[1]} />
 
-          <SectionRule />
+        <SectionRule />
 
-          <ContentEyebrow>Building Services Hazards and Safety Data Sheets</ContentEyebrow>
+        <ContentEyebrow>Building Services Hazards and Safety Data Sheets</ContentEyebrow>
 
-          <ConceptBlock title="Building Services Hazards and Safety Data Sheets">
-            <p>
+        <ConceptBlock title="Building Services Hazards and Safety Data Sheets">
+          <p>
             Building services engineers encounter numerous hazardous substances. Understanding
             Safety Data Sheets (SDS) and GHS/CLP labelling is essential for safe working.
-            </p>
+          </p>
 
-            
-            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+          <p className="text-sm font-medium text-elec-yellow/80 mb-2">
             Common Building Services Hazardous Substances
-            </p>
-            
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-            <li><strong><strong>Refrigerants</strong></strong> — Hazards: Asphyxiation, frostbite, cardiac sensitisation. Control Measures: Ventilation, leak detection, F-gas certification</li>
-            <li><strong><strong>Soldering flux</strong></strong> — Hazards: Respiratory sensitisation, occupational asthma. Control Measures: LEV fume extraction, use less hazardous flux</li>
-            <li><strong><strong>Solvents</strong></strong> — Hazards: Narcosis, dermatitis, organ damage. Control Measures: Ventilation, gloves, substitute with water-based</li>
-            <li><strong><strong>Silica dust</strong></strong> — Hazards: Silicosis, lung cancer (RCS). Control Measures: Wet cutting, on-tool extraction, RPE</li>
-            <li><strong><strong>Cable lubricants</strong></strong> — Hazards: Skin irritation, sensitisation. Control Measures: Gloves, barrier cream, wash facilities</li>
-            <li><strong><strong>Fibrous insulation</strong></strong> — Hazards: Skin, eye and respiratory irritation. Control Measures: Coveralls, gloves, goggles, dust mask</li>
-            </ul>
-            
-            
+          </p>
 
-            
-            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>
+                <strong>Refrigerants</strong>
+              </strong>{' '}
+              — Hazards: Asphyxiation, frostbite, cardiac sensitisation. Control Measures:
+              Ventilation, leak detection, F-gas certification
+            </li>
+            <li>
+              <strong>
+                <strong>Soldering flux</strong>
+              </strong>{' '}
+              — Hazards: Respiratory sensitisation, occupational asthma. Control Measures: LEV fume
+              extraction, use less hazardous flux
+            </li>
+            <li>
+              <strong>
+                <strong>Solvents</strong>
+              </strong>{' '}
+              — Hazards: Narcosis, dermatitis, organ damage. Control Measures: Ventilation, gloves,
+              substitute with water-based
+            </li>
+            <li>
+              <strong>
+                <strong>Silica dust</strong>
+              </strong>{' '}
+              — Hazards: Silicosis, lung cancer (RCS). Control Measures: Wet cutting, on-tool
+              extraction, RPE
+            </li>
+            <li>
+              <strong>
+                <strong>Cable lubricants</strong>
+              </strong>{' '}
+              — Hazards: Skin irritation, sensitisation. Control Measures: Gloves, barrier cream,
+              wash facilities
+            </li>
+            <li>
+              <strong>
+                <strong>Fibrous insulation</strong>
+              </strong>{' '}
+              — Hazards: Skin, eye and respiratory irritation. Control Measures: Coveralls, gloves,
+              goggles, dust mask
+            </li>
+          </ul>
+
+          <p className="text-sm font-medium text-elec-yellow/80 mb-2">
             Safety Data Sheet (SDS) - 16 Sections
-            </p>
-            <div className="grid sm:grid-cols-2 gap-2 text-sm">
+          </p>
+          <div className="grid sm:grid-cols-2 gap-2 text-sm">
             <div className="p-2 rounded bg-white/5">1. Identification</div>
             <div className="p-2 rounded bg-white/5">2. Hazard identification</div>
             <div className="p-2 rounded bg-white/5">3. Composition/ingredients</div>
@@ -598,7 +635,7 @@ const HNCModule1Section1_4 = () => {
             <div className="p-2 rounded bg-white/5">6. Accidental release</div>
             <div className="p-2 rounded bg-white/5">7. Handling and storage</div>
             <div className="p-2 rounded bg-elec-yellow/20 border border-elec-yellow/30">
-            8. Exposure controls/PPE
+              8. Exposure controls/PPE
             </div>
             <div className="p-2 rounded bg-white/5">9. Physical/chemical properties</div>
             <div className="p-2 rounded bg-white/5">10. Stability and reactivity</div>
@@ -608,267 +645,253 @@ const HNCModule1Section1_4 = () => {
             <div className="p-2 rounded bg-white/5">14. Transport information</div>
             <div className="p-2 rounded bg-white/5">15. Regulatory information</div>
             <div className="p-2 rounded bg-white/5">16. Other information</div>
-            </div>
-            <p className="text-xs text-white mt-2">
+          </div>
+          <p className="text-xs text-white mt-2">
             Section 8 (highlighted) is particularly important for COSHH assessments.
-            </p>
-            
+          </p>
 
-            
-            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-            GHS/CLP Hazard Pictograms
-            </p>
-            <div className="grid grid-cols-3 sm:grid-cols-3 gap-3 text-center text-xs">
-            
+          <p className="text-sm font-medium text-elec-yellow/80 mb-2">GHS/CLP Hazard Pictograms</p>
+          <div className="grid grid-cols-3 sm:grid-cols-3 gap-3 text-center text-xs">
             <p className="font-bold text-white mb-1">Flame</p>
             <p className="text-white">Flammable substances</p>
-            
-            
+
             <p className="font-bold text-white mb-1">Skull &amp; Crossbones</p>
             <p className="text-white">Acute toxicity (severe)</p>
-            
-            
+
             <p className="font-bold text-white mb-1">Exclamation Mark</p>
             <p className="text-white">Irritant, harmful</p>
-            
-            
+
             <p className="font-bold text-white mb-1">Corrosion</p>
             <p className="text-white">Corrosive to skin/metals</p>
-            
-            
+
             <p className="font-bold text-white mb-1">Health Hazard</p>
             <p className="text-white">CMR, sensitiser, STOT</p>
-            
-            
+
             <p className="font-bold text-white mb-1">Environment</p>
             <p className="text-white">Aquatic toxicity</p>
-            
-            
+
             <p className="font-bold text-white mb-1">Gas Cylinder</p>
             <p className="text-white">Gases under pressure</p>
-            
-            
+
             <p className="font-bold text-white mb-1">Oxidiser</p>
             <p className="text-white">May cause fire</p>
-            
-            
+
             <p className="font-bold text-white mb-1">Explosive</p>
             <p className="text-white">Explosion hazard</p>
-            
-            </div>
-            
+          </div>
 
-            
-            <p className="text-sm font-medium text-elec-yellow/80 mb-2">CLP Signal Words</p>
-            
-            <div className="p-3 rounded bg-red-500/10 border border-red-500/30">
+          <p className="text-sm font-medium text-elec-yellow/80 mb-2">CLP Signal Words</p>
+
+          <div className="p-3 rounded bg-red-500/10 border border-red-500/30">
             <p className="font-medium text-red-300 mb-1">DANGER</p>
             <p className="text-sm text-white">More severe hazard categories</p>
-            </div>
-            <div className="p-3 rounded bg-orange-500/10 border border-orange-500/30">
+          </div>
+          <div className="p-3 rounded bg-orange-500/10 border border-orange-500/30">
             <p className="font-medium text-orange-300 mb-1">WARNING</p>
             <p className="text-sm text-white">Less severe hazard categories</p>
-            </div>
-            
-            
+          </div>
 
-            <p className="text-sm text-elec-yellow/70">
+          <p className="text-sm text-elec-yellow/70">
             <strong>Key point:</strong> Never use unlabelled containers. If you find one, do not
             attempt to identify contents - report to supervisor for proper identification and
             disposal.
-            </p>
-          </ConceptBlock>
+          </p>
+        </ConceptBlock>
 
-          <InlineCheck {...quickCheckQuestions[2]} />
+        <InlineCheck {...quickCheckQuestions[2]} />
 
-          <SectionRule />
+        <SectionRule />
 
-          <ConceptBlock title="Health Surveillance Requirements">
-            <p>
+        <ConceptBlock title="Health Surveillance Requirements">
+          <p>
             Health surveillance is required when there is a reasonable likelihood that an
             identifiable disease or adverse health effect may result from workplace exposure to
             hazardous substances, and valid techniques exist to detect the condition.
-            </p>
+          </p>
 
-            
-            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+          <p className="text-sm font-medium text-elec-yellow/80 mb-2">
             When Health Surveillance is Required
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-            <li>
-            Exposure to substances causing occupational asthma (e.g., rosin-based flux)
-            </li>
-            <li>
-            Work with substances assigned 'Sk' or 'Sen' notations in EH40
-            </li>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Exposure to substances causing occupational asthma (e.g., rosin-based flux)</li>
+            <li>Work with substances assigned 'Sk' or 'Sen' notations in EH40</li>
             <li>Exposure to substances causing dermatitis</li>
             <li>Exposure to certain carcinogens and mutagens</li>
             <li>When specified in other regulations (e.g., lead, asbestos)</li>
-            </ul>
-            
+          </ul>
 
-            
-            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+          <p className="text-sm font-medium text-elec-yellow/80 mb-2">
             Types of Health Surveillance
-            </p>
-            
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-            <li><strong>Biological monitoring</strong> — Description: Measurement of substances/metabolites in body. Examples: Blood lead levels, urinary mercury</li>
-            <li><strong>Biological effect monitoring</strong> — Description: Measurement of early biological changes. Examples: Lung function tests (spirometry)</li>
-            <li><strong>Medical examination</strong> — Description: Clinical examination by doctor. Examples: Skin examination for dermatitis</li>
-            <li><strong>Health questionnaire</strong> — Description: Regular symptom enquiries. Examples: Respiratory symptom questionnaire</li>
-            </ul>
-            
-            
+          </p>
 
-            <div className="p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Biological monitoring</strong> — Description: Measurement of
+              substances/metabolites in body. Examples: Blood lead levels, urinary mercury
+            </li>
+            <li>
+              <strong>Biological effect monitoring</strong> — Description: Measurement of early
+              biological changes. Examples: Lung function tests (spirometry)
+            </li>
+            <li>
+              <strong>Medical examination</strong> — Description: Clinical examination by doctor.
+              Examples: Skin examination for dermatitis
+            </li>
+            <li>
+              <strong>Health questionnaire</strong> — Description: Regular symptom enquiries.
+              Examples: Respiratory symptom questionnaire
+            </li>
+          </ul>
+
+          <div className="p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
             <p className="text-sm text-blue-300">
-            <strong>Record retention:</strong> Health surveillance records must be kept for at
-            least 40 years from the date of the last entry. This is because some occupational
-            diseases, such as mesothelioma from asbestos exposure, can take decades to develop.
+              <strong>Record retention:</strong> Health surveillance records must be kept for at
+              least 40 years from the date of the last entry. This is because some occupational
+              diseases, such as mesothelioma from asbestos exposure, can take decades to develop.
             </p>
-            </div>
-          </ConceptBlock>
-
-          <InlineCheck {...quickCheckQuestions[3]} />
-
-          <SectionRule />
-
-          <ConceptBlock title="Practical Guidance">
-            <div>
-            <p><strong>Key COSHH Duties</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-            <li>
-            <strong>Assessment:</strong> Carry out suitable and sufficient risk assessment
-            </li>
-            <li>
-            <strong>Prevention/Control:</strong> Prevent exposure or adequately control it
-            </li>
-            <li>
-            <strong>Use of controls:</strong> Ensure control measures are used and maintained
-            </li>
-            <li>
-            <strong>Monitoring:</strong> Monitor exposure where required
-            </li>
-            <li>
-            <strong>Surveillance:</strong> Provide health surveillance where appropriate
-            </li>
-            <li>
-            <strong>Information:</strong> Provide information, instruction and training
-            </li>
-            </ul>
-            </div>
-
-            <div>
-            <p><strong>Emergency Procedures</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-            <li>Know location of emergency equipment (eyewash, spill kits)</li>
-            <li>Understand evacuation procedures for gas leaks</li>
-            <li>Know first aid procedures for chemical exposure</li>
-            <li>Report all spills, leaks and exposure incidents</li>
-            </ul>
-            </div>
-
-            <div>
-            <p><strong>Common Mistakes to Avoid</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-            <li>
-            <strong>Generic assessments:</strong> Must be specific to actual work conditions
-            </li>
-            <li>
-            <strong>PPE first:</strong> Using PPE before considering elimination/substitution
-            </li>
-            <li>
-            <strong>Ignoring by-products:</strong> Fumes from heating are still hazardous
-            </li>
-            <li>
-            <strong>No review:</strong> Assessments must be kept up to date
-            </li>
-            </ul>
-            </div>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <Scenario
-            title="Lead-acid UPS battery replacement in a basement plant room"
-            situation={
-              <>
-                You are supervising replacement of a 480 V lead-acid VRLA battery bank in a
-                ventilated basement UPS room. The plant room ventilation has degraded and
-                hydrogen accumulation is a risk during equalising charge.
-              </>
-            }
-            whatToDo={
-              <>
-                Produce a COSHH assessment that names sulphuric acid (skin/eye burn), hydrogen
-                (flammable, explosive) and the dust hazard. Apply the hierarchy: substitute to
-                sealed VRLA over flooded where the spec allows; engineer the ventilation back to
-                BS EN 50272-2 (5 air changes per hour minimum near a vented battery); administer
-                a permit-to-work that prohibits sources of ignition and limits charge rate; PPE
-                for handlers (face shield, acid-resistant gauntlets, apron). Health surveillance
-                is needed for any operative with regular acid exposure.
-              </>
-            }
-            whyItMatters={
-              <>
-                A hydrogen ignition event in a confined plant room is catastrophic. COSHH plus
-                EAWR plus DSEAR all overlap here, and an HSE inspector will examine all three
-                regimes after any incident.
-              </>
-            }
-          />
-
-          <SectionRule />
-
-          <FAQ items={faqs} />
-
-          <SectionRule />
-
-          <KeyTakeaways
-            points={[
-              'COSHH 2002 covers any substance hazardous to health except asbestos (CAR 2012), lead (CLAW 2002) and ionising radiation (IRR 2017).',
-              'Reg 6 mandates a suitable and sufficient assessment before work starts — generic SDS is not an assessment.',
-              'Reg 7 prevention-first: eliminate, substitute, engineer, administer, PPE — in that order.',
-              'WELs (Workplace Exposure Limits) in EH40 are legal ceilings; below them, you still need to apply the hierarchy.',
-              'Reg 9 requires control measures to be maintained, examined and tested — LEV thorough examination at least every 14 months.',
-              'Reg 10 health surveillance is triggered for substances with a defined health effect (lead, isocyanates, etc).',
-              'Reg 12 information, instruction and training is mandatory and must be records-evidenced.',
-              'On building services projects the recurring COSHH items are solvents, fluxes, sealants, refrigerants, battery electrolyte, silica dust and (in older buildings) asbestos and lead paint.',
-            ]}
-          />
-
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-
-          {/* ── Prev / next nav ─────────────────────────────────── */}
-
-          <div className="grid grid-cols-2 gap-3 pt-2">
-            <button
-              onClick={() => navigate('../h-n-c-module1-section1')}
-              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
-                <ChevronLeft className="h-3 w-3" /> Back to section
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-white truncate">
-                Section 1
-              </div>
-            </button>
-            <button
-              onClick={() => navigate('../h-n-c-module1-section1-5')}
-              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
-                Next <ChevronRight className="h-3 w-3" />
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-black truncate">
-                Section
-              </div>
-            </button>
           </div>
-        </PageFrame>
-      </div>
-    </div>
+        </ConceptBlock>
+
+        <InlineCheck {...quickCheckQuestions[3]} />
+
+        <SectionRule />
+
+        <ConceptBlock title="Practical Guidance">
+          <div>
+            <p>
+              <strong>Key COSHH Duties</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Assessment:</strong> Carry out suitable and sufficient risk assessment
+              </li>
+              <li>
+                <strong>Prevention/Control:</strong> Prevent exposure or adequately control it
+              </li>
+              <li>
+                <strong>Use of controls:</strong> Ensure control measures are used and maintained
+              </li>
+              <li>
+                <strong>Monitoring:</strong> Monitor exposure where required
+              </li>
+              <li>
+                <strong>Surveillance:</strong> Provide health surveillance where appropriate
+              </li>
+              <li>
+                <strong>Information:</strong> Provide information, instruction and training
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <p>
+              <strong>Emergency Procedures</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Know location of emergency equipment (eyewash, spill kits)</li>
+              <li>Understand evacuation procedures for gas leaks</li>
+              <li>Know first aid procedures for chemical exposure</li>
+              <li>Report all spills, leaks and exposure incidents</li>
+            </ul>
+          </div>
+
+          <div>
+            <p>
+              <strong>Common Mistakes to Avoid</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Generic assessments:</strong> Must be specific to actual work conditions
+              </li>
+              <li>
+                <strong>PPE first:</strong> Using PPE before considering elimination/substitution
+              </li>
+              <li>
+                <strong>Ignoring by-products:</strong> Fumes from heating are still hazardous
+              </li>
+              <li>
+                <strong>No review:</strong> Assessments must be kept up to date
+              </li>
+            </ul>
+          </div>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <Scenario
+          title="Lead-acid UPS battery replacement in a basement plant room"
+          situation={
+            <>
+              You are supervising replacement of a 480 V lead-acid VRLA battery bank in a ventilated
+              basement UPS room. The plant room ventilation has degraded and hydrogen accumulation
+              is a risk during equalising charge.
+            </>
+          }
+          whatToDo={
+            <>
+              Produce a COSHH assessment that names sulphuric acid (skin/eye burn), hydrogen
+              (flammable, explosive) and the dust hazard. Apply the hierarchy: substitute to sealed
+              VRLA over flooded where the spec allows; engineer the ventilation back to BS EN
+              50272-2 (5 air changes per hour minimum near a vented battery); administer a
+              permit-to-work that prohibits sources of ignition and limits charge rate; PPE for
+              handlers (face shield, acid-resistant gauntlets, apron). Health surveillance is needed
+              for any operative with regular acid exposure.
+            </>
+          }
+          whyItMatters={
+            <>
+              A hydrogen ignition event in a confined plant room is catastrophic. COSHH plus EAWR
+              plus DSEAR all overlap here, and an HSE inspector will examine all three regimes after
+              any incident.
+            </>
+          }
+        />
+
+        <SectionRule />
+
+        <FAQ items={faqs} />
+
+        <SectionRule />
+
+        <KeyTakeaways
+          points={[
+            'COSHH 2002 covers any substance hazardous to health except asbestos (CAR 2012), lead (CLAW 2002) and ionising radiation (IRR 2017).',
+            'Reg 6 mandates a suitable and sufficient assessment before work starts — generic SDS is not an assessment.',
+            'Reg 7 prevention-first: eliminate, substitute, engineer, administer, PPE — in that order.',
+            'WELs (Workplace Exposure Limits) in EH40 are legal ceilings; below them, you still need to apply the hierarchy.',
+            'Reg 9 requires control measures to be maintained, examined and tested — LEV thorough examination at least every 14 months.',
+            'Reg 10 health surveillance is triggered for substances with a defined health effect (lead, isocyanates, etc).',
+            'Reg 12 information, instruction and training is mandatory and must be records-evidenced.',
+            'On building services projects the recurring COSHH items are solvents, fluxes, sealants, refrigerants, battery electrolyte, silica dust and (in older buildings) asbestos and lead paint.',
+          ]}
+        />
+
+        <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+
+        {/* ── Prev / next nav ─────────────────────────────────── */}
+
+        <div className="grid grid-cols-2 gap-3 pt-2">
+          <button
+            onClick={() => navigate('../h-n-c-module1-section1')}
+            className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+          >
+            <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+              <ChevronLeft className="h-3 w-3" /> Back to section
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-white truncate">Section 1</div>
+          </button>
+          <button
+            onClick={() => navigate('../h-n-c-module1-section1-5')}
+            className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+          >
+            <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+              Next <ChevronRight className="h-3 w-3" />
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-black truncate">Section</div>
+          </button>
+        </div>
+      </HubBody>
+    </HubPage>
   );
 };
 

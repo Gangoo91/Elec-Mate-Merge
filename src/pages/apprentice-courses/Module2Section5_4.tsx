@@ -21,12 +21,7 @@ const quizQuestions = [
   {
     id: 1,
     question: 'Which factor has the greatest effect on cable resistance?',
-    options: [
-      'Cable colour',
-      'Cross-sectional area',
-      'Cable manufacturer',
-      'Installation date',
-    ],
+    options: ['Cable colour', 'Cross-sectional area', 'Cable manufacturer', 'Installation date'],
     correctAnswer: 1,
     explanation:
       'Cross-sectional area (CSA) is inversely proportional to resistance. Doubling the CSA halves the resistance.',
@@ -34,12 +29,7 @@ const quizQuestions = [
   {
     id: 2,
     question: 'For copper cable at 20°C, the resistivity formula is approximately:',
-    options: [
-      'R ≈ L × A ÷ 0.0172',
-      'R ≈ A ÷ L',
-      'R ≈ 0.0172 × L ÷ A',
-      'R ≈ 0.0282 × L ÷ A',
-    ],
+    options: ['R ≈ L × A ÷ 0.0172', 'R ≈ A ÷ L', 'R ≈ 0.0172 × L ÷ A', 'R ≈ 0.0282 × L ÷ A'],
     correctAnswer: 2,
     explanation:
       'For copper, R (Ω) ≈ 0.0172 × L ÷ A, where L is length in metres and A is CSA in mm².',
@@ -47,12 +37,7 @@ const quizQuestions = [
   {
     id: 3,
     question: 'What happens to cable resistance as temperature increases?',
-    options: [
-      'It stays the same',
-      'It decreases',
-      'It becomes unstable',
-      'It increases',
-    ],
+    options: ['It stays the same', 'It decreases', 'It becomes unstable', 'It increases'],
     correctAnswer: 3,
     explanation:
       'Most cable materials have positive temperature coefficients, meaning resistance increases with temperature.',
@@ -60,24 +45,14 @@ const quizQuestions = [
   {
     id: 4,
     question: 'A 20m copper cable with 4mm² CSA has approximately what resistance at 20°C?',
-    options: [
-      '0.086 Ω',
-      '0.43 Ω',
-      '0.172 Ω',
-      '1.72 Ω',
-    ],
+    options: ['0.086 Ω', '0.43 Ω', '0.172 Ω', '1.72 Ω'],
     correctAnswer: 0,
     explanation: 'R ≈ 0.0172 × 20 ÷ 4 = 0.086 Ω',
   },
   {
     id: 5,
     question: 'Poor joints and terminations create problems because they:',
-    options: [
-      'Reduce voltage',
-      'Add contact resistance',
-      'Change CSA',
-      'Increase cable length',
-    ],
+    options: ['Reduce voltage', 'Add contact resistance', 'Change CSA', 'Increase cable length'],
     correctAnswer: 1,
     explanation:
       'Poor connections have high contact resistance, causing heating and voltage drop at the joint.',
@@ -98,36 +73,21 @@ const quizQuestions = [
   {
     id: 7,
     question: 'Which has lower resistance for the same CSA and length?',
-    options: [
-      'Depends on temperature',
-      'Aluminium',
-      'Both the same',
-      'Copper',
-    ],
+    options: ['Depends on temperature', 'Aluminium', 'Both the same', 'Copper'],
     correctAnswer: 3,
     explanation: 'Copper has lower resistivity (0.0172) compared to aluminium (0.0282) at 20°C.',
   },
   {
     id: 8,
     question: 'To reduce resistance in an existing installation, you could:',
-    options: [
-      'Increase the CSA',
-      'Add more joints',
-      'Paint the cable',
-      'Change the voltage',
-    ],
+    options: ['Increase the CSA', 'Add more joints', 'Paint the cable', 'Change the voltage'],
     correctAnswer: 0,
     explanation: 'Increasing CSA (using thicker cable) reduces resistance proportionally.',
   },
   {
     id: 9,
     question: 'High-resistance joints create a safety risk because they:',
-    options: [
-      'Look untidy',
-      'Overheat',
-      'Are hard to test',
-      'Use more cable',
-    ],
+    options: ['Look untidy', 'Overheat', 'Are hard to test', 'Use more cable'],
     correctAnswer: 1,
     explanation:
       'High resistance causes I²R heating, which can damage insulation and create fire risk.',

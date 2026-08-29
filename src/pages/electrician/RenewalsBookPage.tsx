@@ -1,11 +1,13 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import {
   ArrowLeft,
   CalendarClock,
   Mail,
   Phone,
   FolderPlus,
+  FilePlus2,
+  RotateCw,
   Loader2,
   ShieldCheck,
   Search,
@@ -13,6 +15,13 @@ import {
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { supabase } from '@/integrations/supabase/client';
+import {
+  MaintenanceContractsSection,
+  type ContractPrefill,
+} from '@/components/electrician/MaintenanceContractsSection';
+import { RenewalEmailsToggle } from '@/components/electrician/RenewalEmailsToggle';
+import { RenewalResultsStrip } from '@/components/electrician/RenewalResultsStrip';
+import { reportCloud } from '@/utils/reportCloud';
 import { useSparkProjects } from '@/hooks/useSparkProjects';
 import { toast } from '@/hooks/use-toast';
 import { PANEL } from '@/components/electrician/shared/surfaces';
@@ -26,6 +35,8 @@ interface Renewal {
   installation_address: string | null;
   due: string;
   contacted: boolean;
+  /** Set when the customer booked themselves from a reminder email. */
+  booked_for: string | null;
   customer_email?: string | null;
   customer_phone?: string | null;
 }
@@ -50,6 +61,25 @@ const RenewalsBookPage = () => {
   const [renewals, setRenewals] = useState<Renewal[]>([]);
   const [loading, setLoading] = useState(true);
   const [busyId, setBusyId] = useState<string | null>(null);
+  const [contractPrefill, setContractPrefill] = useState<ContractPrefill | null>(null);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  /*
+   * Cross-page entry point — quotes/invoices arrive with
+   * ?contract=1&customer=…&job=…&amount=… to open the contract sheet
+   * pre-filled ("make this recurring"). Consumed once.
+   */
+  useEffect(() => {
+    if (searchParams.get('contract') !== '1') return;
+    setContractPrefill({
+      customerName: searchParams.get('customer') || undefined,
+      customerId: searchParams.get('customerId') || undefined,
+      jobType: searchParams.get('job') || undefined,
+      amount: Number(searchParams.get('amount')) || null,
+    });
+    setSearchParams({}, { replace: true });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const [typeFilter, setTypeFilter] = useState<string>('all');
   const [search, setSearch] = useState('');
   const [showContacted, setShowContacted] = useState(false);
@@ -60,24 +90,55 @@ const RenewalsBookPage = () => {
         data: { user },
       } = await supabase.auth.getUser();
       if (!user) return;
+      /*
+       * Renewal types only — a minor works cert is a one-off job, not a
+       * renewal, and unfiltered this page was mostly minor-works. EICRs (the
+       * point of the page) never write the next_inspection_due column: the
+       * form keeps the date in the report JSON as nextInspectionDate, so it
+       * is read from there, extracted server-side by PostgREST.
+       */
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const { data, error } = await (supabase as any)
         .from('reports')
         .select(
-          'id, report_type, client_name, customer_id, installation_address, next_inspection_due, expiry_date, expiry_reminder_sent, customers(email, phone)'
+          'id, report_type, client_name, customer_id, installation_address, next_inspection_due, expiry_date, expiry_reminder_sent, next_due_json:data->>nextInspectionDate, annual_due_json:data->>nextAnnualTestDue, customers(email, phone)'
         )
         .eq('user_id', user.id)
         .eq('status', 'completed')
-        .or('next_inspection_due.not.is.null,expiry_date.not.is.null')
-        .order('next_inspection_due', { ascending: true, nullsFirst: false });
+        .in('report_type', ['eicr', 'eic', 'fire-alarm-inspection', 'fire-alarm', 'pat-testing', 'emergency-lighting', 'smoke-co-alarm', 'ev-charging', 'bess'])
+        .or('next_inspection_due.not.is.null,expiry_date.not.is.null,data->>nextInspectionDate.not.is.null,data->>nextAnnualTestDue.not.is.null');
       if (error) throw error;
+
+      /*
+       * Ledger overlay — the automation writes its outcomes to
+       * certificate_expiry_reminders: 'booked' when a customer books
+       * themselves from a reminder email, 'completed' when a newer cert
+       * supersedes the old one. The book must reflect both, or the
+       * electrician chases people who already booked and jobs already done.
+       */
+      const { data: ledgerRows } = await supabase
+        .from('certificate_expiry_reminders')
+        .select('report_id, reminder_status, booked_for_date')
+        .eq('user_id', user.id);
+      const ledger = new Map(
+        (ledgerRows || []).map((l) => [l.report_id as string, l])
+      );
       const horizon = Date.now() + 365 * 86400000;
       const mapped: Renewal[] = [];
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       for (const r of (data || []) as any[]) {
-        const due = r.next_inspection_due || r.expiry_date;
+        const isoDay = (v: string | null | undefined) =>
+          /^\d{4}-\d{2}-\d{2}/.test(v || '') ? (v as string).slice(0, 10) : null;
+        const due =
+          r.next_inspection_due ||
+          r.expiry_date ||
+          isoDay(r.next_due_json) ||
+          isoDay(r.annual_due_json);
         if (!due) continue;
         if (new Date(due).getTime() > horizon) continue;
+        const led = ledger.get(r.id as string);
+        // Superseded by a newer cert — finished work, not a renewal to chase.
+        if (led?.reminder_status === 'completed') continue;
         mapped.push({
           id: r.id,
           report_type: r.report_type,
@@ -85,7 +146,9 @@ const RenewalsBookPage = () => {
           customer_id: r.customer_id,
           installation_address: r.installation_address,
           due,
-          contacted: !!r.expiry_reminder_sent,
+          contacted: !!r.expiry_reminder_sent || led?.reminder_status === 'contacted',
+          booked_for:
+            led?.reminder_status === 'booked' ? (led.booked_for_date as string | null) : null,
           customer_email: r.customers?.email || null,
           customer_phone: r.customers?.phone || null,
         });
@@ -118,6 +181,57 @@ const RenewalsBookPage = () => {
         prev.map((x) => (x.id === r.id ? { ...x, contacted: r.contacted } : x))
       );
       toast({ title: 'Could not update', variant: 'destructive' });
+    }
+  };
+
+  /* Convert a renewal into a maintenance contract — cadence follows the
+     trade: EICRs on years (rental = 5), fire alarm six-monthly, the rest
+     annual. Opens the contract sheet below, pre-filled. */
+  const contractSuggestion = (r: Renewal): ContractPrefill => {
+    const t = r.report_type;
+    if (t === 'eicr' || t === 'eic')
+      return { jobType: 'EICR', frequency: 'five_yearly' };
+    if (t.startsWith('fire-alarm'))
+      return { jobType: 'Fire alarm service', frequency: 'six_monthly' };
+    if (t === 'pat-testing') return { jobType: 'PAT testing', frequency: 'annually' };
+    if (t === 'emergency-lighting')
+      return { jobType: 'Emergency lighting test', frequency: 'annually' };
+    return { jobType: typeLabel(t), frequency: 'annually' };
+  };
+
+  const putOnContract = (r: Renewal) => {
+    setContractPrefill({
+      ...contractSuggestion(r),
+      customerName: r.client_name || undefined,
+      customerId: r.customer_id || undefined,
+    });
+  };
+
+  /* Start the renewal EICR itself — seeded with the client's details.
+     Ported from the old Expiring Certificates page when it merged here. */
+  const startRenewalEicr = async (r: Renewal) => {
+    setBusyId(r.id);
+    try {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) return;
+      const seed: Record<string, unknown> = {
+        clientName: r.client_name || '',
+        installationAddress: r.installation_address || '',
+      };
+      if (r.customer_phone) seed.clientPhone = r.customer_phone;
+      if (r.customer_email) seed.clientEmail = r.customer_email;
+      const res = await reportCloud.createReport(user.id, 'eicr', seed);
+      if (res.success && res.reportId) {
+        navigate(
+          `/electrician/inspection-testing?section=eicr&reportId=${res.reportId}&reportType=eicr`
+        );
+      } else {
+        toast({ title: 'Could not start the EICR', variant: 'destructive' });
+      }
+    } finally {
+      setBusyId(null);
     }
   };
 
@@ -236,13 +350,21 @@ const RenewalsBookPage = () => {
             </button>
           )}
         </div>
-        <div className={cn(PANEL, 'overflow-hidden divide-y divide-white/[0.06]')}>
+        {/* Cards in a two-up grid from lg — a single divided list left half a
+            desktop screen empty; phones keep the single column. */}
+        <div className="grid gap-3 lg:grid-cols-2">
           {items.map((r) => {
             const days = daysUntil(r.due);
             return (
-              <div key={r.id} className={cn('px-3.5 sm:px-5 py-3', r.contacted && 'opacity-60')}>
-                <div className="flex items-center gap-3">
-                  <div className="flex-1 min-w-0">
+              <div
+                key={r.id}
+                // min-w-0: a grid child refuses to shrink below its content's
+                // min width without it — the 4-button action row was pushing
+                // cards to 472px on a 390px phone, hanging off-screen.
+                className={cn(PANEL, 'min-w-0 px-3.5 sm:px-5 py-3', r.contacted && 'opacity-60')}
+              >
+                <div>
+                  <div className="min-w-0">
                     <p className="text-[13.5px] font-semibold text-white truncate">
                       {r.client_name || 'Customer'}
                       <span className="font-normal text-white/45"> · {typeLabel(r.report_type)}</span>
@@ -260,8 +382,13 @@ const RenewalsBookPage = () => {
                         ? `${Math.abs(days)} days overdue — was due ${fmtDate(r.due)}`
                         : `Due ${fmtDate(r.due)} · ${days} days`}
                     </p>
+                    {r.booked_for && (
+                      <p className="mt-0.5 flex items-center gap-1 text-[12px] font-semibold text-emerald-300">
+                        <Check className="h-3 w-3" /> Customer booked themselves — {fmtDate(r.booked_for)}
+                      </p>
+                    )}
                   </div>
-                  <div className="flex gap-1.5 shrink-0">
+                  <div className="mt-2.5 flex gap-1.5">
                     {r.customer_phone && (
                       <a
                         href={`tel:${r.customer_phone.replace(/\s+/g, '')}`}
@@ -280,6 +407,27 @@ const RenewalsBookPage = () => {
                     >
                       <Mail className="h-4 w-4" />
                     </button>
+                    <button
+                      type="button"
+                      onClick={() => putOnContract(r)}
+                      aria-label="Put on a maintenance contract"
+                      title="Put on a maintenance contract"
+                      className="h-11 w-11 rounded-xl bg-white/[0.04] border border-white/[0.08] flex items-center justify-center text-white/75 touch-manipulation active:scale-[0.96]"
+                    >
+                      <RotateCw className="h-4 w-4" />
+                    </button>
+                    {(r.report_type === 'eicr' || r.report_type === 'eic') && (
+                      <button
+                        type="button"
+                        onClick={() => startRenewalEicr(r)}
+                        disabled={busyId === r.id}
+                        aria-label="Start the renewal EICR"
+                        title="Start the renewal EICR"
+                        className="h-11 w-11 rounded-xl bg-white/[0.04] border border-white/[0.08] flex items-center justify-center text-white/75 touch-manipulation active:scale-[0.96] disabled:opacity-50"
+                      >
+                        <FilePlus2 className="h-4 w-4" />
+                      </button>
+                    )}
                     <button
                       type="button"
                       onClick={() => createRenewalJob(r)}
@@ -323,15 +471,24 @@ const RenewalsBookPage = () => {
             <ArrowLeft className="h-5 w-5" />
           </Button>
           <div className="min-w-0">
-            <h1 className="text-lg font-bold text-white leading-tight">Renewal book</h1>
+            <h1 className="text-lg font-bold text-white leading-tight">Renewals &amp; Contracts</h1>
             <p className="text-[11px] text-white/60 leading-tight">
-              Repeat work from your own certs
+              Repeat work — from your certs and your contracts
             </p>
           </div>
         </div>
       </div>
 
       <div className="px-4 lg:px-6 pt-4 space-y-5">
+        {/* The automation switch, on the page it automates — and the proof
+            it works, once it has done something. */}
+        <RenewalEmailsToggle />
+        <RenewalResultsStrip />
+
+        {/* ELE-430 — the electrician-defined half of repeat work. Certs below
+            imply their own renewals; contracts are the ones you set up. */}
+        <MaintenanceContractsSection prefill={contractPrefill} />
+
         {loading ? (
           <div className="flex justify-center py-16">
             <Loader2 className="h-6 w-6 animate-spin text-white" />

@@ -17,11 +17,12 @@ interface FollowUpChipsProps {
 }
 
 /**
- * FollowUpChips — Small pill row rendered beneath an assistant message.
+ * FollowUpChips — the "Ask next" list beneath an assistant answer.
  *
- * Editorial, text-only. Max 3 chips on mobile, 4 on desktop.
- * Chips match the college primitive tone (`bg-white/[0.04]`,
- * `border-white/[0.08]`, rounded-full).
+ * One card-surface list, not naked hairline rows: each question is a real
+ * tappable object made of the same material as every other card, with the
+ * volt arrow marking it as an action. The heading is the hub section style
+ * (volt, sentence case) rather than another letterspaced eyebrow.
  */
 export const FollowUpChips = memo(function FollowUpChips({
   questions,
@@ -49,40 +50,46 @@ export const FollowUpChips = memo(function FollowUpChips({
       initial={{ opacity: 0, y: 6 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.2, duration: 0.25 }}
-      className={cn('space-y-2 min-w-0', className)}
+      className={cn('space-y-3 min-w-0', className)}
     >
-      <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-white">
-        Suggested follow-ups
-      </div>
-      {/* Stacked rows on mobile (chip pills on desktop). Each row wraps text,
-          clamps to the container width, and can't push the page sideways. */}
-      <div className="flex flex-col gap-1.5 sm:flex-row sm:flex-wrap sm:gap-2 min-w-0">
-        {capped.map((question, idx) => {
-          const isMobileHidden = idx >= mobileCap;
-          return (
-            <motion.button
-              key={idx}
-              initial={{ opacity: 0, x: -4 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.25 + idx * 0.05 }}
-              onClick={() => handleSelect(question)}
-              className={cn(
-                'group w-full sm:w-auto max-w-full min-w-0 text-left',
-                'text-[13px] leading-snug text-white hover:text-white',
-                'bg-transparent sm:bg-white/[0.04] sm:hover:bg-white/[0.08]',
-                'border-0 sm:border sm:border-white/[0.08] sm:rounded-full',
-                'border-t border-white/[0.06] sm:border-t-0',
-                'px-0 py-2.5 sm:px-3.5 sm:py-1.5 transition-colors touch-manipulation',
-                'flex items-start gap-2 sm:gap-0',
-                isMobileHidden && 'hidden sm:inline-flex'
-              )}
-              style={{ overflowWrap: 'anywhere', wordBreak: 'break-word' }}
-            >
-              <span className="sm:hidden text-white mt-[2px]">→</span>
-              <span className="flex-1 min-w-0">{question}</span>
-            </motion.button>
-          );
-        })}
+      <h3 className="text-[15px] font-semibold tracking-tight text-elec-yellow">Ask next</h3>
+      <div
+        className={cn(
+          'overflow-hidden rounded-2xl border border-white/[0.12]',
+          'bg-gradient-to-br from-white/[0.08] via-white/[0.05] to-white/[0.03]',
+          'shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)]'
+        )}
+      >
+        <div className="divide-y divide-white/[0.10]">
+          {capped.map((question, idx) => {
+            const isMobileHidden = idx >= mobileCap;
+            return (
+              <motion.button
+                key={idx}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.25 + idx * 0.05 }}
+                onClick={() => handleSelect(question)}
+                className={cn(
+                  'group flex w-full min-w-0 items-start gap-3 px-4 py-3 text-left',
+                  'min-h-11 text-[13.5px] leading-snug text-white',
+                  'transition-colors touch-manipulation [-webkit-tap-highlight-color:transparent]',
+                  'hover:bg-white/[0.06] active:bg-white/[0.09]',
+                  isMobileHidden ? 'hidden sm:flex' : 'flex'
+                )}
+                style={{ overflowWrap: 'anywhere', wordBreak: 'break-word' }}
+              >
+                <span
+                  aria-hidden
+                  className="mt-[1px] shrink-0 font-semibold text-elec-yellow transition-transform group-hover:translate-x-0.5"
+                >
+                  →
+                </span>
+                <span className="min-w-0 flex-1">{question}</span>
+              </motion.button>
+            );
+          })}
+        </div>
       </div>
     </motion.div>
   );

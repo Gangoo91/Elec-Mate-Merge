@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { openExternalUrl } from '@/utils/open-external-url';
 import { motion } from 'framer-motion';
 import { Capacitor } from '@capacitor/core';
+import { RevenueCatUI } from '@revenuecat/purchases-capacitor-ui';
 import { useRevenueCat } from '@/hooks/useRevenueCat';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
@@ -287,14 +288,29 @@ const BillingTab = () => {
                 cancelled the Apple sub, and Stripe carried on taking money.
                 Where both could apply we show both — hiding one is the bug. */}
             {showStoreBilling && (
+              /* RevenueCat Customer Center (ELE-1465). The old row kicked the
+                 user straight out to Apple/Google settings — where 56% of
+                 store trials were quietly turning auto-renew off with zero
+                 reasons captured and no save offer made. The Customer Center
+                 handles cancel/refund/change IN app, records the why, and
+                 only it can intercept the decision. Store settings remain the
+                 fallback if the sheet fails to present (e.g. old binary
+                 without the native module, or a web build). */
               <ListRow
                 title="Manage Subscription"
-                subtitle={
-                  Capacitor.getPlatform() === 'ios'
-                    ? 'Manage via Apple ID Settings'
-                    : 'Manage via Google Play'
-                }
-                onClick={() => {
+                subtitle="Cancel, refunds and plan help — in the app"
+                onClick={async () => {
+                  if (isNative) {
+                    try {
+                      await RevenueCatUI.presentCustomerCenter();
+                      return;
+                    } catch (err) {
+                      console.warn(
+                        '[BillingTab] Customer Center unavailable, falling back to store settings:',
+                        err
+                      );
+                    }
+                  }
                   const url =
                     Capacitor.getPlatform() === 'android'
                       ? 'https://play.google.com/store/account/subscriptions'
@@ -303,7 +319,7 @@ const BillingTab = () => {
                 }}
                 trailing={
                   <span className="text-[11px] font-medium uppercase tracking-[0.15em] text-blue-400">
-                    External
+                    {isNative ? 'In-app' : 'External'}
                   </span>
                 }
                 accent="yellow"

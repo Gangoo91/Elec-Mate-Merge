@@ -538,8 +538,8 @@ const BusinessHub = () => {
     },
     {
       id: 'renewals',
-      title: 'Renewal book',
-      description: 'Certs due for re-inspection — booked from your past work.',
+      title: 'Renewals & Contracts',
+      description: 'Certs due for re-inspection, plus maintenance contracts on a schedule.',
       to: '/electrician/renewals',
     },
   ];

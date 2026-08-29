@@ -1,14 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { CARD_BASE, CARD_NEUTRAL, CARD_DISABLED } from '@/components/ui/card-recipe';
 import { cn } from '@/lib/utils';
 
 type CourseLevel =
-  | 'Essential'
-  | 'Foundation'
-  | 'Intermediate'
-  | 'Advanced'
-  | 'Specialist'
-  | 'Expert';
+  'Essential' | 'Foundation' | 'Intermediate' | 'Advanced' | 'Specialist' | 'Expert';
 
 interface CourseCardProps {
   to: string;
@@ -21,15 +17,19 @@ interface CourseCardProps {
   comingSoon?: boolean;
 }
 
-const LEVEL_ACCENT: Record<CourseLevel, string> = {
-  Essential: 'from-elec-yellow/70 via-amber-400/70 to-orange-400/70',
-  Foundation: 'from-emerald-500/70 via-emerald-400/70 to-green-400/70',
-  Intermediate: 'from-blue-500/70 via-blue-400/70 to-cyan-400/70',
-  Advanced: 'from-purple-500/70 via-violet-400/70 to-indigo-400/70',
-  Specialist: 'from-orange-500/70 via-amber-400/70 to-yellow-400/70',
-  Expert: 'from-red-500/70 via-rose-400/70 to-pink-400/70',
-};
-
+/**
+ * The course card. Matched to the Study Centre dashboard card in
+ * `BrowseCoursesPage` — same surface, same `p-4`, same type rhythm, same
+ * eyebrow with a hairline between the two bits of meta, same footer with no
+ * rule above it, and the same rule about volt: it appears only where there is
+ * something to say, never as decoration.
+ *
+ * `LEVEL_ACCENT` is gone. It mapped the six levels to six gradient strips —
+ * Foundation green, Intermediate blue, Advanced violet, Expert red — which were
+ * the only blues and violets in the Study Centre and belonged to no palette.
+ * The level is still shown, as the eyebrow, in words. Nobody was decoding
+ * "this card is violet, so it must be Advanced".
+ */
 export const CourseCard: React.FC<CourseCardProps> = ({
   to,
   title,
@@ -40,68 +40,65 @@ export const CourseCard: React.FC<CourseCardProps> = ({
   index: _index = 0,
   comingSoon = false,
 }) => {
-  const accent = LEVEL_ACCENT[level];
-
   const inner = (
-    <div
-      className={cn(
-        'group relative h-full min-h-[170px] sm:min-h-[190px]',
-        'bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors',
-        'rounded-2xl overflow-hidden',
-        'p-5 flex flex-col text-left',
-        comingSoon ? 'opacity-60 cursor-default' : 'active:scale-[0.99] touch-manipulation'
-      )}
-    >
-      <div
+    <>
+      {/* A 1px volt line, not a volt surface — the same treatment HubKpi uses.
+          A translucent volt FILL goes muddy brown on this ground; a hairline
+          stays yellow because there is nothing behind it to muddy. */}
+      <span
+        aria-hidden
         className={cn(
-          'absolute inset-x-0 top-0 h-px bg-gradient-to-r opacity-70 group-hover:opacity-100 transition-opacity',
-          accent
+          'pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 to-elec-yellow/0',
+          'via-elec-yellow/55'
         )}
       />
 
-      <div className="flex items-start justify-between gap-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          {level}
-        </span>
-        {comingSoon && (
-          <span className="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-amber-500/15 text-amber-300 border border-amber-500/30">
-            Soon
-          </span>
-        )}
-      </div>
+      <span className="flex items-center gap-2 text-[10px] font-medium uppercase tracking-[0.14em] text-white">
+        <Icon className="h-3.5 w-3.5 shrink-0" strokeWidth={1.8} />
+        {level}
+        <span className="h-2.5 w-px bg-white/20" aria-hidden />
+        {duration}
+      </span>
 
-      <div className="mt-4 flex items-start gap-3">
-        <div className="shrink-0 h-9 w-9 rounded-xl bg-white/[0.04] border border-white/[0.08] flex items-center justify-center">
-          <Icon className="h-4 w-4 text-white" strokeWidth={1.8} />
-        </div>
-        <h3 className="text-[15px] sm:text-base font-semibold text-white leading-snug tracking-tight line-clamp-2 flex-1 min-w-0">
-          {title}
-        </h3>
-      </div>
+      <span className="mt-1.5 text-[15px] font-semibold leading-tight tracking-tight text-white">
+        {title}
+      </span>
 
-      <p className="mt-2.5 text-[12.5px] text-white leading-relaxed line-clamp-2">{description}</p>
+      <span className="mt-1.5 line-clamp-2 text-[12.5px] leading-snug text-white">
+        {description}
+      </span>
 
-      <div className="flex-grow" />
-
-      <div className="mt-5 pt-4 border-t border-white/[0.06] flex items-center justify-between gap-2">
-        <span className="text-[11px] text-white">{duration}</span>
-        {comingSoon ? (
-          <span className="text-[12px] text-amber-300/80 font-medium">Coming soon</span>
-        ) : (
-          <span className="text-[12px] font-medium text-elec-yellow/90 group-hover:text-elec-yellow group-hover:translate-x-0.5 transition-all">
-            Open →
-          </span>
-        )}
-      </div>
-    </div>
+      <span className="mt-3 flex items-center justify-between gap-2 text-[11.5px]">
+        <span className="text-white">{comingSoon ? 'Not yet available' : 'Course'}</span>
+        <span className="font-semibold text-white">{comingSoon ? 'Coming soon' : 'Open'}</span>
+      </span>
+    </>
   );
 
   if (comingSoon) {
-    return <div className="block h-full">{inner}</div>;
+    return (
+      <div
+        className={cn(
+          CARD_BASE,
+          CARD_DISABLED,
+          'relative cursor-default overflow-hidden px-4 py-3.5 active:scale-100 sm:p-5'
+        )}
+      >
+        {inner}
+      </div>
+    );
   }
 
   return (
-    <Link to={to} className="block h-full" aria-label={`View ${title} course`}>
+    <Link
+      to={to}
+      aria-label={`View ${title} course`}
+      className={cn(
+        CARD_BASE,
+        CARD_NEUTRAL,
+        'relative overflow-hidden px-4 py-3.5 sm:p-5 lg:hover:-translate-y-0.5'
+      )}
+    >
       {inner}
     </Link>
   );

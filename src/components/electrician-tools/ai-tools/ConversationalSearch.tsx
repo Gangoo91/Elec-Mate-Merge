@@ -23,9 +23,9 @@ import {
   RegulationDetailSheet,
   SaveToJobSheet,
 } from './chat';
+import { AddToEicrSheet } from './chat/AddToEicrSheet';
 import { SourcesRail } from './chat/SourcesRail';
-import { ThumbsUp, ThumbsDown, ArrowDown, FileText, X } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { ArrowDown, FileText, X } from 'lucide-react';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -50,6 +50,8 @@ interface Message {
   citedRegulations?: string[];
   /** Thumbs feedback given on this answer (persists with history). */
   feedback?: 'positive' | 'negative';
+  /** A "what went wrong" reason was recorded for a negative vote. */
+  feedbackReasonGiven?: boolean;
   /**
    * Server signalled generation failed — this message is the fallback apology,
    * not an answer. Suppresses the verification badge and Save-to-job.
@@ -150,6 +152,8 @@ export default function ConversationalSearch() {
   const [isCompressing, setIsCompressing] = useState(false);
   /** Attached PDFs — datasheets, a previous EICR, a spec, a DNO letter. */
   const [selectedDocuments, setSelectedDocuments] = useState<File[]>([]);
+  /** Camera/Photo/Document strip — folded behind the composer's "+". */
+  const [showAttachMenu, setShowAttachMenu] = useState(false);
   const [isDraggingDoc, setIsDraggingDoc] = useState(false);
   /** True while attachments upload — before the request is even made. */
   const [isUploading, setIsUploading] = useState(false);
@@ -177,10 +181,20 @@ export default function ConversationalSearch() {
     cited: string[];
     imageUrls: string[];
   }>({ open: false, answer: '', question: '', cited: [], imageUrls: [] });
+  const [eicrSheet, setEicrSheet] = useState<{
+    open: boolean;
+    answer: string;
+    question: string;
+    cited: string[];
+  }>({ open: false, answer: '', question: '', cited: [] });
 
   // Streaming-status chip. `stage` is either a value emitted from the
   // backend (future-friendly) or an index into STREAM_STAGES.
   const [streamStatus, setStreamStatus] = useState<string | null>(null);
+  // Retrieved regs, emitted the moment retrieval completes — fills the
+  // desktop rail while the answer is still writing. Swapped for the
+  // actually-cited set when the stream ends.
+  const [liveSources, setLiveSources] = useState<string[]>([]);
   const stageTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   // Batched token streaming — flush every 80ms.
@@ -604,6 +618,7 @@ export default function ConversationalSearch() {
       setIsUploading(false);
       setIsSearching(true);
       setIsStreaming(true);
+      setLiveSources([]);
       streaming.reset();
 
       // Kick off stage-cycle fallback; cleared below if server emits status.
@@ -747,6 +762,14 @@ export default function ConversationalSearch() {
                 // the verification badge and Save-to-job.
                 if (parsed?.type === 'error') {
                   sawStreamError = true;
+                  continue;
+                }
+
+                // Early sources — retrieved regs, before any prose arrives.
+                if (parsed?.type === 'sources' && Array.isArray(parsed.regNumbers)) {
+                  setLiveSources(
+                    parsed.regNumbers.filter((r: unknown): r is string => typeof r === 'string')
+                  );
                   continue;
                 }
 
@@ -913,6 +936,20 @@ export default function ConversationalSearch() {
     [messages]
   );
 
+  const handleOpenEicrSheet = useCallback(
+    (message: Message) => {
+      const idx = messages.indexOf(message);
+      const userMsg = idx > 0 && messages[idx - 1].role === 'user' ? messages[idx - 1] : undefined;
+      setEicrSheet({
+        open: true,
+        answer: message.content,
+        question: userMsg?.content || '',
+        cited: message.citedRegulations ?? [],
+      });
+    },
+    [messages]
+  );
+
   const handleOpenSources = useCallback((message: Message) => {
     const first = message.citedRegulations?.[0];
     if (!first) {
@@ -922,10 +959,23 @@ export default function ConversationalSearch() {
     setRegulationSheet({ open: true, regulationNumber: first });
   }, []);
 
-  // ELE-1264: thumbs feedback finally writes somewhere. Every rating lands in
-  // ai_interaction_feedback (which the weekly analyze-feedback cron reads),
-  // so wrong answers surface while people are still customers — not via the
-  // cancellation form on their way out.
+  // Thumbs feedback → elec_ai_feedback (its own table; the old
+  // ai_interaction_feedback insert violated that table's CHECK constraints —
+  // v3 agent whitelist, ±1 ratings — so every vote 400'd silently for as long
+  // as the feature existed). Row ids are kept so a negative vote's reason chip
+  // can attach to the row it belongs to; state not a ref, because the chips'
+  // visibility must re-render when the id arrives.
+  const [feedbackRows, setFeedbackRows] = useState<Record<number, string>>({});
+
+  // Mirror of the chat session id. A brand-new conversation only gets its id
+  // once the first debounced save returns, so a vote cast quickly after the
+  // answer races it and the closure sees null — the ref lets a deferred
+  // backfill read the id that arrived moments later.
+  const sessionIdRef = useRef<string | null>(chatHistory.currentSessionId);
+  useEffect(() => {
+    sessionIdRef.current = chatHistory.currentSessionId;
+  }, [chatHistory.currentSessionId]);
+
   const handleFeedback = useCallback(
     async (idx: number, rating: 'positive' | 'negative') => {
       const message = messages[idx];
@@ -938,31 +988,84 @@ export default function ConversationalSearch() {
         const {
           data: { user },
         } = await supabase.auth.getUser();
-        if (!user) return;
+        if (!user) throw new Error('not signed in');
 
         // The question is the nearest preceding user message.
         const question =
           [...messages.slice(0, idx)].reverse().find((m) => m.role === 'user')?.content || '';
 
-        await supabase.from('ai_interaction_feedback').insert({
-          user_id: user.id,
-          agent_name: 'elec-ai-conversational',
-          question: question.slice(0, 2000),
-          ai_response: message.content.slice(0, 8000),
-          user_rating: rating === 'positive' ? 5 : 1,
-          feedback_type: `thumbs_${rating}`,
-        });
+        // Session ids come from ai_chat_history as strings; the column is
+        // uuid, so only pass one that actually is.
+        const sid = chatHistory.currentSessionId;
+        const sessionId =
+          sid && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(sid)
+            ? sid
+            : null;
 
-        if (rating === 'negative') {
-          toast.message('Thanks — flagged for review', {
-            description: 'Wrong or unhelpful answers get looked at directly.',
-          });
+        const { data, error } = await supabase
+          .from('elec_ai_feedback')
+          .insert({
+            user_id: user.id,
+            agent: 'elec-ai',
+            session_id: sessionId,
+            question: question.slice(0, 2000),
+            answer: message.content.slice(0, 8000),
+            rating,
+            cited_regulations: message.citedRegulations ?? [],
+          })
+          .select('id')
+          .single();
+        if (error) throw error;
+        setFeedbackRows((prev) => ({ ...prev, [idx]: data.id }));
+
+        // Backfill the session link if the vote raced the first session save.
+        if (!sessionId) {
+          window.setTimeout(() => {
+            const late = sessionIdRef.current;
+            if (
+              late &&
+              /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(late)
+            ) {
+              void supabase.from('elec_ai_feedback').update({ session_id: late }).eq('id', data.id);
+            }
+          }, 2500);
         }
       } catch (err) {
-        console.warn('[feedback] insert failed (non-fatal):', err);
+        console.warn('[feedback] insert failed:', err);
+        // Un-light the thumb — a lit vote over a failed write would be a lie,
+        // and reverting lets the user simply tap again.
+        setMessages((prev) =>
+          prev.map((m, i) => (i === idx ? { ...m, feedback: undefined } : m))
+        );
+        toast.error("Couldn't save your rating", { description: 'Tap to try again.' });
       }
     },
-    [messages]
+    [messages, chatHistory.currentSessionId]
+  );
+
+  // One-tap "what went wrong" after a thumbs-down — updates the row the vote
+  // created. This is what makes a negative vote diagnosable rather than a
+  // bare count.
+  const handleFeedbackReason = useCallback(
+    async (idx: number, reason: string) => {
+      const rowId = feedbackRows[idx];
+      setMessages((prev) =>
+        prev.map((m, i) => (i === idx ? { ...m, feedbackReasonGiven: true } : m))
+      );
+      if (!rowId) return;
+      const { error } = await supabase
+        .from('elec_ai_feedback')
+        .update({ reasons: [reason] })
+        .eq('id', rowId);
+      if (error) {
+        console.warn('[feedback] reason update failed:', error);
+        return;
+      }
+      toast.message('Thanks — flagged for review', {
+        description: 'Wrong or unhelpful answers get looked at directly.',
+      });
+    },
+    [feedbackRows]
   );
 
   const handleInlineRegClick = useCallback(
@@ -1065,29 +1168,31 @@ export default function ConversationalSearch() {
           </motion.div>
         )}
       </AnimatePresence>
-      {/* Editorial header — no icons */}
-      <header className="shrink-0 bg-[#0a0a0a] border-b border-white/[0.06]">
-        <div className="flex items-center gap-3 sm:gap-4 px-3 sm:px-6 h-14">
+      {/* Masthead — same treatment as the hub pages: translucent volt ground,
+          blur, one hairline. Text-only, no icons. */}
+      <header className="shrink-0 bg-elec-dark/95 backdrop-blur-sm border-b border-white/[0.06]">
+        <div className="flex items-center gap-2 sm:gap-4 px-4 sm:px-6 h-12">
           <button
             onClick={() => navigate('/electrician')}
-            className="shrink-0 text-[13px] font-medium text-white hover:text-white transition-colors touch-manipulation -ml-1"
+            className="-ml-2 flex h-11 shrink-0 items-center whitespace-nowrap px-2 text-[12.5px] font-medium text-white transition-colors touch-manipulation"
           >
             ← Back
           </button>
-          <div className="flex-1 min-w-0 text-center sm:text-left">
-            <h1 className="text-[15px] font-semibold text-white tracking-tight leading-none truncate">
+          <div className="flex min-w-0 flex-1 items-baseline gap-2.5">
+            <h1 className="truncate text-[13px] font-semibold tracking-tight text-white sm:text-sm">
               Elec-AI
             </h1>
             {/* Subtitle hidden on narrow screens to stop truncation (ASSISTA...) */}
-            <p className="hidden sm:block mt-0.5 text-[10px] font-medium uppercase tracking-[0.22em] text-white truncate">
-              BS 7671 A4:2026 assistant
-            </p>
+            <span className="hidden h-3 w-px bg-white/10 sm:inline" aria-hidden />
+            <span className="hidden sm:inline text-[10px] font-medium uppercase tracking-[0.18em] text-white truncate">
+              BS 7671 A4:2026
+            </span>
           </div>
           {!isStreaming && (
-            <div className="shrink-0 flex items-center gap-3 sm:gap-4 text-[13px] font-medium">
+            <div className="shrink-0 flex items-center gap-1 text-[12.5px] font-medium">
               <button
                 onClick={() => setHistoryOpen(true)}
-                className="text-white hover:text-white transition-colors touch-manipulation"
+                className="flex h-11 items-center px-2 text-white transition-colors touch-manipulation [-webkit-tap-highlight-color:transparent]"
                 aria-label="Chat history"
               >
                 History
@@ -1095,7 +1200,7 @@ export default function ConversationalSearch() {
               {messages.length > 0 && (
                 <button
                   onClick={handleNewChat}
-                  className="text-elec-yellow underline decoration-elec-yellow/50 underline-offset-2 transition-colors hover:decoration-elec-yellow touch-manipulation"
+                  className="flex h-11 items-center px-2 font-semibold text-elec-yellow transition-colors touch-manipulation [-webkit-tap-highlight-color:transparent]"
                   aria-label="New chat"
                 >
                   New
@@ -1108,10 +1213,10 @@ export default function ConversationalSearch() {
 
       {/* Empty state */}
       {messages.length === 0 && (
-        <ChatMessagesArea className="px-3 sm:px-6 lg:px-10">
+        <ChatMessagesArea className="px-4 sm:px-6 lg:px-10">
           {offlineBannerVisible && (
-            <div className="mx-auto max-w-4xl lg:max-w-5xl xl:max-w-6xl pt-4">
-              <div className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] px-4 py-3">
+            <div className="mx-auto max-w-[1400px] pt-4">
+              <div className="rounded-2xl border border-elec-yellow/35 bg-gradient-to-br from-white/[0.10] via-white/[0.06] to-white/[0.04] px-4 py-3">
                 <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-white">
                   Offline · showing your last {offlineCache.limit} saved answers
                 </div>
@@ -1125,7 +1230,7 @@ export default function ConversationalSearch() {
                   {offlineCache.entries.map((entry) => (
                     <div
                       key={entry.id}
-                      className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] px-4 py-3"
+                      className="rounded-2xl border border-white/[0.12] bg-gradient-to-br from-white/[0.10] via-white/[0.06] to-white/[0.04] px-4 py-3"
                     >
                       <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-elec-yellow">
                         {formatRelativeTime(new Date(entry.timestamp))}
@@ -1157,9 +1262,11 @@ export default function ConversationalSearch() {
           messagesEndRef={messagesEndRef}
           onScroll={handleScrollPosition}
           scrollContainerRef={scrollContainerRef}
-          className="px-3 sm:px-6 lg:px-10"
+          className="px-4 sm:px-6 lg:px-10"
         >
-          <div className="mx-auto flex max-w-4xl lg:max-w-5xl xl:max-w-7xl gap-0 py-4 sm:py-6">
+          {/* Same width budget as the composer (1400px) — the transcript used
+              to cap at 4xl/7xl and float in dead space on wide monitors. */}
+          <div className="mx-auto flex w-full max-w-[1400px] gap-0 py-4 sm:py-6">
             <div className="min-w-0 flex-1 space-y-6 sm:space-y-8 lg:pr-6 xl:pr-8">
             <AnimatePresence mode="popLayout">
               {messages.map((message, idx) => {
@@ -1243,7 +1350,7 @@ export default function ConversationalSearch() {
                               ))}
                             </div>
                           )}
-                          <div className="rounded-2xl px-3.5 py-3 sm:px-4 border border-white/[0.16] bg-white/[0.10] text-white">
+                          <div className="rounded-2xl px-3.5 py-3 sm:px-4 border border-white/[0.16] bg-gradient-to-br from-white/[0.14] via-white/[0.09] to-white/[0.06] text-white shadow-[inset_0_1px_0_0_rgba(255,255,255,0.10),0_2px_8px_-3px_rgba(0,0,0,0.75)]">
                             <div
                               className="whitespace-pre-wrap text-[14.5px] leading-relaxed"
                               style={{ overflowWrap: 'anywhere', wordBreak: 'break-word' }}
@@ -1288,7 +1395,29 @@ export default function ConversationalSearch() {
                                 ? handleRegenerate
                                 : undefined
                             }
+                            onAddToEicr={
+                              // Contextual: only when the answer commits to a
+                              // classification code.
+                              !isCurrentlyStreaming &&
+                              !message.isError &&
+                              /\b(C1|C2|C3|FI)\b/.test(message.content)
+                                ? () => handleOpenEicrSheet(message)
+                                : undefined
+                            }
                             onRegClick={handleInlineRegClick}
+                            onFeedback={
+                              !isCurrentlyStreaming
+                                ? (rating) => handleFeedback(idx, rating)
+                                : undefined
+                            }
+                            feedback={message.feedback}
+                            onFeedbackReason={
+                              // Only while the vote's row id is known (same
+                              // session) and no reason has landed yet.
+                              !message.feedbackReasonGiven && feedbackRows[idx]
+                                ? (reason) => handleFeedbackReason(idx, reason)
+                                : undefined
+                            }
                           />
 
                           {/* Streaming machinery line — quiet, human, alive */}
@@ -1302,44 +1431,6 @@ export default function ConversationalSearch() {
                             </div>
                           )}
 
-                          {/* ELE-1264: thumbs feedback — writes to
-                              ai_interaction_feedback so wrong answers surface
-                              while people are still customers. */}
-                          {!isCurrentlyStreaming && (
-                            <div className="flex items-center gap-1">
-                              <button
-                                type="button"
-                                onClick={() => handleFeedback(idx, 'positive')}
-                                disabled={!!message.feedback}
-                                aria-label="Good answer"
-                                className={cn(
-                                  'flex h-9 w-9 touch-manipulation items-center justify-center rounded-lg transition-colors',
-                                  message.feedback === 'positive'
-                                    ? 'bg-white/[0.14] text-white'
-                                    : 'text-white hover:bg-white/[0.08]',
-                                  message.feedback === 'negative' && 'opacity-30'
-                                )}
-                              >
-                                <ThumbsUp className="h-4 w-4" />
-                              </button>
-                              <button
-                                type="button"
-                                onClick={() => handleFeedback(idx, 'negative')}
-                                disabled={!!message.feedback}
-                                aria-label="Wrong or unhelpful answer"
-                                className={cn(
-                                  'flex h-9 w-9 touch-manipulation items-center justify-center rounded-lg transition-colors',
-                                  message.feedback === 'negative'
-                                    ? 'text-red-400'
-                                    : 'text-white/35 hover:text-white/70 hover:bg-white/[0.05]',
-                                  message.feedback === 'positive' && 'opacity-30'
-                                )}
-                              >
-                                <ThumbsDown className="h-4 w-4" />
-                              </button>
-                            </div>
-                          )}
-
                           {!isCurrentlyStreaming &&
                             message.followUpQuestions &&
                             message.followUpQuestions.length > 0 && (
@@ -1348,12 +1439,9 @@ export default function ConversationalSearch() {
                                 onSelect={handleFollowUpSelect}
                               />
                             )}
-
-                          {message.timestamp && !isCurrentlyStreaming && (
-                            <p className="text-[11px] text-white">
-                              {formatRelativeTime(message.timestamp)}
-                            </p>
-                          )}
+                          {/* No assistant timestamp: the question above it
+                              already carries one, and a second grey-reading
+                              line under every answer was pure noise. */}
                         </div>
                       </div>
                     )}
@@ -1367,10 +1455,14 @@ export default function ConversationalSearch() {
 
             <SourcesRail
               regNumbers={
-                [...messages]
-                  .reverse()
-                  .find((m) => m.role === 'assistant' && m.citedRegulations?.length)
-                  ?.citedRegulations ?? []
+                // While streaming, the retrieved set (available seconds
+                // earlier); once done, what the answer actually cited.
+                isStreaming && liveSources.length > 0
+                  ? liveSources
+                  : ([...messages]
+                      .reverse()
+                      .find((m) => m.role === 'assistant' && m.citedRegulations?.length)
+                      ?.citedRegulations ?? [])
               }
               onOpenReg={(regNumber) => setRegulationSheet({ open: true, regulationNumber: regNumber })}
               isStreaming={isStreaming}
@@ -1397,9 +1489,10 @@ export default function ConversationalSearch() {
               onClick={scrollToLatest}
               aria-label="Jump to the latest message"
               className="absolute -top-12 left-1/2 z-30 inline-flex h-10 -translate-x-1/2 items-center gap-1.5
-                rounded-full border border-white/[0.12] bg-[hsl(0_0%_14%)] px-4 text-[12.5px] font-medium
-                text-white shadow-lg shadow-black/40 backdrop-blur transition-colors
-                hover:bg-[hsl(0_0%_18%)] active:scale-[0.97] touch-manipulation"
+                rounded-full border border-elec-yellow/35 bg-elec-dark px-4 text-[12.5px] font-medium
+                text-white shadow-[inset_0_1px_0_0_rgba(255,255,255,0.10),0_4px_14px_-4px_rgba(0,0,0,0.8)]
+                transition-colors hover:border-elec-yellow/60 hover:bg-white/[0.06]
+                active:scale-[0.97] touch-manipulation [-webkit-tap-highlight-color:transparent]"
             >
               <ArrowDown className="h-3.5 w-3.5 text-elec-yellow" />
               {isStreaming ? 'Follow answer' : 'Latest'}
@@ -1509,33 +1602,43 @@ export default function ConversationalSearch() {
             </div>
           )}
 
-          {/* Attachment pills — text-only */}
-          <div className="flex items-center gap-2 pb-2">
-            <button
-              onClick={() => cameraInputRef.current?.click()}
-              disabled={isCompressing}
-              className="text-[12px] font-medium text-white px-3 py-1.5 rounded-full bg-white/[0.04] border border-white/[0.08] hover:bg-white/[0.08] transition-colors touch-manipulation disabled:opacity-50 disabled:cursor-not-allowed"
-              aria-label="Take photo with camera"
-            >
-              Camera
-            </button>
-            <button
-              onClick={() => fileInputRef.current?.click()}
-              disabled={isCompressing}
-              className="text-[12px] font-medium text-white px-3 py-1.5 rounded-full bg-white/[0.04] border border-white/[0.08] hover:bg-white/[0.08] transition-colors touch-manipulation disabled:opacity-50 disabled:cursor-not-allowed"
-              aria-label="Attach photo from library"
-            >
-              Photo
-            </button>
-            <button
-              onClick={() => docInputRef.current?.click()}
-              disabled={isCompressing}
-              className="text-[12px] font-medium text-white px-3 py-1.5 rounded-full bg-white/[0.04] border border-white/[0.08] hover:bg-white/[0.08] transition-colors touch-manipulation disabled:opacity-50 disabled:cursor-not-allowed"
-              aria-label="Attach a PDF document"
-            >
-              Document
-            </button>
-          </div>
+          {/* Attachment strip — folded behind the composer's "+" so the resting
+              state is a single clean row. The chips animate in above the
+              composer and close once a picker is opened. */}
+          <AnimatePresence>
+            {showAttachMenu && (
+              <motion.div
+                initial={{ opacity: 0, height: 0, y: 4 }}
+                animate={{ opacity: 1, height: 'auto', y: 0 }}
+                exit={{ opacity: 0, height: 0, y: 4 }}
+                transition={{ duration: 0.16, ease: 'easeOut' }}
+                className="overflow-hidden"
+              >
+                <div className="flex items-center gap-2 pb-2">
+                  {(
+                    [
+                      { label: 'Camera', ref: cameraInputRef, aria: 'Take photo with camera' },
+                      { label: 'Photo', ref: fileInputRef, aria: 'Attach photo from library' },
+                      { label: 'Document', ref: docInputRef, aria: 'Attach a PDF document' },
+                    ] as const
+                  ).map((a) => (
+                    <button
+                      key={a.label}
+                      onClick={() => {
+                        setShowAttachMenu(false);
+                        a.ref.current?.click();
+                      }}
+                      disabled={isCompressing}
+                      className="h-9 px-3.5 rounded-full text-[12.5px] font-medium text-white bg-white/[0.05] border border-white/[0.12] hover:bg-white/[0.10] hover:border-white/[0.22] active:scale-[0.97] transition-all touch-manipulation [-webkit-tap-highlight-color:transparent] disabled:opacity-50 disabled:cursor-not-allowed"
+                      aria-label={a.aria}
+                    >
+                      {a.label}
+                    </button>
+                  ))}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
           {/* Hidden file inputs */}
           <input
@@ -1590,6 +1693,8 @@ export default function ConversationalSearch() {
             voiceEnabled
             onTranscript={handleVoiceTranscript}
             canSubmitWithoutText={selectedImages.length > 0 || selectedDocuments.length > 0}
+            onAttachPress={() => setShowAttachMenu((v) => !v)}
+            attachActive={showAttachMenu}
           />
         </div>
       </ChatInputArea>
@@ -1619,6 +1724,14 @@ export default function ConversationalSearch() {
         question={saveSheet.question}
         citedRegulations={saveSheet.cited}
         imageUrls={saveSheet.imageUrls}
+      />
+
+      <AddToEicrSheet
+        isOpen={eicrSheet.open}
+        onClose={() => setEicrSheet((prev) => ({ ...prev, open: false }))}
+        answer={eicrSheet.answer}
+        question={eicrSheet.question}
+        citedRegulations={eicrSheet.cited}
       />
     </ChatContainer>
   );

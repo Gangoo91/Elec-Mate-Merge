@@ -1,4 +1,4 @@
-import { ArrowLeft, CheckCircle2, AlertTriangle, Lightbulb } from 'lucide-react';
+import { CheckCircle2, AlertTriangle, Lightbulb } from 'lucide-react';
 
 const traditionalMethods = [
   {
@@ -159,160 +159,151 @@ const providerCriteria = [
     ],
   },
 ];
-import { useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { PageFrame, PageHero, SectionHeader, itemVariants } from '@/components/college/primitives';
+import { SectionHeader } from '@/components/college/primitives';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 
 const DeliveryPage = () => {
-  const navigate = useNavigate();
   return (
-    <PageFrame className="px-4 sm:px-6 lg:px-8">
-      <motion.div variants={itemVariants}>
-        <button
-          onClick={() => navigate('/apprentice/toolbox/off-job-training-guide')}
-          className="inline-flex items-center gap-2 h-11 -ml-2 px-2 rounded-md text-[12px] uppercase tracking-[0.18em] text-white/55 hover:text-white/85 transition-colors touch-manipulation"
-        >
-          <ArrowLeft className="h-4 w-4" />
-          Back
-        </button>
-      </motion.div>
+    <HubPage>
+      <HubMasthead
+        section="Apprentice · OJT"
+        title="Delivery Methods"
+        backTo="/apprentice/toolbox/off-job-training-guide"
+      />
+      <HubBody>
+        {/* Traditional Methods */}
+        <div className="space-y-3">
+          <SectionHeader eyebrow="Methods" title="Traditional methods" />
 
-      <motion.div variants={itemVariants}>
-        <PageHero eyebrow="Apprentice · OJT" title="Delivery Methods" tone="yellow" />
-      </motion.div>
+          {traditionalMethods.map((method) => (
+            <div
+              key={method.title}
+              className="sm:rounded-xl sm:border sm:border-white/[0.06] sm:bg-[hsl(0_0%_10%)]"
+            >
+              <div className="sm:p-5 py-4 space-y-3">
+                <h3 className="font-medium text-sm text-white">{method.title}</h3>
+                <p className="text-white text-sm">{method.desc}</p>
 
-      {/* Traditional Methods */}
-      <div className="space-y-3">
-        <SectionHeader eyebrow="Methods" title="Traditional methods" />
-
-        {traditionalMethods.map((method) => (
-          <div
-            key={method.title}
-            className="sm:rounded-xl sm:border sm:border-white/[0.06] sm:bg-[hsl(0_0%_10%)]"
-          >
-            <div className="sm:p-5 py-4 space-y-3">
-              <h3 className="font-medium text-sm text-white">{method.title}</h3>
-              <p className="text-white text-sm">{method.desc}</p>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div>
-                  <p className="text-green-400 text-xs font-semibold mb-1">Pros</p>
-                  <ul className="space-y-1">
-                    {method.pros.map((pro) => (
-                      <li key={pro} className="flex items-start gap-1.5 text-xs text-white">
-                        <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 mt-0.5 flex-shrink-0" />
-                        {pro}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <div>
-                  <p className="text-red-400 text-xs font-semibold mb-1">Cons</p>
-                  <ul className="space-y-1">
-                    {method.cons.map((con) => (
-                      <li key={con} className="flex items-start gap-1.5 text-xs text-white">
-                        <AlertTriangle className="h-3.5 w-3.5 text-red-300 mt-0.5 flex-shrink-0" />
-                        {con}
-                      </li>
-                    ))}
-                  </ul>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div>
+                    <p className="text-green-400 text-xs font-semibold mb-1">Pros</p>
+                    <ul className="space-y-1">
+                      {method.pros.map((pro) => (
+                        <li key={pro} className="flex items-start gap-1.5 text-xs text-white">
+                          <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 mt-0.5 flex-shrink-0" />
+                          {pro}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div>
+                    <p className="text-red-400 text-xs font-semibold mb-1">Cons</p>
+                    <ul className="space-y-1">
+                      {method.cons.map((con) => (
+                        <li key={con} className="flex items-start gap-1.5 text-xs text-white">
+                          <AlertTriangle className="h-3.5 w-3.5 text-red-300 mt-0.5 flex-shrink-0" />
+                          {con}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        ))}
-      </div>
-
-      {/* Modern Approaches */}
-      <div className="space-y-3">
-        <SectionHeader eyebrow="Methods" title="Modern approaches" />
-
-        {modernApproaches.map((method) => (
-          <div
-            key={method.title}
-            className="sm:rounded-xl sm:border sm:border-white/[0.06] sm:bg-[hsl(0_0%_10%)]"
-          >
-            <div className="sm:p-5 py-4 space-y-3">
-              <h3 className="font-medium text-sm text-white">{method.title}</h3>
-              <p className="text-white text-sm">{method.desc}</p>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div>
-                  <p className="text-green-400 text-xs font-semibold mb-1">Pros</p>
-                  <ul className="space-y-1">
-                    {method.pros.map((pro) => (
-                      <li key={pro} className="flex items-start gap-1.5 text-xs text-white">
-                        <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 mt-0.5 flex-shrink-0" />
-                        {pro}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <div>
-                  <p className="text-red-400 text-xs font-semibold mb-1">Cons</p>
-                  <ul className="space-y-1">
-                    {method.cons.map((con) => (
-                      <li key={con} className="flex items-start gap-1.5 text-xs text-white">
-                        <AlertTriangle className="h-3.5 w-3.5 text-red-300 mt-0.5 flex-shrink-0" />
-                        {con}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      {/* Remote Learning Tips */}
-      <div className="space-y-3">
-        <SectionHeader eyebrow="Tips" title="Remote learning tips" />
-
-        <div className="sm:rounded-xl sm:border sm:border-elec-yellow/25 sm:bg-elec-yellow/[0.04]">
-          <div className="sm:p-5 space-y-3">
-            <div className="flex items-center gap-2 mb-1">
-              <Lightbulb className="h-4 w-4 text-amber-400" />
-              <p className="text-white text-sm font-medium">
-                Getting the most from online sessions
-              </p>
-            </div>
-            <ul className="space-y-2">
-              {remoteLearningTips.map((tip) => (
-                <li key={tip} className="flex items-start gap-2 text-sm text-white">
-                  <span className="text-elec-yellow/70 mt-0.5">·</span>
-                  {tip}
-                </li>
-              ))}
-            </ul>
-          </div>
+          ))}
         </div>
-      </div>
 
-      {/* Provider Selection */}
-      <div className="space-y-3">
-        <SectionHeader eyebrow="Choosing" title="Provider selection criteria" />
+        {/* Modern Approaches */}
+        <div className="space-y-3">
+          <SectionHeader eyebrow="Methods" title="Modern approaches" />
 
-        {providerCriteria.map((section) => (
-          <div
-            key={section.title}
-            className="sm:rounded-xl sm:border sm:border-white/[0.06] sm:bg-[hsl(0_0%_10%)]"
-          >
-            <div className="sm:p-5 py-4">
-              <h3 className="text-elec-yellow font-semibold text-sm mb-2">{section.title}</h3>
-              <ul className="space-y-1">
-                {section.items.map((item) => (
-                  <li key={item} className="flex items-start gap-2 text-sm text-white">
+          {modernApproaches.map((method) => (
+            <div
+              key={method.title}
+              className="sm:rounded-xl sm:border sm:border-white/[0.06] sm:bg-[hsl(0_0%_10%)]"
+            >
+              <div className="sm:p-5 py-4 space-y-3">
+                <h3 className="font-medium text-sm text-white">{method.title}</h3>
+                <p className="text-white text-sm">{method.desc}</p>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div>
+                    <p className="text-green-400 text-xs font-semibold mb-1">Pros</p>
+                    <ul className="space-y-1">
+                      {method.pros.map((pro) => (
+                        <li key={pro} className="flex items-start gap-1.5 text-xs text-white">
+                          <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 mt-0.5 flex-shrink-0" />
+                          {pro}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div>
+                    <p className="text-red-400 text-xs font-semibold mb-1">Cons</p>
+                    <ul className="space-y-1">
+                      {method.cons.map((con) => (
+                        <li key={con} className="flex items-start gap-1.5 text-xs text-white">
+                          <AlertTriangle className="h-3.5 w-3.5 text-red-300 mt-0.5 flex-shrink-0" />
+                          {con}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Remote Learning Tips */}
+        <div className="space-y-3">
+          <SectionHeader eyebrow="Tips" title="Remote learning tips" />
+
+          <div className="sm:rounded-xl sm:border sm:border-elec-yellow/25 sm:bg-elec-yellow/[0.04]">
+            <div className="sm:p-5 space-y-3">
+              <div className="flex items-center gap-2 mb-1">
+                <Lightbulb className="h-4 w-4 text-amber-400" />
+                <p className="text-white text-sm font-medium">
+                  Getting the most from online sessions
+                </p>
+              </div>
+              <ul className="space-y-2">
+                {remoteLearningTips.map((tip) => (
+                  <li key={tip} className="flex items-start gap-2 text-sm text-white">
                     <span className="text-elec-yellow/70 mt-0.5">·</span>
-                    {item}
+                    {tip}
                   </li>
                 ))}
               </ul>
             </div>
           </div>
-        ))}
-      </div>
-    </PageFrame>
+        </div>
+
+        {/* Provider Selection */}
+        <div className="space-y-3">
+          <SectionHeader eyebrow="Choosing" title="Provider selection criteria" />
+
+          {providerCriteria.map((section) => (
+            <div
+              key={section.title}
+              className="sm:rounded-xl sm:border sm:border-white/[0.06] sm:bg-[hsl(0_0%_10%)]"
+            >
+              <div className="sm:p-5 py-4">
+                <h3 className="text-elec-yellow font-semibold text-sm mb-2">{section.title}</h3>
+                <ul className="space-y-1">
+                  {section.items.map((item) => (
+                    <li key={item} className="flex items-start gap-2 text-sm text-white">
+                      <span className="text-elec-yellow/70 mt-0.5">·</span>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          ))}
+        </div>
+      </HubBody>
+    </HubPage>
   );
 };
 

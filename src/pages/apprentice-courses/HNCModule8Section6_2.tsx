@@ -5,10 +5,10 @@
  */
 
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
-import { PageFrame, PageHero } from '@/components/college/primitives';
 import {
   ConceptBlock,
   CommonMistake,
@@ -54,12 +54,7 @@ const quickCheckQuestions = [
     id: 'lighting-level',
     question:
       'What is the minimum recommended illuminance level for general plant room areas according to CIBSE guidance?',
-    options: [
-      '50 lux',
-      '100 lux',
-      '200 lux',
-      '500 lux',
-    ],
+    options: ['50 lux', '100 lux', '200 lux', '500 lux'],
     correctIndex: 2,
     explanation:
       'CIBSE SLL Lighting Guide recommends a minimum of 200 lux for plant rooms to enable safe equipment operation, maintenance tasks, and meter reading. Higher levels (300-500 lux) may be required at control panels and where detailed work is performed.',
@@ -84,12 +79,7 @@ const quizQuestions = [
     id: 1,
     question:
       'According to BS 7671 and industry guidance, what is the minimum clearance required in front of switchgear for safe operation and maintenance?',
-    options: [
-      '600mm',
-      '1000mm',
-      '800mm',
-      '1200mm',
-    ],
+    options: ['600mm', '1000mm', '800mm', '1200mm'],
     correctAnswer: 1,
     explanation:
       'A minimum clearance of 1000mm is required in front of switchgear to allow safe operation, visual inspection of indicators, and adequate working space for maintenance personnel. This dimension accommodates door swing, panel removal, and emergency egress.',
@@ -112,12 +102,7 @@ const quizQuestions = [
     id: 3,
     question:
       'What is the recommended minimum illuminance at switchboard control panels according to CIBSE guidance?',
-    options: [
-      '200 lux',
-      '100 lux',
-      '500 lux',
-      '300 lux',
-    ],
+    options: ['200 lux', '100 lux', '500 lux', '300 lux'],
     correctAnswer: 3,
     explanation:
       'CIBSE recommends 300 lux minimum at control panels where operators need to read instruments, meters, and labels accurately. General plant room areas require 200 lux minimum, whilst task lighting may provide up to 500 lux for detailed maintenance work.',
@@ -154,12 +139,7 @@ const quizQuestions = [
     id: 6,
     question:
       'When designing cable routes in a plant room, what minimum height should horizontal cable containment be installed above floor level?',
-    options: [
-      '1.8m',
-      '2.1m',
-      '2.4m',
-      '3.0m',
-    ],
+    options: ['1.8m', '2.1m', '2.4m', '3.0m'],
     correctAnswer: 2,
     explanation:
       'Horizontal cable containment should be installed at minimum 2.4m (or higher where ceiling height permits) to maintain clear headroom for personnel access and equipment movement. This also reduces risk of mechanical damage and provides adequate bend radii for cable entries.',
@@ -223,12 +203,7 @@ const quizQuestions = [
     id: 11,
     question:
       'What is the recommended minimum door width for plant room access to allow equipment entry and replacement?',
-    options: [
-      '800mm',
-      '900mm',
-      '1000mm',
-      '1200mm',
-    ],
+    options: ['800mm', '900mm', '1000mm', '1200mm'],
     correctAnswer: 3,
     explanation:
       'A minimum door width of 1200mm is recommended to allow entry of standard equipment, cable drums, and maintenance equipment. Larger openings (double doors or removable panels) may be required for major plant items that cannot be disassembled.',
@@ -265,12 +240,7 @@ const quizQuestions = [
     id: 14,
     question:
       'What minimum IP rating is generally recommended for electrical enclosures in plant rooms with potential water exposure?',
-    options: [
-      'IP2X',
-      'IP4X',
-      'IP44',
-      'IP65',
-    ],
+    options: ['IP2X', 'IP4X', 'IP44', 'IP65'],
     correctAnswer: 2,
     explanation:
       'IP44 provides protection against solid objects greater than 1mm and water splashing from any direction. This is suitable for most plant rooms where cleaning operations or minor water leaks may occur. Higher ratings (IP55/IP65) may be needed near water services or in humid conditions.',
@@ -315,375 +285,668 @@ const HNCModule8Section6_2 = () => {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
-      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
-        <PageFrame>
+    <HubPage>
+      <HubMasthead
+        section="Module 8 · Section 6 · Subsection 2"
+        title="Plant Room Design"
+        backTo="/study-centre/apprentice/h-n-c-module8-section6"
+      />
+      <HubBody>
+        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
+          Layout considerations, access requirements, ventilation, lighting and electrical
+          infrastructure
+        </p>
+
+        <LearningOutcomes
+          outcomes={[
+            'Design plant room layouts with appropriate equipment zoning',
+            'Specify adequate access clearances for operation and maintenance',
+            'Calculate ventilation requirements for heat rejection',
+            'Apply lighting standards including emergency lighting',
+            'Position switchboards and plan cable routes effectively',
+            'Design earthing and bonding arrangements per BS 7671',
+          ]}
+        />
+
+        <SectionRule />
+
+        <ConceptBlock title="Layout Considerations">
+          <p>
+            Plant room layout design requires careful coordination of electrical, mechanical, and
+            plumbing services within a confined space. BSRIA BG 32 provides comprehensive guidance
+            on spatial planning, equipment zoning, and the creation of efficient, maintainable
+            installations. The layout must balance operational requirements, maintenance access,
+            safety considerations, and future flexibility.
+          </p>
+          <p>
+            <strong>Fundamental Layout Principles:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Equipment zoning:</strong> Group related equipment together (electrical,
+              mechanical, controls)
+            </li>
+            <li>
+              <strong>Segregation:</strong> Separate electrical equipment from water services where
+              possible
+            </li>
+            <li>
+              <strong>Access routes:</strong> Maintain clear circulation paths to all equipment
+            </li>
+            <li>
+              <strong>Emergency egress:</strong> Ensure alternative escape routes from all areas
+            </li>
+            <li>
+              <strong>Future expansion:</strong> Allow space for additional equipment and circuits
+            </li>
+          </ul>
+          <p>
+            <strong>Equipment Positioning Hierarchy</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Main switchboard:</strong> Near plant room entrance — Emergency access, cable
+              entry routes
+            </li>
+            <li>
+              <strong>Transformers:</strong> External wall or fire-rated enclosure — Ventilation,
+              noise, fire separation
+            </li>
+            <li>
+              <strong>Distribution boards:</strong> Central to served areas — Cable route
+              efficiency, accessibility
+            </li>
+            <li>
+              <strong>Control panels (BMS/HVAC):</strong> Near associated plant — Signal cable
+              lengths, operator access
+            </li>
+            <li>
+              <strong>Metering equipment:</strong> Accessible without entering plant area — Meter
+              reading access, CT locations
+            </li>
+          </ul>
+          <p>
+            <strong>Services Coordination</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>3D modelling:</strong> Use BIM coordination to identify clashes before
+              installation
+            </li>
+            <li>
+              <strong>Vertical zoning:</strong> Establish service layers (drainage lowest,
+              electrical highest)
+            </li>
+            <li>
+              <strong>Horizontal corridors:</strong> Maintain clear routes for cable containment
+              runs
+            </li>
+            <li>
+              <strong>Equipment replacement:</strong> Consider removal routes for major plant items
+            </li>
+            <li>
+              <strong>Structural coordination:</strong> Verify floor loadings and fixing positions
+            </li>
+          </ul>
+          <p>
+            <strong>Plant Room Sizing Guide</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Rule of thumb:</strong> Plant room area = 3-5% of gross building floor area
+            </li>
+            <li>
+              <strong>Height:</strong> Minimum 3.0m clear, 3.5-4.0m preferred
+            </li>
+            <li>
+              <strong>Door size:</strong> 1200mm wide minimum, double doors for large equipment
+            </li>
+            <li>
+              <strong>Floor loading:</strong> Typically 7.5-10 kN/m squared for equipment areas
+            </li>
+          </ul>
+          <p>
+            <strong>Design coordination:</strong> Early engagement between electrical, mechanical,
+            and architectural designers is essential. Establish equipment layouts before structural
+            design is finalised to ensure adequate space and structural provisions.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...quickCheckQuestions[0]} />
+
+        <SectionRule />
+
+        <ConceptBlock title="Access Requirements">
+          <p>
+            Adequate access is fundamental to safe plant room operation and maintenance. BS 7671,
+            CIBSE guides, and manufacturer requirements all specify minimum clearances that must be
+            maintained throughout the installation's life. Access requirements influence not only
+            layout but also the sizing of the plant room itself.
+          </p>
+          <p>
+            <strong>Front Access</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>1000mm minimum clear depth</li>
+            <li>Full width of switchgear</li>
+            <li>Door swing clearance</li>
+            <li>Arc flash safe distance</li>
+          </ul>
+          <p>
+            <strong>Rear Access</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>600mm minimum where required</li>
+            <li>Cable termination space</li>
+            <li>Component replacement</li>
+            <li>May require lighting</li>
+          </ul>
+          <p>
+            <strong>Side Access</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>200-300mm typical minimum</li>
+            <li>Manufacturer specified</li>
+            <li>Ventilation requirements</li>
+            <li>Section removal routes</li>
+          </ul>
+          <p>
+            <strong>Access Clearance Requirements</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>LV switchboard:</strong> 1000mm — 600mm (if rear access) — Check arc flash
+              requirements
+            </li>
+            <li>
+              <strong>Distribution boards:</strong> 800mm — N/A (wall-mounted) — Door opening
+              clearance
+            </li>
+            <li>
+              <strong>Transformers:</strong> 1000mm — 600mm all sides — Ventilation requirements
+            </li>
+            <li>
+              <strong>Control panels:</strong> 800mm — 450mm — Cabling access
+            </li>
+          </ul>
+          <p>
+            <strong>Maintenance Access Considerations</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Equipment removal:</strong> Clear route from equipment to plant room door
+            </li>
+            <li>
+              <strong>Lifting provisions:</strong> Overhead lifting beams or adequate headroom for
+              mobile lifting
+            </li>
+            <li>
+              <strong>Floor loadings:</strong> Adequate for equipment transport (pallet trucks,
+              forklifts)
+            </li>
+            <li>
+              <strong>Service isolation:</strong> Accessible isolators for maintenance work
+            </li>
+            <li>
+              <strong>Test equipment:</strong> Space for test instruments during commissioning and
+              maintenance
+            </li>
+          </ul>
+          <p>
+            <strong>Safety Requirements</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Emergency egress:</strong> Two exits required where travel distance exceeds
+              12m
+            </li>
+            <li>
+              <strong>Floor surfaces:</strong> Non-slip finish, free from trip hazards
+            </li>
+            <li>
+              <strong>Headroom:</strong> 2.1m minimum throughout, 2.4m preferred
+            </li>
+            <li>
+              <strong>Emergency stops:</strong> Located near exits, clearly identified
+            </li>
+          </ul>
+          <p>
+            <strong>Future-proofing:</strong> Design access routes to accommodate potential
+            equipment upgrades or replacements. Consider modular construction allowing section
+            removal without major alterations.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...quickCheckQuestions[1]} />
+
+        <SectionRule />
+
+        <ConceptBlock title="Ventilation and Environmental Control">
+          <p>
+            Effective ventilation is critical for maintaining electrical equipment within its rated
+            operating temperature. Heat generated by transformers, switchgear, cables, and
+            electronic equipment must be removed to prevent premature failure and maintain
+            protective device accuracy. CIBSE Guide B provides detailed guidance on plant room
+            ventilation design.
+          </p>
+          <p>
+            <strong>Heat Sources in Electrical Plant Rooms</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Transformers (dry type):</strong> 2-3% of rated kVA — Higher at full load
+            </li>
+            <li>
+              <strong>LV switchgear:</strong> 0.5-1% of throughput — Contact and conductor losses
+            </li>
+            <li>
+              <strong>Power cables:</strong> I squared R losses — Varies with loading
+            </li>
+            <li>
+              <strong>UPS systems:</strong> 5-15% of rated load — Includes battery charging
+            </li>
+            <li>
+              <strong>Variable speed drives:</strong> 2-5% of rated power — Requires local
+              extraction
+            </li>
+          </ul>
+          <p>
+            <strong>Natural Ventilation</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Low-level intake, high-level exhaust</li>
+            <li>Inlet area 50% of exhaust area</li>
+            <li>Stack effect calculation required</li>
+            <li>Weather louvres for rain protection</li>
+            <li>Limited cooling capacity</li>
+          </ul>
+          <p>
+            <strong>Mechanical Ventilation</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Extract fans with motorised dampers</li>
+            <li>Temperature-controlled operation</li>
+            <li>25-35 l/s per kW heat gain</li>
+            <li>Standby fan for critical areas</li>
+            <li>BMS integration for monitoring</li>
+          </ul>
+          <p>
+            <strong>Ventilation Calculation Example</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Total heat dissipation:</strong> 15 kW (transformer 8kW, switchgear 4kW,
+              cables 3kW)
+            </li>
+            <li>
+              <strong>Ventilation rate:</strong> 30 l/s per kW (standard)
+            </li>
+            <li>
+              <strong>Required airflow:</strong> 15 x 30 = 450 l/s
+            </li>
+            <li>
+              <strong>Temperature rise:</strong> Q = m x Cp x delta T
+            </li>
+            <li>
+              <strong>With 10K rise:</strong> External 28 degrees C + 10K = 38 degrees C max ambient
+            </li>
+          </ul>
+          <p>Within 40 degrees C equipment rating - acceptable</p>
+          <p>
+            <strong>Environmental Control Requirements</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Temperature:</strong> Maintain below 35-40 degrees Celsius (equipment rating
+              dependent)
+            </li>
+            <li>
+              <strong>Humidity:</strong> 40-60% RH to prevent condensation and static discharge
+            </li>
+            <li>
+              <strong>Dust control:</strong> Filtered air intake, IP rating appropriate to
+              environment
+            </li>
+            <li>
+              <strong>Pressure:</strong> Slight positive pressure prevents dust ingress
+            </li>
+            <li>
+              <strong>Monitoring:</strong> Temperature and humidity sensors with BMS alerts
+            </li>
+          </ul>
+          <p>
+            <strong>Critical consideration:</strong> Inadequate ventilation causes accelerated
+            insulation degradation, increased contact resistance, and protective device nuisance
+            tripping. Equipment life may be reduced by 50% for every 10 degrees Celsius above rated
+            ambient.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...quickCheckQuestions[2]} />
+
+        <SectionRule />
+
+        <ConceptBlock title="Lighting and Electrical Infrastructure">
+          <p>
+            Plant room lighting must provide adequate illumination for safe equipment operation,
+            maintenance tasks, and emergency egress. CIBSE SLL Lighting Guide and BS 5266 for
+            emergency lighting establish the requirements. The electrical infrastructure must
+            support the plant room's own requirements as well as providing distribution to the wider
+            building.
+          </p>
+          <p>
+            <strong>Lighting Requirements (CIBSE SLL)</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>General plant room areas:</strong> 200 lux minimum — &gt;60
+            </li>
+            <li>
+              <strong>Control panels and switchgear faces:</strong> 300 lux minimum — &gt;80
+            </li>
+            <li>
+              <strong>Detailed maintenance work:</strong> 500 lux (task lighting) — &gt;80
+            </li>
+            <li>
+              <strong>Cable termination areas:</strong> 300 lux minimum — &gt;80 (cable
+              identification)
+            </li>
+            <li>
+              <strong>Emergency lighting (high-risk):</strong> 10% of normal or 15 lux min — &gt;40
+            </li>
+          </ul>
+          <p>
+            <strong>Lighting Design Considerations</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Avoid shadows on switchgear operating faces</li>
+            <li>Luminaires positioned for maintenance access</li>
+            <li>Protection against mechanical damage (IP rating)</li>
+            <li>Local switching at plant room entrance</li>
+            <li>Separate circuits for general and task lighting</li>
+          </ul>
+          <p>
+            <strong>Emergency Lighting (BS 5266)</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>High-risk task area classification</li>
+            <li>Minimum 10% of normal illuminance</li>
+            <li>3-hour rated duration</li>
+            <li>Self-contained or central battery</li>
+            <li>Monthly function tests required</li>
+          </ul>
+          <p>
+            <strong>Switchboard Positioning</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Cable entry:</strong> Position to minimise cable route lengths and crossings
+            </li>
+            <li>
+              <strong>Incoming supply:</strong> Locate main switchboard near service entry point
+            </li>
+            <li>
+              <strong>Orientation:</strong> Operating face towards main access route
+            </li>
+            <li>
+              <strong>Environmental:</strong> Away from heat sources, water services, vibration
+            </li>
+            <li>
+              <strong>Expansion:</strong> Allow space for future panel extensions
+            </li>
+          </ul>
+          <p>
+            <strong>Cable Containment Systems</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Cable ladder:</strong> Heavy power cables — Good ventilation, easy
+              installation
+            </li>
+            <li>
+              <strong>Cable tray (perforated):</strong> Medium cables, mixed services — Segregation
+              dividers available
+            </li>
+            <li>
+              <strong>Cable trunking:</strong> Distribution to boards — Mechanical protection, neat
+              appearance
+            </li>
+            <li>
+              <strong>Floor trenches:</strong> Switchboard entries — Fire-stopped covers required
+            </li>
+          </ul>
+          <p>
+            <strong>Earthing and Bonding Infrastructure</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Main earthing terminal (MET):</strong> Central connection point, clearly
+              labelled, accessible for testing
+            </li>
+            <li>
+              <strong>Earth bars:</strong> Copper earth bars for multiple circuit connections
+              (minimum 25mm x 6mm)
+            </li>
+            <li>
+              <strong>Main protective bonding:</strong> Connect incoming metallic services (water,
+              gas, structural steel)
+            </li>
+            <li>
+              <strong>Supplementary bonding:</strong> Connect simultaneously accessible
+              extraneous-conductive-parts
+            </li>
+            <li>
+              <strong>Containment bonding:</strong> Ensure electrical continuity of all metallic
+              containment
+            </li>
+            <li>
+              <strong>Lightning protection:</strong> Connection to LPS earth where applicable
+            </li>
+          </ul>
+          <p>
+            <strong>BS 7671 Earthing Requirements</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Main bonding conductor:</strong> Minimum 50% of earthing conductor (min 6mm
+              squared Cu)
+            </li>
+            <li>
+              <strong>Earthing conductor:</strong> Per Table 54.7 based on line conductor size
+            </li>
+            <li>
+              <strong>Supplementary bonding:</strong> Minimum 4mm squared Cu (2.5mm squared if
+              mechanically protected)
+            </li>
+            <li>
+              <strong>Earth bar:</strong> Sized for connected conductors + 30% spare capacity
+            </li>
+          </ul>
+          <p>
+            <strong>Cable route planning:</strong> Establish primary containment routes early in
+            design. Maintain 30-50% spare capacity for future cables. Segregate power and data
+            cables per BS 7671 requirements.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...quickCheckQuestions[3]} />
+
+        <SectionRule />
+
+        <ConceptBlock title="Worked Examples">
+          <p>
+            <strong>Example 1: Ventilation Requirement Calculation</strong>
+          </p>
+          <p>
+            <strong>Scenario:</strong> Calculate ventilation requirements for a plant room
+            containing 500kVA transformer, main LV switchboard (400A), and distribution equipment.
+          </p>
+          <p>Heat sources:</p>
+          <p>Transformer (500kVA x 2.5% loss) = 12.5 kW</p>
+          <p>Switchgear (estimated) = 3 kW</p>
+          <p>Cables and miscellaneous = 2.5 kW</p>
+          <p>Total heat gain = 18 kW</p>
+          <p>Ventilation calculation:</p>
+          <p>Rate = 30 l/s per kW (standard for electrical plant)</p>
+          <p>Required airflow = 18 x 30 = 540 l/s</p>
+          <p>Extract fan specification:</p>
+          <p>Minimum duty = 540 l/s at system pressure</p>
+          <p>With 20% margin = 648 l/s design flow</p>
+          <p>Select 2 x 400 l/s fans (duty/standby) for resilience</p>
+          <p>
+            <strong>Example 2: Lighting Design</strong>
+          </p>
+          <p>
+            <strong>Scenario:</strong> Design lighting for a 10m x 6m plant room with 3.5m ceiling
+            height.
+          </p>
+          <p>Requirements:</p>
+          <p>General illuminance = 200 lux minimum</p>
+          <p>Switchgear face = 300 lux</p>
+          <p>Emergency = 10% or 15 lux minimum</p>
+          <p>Lumen method calculation:</p>
+          <p>Room area = 60 m squared</p>
+          <p>Required lumens = E x A / (UF x MF)</p>
+          <p>= 200 x 60 / (0.5 x 0.8) = 30,000 lumens</p>
+          <p>Luminaire selection:</p>
+          <p>LED battens 5000 lumens each</p>
+          <p>Quantity = 30,000 / 5,000 = 6 luminaires</p>
+          <p>Install 6 x LED battens in 2 rows of 3</p>
+          <p>+ 3 x emergency luminaires (self-contained)</p>
+          <p>
+            <strong>Example 3: Main Bonding Conductor Sizing</strong>
+          </p>
+          <p>
+            <strong>Scenario:</strong> Determine main protective bonding conductor sizes for a plant
+            room with 120mm squared earthing conductor.
+          </p>
+          <p>Given data:</p>
+          <p>Earthing conductor = 120mm squared copper</p>
+          <p>Water pipe = 54mm diameter</p>
+          <p>Gas pipe = 42mm diameter</p>
+          <p>Structural steel present</p>
+          <p>BS 7671 Table 54.8 calculation:</p>
+          <p>Main bonding = 50% of earthing conductor</p>
+          <p>= 0.5 x 120 = 60mm squared</p>
+          <p>Minimum = 6mm squared (not applicable here)</p>
+          <p>Bonding conductor requirements:</p>
+          <p>Water main = 70mm squared copper</p>
+          <p>Gas main = 70mm squared copper</p>
+          <p>Structural steel = 70mm squared copper</p>
+          <p>All main bonding = 70mm squared Cu to MET</p>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <ConceptBlock title="Practical guidance">
+          <p>
+            <strong>Plant Room Design Checklist:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              Obtain equipment data sheets for all major items (dimensions, weights, heat output)
+            </li>
+            <li>Verify floor loading capacity for equipment and maintenance access</li>
+            <li>Coordinate layout with mechanical and plumbing services</li>
+            <li>Confirm access clearances meet manufacturer and regulatory requirements</li>
+            <li>
+              Calculate ventilation requirements and verify plant room can achieve required airflow
+            </li>
+            <li>Design lighting to achieve recommended illuminance levels</li>
+            <li>Plan cable routes with adequate capacity and segregation</li>
+            <li>Specify earthing and bonding arrangements per BS 7671</li>
+          </ul>
+          <p>
+            <strong>Key Standards Reference:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>BS 7671:</strong> Wiring Regulations - installation requirements, earthing,
+              bonding
+            </li>
+            <li>
+              <strong>CIBSE Guide B:</strong> Heating, ventilating, air conditioning - ventilation
+              design
+            </li>
+            <li>
+              <strong>CIBSE SLL:</strong> Lighting Guide - illuminance requirements
+            </li>
+            <li>
+              <strong>BSRIA BG 32:</strong> Designing Plant Rooms - layout guidance
+            </li>
+            <li>
+              <strong>BS 5266:</strong> Emergency lighting requirements
+            </li>
+            <li>
+              <strong>BS EN 61439:</strong> Switchgear assembly requirements
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <CommonMistake
+          title="Common mistakes to avoid"
+          whatHappens={
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+              <li>
+                <strong>Inadequate ventilation:</strong> Undersized ventilation leading to
+                overheating
+              </li>
+              <li>
+                <strong>Poor access planning:</strong> Equipment installed without adequate
+                maintenance access
+              </li>
+              <li>
+                <strong>Insufficient lighting:</strong> Shadow areas preventing safe operation
+              </li>
+              <li>
+                <strong>Cable route clashes:</strong> Containment conflicts with other services
+              </li>
+              <li>
+                <strong>Omitting expansion space:</strong> No provision for future equipment or
+                circuits
+              </li>
+              <li>
+                <strong>Ignoring floor drainage:</strong> No provision for water ingress or cleaning
+              </li>
+            </ul>
+          }
+          doInstead="Cross-check assumptions against published guidance, validate measured values against design intent, and engage the wider team early when interface issues emerge."
+        />
+
+        <SectionRule />
+
+        <FAQ items={faqs} />
+
+        <SectionRule />
+
+        <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+
+        <div className="grid grid-cols-2 gap-3 pt-2">
           <button
-            onClick={() => navigate("/study-centre/apprentice/h-n-c-module8-section6")}
-            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module8-section6-1')}
+            className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
           >
-            <ArrowLeft className="h-4 w-4" /> Back
+            <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+              <ChevronLeft className="h-3 w-3" /> Previous
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-white truncate">
+              HVAC electrical requirements
+            </div>
           </button>
-
-          <PageHero
-            eyebrow="Module 8 · Section 6 · Subsection 2"
-            title="Plant Room Design"
-            description="Layout considerations, access requirements, ventilation, lighting and electrical infrastructure"
-            tone="purple"
-          />
-
-          <LearningOutcomes
-            outcomes={[
-              "Design plant room layouts with appropriate equipment zoning",
-              "Specify adequate access clearances for operation and maintenance",
-              "Calculate ventilation requirements for heat rejection",
-              "Apply lighting standards including emergency lighting",
-              "Position switchboards and plan cable routes effectively",
-              "Design earthing and bonding arrangements per BS 7671",
-            ]}
-          />
-
-          <SectionRule />
-
-          <ConceptBlock title="Layout Considerations">
-            <p>Plant room layout design requires careful coordination of electrical, mechanical, and plumbing services within a confined space. BSRIA BG 32 provides comprehensive guidance on spatial planning, equipment zoning, and the creation of efficient, maintainable installations. The layout must balance operational requirements, maintenance access, safety considerations, and future flexibility.</p>
-            <p><strong>Fundamental Layout Principles:</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Equipment zoning:</strong> Group related equipment together (electrical, mechanical, controls)</li>
-              <li><strong>Segregation:</strong> Separate electrical equipment from water services where possible</li>
-              <li><strong>Access routes:</strong> Maintain clear circulation paths to all equipment</li>
-              <li><strong>Emergency egress:</strong> Ensure alternative escape routes from all areas</li>
-              <li><strong>Future expansion:</strong> Allow space for additional equipment and circuits</li>
-            </ul>
-            <p><strong>Equipment Positioning Hierarchy</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Main switchboard:</strong> Near plant room entrance — Emergency access, cable entry routes</li>
-              <li><strong>Transformers:</strong> External wall or fire-rated enclosure — Ventilation, noise, fire separation</li>
-              <li><strong>Distribution boards:</strong> Central to served areas — Cable route efficiency, accessibility</li>
-              <li><strong>Control panels (BMS/HVAC):</strong> Near associated plant — Signal cable lengths, operator access</li>
-              <li><strong>Metering equipment:</strong> Accessible without entering plant area — Meter reading access, CT locations</li>
-            </ul>
-            <p><strong>Services Coordination</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>3D modelling:</strong> Use BIM coordination to identify clashes before installation</li>
-              <li><strong>Vertical zoning:</strong> Establish service layers (drainage lowest, electrical highest)</li>
-              <li><strong>Horizontal corridors:</strong> Maintain clear routes for cable containment runs</li>
-              <li><strong>Equipment replacement:</strong> Consider removal routes for major plant items</li>
-              <li><strong>Structural coordination:</strong> Verify floor loadings and fixing positions</li>
-            </ul>
-            <p><strong>Plant Room Sizing Guide</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Rule of thumb:</strong> Plant room area = 3-5% of gross building floor area</li>
-              <li><strong>Height:</strong> Minimum 3.0m clear, 3.5-4.0m preferred</li>
-              <li><strong>Door size:</strong> 1200mm wide minimum, double doors for large equipment</li>
-              <li><strong>Floor loading:</strong> Typically 7.5-10 kN/m squared for equipment areas</li>
-            </ul>
-            <p><strong>Design coordination:</strong> Early engagement between electrical, mechanical, and architectural designers is essential. Establish equipment layouts before structural design is finalised to ensure adequate space and structural provisions.</p>
-          </ConceptBlock>
-
-          <InlineCheck {...quickCheckQuestions[0]} />
-
-          <SectionRule />
-
-          <ConceptBlock title="Access Requirements">
-            <p>Adequate access is fundamental to safe plant room operation and maintenance. BS 7671, CIBSE guides, and manufacturer requirements all specify minimum clearances that must be maintained throughout the installation's life. Access requirements influence not only layout but also the sizing of the plant room itself.</p>
-            <p><strong>Front Access</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>1000mm minimum clear depth</li>
-              <li>Full width of switchgear</li>
-              <li>Door swing clearance</li>
-              <li>Arc flash safe distance</li>
-            </ul>
-            <p><strong>Rear Access</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>600mm minimum where required</li>
-              <li>Cable termination space</li>
-              <li>Component replacement</li>
-              <li>May require lighting</li>
-            </ul>
-            <p><strong>Side Access</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>200-300mm typical minimum</li>
-              <li>Manufacturer specified</li>
-              <li>Ventilation requirements</li>
-              <li>Section removal routes</li>
-            </ul>
-            <p><strong>Access Clearance Requirements</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>LV switchboard:</strong> 1000mm — 600mm (if rear access) — Check arc flash requirements</li>
-              <li><strong>Distribution boards:</strong> 800mm — N/A (wall-mounted) — Door opening clearance</li>
-              <li><strong>Transformers:</strong> 1000mm — 600mm all sides — Ventilation requirements</li>
-              <li><strong>Control panels:</strong> 800mm — 450mm — Cabling access</li>
-            </ul>
-            <p><strong>Maintenance Access Considerations</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Equipment removal:</strong> Clear route from equipment to plant room door</li>
-              <li><strong>Lifting provisions:</strong> Overhead lifting beams or adequate headroom for mobile lifting</li>
-              <li><strong>Floor loadings:</strong> Adequate for equipment transport (pallet trucks, forklifts)</li>
-              <li><strong>Service isolation:</strong> Accessible isolators for maintenance work</li>
-              <li><strong>Test equipment:</strong> Space for test instruments during commissioning and maintenance</li>
-            </ul>
-            <p><strong>Safety Requirements</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Emergency egress:</strong> Two exits required where travel distance exceeds 12m</li>
-              <li><strong>Floor surfaces:</strong> Non-slip finish, free from trip hazards</li>
-              <li><strong>Headroom:</strong> 2.1m minimum throughout, 2.4m preferred</li>
-              <li><strong>Emergency stops:</strong> Located near exits, clearly identified</li>
-            </ul>
-            <p><strong>Future-proofing:</strong> Design access routes to accommodate potential equipment upgrades or replacements. Consider modular construction allowing section removal without major alterations.</p>
-          </ConceptBlock>
-
-          <InlineCheck {...quickCheckQuestions[1]} />
-
-          <SectionRule />
-
-          <ConceptBlock title="Ventilation and Environmental Control">
-            <p>Effective ventilation is critical for maintaining electrical equipment within its rated operating temperature. Heat generated by transformers, switchgear, cables, and electronic equipment must be removed to prevent premature failure and maintain protective device accuracy. CIBSE Guide B provides detailed guidance on plant room ventilation design.</p>
-            <p><strong>Heat Sources in Electrical Plant Rooms</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Transformers (dry type):</strong> 2-3% of rated kVA — Higher at full load</li>
-              <li><strong>LV switchgear:</strong> 0.5-1% of throughput — Contact and conductor losses</li>
-              <li><strong>Power cables:</strong> I squared R losses — Varies with loading</li>
-              <li><strong>UPS systems:</strong> 5-15% of rated load — Includes battery charging</li>
-              <li><strong>Variable speed drives:</strong> 2-5% of rated power — Requires local extraction</li>
-            </ul>
-            <p><strong>Natural Ventilation</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Low-level intake, high-level exhaust</li>
-              <li>Inlet area 50% of exhaust area</li>
-              <li>Stack effect calculation required</li>
-              <li>Weather louvres for rain protection</li>
-              <li>Limited cooling capacity</li>
-            </ul>
-            <p><strong>Mechanical Ventilation</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Extract fans with motorised dampers</li>
-              <li>Temperature-controlled operation</li>
-              <li>25-35 l/s per kW heat gain</li>
-              <li>Standby fan for critical areas</li>
-              <li>BMS integration for monitoring</li>
-            </ul>
-            <p><strong>Ventilation Calculation Example</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Total heat dissipation:</strong> 15 kW (transformer 8kW, switchgear 4kW, cables 3kW)</li>
-              <li><strong>Ventilation rate:</strong> 30 l/s per kW (standard)</li>
-              <li><strong>Required airflow:</strong> 15 x 30 = 450 l/s</li>
-              <li><strong>Temperature rise:</strong> Q = m x Cp x delta T</li>
-              <li><strong>With 10K rise:</strong> External 28 degrees C + 10K = 38 degrees C max ambient</li>
-            </ul>
-            <p>Within 40 degrees C equipment rating - acceptable</p>
-            <p><strong>Environmental Control Requirements</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Temperature:</strong> Maintain below 35-40 degrees Celsius (equipment rating dependent)</li>
-              <li><strong>Humidity:</strong> 40-60% RH to prevent condensation and static discharge</li>
-              <li><strong>Dust control:</strong> Filtered air intake, IP rating appropriate to environment</li>
-              <li><strong>Pressure:</strong> Slight positive pressure prevents dust ingress</li>
-              <li><strong>Monitoring:</strong> Temperature and humidity sensors with BMS alerts</li>
-            </ul>
-            <p><strong>Critical consideration:</strong> Inadequate ventilation causes accelerated insulation degradation, increased contact resistance, and protective device nuisance tripping. Equipment life may be reduced by 50% for every 10 degrees Celsius above rated ambient.</p>
-          </ConceptBlock>
-
-          <InlineCheck {...quickCheckQuestions[2]} />
-
-          <SectionRule />
-
-          <ConceptBlock title="Lighting and Electrical Infrastructure">
-            <p>Plant room lighting must provide adequate illumination for safe equipment operation, maintenance tasks, and emergency egress. CIBSE SLL Lighting Guide and BS 5266 for emergency lighting establish the requirements. The electrical infrastructure must support the plant room's own requirements as well as providing distribution to the wider building.</p>
-            <p><strong>Lighting Requirements (CIBSE SLL)</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>General plant room areas:</strong> 200 lux minimum — &gt;60</li>
-              <li><strong>Control panels and switchgear faces:</strong> 300 lux minimum — &gt;80</li>
-              <li><strong>Detailed maintenance work:</strong> 500 lux (task lighting) — &gt;80</li>
-              <li><strong>Cable termination areas:</strong> 300 lux minimum — &gt;80 (cable identification)</li>
-              <li><strong>Emergency lighting (high-risk):</strong> 10% of normal or 15 lux min — &gt;40</li>
-            </ul>
-            <p><strong>Lighting Design Considerations</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Avoid shadows on switchgear operating faces</li>
-              <li>Luminaires positioned for maintenance access</li>
-              <li>Protection against mechanical damage (IP rating)</li>
-              <li>Local switching at plant room entrance</li>
-              <li>Separate circuits for general and task lighting</li>
-            </ul>
-            <p><strong>Emergency Lighting (BS 5266)</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>High-risk task area classification</li>
-              <li>Minimum 10% of normal illuminance</li>
-              <li>3-hour rated duration</li>
-              <li>Self-contained or central battery</li>
-              <li>Monthly function tests required</li>
-            </ul>
-            <p><strong>Switchboard Positioning</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Cable entry:</strong> Position to minimise cable route lengths and crossings</li>
-              <li><strong>Incoming supply:</strong> Locate main switchboard near service entry point</li>
-              <li><strong>Orientation:</strong> Operating face towards main access route</li>
-              <li><strong>Environmental:</strong> Away from heat sources, water services, vibration</li>
-              <li><strong>Expansion:</strong> Allow space for future panel extensions</li>
-            </ul>
-            <p><strong>Cable Containment Systems</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Cable ladder:</strong> Heavy power cables — Good ventilation, easy installation</li>
-              <li><strong>Cable tray (perforated):</strong> Medium cables, mixed services — Segregation dividers available</li>
-              <li><strong>Cable trunking:</strong> Distribution to boards — Mechanical protection, neat appearance</li>
-              <li><strong>Floor trenches:</strong> Switchboard entries — Fire-stopped covers required</li>
-            </ul>
-            <p><strong>Earthing and Bonding Infrastructure</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Main earthing terminal (MET):</strong> Central connection point, clearly labelled, accessible for testing</li>
-              <li><strong>Earth bars:</strong> Copper earth bars for multiple circuit connections (minimum 25mm x 6mm)</li>
-              <li><strong>Main protective bonding:</strong> Connect incoming metallic services (water, gas, structural steel)</li>
-              <li><strong>Supplementary bonding:</strong> Connect simultaneously accessible extraneous-conductive-parts</li>
-              <li><strong>Containment bonding:</strong> Ensure electrical continuity of all metallic containment</li>
-              <li><strong>Lightning protection:</strong> Connection to LPS earth where applicable</li>
-            </ul>
-            <p><strong>BS 7671 Earthing Requirements</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Main bonding conductor:</strong> Minimum 50% of earthing conductor (min 6mm squared Cu)</li>
-              <li><strong>Earthing conductor:</strong> Per Table 54.7 based on line conductor size</li>
-              <li><strong>Supplementary bonding:</strong> Minimum 4mm squared Cu (2.5mm squared if mechanically protected)</li>
-              <li><strong>Earth bar:</strong> Sized for connected conductors + 30% spare capacity</li>
-            </ul>
-            <p><strong>Cable route planning:</strong> Establish primary containment routes early in design. Maintain 30-50% spare capacity for future cables. Segregate power and data cables per BS 7671 requirements.</p>
-          </ConceptBlock>
-
-          <InlineCheck {...quickCheckQuestions[3]} />
-
-          <SectionRule />
-
-          <ConceptBlock title="Worked Examples">
-            <p>
-              <strong>Example 1: Ventilation Requirement Calculation</strong>
-            </p>
-            <p><strong>Scenario:</strong> Calculate ventilation requirements for a plant room containing 500kVA transformer, main LV switchboard (400A), and distribution equipment.</p>
-            <p>Heat sources:</p>
-            <p>Transformer (500kVA x 2.5% loss) = 12.5 kW</p>
-            <p>Switchgear (estimated) = 3 kW</p>
-            <p>Cables and miscellaneous = 2.5 kW</p>
-            <p>Total heat gain = 18 kW</p>
-            <p>Ventilation calculation:</p>
-            <p>Rate = 30 l/s per kW (standard for electrical plant)</p>
-            <p>Required airflow = 18 x 30 = 540 l/s</p>
-            <p>Extract fan specification:</p>
-            <p>Minimum duty = 540 l/s at system pressure</p>
-            <p>With 20% margin = 648 l/s design flow</p>
-            <p>Select 2 x 400 l/s fans (duty/standby) for resilience</p>
-            <p>
-              <strong>Example 2: Lighting Design</strong>
-            </p>
-            <p><strong>Scenario:</strong> Design lighting for a 10m x 6m plant room with 3.5m ceiling height.</p>
-            <p>Requirements:</p>
-            <p>General illuminance = 200 lux minimum</p>
-            <p>Switchgear face = 300 lux</p>
-            <p>Emergency = 10% or 15 lux minimum</p>
-            <p>Lumen method calculation:</p>
-            <p>Room area = 60 m squared</p>
-            <p>Required lumens = E x A / (UF x MF)</p>
-            <p>= 200 x 60 / (0.5 x 0.8) = 30,000 lumens</p>
-            <p>Luminaire selection:</p>
-            <p>LED battens 5000 lumens each</p>
-            <p>Quantity = 30,000 / 5,000 = 6 luminaires</p>
-            <p>Install 6 x LED battens in 2 rows of 3</p>
-            <p>+ 3 x emergency luminaires (self-contained)</p>
-            <p>
-              <strong>Example 3: Main Bonding Conductor Sizing</strong>
-            </p>
-            <p><strong>Scenario:</strong> Determine main protective bonding conductor sizes for a plant room with 120mm squared earthing conductor.</p>
-            <p>Given data:</p>
-            <p>Earthing conductor = 120mm squared copper</p>
-            <p>Water pipe = 54mm diameter</p>
-            <p>Gas pipe = 42mm diameter</p>
-            <p>Structural steel present</p>
-            <p>BS 7671 Table 54.8 calculation:</p>
-            <p>Main bonding = 50% of earthing conductor</p>
-            <p>= 0.5 x 120 = 60mm squared</p>
-            <p>Minimum = 6mm squared (not applicable here)</p>
-            <p>Bonding conductor requirements:</p>
-            <p>Water main = 70mm squared copper</p>
-            <p>Gas main = 70mm squared copper</p>
-            <p>Structural steel = 70mm squared copper</p>
-            <p>All main bonding = 70mm squared Cu to MET</p>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <ConceptBlock title="Practical guidance">
-            <p>
-              <strong>Plant Room Design Checklist:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Obtain equipment data sheets for all major items (dimensions, weights, heat output)</li>
-              <li>Verify floor loading capacity for equipment and maintenance access</li>
-              <li>Coordinate layout with mechanical and plumbing services</li>
-              <li>Confirm access clearances meet manufacturer and regulatory requirements</li>
-              <li>Calculate ventilation requirements and verify plant room can achieve required airflow</li>
-              <li>Design lighting to achieve recommended illuminance levels</li>
-              <li>Plan cable routes with adequate capacity and segregation</li>
-              <li>Specify earthing and bonding arrangements per BS 7671</li>
-            </ul>
-            <p>
-              <strong>Key Standards Reference:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>BS 7671:</strong> Wiring Regulations - installation requirements, earthing, bonding</li>
-              <li><strong>CIBSE Guide B:</strong> Heating, ventilating, air conditioning - ventilation design</li>
-              <li><strong>CIBSE SLL:</strong> Lighting Guide - illuminance requirements</li>
-              <li><strong>BSRIA BG 32:</strong> Designing Plant Rooms - layout guidance</li>
-              <li><strong>BS 5266:</strong> Emergency lighting requirements</li>
-              <li><strong>BS EN 61439:</strong> Switchgear assembly requirements</li>
-            </ul>
-          </ConceptBlock>
-
-          <CommonMistake
-            title="Common mistakes to avoid"
-            whatHappens={
-              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
-                <li><strong>Inadequate ventilation:</strong> Undersized ventilation leading to overheating</li>
-                <li><strong>Poor access planning:</strong> Equipment installed without adequate maintenance access</li>
-                <li><strong>Insufficient lighting:</strong> Shadow areas preventing safe operation</li>
-                <li><strong>Cable route clashes:</strong> Containment conflicts with other services</li>
-                <li><strong>Omitting expansion space:</strong> No provision for future equipment or circuits</li>
-                <li><strong>Ignoring floor drainage:</strong> No provision for water ingress or cleaning</li>
-              </ul>
-            }
-            doInstead="Cross-check assumptions against published guidance, validate measured values against design intent, and engage the wider team early when interface issues emerge."
-          />
-
-          <SectionRule />
-
-          <FAQ items={faqs} />
-
-          <SectionRule />
-
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-
-          <div className="grid grid-cols-2 gap-3 pt-2">
-            <button
-              onClick={() => navigate("/study-centre/apprentice/h-n-c-module8-section6-1")}
-              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
-                <ChevronLeft className="h-3 w-3" /> Previous
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-white truncate">
-                HVAC electrical requirements
-              </div>
-            </button>
-            <button
-              onClick={() => navigate("/study-centre/apprentice/h-n-c-module8-section6-3")}
-              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
-                Next subsection <ChevronRight className="h-3 w-3" />
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-black truncate">
-                Interface coordination
-              </div>
-            </button>
-          </div>
-        </PageFrame>
-      </div>
-    </div>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module8-section6-3')}
+            className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+          >
+            <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+              Next subsection <ChevronRight className="h-3 w-3" />
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-black truncate">
+              Interface coordination
+            </div>
+          </button>
+        </div>
+      </HubBody>
+    </HubPage>
   );
 };
 

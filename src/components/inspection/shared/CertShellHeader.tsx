@@ -17,13 +17,22 @@ interface CertShellHeaderProps {
   isSaving?: boolean;
   onManualSave?: () => void;
   syncStatus?: SyncStatus;
-  progressPercent: number;
+  /*
+   * ── Step navigation. OPTIONAL, because not every report is a wizard. ────
+   *
+   * The pre-purchase survey (ELE-1634) is camera-first by design: the shutter
+   * is the first thing on the screen and the report assembles behind it, so
+   * there are no steps to show and no meaningful percentage to put in the
+   * ring. Omit `steps` and the tab row and the progress ring are both dropped;
+   * every existing certificate passes them and is unaffected.
+   */
+  progressPercent?: number;
   /** Tap the progress ring to see what's still missing (cert renders its own sheet). */
   onProgressTap?: () => void;
-  steps: CertShellStep[];
-  currentTab: string;
-  onTabChange: (tab: string) => void;
-  completedTabs: Record<string, boolean>;
+  steps?: CertShellStep[];
+  currentTab?: string;
+  onTabChange?: (tab: string) => void;
+  completedTabs?: Record<string, boolean>;
 }
 
 /**
@@ -121,6 +130,8 @@ const CertShellHeader: React.FC<CertShellHeaderProps> = ({
           >
             {save.word}
           </button>
+          {/* No steps means no meaningful percentage — see the props. */}
+          {steps && steps.length > 0 && (
           <button
             type="button"
             onClick={() => {
@@ -152,6 +163,7 @@ const CertShellHeader: React.FC<CertShellHeaderProps> = ({
               {progressPercent}%
             </span>
           </button>
+          )}
         </div>
 
         {/* Step tabs across the full width.
@@ -160,17 +172,18 @@ const CertShellHeader: React.FC<CertShellHeaderProps> = ({
             an empty expanse beside them — the tabs read as leftovers rather
             than as the certificate's spine. Equal columns edge to edge now line
             up with the header above them. */}
+        {steps && steps.length > 0 && (
         <nav aria-label="Certificate steps" className="flex mt-1">
           {steps.map((step) => {
             const isActive = step.id === currentTab;
-            const isDone = !isActive && !!completedTabs[step.id];
+            const isDone = !isActive && !!completedTabs?.[step.id];
             return (
               <button
                 key={step.id}
                 onClick={() => {
                   if (!isActive) {
                     haptic.light();
-                    onTabChange(step.id);
+                    onTabChange?.(step.id);
                   }
                 }}
                 aria-current={isActive ? 'step' : undefined}
@@ -198,9 +211,15 @@ const CertShellHeader: React.FC<CertShellHeaderProps> = ({
             );
           })}
         </nav>
+        )}
       </div>
-      {/* Spacer — reserves the shell's height in the document flow */}
-      <div className="h-[105px]" aria-hidden="true" />
+      {/* Spacer — reserves the shell's height in the document flow.
+          Shorter without the step row, or a step-less header (the pre-purchase
+          survey) would sit above a band of dead space. */}
+      <div
+        className={steps && steps.length > 0 ? 'h-[105px]' : 'h-[64px]'}
+        aria-hidden="true"
+      />
     </>
   );
 };

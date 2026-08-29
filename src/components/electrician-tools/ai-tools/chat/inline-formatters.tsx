@@ -186,7 +186,9 @@ export function extractVerdict(content: string): { verdict: string | null; body:
   const re = /^>?\s*\*\*(?:Verdict|Answer|Bottom line|TL;DR)\s*:?\*\*\s*(.+?)(\r?\n|$)/i;
   const m = trimmed.match(re);
   if (!m) return { verdict: null, body: content };
-  const verdict = m[1].trim();
+  // The verdict renders as plain styled text, not markdown — inner emphasis
+  // markers ("is **1.09 Ω**") would otherwise print literally.
+  const verdict = m[1].trim().replace(/\*\*/g, '').replace(/(^|\s)\*(\S[^*]*\S)\*/g, '$1$2');
   const rest = trimmed.slice(m[0].length).replace(/^\s+/, '');
   return { verdict, body: rest };
 }

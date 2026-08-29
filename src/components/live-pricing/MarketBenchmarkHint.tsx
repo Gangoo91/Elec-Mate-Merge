@@ -72,7 +72,7 @@ const MarketBenchmarkHint = ({
     >
       <div className="flex items-center gap-3">
         <div className="flex-1 min-w-0">
-          <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80">
+          <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
             Market rate · {regional ? region : 'UK'}
           </p>
           <p className="text-sm font-bold text-white truncate mt-0.5">{jobType}</p>
@@ -81,7 +81,7 @@ const MarketBenchmarkHint = ({
           <p className="text-xl font-black text-white tabular-nums leading-tight">
             {gbp(shown.median_price)}
           </p>
-          <p className="text-[10px] text-white/70">median</p>
+          <p className="text-[10px] text-white">median</p>
         </div>
       </div>
 
@@ -92,7 +92,7 @@ const MarketBenchmarkHint = ({
         className="mt-3"
       />
 
-      <p className="text-[10px] text-white/70 mt-1.5">
+      <p className="text-[10px] text-white mt-1.5">
         {regional
           ? `${regional.sample_size} real quotes in ${region} · UK median ${gbp(national.median_price)}`
           : `${national.sample_size} real quotes from UK electricians`}
@@ -112,7 +112,7 @@ const MarketBenchmarkHint = ({
       )}
 
       {hasTotal && isBundled && (
-        <p className="text-[11px] font-medium text-white/80 mt-2 pt-2 border-t border-white/10 tabular-nums">
+        <p className="text-[11px] font-medium text-white mt-2 pt-2 border-t border-white/10 tabular-nums">
           This quote covers more than one job type
           {national.bundled_median != null
             ? ` — bundled ${jobType.toLowerCase()} quotes run higher: median ${gbp(national.bundled_median)} (${national.bundled_count} quotes)`

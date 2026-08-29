@@ -39,7 +39,7 @@ export const comprehensiveTestingGuides: EnhancedTestGuide[] = [
   {
     id: 'safe-isolation',
     title: 'Safe Isolation Procedure',
-    description: 'Complete safe isolation procedure following HSE guidance and BS7671 requirements',
+    description: 'Complete safe isolation procedure following HSE guidance and BS 7671 requirements',
     purpose:
       'To ensure the electrical installation is safely isolated before testing or maintenance work',
     duration: '5-10 mins',

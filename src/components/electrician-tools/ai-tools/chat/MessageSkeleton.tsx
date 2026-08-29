@@ -27,7 +27,7 @@ export const MessageSkeleton = memo(function MessageSkeleton({
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -6 }}
       transition={{ duration: 0.18 }}
-      className={cn('w-full max-w-4xl space-y-3', className)}
+      className={cn('w-full space-y-3', className)}
     >
       <div className="h-2.5 w-24 rounded-full bg-white/[0.06] animate-pulse" />
       <div className="space-y-2.5">
@@ -61,25 +61,20 @@ interface SearchingSkeletonProps {
   }>;
 }
 
-const toneText: Record<'yellow' | 'emerald' | 'blue' | 'purple', string> = {
-  yellow: 'text-white',
-  emerald: 'text-emerald-400',
-  blue: 'text-blue-400',
-  purple: 'text-purple-400',
-};
-
 /**
  * SearchingSkeleton — "Searching knowledge bases" preamble.
  *
- * Shown while the backend is resolving which regs to cite.
- * Editorial eyebrow + inline tone-coloured source names.
+ * Shown while the backend is resolving which regs to cite. One live volt dot
+ * and the source names in white — the old blue/emerald/purple tones were the
+ * only rainbow left in the chat, encoding nothing. (`tone` is kept on the prop
+ * type so existing callers still compile; it no longer changes the colour.)
  */
 export const SearchingSkeleton = memo(function SearchingSkeleton({
   className,
   sources = [
-    { name: 'BS 7671 Regulations', tone: 'blue' },
-    { name: 'Practical Guides', tone: 'emerald' },
-    { name: 'Design Knowledge', tone: 'purple' },
+    { name: 'BS 7671 Regulations' },
+    { name: 'Practical Guides' },
+    { name: 'Design Knowledge' },
   ],
 }: SearchingSkeletonProps) {
   return (
@@ -88,10 +83,16 @@ export const SearchingSkeleton = memo(function SearchingSkeleton({
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.18 }}
-      className={cn('w-full max-w-4xl', className)}
+      className={cn('w-full', className)}
     >
-      <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-white">
-        Searching knowledge bases
+      <div className="flex items-center gap-2">
+        <span className="relative flex h-1.5 w-1.5">
+          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-elec-yellow/70" />
+          <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-elec-yellow" />
+        </span>
+        <span className="text-[10px] font-medium uppercase tracking-[0.22em] text-white">
+          Searching knowledge bases
+        </span>
       </div>
       <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-[13px]">
         {sources.map((source, idx) => (
@@ -100,11 +101,7 @@ export const SearchingSkeleton = memo(function SearchingSkeleton({
             initial={{ opacity: 0, y: 2 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: idx * 0.08 }}
-            className={cn(
-              'font-medium',
-              source.complete ? toneText[source.tone ?? 'yellow'] : 'text-white',
-              !source.complete && 'animate-pulse'
-            )}
+            className={cn('font-medium text-white', !source.complete && 'animate-pulse')}
           >
             {source.name}
           </motion.span>

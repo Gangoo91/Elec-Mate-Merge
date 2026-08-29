@@ -7,10 +7,10 @@
  */
 
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
-import { PageFrame, PageHero } from '@/components/college/primitives';
 import {
   TLDR,
   ConceptBlock,
@@ -282,486 +282,493 @@ const HNCModule2Section6_4 = () => {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
-      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
-        <PageFrame>
+    <HubPage>
+      <HubMasthead
+        section="Module 2 · Section 6 · Subsection 4"
+        title="Design Tools and Software"
+        backTo="/study-centre/apprentice/h-n-c-module2-section6"
+      />
+      <HubBody>
+        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
+          Building energy and environmental simulation software for design and compliance.
+        </p>
+
+        <TLDR
+          points={[
+            'You pick SBEM (or SAP for dwellings) for routine Part L compliance and DSM (IES VE, TAS, DesignBuilder) when SBEM cannot model the system (CHP, complex HVAC, automatic blinds).',
+            'You use DIALux/Relux for lighting, ODEON/CATT for acoustics, ANSYS/CFX for CFD — separate specialist tools whose outputs feed into the integrated DSM.',
+            'You drive simulation from the BIM (Revit/IFC) export to keep geometry, U-values and zoning consistent across consultants.',
+            'You document the tool, version, weather file and assumptions in every report — auditability is non-negotiable.',
+          ]}
+        />
+
+        <RegsCallout
+          source="Building Regulations 2010 — Approved Document L (England); BRE / DLUHC SBEM and DSM Compliance Methodology"
+          clause="Part L compliance is demonstrated using either SBEM (Simplified Building Energy Model) for typical buildings, or an approved Dynamic Simulation Model (DSM) for buildings with features SBEM cannot represent — both calculating Building Emission Rate against the Target Emission Rate."
+          meaning={
+            <>
+              The choice between SBEM and DSM is regulatorily defined. As HNC engineer you flag at
+              Stage-2 whether the design will need DSM (CHP, ASHP, mixed-mode HVAC, complex glazing
+              controls) — DSM is significantly more expensive and time-consuming, so the procurement
+              plan needs to know early.
+            </>
+          }
+          cite="Source: Building Regulations 2010, Approved Document L — gov.uk; BRE National Calculation Methodology; DLUHC SBEM and DSM Compliance Documentation."
+        />
+
+        <LearningOutcomes
+          outcomes={[
+            'Understand the capabilities of major simulation software',
+            'Select appropriate tools for different project types',
+            'Recognise Part L compliance tool requirements',
+            'Distinguish between SBEM and DSM approaches',
+            'Understand BIM integration with simulation',
+            'Identify when specialist analysis is needed',
+          ]}
+          initialVisibleCount={3}
+        />
+
+        <SectionRule />
+
+        <ConceptBlock
+          title="Part L Compliance Tools"
+          plainEnglish="Part L compares your building's BER (carbon) against a TER target. SBEM is the simplified calculator for ordinary buildings; DSM is needed once you go big or fancy."
+        >
+          <p>
+            Part L of the Building Regulations requires demonstration that a building's carbon
+            emissions (BER - Building Emission Rate) do not exceed the target (TER - Target Emission
+            Rate). Different tools are approved for this calculation.
+          </p>
+          <p>
+            <strong>SBEM (Simplified Building Energy Model):</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Purpose:</strong> Part L compliance for non-domestic buildings
+            </li>
+            <li>
+              <strong>Interface:</strong> iSBEM (web-based input)
+            </li>
+            <li>
+              <strong>Method:</strong> Monthly quasi-steady-state calculation
+            </li>
+            <li>
+              <strong>Suitable for:</strong> Simple buildings under 1,000m²
+            </li>
+            <li>
+              <strong>Output:</strong> EPC rating, BER/TER comparison
+            </li>
+          </ul>
+          <p>
+            <strong>When DSM is required (instead of SBEM):</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Floor area &gt;1,000m²: DSM required</li>
+            <li>Atrium &gt;3 storeys: DSM required</li>
+            <li>Displacement ventilation: DSM required</li>
+            <li>Chilled beams/ceilings: DSM required</li>
+            <li>Simple AC office &lt;1,000m²: SBEM suitable, DSM optional</li>
+          </ul>
+          <p>
+            <strong>NCM (National Calculation Methodology):</strong> Both SBEM and approved DSM
+            tools must follow the NCM, which specifies standard occupancy and equipment schedules,
+            notional building specifications for TER calculation, system efficiency assumptions, and
+            weather data (standard UK locations).
+          </p>
+          <p>
+            <strong>Key point:</strong> The NCM creates a level playing field - all buildings are
+            compared against the same standardised assumptions, not actual operational patterns.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...quickCheckQuestions[0]} />
+
+        <SectionRule />
+
+        <ConceptBlock
+          title="Dynamic Simulation Software"
+          plainEnglish="For complex buildings, you need an hour-by-hour engine. The big UK names are IES VE and TAS; EnergyPlus is the free engine many tools use under the hood."
+        >
+          <p>
+            For complex buildings and detailed design analysis, dynamic simulation software provides
+            hourly or sub-hourly calculation of building thermal performance throughout the year.
+          </p>
+          <p>
+            <strong>Major UK simulation packages:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>IES VE (IES Ltd):</strong> Integrated suite - thermal, daylight, CFD
+            </li>
+            <li>
+              <strong>TAS (EDSL):</strong> Dynamic simulation, Part L approved
+            </li>
+            <li>
+              <strong>DesignBuilder:</strong> EnergyPlus interface, user-friendly
+            </li>
+            <li>
+              <strong>EnergyPlus (US DOE):</strong> Free, powerful, text-based input
+            </li>
+            <li>
+              <strong>OpenStudio (NREL):</strong> Open-source, EnergyPlus platform
+            </li>
+          </ul>
+          <p>
+            <strong>IES VE suite components:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>ModelIT:</strong> Geometry modelling
+            </li>
+            <li>
+              <strong>ApacheSim:</strong> Dynamic thermal simulation
+            </li>
+            <li>
+              <strong>MacroFlo:</strong> Natural ventilation
+            </li>
+            <li>
+              <strong>SunCast:</strong> Shading analysis
+            </li>
+            <li>
+              <strong>RadianceIES:</strong> Daylight simulation
+            </li>
+            <li>
+              <strong>MicroFlo:</strong> CFD analysis
+            </li>
+            <li>
+              <strong>ASHRAE 140:</strong> Validated engine
+            </li>
+            <li>
+              <strong>UK Part L:</strong> Approved for compliance
+            </li>
+          </ul>
+          <p>
+            <strong>EnergyPlus capabilities:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Heat balance based thermal simulation</li>
+            <li>Sub-hourly timesteps (down to 1 minute)</li>
+            <li>Detailed HVAC system modelling</li>
+            <li>Multizone airflow (AirflowNetwork)</li>
+            <li>Ground heat transfer</li>
+            <li>Extensive validation (ASHRAE 140, BESTEST)</li>
+          </ul>
+          <p>
+            <strong>Tip:</strong> EnergyPlus is free but requires scripting or a graphical interface
+            like DesignBuilder or OpenStudio for practical use.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...quickCheckQuestions[2]} />
+
+        <SectionRule />
+
+        <ConceptBlock
+          title="Selecting the Right Tool"
+          plainEnglish="Match the tool to the question. SBEM for simple compliance, dynamic suites for complex buildings, simplified tools for early-stage option testing."
+        >
+          <p>
+            Tool selection depends on project requirements, team capabilities, available time, and
+            budget. Using overly complex tools for simple projects wastes time; using simple tools
+            for complex projects risks inaccurate results.
+          </p>
+          <p>
+            <strong>Tool selection guide (project type / recommended tool / justification):</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Simple office &lt;1,000m² → SBEM/iSBEM (compliance compliant, quick)</li>
+            <li>Large office building → IES VE or TAS (DSM required, detailed analysis)</li>
+            <li>
+              Building with atrium → IES VE with MacroFlo/MicroFlo (natural ventilation/CFD needed)
+            </li>
+            <li>
+              Early concept stage → Simplified tools or benchmarks (quick iteration, design fluid)
+            </li>
+            <li>Research / academic → EnergyPlus / OpenStudio (free, documented, reproducible)</li>
+          </ul>
+          <p>
+            <strong>Decision factors:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Regulatory requirement:</strong> What does Part L/BREEAM require?
+            </li>
+            <li>
+              <strong>Building complexity:</strong> Simple box or complex geometry?
+            </li>
+            <li>
+              <strong>HVAC systems:</strong> Standard or advanced systems?
+            </li>
+            <li>
+              <strong>Analysis needs:</strong> Compliance only or design optimisation?
+            </li>
+            <li>
+              <strong>Team skills:</strong> What tools does the team know?
+            </li>
+            <li>
+              <strong>Time available:</strong> Detailed modelling takes time
+            </li>
+          </ul>
+          <p>
+            <strong>Common pitfall:</strong> Don't use complex simulation for every project. A
+            well-run SBEM calculation for a simple building is often more useful than a
+            poorly-executed dynamic simulation. Match tool complexity to project needs and team
+            capability.
+          </p>
+          <p>
+            <strong>Best practice:</strong> Start simple, add complexity only when needed to answer
+            specific design questions or meet compliance requirements.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...quickCheckQuestions[3]} />
+
+        <SectionRule />
+
+        <ConceptBlock
+          title="BIM Integration and Workflows"
+          plainEnglish="You can pull architect geometry into a sim tool via gbXML or IFC, but expect to spend time cleaning it up. BIM saves time only if you plan the export properly."
+        >
+          <p>
+            Modern building design increasingly uses BIM (Building Information Modelling).
+            Simulation tools can import geometry from BIM, though translation requires care to
+            maintain accuracy and efficiency.
+          </p>
+          <p>
+            <strong>BIM-to-simulation data exchange (format / description / typical use):</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>gbXML - Green Building XML - most common for energy simulation</li>
+            <li>IFC - Industry Foundation Classes - open BIM standard, improving</li>
+            <li>Native plugins - direct Revit/ArchiCAD links - tightest integration</li>
+            <li>Geometry only - DXF/DWG import - tracing over CAD</li>
+          </ul>
+          <p>
+            <strong>BIM import considerations:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Geometry simplification:</strong> Remove small details irrelevant to energy
+            </li>
+            <li>
+              <strong>Zone definition:</strong> BIM rooms may need combining/splitting
+            </li>
+            <li>
+              <strong>Construction assignment:</strong> Check materials translate correctly
+            </li>
+            <li>
+              <strong>Window properties:</strong> Often need manual specification
+            </li>
+            <li>
+              <strong>Second floor boundaries:</strong> Check adjacencies are correct
+            </li>
+          </ul>
+          <p>
+            <strong>Typical workflow:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Receive BIM model from architect (Revit, ArchiCAD)</li>
+            <li>Export to gbXML (with energy analysis settings)</li>
+            <li>Import to simulation tool (IES, TAS, DesignBuilder)</li>
+            <li>Review and fix geometry issues</li>
+            <li>Assign/verify constructions and glazing</li>
+            <li>Define zones and HVAC systems</li>
+            <li>Add schedules and internal gains</li>
+            <li>Run simulation and analyse results</li>
+          </ul>
+          <p>
+            <strong>Reality check:</strong> BIM-to-simulation transfer rarely works perfectly first
+            time. Budget 20-30% of modelling time for geometry cleanup and verification.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...quickCheckQuestions[1]} />
+
+        <SectionRule />
+
+        <ConceptBlock
+          title="Worked examples"
+          plainEnglish="Three scenarios picking the right tool: a small retail unit, a large mixed-mode office, and a BREEAM Excellent school needing several analyses."
+        >
+          <p>
+            <strong>Example 1 - Tool selection:</strong> 800m² retail unit with simple split DX
+            cooling, seeking Part L compliance.
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Floor area: 800m² (&lt;1,000m² threshold)</li>
+            <li>HVAC: Simple split system (no complex features)</li>
+            <li>No atrium or special ventilation</li>
+            <li>
+              Decision: <strong>SBEM/iSBEM is appropriate</strong>
+            </li>
+            <li>
+              Building under 1,000m² - SBEM permitted; simple systems - no DSM-only features;
+              compliance focus - detailed analysis not needed
+            </li>
+            <li>Time estimate: 1-2 days for model and report</li>
+          </ul>
+          <p>
+            <strong>Example 2 - DSM requirement:</strong> 5,000m² office with chilled beams and
+            mixed-mode ventilation.
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Floor area: 5,000m² (&gt;1,000m² threshold)</li>
+            <li>HVAC: Chilled beams (DSM-only system)</li>
+            <li>Mixed-mode: Natural + mechanical ventilation</li>
+            <li>
+              Decision: <strong>Dynamic Simulation Model required</strong>
+            </li>
+            <li>
+              Recommended: IES VE or TAS for Part L compliance, MacroFlo/natural vent module for
+              mixed-mode, TM52 analysis for overheating (BREEAM)
+            </li>
+            <li>Time estimate: 2-3 weeks for full analysis</li>
+          </ul>
+          <p>
+            <strong>Example 3 - BREEAM analysis suite:</strong> New school targeting BREEAM
+            Excellent, requiring multiple simulation outputs.
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Part L compliance (Ene 01) → IES VE or TAS with NCM module</li>
+            <li>TM52 overheating (Hea 04) → Dynamic simulation with DSY weather</li>
+            <li>Daylight factor (Hea 01) → RadianceIES or TAS daylighting</li>
+            <li>Energy prediction for Soft Landings → TM54 analysis using same model</li>
+            <li>
+              Single IES VE model serves all analyses, consistent geometry and constructions,
+              different weather files for different purposes
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <ConceptBlock
+          title="Practical guidance"
+          plainEnglish="The starter steps and quality checks that make a simulation report defendable to a client or BCO."
+        >
+          <p>
+            <strong>Getting started with simulation:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Complete vendor training for your chosen software</li>
+            <li>Practice on simple, known buildings first</li>
+            <li>Compare results to benchmarks and published examples</li>
+            <li>Join user groups and forums for support</li>
+            <li>Consider vendor certification for professional credibility</li>
+          </ul>
+          <p>
+            <strong>Quality assurance checklist:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Zone areas match drawings/brief</li>
+            <li>Construction U-values match specification</li>
+            <li>Glazing properties (U, g, VT) are correct</li>
+            <li>HVAC systems match design intent</li>
+            <li>Schedules reflect intended operation</li>
+            <li>Results are sense-checked against benchmarks</li>
+          </ul>
+        </ConceptBlock>
+
+        <CommonMistake
+          title="Common mistakes to avoid"
+          whatHappens={
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+              <li>
+                <strong>Over-complex models:</strong> Don't model every room separately
+              </li>
+              <li>
+                <strong>Default schedules:</strong> Verify they match project requirements
+              </li>
+              <li>
+                <strong>Ignoring warnings:</strong> Simulation warnings often indicate problems
+              </li>
+              <li>
+                <strong>No sanity check:</strong> Results should align with expectations
+              </li>
+            </ul>
+          }
+          doInstead="Group similar rooms into representative zones, swap default schedules for project-specific ones, investigate every simulation warning, and benchmark output against TM46 or similar buildings as a sense check."
+        />
+
+        <SectionRule />
+
+        <Scenario
+          title="Selecting the modelling toolkit for a Net-Zero new-build school"
+          situation={
+            <>
+              You are mobilising a Stage-3 design for a new 8,500 m² primary school targeting
+              Net-Zero in operation: PV + GSHP + MVHR + automatic external shading. Soft Landings is
+              a contractual deliverable. The design programme is 16 weeks to RIBA-4.
+            </>
+          }
+          whatToDo={
+            <>
+              SBEM cannot represent the GSHP-PV-MVHR-shading interaction credibly — flag DSM as
+              essential. Pick IES VE (or DesignBuilder/EnergyPlus) for the DSM. Run TM52 for the
+              classrooms, TM54 for operational forecast, AM11 methodology for model construction and
+              reporting. Use DIALux for lighting lux/UGR/glare on the open studios. Use ODEON for
+              the multi-purpose hall acoustics. Drive geometry from the architect&rsquo;s Revit
+              model via gbXML or IFC. Lock the weather file, occupancy schedules and HVAC controls
+              in a version-controlled documentation pack.
+            </>
+          }
+          whyItMatters={
+            <>
+              Net-Zero schools attract DfE funding scrutiny and BREEAM Excellent / Outstanding
+              contractual targets. A Part L-only SBEM submission will not credibly model the GSHP-PV
+              interaction — and every credit hangs on a defendable model. The right tool stack at
+              Stage-3 saves a six-figure rework at Stage-4.
+            </>
+          }
+        />
+
+        <SectionRule />
+
+        <FAQ items={faqs} />
+
+        <SectionRule />
+
+        <KeyTakeaways
+          points={[
+            'SBEM = Simplified Building Energy Model for routine Part L compliance on non-domestic buildings.',
+            'SAP = Standard Assessment Procedure for dwellings — equivalent role to SBEM.',
+            'DSM = Dynamic Simulation Model — IES VE, TAS, DesignBuilder, EnergyPlus — used when SBEM cannot represent the design.',
+            'DSM mandatory for: CHP, advanced HVAC controls, automatic shading, mixed-mode, demand-response.',
+            'Specialist tools: DIALux/Relux (lighting), ODEON/CATT (acoustics), ANSYS/CFX (CFD), TRNSYS (renewables systems).',
+            'BIM integration via gbXML or IFC keeps simulation geometry consistent with the federated BIM model.',
+            'Always document tool, version, weather file, calibration evidence and assumptions in the report appendix.',
+            'Approved Document L mandates the SBEM-or-DSM choice for compliance demonstration.',
+          ]}
+        />
+
+        <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+
+        <div className="grid grid-cols-2 gap-3 pt-2">
           <button
-            onClick={() => navigate('/study-centre/apprentice/h-n-c-module2-section6')}
-            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module2-section6-3')}
+            className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
           >
-            <ArrowLeft className="h-4 w-4" /> Back
+            <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+              <ChevronLeft className="h-3 w-3" /> Previous subsection
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-white truncate">
+              Building simulation
+            </div>
           </button>
-
-          <PageHero
-            eyebrow="Module 2 · Section 6 · Subsection 4"
-            title="Design Tools and Software"
-            description="Building energy and environmental simulation software for design and compliance."
-            tone="purple"
-          />
-
-          <TLDR
-            points={[
-              'You pick SBEM (or SAP for dwellings) for routine Part L compliance and DSM (IES VE, TAS, DesignBuilder) when SBEM cannot model the system (CHP, complex HVAC, automatic blinds).',
-              'You use DIALux/Relux for lighting, ODEON/CATT for acoustics, ANSYS/CFX for CFD — separate specialist tools whose outputs feed into the integrated DSM.',
-              'You drive simulation from the BIM (Revit/IFC) export to keep geometry, U-values and zoning consistent across consultants.',
-              'You document the tool, version, weather file and assumptions in every report — auditability is non-negotiable.',
-            ]}
-          />
-
-          <RegsCallout
-            source="Building Regulations 2010 — Approved Document L (England); BRE / DLUHC SBEM and DSM Compliance Methodology"
-            clause="Part L compliance is demonstrated using either SBEM (Simplified Building Energy Model) for typical buildings, or an approved Dynamic Simulation Model (DSM) for buildings with features SBEM cannot represent — both calculating Building Emission Rate against the Target Emission Rate."
-            meaning={
-              <>
-                The choice between SBEM and DSM is regulatorily defined. As HNC engineer
-                you flag at Stage-2 whether the design will need DSM (CHP, ASHP, mixed-mode
-                HVAC, complex glazing controls) — DSM is significantly more expensive
-                and time-consuming, so the procurement plan needs to know early.
-              </>
-            }
-            cite="Source: Building Regulations 2010, Approved Document L — gov.uk; BRE National Calculation Methodology; DLUHC SBEM and DSM Compliance Documentation."
-          />
-
-          <LearningOutcomes
-            outcomes={[
-              'Understand the capabilities of major simulation software',
-              'Select appropriate tools for different project types',
-              'Recognise Part L compliance tool requirements',
-              'Distinguish between SBEM and DSM approaches',
-              'Understand BIM integration with simulation',
-              'Identify when specialist analysis is needed',
-            ]}
-            initialVisibleCount={3}
-          />
-
-          <SectionRule />
-
-          <ConceptBlock
-            title="Part L Compliance Tools"
-            plainEnglish="Part L compares your building's BER (carbon) against a TER target. SBEM is the simplified calculator for ordinary buildings; DSM is needed once you go big or fancy."
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module2-section6-5')}
+            className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
           >
-            <p>
-              Part L of the Building Regulations requires demonstration that a building's carbon
-              emissions (BER - Building Emission Rate) do not exceed the target (TER - Target
-              Emission Rate). Different tools are approved for this calculation.
-            </p>
-            <p>
-              <strong>SBEM (Simplified Building Energy Model):</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Purpose:</strong> Part L compliance for non-domestic buildings
-              </li>
-              <li>
-                <strong>Interface:</strong> iSBEM (web-based input)
-              </li>
-              <li>
-                <strong>Method:</strong> Monthly quasi-steady-state calculation
-              </li>
-              <li>
-                <strong>Suitable for:</strong> Simple buildings under 1,000m²
-              </li>
-              <li>
-                <strong>Output:</strong> EPC rating, BER/TER comparison
-              </li>
-            </ul>
-            <p>
-              <strong>When DSM is required (instead of SBEM):</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Floor area &gt;1,000m²: DSM required</li>
-              <li>Atrium &gt;3 storeys: DSM required</li>
-              <li>Displacement ventilation: DSM required</li>
-              <li>Chilled beams/ceilings: DSM required</li>
-              <li>Simple AC office &lt;1,000m²: SBEM suitable, DSM optional</li>
-            </ul>
-            <p>
-              <strong>NCM (National Calculation Methodology):</strong> Both SBEM and approved DSM
-              tools must follow the NCM, which specifies standard occupancy and equipment schedules,
-              notional building specifications for TER calculation, system efficiency assumptions,
-              and weather data (standard UK locations).
-            </p>
-            <p>
-              <strong>Key point:</strong> The NCM creates a level playing field - all buildings are
-              compared against the same standardised assumptions, not actual operational patterns.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...quickCheckQuestions[0]} />
-
-          <SectionRule />
-
-          <ConceptBlock
-            title="Dynamic Simulation Software"
-            plainEnglish="For complex buildings, you need an hour-by-hour engine. The big UK names are IES VE and TAS; EnergyPlus is the free engine many tools use under the hood."
-          >
-            <p>
-              For complex buildings and detailed design analysis, dynamic simulation software
-              provides hourly or sub-hourly calculation of building thermal performance throughout
-              the year.
-            </p>
-            <p>
-              <strong>Major UK simulation packages:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>IES VE (IES Ltd):</strong> Integrated suite - thermal, daylight, CFD
-              </li>
-              <li>
-                <strong>TAS (EDSL):</strong> Dynamic simulation, Part L approved
-              </li>
-              <li>
-                <strong>DesignBuilder:</strong> EnergyPlus interface, user-friendly
-              </li>
-              <li>
-                <strong>EnergyPlus (US DOE):</strong> Free, powerful, text-based input
-              </li>
-              <li>
-                <strong>OpenStudio (NREL):</strong> Open-source, EnergyPlus platform
-              </li>
-            </ul>
-            <p>
-              <strong>IES VE suite components:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>ModelIT:</strong> Geometry modelling
-              </li>
-              <li>
-                <strong>ApacheSim:</strong> Dynamic thermal simulation
-              </li>
-              <li>
-                <strong>MacroFlo:</strong> Natural ventilation
-              </li>
-              <li>
-                <strong>SunCast:</strong> Shading analysis
-              </li>
-              <li>
-                <strong>RadianceIES:</strong> Daylight simulation
-              </li>
-              <li>
-                <strong>MicroFlo:</strong> CFD analysis
-              </li>
-              <li>
-                <strong>ASHRAE 140:</strong> Validated engine
-              </li>
-              <li>
-                <strong>UK Part L:</strong> Approved for compliance
-              </li>
-            </ul>
-            <p>
-              <strong>EnergyPlus capabilities:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Heat balance based thermal simulation</li>
-              <li>Sub-hourly timesteps (down to 1 minute)</li>
-              <li>Detailed HVAC system modelling</li>
-              <li>Multizone airflow (AirflowNetwork)</li>
-              <li>Ground heat transfer</li>
-              <li>Extensive validation (ASHRAE 140, BESTEST)</li>
-            </ul>
-            <p>
-              <strong>Tip:</strong> EnergyPlus is free but requires scripting or a graphical
-              interface like DesignBuilder or OpenStudio for practical use.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...quickCheckQuestions[2]} />
-
-          <SectionRule />
-
-          <ConceptBlock
-            title="Selecting the Right Tool"
-            plainEnglish="Match the tool to the question. SBEM for simple compliance, dynamic suites for complex buildings, simplified tools for early-stage option testing."
-          >
-            <p>
-              Tool selection depends on project requirements, team capabilities, available time, and
-              budget. Using overly complex tools for simple projects wastes time; using simple tools
-              for complex projects risks inaccurate results.
-            </p>
-            <p>
-              <strong>Tool selection guide (project type / recommended tool / justification):</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Simple office &lt;1,000m² → SBEM/iSBEM (compliance compliant, quick)</li>
-              <li>Large office building → IES VE or TAS (DSM required, detailed analysis)</li>
-              <li>Building with atrium → IES VE with MacroFlo/MicroFlo (natural ventilation/CFD needed)</li>
-              <li>Early concept stage → Simplified tools or benchmarks (quick iteration, design fluid)</li>
-              <li>Research / academic → EnergyPlus / OpenStudio (free, documented, reproducible)</li>
-            </ul>
-            <p>
-              <strong>Decision factors:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Regulatory requirement:</strong> What does Part L/BREEAM require?
-              </li>
-              <li>
-                <strong>Building complexity:</strong> Simple box or complex geometry?
-              </li>
-              <li>
-                <strong>HVAC systems:</strong> Standard or advanced systems?
-              </li>
-              <li>
-                <strong>Analysis needs:</strong> Compliance only or design optimisation?
-              </li>
-              <li>
-                <strong>Team skills:</strong> What tools does the team know?
-              </li>
-              <li>
-                <strong>Time available:</strong> Detailed modelling takes time
-              </li>
-            </ul>
-            <p>
-              <strong>Common pitfall:</strong> Don't use complex simulation for every project. A
-              well-run SBEM calculation for a simple building is often more useful than a
-              poorly-executed dynamic simulation. Match tool complexity to project needs and team
-              capability.
-            </p>
-            <p>
-              <strong>Best practice:</strong> Start simple, add complexity only when needed to
-              answer specific design questions or meet compliance requirements.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...quickCheckQuestions[3]} />
-
-          <SectionRule />
-
-          <ConceptBlock
-            title="BIM Integration and Workflows"
-            plainEnglish="You can pull architect geometry into a sim tool via gbXML or IFC, but expect to spend time cleaning it up. BIM saves time only if you plan the export properly."
-          >
-            <p>
-              Modern building design increasingly uses BIM (Building Information Modelling).
-              Simulation tools can import geometry from BIM, though translation requires care to
-              maintain accuracy and efficiency.
-            </p>
-            <p>
-              <strong>BIM-to-simulation data exchange (format / description / typical use):</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>gbXML - Green Building XML - most common for energy simulation</li>
-              <li>IFC - Industry Foundation Classes - open BIM standard, improving</li>
-              <li>Native plugins - direct Revit/ArchiCAD links - tightest integration</li>
-              <li>Geometry only - DXF/DWG import - tracing over CAD</li>
-            </ul>
-            <p>
-              <strong>BIM import considerations:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Geometry simplification:</strong> Remove small details irrelevant to energy
-              </li>
-              <li>
-                <strong>Zone definition:</strong> BIM rooms may need combining/splitting
-              </li>
-              <li>
-                <strong>Construction assignment:</strong> Check materials translate correctly
-              </li>
-              <li>
-                <strong>Window properties:</strong> Often need manual specification
-              </li>
-              <li>
-                <strong>Second floor boundaries:</strong> Check adjacencies are correct
-              </li>
-            </ul>
-            <p>
-              <strong>Typical workflow:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Receive BIM model from architect (Revit, ArchiCAD)</li>
-              <li>Export to gbXML (with energy analysis settings)</li>
-              <li>Import to simulation tool (IES, TAS, DesignBuilder)</li>
-              <li>Review and fix geometry issues</li>
-              <li>Assign/verify constructions and glazing</li>
-              <li>Define zones and HVAC systems</li>
-              <li>Add schedules and internal gains</li>
-              <li>Run simulation and analyse results</li>
-            </ul>
-            <p>
-              <strong>Reality check:</strong> BIM-to-simulation transfer rarely works perfectly
-              first time. Budget 20-30% of modelling time for geometry cleanup and verification.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...quickCheckQuestions[1]} />
-
-          <SectionRule />
-
-          <ConceptBlock
-            title="Worked examples"
-            plainEnglish="Three scenarios picking the right tool: a small retail unit, a large mixed-mode office, and a BREEAM Excellent school needing several analyses."
-          >
-            <p>
-              <strong>Example 1 - Tool selection:</strong> 800m² retail unit with simple split DX
-              cooling, seeking Part L compliance.
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Floor area: 800m² (&lt;1,000m² threshold)</li>
-              <li>HVAC: Simple split system (no complex features)</li>
-              <li>No atrium or special ventilation</li>
-              <li>Decision: <strong>SBEM/iSBEM is appropriate</strong></li>
-              <li>Building under 1,000m² - SBEM permitted; simple systems - no DSM-only features; compliance focus - detailed analysis not needed</li>
-              <li>Time estimate: 1-2 days for model and report</li>
-            </ul>
-            <p>
-              <strong>Example 2 - DSM requirement:</strong> 5,000m² office with chilled beams and
-              mixed-mode ventilation.
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Floor area: 5,000m² (&gt;1,000m² threshold)</li>
-              <li>HVAC: Chilled beams (DSM-only system)</li>
-              <li>Mixed-mode: Natural + mechanical ventilation</li>
-              <li>Decision: <strong>Dynamic Simulation Model required</strong></li>
-              <li>Recommended: IES VE or TAS for Part L compliance, MacroFlo/natural vent module for mixed-mode, TM52 analysis for overheating (BREEAM)</li>
-              <li>Time estimate: 2-3 weeks for full analysis</li>
-            </ul>
-            <p>
-              <strong>Example 3 - BREEAM analysis suite:</strong> New school targeting BREEAM
-              Excellent, requiring multiple simulation outputs.
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Part L compliance (Ene 01) → IES VE or TAS with NCM module</li>
-              <li>TM52 overheating (Hea 04) → Dynamic simulation with DSY weather</li>
-              <li>Daylight factor (Hea 01) → RadianceIES or TAS daylighting</li>
-              <li>Energy prediction for Soft Landings → TM54 analysis using same model</li>
-              <li>Single IES VE model serves all analyses, consistent geometry and constructions, different weather files for different purposes</li>
-            </ul>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <ConceptBlock
-            title="Practical guidance"
-            plainEnglish="The starter steps and quality checks that make a simulation report defendable to a client or BCO."
-          >
-            <p>
-              <strong>Getting started with simulation:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Complete vendor training for your chosen software</li>
-              <li>Practice on simple, known buildings first</li>
-              <li>Compare results to benchmarks and published examples</li>
-              <li>Join user groups and forums for support</li>
-              <li>Consider vendor certification for professional credibility</li>
-            </ul>
-            <p>
-              <strong>Quality assurance checklist:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Zone areas match drawings/brief</li>
-              <li>Construction U-values match specification</li>
-              <li>Glazing properties (U, g, VT) are correct</li>
-              <li>HVAC systems match design intent</li>
-              <li>Schedules reflect intended operation</li>
-              <li>Results are sense-checked against benchmarks</li>
-            </ul>
-          </ConceptBlock>
-
-          <CommonMistake
-            title="Common mistakes to avoid"
-            whatHappens={
-              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
-                <li>
-                  <strong>Over-complex models:</strong> Don't model every room separately
-                </li>
-                <li>
-                  <strong>Default schedules:</strong> Verify they match project requirements
-                </li>
-                <li>
-                  <strong>Ignoring warnings:</strong> Simulation warnings often indicate problems
-                </li>
-                <li>
-                  <strong>No sanity check:</strong> Results should align with expectations
-                </li>
-              </ul>
-            }
-            doInstead="Group similar rooms into representative zones, swap default schedules for project-specific ones, investigate every simulation warning, and benchmark output against TM46 or similar buildings as a sense check."
-          />
-
-          <SectionRule />
-
-          <Scenario
-            title="Selecting the modelling toolkit for a Net-Zero new-build school"
-            situation={
-              <>
-                You are mobilising a Stage-3 design for a new 8,500 m² primary school
-                targeting Net-Zero in operation: PV + GSHP + MVHR + automatic external
-                shading. Soft Landings is a contractual deliverable. The design programme
-                is 16 weeks to RIBA-4.
-              </>
-            }
-            whatToDo={
-              <>
-                SBEM cannot represent the GSHP-PV-MVHR-shading interaction credibly — flag
-                DSM as essential. Pick IES VE (or DesignBuilder/EnergyPlus) for the
-                DSM. Run TM52 for the classrooms, TM54 for operational forecast, AM11
-                methodology for model construction and reporting. Use DIALux for lighting
-                lux/UGR/glare on the open studios. Use ODEON for the multi-purpose hall
-                acoustics. Drive geometry from the architect&rsquo;s Revit model via gbXML
-                or IFC. Lock the weather file, occupancy schedules and HVAC controls in a
-                version-controlled documentation pack.
-              </>
-            }
-            whyItMatters={
-              <>
-                Net-Zero schools attract DfE funding scrutiny and BREEAM Excellent / Outstanding
-                contractual targets. A Part L-only SBEM submission will not credibly model
-                the GSHP-PV interaction — and every credit hangs on a defendable model.
-                The right tool stack at Stage-3 saves a six-figure rework at Stage-4.
-              </>
-            }
-          />
-
-          <SectionRule />
-
-          <FAQ items={faqs} />
-
-          <SectionRule />
-
-          <KeyTakeaways
-            points={[
-              'SBEM = Simplified Building Energy Model for routine Part L compliance on non-domestic buildings.',
-              'SAP = Standard Assessment Procedure for dwellings — equivalent role to SBEM.',
-              'DSM = Dynamic Simulation Model — IES VE, TAS, DesignBuilder, EnergyPlus — used when SBEM cannot represent the design.',
-              'DSM mandatory for: CHP, advanced HVAC controls, automatic shading, mixed-mode, demand-response.',
-              'Specialist tools: DIALux/Relux (lighting), ODEON/CATT (acoustics), ANSYS/CFX (CFD), TRNSYS (renewables systems).',
-              'BIM integration via gbXML or IFC keeps simulation geometry consistent with the federated BIM model.',
-              'Always document tool, version, weather file, calibration evidence and assumptions in the report appendix.',
-              'Approved Document L mandates the SBEM-or-DSM choice for compliance demonstration.',
-            ]}
-          />
-
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-
-          <div className="grid grid-cols-2 gap-3 pt-2">
-            <button
-              onClick={() => navigate('/study-centre/apprentice/h-n-c-module2-section6-3')}
-              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
-                <ChevronLeft className="h-3 w-3" /> Previous subsection
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-white truncate">
-                Building simulation
-              </div>
-            </button>
-            <button
-              onClick={() => navigate('/study-centre/apprentice/h-n-c-module2-section6-5')}
-              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
-                Next subsection <ChevronRight className="h-3 w-3" />
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-black truncate">
-                System integration
-              </div>
-            </button>
-          </div>
-        </PageFrame>
-      </div>
-    </div>
+            <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+              Next subsection <ChevronRight className="h-3 w-3" />
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-black truncate">
+              System integration
+            </div>
+          </button>
+        </div>
+      </HubBody>
+    </HubPage>
   );
 };
 

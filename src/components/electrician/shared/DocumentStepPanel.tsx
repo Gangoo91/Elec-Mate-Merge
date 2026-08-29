@@ -43,15 +43,44 @@ export const DocumentStepPanel = ({
   // No card here. The step's own sections are the cards — wrapping them in
   // another one produces boxes inside boxes. The certificates put sections
   // straight on the page background and let type carry the hierarchy.
+  /*
+   * 🔴 `min-h-0` is NOT wanted here, and `h-full` is actively harmful.
+   *
+   * The panels overlapped: the Job details panel measured 684px while its own
+   * content needed 837px, so 153px of it spilled over the "Build the price"
+   * row beneath and the two market-rate cards drew on top of each other.
+   *
+   * Two causes, and BOTH have to go:
+   *  • `flex-1` is `flex: 1 1 0%`. A zero flex-basis makes this column
+   *    under-report its intrinsic height, so the grid sized the row from the
+   *    shorter Client panel instead. `grow` is `flex-grow: 1` with basis auto —
+   *    same fill behaviour, honest measurement.
+   *  • `h-full` is `height: 100%` against that (too short) auto row, pinning
+   *    the panel to it. Grid already stretches items to the row by default, so
+   *    it bought nothing and cost the overflow.
+   */
   return (
-    <div className={cn('flex h-full flex-col gap-4', wide ? 'col-span-2' : 'col-span-1')}>
+    <div className={cn('flex flex-col gap-4', wide ? 'col-span-2' : 'col-span-1')}>
       <div>
         <h2 className="text-[17px] font-bold leading-tight text-white">{title}</h2>
         <p className="mt-0.5 text-[12px] text-white">{sub}</p>
       </div>
-      {/* `[&>section]` reaches a step that renders one card so it grows to the
-          row height. Steps rendering a stack of cards are left alone. */}
-      <div className="flex-1 [&>section]:h-full">{children}</div>
+      {/*
+       * 🔴 A flex column, and `[&>section]:grow` rather than `:h-full`.
+       *
+       * This is what actually caused the overlap. `h-full` is `height: 100%`,
+       * and it assumed the step renders exactly ONE `<section>` — the old
+       * comment here said as much. Step 1 passes TWO children: JobDetailsStep
+       * (a section) and the market-rate card beside it. The section's 100% ate
+       * the whole wrapper, the wrapper measured itself as just the section, and
+       * the card was left rendering 133px outside its own parent — straight
+       * over the "Build the price" row below it.
+       *
+       * As a flex column the section grows into the spare room and any siblings
+       * keep their natural height, so a step can render one card or several
+       * without the layout caring.
+       */}
+      <div className="flex grow flex-col [&>section]:grow">{children}</div>
     </div>
   );
 };

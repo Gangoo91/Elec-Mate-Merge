@@ -13,11 +13,11 @@
  */
 
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
-import { PageFrame, PageHero } from '@/components/college/primitives';
 import {
   TLDR,
   ConceptBlock,
@@ -85,7 +85,8 @@ const checks = [
 const quizQuestions = [
   {
     id: 1,
-    question: 'Why is the ring final test split into three parts rather than just measured end-to-end like a radial?',
+    question:
+      'Why is the ring final test split into three parts rather than just measured end-to-end like a radial?',
     options: [
       'Because a ring final carries twice the current of a radial, so the test has to be repeated three times to confirm the cable does not overheat under sustained load.',
       'Because a ring final has parallel paths for current — a single end-to-end reading at the CU would not detect a broken ring (current would still flow via the unbroken half) and would not give you the per-socket R1+R2 needed for Zs verification.',
@@ -111,7 +112,8 @@ const quizQuestions = [
   },
   {
     id: 3,
-    question: 'A 32 A Type B ring final has been tested. Part 1: r1 = 0.60 Ω, rn = 0.62 Ω, r2 = 1.05 Ω end-to-end. Part 3 cross-connection reading at the furthest socket = 0.41 Ω. Ze = 0.30 Ω. Compute Zs and decide pass/fail against A4:2026 Table 41.3.',
+    question:
+      'A 32 A Type B ring final has been tested. Part 1: r1 = 0.60 Ω, rn = 0.62 Ω, r2 = 1.05 Ω end-to-end. Part 3 cross-connection reading at the furthest socket = 0.41 Ω. Ze = 0.30 Ω. Compute Zs and decide pass/fail against A4:2026 Table 41.3.',
     options: [
       'Zs = 1.65 Ω. Fail — add Ze to the full end-to-end r1 + r2 (0.30 + 0.60 + 1.05) and it exceeds the 1.10 Ω limit.',
       'Zs = 0.41 Ω. Pass — the cross-connection reading is Zs directly, with no need to add Ze.',
@@ -124,7 +126,8 @@ const quizQuestions = [
   },
   {
     id: 4,
-    question: 'Why is r2 (CPC end-to-end) higher than r1 (line end-to-end) in a 2.5/1.5 mm² T&E ring?',
+    question:
+      'Why is r2 (CPC end-to-end) higher than r1 (line end-to-end) in a 2.5/1.5 mm² T&E ring?',
     options: [
       'Because the CPC in 2.5/1.5 T&E is 1.5 mm² while the line is 2.5 mm². Smaller cross-section means higher resistance per metre. Typical: 2.5 mm² ≈ 7.41 mΩ/m, 1.5 mm² ≈ 12.10 mΩ/m. So r2 is roughly r1 × 1.63.',
       'Because the CPC carries fault current only, the standard requires it to be made of a higher-resistance alloy than the line conductor, which raises r2.',
@@ -137,7 +140,8 @@ const quizQuestions = [
   },
   {
     id: 5,
-    question: 'During Part 1 you measure the end-to-end r1 of a ring. The reading is OL (open circuit). Most likely cause:',
+    question:
+      'During Part 1 you measure the end-to-end r1 of a ring. The reading is OL (open circuit). Most likely cause:',
     options: [
       'A perfectly healthy ring — OL is the correct reading on an intact ring because the two halves cancel out and the meter sees infinite resistance end-to-end.',
       'A break somewhere in the line conductor of the ring — a loose terminal in a back-box, a damaged cable inside a void, or a cable not actually returned to the CU. Investigate before going any further.',
@@ -163,7 +167,8 @@ const quizQuestions = [
   },
   {
     id: 7,
-    question: 'You have set up Part 3 (L-CPC cross-connection) and at one socket the reading is roughly half of what every other socket reads. What does that suggest?',
+    question:
+      'You have set up Part 3 (L-CPC cross-connection) and at one socket the reading is roughly half of what every other socket reads. What does that suggest?',
     options: [
       'That socket is the electrical midpoint of the ring, so it is normal for it to read half — every ring has one socket that reads half the others.',
       'A spur has been added at that socket — spurs always halve the reading because the spur cable runs in parallel with the ring.',
@@ -176,7 +181,8 @@ const quizQuestions = [
   },
   {
     id: 8,
-    question: 'You have completed all three parts of the ring test successfully. Final step before energising:',
+    question:
+      'You have completed all three parts of the ring test successfully. Final step before energising:',
     options: [
       'Remove the cross-connection at the CU, re-land the line and neutral conductors into their correct terminals on the protective device, double-check polarity by visual inspection of the terminations, then proceed to insulation resistance testing (Sub 3) before energising.',
       'Energise the ring immediately to take the live Zs reading while the cross-connection is still in place, then remove the link afterwards.',
@@ -196,12 +202,14 @@ const faqs = [
       'Lowercase r1 = end-to-end resistance of the line conductor of the ring measured during Part 1 (with the ring open at the CU). Uppercase R1 = the line-conductor resistance of the circuit as it appears in the R1+R2 calc you will use for Zs — derived from the Part 3 cross-connection reading. Same for rn (end-to-end neutral) versus the in-service values used in Zs maths. A constant convention: lowercase letters refer to end-to-end measurements with the ring open, uppercase to the in-service installed values used in Zs maths.',
   },
   {
-    question: 'Why exactly is the cross-connection reading constant at every socket on a properly installed ring?',
+    question:
+      'Why exactly is the cross-connection reading constant at every socket on a properly installed ring?',
     answer:
       'Because the ring topology means that at any socket, the meter sees two parallel paths from the cross-connected L back to the cross-connected N (or CPC). The total length of those two parallel paths is always the full ring loop, regardless of where you stop on it. Mathematically: at a point that is x metres from one CU termination and (L−x) from the other, the parallel combination of those two paths is x(L−x)/L — the maximum is when x = L/2 (the midpoint, giving L/4) and it tapers to zero at each end (which is why you do not test at the CU). For practical purposes the variation is small enough across the inner 80% of the ring that readings should be constant within a few percent.',
   },
   {
-    question: 'My readings are roughly constant but vary by 0.02-0.03 Ω from socket to socket — is that OK?',
+    question:
+      'My readings are roughly constant but vary by 0.02-0.03 Ω from socket to socket — is that OK?',
     answer:
       'Yes — small variations of a few percent are normal and reflect the slightly different positions of each socket on the ring (the curve is not perfectly flat) plus the resistance of the socket terminations themselves. What you are looking for is a single outlier that breaks the pattern: one socket reading 50% higher (a spur), one socket reading half (a cross-wire), or progressive increase from one end to the other (a broken ring with the meter reading only one half of the loop).',
   },
@@ -216,7 +224,8 @@ const faqs = [
       'Order matters. Continuity (this Sub) before insulation resistance (Sub 3). For ring final IR, you can usually test L, N and CPC of the ring as a single circuit (combined L+N to CPC, or all three separately depending on technique). The ring being a ring is irrelevant to the IR test itself — what matters is that you have proven continuity of all three conductors first, so any subsequent IR fault can be localised correctly.',
   },
   {
-    question: 'What if a domestic ring final fails the cross-connection test — readings are not constant?',
+    question:
+      'What if a domestic ring final fails the cross-connection test — readings are not constant?',
     answer:
       'Stop and investigate. Most likely causes: (a) a broken ring — one half of the loop is open at a back-box termination, junction box or behind a kitchen unit. Trace methodically from CU outwards using the readings to narrow down which side of the loop is open. (b) A spur connected wrongly. (c) A back-box terminal where the line and neutral have been swapped (you will see roughly half-readings at one socket). (d) The cross-connection at the CU was set up incorrectly. Before tearing the wall apart, double-check the cross-connection itself — many "broken ring" diagnoses turn out to be operator error at the CU.',
   },
@@ -227,616 +236,635 @@ export default function Sub2() {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
-      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
-        <PageFrame>
-          <button
-            onClick={() => navigate('..')}
-            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
-          >
-            <ArrowLeft className="h-4 w-4" /> Section 6
-          </button>
+    <HubPage>
+      <HubMasthead
+        section="Module 4 · Section 6 · Subsection 2"
+        title="Test ring final circuit"
+        backTo=".."
+      />
+      <HubBody>
+        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
+          The three-part ring final test — end-to-end r1, rn, r2 followed by cross-connection L-N
+          and L-CPC at every socket. Spot broken rings, spurs and wiring errors from the pattern of
+          readings.
+        </p>
 
-          <PageHero
-            eyebrow="Module 4 · Section 6 · Subsection 2"
-            title="Test ring final circuit"
-            description="The three-part ring final test — end-to-end r1, rn, r2 followed by cross-connection L-N and L-CPC at every socket. Spot broken rings, spurs and wiring errors from the pattern of readings."
-            tone="emerald"
-          />
+        <TLDR
+          points={[
+            'BS 7671 Reg 643.2.1(b) requires the live conductors of a ring final to be continuity-tested. The IET method is the three-part test: end-to-end, then L-N cross-connection, then L-CPC cross-connection.',
+            'In an intact ring the cross-connection readings are constant at every socket — within a few percent. A constant set with one outlier means a spur; non-constant readings mean a broken ring or wiring error.',
+            'The Part 3 cross-connection reading at any socket gives you the effective R1+R2 for that point. Combine with Ze for Zs, then check against BS 7671 A4:2026 Table 41.3 (B32 = 1.37 Ω) using the 0.8 multiplier.',
+          ]}
+        />
 
-          <TLDR
-            points={[
-              'BS 7671 Reg 643.2.1(b) requires the live conductors of a ring final to be continuity-tested. The IET method is the three-part test: end-to-end, then L-N cross-connection, then L-CPC cross-connection.',
-              'In an intact ring the cross-connection readings are constant at every socket — within a few percent. A constant set with one outlier means a spur; non-constant readings mean a broken ring or wiring error.',
-              'The Part 3 cross-connection reading at any socket gives you the effective R1+R2 for that point. Combine with Ze for Zs, then check against BS 7671 A4:2026 Table 41.3 (B32 = 1.37 Ω) using the 0.8 multiplier.',
-            ]}
-          />
+        <LearningOutcomes
+          outcomes={[
+            'Disconnect a ring final at the CU and set up the three-part test correctly.',
+            'Measure end-to-end r1, rn and r2 with the ring open and recognise sensible values for typical T&E sizes.',
+            'Set up the L-N cross-connection (Part 2) and read every socket — recognise constant readings as proof of an intact ring.',
+            'Set up the L-CPC cross-connection (Part 3) and derive R1+R2 for the Zs calc.',
+            'Diagnose broken rings, spurs and cross-wired sockets from the pattern of readings.',
+            'Cite Reg 643.2.1 (continuity), Reg 433.1.5 (ring final design as updated in A4:2026) and Table 41.3 (max Zs).',
+            'Document ring test results on the Schedule of Test Results in the r1, rn, r2 and R1+R2 columns.',
+          ]}
+          initialVisibleCount={4}
+        />
 
-          <LearningOutcomes
-            outcomes={[
-              'Disconnect a ring final at the CU and set up the three-part test correctly.',
-              'Measure end-to-end r1, rn and r2 with the ring open and recognise sensible values for typical T&E sizes.',
-              'Set up the L-N cross-connection (Part 2) and read every socket — recognise constant readings as proof of an intact ring.',
-              'Set up the L-CPC cross-connection (Part 3) and derive R1+R2 for the Zs calc.',
-              'Diagnose broken rings, spurs and cross-wired sockets from the pattern of readings.',
-              'Cite Reg 643.2.1 (continuity), Reg 433.1.5 (ring final design as updated in A4:2026) and Table 41.3 (max Zs).',
-              'Document ring test results on the Schedule of Test Results in the r1, rn, r2 and R1+R2 columns.',
-            ]}
-            initialVisibleCount={4}
-          />
+        <VideoCard
+          url={videos.ringFinalTest.url}
+          title={videos.ringFinalTest.title}
+          channel={videos.ringFinalTest.channel}
+          duration={videos.ringFinalTest.duration}
+          topic="Three-part ring final continuity test · Unit 204 AC 6.2"
+          caption="Craig Wiltshire takes the ring apart at the CU and walks the three-part method end-to-end — the L/N/CPC end-to-end readings, the L-N cross-connection and the L-CPC cross-connection that gives you R1+R2 for the Zs calc."
+        />
 
-          <VideoCard
-            url={videos.ringFinalTest.url}
-            title={videos.ringFinalTest.title}
-            channel={videos.ringFinalTest.channel}
-            duration={videos.ringFinalTest.duration}
-            topic="Three-part ring final continuity test · Unit 204 AC 6.2"
-            caption="Craig Wiltshire takes the ring apart at the CU and walks the three-part method end-to-end — the L/N/CPC end-to-end readings, the L-N cross-connection and the L-CPC cross-connection that gives you R1+R2 for the Zs calc."
-          />
+        <ContentEyebrow>Why the three-part test exists</ContentEyebrow>
 
-          <ContentEyebrow>Why the three-part test exists</ContentEyebrow>
+        <ConceptBlock
+          title="A ring is not just a long radial"
+          plainEnglish="A ring final has two parallel paths from the CU back to itself. That parallel arrangement spreads the load and lowers the effective resistance — but it also means a single end-to-end test cannot prove the ring is actually continuous in both directions."
+          onSite="Imagine a 32 A ring final with the second leg disconnected at the CU. The first leg works fine as a long radial. A simple R1+R2 from the CU sees current go out one leg and never returns by the other — but the meter still reads a value because the loop closes via the linked conductors at the far end. You would never know the ring was broken without the three-part method."
+        >
+          <p>
+            The ring final is the UK domestic standard for socket circuits — two cables leave the CU
+            at a single 32 A protective device, run in a loop through every socket on the circuit,
+            and return to the same protective device. The two paths share the load (each leg
+            carrying roughly half the current), and the parallel arrangement gives a lower effective
+            R1+R2 than an equivalent radial would.
+          </p>
+          <p>
+            The three-part test exists because that parallel topology requires special handling:
+          </p>
+          <ol className="space-y-1.5 list-decimal pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Part 1 — end-to-end continuity.</strong> Disconnect both legs of the ring at
+              the CU. Measure resistance of each conductor (L, N, CPC) end-to-end with the ring
+              open. Confirms each conductor is continuous around the loop.
+            </li>
+            <li>
+              <strong>Part 2 — L-N cross-connection.</strong> Connect L of one leg to N of the other
+              at the CU. Read L-N at every socket. Constant readings prove the ring is intact on
+              both L and N.
+            </li>
+            <li>
+              <strong>Part 3 — L-CPC cross-connection.</strong> Connect L of one leg to CPC of the
+              other. Read L-CPC at every socket. Constant readings prove the ring is intact on L and
+              CPC. The reading also gives you R1+R2 for the Zs calc.
+            </li>
+          </ol>
+          <p>
+            Each part independently catches different fault modes. Together they give complete
+            assurance that the ring is wired correctly and the conductor sizes match what was
+            installed.
+          </p>
+        </ConceptBlock>
 
-          <ConceptBlock
-            title="A ring is not just a long radial"
-            plainEnglish="A ring final has two parallel paths from the CU back to itself. That parallel arrangement spreads the load and lowers the effective resistance — but it also means a single end-to-end test cannot prove the ring is actually continuous in both directions."
-            onSite="Imagine a 32 A ring final with the second leg disconnected at the CU. The first leg works fine as a long radial. A simple R1+R2 from the CU sees current go out one leg and never returns by the other — but the meter still reads a value because the loop closes via the linked conductors at the far end. You would never know the ring was broken without the three-part method."
-          >
-            <p>
-              The ring final is the UK domestic standard for socket circuits — two cables leave the
-              CU at a single 32 A protective device, run in a loop through every socket on the
-              circuit, and return to the same protective device. The two paths share the load (each
-              leg carrying roughly half the current), and the parallel arrangement gives a lower
-              effective R1+R2 than an equivalent radial would.
-            </p>
-            <p>
-              The three-part test exists because that parallel topology requires special handling:
-            </p>
-            <ol className="space-y-1.5 list-decimal pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Part 1 — end-to-end continuity.</strong> Disconnect both legs of the ring
-                at the CU. Measure resistance of each conductor (L, N, CPC) end-to-end with the
-                ring open. Confirms each conductor is continuous around the loop.
-              </li>
-              <li>
-                <strong>Part 2 — L-N cross-connection.</strong> Connect L of one leg to N of the
-                other at the CU. Read L-N at every socket. Constant readings prove the ring is
-                intact on both L and N.
-              </li>
-              <li>
-                <strong>Part 3 — L-CPC cross-connection.</strong> Connect L of one leg to CPC of
-                the other. Read L-CPC at every socket. Constant readings prove the ring is intact
-                on L and CPC. The reading also gives you R1+R2 for the Zs calc.
-              </li>
-            </ol>
-            <p>
-              Each part independently catches different fault modes. Together they give complete
-              assurance that the ring is wired correctly and the conductor sizes match what was
-              installed.
-            </p>
-          </ConceptBlock>
+        <RegsCallout
+          source="BS 7671:2018+A4:2026 — Regulation 643.2.1 (Continuity of conductors) — extract concerning ring final live conductors"
+          clause="The continuity of conductors and connections to exposed-conductive-parts and extraneous-conductive-parts, if any, shall be verified by a measurement of resistance of: (a) protective conductors, including protective bonding conductors; and (b) in the case of ring final circuits, live conductors."
+          meaning={
+            <>
+              Sub-clause (b) is the regulation that mandates continuity testing of the live
+              conductors (L and N) of a ring final, in addition to the CPC continuity required for
+              any circuit under (a). The three-part test (end-to-end plus two cross-connections) is
+              the IET-published method that satisfies (b) for a ring final.
+            </>
+          }
+          cite="Source: BS 7671:2018+A4:2026 Part 6, Chapter 64, Regulation 643.2.1."
+        />
 
-          <RegsCallout
-            source="BS 7671:2018+A4:2026 — Regulation 643.2.1 (Continuity of conductors) — extract concerning ring final live conductors"
-            clause="The continuity of conductors and connections to exposed-conductive-parts and extraneous-conductive-parts, if any, shall be verified by a measurement of resistance of: (a) protective conductors, including protective bonding conductors; and (b) in the case of ring final circuits, live conductors."
-            meaning={
-              <>
-                Sub-clause (b) is the regulation that mandates continuity testing of the live
-                conductors (L and N) of a ring final, in addition to the CPC continuity required
-                for any circuit under (a). The three-part test (end-to-end plus two
-                cross-connections) is the IET-published method that satisfies (b) for a ring final.
-              </>
-            }
-            cite="Source: BS 7671:2018+A4:2026 Part 6, Chapter 64, Regulation 643.2.1."
-          />
+        <SectionRule />
 
-          <SectionRule />
+        <ContentEyebrow>Part 1 — end-to-end r1, rn, r2</ContentEyebrow>
 
-          <ContentEyebrow>Part 1 — end-to-end r1, rn, r2</ContentEyebrow>
+        <ConceptBlock
+          title="Open the ring at the CU and measure each conductor"
+          plainEnglish="With the ring disconnected from the protective device, the two legs of L hang loose at the CU. Measure resistance between them — that is r1, the end-to-end resistance of the line conductor of the loop. Repeat for N (rn) and CPC (r2)."
+          onSite="Verify safe isolation first. Lift both legs of L, both legs of N and both legs of CPC out of their respective terminals. Identify which two L ends belong to the ring (label or trace if not obvious). Test."
+        >
+          <p>Step-by-step Part 1:</p>
+          <ol className="space-y-1.5 list-decimal pl-5 marker:text-elec-yellow/70">
+            <li>Verify safe isolation per the JIB sequence.</li>
+            <li>
+              At the CU, disconnect both legs of the ring from the protective device terminals (L),
+              the neutral bar (N) and the earth bar (CPC). You now have six free conductor ends: L1,
+              L2, N1, N2, CPC1, CPC2.
+            </li>
+            <li>
+              Connect MFT continuity leads to L1 and L2. Press TEST. Read r1 — the end-to-end
+              resistance of the line conductor of the ring.
+            </li>
+            <li>Move to N1, N2. Read rn — the end-to-end neutral resistance.</li>
+            <li>Move to CPC1, CPC2. Read r2 — the end-to-end CPC resistance.</li>
+            <li>Record all three values.</li>
+          </ol>
+          <p>
+            <strong>Sanity check the values.</strong> For 2.5/1.5 mm² T&E (the standard domestic
+            ring cable), expected resistance per metre at 20 °C: 2.5 mm² ≈ 7.41 mΩ/m, 1.5 mm² ≈
+            12.10 mΩ/m. So for a typical 28 m ring loop:
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>r1 ≈ 28 × 0.00741 ≈ 0.21 Ω</li>
+            <li>rn ≈ 28 × 0.00741 ≈ 0.21 Ω (should match r1 within a few %)</li>
+            <li>r2 ≈ 28 × 0.01210 ≈ 0.34 Ω (about r1 × 1.63 because of the smaller CPC)</li>
+          </ul>
+          <p>
+            Real-world readings include the resistance of every socket termination on the ring, so
+            add 0.05-0.15 Ω to the cold-cable estimate. r1 around 0.30-0.45 Ω, rn similar, r2 around
+            0.50-0.70 Ω is a sensible range for a fresh domestic ring of typical length.
+          </p>
+          <p>
+            <strong>Red flags:</strong> r1 ≠ rn by more than ~10%; r2 not consistent with the cable
+            size; OL on any reading; values an order of magnitude off (suggests a wrong cable size
+            has been installed somewhere).
+          </p>
+        </ConceptBlock>
 
-          <ConceptBlock
-            title="Open the ring at the CU and measure each conductor"
-            plainEnglish="With the ring disconnected from the protective device, the two legs of L hang loose at the CU. Measure resistance between them — that is r1, the end-to-end resistance of the line conductor of the loop. Repeat for N (rn) and CPC (r2)."
-            onSite="Verify safe isolation first. Lift both legs of L, both legs of N and both legs of CPC out of their respective terminals. Identify which two L ends belong to the ring (label or trace if not obvious). Test."
-          >
-            <p>Step-by-step Part 1:</p>
-            <ol className="space-y-1.5 list-decimal pl-5 marker:text-elec-yellow/70">
-              <li>Verify safe isolation per the JIB sequence.</li>
-              <li>
-                At the CU, disconnect both legs of the ring from the protective device terminals
-                (L), the neutral bar (N) and the earth bar (CPC). You now have six free conductor
-                ends: L1, L2, N1, N2, CPC1, CPC2.
-              </li>
-              <li>
-                Connect MFT continuity leads to L1 and L2. Press TEST. Read r1 — the end-to-end
-                resistance of the line conductor of the ring.
-              </li>
-              <li>Move to N1, N2. Read rn — the end-to-end neutral resistance.</li>
-              <li>Move to CPC1, CPC2. Read r2 — the end-to-end CPC resistance.</li>
-              <li>Record all three values.</li>
-            </ol>
-            <p>
-              <strong>Sanity check the values.</strong> For 2.5/1.5 mm² T&E (the standard
-              domestic ring cable), expected resistance per metre at 20 °C: 2.5 mm² ≈ 7.41 mΩ/m,
-              1.5 mm² ≈ 12.10 mΩ/m. So for a typical 28 m ring loop:
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>r1 ≈ 28 × 0.00741 ≈ 0.21 Ω</li>
-              <li>rn ≈ 28 × 0.00741 ≈ 0.21 Ω (should match r1 within a few %)</li>
-              <li>r2 ≈ 28 × 0.01210 ≈ 0.34 Ω (about r1 × 1.63 because of the smaller CPC)</li>
-            </ul>
-            <p>
-              Real-world readings include the resistance of every socket termination on the ring,
-              so add 0.05-0.15 Ω to the cold-cable estimate. r1 around 0.30-0.45 Ω, rn similar,
-              r2 around 0.50-0.70 Ω is a sensible range for a fresh domestic ring of typical
-              length.
-            </p>
-            <p>
-              <strong>Red flags:</strong> r1 ≠ rn by more than ~10%; r2 not consistent with the
-              cable size; OL on any reading; values an order of magnitude off (suggests a wrong
-              cable size has been installed somewhere).
-            </p>
-          </ConceptBlock>
+        <SectionRule />
 
-          <SectionRule />
+        <ContentEyebrow>Part 2 — L-N cross-connection</ContentEyebrow>
 
-          <ContentEyebrow>Part 2 — L-N cross-connection</ContentEyebrow>
+        <ConceptBlock
+          title="The L-N cross-connection — proving the ring is a ring"
+          plainEnglish="At the CU, link L of one leg to N of the other leg. Now go to every socket on the ring and measure resistance between L and N at the socket terminals. On an intact ring, the reading is constant at every socket."
+          onSite="Use a sturdy short jumper at the CU — not a piece of floppy single-core. The jumper has to make a low-resistance connection or it adds error to every reading."
+        >
+          <p>Step-by-step Part 2:</p>
+          <ol className="space-y-1.5 list-decimal pl-5 marker:text-elec-yellow/70">
+            <li>
+              With the ring still disconnected from the protective device, take the line of leg 1
+              (L1) and connect it to the neutral of leg 2 (N2) using a low-resistance jumper. The
+              other ends — L2 and N1 — are the test terminals.
+            </li>
+            <li>
+              At each socket on the ring in turn, remove the front plate and connect MFT continuity
+              leads to the L and N terminals of the back-box wiring (or use a socket-test adapter
+              that takes the readings via the front face).
+            </li>
+            <li>
+              Press TEST. Note the reading. Move to the next socket. Repeat at every accessory on
+              the ring.
+            </li>
+          </ol>
+          <p>
+            <strong>Expected reading on an intact ring:</strong> approximately (r1 + rn) ÷ 4 at
+            every socket, constant within a few percent. For r1 = 0.21, rn = 0.21 → expected ≈ 0.10
+            Ω at every socket. (The divide-by-four comes from the parallel combination of two halves
+            of the loop, each half being two quarters in series.)
+          </p>
+          <p>What the readings tell you:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Constant at every socket within a few %:</strong> intact ring, correctly wired
+              on L and N. Pass.
+            </li>
+            <li>
+              <strong>One socket reading roughly half the others:</strong> L and N have been swapped
+              at that socket — the meter is seeing one path of the ring rather than the parallel
+              combination.
+            </li>
+            <li>
+              <strong>One socket reading roughly double the others:</strong> the socket is on a
+              spur, not in the ring.
+            </li>
+            <li>
+              <strong>Readings progressively increasing from near-end sockets to far-end:</strong>
+              the ring is broken — you are reading a long radial path rather than the parallel ring.
+            </li>
+            <li>
+              <strong>OL at a socket:</strong> open circuit at that socket — could be a missing
+              terminal connection, a damaged conductor, or front plate disconnected.
+            </li>
+          </ul>
+        </ConceptBlock>
 
-          <ConceptBlock
-            title="The L-N cross-connection — proving the ring is a ring"
-            plainEnglish="At the CU, link L of one leg to N of the other leg. Now go to every socket on the ring and measure resistance between L and N at the socket terminals. On an intact ring, the reading is constant at every socket."
-            onSite="Use a sturdy short jumper at the CU — not a piece of floppy single-core. The jumper has to make a low-resistance connection or it adds error to every reading."
-          >
-            <p>Step-by-step Part 2:</p>
-            <ol className="space-y-1.5 list-decimal pl-5 marker:text-elec-yellow/70">
-              <li>
-                With the ring still disconnected from the protective device, take the line of leg
-                1 (L1) and connect it to the neutral of leg 2 (N2) using a low-resistance jumper.
-                The other ends — L2 and N1 — are the test terminals.
-              </li>
-              <li>
-                At each socket on the ring in turn, remove the front plate and connect MFT
-                continuity leads to the L and N terminals of the back-box wiring (or use a
-                socket-test adapter that takes the readings via the front face).
-              </li>
-              <li>
-                Press TEST. Note the reading. Move to the next socket. Repeat at every accessory
-                on the ring.
-              </li>
-            </ol>
-            <p>
-              <strong>Expected reading on an intact ring:</strong> approximately (r1 + rn) ÷ 4 at
-              every socket, constant within a few percent. For r1 = 0.21, rn = 0.21 → expected
-              ≈ 0.10 Ω at every socket. (The divide-by-four comes from the parallel combination of
-              two halves of the loop, each half being two quarters in series.)
-            </p>
-            <p>What the readings tell you:</p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Constant at every socket within a few %:</strong> intact ring, correctly
-                wired on L and N. Pass.
-              </li>
-              <li>
-                <strong>One socket reading roughly half the others:</strong> L and N have been
-                swapped at that socket — the meter is seeing one path of the ring rather than the
-                parallel combination.
-              </li>
-              <li>
-                <strong>One socket reading roughly double the others:</strong> the socket is on a
-                spur, not in the ring.
-              </li>
-              <li>
-                <strong>Readings progressively increasing from near-end sockets to far-end:</strong>
-                the ring is broken — you are reading a long radial path rather than the parallel
-                ring.
-              </li>
-              <li>
-                <strong>OL at a socket:</strong> open circuit at that socket — could be a missing
-                terminal connection, a damaged conductor, or front plate disconnected.
-              </li>
-            </ul>
-          </ConceptBlock>
+        <InlineCheck
+          id={checks[0].id}
+          question={checks[0].question}
+          options={checks[0].options}
+          correctIndex={checks[0].correctIndex}
+          explanation={checks[0].explanation}
+        />
 
-          <InlineCheck
-            id={checks[0].id}
-            question={checks[0].question}
-            options={checks[0].options}
-            correctIndex={checks[0].correctIndex}
-            explanation={checks[0].explanation}
-          />
+        <SectionRule />
 
-          <SectionRule />
+        <ContentEyebrow>Part 3 — L-CPC cross-connection (gives R1+R2)</ContentEyebrow>
 
-          <ContentEyebrow>Part 3 — L-CPC cross-connection (gives R1+R2)</ContentEyebrow>
+        <ConceptBlock
+          title="The L-CPC cross-connection — proving the earth path and giving R1+R2"
+          plainEnglish="Same idea as Part 2 but with CPC instead of N. Cross-connect L of one leg to CPC of the other. The reading at every socket is the effective R1+R2 for that point — and on an intact ring it should be constant at every socket."
+          onSite="The number you get from this part is the one you put in the R1+R2 column on the schedule of test results, and the one you use in the Zs = Ze + (R1+R2) calculation."
+        >
+          <p>Step-by-step Part 3:</p>
+          <ol className="space-y-1.5 list-decimal pl-5 marker:text-elec-yellow/70">
+            <li>
+              Remove the L-N jumper from Part 2. Set up the new cross-connection: L of leg 1 to CPC
+              of leg 2 with the same low-resistance jumper. Test terminals are L2 and CPC1.
+            </li>
+            <li>At each socket on the ring, connect MFT leads to the L and earth terminals.</li>
+            <li>Press TEST. Note the reading. Repeat at every socket.</li>
+          </ol>
+          <p>
+            <strong>Expected reading on an intact ring:</strong> approximately (r1 + r2) ÷ 4 at
+            every socket, constant within a few percent. For r1 = 0.21 Ω, r2 = 0.34 Ω → expected ≈
+            0.14 Ω at every socket. Real-world numbers including terminations: 0.18-0.25 Ω is a
+            sensible range for a typical domestic kitchen ring.
+          </p>
+          <p>
+            <strong>This reading IS the R1+R2 for the circuit at that point.</strong> Combine with
+            Ze to get Zs:
+          </p>
+          <p className="font-mono text-[14px] text-emerald-300">Zs = Ze + (R1 + R2)</p>
+          <p>
+            For Ze = 0.30 Ω (typical TN-C-S), R1+R2 = 0.20 Ω → Zs = 0.50 Ω. Compare against A4:2026
+            Table 41.3 for the device protecting the circuit. For Type B 32 A: max Zs = 1.37 Ω,
+            corrected measured limit = 1.37 × 0.8 = 1.10 Ω. 0.50 Ω is comfortably below 1.10 Ω →
+            pass.
+          </p>
+          <p>
+            Document the highest reading on the ring (usually the furthest electrically) as the
+            R1+R2 for the circuit on the STR.
+          </p>
+        </ConceptBlock>
 
-          <ConceptBlock
-            title="The L-CPC cross-connection — proving the earth path and giving R1+R2"
-            plainEnglish="Same idea as Part 2 but with CPC instead of N. Cross-connect L of one leg to CPC of the other. The reading at every socket is the effective R1+R2 for that point — and on an intact ring it should be constant at every socket."
-            onSite="The number you get from this part is the one you put in the R1+R2 column on the schedule of test results, and the one you use in the Zs = Ze + (R1+R2) calculation."
-          >
-            <p>Step-by-step Part 3:</p>
-            <ol className="space-y-1.5 list-decimal pl-5 marker:text-elec-yellow/70">
-              <li>
-                Remove the L-N jumper from Part 2. Set up the new cross-connection: L of leg 1 to
-                CPC of leg 2 with the same low-resistance jumper. Test terminals are L2 and CPC1.
-              </li>
-              <li>
-                At each socket on the ring, connect MFT leads to the L and earth terminals.
-              </li>
-              <li>Press TEST. Note the reading. Repeat at every socket.</li>
-            </ol>
-            <p>
-              <strong>Expected reading on an intact ring:</strong> approximately (r1 + r2) ÷ 4 at
-              every socket, constant within a few percent. For r1 = 0.21 Ω, r2 = 0.34 Ω →
-              expected ≈ 0.14 Ω at every socket. Real-world numbers including terminations:
-              0.18-0.25 Ω is a sensible range for a typical domestic kitchen ring.
-            </p>
-            <p>
-              <strong>This reading IS the R1+R2 for the circuit at that point.</strong> Combine
-              with Ze to get Zs:
-            </p>
-            <p className="font-mono text-[14px] text-emerald-300">
-              Zs = Ze + (R1 + R2)
-            </p>
-            <p>
-              For Ze = 0.30 Ω (typical TN-C-S), R1+R2 = 0.20 Ω → Zs = 0.50 Ω. Compare against
-              A4:2026 Table 41.3 for the device protecting the circuit. For Type B 32 A: max Zs =
-              1.37 Ω, corrected measured limit = 1.37 × 0.8 = 1.10 Ω. 0.50 Ω is comfortably
-              below 1.10 Ω → pass.
-            </p>
-            <p>
-              Document the highest reading on the ring (usually the furthest electrically) as the
-              R1+R2 for the circuit on the STR.
-            </p>
-          </ConceptBlock>
+        <RegsCallout
+          source="BS 7671:2018+A4:2026 — Regulation 433.1.5 (Ring final circuit arrangement, paraphrased) and Appendix 15"
+          clause="A ring final circuit shall be arranged so that the line, neutral and protective conductors form a complete loop returning to the protective device. Conductors shall be of the same cross-sectional area throughout the ring. The protective device shall have a rated current not exceeding 32 A. Where socket-outlets to BS 1363 are installed, additional protection by an RCD with rated residual operating current not exceeding 30 mA shall be provided in accordance with Regulation 411.3.3. The integrity of the ring shall be verified by continuity testing in accordance with Regulation 643.2.1."
+          meaning={
+            <>
+              A4:2026 reaffirms the ring final design rules and explicitly cross-references the
+              continuity testing requirement of Reg 643.2.1. The three-part test is the IET method
+              for proving the integrity of the ring as required by this regulation. Note also: same
+              conductor size throughout the ring — a ring with a thinner section spliced in (a
+              common defect on older installations that have been altered) is non-compliant and
+              would show up in your readings as a non-constant cross-connection.
+            </>
+          }
+          cite="Source: BS 7671:2018+A4:2026, Regulation 433.1.5 + Appendix 15 — paraphrased synthesis."
+        />
 
-          <RegsCallout
-            source="BS 7671:2018+A4:2026 — Regulation 433.1.5 (Ring final circuit arrangement, paraphrased) and Appendix 15"
-            clause="A ring final circuit shall be arranged so that the line, neutral and protective conductors form a complete loop returning to the protective device. Conductors shall be of the same cross-sectional area throughout the ring. The protective device shall have a rated current not exceeding 32 A. Where socket-outlets to BS 1363 are installed, additional protection by an RCD with rated residual operating current not exceeding 30 mA shall be provided in accordance with Regulation 411.3.3. The integrity of the ring shall be verified by continuity testing in accordance with Regulation 643.2.1."
-            meaning={
-              <>
-                A4:2026 reaffirms the ring final design rules and explicitly cross-references the
-                continuity testing requirement of Reg 643.2.1. The three-part test is the IET
-                method for proving the integrity of the ring as required by this regulation.
-                Note also: same conductor size throughout the ring — a ring with a thinner section
-                spliced in (a common defect on older installations that have been altered) is
-                non-compliant and would show up in your readings as a non-constant cross-connection.
-              </>
-            }
-            cite="Source: BS 7671:2018+A4:2026, Regulation 433.1.5 + Appendix 15 — paraphrased synthesis."
-          />
+        <InlineCheck
+          id={checks[1].id}
+          question={checks[1].question}
+          options={checks[1].options}
+          correctIndex={checks[1].correctIndex}
+          explanation={checks[1].explanation}
+        />
 
-          <InlineCheck
-            id={checks[1].id}
-            question={checks[1].question}
-            options={checks[1].options}
-            correctIndex={checks[1].correctIndex}
-            explanation={checks[1].explanation}
-          />
+        <SectionRule />
 
-          <SectionRule />
+        <ContentEyebrow>Reading patterns and what they mean</ContentEyebrow>
 
-          <ContentEyebrow>Reading patterns and what they mean</ContentEyebrow>
+        <ConceptBlock
+          title="Diagnosing from the pattern of readings"
+          plainEnglish="An intact ring gives constant cross-connection readings. Outliers and trends point to specific defects."
+        >
+          <p>The diagnosis chart for cross-connection results:</p>
 
-          <ConceptBlock
-            title="Diagnosing from the pattern of readings"
-            plainEnglish="An intact ring gives constant cross-connection readings. Outliers and trends point to specific defects."
-          >
-            <p>The diagnosis chart for cross-connection results:</p>
-
-            <div className="hidden sm:block bg-[hsl(0_0%_10%)] border border-white/[0.08] rounded-xl p-4 text-[13px]">
-              <div className="grid grid-cols-2 gap-3 text-white/90">
-                <div className="text-elec-yellow/80 text-[11px] uppercase tracking-wide font-semibold">Reading pattern</div>
-                <div className="text-elec-yellow/80 text-[11px] uppercase tracking-wide font-semibold">Diagnosis</div>
-
-                <div>Constant within a few % at every socket</div>
-                <div>Intact ring, correctly wired. Pass.</div>
-
-                <div>One socket ≈ half the others</div>
-                <div>L and CPC (or L and N) swapped at that socket</div>
-
-                <div>One socket significantly higher than the rest</div>
-                <div>Spur off the ring — note location and cable length</div>
-
-                <div>Progressive increase from near to far end of ring</div>
-                <div>Ring is broken — you are reading a radial path</div>
-
-                <div>OL at every socket</div>
-                <div>Cross-connection jumper is loose at the CU — re-make the jumper</div>
-
-                <div>OL at one socket only</div>
-                <div>Open termination at that socket — check the back-box wiring</div>
-
-                <div>r1 and rn end-to-end different by &gt; 10% in Part 1</div>
-                <div>Mixed cable sizes in the loop, or one leg has a hidden joint with extra resistance</div>
-
-                <div>r2 not in expected ratio to r1 (1.63 for 2.5/1.5 T&E)</div>
-                <div>Wrong cable type fitted, or CPC has been parallelled by another path</div>
+          <div className="hidden sm:block bg-[hsl(0_0%_10%)] border border-white/[0.08] rounded-xl p-4 text-[13px]">
+            <div className="grid grid-cols-2 gap-3 text-white/90">
+              <div className="text-elec-yellow/80 text-[11px] uppercase tracking-wide font-semibold">
+                Reading pattern
               </div>
+              <div className="text-elec-yellow/80 text-[11px] uppercase tracking-wide font-semibold">
+                Diagnosis
+              </div>
+
+              <div>Constant within a few % at every socket</div>
+              <div>Intact ring, correctly wired. Pass.</div>
+
+              <div>One socket ≈ half the others</div>
+              <div>L and CPC (or L and N) swapped at that socket</div>
+
+              <div>One socket significantly higher than the rest</div>
+              <div>Spur off the ring — note location and cable length</div>
+
+              <div>Progressive increase from near to far end of ring</div>
+              <div>Ring is broken — you are reading a radial path</div>
+
+              <div>OL at every socket</div>
+              <div>Cross-connection jumper is loose at the CU — re-make the jumper</div>
+
+              <div>OL at one socket only</div>
+              <div>Open termination at that socket — check the back-box wiring</div>
+
+              <div>r1 and rn end-to-end different by &gt; 10% in Part 1</div>
+              <div>
+                Mixed cable sizes in the loop, or one leg has a hidden joint with extra resistance
+              </div>
+
+              <div>r2 not in expected ratio to r1 (1.63 for 2.5/1.5 T&E)</div>
+              <div>Wrong cable type fitted, or CPC has been parallelled by another path</div>
             </div>
-
-            <div className="sm:hidden space-y-2">
-              {[
-                { pattern: 'Constant within a few % at every socket', diagnosis: 'Intact ring, correctly wired. Pass.' },
-                { pattern: 'One socket ≈ half the others', diagnosis: 'L and CPC (or L and N) swapped at that socket' },
-                { pattern: 'One socket significantly higher than the rest', diagnosis: 'Spur off the ring — note location and cable length' },
-                { pattern: 'Progressive increase from near to far end of ring', diagnosis: 'Ring is broken — you are reading a radial path' },
-                { pattern: 'OL at every socket', diagnosis: 'Cross-connection jumper is loose at the CU — re-make the jumper' },
-                { pattern: 'OL at one socket only', diagnosis: 'Open termination at that socket — check the back-box wiring' },
-                { pattern: 'r1 ≠ rn by > 10% (Part 1)', diagnosis: 'Mixed cable sizes in the loop, or hidden joint' },
-                { pattern: 'r2 not in expected ratio to r1', diagnosis: 'Wrong cable type, or CPC parallelled by another path' },
-              ].map((row, i) => (
-                <div key={i} className="bg-[hsl(0_0%_10%)] border border-white/[0.08] rounded-xl p-3 text-[13px]">
-                  <div className="text-elec-yellow text-[11px] uppercase tracking-wide font-semibold">Pattern</div>
-                  <div className="text-white/90 mt-0.5">{row.pattern}</div>
-                  <div className="text-elec-yellow text-[11px] uppercase tracking-wide font-semibold mt-2">Diagnosis</div>
-                  <div className="text-white/80 mt-0.5">{row.diagnosis}</div>
-                </div>
-              ))}
-            </div>
-          </ConceptBlock>
-
-          <InlineCheck
-            id={checks[2].id}
-            question={checks[2].question}
-            options={checks[2].options}
-            correctIndex={checks[2].correctIndex}
-            explanation={checks[2].explanation}
-          />
-
-          <ConceptBlock
-            title="When the ring isn't a ring — diagnostic patterns from the cross-connect test"
-            plainEnglish="A broken ring, an unauthorised spur, and a bridged ring all give different fingerprints in the cross-connection readings. Learn the patterns and you can usually localise the fault before pulling a single accessory."
-            onSite="Always start by re-checking the cross-connection at the CU before tearing into the wall. Most 'broken ring' diagnoses turn out to be a loose jumper at the consumer unit end."
-          >
-            <p>The four classic ring fault patterns and how to spot them:</p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Broken ring (one leg open).</strong> Cross-connection reading at sockets
-                near one end of the ring is low; readings climb progressively as you move along
-                the ring; reading at sockets near the broken end is high. The meter is
-                effectively reading a long radial in one direction. Trace the readings to find
-                the break point — the reading typically jumps sharply at the broken accessory.
-              </li>
-              <li>
-                <strong>Unauthorised spur tapped into the ring.</strong> Constant ring readings
-                at most sockets, plus one or more outlying sockets reading higher. The extra
-                resistance is the round-trip length of the spur cable. Worth investigating
-                whether the spur is properly fused (one unfused spur per outlet on the ring is
-                permitted; an unfused multiple spur is non-compliant).
-              </li>
-              <li>
-                <strong>Bridged ring (sockets cross-wired between L and N or L and CPC at one
-                accessory).</strong> Most sockets read constant; one socket reads ROUGHLY HALF
-                the others. The meter is seeing a different parallel-path combination at that
-                socket because two conductors have been swapped at the back-box terminal.
-                Always investigate the wiring at that specific socket.
-              </li>
-              <li>
-                <strong>OL at every socket on the cross-connection.</strong> Almost certainly
-                the cross-connection jumper at the CU is loose or not connected. Re-make the
-                jumper, retest. If still OL, suspect a major break in the loop — but check the
-                CU first.
-              </li>
-            </ul>
-            <p>
-              The pattern is the diagnostic. Single outlying high reading = spur. Single half
-              reading = bridged accessory. Progressive change = broken ring. All-OL = jumper
-              issue. Train your eye on these patterns and ring testing becomes much faster.
-            </p>
-          </ConceptBlock>
-
-          <ConceptBlock
-            title="Two-test vs three-test ring testing — what the inspector wants to see"
-            plainEnglish="The formal three-part method (end-to-end r1/rn/r2, then L-N cross-connection at every socket, then L-CPC cross-connection at every socket) is the IET-published method that satisfies Reg 643.2.1(b). Shortcut methods exist on site but won't pass an audit."
-            onSite="On a periodic inspection you might shortcut to just the end-to-end and L-CPC cross-connection — but on a NEW install the full three-part is non-negotiable for sign-off."
-          >
-            <p>
-              The full three-part method — what the inspector and the IET model STR expect:
-            </p>
-            <ol className="space-y-1.5 list-decimal pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Part 1 — end-to-end r1, rn, r2.</strong> Three readings (one per
-                conductor) with the ring open at the CU. Confirms each conductor is continuous
-                around the loop and gives sensible expected values.
-              </li>
-              <li>
-                <strong>Part 2 — L-N cross-connection at every socket.</strong> Confirms the
-                ring is intact on L and N. Spot wiring errors that would not show up in Part 1
-                alone.
-              </li>
-              <li>
-                <strong>Part 3 — L-CPC cross-connection at every socket.</strong> Confirms the
-                ring is intact on L and CPC and gives the R1+R2 value used in the Zs calc.
-              </li>
-            </ol>
-            <p>
-              Common shortcuts and why they don't pass:
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>"Just take a single R1+R2 at the CU."</strong> Reads the loop in
-                parallel — would not detect a broken ring (the unbroken half completes the loop)
-                and gives no socket-by-socket diagnostic. Non-compliant for Reg 643.2.1(b)
-                requirement.
-              </li>
-              <li>
-                <strong>"End-to-end only, skip the cross-connections."</strong> Confirms each
-                conductor is continuous but gives no proof the ring is actually wired as a ring
-                — could be a long radial that happens to terminate back at the CU. Spurs and
-                bridges go undetected.
-              </li>
-              <li>
-                <strong>"Cross-connections at one or two sockets, not all of them."</strong>
-                Misses spurs at unsampled sockets. The cost of testing every socket is small —
-                30-60 seconds per socket — and the diagnostic value is high.
-              </li>
-            </ul>
-            <p>
-              On the STR you record r1, rn, r2 from Part 1 and the highest cross-connection
-              reading (typically from Part 3) as R1+R2 for the circuit. Showing all three
-              end-to-end readings plus a representative cross-connection range demonstrates the
-              full method was followed.
-            </p>
-          </ConceptBlock>
-
-          <ConceptBlock
-            title="Ring final design under A4:2026 — the workflow change to ensure continuity is verifiable"
-            plainEnglish="Reg 433.1.5 reaffirms the ring final design rules in A4:2026 — same conductor size throughout, ring returns to the same protective device, RCD additional protection mandatory on socket-outlets up to 32 A. The verification side has tightened too: integrity must be PROVEN by continuity testing per Reg 643.2.1, not assumed."
-            onSite="If you're inheriting a ring from another installer or working on an alteration, the first thing to do is the three-part test from scratch. Don't trust documentation — measurements only."
-          >
-            <p>
-              A4:2026 reaffirmed (rather than dramatically changed) the ring final design rules,
-              but with an explicit cross-reference to the verification requirement. The headline
-              rules:
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Same conductor size throughout the ring.</strong> No spliced-in thinner
-                sections (a common defect on older alterations). Mixed sizes show up in Part 1
-                as r1 ≠ rn or as a non-constant cross-connection set.
-              </li>
-              <li>
-                <strong>Single protective device.</strong> The ring returns to the same
-                protective device at the CU — no half-and-half arrangements where two MCBs feed
-                "half a ring" each.
-              </li>
-              <li>
-                <strong>Maximum protective device rating 32 A.</strong> Plus mandatory RCD
-                additional protection for socket-outlets up to 32 A under Reg 411.3.3 (A4:2026
-                update — was 20 A under A2).
-              </li>
-              <li>
-                <strong>Integrity verified by continuity testing per Reg 643.2.1.</strong>
-                Explicit cross-reference in A4:2026 — the design rule and the test requirement
-                are now formally linked.
-              </li>
-            </ul>
-            <p>
-              The workflow change for installers: the three-part test isn't optional or
-              "best practice" — it's the regulatory verification of the design rules. On a new
-              install, build the testing time into the programme. On an alteration, retest the
-              whole ring (not just the altered section) because adding or moving an accessory
-              can disturb the loop integrity. Document fully on the STR — r1, rn, r2 plus the
-              R1+R2 highest cross-connection reading.
-            </p>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <ContentEyebrow>What goes wrong on site</ContentEyebrow>
-
-          <CommonMistake
-            title="Forgetting to disconnect the ring from the protective device before testing"
-            whatHappens={
-              <>
-                You leave both legs of the ring landed in the 32 A RCBO and start Part 1. Your
-                meter sees the resistance of the ring conductor in parallel with all the other
-                circuits in the consumer unit (because they share the neutral and earth bars). The
-                reading comes in lower than the actual cable resistance — sometimes near-zero on a
-                short ring. You write it down as a pass and move on. The ring could have a hidden
-                broken leg and you would never catch it.
-              </>
-            }
-            doInstead={
-              <>
-                Always disconnect the ring at the CU before testing. Both legs of L lifted out of
-                the protective device, both legs of N lifted out of the neutral bar, both legs of
-                CPC lifted out of the earth bar. Six free ends. Then test. After the test, re-land
-                each conductor into its correct terminal — and double-check the line goes back into
-                the protective device, not the neutral bar.
-              </>
-            }
-          />
-
-          <Scenario
-            title="Three-part test on a freshly installed kitchen ring"
-            situation={
-              <>
-                Kitchen ring final, T&E 2.5/1.5 mm², measured route length around the loop ≈ 28 m,
-                eight twin sockets at intervals around the kitchen perimeter. 32 A Type B RCBO at
-                the CU. TN-C-S supply with measured Ze = 0.30 Ω. You complete the three-part test:
-                <br />
-                <br />
-                <strong>Part 1:</strong> r1 = 0.32 Ω, rn = 0.34 Ω, r2 = 0.55 Ω. <br />
-                <strong>Part 2 (L-N):</strong> readings at all eight sockets between 0.16 and 0.18 Ω. <br />
-                <strong>Part 3 (L-CPC):</strong> readings at all eight sockets between 0.20 and 0.22 Ω.
-              </>
-            }
-            whatToDo={
-              <>
-                Sanity-check Part 1: r1 ≈ rn (within 6 %, fine), r2 ≈ r1 × 1.7 (close to the
-                expected 1.63 ratio for 2.5/1.5 T&E), absolute values consistent with 28 m of
-                cable plus terminations — pass. Part 2 readings constant within ±10 % across all
-                eight sockets — intact ring on L and N. Part 3 readings constant within ±10 %
-                across all eight sockets — intact ring on L and CPC. Take the highest Part 3
-                reading (0.22 Ω) as the R1+R2 for the circuit. Compute Zs = Ze + R1+R2 = 0.30 +
-                0.22 = 0.52 Ω. A4:2026 Table 41.3 max Zs for Type B 32 A = 1.37 Ω; corrected
-                measured limit = 1.37 × 0.8 = 1.10 Ω. 0.52 Ω is comfortably below 1.10 Ω → pass.
-                Record on the STR: r1 = 0.32, rn = 0.34, r2 = 0.55, R1+R2 (highest) = 0.22, Zs
-                (calc) = 0.52. Re-make all CU terminations and proceed to insulation resistance
-                testing (Sub 3).
-              </>
-            }
-            whyItMatters={
-              <>
-                Every reading agrees with first-principles calculation, every cross-connection set
-                is constant, and the headroom on Zs is generous. This is what a properly installed
-                ring should look like on the test schedule. Compare the same circuit with one
-                socket reading 0.40 Ω in Part 3 (while the others are at 0.22) — that single
-                outlier would tell you that socket is on a spur, the spur cable has 0.18 Ω
-                additional resistance (so roughly 9 m of additional 2.5 mm² cable), and you would
-                document that spur on the STR.
-              </>
-            }
-          />
-
-          <SectionRule />
-
-          <FAQ items={faqs} />
-
-          <SectionRule />
-
-          <KeyTakeaways
-            points={[
-              'BS 7671 Reg 643.2.1(b) requires continuity testing of the live conductors of a ring final. The three-part test (end-to-end, L-N cross-connection, L-CPC cross-connection) is the IET method.',
-              'Disconnect both legs of the ring at the CU before starting. Six free conductor ends — L1, L2, N1, N2, CPC1, CPC2 — let you set up Part 1, Part 2 and Part 3 cleanly.',
-              'Part 1 — end-to-end r1, rn, r2. Sanity check: r1 ≈ rn within a few %; r2 in the expected ratio to r1 for the cable type (1.63 for 2.5/1.5 T&E).',
-              'Part 2 — L-N cross-connection at the CU, read L-N at every socket. Constant readings prove an intact ring on L and N.',
-              'Part 3 — L-CPC cross-connection at the CU, read L-CPC at every socket. Constant readings prove an intact ring on L and CPC. The reading IS the R1+R2 for the circuit.',
-              'A constant set with one outlier higher = spur. Half-readings = wires swapped at that socket. Progressive increase = broken ring. OL at one socket = open termination there.',
-              'After testing: remove cross-connection jumpers, re-land conductors into correct terminals at the CU, double-check polarity by visual inspection, then proceed to insulation resistance (Sub 3).',
-              'Compute Zs = Ze + R1+R2. Compare to A4:2026 Table 41.3 (Type B 32 A = 1.37 Ω) using the 0.8 multiplier. Document highest R1+R2 on the ring as the circuit value on the STR.',
-            ]}
-          />
-
-          <Quiz title="Ring final test — knowledge check" questions={quizQuestions} />
-
-          <div className="grid grid-cols-2 gap-3 pt-2">
-            <button
-              onClick={() => navigate('/study-centre/apprentice/level2/module4/section6/6-1')}
-              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
-                <ChevronLeft className="h-3 w-3" /> Previous subsection
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-white truncate">
-                6.1 Continuity of CPC
-              </div>
-            </button>
-            <button
-              onClick={() => navigate('/study-centre/apprentice/level2/module4/section6/6-3')}
-              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
-                Next subsection <ChevronRight className="h-3 w-3" />
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-black truncate">
-                6.3 Insulation resistance
-              </div>
-            </button>
           </div>
-        </PageFrame>
-      </div>
-    </div>
+
+          <div className="sm:hidden space-y-2">
+            {[
+              {
+                pattern: 'Constant within a few % at every socket',
+                diagnosis: 'Intact ring, correctly wired. Pass.',
+              },
+              {
+                pattern: 'One socket ≈ half the others',
+                diagnosis: 'L and CPC (or L and N) swapped at that socket',
+              },
+              {
+                pattern: 'One socket significantly higher than the rest',
+                diagnosis: 'Spur off the ring — note location and cable length',
+              },
+              {
+                pattern: 'Progressive increase from near to far end of ring',
+                diagnosis: 'Ring is broken — you are reading a radial path',
+              },
+              {
+                pattern: 'OL at every socket',
+                diagnosis: 'Cross-connection jumper is loose at the CU — re-make the jumper',
+              },
+              {
+                pattern: 'OL at one socket only',
+                diagnosis: 'Open termination at that socket — check the back-box wiring',
+              },
+              {
+                pattern: 'r1 ≠ rn by > 10% (Part 1)',
+                diagnosis: 'Mixed cable sizes in the loop, or hidden joint',
+              },
+              {
+                pattern: 'r2 not in expected ratio to r1',
+                diagnosis: 'Wrong cable type, or CPC parallelled by another path',
+              },
+            ].map((row, i) => (
+              <div
+                key={i}
+                className="bg-[hsl(0_0%_10%)] border border-white/[0.08] rounded-xl p-3 text-[13px]"
+              >
+                <div className="text-elec-yellow text-[11px] uppercase tracking-wide font-semibold">
+                  Pattern
+                </div>
+                <div className="text-white/90 mt-0.5">{row.pattern}</div>
+                <div className="text-elec-yellow text-[11px] uppercase tracking-wide font-semibold mt-2">
+                  Diagnosis
+                </div>
+                <div className="text-white/80 mt-0.5">{row.diagnosis}</div>
+              </div>
+            ))}
+          </div>
+        </ConceptBlock>
+
+        <InlineCheck
+          id={checks[2].id}
+          question={checks[2].question}
+          options={checks[2].options}
+          correctIndex={checks[2].correctIndex}
+          explanation={checks[2].explanation}
+        />
+
+        <ConceptBlock
+          title="When the ring isn't a ring — diagnostic patterns from the cross-connect test"
+          plainEnglish="A broken ring, an unauthorised spur, and a bridged ring all give different fingerprints in the cross-connection readings. Learn the patterns and you can usually localise the fault before pulling a single accessory."
+          onSite="Always start by re-checking the cross-connection at the CU before tearing into the wall. Most 'broken ring' diagnoses turn out to be a loose jumper at the consumer unit end."
+        >
+          <p>The four classic ring fault patterns and how to spot them:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Broken ring (one leg open).</strong> Cross-connection reading at sockets near
+              one end of the ring is low; readings climb progressively as you move along the ring;
+              reading at sockets near the broken end is high. The meter is effectively reading a
+              long radial in one direction. Trace the readings to find the break point — the reading
+              typically jumps sharply at the broken accessory.
+            </li>
+            <li>
+              <strong>Unauthorised spur tapped into the ring.</strong> Constant ring readings at
+              most sockets, plus one or more outlying sockets reading higher. The extra resistance
+              is the round-trip length of the spur cable. Worth investigating whether the spur is
+              properly fused (one unfused spur per outlet on the ring is permitted; an unfused
+              multiple spur is non-compliant).
+            </li>
+            <li>
+              <strong>
+                Bridged ring (sockets cross-wired between L and N or L and CPC at one accessory).
+              </strong>{' '}
+              Most sockets read constant; one socket reads ROUGHLY HALF the others. The meter is
+              seeing a different parallel-path combination at that socket because two conductors
+              have been swapped at the back-box terminal. Always investigate the wiring at that
+              specific socket.
+            </li>
+            <li>
+              <strong>OL at every socket on the cross-connection.</strong> Almost certainly the
+              cross-connection jumper at the CU is loose or not connected. Re-make the jumper,
+              retest. If still OL, suspect a major break in the loop — but check the CU first.
+            </li>
+          </ul>
+          <p>
+            The pattern is the diagnostic. Single outlying high reading = spur. Single half reading
+            = bridged accessory. Progressive change = broken ring. All-OL = jumper issue. Train your
+            eye on these patterns and ring testing becomes much faster.
+          </p>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="Two-test vs three-test ring testing — what the inspector wants to see"
+          plainEnglish="The formal three-part method (end-to-end r1/rn/r2, then L-N cross-connection at every socket, then L-CPC cross-connection at every socket) is the IET-published method that satisfies Reg 643.2.1(b). Shortcut methods exist on site but won't pass an audit."
+          onSite="On a periodic inspection you might shortcut to just the end-to-end and L-CPC cross-connection — but on a NEW install the full three-part is non-negotiable for sign-off."
+        >
+          <p>The full three-part method — what the inspector and the IET model STR expect:</p>
+          <ol className="space-y-1.5 list-decimal pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Part 1 — end-to-end r1, rn, r2.</strong> Three readings (one per conductor)
+              with the ring open at the CU. Confirms each conductor is continuous around the loop
+              and gives sensible expected values.
+            </li>
+            <li>
+              <strong>Part 2 — L-N cross-connection at every socket.</strong> Confirms the ring is
+              intact on L and N. Spot wiring errors that would not show up in Part 1 alone.
+            </li>
+            <li>
+              <strong>Part 3 — L-CPC cross-connection at every socket.</strong> Confirms the ring is
+              intact on L and CPC and gives the R1+R2 value used in the Zs calc.
+            </li>
+          </ol>
+          <p>Common shortcuts and why they don't pass:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>"Just take a single R1+R2 at the CU."</strong> Reads the loop in parallel —
+              would not detect a broken ring (the unbroken half completes the loop) and gives no
+              socket-by-socket diagnostic. Non-compliant for Reg 643.2.1(b) requirement.
+            </li>
+            <li>
+              <strong>"End-to-end only, skip the cross-connections."</strong> Confirms each
+              conductor is continuous but gives no proof the ring is actually wired as a ring —
+              could be a long radial that happens to terminate back at the CU. Spurs and bridges go
+              undetected.
+            </li>
+            <li>
+              <strong>"Cross-connections at one or two sockets, not all of them."</strong>
+              Misses spurs at unsampled sockets. The cost of testing every socket is small — 30-60
+              seconds per socket — and the diagnostic value is high.
+            </li>
+          </ul>
+          <p>
+            On the STR you record r1, rn, r2 from Part 1 and the highest cross-connection reading
+            (typically from Part 3) as R1+R2 for the circuit. Showing all three end-to-end readings
+            plus a representative cross-connection range demonstrates the full method was followed.
+          </p>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="Ring final design under A4:2026 — the workflow change to ensure continuity is verifiable"
+          plainEnglish="Reg 433.1.5 reaffirms the ring final design rules in A4:2026 — same conductor size throughout, ring returns to the same protective device, RCD additional protection mandatory on socket-outlets up to 32 A. The verification side has tightened too: integrity must be PROVEN by continuity testing per Reg 643.2.1, not assumed."
+          onSite="If you're inheriting a ring from another installer or working on an alteration, the first thing to do is the three-part test from scratch. Don't trust documentation — measurements only."
+        >
+          <p>
+            A4:2026 reaffirmed (rather than dramatically changed) the ring final design rules, but
+            with an explicit cross-reference to the verification requirement. The headline rules:
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Same conductor size throughout the ring.</strong> No spliced-in thinner
+              sections (a common defect on older alterations). Mixed sizes show up in Part 1 as r1 ≠
+              rn or as a non-constant cross-connection set.
+            </li>
+            <li>
+              <strong>Single protective device.</strong> The ring returns to the same protective
+              device at the CU — no half-and-half arrangements where two MCBs feed "half a ring"
+              each.
+            </li>
+            <li>
+              <strong>Maximum protective device rating 32 A.</strong> Plus mandatory RCD additional
+              protection for socket-outlets up to 32 A under Reg 411.3.3 (A4:2026 update — was 20 A
+              under A2).
+            </li>
+            <li>
+              <strong>Integrity verified by continuity testing per Reg 643.2.1.</strong>
+              Explicit cross-reference in A4:2026 — the design rule and the test requirement are now
+              formally linked.
+            </li>
+          </ul>
+          <p>
+            The workflow change for installers: the three-part test isn't optional or "best
+            practice" — it's the regulatory verification of the design rules. On a new install,
+            build the testing time into the programme. On an alteration, retest the whole ring (not
+            just the altered section) because adding or moving an accessory can disturb the loop
+            integrity. Document fully on the STR — r1, rn, r2 plus the R1+R2 highest
+            cross-connection reading.
+          </p>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <ContentEyebrow>What goes wrong on site</ContentEyebrow>
+
+        <CommonMistake
+          title="Forgetting to disconnect the ring from the protective device before testing"
+          whatHappens={
+            <>
+              You leave both legs of the ring landed in the 32 A RCBO and start Part 1. Your meter
+              sees the resistance of the ring conductor in parallel with all the other circuits in
+              the consumer unit (because they share the neutral and earth bars). The reading comes
+              in lower than the actual cable resistance — sometimes near-zero on a short ring. You
+              write it down as a pass and move on. The ring could have a hidden broken leg and you
+              would never catch it.
+            </>
+          }
+          doInstead={
+            <>
+              Always disconnect the ring at the CU before testing. Both legs of L lifted out of the
+              protective device, both legs of N lifted out of the neutral bar, both legs of CPC
+              lifted out of the earth bar. Six free ends. Then test. After the test, re-land each
+              conductor into its correct terminal — and double-check the line goes back into the
+              protective device, not the neutral bar.
+            </>
+          }
+        />
+
+        <Scenario
+          title="Three-part test on a freshly installed kitchen ring"
+          situation={
+            <>
+              Kitchen ring final, T&E 2.5/1.5 mm², measured route length around the loop ≈ 28 m,
+              eight twin sockets at intervals around the kitchen perimeter. 32 A Type B RCBO at the
+              CU. TN-C-S supply with measured Ze = 0.30 Ω. You complete the three-part test:
+              <br />
+              <br />
+              <strong>Part 1:</strong> r1 = 0.32 Ω, rn = 0.34 Ω, r2 = 0.55 Ω. <br />
+              <strong>Part 2 (L-N):</strong> readings at all eight sockets between 0.16 and 0.18 Ω.{' '}
+              <br />
+              <strong>Part 3 (L-CPC):</strong> readings at all eight sockets between 0.20 and 0.22
+              Ω.
+            </>
+          }
+          whatToDo={
+            <>
+              Sanity-check Part 1: r1 ≈ rn (within 6 %, fine), r2 ≈ r1 × 1.7 (close to the expected
+              1.63 ratio for 2.5/1.5 T&E), absolute values consistent with 28 m of cable plus
+              terminations — pass. Part 2 readings constant within ±10 % across all eight sockets —
+              intact ring on L and N. Part 3 readings constant within ±10 % across all eight sockets
+              — intact ring on L and CPC. Take the highest Part 3 reading (0.22 Ω) as the R1+R2 for
+              the circuit. Compute Zs = Ze + R1+R2 = 0.30 + 0.22 = 0.52 Ω. A4:2026 Table 41.3 max Zs
+              for Type B 32 A = 1.37 Ω; corrected measured limit = 1.37 × 0.8 = 1.10 Ω. 0.52 Ω is
+              comfortably below 1.10 Ω → pass. Record on the STR: r1 = 0.32, rn = 0.34, r2 = 0.55,
+              R1+R2 (highest) = 0.22, Zs (calc) = 0.52. Re-make all CU terminations and proceed to
+              insulation resistance testing (Sub 3).
+            </>
+          }
+          whyItMatters={
+            <>
+              Every reading agrees with first-principles calculation, every cross-connection set is
+              constant, and the headroom on Zs is generous. This is what a properly installed ring
+              should look like on the test schedule. Compare the same circuit with one socket
+              reading 0.40 Ω in Part 3 (while the others are at 0.22) — that single outlier would
+              tell you that socket is on a spur, the spur cable has 0.18 Ω additional resistance (so
+              roughly 9 m of additional 2.5 mm² cable), and you would document that spur on the STR.
+            </>
+          }
+        />
+
+        <SectionRule />
+
+        <FAQ items={faqs} />
+
+        <SectionRule />
+
+        <KeyTakeaways
+          points={[
+            'BS 7671 Reg 643.2.1(b) requires continuity testing of the live conductors of a ring final. The three-part test (end-to-end, L-N cross-connection, L-CPC cross-connection) is the IET method.',
+            'Disconnect both legs of the ring at the CU before starting. Six free conductor ends — L1, L2, N1, N2, CPC1, CPC2 — let you set up Part 1, Part 2 and Part 3 cleanly.',
+            'Part 1 — end-to-end r1, rn, r2. Sanity check: r1 ≈ rn within a few %; r2 in the expected ratio to r1 for the cable type (1.63 for 2.5/1.5 T&E).',
+            'Part 2 — L-N cross-connection at the CU, read L-N at every socket. Constant readings prove an intact ring on L and N.',
+            'Part 3 — L-CPC cross-connection at the CU, read L-CPC at every socket. Constant readings prove an intact ring on L and CPC. The reading IS the R1+R2 for the circuit.',
+            'A constant set with one outlier higher = spur. Half-readings = wires swapped at that socket. Progressive increase = broken ring. OL at one socket = open termination there.',
+            'After testing: remove cross-connection jumpers, re-land conductors into correct terminals at the CU, double-check polarity by visual inspection, then proceed to insulation resistance (Sub 3).',
+            'Compute Zs = Ze + R1+R2. Compare to A4:2026 Table 41.3 (Type B 32 A = 1.37 Ω) using the 0.8 multiplier. Document highest R1+R2 on the ring as the circuit value on the STR.',
+          ]}
+        />
+
+        <Quiz title="Ring final test — knowledge check" questions={quizQuestions} />
+
+        <div className="grid grid-cols-2 gap-3 pt-2">
+          <button
+            onClick={() => navigate('/study-centre/apprentice/level2/module4/section6/6-1')}
+            className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+          >
+            <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+              <ChevronLeft className="h-3 w-3" /> Previous subsection
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-white truncate">
+              6.1 Continuity of CPC
+            </div>
+          </button>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/level2/module4/section6/6-3')}
+            className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+          >
+            <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+              Next subsection <ChevronRight className="h-3 w-3" />
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-black truncate">
+              6.3 Insulation resistance
+            </div>
+          </button>
+        </div>
+      </HubBody>
+    </HubPage>
   );
 }

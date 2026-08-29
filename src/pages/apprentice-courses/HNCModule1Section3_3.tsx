@@ -7,11 +7,11 @@
  */
 
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
-import { PageFrame, PageHero } from '@/components/college/primitives';
 import {
   TLDR,
   ConceptBlock,
@@ -282,338 +282,367 @@ const HNCModule1Section3_3 = () => {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
-      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
-        <PageFrame>
-          <button
-            onClick={() => navigate('../h-n-c-module1-section3')}
-            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
-          >
-            <ArrowLeft className="h-4 w-4" /> Section 3
-          </button>
+    <HubPage>
+      <HubMasthead
+        section="Module 1.3.3"
+        title="Permit to Work Systems"
+        backTo="../h-n-c-module1-section3"
+      />
+      <HubBody>
+        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
+          Formal systems for controlling high-risk work activities in building services
+        </p>
 
-          <PageHero
-            eyebrow="Module 1.3.3"
-            title="Permit to Work Systems"
-            description="Formal systems for controlling high-risk work activities in building services"
-            tone="purple"
-          />
+        <TLDR
+          points={[
+            'You will issue permits-to-work for the recognised high-risk activities — live electrical, hot work, confined space, work at height in atypical locations, HV, excavation.',
+            'You can break the permit cycle into seven steps — preparation, issue, acceptance, execution, suspension/extension, return-to-service, close-out.',
+            'You apply HSG250 (HSE permit-to-work guidance) as the recognised UK reference.',
+            'You separate the permit issuer (the authoriser) from the permit holder (the doer) — and from the authorised person doing the isolation.',
+          ]}
+        />
 
-          <TLDR
-            points={[
-              'You will issue permits-to-work for the recognised high-risk activities — live electrical, hot work, confined space, work at height in atypical locations, HV, excavation.',
-              'You can break the permit cycle into seven steps — preparation, issue, acceptance, execution, suspension/extension, return-to-service, close-out.',
-              'You apply HSG250 (HSE permit-to-work guidance) as the recognised UK reference.',
-              'You separate the permit issuer (the authoriser) from the permit holder (the doer) — and from the authorised person doing the isolation.',
-            ]}
-          />
+        <RegsCallout
+          source="EAWR 1989 — Regulation 14"
+          clause="No person shall be engaged in any work activity on or so near any live conductor (other than one suitably covered with insulating material so as to prevent danger) that danger may arise unless—(a) it is unreasonable in all the circumstances for it to be dead; and (b) it is reasonable in all the circumstances for him to be at work on or near it while it is live; and (c) suitable precautions (including where necessary the provision of suitable protective equipment) are taken to prevent injury."
+          meaning={
+            <>
+              The live-working permit is the documented evidence that all three Reg 14 limbs were
+              considered before the work started. As the permit issuer you are personally
+              accountable.
+            </>
+          }
+          cite="Source: Electricity at Work Regulations 1989, Reg 14 — legislation.gov.uk"
+        />
 
-          <RegsCallout
-            source="EAWR 1989 — Regulation 14"
-            clause="No person shall be engaged in any work activity on or so near any live conductor (other than one suitably covered with insulating material so as to prevent danger) that danger may arise unless—(a) it is unreasonable in all the circumstances for it to be dead; and (b) it is reasonable in all the circumstances for him to be at work on or near it while it is live; and (c) suitable precautions (including where necessary the provision of suitable protective equipment) are taken to prevent injury."
-            meaning={
-              <>
-                The live-working permit is the documented evidence that all three Reg 14 limbs
-                were considered before the work started. As the permit issuer you are
-                personally accountable.
-              </>
-            }
-            cite="Source: Electricity at Work Regulations 1989, Reg 14 — legislation.gov.uk"
-          />
+        <LearningOutcomes
+          outcomes={[
+            'Explain when permit to work systems are required',
+            'Describe the key elements of an effective permit',
+            'Apply Lockout/Tagout (LOTO) procedures correctly',
+            'Identify requirements for hot work and confined space permits',
+            'Understand roles: Authorising Person, Performing Authority, Competent Person',
+            'Implement permit procedures for electrical isolation',
+          ]}
+          initialVisibleCount={3}
+        />
 
-          <LearningOutcomes
-            outcomes={[
-              "Explain when permit to work systems are required",
-              "Describe the key elements of an effective permit",
-              "Apply Lockout/Tagout (LOTO) procedures correctly",
-              "Identify requirements for hot work and confined space permits",
-              "Understand roles: Authorising Person, Performing Authority, Competent Person",
-              "Implement permit procedures for electrical isolation",
-            ]}
-            initialVisibleCount={3}
-          />
+        <SectionRule />
 
-          <SectionRule />
+        <ContentEyebrow>Permit to Work Fundamentals</ContentEyebrow>
 
-          <ContentEyebrow>Permit to Work Fundamentals</ContentEyebrow>
-
-          <ConceptBlock title="Permit to Work Fundamentals">
-            <p>
-            A permit to work (PTW) is a formal documented system that authorises certain work to
-            be carried out at a specific time and place. It sets out the precautions required to
+        <ConceptBlock title="Permit to Work Fundamentals">
+          <p>
+            A permit to work (PTW) is a formal documented system that authorises certain work to be
+            carried out at a specific time and place. It sets out the precautions required to
             complete the work safely and provides a clear record of the authorization.
-            </p>
+          </p>
 
-            
-            <p className="text-sm font-medium text-white mb-2">
-            When permits to work are required:
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+          <p className="text-sm font-medium text-white mb-2">When permits to work are required:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
             <li>
-            <strong>Electrical work:</strong> Isolation of systems, live working, work near
-            live conductors
+              <strong>Electrical work:</strong> Isolation of systems, live working, work near live
+              conductors
             </li>
             <li>
-            <strong>Hot work:</strong> Welding, cutting, brazing, grinding where fire risk
-            exists
+              <strong>Hot work:</strong> Welding, cutting, brazing, grinding where fire risk exists
             </li>
             <li>
-            <strong>Confined spaces:</strong> Entry to tanks, vessels, ducts, risers, ceiling
-            voids
+              <strong>Confined spaces:</strong> Entry to tanks, vessels, ducts, risers, ceiling
+              voids
             </li>
             <li>
-            <strong>Working at height:</strong> Complex access requirements, fragile roofs
+              <strong>Working at height:</strong> Complex access requirements, fragile roofs
             </li>
             <li>
-            <strong>Excavations:</strong> Breaking ground, especially near services
+              <strong>Excavations:</strong> Breaking ground, especially near services
             </li>
-            </ul>
-            
+          </ul>
 
-            
-            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+          <p className="text-sm font-medium text-elec-yellow/80 mb-2">
             Key Roles in Permit Systems
-            </p>
-            
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-            <li><strong>Authorising Person (AP)</strong> — Responsibilities: Knows the plant, identifies hazards, specifies precautions, authorises work</li>
-            <li><strong>Competent Person (CP)</strong> — Responsibilities: Carries out or supervises the work, implements precautions, accepts permit</li>
-            <li><strong>Performing Authority</strong> — Responsibilities: The person or team physically doing the work under the permit</li>
-            <li><strong>Permit Coordinator</strong> — Responsibilities: Oversees the permit system, manages conflicts, maintains records</li>
-            </ul>
-            
-            
+          </p>
 
-            <p className="text-sm text-elec-yellow/70">
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Authorising Person (AP)</strong> — Responsibilities: Knows the plant,
+              identifies hazards, specifies precautions, authorises work
+            </li>
+            <li>
+              <strong>Competent Person (CP)</strong> — Responsibilities: Carries out or supervises
+              the work, implements precautions, accepts permit
+            </li>
+            <li>
+              <strong>Performing Authority</strong> — Responsibilities: The person or team
+              physically doing the work under the permit
+            </li>
+            <li>
+              <strong>Permit Coordinator</strong> — Responsibilities: Oversees the permit system,
+              manages conflicts, maintains records
+            </li>
+          </ul>
+
+          <p className="text-sm text-elec-yellow/70">
             <strong>Key principle:</strong> A permit is not just paperwork - it's a formal check
             that safe conditions exist. Work must not proceed until all parties have signed to
             confirm precautions are in place.
-            </p>
-          </ConceptBlock>
+          </p>
+        </ConceptBlock>
 
-          <InlineCheck {...quickCheckQuestions[0]} />
+        <InlineCheck {...quickCheckQuestions[0]} />
 
-          <SectionRule />
+        <SectionRule />
 
-          <ContentEyebrow>Lockout/Tagout (LOTO) Procedures</ContentEyebrow>
+        <ContentEyebrow>Lockout/Tagout (LOTO) Procedures</ContentEyebrow>
 
-          <ConceptBlock title="Lockout/Tagout (LOTO) Procedures">
-            <p>
+        <ConceptBlock title="Lockout/Tagout (LOTO) Procedures">
+          <p>
             LOTO is a safety procedure ensuring that dangerous machines or energy sources are
-            properly shut off and cannot be restarted until maintenance or service work is
-            complete. It protects workers from unexpected energisation.
-            </p>
+            properly shut off and cannot be restarted until maintenance or service work is complete.
+            It protects workers from unexpected energisation.
+          </p>
 
-            
-            <p className="text-sm font-medium text-elec-yellow/80 mb-2">The LOTO Process</p>
-            
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-            <li><strong>1. Preparation</strong> — Action: Identify all energy sources. Purpose: Know what needs isolating</li>
-            <li><strong>2. Notification</strong> — Action: Inform affected personnel. Purpose: Prevent unauthorised start-up</li>
-            <li><strong>3. Shutdown</strong> — Action: Turn off equipment normally. Purpose: Controlled de-energisation</li>
-            <li><strong>4. Isolation</strong> — Action: Operate isolation devices. Purpose: Disconnect from energy source</li>
-            <li><strong>5. Lockout</strong> — Action: Apply personal locks and tags. Purpose: Prevent re-energisation</li>
-            <li><strong>6. Stored Energy</strong> — Action: Release/restrain residual energy. Purpose: Eliminate hidden hazards</li>
-            <li><strong>7. Verification</strong> — Action: Test that system is dead. Purpose: Confirm safe to work</li>
-            </ul>
-            
-            
+          <p className="text-sm font-medium text-elec-yellow/80 mb-2">The LOTO Process</p>
 
-            
-            <div>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>1. Preparation</strong> — Action: Identify all energy sources. Purpose: Know
+              what needs isolating
+            </li>
+            <li>
+              <strong>2. Notification</strong> — Action: Inform affected personnel. Purpose: Prevent
+              unauthorised start-up
+            </li>
+            <li>
+              <strong>3. Shutdown</strong> — Action: Turn off equipment normally. Purpose:
+              Controlled de-energisation
+            </li>
+            <li>
+              <strong>4. Isolation</strong> — Action: Operate isolation devices. Purpose: Disconnect
+              from energy source
+            </li>
+            <li>
+              <strong>5. Lockout</strong> — Action: Apply personal locks and tags. Purpose: Prevent
+              re-energisation
+            </li>
+            <li>
+              <strong>6. Stored Energy</strong> — Action: Release/restrain residual energy. Purpose:
+              Eliminate hidden hazards
+            </li>
+            <li>
+              <strong>7. Verification</strong> — Action: Test that system is dead. Purpose: Confirm
+              safe to work
+            </li>
+          </ul>
+
+          <div>
             <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-            Energy Sources to Consider
+              Energy Sources to Consider
             </p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-            <li>
-            <strong>Electrical:</strong> Mains, UPS, generators, batteries
-            </li>
-            <li>
-            <strong>Mechanical:</strong> Moving parts, gravity, springs
-            </li>
-            <li>
-            <strong>Hydraulic:</strong> Pressurised fluid systems
-            </li>
-            <li>
-            <strong>Pneumatic:</strong> Compressed air systems
-            </li>
-            <li>
-            <strong>Thermal:</strong> Steam, hot water, heated surfaces
-            </li>
+              <li>
+                <strong>Electrical:</strong> Mains, UPS, generators, batteries
+              </li>
+              <li>
+                <strong>Mechanical:</strong> Moving parts, gravity, springs
+              </li>
+              <li>
+                <strong>Hydraulic:</strong> Pressurised fluid systems
+              </li>
+              <li>
+                <strong>Pneumatic:</strong> Compressed air systems
+              </li>
+              <li>
+                <strong>Thermal:</strong> Steam, hot water, heated surfaces
+              </li>
             </ul>
-            </div>
-            <div>
+          </div>
+          <div>
             <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-            Lock and Tag Requirements
+              Lock and Tag Requirements
             </p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-            <li>Each worker applies their own personal lock</li>
-            <li>Locks should be substantial and standardised</li>
-            <li>Tags identify who applied the lock and when</li>
-            <li>Multi-lock hasps for multiple workers</li>
-            <li>Only lock owner can remove their lock</li>
+              <li>Each worker applies their own personal lock</li>
+              <li>Locks should be substantial and standardised</li>
+              <li>Tags identify who applied the lock and when</li>
+              <li>Multi-lock hasps for multiple workers</li>
+              <li>Only lock owner can remove their lock</li>
             </ul>
-            </div>
-            
+          </div>
 
-            <p className="text-sm text-elec-yellow/70">
+          <p className="text-sm text-elec-yellow/70">
             <strong>Electrical isolation:</strong> Must be proved dead using an approved voltage
             indicator that has been tested immediately before and after on a known live source
             (proving unit or supply).
-            </p>
-          </ConceptBlock>
+          </p>
+        </ConceptBlock>
 
-          <InlineCheck {...quickCheckQuestions[1]} />
+        <InlineCheck {...quickCheckQuestions[1]} />
 
-          <SectionRule />
+        <SectionRule />
 
-          <ContentEyebrow>Hot Work Permits</ContentEyebrow>
+        <ContentEyebrow>Hot Work Permits</ContentEyebrow>
 
-          <ConceptBlock title="Hot Work Permits">
-            <p>
+        <ConceptBlock title="Hot Work Permits">
+          <p>
             Hot work includes any activity that produces flames, sparks, or heat that could ignite
             combustible materials. In building services, this commonly includes welding, brazing,
             soldering, and grinding near combustible materials.
-            </p>
+          </p>
 
-            
-            <p className="text-sm font-medium text-white mb-2">Hot work permit requirements:</p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+          <p className="text-sm font-medium text-white mb-2">Hot work permit requirements:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
             <li>
-            <strong>Location:</strong> Exact area where hot work will occur
+              <strong>Location:</strong> Exact area where hot work will occur
             </li>
             <li>
-            <strong>Duration:</strong> Start and finish times, fire watch period
+              <strong>Duration:</strong> Start and finish times, fire watch period
             </li>
             <li>
-            <strong>Fire precautions:</strong> Extinguishers, blankets, removal of
-            combustibles
+              <strong>Fire precautions:</strong> Extinguishers, blankets, removal of combustibles
             </li>
             <li>
-            <strong>Fire watch:</strong> Named person to monitor during and after work
+              <strong>Fire watch:</strong> Named person to monitor during and after work
             </li>
             <li>
-            <strong>Detector isolation:</strong> Which detectors isolated (with notification
-            to fire panel)
+              <strong>Detector isolation:</strong> Which detectors isolated (with notification to
+              fire panel)
             </li>
-            </ul>
-            
+          </ul>
 
-            
-            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-            Fire Prevention Checklist
-            </p>
-            
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-            <li><strong>Remove combustibles within 11m</strong> — During Work: Continuous fire watch. After Work: Fire watch for 60+ minutes</li>
-            <li><strong>Cover non-removable materials</strong> — During Work: Monitor adjacent areas. After Work: Check hidden voids and spaces</li>
-            <li><strong>Seal wall/floor openings</strong> — During Work: Keep extinguisher to hand. After Work: Reinstate fire detection</li>
-            <li><strong>Position fire extinguishers</strong> — During Work: Check for smouldering. After Work: Formal permit handback</li>
-            </ul>
-            
-            
+          <p className="text-sm font-medium text-elec-yellow/80 mb-2">Fire Prevention Checklist</p>
 
-            <CommonMistake
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Remove combustibles within 11m</strong> — During Work: Continuous fire watch.
+              After Work: Fire watch for 60+ minutes
+            </li>
+            <li>
+              <strong>Cover non-removable materials</strong> — During Work: Monitor adjacent areas.
+              After Work: Check hidden voids and spaces
+            </li>
+            <li>
+              <strong>Seal wall/floor openings</strong> — During Work: Keep extinguisher to hand.
+              After Work: Reinstate fire detection
+            </li>
+            <li>
+              <strong>Position fire extinguishers</strong> — During Work: Check for smouldering.
+              After Work: Formal permit handback
+            </li>
+          </ul>
+
+          <CommonMistake
             title="Fire Watch - Critical Requirements"
-            whatHappens={<><ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-            <li>
-            Fire watch person must be trained and remain at the location
-            </li>
-            <li>Must continue for minimum 60 minutes after hot work ceases</li>
-            <li>Must have means to raise the alarm and tackle small fires</li>
-            <li>In high-risk buildings, extend fire watch to 4+ hours</li>
-            </ul></>}
-            doInstead={<>Follow the safe-system procedure: stop work, escalate, document, and only resume once controls are verified.</>}
-            />
+            whatHappens={
+              <>
+                <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                  <li>Fire watch person must be trained and remain at the location</li>
+                  <li>Must continue for minimum 60 minutes after hot work ceases</li>
+                  <li>Must have means to raise the alarm and tackle small fires</li>
+                  <li>In high-risk buildings, extend fire watch to 4+ hours</li>
+                </ul>
+              </>
+            }
+            doInstead={
+              <>
+                Follow the safe-system procedure: stop work, escalate, document, and only resume
+                once controls are verified.
+              </>
+            }
+          />
 
-            <p className="text-sm text-elec-yellow/70">
+          <p className="text-sm text-elec-yellow/70">
             <strong>Insurance note:</strong> Many insurance policies require formal hot work
             permits. Failure to follow permit procedures may invalidate fire insurance claims.
-            </p>
-          </ConceptBlock>
+          </p>
+        </ConceptBlock>
 
-          <InlineCheck {...quickCheckQuestions[2]} />
+        <InlineCheck {...quickCheckQuestions[2]} />
 
-          <SectionRule />
+        <SectionRule />
 
-          <ContentEyebrow>Confined Space and Electrical Permits</ContentEyebrow>
+        <ContentEyebrow>Confined Space and Electrical Permits</ContentEyebrow>
 
-          <ConceptBlock title="Confined Space and Electrical Permits">
-            <p>
-            Confined spaces in building services include tanks, risers, ceiling voids, ductwork,
-            and any enclosed space with limited access where dangerous conditions may exist.
-            Electrical permits control work on live systems or in high-risk electrical
-            environments.
-            </p>
+        <ConceptBlock title="Confined Space and Electrical Permits">
+          <p>
+            Confined spaces in building services include tanks, risers, ceiling voids, ductwork, and
+            any enclosed space with limited access where dangerous conditions may exist. Electrical
+            permits control work on live systems or in high-risk electrical environments.
+          </p>
 
-            
-            <div>
+          <div>
             <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-            Confined Space Permit Elements
+              Confined Space Permit Elements
             </p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-            <li>Atmospheric testing before and during entry</li>
-            <li>Ventilation requirements</li>
-            <li>Standby person stationed at entry</li>
-            <li>Communication system specified</li>
-            <li>Rescue plan and equipment</li>
-            <li>Entry log maintained</li>
+              <li>Atmospheric testing before and during entry</li>
+              <li>Ventilation requirements</li>
+              <li>Standby person stationed at entry</li>
+              <li>Communication system specified</li>
+              <li>Rescue plan and equipment</li>
+              <li>Entry log maintained</li>
             </ul>
-            </div>
-            <div>
+          </div>
+          <div>
             <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-            Electrical Sanction Permit Elements
+              Electrical Sanction Permit Elements
             </p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-            <li>Equipment/circuits to be worked on</li>
-            <li>Points of isolation identified</li>
-            <li>Proof of isolation documented</li>
-            <li>Safety earthing if required</li>
-            <li>Adjacent live parts identified</li>
-            <li>Barriers and warning notices</li>
+              <li>Equipment/circuits to be worked on</li>
+              <li>Points of isolation identified</li>
+              <li>Proof of isolation documented</li>
+              <li>Safety earthing if required</li>
+              <li>Adjacent live parts identified</li>
+              <li>Barriers and warning notices</li>
             </ul>
-            </div>
-            
+          </div>
 
-            
-            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-            Permit Handback Process
-            </p>
-            
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-            <li><strong>1</strong> — Action: Work completed or area left in safe state</li>
-            <li><strong>2</strong> — Action: All workers and tools removed from area</li>
-            <li><strong>3</strong> — Action: All personal locks removed by their owners</li>
-            <li><strong>4</strong> — Action: Competent Person signs handback section</li>
-            <li><strong>5</strong> — Action: Authorising Person accepts handback and cancels permit</li>
-            <li><strong>6</strong> — Action: System returned to normal operation (if applicable)</li>
-            </ul>
-            
-            
+          <p className="text-sm font-medium text-elec-yellow/80 mb-2">Permit Handback Process</p>
 
-            <p className="text-sm text-white italic">
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>1</strong> — Action: Work completed or area left in safe state
+            </li>
+            <li>
+              <strong>2</strong> — Action: All workers and tools removed from area
+            </li>
+            <li>
+              <strong>3</strong> — Action: All personal locks removed by their owners
+            </li>
+            <li>
+              <strong>4</strong> — Action: Competent Person signs handback section
+            </li>
+            <li>
+              <strong>5</strong> — Action: Authorising Person accepts handback and cancels permit
+            </li>
+            <li>
+              <strong>6</strong> — Action: System returned to normal operation (if applicable)
+            </li>
+          </ul>
+
+          <p className="text-sm text-white italic">
             <strong>Record keeping:</strong> All permits should be retained for a minimum period
             (often 3 years) as they provide evidence of the safe system of work applied. Some
             permits may be required for longer in case of future investigations.
-            </p>
-          </ConceptBlock>
+          </p>
+        </ConceptBlock>
 
-          <InlineCheck {...quickCheckQuestions[3]} />
+        <InlineCheck {...quickCheckQuestions[3]} />
 
-          <SectionRule />
+        <SectionRule />
 
-          <ConceptBlock title="Practical Application">
-            <p><strong>Example 1: Electrical Isolation for Switchboard Work</strong></p>
-            <p className="text-sm text-white mb-2">
+        <ConceptBlock title="Practical Application">
+          <p>
+            <strong>Example 1: Electrical Isolation for Switchboard Work</strong>
+          </p>
+          <p className="text-sm text-white mb-2">
             <strong>Task:</strong> Replace MCCB in live switchboard in commercial building.
-            </p>
-            <div className="bg-black/30 p-3 rounded text-sm text-white">
+          </p>
+          <div className="bg-black/30 p-3 rounded text-sm text-white">
             <p>
-            <strong>Permit Process:</strong>
+              <strong>Permit Process:</strong>
             </p>
-            <p className="ml-4">
-            1. Identify all incoming supplies (including standby generator)
-            </p>
+            <p className="ml-4">1. Identify all incoming supplies (including standby generator)</p>
             <p className="ml-4">2. Authorising Person issues Electrical Permit to Work</p>
             <p className="ml-4">3. Controlled shutdown coordinated with building management</p>
             <p className="ml-4">4. Main incomer isolated and locked off</p>
@@ -624,22 +653,19 @@ const HNCModule1Section3_3 = () => {
             <p className="ml-4">9. Voltage indicator retested on proving unit</p>
             <p className="ml-4">10. Barriers and warning notices in place</p>
             <p className="mt-2 text-green-400">Only then does work proceed under the permit</p>
-            </div>
-            
+          </div>
 
-            
-            <p><strong>Example 2: Hot Work in Plant Room</strong></p>
-            <p className="text-sm text-white mb-2">
-            <strong>Task:</strong> Welding pipework modification near thermal insulation
-            materials.
-            </p>
-            <div className="bg-black/30 p-3 rounded text-sm text-white">
+          <p>
+            <strong>Example 2: Hot Work in Plant Room</strong>
+          </p>
+          <p className="text-sm text-white mb-2">
+            <strong>Task:</strong> Welding pipework modification near thermal insulation materials.
+          </p>
+          <div className="bg-black/30 p-3 rounded text-sm text-white">
             <p>
-            <strong>Hot Work Permit Requirements:</strong>
+              <strong>Hot Work Permit Requirements:</strong>
             </p>
-            <p className="ml-4">
-            - Fire detection in plant room isolated (notified to fire panel)
-            </p>
+            <p className="ml-4">- Fire detection in plant room isolated (notified to fire panel)</p>
             <p className="ml-4">- Combustible insulation protected with fire blankets</p>
             <p className="ml-4">- Oil drums and flammable stores removed from area</p>
             <p className="ml-4">- Two CO2 extinguishers positioned within reach</p>
@@ -647,141 +673,139 @@ const HNCModule1Section3_3 = () => {
             <p className="ml-4">- Work duration: 09:00-12:00</p>
             <p className="ml-4">- Fire watch until: 13:00 minimum</p>
             <p className="ml-4">- Detection to be reinstated after fire watch confirms safe</p>
-            </div>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <ConceptBlock title="Key Points Summary">
-            <div>
-            <p><strong>Permit Essentials</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-            <li>
-            Permits are not just paperwork - they ensure precautions are in place
-            </li>
-            <li>All parties must sign before work proceeds</li>
-            <li>
-            Permits have time limits - do not exceed without reauthorisation
-            </li>
-            <li>Scope changes require new permits, not amendments</li>
-            <li>Formal handback is essential - don't skip this step</li>
-            </ul>
-            </div>
-
-            <div>
-            <p><strong>LOTO Key Principles</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-            <li>Identify ALL energy sources before starting</li>
-            <li>Each worker applies their own personal lock</li>
-            <li>Only the lock owner can remove their lock</li>
-            <li>Always prove dead with tested equipment</li>
-            <li>Don't forget stored energy (capacitors, pressure, gravity)</li>
-            </ul>
-            </div>
-
-            <div>
-            <p><strong>Common Permit Failures</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-            <li>
-            <strong>Rubber stamping:</strong> Issuing without physical checks
-            </li>
-            <li>
-            <strong>Over-running:</strong> Work continuing beyond permit validity
-            </li>
-            <li>
-            <strong>Scope creep:</strong> Doing more than the permit covers
-            </li>
-            <li>
-            <strong>No handback:</strong> Permit left open, system unsafe
-            </li>
-            <li>
-            <strong>Key removal:</strong> Taking out locks before work complete
-            </li>
-            </ul>
-            </div>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <Scenario
-            title="Hot work permit for tray-cutting in a sprinklered server room"
-            situation={
-              <>
-                You need to cut new openings in steel cable tray inside a sprinklered server
-                room. The room is alarmed via VESDA aspirating smoke detection and the
-                sprinkler is on a wet pipe.
-              </>
-            }
-            whatToDo={
-              <>
-                Issue a hot work permit. Pre-task: isolate the smoke head (with the alarm
-                contractor, recorded on the permit), keep sprinkler live but bag the local
-                head, fire watcher posted, water/CO₂ extinguisher in arm&rsquo;s reach,
-                combustibles within 10 m removed, fire blanket beneath cut. During: continuous
-                fire watch. Post-task: 60-minute fire watch, smoke head re-instated, alarm
-                test back to ARC, permit closed by the issuer (not the holder), site log
-                updated.
-              </>
-            }
-            whyItMatters={
-              <>
-                Hot work in a sprinklered, alarmed environment combines RRO 2005, EAWR, BS
-                5839 and insurer requirements. The permit is the single document that ties
-                them together and proves due diligence.
-              </>
-            }
-          />
-
-          <SectionRule />
-
-          <FAQ items={faqs} />
-
-          <SectionRule />
-
-          <KeyTakeaways
-            points={[
-              'Permits-to-work formalise the highest-risk SSOWs — live electrical, hot work, confined space, HV, excavation, atypical work-at-height.',
-              'Seven-step cycle: preparation → issue → acceptance → execution → suspension/extension → return-to-service → close-out.',
-              'Separation of duties: issuer (authoriser), holder (doer), authorised person (isolator) — no single person does all three.',
-              'HSG250 is the HSE-recognised reference for UK permit systems.',
-              'Permit must be specific to the task, location, time and personnel — generic permits fail in court.',
-              'Record competence of every named person on the permit — issuer, holder, isolator, fire watcher.',
-              'Suspension and extension protocols must be documented — overrunning permits silently is a major audit failing.',
-              'Close-out is mandatory — equipment returned to service, area inspected, paperwork archived.',
-            ]}
-          />
-
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-
-          {/* ── Prev / next nav ─────────────────────────────────── */}
-
-          <div className="grid grid-cols-2 gap-3 pt-2">
-            <button
-              onClick={() => navigate('../h-n-c-module1-section3')}
-              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
-                <ChevronLeft className="h-3 w-3" /> Back to section
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-white truncate">
-                Section 3
-              </div>
-            </button>
-            <button
-              onClick={() => navigate('../h-n-c-module1-section3-4')}
-              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
-                Next <ChevronRight className="h-3 w-3" />
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-black truncate">
-                Audits and Inspections
-              </div>
-            </button>
           </div>
-        </PageFrame>
-      </div>
-    </div>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <ConceptBlock title="Key Points Summary">
+          <div>
+            <p>
+              <strong>Permit Essentials</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Permits are not just paperwork - they ensure precautions are in place</li>
+              <li>All parties must sign before work proceeds</li>
+              <li>Permits have time limits - do not exceed without reauthorisation</li>
+              <li>Scope changes require new permits, not amendments</li>
+              <li>Formal handback is essential - don't skip this step</li>
+            </ul>
+          </div>
+
+          <div>
+            <p>
+              <strong>LOTO Key Principles</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Identify ALL energy sources before starting</li>
+              <li>Each worker applies their own personal lock</li>
+              <li>Only the lock owner can remove their lock</li>
+              <li>Always prove dead with tested equipment</li>
+              <li>Don't forget stored energy (capacitors, pressure, gravity)</li>
+            </ul>
+          </div>
+
+          <div>
+            <p>
+              <strong>Common Permit Failures</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Rubber stamping:</strong> Issuing without physical checks
+              </li>
+              <li>
+                <strong>Over-running:</strong> Work continuing beyond permit validity
+              </li>
+              <li>
+                <strong>Scope creep:</strong> Doing more than the permit covers
+              </li>
+              <li>
+                <strong>No handback:</strong> Permit left open, system unsafe
+              </li>
+              <li>
+                <strong>Key removal:</strong> Taking out locks before work complete
+              </li>
+            </ul>
+          </div>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <Scenario
+          title="Hot work permit for tray-cutting in a sprinklered server room"
+          situation={
+            <>
+              You need to cut new openings in steel cable tray inside a sprinklered server room. The
+              room is alarmed via VESDA aspirating smoke detection and the sprinkler is on a wet
+              pipe.
+            </>
+          }
+          whatToDo={
+            <>
+              Issue a hot work permit. Pre-task: isolate the smoke head (with the alarm contractor,
+              recorded on the permit), keep sprinkler live but bag the local head, fire watcher
+              posted, water/CO₂ extinguisher in arm&rsquo;s reach, combustibles within 10 m removed,
+              fire blanket beneath cut. During: continuous fire watch. Post-task: 60-minute fire
+              watch, smoke head re-instated, alarm test back to ARC, permit closed by the issuer
+              (not the holder), site log updated.
+            </>
+          }
+          whyItMatters={
+            <>
+              Hot work in a sprinklered, alarmed environment combines RRO 2005, EAWR, BS 5839 and
+              insurer requirements. The permit is the single document that ties them together and
+              proves due diligence.
+            </>
+          }
+        />
+
+        <SectionRule />
+
+        <FAQ items={faqs} />
+
+        <SectionRule />
+
+        <KeyTakeaways
+          points={[
+            'Permits-to-work formalise the highest-risk SSOWs — live electrical, hot work, confined space, HV, excavation, atypical work-at-height.',
+            'Seven-step cycle: preparation → issue → acceptance → execution → suspension/extension → return-to-service → close-out.',
+            'Separation of duties: issuer (authoriser), holder (doer), authorised person (isolator) — no single person does all three.',
+            'HSG250 is the HSE-recognised reference for UK permit systems.',
+            'Permit must be specific to the task, location, time and personnel — generic permits fail in court.',
+            'Record competence of every named person on the permit — issuer, holder, isolator, fire watcher.',
+            'Suspension and extension protocols must be documented — overrunning permits silently is a major audit failing.',
+            'Close-out is mandatory — equipment returned to service, area inspected, paperwork archived.',
+          ]}
+        />
+
+        <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+
+        {/* ── Prev / next nav ─────────────────────────────────── */}
+
+        <div className="grid grid-cols-2 gap-3 pt-2">
+          <button
+            onClick={() => navigate('../h-n-c-module1-section3')}
+            className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+          >
+            <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+              <ChevronLeft className="h-3 w-3" /> Back to section
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-white truncate">Section 3</div>
+          </button>
+          <button
+            onClick={() => navigate('../h-n-c-module1-section3-4')}
+            className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+          >
+            <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+              Next <ChevronRight className="h-3 w-3" />
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-black truncate">
+              Audits and Inspections
+            </div>
+          </button>
+        </div>
+      </HubBody>
+    </HubPage>
   );
 };
 

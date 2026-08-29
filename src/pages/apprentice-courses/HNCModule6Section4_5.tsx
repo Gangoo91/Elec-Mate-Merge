@@ -5,10 +5,10 @@
  */
 
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
-import { PageFrame, PageHero } from '@/components/college/primitives';
 import {
   CommonMistake,
   ConceptBlock,
@@ -167,12 +167,7 @@ const quizQuestions = [
   {
     id: 7,
     question: 'What is the typical permanence requirement for high-quality carbon removal offsets?',
-    options: [
-      '5-10 years',
-      '20-30 years',
-      '50 years exactly',
-      '100+ years (ideally 1,000+ years)',
-    ],
+    options: ['5-10 years', '20-30 years', '50 years exactly', '100+ years (ideally 1,000+ years)'],
     correctAnswer: 3,
     explanation:
       'High-quality carbon removal standards require storage for 100+ years minimum, with premium standards like the Oxford Principles recommending 1,000+ years. This reflects the long atmospheric lifetime of CO2 and the need for removals to genuinely counterbalance emissions.',
@@ -284,366 +279,563 @@ const HNCModule6Section4_5 = () => {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
-      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
-        <PageFrame>
+    <HubPage>
+      <HubMasthead
+        section="Module 6 · Section 4 · Subsection 5"
+        title="Carbon Offsetting"
+        backTo="/study-centre/apprentice/h-n-c-module6-section4"
+      />
+      <HubBody>
+        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
+          Offset types, quality standards, additionality, permanence and the role of offsetting in
+          net-zero strategies
+        </p>
+
+        <TLDR
+          points={[
+            'Carbon offsets are credits from emission-reduction or removal projects (renewable energy, reforestation, direct air capture) used to "offset" residual emissions that cannot be eliminated at source — measured in tonnes CO₂e.',
+            'Quality varies enormously — robust offsets must demonstrate additionality (would not have happened without the funding), permanence (removal is durable), and verification (independent audit) under standards such as Verra VCS, Gold Standard, or Woodland Carbon Code (UK).',
+            'In SBTi-aligned strategy, offsets are explicitly the last resort — applicable only to residual emissions after the science-based reduction trajectory (typically ≤10% of base-year emissions by 2050), and ideally removals (DAC, biochar, BECCS) not avoidance.',
+          ]}
+        />
+
+        <RegsCallout
+          source="ISO 14068-1:2023 Carbon Neutrality + Advertising Standards Authority guidance"
+          clause="A claim of carbon neutrality shall be supported by a documented emissions reduction plan demonstrating action to reduce emissions in line with relevant climate science, with offsetting used only for residual emissions after maximum feasible reduction. Offsets shall be of demonstrated quality (verified to a recognised standard, additional, permanent, with no double-counting) and shall be retired and reported transparently. Misleading claims of neutrality or net-zero may breach the CAP Code or the BCAP Code and be subject to ASA enforcement."
+          meaning={
+            <>
+              ISO 14068 (replacing PAS 2060) is the international standard for substantiated
+              carbon-neutrality claims. The ASA has banned multiple "carbon-neutral" marketing
+              claims in the UK for relying on low-quality offsets without supporting reduction
+              action — effectively making rigorous offsetting compliance a marketing-and-legal
+              issue, not just an environmental one.
+            </>
+          }
+          cite="Source: ISO 14068-1:2023 — iso.org; ASA rulings on environmental claims — asa.org.uk"
+        />
+
+        <LearningOutcomes
+          outcomes={[
+            'Distinguish between avoidance and removal carbon offsets',
+            'Evaluate offset quality using additionality and permanence criteria',
+            'Apply verification standards including Gold Standard and VCS',
+            'Position offsetting correctly within the mitigation hierarchy',
+            'Assess criticisms and limitations of carbon offset approaches',
+            'Integrate offsetting into organisational net-zero strategies',
+          ]}
+        />
+
+        <SectionRule />
+
+        <ConceptBlock title="Carbon Offset Types">
+          <p>
+            Carbon offsets represent verified emission reductions or removals that can be used to
+            compensate for emissions occurring elsewhere. The fundamental distinction lies between
+            offsets that prevent emissions from happening (avoidance/reduction) and those that
+            remove existing CO2 from the atmosphere.
+          </p>
+          <p>
+            <strong>Two fundamental offset categories:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Avoidance/reduction offsets:</strong> Prevent emissions that would otherwise
+              occur - protecting forests, displacing fossil fuels with renewables, improving
+              efficiency
+            </li>
+            <li>
+              <strong>Removal offsets:</strong> Extract CO2 already in the atmosphere -
+              afforestation, direct air capture, enhanced weathering, biochar
+            </li>
+          </ul>
+          <p>
+            <strong>Common Offset Project Types</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Avoidance:</strong> Renewable energy — Displaces fossil fuel generation
+            </li>
+            <li>
+              <strong>REDD+ (avoided deforestation):</strong> Prevents forest carbon release
+            </li>
+            <li>
+              <strong>Clean cookstoves:</strong> Reduces fuel consumption
+            </li>
+            <li>
+              <strong>Methane capture (landfill/agriculture):</strong> Destroys potent GHG
+            </li>
+            <li>
+              <strong>Removal:</strong> Afforestation/reforestation — Trees absorb atmospheric CO2
+            </li>
+            <li>
+              <strong>Direct air capture (DAC):</strong> Chemical capture from ambient air
+            </li>
+            <li>
+              <strong>Biochar:</strong> Stable carbon in soil
+            </li>
+            <li>
+              <strong>Enhanced weathering:</strong> Mineral carbonation
+            </li>
+          </ul>
+          <p>
+            <strong>Critical distinction:</strong> For genuine net-zero claims, only removal offsets
+            can balance residual emissions - avoidance offsets reduce global emissions but do not
+            neutralise the buyer's own emissions.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...quickCheckQuestions[0]} />
+
+        <SectionRule />
+
+        <ConceptBlock title="Quality Criteria and Standards">
+          <p>
+            Not all carbon offsets deliver equivalent climate benefits. Robust quality criteria
+            distinguish credible offsets from those that may not represent real emission reductions.
+            Understanding these criteria is essential for responsible procurement.
+          </p>
+          <p>
+            <strong>Additionality</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Would project happen without offset revenue?</li>
+            <li>Must demonstrate financial/barrier additionality</li>
+            <li>Excludes legally required actions</li>
+            <li>Most debated quality criterion</li>
+          </ul>
+          <p>
+            <strong>Permanence</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>How long will carbon stay stored?</li>
+            <li>Forests: reversal risk (fire, disease)</li>
+            <li>Geological storage: 1,000+ years</li>
+            <li>Buffer pools mitigate reversal risk</li>
+          </ul>
+          <p>
+            <strong>Verification</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Independent third-party assessment</li>
+            <li>Quantification methodology review</li>
+            <li>Ongoing monitoring requirements</li>
+            <li>Registry tracking and retirement</li>
+          </ul>
+          <p>
+            <strong>No Leakage or Double Counting</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Leakage: emissions shift elsewhere</li>
+            <li>Double counting: multiple claims</li>
+            <li>Corresponding adjustments under Paris Agreement</li>
+            <li>Unique serial number per credit</li>
+          </ul>
+          <p>
+            <strong>Major Verification Standards</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Verified Carbon Standard (VCS/Verra):</strong> All project types — Largest
+              voluntary market registry, 1B+ credits issued
+            </li>
+            <li>
+              <strong>Gold Standard:</strong> Development co-benefits — Requires UN SDG
+              contributions, premium pricing
+            </li>
+            <li>
+              <strong>American Carbon Registry (ACR):</strong> North American projects — Compliance
+              and voluntary markets
+            </li>
+            <li>
+              <strong>Climate Action Reserve (CAR):</strong> North American projects — California
+              compliance programme eligible
+            </li>
+            <li>
+              <strong>Puro.earth:</strong> Carbon removals only — Engineered removal focus, 100+
+              year permanence
+            </li>
+          </ul>
+          <p>
+            <strong>Quality guidance:</strong> Prioritise certified credits with clear additionality
+            demonstration, appropriate permanence for your claims, and transparent registry tracking
+            to retirement.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...quickCheckQuestions[1]} />
+
+        <SectionRule />
+
+        <ConceptBlock title="Offsetting in Net-Zero Strategies">
+          <p>
+            Carbon offsetting occupies a specific position within the mitigation hierarchy - it
+            should address residual emissions only after all practicable reduction measures have
+            been implemented. Understanding this hierarchy is critical for credible net-zero
+            strategies.
+          </p>
+          <p>
+            <strong>The Mitigation Hierarchy</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Priority 1:</strong> AVOID
+            </li>
+            <li>
+              <strong>Priority 2:</strong> REDUCE
+            </li>
+            <li>
+              <strong>Priority 3:</strong> SUBSTITUTE
+            </li>
+            <li>
+              <strong>Priority 4:</strong> OFFSET
+            </li>
+          </ul>
+          <p>
+            <strong>SBTi Net-Zero Standard Requirements</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>90%+ reduction:</strong> Scope 1 and 2 emissions must be reduced by at least
+              90% before offsetting
+            </li>
+            <li>
+              <strong>Removal only:</strong> Only carbon removal offsets (not avoidance) can be used
+              for residual emissions
+            </li>
+            <li>
+              <strong>High quality:</strong> Removals must meet strict permanence and verification
+              criteria
+            </li>
+            <li>
+              <strong>Beyond value chain:</strong> Separate from internal abatement investments
+            </li>
+          </ul>
+          <p>
+            <strong>Offset Portfolio Evolution (Oxford Principles)</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Near-term (2025):</strong> Primarily avoidance with some removal — Mix of
+              short and long-lived
+            </li>
+            <li>
+              <strong>Medium-term (2030):</strong> Increasing removal proportion — Shift toward
+              long-lived storage
+            </li>
+            <li>
+              <strong>Long-term (2040+):</strong> Predominantly or exclusively removal — Long-lived
+              storage dominant
+            </li>
+            <li>
+              <strong>Net-zero target year:</strong> High-quality removal only — Permanent
+              geological/equivalent
+            </li>
+          </ul>
+          <p>
+            <strong>Building services application:</strong> For MEP contractors pursuing net-zero,
+            prioritise operational energy efficiency, low-carbon materials, and supplier engagement
+            before considering offsets for genuinely unavoidable embodied or operational emissions.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...quickCheckQuestions[2]} />
+
+        <SectionRule />
+
+        <ConceptBlock title="Criticisms, Limitations and Best Practice">
+          <p>
+            Carbon offsetting faces significant criticisms that must be understood to use offsets
+            responsibly. These limitations do not invalidate offsetting entirely but require careful
+            consideration and transparent communication.
+          </p>
+          <p>
+            <strong>Key Criticisms of Carbon Offsetting</strong>
+          </p>
+          <p>
+            <strong>Additionality Challenges</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Counterfactual baseline inherently uncertain</li>
+            <li>Some projects would occur anyway</li>
+            <li>Gaming of additionality tests</li>
+            <li>Renewable energy additionality declining</li>
+          </ul>
+          <p>
+            <strong>Permanence Risks</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Forest fires increasing with climate change</li>
+            <li>Reversal undermines climate benefit</li>
+            <li>Buffer pools may be insufficient</li>
+            <li>Long-term monitoring uncertain</li>
+          </ul>
+          <p>
+            <strong>Moral Hazard</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>'Licence to pollute' criticism</li>
+            <li>May delay genuine decarbonisation</li>
+            <li>Perception of buying way out</li>
+            <li>Greenwashing concerns</li>
+          </ul>
+          <p>
+            <strong>Market Integrity Issues</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Quality varies significantly</li>
+            <li>Opaque pricing</li>
+            <li>Double counting risks</li>
+            <li>Regulatory fragmentation</li>
+          </ul>
+          <p>
+            <strong>Recent Controversies</strong>
+          </p>
+          <p>
+            Investigative reporting has revealed quality issues in major offset programmes,
+            including REDD+ projects credited for protecting forests that faced little deforestation
+            threat. The Integrity Council for the Voluntary Carbon Market (ICVCM) is developing Core
+            Carbon Principles to improve standards. Organisations should conduct due diligence
+            beyond relying solely on certification.
+          </p>
+          <p>
+            <strong>Best Practice Guidance for Offset Use</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Mitigation hierarchy first:</strong> Document reduction efforts before
+              offsetting; set internal carbon price to drive efficiency
+            </li>
+            <li>
+              <strong>High-quality credits only:</strong> Verify certification, review project
+              documentation, check registry status
+            </li>
+            <li>
+              <strong>Transition toward removals:</strong> Plan portfolio evolution from avoidance
+              to removal over time
+            </li>
+            <li>
+              <strong>Transparent communication:</strong> Report offsets separately from reductions;
+              avoid misleading neutrality claims
+            </li>
+            <li>
+              <strong>Due diligence:</strong> Go beyond certification to assess project-specific
+              risks and co-benefits
+            </li>
+          </ul>
+          <p>
+            <strong>Practical guidance:</strong> Treat offsetting as insurance for unavoidable
+            emissions, not a substitute for decarbonisation. Allocate budget to removal offsets and
+            plan for price increases as demand grows.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...quickCheckQuestions[3]} />
+
+        <SectionRule />
+
+        <ConceptBlock title="Worked Examples">
+          <p>
+            <strong>Example 1: Evaluating Offset Quality</strong>
+          </p>
+          <p>
+            <strong>Scenario:</strong> An MEP contractor is offered forest protection offsets at GBP
+            8/tCO2e. Assess quality.
+          </p>
+          <p>Quality assessment checklist:</p>
+          <p>1. Certification: Check for VCS/Gold Standard certification</p>
+          <p>2. Additionality: Review project documentation</p>
+          <p>- Was forest genuinely at risk of deforestation?</p>
+          <p>- What is the baseline methodology?</p>
+          <p>Warning: Very low price may indicate quality issues</p>
+          <p>3. Permanence: Assess reversal risk</p>
+          <p>- What is the buffer pool percentage?</p>
+          <p>- Fire/disease history in region?</p>
+          <p>4. Registry: Verify on Verra/Gold Standard registry</p>
+          <p>- Unique serial numbers assigned?</p>
+          <p>- Will credits be retired in your name?</p>
+          <p>Recommendation: Request third-party verification report</p>
+          <p>Consider paying premium for higher-quality credits</p>
+          <p>
+            <strong>Example 2: Building an Offset Strategy</strong>
+          </p>
+          <p>
+            <strong>Scenario:</strong> Develop an offset strategy for a building services company
+            targeting net-zero by 2040.
+          </p>
+          <p>Phase 1 (2024-2027): Foundation</p>
+          <p>- Complete Scope 1, 2, 3 inventory</p>
+          <p>- Set science-based reduction targets</p>
+          <p>- Begin offset procurement for engagement</p>
+          <p>- Mix: 70% avoidance, 30% removal</p>
+          <p>Phase 2 (2028-2033): Transition</p>
+          <p>- Achieve 50% absolute reduction</p>
+          <p>- Increase removal proportion</p>
+          <p>- Mix: 40% avoidance, 60% removal</p>
+          <p>Phase 3 (2034-2040): Net-Zero</p>
+          <p>- Achieve 90%+ reduction</p>
+          <p>- Removals only for residual emissions</p>
+          <p>- Mix: 100% high-permanence removal</p>
+          <p>Budget planning: Assume 3-5x price increase for removals by 2040</p>
+          <p>
+            <strong>Example 3: Calculating Residual Emissions</strong>
+          </p>
+          <p>
+            <strong>Scenario:</strong> Calculate offset requirements for a net-zero building
+            project.
+          </p>
+          <p>Project: Commercial office building MEP installation</p>
+          <p>Embodied carbon assessment:</p>
+          <p>Total embodied carbon: 450 tCO2e</p>
+          <p>Reduction through design: -120 tCO2e (27%)</p>
+          <p>Low-carbon materials: -85 tCO2e (19%)</p>
+          <p>Supplier engagement: -45 tCO2e (10%)</p>
+          <p>-----</p>
+          <p>Residual to offset: 200 tCO2e (44%)</p>
+          <p>Offset procurement:</p>
+          <p>Removal credits required: 200 tCO2e</p>
+          <p>Assumed price (2024): GBP 120/tCO2e</p>
+          <p>Total offset budget: GBP 24,000</p>
+          <p>Demonstrate 56% reduction before offsetting</p>
+          <p>Document in sustainability report with reduction evidence</p>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <ConceptBlock title="Practical guidance">
+          <p>
+            <strong>Offset Quality Assessment Checklist:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Verify certification by recognised standard (VCS, Gold Standard, etc.)</li>
+            <li>Review additionality documentation and baseline methodology</li>
+            <li>Assess permanence risk and buffer pool adequacy</li>
+            <li>Check registry for unique serial numbers and retirement process</li>
+            <li>Evaluate co-benefits (biodiversity, community development)</li>
+            <li>Consider price as quality indicator (very cheap = higher risk)</li>
+          </ul>
+          <p>
+            <strong>Key Values to Remember:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              SBTi net-zero: <strong>90%+ reduction</strong> required before offsetting
+            </li>
+            <li>
+              Permanence target: <strong>100+ years</strong> (ideally 1,000+)
+            </li>
+            <li>
+              Buffer pools: <strong>10-20%</strong> of credits held for reversal
+            </li>
+            <li>
+              One credit: <strong>1 tonne CO2e</strong> reduced or removed
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <CommonMistake
+          title="Common mistakes to avoid"
+          whatHappens={
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+              <li>
+                <strong>Using offsets first</strong> - Always exhaust reduction options before
+                offsetting
+              </li>
+              <li>
+                <strong>Choosing on price alone</strong> - Cheap credits often have quality issues
+              </li>
+              <li>
+                <strong>Claiming carbon neutral without transparency</strong> - Separate offset
+                claims from reductions
+              </li>
+              <li>
+                <strong>Ignoring portfolio evolution</strong> - Plan transition toward removals over
+                time
+              </li>
+            </ul>
+          }
+          doInstead="Cross-check assumptions against published guidance, validate measured values against design intent, and engage the wider team early when interface issues emerge."
+        />
+
+        <SectionRule />
+
+        <Scenario
+          title="Voluntary carbon market reform devalues retired credits"
+          situation={
+            <>
+              A property company purchased 50,000 tonnes of REDD+ (avoided deforestation) credits in
+              2021 to offset annual operational emissions. Investigative journalism in 2023
+              questioned the additionality of many REDD+ projects; in 2024 the Voluntary Carbon
+              Market Integrity Initiative (VCMI) tightened quality criteria. The company's historic
+              offsets no longer meet the new standard for net-zero claims.
+            </>
+          }
+          whatToDo={
+            <>
+              Three-stage response: (1) accelerate operational emission reductions to reduce future
+              offset reliance; (2) shift offset purchasing from avoidance (REDD+) to removals (DAC,
+              biochar, BECCS) — much more expensive but credible; (3) update marketing claims to
+              remove "carbon neutral" wording where the supporting offsets no longer meet ISO 14068.
+              Long-term: re-baseline to SBTi methodology where offsets are explicitly minimised, not
+              maximised.
+            </>
+          }
+          whyItMatters={
+            <>
+              The voluntary carbon market is in active reform. Avoidance-based credits (which were
+              the bulk of the market) are losing credibility; removal credits are scarce and
+              expensive. Any organisation building a sustainability strategy on offsetting needs a
+              transition plan to direct emission reduction — and to higher-quality offsets at much
+              higher prices (£100/tCO₂e+ for DAC vs £5–15 for avoidance).
+            </>
+          }
+        />
+
+        <SectionRule />
+
+        <FAQ items={faqs} />
+
+        <SectionRule />
+
+        <KeyTakeaways
+          points={[
+            'Offsets = credits from emission reduction (avoidance) or removal projects.',
+            'Quality criteria: additionality, permanence, verification, no double-counting.',
+            'Standards: Verra VCS, Gold Standard, Woodland Carbon Code (UK), Plan Vivo.',
+            'SBTi treats offsets as last resort — only for residual ≤10% emissions by 2050.',
+            'Removals (DAC, biochar, BECCS) are higher quality than avoidance (REDD+).',
+            'ISO 14068-1 (2023) replaces PAS 2060 for substantiated neutrality claims.',
+            'ASA enforcement — misleading offsetting claims are now actively challenged.',
+          ]}
+        />
+
+        <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+
+        <div className="grid grid-cols-2 gap-3 pt-2">
           <button
-            onClick={() => navigate("/study-centre/apprentice/h-n-c-module6-section4")}
-            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module6-section4-4')}
+            className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
           >
-            <ArrowLeft className="h-4 w-4" /> Back
+            <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+              <ChevronLeft className="h-3 w-3" /> Previous
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-white truncate">
+              Science-based targets
+            </div>
           </button>
-
-          <PageHero
-            eyebrow="Module 6 · Section 4 · Subsection 5"
-            title="Carbon Offsetting"
-            description="Offset types, quality standards, additionality, permanence and the role of offsetting in net-zero strategies"
-            tone="purple"
-          />
-
-          <TLDR
-            points={[
-              "Carbon offsets are credits from emission-reduction or removal projects (renewable energy, reforestation, direct air capture) used to \"offset\" residual emissions that cannot be eliminated at source — measured in tonnes CO₂e.",
-              "Quality varies enormously — robust offsets must demonstrate additionality (would not have happened without the funding), permanence (removal is durable), and verification (independent audit) under standards such as Verra VCS, Gold Standard, or Woodland Carbon Code (UK).",
-              "In SBTi-aligned strategy, offsets are explicitly the last resort — applicable only to residual emissions after the science-based reduction trajectory (typically ≤10% of base-year emissions by 2050), and ideally removals (DAC, biochar, BECCS) not avoidance.",
-            ]}
-          />
-
-          <RegsCallout
-            source="ISO 14068-1:2023 Carbon Neutrality + Advertising Standards Authority guidance"
-            clause="A claim of carbon neutrality shall be supported by a documented emissions reduction plan demonstrating action to reduce emissions in line with relevant climate science, with offsetting used only for residual emissions after maximum feasible reduction. Offsets shall be of demonstrated quality (verified to a recognised standard, additional, permanent, with no double-counting) and shall be retired and reported transparently. Misleading claims of neutrality or net-zero may breach the CAP Code or the BCAP Code and be subject to ASA enforcement."
-            meaning={
-              <>
-                ISO 14068 (replacing PAS 2060) is the international standard for substantiated carbon-neutrality claims. The ASA has banned multiple "carbon-neutral" marketing claims in the UK for relying on low-quality offsets without supporting reduction action — effectively making rigorous offsetting compliance a marketing-and-legal issue, not just an environmental one.
-              </>
-            }
-            cite="Source: ISO 14068-1:2023 — iso.org; ASA rulings on environmental claims — asa.org.uk"
-          />
-
-          <LearningOutcomes
-            outcomes={[
-              "Distinguish between avoidance and removal carbon offsets",
-              "Evaluate offset quality using additionality and permanence criteria",
-              "Apply verification standards including Gold Standard and VCS",
-              "Position offsetting correctly within the mitigation hierarchy",
-              "Assess criticisms and limitations of carbon offset approaches",
-              "Integrate offsetting into organisational net-zero strategies",
-            ]}
-          />
-
-          <SectionRule />
-
-          <ConceptBlock title="Carbon Offset Types">
-            <p>Carbon offsets represent verified emission reductions or removals that can be used to compensate for emissions occurring elsewhere. The fundamental distinction lies between offsets that prevent emissions from happening (avoidance/reduction) and those that remove existing CO2 from the atmosphere.</p>
-            <p><strong>Two fundamental offset categories:</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Avoidance/reduction offsets:</strong> Prevent emissions that would otherwise occur - protecting forests, displacing fossil fuels with renewables, improving efficiency</li>
-              <li><strong>Removal offsets:</strong> Extract CO2 already in the atmosphere - afforestation, direct air capture, enhanced weathering, biochar</li>
-            </ul>
-            <p><strong>Common Offset Project Types</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Avoidance:</strong> Renewable energy — Displaces fossil fuel generation</li>
-              <li><strong>REDD+ (avoided deforestation):</strong> Prevents forest carbon release</li>
-              <li><strong>Clean cookstoves:</strong> Reduces fuel consumption</li>
-              <li><strong>Methane capture (landfill/agriculture):</strong> Destroys potent GHG</li>
-              <li><strong>Removal:</strong> Afforestation/reforestation — Trees absorb atmospheric CO2</li>
-              <li><strong>Direct air capture (DAC):</strong> Chemical capture from ambient air</li>
-              <li><strong>Biochar:</strong> Stable carbon in soil</li>
-              <li><strong>Enhanced weathering:</strong> Mineral carbonation</li>
-            </ul>
-            <p><strong>Critical distinction:</strong> For genuine net-zero claims, only removal offsets can balance residual emissions - avoidance offsets reduce global emissions but do not neutralise the buyer's own emissions.</p>
-          </ConceptBlock>
-
-          <InlineCheck {...quickCheckQuestions[0]} />
-
-          <SectionRule />
-
-          <ConceptBlock title="Quality Criteria and Standards">
-            <p>Not all carbon offsets deliver equivalent climate benefits. Robust quality criteria distinguish credible offsets from those that may not represent real emission reductions. Understanding these criteria is essential for responsible procurement.</p>
-            <p><strong>Additionality</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Would project happen without offset revenue?</li>
-              <li>Must demonstrate financial/barrier additionality</li>
-              <li>Excludes legally required actions</li>
-              <li>Most debated quality criterion</li>
-            </ul>
-            <p><strong>Permanence</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>How long will carbon stay stored?</li>
-              <li>Forests: reversal risk (fire, disease)</li>
-              <li>Geological storage: 1,000+ years</li>
-              <li>Buffer pools mitigate reversal risk</li>
-            </ul>
-            <p><strong>Verification</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Independent third-party assessment</li>
-              <li>Quantification methodology review</li>
-              <li>Ongoing monitoring requirements</li>
-              <li>Registry tracking and retirement</li>
-            </ul>
-            <p><strong>No Leakage or Double Counting</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Leakage: emissions shift elsewhere</li>
-              <li>Double counting: multiple claims</li>
-              <li>Corresponding adjustments under Paris Agreement</li>
-              <li>Unique serial number per credit</li>
-            </ul>
-            <p><strong>Major Verification Standards</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Verified Carbon Standard (VCS/Verra):</strong> All project types — Largest voluntary market registry, 1B+ credits issued</li>
-              <li><strong>Gold Standard:</strong> Development co-benefits — Requires UN SDG contributions, premium pricing</li>
-              <li><strong>American Carbon Registry (ACR):</strong> North American projects — Compliance and voluntary markets</li>
-              <li><strong>Climate Action Reserve (CAR):</strong> North American projects — California compliance programme eligible</li>
-              <li><strong>Puro.earth:</strong> Carbon removals only — Engineered removal focus, 100+ year permanence</li>
-            </ul>
-            <p><strong>Quality guidance:</strong> Prioritise certified credits with clear additionality demonstration, appropriate permanence for your claims, and transparent registry tracking to retirement.</p>
-          </ConceptBlock>
-
-          <InlineCheck {...quickCheckQuestions[1]} />
-
-          <SectionRule />
-
-          <ConceptBlock title="Offsetting in Net-Zero Strategies">
-            <p>Carbon offsetting occupies a specific position within the mitigation hierarchy - it should address residual emissions only after all practicable reduction measures have been implemented. Understanding this hierarchy is critical for credible net-zero strategies.</p>
-            <p><strong>The Mitigation Hierarchy</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Priority 1:</strong> AVOID</li>
-              <li><strong>Priority 2:</strong> REDUCE</li>
-              <li><strong>Priority 3:</strong> SUBSTITUTE</li>
-              <li><strong>Priority 4:</strong> OFFSET</li>
-            </ul>
-            <p><strong>SBTi Net-Zero Standard Requirements</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>90%+ reduction:</strong> Scope 1 and 2 emissions must be reduced by at least 90% before offsetting</li>
-              <li><strong>Removal only:</strong> Only carbon removal offsets (not avoidance) can be used for residual emissions</li>
-              <li><strong>High quality:</strong> Removals must meet strict permanence and verification criteria</li>
-              <li><strong>Beyond value chain:</strong> Separate from internal abatement investments</li>
-            </ul>
-            <p><strong>Offset Portfolio Evolution (Oxford Principles)</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Near-term (2025):</strong> Primarily avoidance with some removal — Mix of short and long-lived</li>
-              <li><strong>Medium-term (2030):</strong> Increasing removal proportion — Shift toward long-lived storage</li>
-              <li><strong>Long-term (2040+):</strong> Predominantly or exclusively removal — Long-lived storage dominant</li>
-              <li><strong>Net-zero target year:</strong> High-quality removal only — Permanent geological/equivalent</li>
-            </ul>
-            <p><strong>Building services application:</strong> For MEP contractors pursuing net-zero, prioritise operational energy efficiency, low-carbon materials, and supplier engagement before considering offsets for genuinely unavoidable embodied or operational emissions.</p>
-          </ConceptBlock>
-
-          <InlineCheck {...quickCheckQuestions[2]} />
-
-          <SectionRule />
-
-          <ConceptBlock title="Criticisms, Limitations and Best Practice">
-            <p>Carbon offsetting faces significant criticisms that must be understood to use offsets responsibly. These limitations do not invalidate offsetting entirely but require careful consideration and transparent communication.</p>
-            <p><strong>Key Criticisms of Carbon Offsetting</strong></p>
-            <p><strong>Additionality Challenges</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Counterfactual baseline inherently uncertain</li>
-              <li>Some projects would occur anyway</li>
-              <li>Gaming of additionality tests</li>
-              <li>Renewable energy additionality declining</li>
-            </ul>
-            <p><strong>Permanence Risks</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Forest fires increasing with climate change</li>
-              <li>Reversal undermines climate benefit</li>
-              <li>Buffer pools may be insufficient</li>
-              <li>Long-term monitoring uncertain</li>
-            </ul>
-            <p><strong>Moral Hazard</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>'Licence to pollute' criticism</li>
-              <li>May delay genuine decarbonisation</li>
-              <li>Perception of buying way out</li>
-              <li>Greenwashing concerns</li>
-            </ul>
-            <p><strong>Market Integrity Issues</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Quality varies significantly</li>
-              <li>Opaque pricing</li>
-              <li>Double counting risks</li>
-              <li>Regulatory fragmentation</li>
-            </ul>
-            <p><strong>Recent Controversies</strong></p>
-            <p>Investigative reporting has revealed quality issues in major offset programmes, including REDD+ projects credited for protecting forests that faced little deforestation threat. The Integrity Council for the Voluntary Carbon Market (ICVCM) is developing Core Carbon Principles to improve standards. Organisations should conduct due diligence beyond relying solely on certification.</p>
-            <p><strong>Best Practice Guidance for Offset Use</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Mitigation hierarchy first:</strong> Document reduction efforts before offsetting; set internal carbon price to drive efficiency</li>
-              <li><strong>High-quality credits only:</strong> Verify certification, review project documentation, check registry status</li>
-              <li><strong>Transition toward removals:</strong> Plan portfolio evolution from avoidance to removal over time</li>
-              <li><strong>Transparent communication:</strong> Report offsets separately from reductions; avoid misleading neutrality claims</li>
-              <li><strong>Due diligence:</strong> Go beyond certification to assess project-specific risks and co-benefits</li>
-            </ul>
-            <p><strong>Practical guidance:</strong> Treat offsetting as insurance for unavoidable emissions, not a substitute for decarbonisation. Allocate budget to removal offsets and plan for price increases as demand grows.</p>
-          </ConceptBlock>
-
-          <InlineCheck {...quickCheckQuestions[3]} />
-
-          <SectionRule />
-
-          <ConceptBlock title="Worked Examples">
-            <p>
-              <strong>Example 1: Evaluating Offset Quality</strong>
-            </p>
-            <p><strong>Scenario:</strong> An MEP contractor is offered forest protection offsets at GBP 8/tCO2e. Assess quality.</p>
-            <p>Quality assessment checklist:</p>
-            <p>1. Certification: Check for VCS/Gold Standard certification</p>
-            <p>2. Additionality: Review project documentation</p>
-            <p>- Was forest genuinely at risk of deforestation?</p>
-            <p>- What is the baseline methodology?</p>
-            <p>Warning: Very low price may indicate quality issues</p>
-            <p>3. Permanence: Assess reversal risk</p>
-            <p>- What is the buffer pool percentage?</p>
-            <p>- Fire/disease history in region?</p>
-            <p>4. Registry: Verify on Verra/Gold Standard registry</p>
-            <p>- Unique serial numbers assigned?</p>
-            <p>- Will credits be retired in your name?</p>
-            <p>Recommendation: Request third-party verification report</p>
-            <p>Consider paying premium for higher-quality credits</p>
-            <p>
-              <strong>Example 2: Building an Offset Strategy</strong>
-            </p>
-            <p><strong>Scenario:</strong> Develop an offset strategy for a building services company targeting net-zero by 2040.</p>
-            <p>Phase 1 (2024-2027): Foundation</p>
-            <p>- Complete Scope 1, 2, 3 inventory</p>
-            <p>- Set science-based reduction targets</p>
-            <p>- Begin offset procurement for engagement</p>
-            <p>- Mix: 70% avoidance, 30% removal</p>
-            <p>Phase 2 (2028-2033): Transition</p>
-            <p>- Achieve 50% absolute reduction</p>
-            <p>- Increase removal proportion</p>
-            <p>- Mix: 40% avoidance, 60% removal</p>
-            <p>Phase 3 (2034-2040): Net-Zero</p>
-            <p>- Achieve 90%+ reduction</p>
-            <p>- Removals only for residual emissions</p>
-            <p>- Mix: 100% high-permanence removal</p>
-            <p>Budget planning: Assume 3-5x price increase for removals by 2040</p>
-            <p>
-              <strong>Example 3: Calculating Residual Emissions</strong>
-            </p>
-            <p><strong>Scenario:</strong> Calculate offset requirements for a net-zero building project.</p>
-            <p>Project: Commercial office building MEP installation</p>
-            <p>Embodied carbon assessment:</p>
-            <p>Total embodied carbon: 450 tCO2e</p>
-            <p>Reduction through design: -120 tCO2e (27%)</p>
-            <p>Low-carbon materials: -85 tCO2e (19%)</p>
-            <p>Supplier engagement: -45 tCO2e (10%)</p>
-            <p>-----</p>
-            <p>Residual to offset: 200 tCO2e (44%)</p>
-            <p>Offset procurement:</p>
-            <p>Removal credits required: 200 tCO2e</p>
-            <p>Assumed price (2024): GBP 120/tCO2e</p>
-            <p>Total offset budget: GBP 24,000</p>
-            <p>Demonstrate 56% reduction before offsetting</p>
-            <p>Document in sustainability report with reduction evidence</p>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <ConceptBlock title="Practical guidance">
-            <p>
-              <strong>Offset Quality Assessment Checklist:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Verify certification by recognised standard (VCS, Gold Standard, etc.)</li>
-              <li>Review additionality documentation and baseline methodology</li>
-              <li>Assess permanence risk and buffer pool adequacy</li>
-              <li>Check registry for unique serial numbers and retirement process</li>
-              <li>Evaluate co-benefits (biodiversity, community development)</li>
-              <li>Consider price as quality indicator (very cheap = higher risk)</li>
-            </ul>
-            <p>
-              <strong>Key Values to Remember:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>SBTi net-zero: <strong>90%+ reduction</strong> required before offsetting</li>
-              <li>Permanence target: <strong>100+ years</strong> (ideally 1,000+)</li>
-              <li>Buffer pools: <strong>10-20%</strong> of credits held for reversal</li>
-              <li>One credit: <strong>1 tonne CO2e</strong> reduced or removed</li>
-            </ul>
-          </ConceptBlock>
-
-          <CommonMistake
-            title="Common mistakes to avoid"
-            whatHappens={
-              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
-                <li><strong>Using offsets first</strong> - Always exhaust reduction options before offsetting</li>
-                <li><strong>Choosing on price alone</strong> - Cheap credits often have quality issues</li>
-                <li><strong>Claiming carbon neutral without transparency</strong> - Separate offset claims from reductions</li>
-                <li><strong>Ignoring portfolio evolution</strong> - Plan transition toward removals over time</li>
-              </ul>
-            }
-            doInstead="Cross-check assumptions against published guidance, validate measured values against design intent, and engage the wider team early when interface issues emerge."
-          />
-
-          <SectionRule />
-
-          <Scenario
-            title="Voluntary carbon market reform devalues retired credits"
-            situation={
-              <>
-                A property company purchased 50,000 tonnes of REDD+ (avoided deforestation) credits in 2021 to offset annual operational emissions. Investigative journalism in 2023 questioned the additionality of many REDD+ projects; in 2024 the Voluntary Carbon Market Integrity Initiative (VCMI) tightened quality criteria. The company's historic offsets no longer meet the new standard for net-zero claims.
-              </>
-            }
-            whatToDo={
-              <>
-                Three-stage response: (1) accelerate operational emission reductions to reduce future offset reliance; (2) shift offset purchasing from avoidance (REDD+) to removals (DAC, biochar, BECCS) — much more expensive but credible; (3) update marketing claims to remove "carbon neutral" wording where the supporting offsets no longer meet ISO 14068. Long-term: re-baseline to SBTi methodology where offsets are explicitly minimised, not maximised.
-              </>
-            }
-            whyItMatters={
-              <>
-                The voluntary carbon market is in active reform. Avoidance-based credits (which were the bulk of the market) are losing credibility; removal credits are scarce and expensive. Any organisation building a sustainability strategy on offsetting needs a transition plan to direct emission reduction — and to higher-quality offsets at much higher prices (£100/tCO₂e+ for DAC vs £5–15 for avoidance).
-              </>
-            }
-          />
-
-          <SectionRule />
-
-          <FAQ items={faqs} />
-
-          <SectionRule />
-
-          <KeyTakeaways
-            points={[
-              "Offsets = credits from emission reduction (avoidance) or removal projects.",
-              "Quality criteria: additionality, permanence, verification, no double-counting.",
-              "Standards: Verra VCS, Gold Standard, Woodland Carbon Code (UK), Plan Vivo.",
-              "SBTi treats offsets as last resort — only for residual ≤10% emissions by 2050.",
-              "Removals (DAC, biochar, BECCS) are higher quality than avoidance (REDD+).",
-              "ISO 14068-1 (2023) replaces PAS 2060 for substantiated neutrality claims.",
-              "ASA enforcement — misleading offsetting claims are now actively challenged.",
-            ]}
-          />
-
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-
-          <div className="grid grid-cols-2 gap-3 pt-2">
-            <button
-              onClick={() => navigate("/study-centre/apprentice/h-n-c-module6-section4-4")}
-              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
-                <ChevronLeft className="h-3 w-3" /> Previous
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-white truncate">
-                Science-based targets
-              </div>
-            </button>
-            <button
-              onClick={() => navigate("/study-centre/apprentice/h-n-c-module6-section4-6")}
-              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
-                Next subsection <ChevronRight className="h-3 w-3" />
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-black truncate">
-                Net-zero pathways
-              </div>
-            </button>
-          </div>
-        </PageFrame>
-      </div>
-    </div>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module6-section4-6')}
+            className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+          >
+            <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+              Next subsection <ChevronRight className="h-3 w-3" />
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-black truncate">
+              Net-zero pathways
+            </div>
+          </button>
+        </div>
+      </HubBody>
+    </HubPage>
   );
 };
 

@@ -183,7 +183,7 @@ const InstrumentationModule7Section1 = () => {
 
         <InlineCheck
           question="What does 4mA represent in a 4-20mA current loop and why is it called 'live zero'?"
-          answer="4mA represents 0% of the measurement range (minimum value). It's called 'live zero' because the presence of 4mA proves the loop is functioning correctly - if current drops below 4mA (including 0mA), this indicates a fault such as a broken wire, failed transmitter, or power loss."
+          correctAnswer="4mA represents 0% of the measurement range (minimum value). It's called 'live zero' because the presence of 4mA proves the loop is functioning correctly - if current drops below 4mA (including 0mA), this indicates a fault such as a broken wire, failed transmitter, or power loss."
         />
 
         {/* Section 02 - Signal Integrity */}
@@ -399,7 +399,7 @@ const InstrumentationModule7Section1 = () => {
 
         <InlineCheck
           question="Why is current signalling better than voltage signalling over long cable runs?"
-          answer="Current remains constant regardless of cable resistance (within limits) because the transmitter maintains a constant current flow. Voltage signals suffer from voltage drop due to cable resistance, causing measurement errors. A 300m cable run might drop several volts, but the current stays the same throughout the loop."
+          correctAnswer="Current remains constant regardless of cable resistance (within limits) because the transmitter maintains a constant current flow. Voltage signals suffer from voltage drop due to cable resistance, causing measurement errors. A 300m cable run might drop several volts, but the current stays the same throughout the loop."
         />
 
         {/* Section 04 - Devices in a Loop */}
@@ -516,7 +516,7 @@ const InstrumentationModule7Section1 = () => {
 
         <InlineCheck
           question="How do you calculate the maximum allowable loop resistance?"
-          answer="Maximum loop resistance = (Supply Voltage - Transmitter Voltage Drop) / 20mA. For example, with a 24V supply and 10V transmitter drop: (24 - 10) / 0.02 = 700 ohms maximum. Always design with a safety margin (75% of maximum) to account for cable ageing and connection resistance."
+          correctAnswer="Maximum loop resistance = (Supply Voltage - Transmitter Voltage Drop) / 20mA. For example, with a 24V supply and 10V transmitter drop: (24 - 10) / 0.02 = 700 ohms maximum. Always design with a safety margin (75% of maximum) to account for cable ageing and connection resistance."
         />
 
         {/* Real World Scenario */}

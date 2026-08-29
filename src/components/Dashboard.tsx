@@ -513,6 +513,20 @@ const Dashboard = ({
       meta: totalCount > 0 ? `${totalCount} on file` : 'Empty',
     },
     {
+      /*
+       * ELE-1368. Sits with the LIBRARY cards, not the "start a cert" ones —
+       * importing is how an electrician's back-catalogue of paper gets into the
+       * platform, which is a filing errand rather than a new job. Placed
+       * directly after My Certificates for that reason.
+       */
+      id: 'cert-import',
+      eyebrow: 'Library',
+      title: 'Import a certificate',
+      description: 'Photograph or upload a paper cert and have it read into a draft.',
+      onClick: () => navigate('/electrician/inspection-testing/import'),
+      meta: 'EICR, EIC, MW',
+    },
+    {
       id: 'specialist',
       eyebrow: 'Specialist',
       title: 'Specialist',

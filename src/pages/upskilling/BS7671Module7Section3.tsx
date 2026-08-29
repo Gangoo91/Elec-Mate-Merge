@@ -1,8 +1,8 @@
-import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { useNavigate } from 'react-router-dom';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
-import { PageFrame, PageHero } from '@/components/college/primitives';
 import {
   TLDR,
   ConceptBlock,
@@ -297,396 +297,392 @@ const BS7671Module7Section3 = () => {
   });
 
   return (
-    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
-      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
-        <PageFrame>
+    <HubPage>
+      <HubMasthead
+        section="Module 7 · Section 3 · Updated for A4:2026"
+        title="Outdoor and agricultural installations"
+        backTo="../bs7671-module-7"
+      />
+      <HubBody>
+        <div className="max-w-3xl text-[13px] leading-relaxed text-white">
+          {
+            'The Part 7 special-location rules that apply when the location itself is the hazard — livestock touch-current, wet wash-down zones, salt-water marina pedestals, repeatedly-erected exhibition and fairground gear, and outdoor cable runs across uncertain ground.'
+          }
+        </div>
+
+        <div className="flex flex-wrap items-center gap-2">
+          {
+            <>
+              <RegBadge>705.422</RegBadge>
+              <RegBadge>708.553</RegBadge>
+              <RegBadge>709.531</RegBadge>
+              <AmendmentBadge regs={['705.422', '708.553']} />
+            </>
+          }
+        </div>
+
+        <TLDR
+          points={[
+            'Section 705 (agricultural / horticultural) is driven by livestock touch-current and fire risk: TT earthing is typical, 30 mA RCD on every final circuit, supplementary bonding throughout livestock zones, and IP/IK ratings selected for wash-down and impact.',
+            'Section 708 (caravan parks) requires individual 30 mA RCD per BS EN 60309-2 outlet, individual overcurrent protection, no more than three socket-outlets per circuit, and IP44 minimum.',
+            'Section 709 (marinas) layers Type A or Type B RCD selection (smooth DC residuals from on-board power-electronics), isolation transformers for galvanic separation, and IP44+ pedestals.',
+            'Section 711 (exhibitions / stands) and Section 740 (fairgrounds) treat every re-erection as a new installation requiring initial verification per Part 6, with heavy-duty flexible cables and pre-opening functional tests.',
+          ]}
+        />
+
+        <LearningOutcomes
+          outcomes={[
+            'Identify which Part 7 section applies — Section 705, 708, 709, 711 or 740 — based on the actual environment and end-use.',
+            'Explain why agricultural premises typically use TT earthing, and apply Reg 411.5.3 (Ra x I_dn ≤ 50 V) to a livestock-zone calculation.',
+            'State the differences between human and livestock touch-current limits, and design supplementary bonding for a stock zone per Section 705.',
+            'Specify the socket-outlet, RCD and circuit topology for a caravan park pitch under Reg 708.553.',
+            'Pick the correct RCD type at a marina pedestal under Reg 709.531, accounting for on-board inverters, lithium chargers and isolation-transformer practice.',
+            'Apply Section 711 (exhibitions) and Section 740 (fairgrounds) inspection and functional-test requirements to repeatedly-erected temporary installations.',
+            'Specify outdoor cable burial depth, mechanical protection and bonding to outbuildings under general BS 7671 rules and the relevant Part 7 section.',
+          ]}
+          initialVisibleCount={3}
+        />
+
+        <ContentEyebrow>Section 705 — agricultural &amp; horticultural premises</ContentEyebrow>
+
+        <ConceptBlock
+          title="Why agricultural is its own special location"
+          plainEnglish="Livestock are easier to electrocute than humans, agricultural buildings burn easily (dust, fodder, dry bedding), wash-downs are routine, and rodents chew cables. Section 705 is the rulebook that adapts BS 7671 to that environment."
+          onSite="The trigger is the presence of livestock or agricultural processing, not the rural address. A milking parlour, pig finisher, equestrian indoor school or a grain dryer is in scope. A farmhouse kitchen with no stock and no processing is not — it reverts to general BS 7671 rules."
+        >
+          <p>
+            Section 705 covers agricultural and horticultural premises — buildings and parts of
+            buildings where livestock are kept, fodder is processed or stored, or grain and produce
+            are dried or stored. The chapter layers extra requirements on top of the general BS 7671
+            rules: stricter touch-current control through extensive supplementary equipotential
+            bonding, broad 30 mA RCD additional protection (not just sockets), elevated fire-risk
+            countermeasures per Reg 705.422, and IP / IK ratings selected for wash-down and physical
+            impact.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...inlineChecks[0]} />
+
+        <ConceptBlock
+          title="Why TT is the typical agricultural earthing arrangement"
+          plainEnglish="DNOs refuse to give an agricultural premise a PME (TN-C-S) earth because an open-PEN fault would drive the MET — and every Class I metal part bonded to it — towards line voltage. With livestock standing on wet conductive floors, that elevated potential is lethal."
+          onSite="On a refused PME, the designer installs a separate earth electrode (rod, rod-array or earth mat) and runs the installation as TT. ADS is delivered by RCDs (Reg 411.5.3, Ra x I_dn ≤ 50 V). Practical designs aim for Ra well below the calculated maximum — typically below 100 ohms — to leave headroom for soil-moisture variation across seasons."
+        >
+          <p>
+            The animal-touch-current logic is the design driver. A standing human has a body
+            resistance dominated by footwear and skin and contacts earth through one or two feet. A
+            cow standing in a milking parlour has four hooves on a wet conductive floor and a body
+            that conducts well across the chest. Body resistance is dramatically lower; lethal
+            current threshold is dramatically lower. The same touch-voltage that a person would not
+            register can disable or kill a cow. Section 705.411.1 builds on Reg 411 by tightening
+            the touch-voltage limits and the equipotential-bonding obligations specifically to
+            address this asymmetry.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...inlineChecks[1]} />
+
+        <RegsCallout
+          source="BS 7671:2018+A4:2026 · Reg 705.422 — Fire risk in agricultural and horticultural premises"
+          clause="Where the risk of fire is increased, electrical equipment shall be selected and erected to limit the risk of ignition. In particular, every final circuit shall be provided with additional protection by means of an RCD with a rated residual operating current not exceeding 30 mA, and arc-fault detection devices shall be considered for circuits in locations where flammable materials are present."
+          meaning="Fire-driven, not just shock-driven. Agricultural buildings combine combustible dust, fodder and bedding with rodent-damaged cables and arcing accessories. The response is 30 mA RCDs across all final circuits (not just sockets), AFDDs strongly considered (and mandatory under A4 Reg 421.1.7 for some agricultural high-risk locations), and good cable management to keep rodents off."
+          cite="BS 7671:2018+A4:2026, Reg 705.422 (Section 705)"
+        />
+
+        <ConceptBlock
+          title="Supplementary equipotential bonding — the livestock-zone obligation"
+          plainEnglish="In a livestock zone, every metal part within reach of an animal — stall railings, drinkers, milking-cluster supports, structural steel, floor grids — is bonded together back to the MET. If a fault drives any one of them above earth, they all rise together, so there is no touch-voltage between simultaneously-touchable surfaces."
+          onSite="On a new milking parlour, the equipotential bonding plan is drawn before the slab is poured: a bonding mesh embedded in the floor, brought out at every stall railing, every drinker, the metal stalls themselves and the milking-cluster supports, then run back to the MET on a 10 mm² (or larger) bonding conductor. Cable-tile or duct any bonding cable that crosses livestock movement paths."
+        >
+          <p>
+            The Section 705 supplementary-bonding network is more aggressive than a standard
+            domestic supplementary bond. It includes (a) every exposed-conductive-part (motor
+            frames, lighting bodies, control panels), (b) every extraneous-conductive-part within
+            stock reach (stall railings, drinkers, water troughs, structural steel, metal grids
+            embedded in floors), and (c) any equipotential floor grid installed specifically to deal
+            with stock touch-current. All bonded back to the MET, with cross-section per Reg 544.2
+            (10 mm² is common for the main supplementary network in a livestock zone, with 4 mm²
+            minimum for unprotected branches and 2.5 mm² minimum for mechanically-protected
+            branches).
+          </p>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <ContentEyebrow>Section 708 — caravan / camping parks</ContentEyebrow>
+
+        <ConceptBlock
+          title="Pitch electrical supplies — the Reg 708.553 design package"
+          plainEnglish="A caravan park is a TT installation feeding many wet, outdoor, repeatedly-connected sockets. Reg 708.553 standardises the pitch supply: industrial BS EN 60309-2 connector, individual 30 mA RCD, individual MCB, no more than three outlets per circuit."
+          onSite="Each pitch typically gets a 16 A blue commando outlet at 0.5-1.5 m height, IP44 minimum, in a pedestal with a hinged cover. Behind the pedestal: one MCB and one 30 mA RCD per outlet (or RCBO per outlet). Cable to pedestals is SWA buried at typical depths; the pedestals themselves are on a TT earth electrode shared with the rest of the park installation, sized for the aggregated Ra requirement."
+        >
+          <p>
+            The choice of BS EN 60309-2 (the blue 16 A commando socket) is deliberate: IP44 minimum
+            (resistant to splashing water from any direction), a positive locking action (the lid
+            stays shut, the plug locks in), and a standardised interface used across European
+            caravan / motorhome equipment. The maximum-three-outlets-per-circuit rule (Reg
+            708.553.1.13) keeps the discrimination tractable — a single faulty tourer cannot take
+            down half the site. Mounting height (0.5-1.5 m above ground) keeps the outlet out of
+            standing water and within easy reach.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...inlineChecks[2]} />
+
+        <RegsCallout
+          source="BS 7671:2018+A4:2026 · Reg 708.553.1.13 — Caravan pitch socket-outlets"
+          clause="Each socket-outlet shall be provided with individual overcurrent protection. Each socket-outlet shall be provided with individual additional protection by an RCD having a rated residual operating current not exceeding 30 mA. Not more than three socket-outlets shall be supplied from any one final circuit."
+          meaning="Individual RCD per outlet (not shared), individual MCB per outlet, max three outlets per circuit. The architecture prevents one tripping caravan from disabling neighbouring pitches and gives the operator simple per-pitch isolation for maintenance."
+          cite="BS 7671:2018+A4:2026, Reg 708.553.1.13 (Section 708)"
+        />
+
+        <ConceptBlock
+          title="On-board caravan / motorhome electrics — separate scope"
+          plainEnglish="The caravan park installation stops at the pitch socket. The 230 V and 12 V wiring inside the caravan is governed by separate standards (BS EN 1648-2 for habitation, plus the touring-caravan habitation regs). The two are designed together but certified separately."
+          onSite="An EIC for the caravan park does not warrant the caravan plugged into it. When the customer asks 'is my caravan safe?', the answer involves two certifications: the park-side EIC (your work, BS 7671) and the caravan habitation cert (the caravan manufacturer / inspection body's work, BS EN 1648-2)."
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>Section 709 — marinas &amp; similar locations</ContentEyebrow>
+
+        <ConceptBlock
+          title="Why marinas need their own chapter"
+          plainEnglish="Wet environment, salt-water corrosion, vessels with on-board power electronics, and a population of bonded steel hulls floating in conductive seawater. Each of those creates a hazard a domestic installation never sees."
+          onSite="The marina installation runs from the shore-side LV switchboard, out along the pontoons (cable trays or buried SWA), to pedestals at each berth. Each pedestal carries one or more BS EN 60309-2 outlets, IP44 minimum, with individual RCD + MCB per outlet. Salt spray is constant — accessory selection prioritises corrosion-resistant materials (marine-grade stainless, polycarbonate, IP55 / IP56 enclosures where exposed to direct spray)."
+        >
+          <p>
+            Reg 709 layers the standard 30 mA RCD additional-protection rule with three
+            marina-specific concerns. (1) Smooth DC residuals from on-board inverters, lithium
+            chargers and DC-DC converters can defeat Type A RCDs — Type B RCDs at the pedestal, or
+            RDC-DD upstream of Type A, or an isolation transformer per berth, all mitigate this. (2)
+            Galvanic coupling between bonded steel hulls floating in seawater accelerates corrosion
+            — isolation transformers at the pedestal break the galvanic path while preserving the
+            safety earth. (3) Mechanical impact and salt corrosion drive accessory selection to
+            higher IP and IK ratings than would suffice on land.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...inlineChecks[3]} />
+
+        <RegsCallout
+          source="BS 7671:2018+A4:2026 · Reg 709.531 — Devices for protection against electric shock by automatic disconnection of supply"
+          clause="Each socket-outlet shall be provided with individual additional protection by means of an RCD having a rated residual operating current not exceeding 30 mA. Where smooth DC residual currents may be produced by equipment connected to the supply, the type of RCD shall be selected accordingly."
+          meaning="Per-outlet 30 mA RCD is the default. Where on-board equipment (inverters, lithium chargers, VSDs) can produce smooth DC residual, Type B RCDs (or Type A with upstream RDC-DD, or isolation transformers) are required. The designer must consider what is plausibly going to be plugged in — modern boats are NOT a passive AC load."
+          cite="BS 7671:2018+A4:2026, Reg 709.531 (Section 709)"
+        />
+
+        <ConceptBlock
+          title="Isolation transformers — the marina-specific tool"
+          plainEnglish="An isolation transformer at the pedestal breaks the direct conductive path between the supply network and the boat. Each vessel becomes a galvanically-isolated island: faults inside the boat do not feed earth current back through neighbouring vessels' bonded hulls."
+          onSite="Isolation transformers add cost (per-pedestal) but solve two problems at once: galvanic corrosion (electrolytic action between bonded hulls in conductive seawater) and the smooth-DC-residual / Type-B requirement (the transformer secondary is its own electrical island, so a Type A RCD on the secondary side is sufficient against on-board AC residuals). High-end marinas specify per-berth isolation transformers as standard practice."
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>Section 711 — exhibitions, shows &amp; stands</ContentEyebrow>
+
+        <ConceptBlock
+          title="Temporary installations are NOT a relaxation of BS 7671"
+          plainEnglish="Section 711 doesn't loosen the rules — it tightens the inspection regime. Equipment is repeatedly assembled, transported and re-energised, so the cable / connector / RCD wear rate is high. Every re-erection is treated as a new installation."
+          onSite="Trade-show and exhibition stands at NEC, ExCeL, Olympia and similar venues all follow the same pattern: the venue provides a permanent fixed supply with industrial connectors at distribution points; each stand brings its own temporary installation off one of those connectors. Stand wiring, cable management, RCD per circuit, IP rating, accessory selection — all per Section 711 and the venue's own technical regulations."
+        >
+          <p>
+            The chapter applies the standard Part 4 protective-measure rules — ADS, additional
+            protection by 30 mA RCDs on all socket-outlet and luminaire circuits, IP-rated equipment
+            for the location class — and adds Section 711.6 inspection requirements specific to the
+            temporary nature of the install. Heavy-duty flexible cables (HO7RN-F or equivalent), BS
+            EN 60309-2 connectors (the same family as caravan parks and marinas), and a documented
+            pre-opening functional test of every RCD and CPC continuity check before the public is
+            admitted.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...inlineChecks[4]} />
+
+        <ConceptBlock
+          title="Section 740 — fairgrounds, amusement parks, circuses"
+          plainEnglish="A separate special-location chapter for repeatedly-erected ride / booth / circus installations. Heavier mechanical demands than Section 711 (ride loads, transport vibration), with the same commitment to per-erection initial verification."
+          onSite="Section 740 governs the temporary supply to rides and booths — the heavy-duty flexible feed cable (HO7RN-F or equivalent), BS EN 60309-2 connectors, 30 mA RCD per circuit, IP44 minimum, and inspection / functional test of RCDs before each opening. The ride manufacturer's own type-test certification covers the on-ride electrical equipment; Section 740 covers the supply up to the ride."
+        >
+          <p>
+            Reg 740.521 specifies the flexible-cable type (heavy-duty HO7RN-F or equivalent
+            rubber-sheathed flexible). Reg 740.55 covers connector and accessory selection. Reg
+            740.6 ties the inspection regime to the operational cycle: every time the fairground is
+            erected, the initial verification is performed before the first opening; functional
+            tests of every RCD and visual checks of cables and connectors are performed before each
+            opening day. The cert is an EIC for the temporary installation, signed by a skilled
+            person (electrically), held on site for the duration of the event.
+          </p>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <ContentEyebrow>
+          Outdoor general — IP, IK, burial &amp; bonding to outbuildings
+        </ContentEyebrow>
+
+        <ConceptBlock
+          title="Cable burial depth, mechanical protection &amp; marker tape"
+          plainEnglish="BS 7671 Reg 522.8.10 says cables shall be at sufficient depth to avoid mechanical damage having regard to anticipated disturbance. The numbers come from industry practice and the DNO ENA standards, not from a single mandatory depth in the Wiring Regs."
+          onSite="UK industry practice: 450-600 mm in cultivated ground (above plough-depth), with marker tape laid 150 mm above the cable. Where vehicles or heavy plant cross, add cable tile, ducting or a deeper trench. SWA is standard for outdoor buried runs because the steel armour is the mechanical-impact tolerance and a low-impedance fault path. PVC-insulated SWA in a dry duct in non-cultivated ground can go shallower; in cultivated farmland with a 450 mm plough depth, design for at least 600 mm cover."
+        >
+          <p>
+            For agricultural runs, also consider rodent damage at building entries (use a rigid duct
+            or sealed gland rather than letting an SWA enter through a chewed cable hole) and frost
+            heave (deep trenches in some soils can experience seasonal movement; an SWA is forgiving
+            but a flexible cable is not). For caravan-park and marina installations, the run is
+            typically along buried or tray-mounted SWA from the LV switchboard out to the pedestals
+            — depth and mechanical protection follow the same general rules, with attention to
+            ground-water table on coastal sites.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...inlineChecks[5]} />
+
+        <ConceptBlock
+          title="Bonding to outbuildings &amp; Section 705 zones"
+          plainEnglish="A new outbuilding (workshop, barn, garage) typically gets its own sub-distribution and may need its own MET, with main protective bonding to incoming services and a CPC continuous from the supplying installation."
+          onSite="Where the supplying installation is TN-C-S and the outbuilding is in a livestock zone, the choice is to either (a) export the TN-C-S earth to the outbuilding (rare on agricultural — DNO and risk-assessment usually prevent this) or (b) treat the outbuilding as TT, with its own earth electrode, and break the earth path between the buildings. Option (b) is the dominant agricultural choice."
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>Where it goes wrong</ContentEyebrow>
+
+        <CommonMistake
+          title="Spec'ing an ordinary RCD on agricultural without considering AFDD &amp; fire risk"
+          whatHappens="Designer fits a generic 30 mA Type A RCBO board in a milking parlour because 'sockets need 30 mA and that's done'. Reg 705.422 fire-risk requirements (30 mA RCDs on ALL final circuits, including lighting and motor circuits, plus AFDD consideration / requirement under A4 Reg 421.1.7 in high-fire-risk agricultural zones) are missed. EICR codes the install C2 — fire risk not adequately addressed."
+          doInstead="Read Section 705 as a fire-AND-shock chapter. 30 mA RCD on every final circuit, not just sockets. Specify AFDDs in line with Reg 421.1.7 high-fire-risk zone requirements. Choose IP / IK ratings for the wash-down and impact environment. Document the fire-risk assessment that drove the protective device choice — not just 'standard domestic CU'."
+        />
+
+        <CommonMistake
+          title="Ignoring livestock touch-current limits in the bonding design"
+          whatHappens="Installer treats a stable-yard sub-board the same way as a domestic garage. Single 10 mm² main bond to the consumer unit; no supplementary bonding network in the stalls; metal stall railings, drinkers and structural steel are all separate from the MET. A CPC fault in a heat-lamp circuit drives the lamp body to ~115 V; a horse touching the lamp casing while in contact with the metal stall partition completes a chest-to-flank path through low-resistance hooves on a wet floor. The horse is killed by a fault that would not have hurt a human in the same scenario."
+          doInstead="Section 705 supplementary bonding is comprehensive and stock-zone-wide: every exposed-conductive-part and every extraneous-conductive-part within reach of livestock is bonded together back to the MET, on conductors sized per Reg 544.2 (10 mm² main, 4 mm² unprotected branch, 2.5 mm² protected branch). In new builds, embed an equipotential floor grid in the slab and brings it out at every stall and drinker."
+        />
+
+        <CommonMistake
+          title="Undersized earth electrode for a caravan-park TT installation"
+          whatHappens="Single 1.2 m rod hammered into dry sandy soil at a coastal caravan park; measured Ra = 280 ohms. Designer does the maths: 280 x 0.03 = 8.4 V — well under 50 V — and signs off the cert. In summer the soil dries further; Ra drifts up to 900 ohms; a fault on a tourer is now intermittent and the RCD is operating at the edge of its sensitivity. EICR a year later flags Ra = 740 ohms; the install is recoded."
+          doInstead="Design Ra with seasonal soil-resistivity headroom — practical aim below 100 ohms. Use multiple rods in parallel (or a deep-driven rod, or an earth mat) on dry, sandy or rocky ground. Document the measured Ra and the soil conditions on the day, and call out the recheck interval. A caravan park is a TT installation that lives outside in all weathers — the earth electrode that worked in March is not guaranteed to work in August."
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>Scenarios — applying it on the day</ContentEyebrow>
+
+        <Scenario
+          title="Cattle-barn rewire under A4"
+          situation="A 1990s 6-bay cattle barn has a damaged old-fashioned consumer unit at the dairy entrance, fed from the farmhouse on a TN-C-S sub-main. The customer wants a full rewire to current standards — wash-down sockets at every bay, milking-cluster motor supply, infrared heat lamps for calf rearing, lighting throughout, and a small office area at one end. Soil is heavy clay, water table 2 m below ground."
+          whatToDo="(1) Talk to the DNO: confirm refusal of PME on the agricultural premise (expected). (2) Disconnect the existing sub-main from the farmhouse TN-C-S earth — bring 3-core SWA out, but use only the L and N; treat the barn as a separate TT installation. (3) Drive an earth electrode array (3-4 rods in parallel, 2.4 m each) at the barn — clay water table is favourable; aim Ra below 50 ohms measured. (4) New consumer unit: split-load with RCBO per circuit, 30 mA on every circuit (not just sockets) per Reg 705.422; AFDD-RCBOs on the heat-lamp and lighting circuits per Reg 421.1.7 high-fire-risk zone considerations. (5) Supplementary bonding network throughout the stock zone: 10 mm² main loop bonding all stall railings, drinkers, milking-cluster supports, embedded floor grid, structural steel, back to the barn MET. (6) Wash-down sockets: BS EN 60309-2 16 A blue commando, IP55 minimum, 1.0 m mounting height, individual 30 mA RCBO. (7) Document the fire-risk assessment, the TT design, the supplementary-bonding network, and the measured Ra / Zs / RCD operating times on the EIC. The cert references Section 705, Reg 411.5.3, Reg 705.422 and Reg 421.1.7 (A4)."
+          whyItMatters="A cattle barn is a livestock-zone, fire-risk, wash-down, agricultural special location all at once. Treat it as 'just a domestic CU outside' and the cert is wrong on multiple counts: wrong earthing arrangement, undersized supplementary bonding, missing AFDDs, wrong IP rating on accessories. The customer's insurer will request the EIC after the inevitable claim — that EIC has to demonstrate Section 705 compliance, not generic Section 411 compliance."
+        />
+
+        <Scenario
+          title="Marina shore-power install for a 30-berth pontoon"
+          situation="A coastal marina is upgrading its 1990s shore-power pedestals. Mix of vessels: traditional sailboats (passive AC loads), modern motor cruisers with shore-power-fed lithium chargers and on-board inverters, one liveaboard catamaran with a 5 kW solar array, lithium house bank and AC-coupled inverter. Existing system is per-pedestal Type AC RCDs sharing a 100 mA upstream device — clearly non-compliant under current Reg 709 and the equipment realities."
+          whatToDo="(1) Survey the load: at least 30% of berths now have power-electronics on board (lithium chargers, inverters, VSDs) plausibly producing smooth DC residuals. (2) Specify per-berth isolation transformers at every pedestal — solves smooth-DC by giving each berth its own galvanically-isolated secondary, AND solves galvanic corrosion between bonded hulls. (3) Per-outlet 30 mA Type A RCBOs on the secondary side of each isolation transformer (Type A is sufficient because the secondary is its own AC island). (4) BS EN 60309-2 16 A or 32 A blue commando outlets, IP55 (direct sea-spray exposure), marine-grade stainless / polycarbonate enclosures. (5) SWA pontoon distribution from a shore-side TT switchboard with its own earth electrode network — not the public TN-C-S supply (DNO has refused PME on this site). (6) Document the per-berth electrical separation, the smooth-DC-residual mitigation, the corrosion mitigation, and the salt-spray IP / corrosion-resistance design choices. EIC references Section 709, Reg 709.531, the isolation-transformer architecture, and the manufacturers' instructions for the on-board equipment driving the Type A choice."
+          whyItMatters="Marinas are the example par excellence of a mixed-load, mixed-vintage vessel population on a single supply. The shared-RCD architecture works in 1990; it does not work today. The isolation-transformer-per-berth design solves multiple problems at once: smooth-DC immunity, galvanic-corrosion mitigation, per-berth fault isolation. It costs more — and it is the right answer when liveaboards with lithium banks are plugged in next to wooden sailboats."
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>Designer's quick reference — picking the Section</ContentEyebrow>
+
+        <ConceptBlock
+          title="Section 705 vs 708 vs 709 vs 711 vs 740"
+          plainEnglish="The wrong Part 7 reference at the top of the cert means the wrong protective measures, the wrong RCD type, the wrong inspection regime. Pick by the actual environment, not the address."
+          onSite="(1) Livestock present, or fodder / grain processing on site = Section 705. (2) Caravan / motorhome / camping pitch electrical supply = Section 708. (3) Berth electrical supply at a marina, harbour or similar = Section 709. (4) Trade exhibition stand, indoor or outdoor pop-up market, or temporary public-display installation = Section 711. (5) Fairground ride, circus, mobile amusement booth = Section 740. Multiple sections can apply to a single site (a fairground inside an exhibition centre engages 711 and 740; a coastal caravan park may engage 708 and parts of 709 if it has a small jetty)."
+        >
+          <p>
+            The question that drives the choice is 'what is the safety-critical hazard specific to
+            this location?'. For Section 705 it is livestock touch-current and fire risk; for 708 it
+            is repeatedly-connected wet outdoor sockets feeding mobile accommodation; for 709 it is
+            salt-water, on-board power-electronics and galvanic coupling; for 711 it is repeated
+            dismantling and re-erection of public-facing installations; for 740 it is heavy
+            mechanical demand and ride-supply repeatability. Each chapter is a focused response to
+            one of those hazards, layered on top of the general BS 7671 protective-measure rules.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...inlineChecks[6]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>Designer's quick reference</ContentEyebrow>
+
+        <ConceptBlock
+          title="The four design questions for outdoor / agricultural work"
+          plainEnglish="(1) Is the supply TT or TN? (2) Are there livestock present? (3) Is the location wet, dusty or corrosive? (4) Will mobile equipment be used outdoors?"
+          onSite="(1) TT is typical — most rural / agricultural / marina supplies are TT. Apply Reg 411.5.3 RCD-led ADS. (2) Livestock — Section 705 supplementary bonding required throughout, stock-touch limits drive electrode design. (3) Wet / corrosive — IP65+ enclosures, marine-grade fixings near sea, PVC conduit not metal. (4) Mobile equipment — Reg 411.3.3(c) — 30 mA RCD additional protection mandatory, no exception."
+        >
+          <p>
+            Walk the four questions in order on every job; each answer cascades into design choices.
+            Skip any of them and the install fails on first inspection — Section 705 compliance is
+            heavily inspector-tested because the consequences of getting it wrong (livestock
+            fatalities, marina shock-bath incidents, caravan-park boil-out events) are severe and
+            visible.
+          </p>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="Salt-water environments — material selection"
+          plainEnglish="Salt accelerates corrosion of every metal. Standard galvanised steel rusts in months at a marina; even stainless 304 pits within 5 years. Specify 316 stainless or A4 marine-grade fixings, marine-grade plastics for enclosures, tinned-copper conductors where exposed."
+          onSite="Marinas and coastal installations are environmental category AF3-AF4 (substantial corrosion). Cable: SWA with thermoplastic outer plus an HDPE oversheath for direct contact, or proprietary marine-rated cables. Enclosures: GRP (glass-reinforced polyester) over metal. Fixings: A4-grade stainless throughout. Bonding: tinned copper where exposed to salt spray. Document the material spec on the design sheet — corrosion resistance is a Reg 522.10 design check."
+        >
+          <p>
+            The cost premium for marine-grade materials is real but pays back over the installation
+            lifetime. A standard galvanised SWA install in a marina has typically 5-7 year service
+            life before replacement; marine-grade install runs 20+ years. The customer&apos;s
+            lifecycle cost is the conversation, not just first-fit cost.
+          </p>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <FAQ items={faqItems} />
+
+        <KeyTakeaways
+          points={[
+            'Section 705 (agricultural) is driven by livestock touch-current and fire risk: TT typical, 30 mA RCD on every final circuit (Reg 705.422), supplementary bonding throughout livestock zones, IP / IK selection for wash-down and impact, AFDD consideration under A4 Reg 421.1.7.',
+            'Section 708 (caravan parks): individual 30 mA RCD per BS EN 60309-2 outlet, individual MCB per outlet, max three outlets per circuit (Reg 708.553.1.13), IP44 minimum, 0.5-1.5 m mounting height.',
+            'Section 709 (marinas): standard 30 mA RCD per outlet; Type B (or RDC-DD, or per-berth isolation transformer) where on-board inverters / lithium chargers can produce smooth DC residuals (Reg 709.531). Isolation transformers also mitigate galvanic corrosion.',
+            'Section 711 (exhibitions / stands) and Section 740 (fairgrounds) treat each re-erection as a new installation requiring initial verification per Part 6 — heavy-duty flexible cables, BS EN 60309-2 connectors, pre-opening functional tests of every RCD and CPC.',
+            'Outdoor general: cable burial depth driven by Reg 522.8.10 (sufficient to avoid mechanical damage) — UK practice 450-600 mm cultivated, marker tape and additional protection where vehicles cross. Bonding to outbuildings: TT typical for agricultural sub-buildings.',
+          ]}
+        />
+
+        <Quiz questions={quizQuestions} />
+
+        <div className="grid grid-cols-2 gap-3 pt-2">
           <button
             type="button"
-            onClick={() => navigate('../bs7671-module-7')}
-            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            onClick={() => navigate('/electrician/upskilling/bs7671-module-7')}
+            className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
           >
-            <ArrowLeft className="h-4 w-4" /> Module 7
+            <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+              <ChevronLeft className="h-3 w-3" /> Module 7
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-white truncate">
+              Module overview
+            </div>
           </button>
-
-          <PageHero
-            eyebrow="Module 7 · Section 3 · Updated for A4:2026"
-            title="Outdoor and agricultural installations"
-            description="The Part 7 special-location rules that apply when the location itself is the hazard — livestock touch-current, wet wash-down zones, salt-water marina pedestals, repeatedly-erected exhibition and fairground gear, and outdoor cable runs across uncertain ground."
-            actions={
-              <>
-                <RegBadge>705.422</RegBadge>
-                <RegBadge>708.553</RegBadge>
-                <RegBadge>709.531</RegBadge>
-                <AmendmentBadge regs={['705.422', '708.553']} />
-              </>
-            }
-            tone="yellow"
-          />
-
-          <TLDR
-            points={[
-              'Section 705 (agricultural / horticultural) is driven by livestock touch-current and fire risk: TT earthing is typical, 30 mA RCD on every final circuit, supplementary bonding throughout livestock zones, and IP/IK ratings selected for wash-down and impact.',
-              'Section 708 (caravan parks) requires individual 30 mA RCD per BS EN 60309-2 outlet, individual overcurrent protection, no more than three socket-outlets per circuit, and IP44 minimum.',
-              'Section 709 (marinas) layers Type A or Type B RCD selection (smooth DC residuals from on-board power-electronics), isolation transformers for galvanic separation, and IP44+ pedestals.',
-              'Section 711 (exhibitions / stands) and Section 740 (fairgrounds) treat every re-erection as a new installation requiring initial verification per Part 6, with heavy-duty flexible cables and pre-opening functional tests.',
-            ]}
-          />
-
-          <LearningOutcomes
-            outcomes={[
-              'Identify which Part 7 section applies — Section 705, 708, 709, 711 or 740 — based on the actual environment and end-use.',
-              'Explain why agricultural premises typically use TT earthing, and apply Reg 411.5.3 (Ra x I_dn ≤ 50 V) to a livestock-zone calculation.',
-              'State the differences between human and livestock touch-current limits, and design supplementary bonding for a stock zone per Section 705.',
-              'Specify the socket-outlet, RCD and circuit topology for a caravan park pitch under Reg 708.553.',
-              'Pick the correct RCD type at a marina pedestal under Reg 709.531, accounting for on-board inverters, lithium chargers and isolation-transformer practice.',
-              'Apply Section 711 (exhibitions) and Section 740 (fairgrounds) inspection and functional-test requirements to repeatedly-erected temporary installations.',
-              'Specify outdoor cable burial depth, mechanical protection and bonding to outbuildings under general BS 7671 rules and the relevant Part 7 section.',
-            ]}
-            initialVisibleCount={3}
-          />
-
-          <ContentEyebrow>Section 705 — agricultural &amp; horticultural premises</ContentEyebrow>
-
-          <ConceptBlock
-            title="Why agricultural is its own special location"
-            plainEnglish="Livestock are easier to electrocute than humans, agricultural buildings burn easily (dust, fodder, dry bedding), wash-downs are routine, and rodents chew cables. Section 705 is the rulebook that adapts BS 7671 to that environment."
-            onSite="The trigger is the presence of livestock or agricultural processing, not the rural address. A milking parlour, pig finisher, equestrian indoor school or a grain dryer is in scope. A farmhouse kitchen with no stock and no processing is not — it reverts to general BS 7671 rules."
+          <button
+            type="button"
+            onClick={() => navigate('/electrician/upskilling/bs7671-module-7-section-4')}
+            className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
           >
-            <p>
-              Section 705 covers agricultural and horticultural premises — buildings and parts of
-              buildings where livestock are kept, fodder is processed or stored, or grain and
-              produce are dried or stored. The chapter layers extra requirements on top of the
-              general BS 7671 rules: stricter touch-current control through extensive supplementary
-              equipotential bonding, broad 30 mA RCD additional protection (not just sockets),
-              elevated fire-risk countermeasures per Reg 705.422, and IP / IK ratings selected for
-              wash-down and physical impact.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...inlineChecks[0]} />
-
-          <ConceptBlock
-            title="Why TT is the typical agricultural earthing arrangement"
-            plainEnglish="DNOs refuse to give an agricultural premise a PME (TN-C-S) earth because an open-PEN fault would drive the MET — and every Class I metal part bonded to it — towards line voltage. With livestock standing on wet conductive floors, that elevated potential is lethal."
-            onSite="On a refused PME, the designer installs a separate earth electrode (rod, rod-array or earth mat) and runs the installation as TT. ADS is delivered by RCDs (Reg 411.5.3, Ra x I_dn ≤ 50 V). Practical designs aim for Ra well below the calculated maximum — typically below 100 ohms — to leave headroom for soil-moisture variation across seasons."
-          >
-            <p>
-              The animal-touch-current logic is the design driver. A standing human has a body
-              resistance dominated by footwear and skin and contacts earth through one or two feet.
-              A cow standing in a milking parlour has four hooves on a wet conductive floor and a
-              body that conducts well across the chest. Body resistance is dramatically lower;
-              lethal current threshold is dramatically lower. The same touch-voltage that a person
-              would not register can disable or kill a cow. Section 705.411.1 builds on Reg 411 by
-              tightening the touch-voltage limits and the equipotential-bonding obligations
-              specifically to address this asymmetry.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...inlineChecks[1]} />
-
-          <RegsCallout
-            source="BS 7671:2018+A4:2026 · Reg 705.422 — Fire risk in agricultural and horticultural premises"
-            clause="Where the risk of fire is increased, electrical equipment shall be selected and erected to limit the risk of ignition. In particular, every final circuit shall be provided with additional protection by means of an RCD with a rated residual operating current not exceeding 30 mA, and arc-fault detection devices shall be considered for circuits in locations where flammable materials are present."
-            meaning="Fire-driven, not just shock-driven. Agricultural buildings combine combustible dust, fodder and bedding with rodent-damaged cables and arcing accessories. The response is 30 mA RCDs across all final circuits (not just sockets), AFDDs strongly considered (and mandatory under A4 Reg 421.1.7 for some agricultural high-risk locations), and good cable management to keep rodents off."
-            cite="BS 7671:2018+A4:2026, Reg 705.422 (Section 705)"
-          />
-
-          <ConceptBlock
-            title="Supplementary equipotential bonding — the livestock-zone obligation"
-            plainEnglish="In a livestock zone, every metal part within reach of an animal — stall railings, drinkers, milking-cluster supports, structural steel, floor grids — is bonded together back to the MET. If a fault drives any one of them above earth, they all rise together, so there is no touch-voltage between simultaneously-touchable surfaces."
-            onSite="On a new milking parlour, the equipotential bonding plan is drawn before the slab is poured: a bonding mesh embedded in the floor, brought out at every stall railing, every drinker, the metal stalls themselves and the milking-cluster supports, then run back to the MET on a 10 mm² (or larger) bonding conductor. Cable-tile or duct any bonding cable that crosses livestock movement paths."
-          >
-            <p>
-              The Section 705 supplementary-bonding network is more aggressive than a standard
-              domestic supplementary bond. It includes (a) every exposed-conductive-part (motor
-              frames, lighting bodies, control panels), (b) every extraneous-conductive-part within
-              stock reach (stall railings, drinkers, water troughs, structural steel, metal grids
-              embedded in floors), and (c) any equipotential floor grid installed specifically to
-              deal with stock touch-current. All bonded back to the MET, with cross-section per Reg
-              544.2 (10 mm² is common for the main supplementary network in a livestock zone, with 4
-              mm² minimum for unprotected branches and 2.5 mm² minimum for mechanically-protected
-              branches).
-            </p>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <ContentEyebrow>Section 708 — caravan / camping parks</ContentEyebrow>
-
-          <ConceptBlock
-            title="Pitch electrical supplies — the Reg 708.553 design package"
-            plainEnglish="A caravan park is a TT installation feeding many wet, outdoor, repeatedly-connected sockets. Reg 708.553 standardises the pitch supply: industrial BS EN 60309-2 connector, individual 30 mA RCD, individual MCB, no more than three outlets per circuit."
-            onSite="Each pitch typically gets a 16 A blue commando outlet at 0.5-1.5 m height, IP44 minimum, in a pedestal with a hinged cover. Behind the pedestal: one MCB and one 30 mA RCD per outlet (or RCBO per outlet). Cable to pedestals is SWA buried at typical depths; the pedestals themselves are on a TT earth electrode shared with the rest of the park installation, sized for the aggregated Ra requirement."
-          >
-            <p>
-              The choice of BS EN 60309-2 (the blue 16 A commando socket) is deliberate: IP44
-              minimum (resistant to splashing water from any direction), a positive locking action
-              (the lid stays shut, the plug locks in), and a standardised interface used across
-              European caravan / motorhome equipment. The maximum-three-outlets-per-circuit rule
-              (Reg 708.553.1.13) keeps the discrimination tractable — a single faulty tourer cannot
-              take down half the site. Mounting height (0.5-1.5 m above ground) keeps the outlet out
-              of standing water and within easy reach.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...inlineChecks[2]} />
-
-          <RegsCallout
-            source="BS 7671:2018+A4:2026 · Reg 708.553.1.13 — Caravan pitch socket-outlets"
-            clause="Each socket-outlet shall be provided with individual overcurrent protection. Each socket-outlet shall be provided with individual additional protection by an RCD having a rated residual operating current not exceeding 30 mA. Not more than three socket-outlets shall be supplied from any one final circuit."
-            meaning="Individual RCD per outlet (not shared), individual MCB per outlet, max three outlets per circuit. The architecture prevents one tripping caravan from disabling neighbouring pitches and gives the operator simple per-pitch isolation for maintenance."
-            cite="BS 7671:2018+A4:2026, Reg 708.553.1.13 (Section 708)"
-          />
-
-          <ConceptBlock
-            title="On-board caravan / motorhome electrics — separate scope"
-            plainEnglish="The caravan park installation stops at the pitch socket. The 230 V and 12 V wiring inside the caravan is governed by separate standards (BS EN 1648-2 for habitation, plus the touring-caravan habitation regs). The two are designed together but certified separately."
-            onSite="An EIC for the caravan park does not warrant the caravan plugged into it. When the customer asks 'is my caravan safe?', the answer involves two certifications: the park-side EIC (your work, BS 7671) and the caravan habitation cert (the caravan manufacturer / inspection body's work, BS EN 1648-2)."
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>Section 709 — marinas &amp; similar locations</ContentEyebrow>
-
-          <ConceptBlock
-            title="Why marinas need their own chapter"
-            plainEnglish="Wet environment, salt-water corrosion, vessels with on-board power electronics, and a population of bonded steel hulls floating in conductive seawater. Each of those creates a hazard a domestic installation never sees."
-            onSite="The marina installation runs from the shore-side LV switchboard, out along the pontoons (cable trays or buried SWA), to pedestals at each berth. Each pedestal carries one or more BS EN 60309-2 outlets, IP44 minimum, with individual RCD + MCB per outlet. Salt spray is constant — accessory selection prioritises corrosion-resistant materials (marine-grade stainless, polycarbonate, IP55 / IP56 enclosures where exposed to direct spray)."
-          >
-            <p>
-              Reg 709 layers the standard 30 mA RCD additional-protection rule with three
-              marina-specific concerns. (1) Smooth DC residuals from on-board inverters, lithium
-              chargers and DC-DC converters can defeat Type A RCDs — Type B RCDs at the pedestal, or
-              RDC-DD upstream of Type A, or an isolation transformer per berth, all mitigate this.
-              (2) Galvanic coupling between bonded steel hulls floating in seawater accelerates
-              corrosion — isolation transformers at the pedestal break the galvanic path while
-              preserving the safety earth. (3) Mechanical impact and salt corrosion drive accessory
-              selection to higher IP and IK ratings than would suffice on land.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...inlineChecks[3]} />
-
-          <RegsCallout
-            source="BS 7671:2018+A4:2026 · Reg 709.531 — Devices for protection against electric shock by automatic disconnection of supply"
-            clause="Each socket-outlet shall be provided with individual additional protection by means of an RCD having a rated residual operating current not exceeding 30 mA. Where smooth DC residual currents may be produced by equipment connected to the supply, the type of RCD shall be selected accordingly."
-            meaning="Per-outlet 30 mA RCD is the default. Where on-board equipment (inverters, lithium chargers, VSDs) can produce smooth DC residual, Type B RCDs (or Type A with upstream RDC-DD, or isolation transformers) are required. The designer must consider what is plausibly going to be plugged in — modern boats are NOT a passive AC load."
-            cite="BS 7671:2018+A4:2026, Reg 709.531 (Section 709)"
-          />
-
-          <ConceptBlock
-            title="Isolation transformers — the marina-specific tool"
-            plainEnglish="An isolation transformer at the pedestal breaks the direct conductive path between the supply network and the boat. Each vessel becomes a galvanically-isolated island: faults inside the boat do not feed earth current back through neighbouring vessels' bonded hulls."
-            onSite="Isolation transformers add cost (per-pedestal) but solve two problems at once: galvanic corrosion (electrolytic action between bonded hulls in conductive seawater) and the smooth-DC-residual / Type-B requirement (the transformer secondary is its own electrical island, so a Type A RCD on the secondary side is sufficient against on-board AC residuals). High-end marinas specify per-berth isolation transformers as standard practice."
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>Section 711 — exhibitions, shows &amp; stands</ContentEyebrow>
-
-          <ConceptBlock
-            title="Temporary installations are NOT a relaxation of BS 7671"
-            plainEnglish="Section 711 doesn't loosen the rules — it tightens the inspection regime. Equipment is repeatedly assembled, transported and re-energised, so the cable / connector / RCD wear rate is high. Every re-erection is treated as a new installation."
-            onSite="Trade-show and exhibition stands at NEC, ExCeL, Olympia and similar venues all follow the same pattern: the venue provides a permanent fixed supply with industrial connectors at distribution points; each stand brings its own temporary installation off one of those connectors. Stand wiring, cable management, RCD per circuit, IP rating, accessory selection — all per Section 711 and the venue's own technical regulations."
-          >
-            <p>
-              The chapter applies the standard Part 4 protective-measure rules — ADS, additional
-              protection by 30 mA RCDs on all socket-outlet and luminaire circuits, IP-rated
-              equipment for the location class — and adds Section 711.6 inspection requirements
-              specific to the temporary nature of the install. Heavy-duty flexible cables (HO7RN-F
-              or equivalent), BS EN 60309-2 connectors (the same family as caravan parks and
-              marinas), and a documented pre-opening functional test of every RCD and CPC continuity
-              check before the public is admitted.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...inlineChecks[4]} />
-
-          <ConceptBlock
-            title="Section 740 — fairgrounds, amusement parks, circuses"
-            plainEnglish="A separate special-location chapter for repeatedly-erected ride / booth / circus installations. Heavier mechanical demands than Section 711 (ride loads, transport vibration), with the same commitment to per-erection initial verification."
-            onSite="Section 740 governs the temporary supply to rides and booths — the heavy-duty flexible feed cable (HO7RN-F or equivalent), BS EN 60309-2 connectors, 30 mA RCD per circuit, IP44 minimum, and inspection / functional test of RCDs before each opening. The ride manufacturer's own type-test certification covers the on-ride electrical equipment; Section 740 covers the supply up to the ride."
-          >
-            <p>
-              Reg 740.521 specifies the flexible-cable type (heavy-duty HO7RN-F or equivalent
-              rubber-sheathed flexible). Reg 740.55 covers connector and accessory selection. Reg
-              740.6 ties the inspection regime to the operational cycle: every time the fairground
-              is erected, the initial verification is performed before the first opening; functional
-              tests of every RCD and visual checks of cables and connectors are performed before
-              each opening day. The cert is an EIC for the temporary installation, signed by a
-              skilled person (electrically), held on site for the duration of the event.
-            </p>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <ContentEyebrow>
-            Outdoor general — IP, IK, burial &amp; bonding to outbuildings
-          </ContentEyebrow>
-
-          <ConceptBlock
-            title="Cable burial depth, mechanical protection &amp; marker tape"
-            plainEnglish="BS 7671 Reg 522.8.10 says cables shall be at sufficient depth to avoid mechanical damage having regard to anticipated disturbance. The numbers come from industry practice and the DNO ENA standards, not from a single mandatory depth in the Wiring Regs."
-            onSite="UK industry practice: 450-600 mm in cultivated ground (above plough-depth), with marker tape laid 150 mm above the cable. Where vehicles or heavy plant cross, add cable tile, ducting or a deeper trench. SWA is standard for outdoor buried runs because the steel armour is the mechanical-impact tolerance and a low-impedance fault path. PVC-insulated SWA in a dry duct in non-cultivated ground can go shallower; in cultivated farmland with a 450 mm plough depth, design for at least 600 mm cover."
-          >
-            <p>
-              For agricultural runs, also consider rodent damage at building entries (use a rigid
-              duct or sealed gland rather than letting an SWA enter through a chewed cable hole) and
-              frost heave (deep trenches in some soils can experience seasonal movement; an SWA is
-              forgiving but a flexible cable is not). For caravan-park and marina installations, the
-              run is typically along buried or tray-mounted SWA from the LV switchboard out to the
-              pedestals — depth and mechanical protection follow the same general rules, with
-              attention to ground-water table on coastal sites.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...inlineChecks[5]} />
-
-          <ConceptBlock
-            title="Bonding to outbuildings &amp; Section 705 zones"
-            plainEnglish="A new outbuilding (workshop, barn, garage) typically gets its own sub-distribution and may need its own MET, with main protective bonding to incoming services and a CPC continuous from the supplying installation."
-            onSite="Where the supplying installation is TN-C-S and the outbuilding is in a livestock zone, the choice is to either (a) export the TN-C-S earth to the outbuilding (rare on agricultural — DNO and risk-assessment usually prevent this) or (b) treat the outbuilding as TT, with its own earth electrode, and break the earth path between the buildings. Option (b) is the dominant agricultural choice."
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>Where it goes wrong</ContentEyebrow>
-
-          <CommonMistake
-            title="Spec'ing an ordinary RCD on agricultural without considering AFDD &amp; fire risk"
-            whatHappens="Designer fits a generic 30 mA Type A RCBO board in a milking parlour because 'sockets need 30 mA and that's done'. Reg 705.422 fire-risk requirements (30 mA RCDs on ALL final circuits, including lighting and motor circuits, plus AFDD consideration / requirement under A4 Reg 421.1.7 in high-fire-risk agricultural zones) are missed. EICR codes the install C2 — fire risk not adequately addressed."
-            doInstead="Read Section 705 as a fire-AND-shock chapter. 30 mA RCD on every final circuit, not just sockets. Specify AFDDs in line with Reg 421.1.7 high-fire-risk zone requirements. Choose IP / IK ratings for the wash-down and impact environment. Document the fire-risk assessment that drove the protective device choice — not just 'standard domestic CU'."
-          />
-
-          <CommonMistake
-            title="Ignoring livestock touch-current limits in the bonding design"
-            whatHappens="Installer treats a stable-yard sub-board the same way as a domestic garage. Single 10 mm² main bond to the consumer unit; no supplementary bonding network in the stalls; metal stall railings, drinkers and structural steel are all separate from the MET. A CPC fault in a heat-lamp circuit drives the lamp body to ~115 V; a horse touching the lamp casing while in contact with the metal stall partition completes a chest-to-flank path through low-resistance hooves on a wet floor. The horse is killed by a fault that would not have hurt a human in the same scenario."
-            doInstead="Section 705 supplementary bonding is comprehensive and stock-zone-wide: every exposed-conductive-part and every extraneous-conductive-part within reach of livestock is bonded together back to the MET, on conductors sized per Reg 544.2 (10 mm² main, 4 mm² unprotected branch, 2.5 mm² protected branch). In new builds, embed an equipotential floor grid in the slab and brings it out at every stall and drinker."
-          />
-
-          <CommonMistake
-            title="Undersized earth electrode for a caravan-park TT installation"
-            whatHappens="Single 1.2 m rod hammered into dry sandy soil at a coastal caravan park; measured Ra = 280 ohms. Designer does the maths: 280 x 0.03 = 8.4 V — well under 50 V — and signs off the cert. In summer the soil dries further; Ra drifts up to 900 ohms; a fault on a tourer is now intermittent and the RCD is operating at the edge of its sensitivity. EICR a year later flags Ra = 740 ohms; the install is recoded."
-            doInstead="Design Ra with seasonal soil-resistivity headroom — practical aim below 100 ohms. Use multiple rods in parallel (or a deep-driven rod, or an earth mat) on dry, sandy or rocky ground. Document the measured Ra and the soil conditions on the day, and call out the recheck interval. A caravan park is a TT installation that lives outside in all weathers — the earth electrode that worked in March is not guaranteed to work in August."
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>Scenarios — applying it on the day</ContentEyebrow>
-
-          <Scenario
-            title="Cattle-barn rewire under A4"
-            situation="A 1990s 6-bay cattle barn has a damaged old-fashioned consumer unit at the dairy entrance, fed from the farmhouse on a TN-C-S sub-main. The customer wants a full rewire to current standards — wash-down sockets at every bay, milking-cluster motor supply, infrared heat lamps for calf rearing, lighting throughout, and a small office area at one end. Soil is heavy clay, water table 2 m below ground."
-            whatToDo="(1) Talk to the DNO: confirm refusal of PME on the agricultural premise (expected). (2) Disconnect the existing sub-main from the farmhouse TN-C-S earth — bring 3-core SWA out, but use only the L and N; treat the barn as a separate TT installation. (3) Drive an earth electrode array (3-4 rods in parallel, 2.4 m each) at the barn — clay water table is favourable; aim Ra below 50 ohms measured. (4) New consumer unit: split-load with RCBO per circuit, 30 mA on every circuit (not just sockets) per Reg 705.422; AFDD-RCBOs on the heat-lamp and lighting circuits per Reg 421.1.7 high-fire-risk zone considerations. (5) Supplementary bonding network throughout the stock zone: 10 mm² main loop bonding all stall railings, drinkers, milking-cluster supports, embedded floor grid, structural steel, back to the barn MET. (6) Wash-down sockets: BS EN 60309-2 16 A blue commando, IP55 minimum, 1.0 m mounting height, individual 30 mA RCBO. (7) Document the fire-risk assessment, the TT design, the supplementary-bonding network, and the measured Ra / Zs / RCD operating times on the EIC. The cert references Section 705, Reg 411.5.3, Reg 705.422 and Reg 421.1.7 (A4)."
-            whyItMatters="A cattle barn is a livestock-zone, fire-risk, wash-down, agricultural special location all at once. Treat it as 'just a domestic CU outside' and the cert is wrong on multiple counts: wrong earthing arrangement, undersized supplementary bonding, missing AFDDs, wrong IP rating on accessories. The customer's insurer will request the EIC after the inevitable claim — that EIC has to demonstrate Section 705 compliance, not generic Section 411 compliance."
-          />
-
-          <Scenario
-            title="Marina shore-power install for a 30-berth pontoon"
-            situation="A coastal marina is upgrading its 1990s shore-power pedestals. Mix of vessels: traditional sailboats (passive AC loads), modern motor cruisers with shore-power-fed lithium chargers and on-board inverters, one liveaboard catamaran with a 5 kW solar array, lithium house bank and AC-coupled inverter. Existing system is per-pedestal Type AC RCDs sharing a 100 mA upstream device — clearly non-compliant under current Reg 709 and the equipment realities."
-            whatToDo="(1) Survey the load: at least 30% of berths now have power-electronics on board (lithium chargers, inverters, VSDs) plausibly producing smooth DC residuals. (2) Specify per-berth isolation transformers at every pedestal — solves smooth-DC by giving each berth its own galvanically-isolated secondary, AND solves galvanic corrosion between bonded hulls. (3) Per-outlet 30 mA Type A RCBOs on the secondary side of each isolation transformer (Type A is sufficient because the secondary is its own AC island). (4) BS EN 60309-2 16 A or 32 A blue commando outlets, IP55 (direct sea-spray exposure), marine-grade stainless / polycarbonate enclosures. (5) SWA pontoon distribution from a shore-side TT switchboard with its own earth electrode network — not the public TN-C-S supply (DNO has refused PME on this site). (6) Document the per-berth electrical separation, the smooth-DC-residual mitigation, the corrosion mitigation, and the salt-spray IP / corrosion-resistance design choices. EIC references Section 709, Reg 709.531, the isolation-transformer architecture, and the manufacturers' instructions for the on-board equipment driving the Type A choice."
-            whyItMatters="Marinas are the example par excellence of a mixed-load, mixed-vintage vessel population on a single supply. The shared-RCD architecture works in 1990; it does not work today. The isolation-transformer-per-berth design solves multiple problems at once: smooth-DC immunity, galvanic-corrosion mitigation, per-berth fault isolation. It costs more — and it is the right answer when liveaboards with lithium banks are plugged in next to wooden sailboats."
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>Designer's quick reference — picking the Section</ContentEyebrow>
-
-          <ConceptBlock
-            title="Section 705 vs 708 vs 709 vs 711 vs 740"
-            plainEnglish="The wrong Part 7 reference at the top of the cert means the wrong protective measures, the wrong RCD type, the wrong inspection regime. Pick by the actual environment, not the address."
-            onSite="(1) Livestock present, or fodder / grain processing on site = Section 705. (2) Caravan / motorhome / camping pitch electrical supply = Section 708. (3) Berth electrical supply at a marina, harbour or similar = Section 709. (4) Trade exhibition stand, indoor or outdoor pop-up market, or temporary public-display installation = Section 711. (5) Fairground ride, circus, mobile amusement booth = Section 740. Multiple sections can apply to a single site (a fairground inside an exhibition centre engages 711 and 740; a coastal caravan park may engage 708 and parts of 709 if it has a small jetty)."
-          >
-            <p>
-              The question that drives the choice is 'what is the safety-critical hazard specific to
-              this location?'. For Section 705 it is livestock touch-current and fire risk; for 708
-              it is repeatedly-connected wet outdoor sockets feeding mobile accommodation; for 709
-              it is salt-water, on-board power-electronics and galvanic coupling; for 711 it is
-              repeated dismantling and re-erection of public-facing installations; for 740 it is
-              heavy mechanical demand and ride-supply repeatability. Each chapter is a focused
-              response to one of those hazards, layered on top of the general BS 7671
-              protective-measure rules.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...inlineChecks[6]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>Designer's quick reference</ContentEyebrow>
-
-          <ConceptBlock
-            title="The four design questions for outdoor / agricultural work"
-            plainEnglish="(1) Is the supply TT or TN? (2) Are there livestock present? (3) Is the location wet, dusty or corrosive? (4) Will mobile equipment be used outdoors?"
-            onSite="(1) TT is typical — most rural / agricultural / marina supplies are TT. Apply Reg 411.5.3 RCD-led ADS. (2) Livestock — Section 705 supplementary bonding required throughout, stock-touch limits drive electrode design. (3) Wet / corrosive — IP65+ enclosures, marine-grade fixings near sea, PVC conduit not metal. (4) Mobile equipment — Reg 411.3.3(c) — 30 mA RCD additional protection mandatory, no exception."
-          >
-            <p>
-              Walk the four questions in order on every job; each answer cascades into design
-              choices. Skip any of them and the install fails on first inspection — Section 705
-              compliance is heavily inspector-tested because the consequences of getting it wrong
-              (livestock fatalities, marina shock-bath incidents, caravan-park boil-out events) are
-              severe and visible.
-            </p>
-          </ConceptBlock>
-
-          <ConceptBlock
-            title="Salt-water environments — material selection"
-            plainEnglish="Salt accelerates corrosion of every metal. Standard galvanised steel rusts in months at a marina; even stainless 304 pits within 5 years. Specify 316 stainless or A4 marine-grade fixings, marine-grade plastics for enclosures, tinned-copper conductors where exposed."
-            onSite="Marinas and coastal installations are environmental category AF3-AF4 (substantial corrosion). Cable: SWA with thermoplastic outer plus an HDPE oversheath for direct contact, or proprietary marine-rated cables. Enclosures: GRP (glass-reinforced polyester) over metal. Fixings: A4-grade stainless throughout. Bonding: tinned copper where exposed to salt spray. Document the material spec on the design sheet — corrosion resistance is a Reg 522.10 design check."
-          >
-            <p>
-              The cost premium for marine-grade materials is real but pays back over the
-              installation lifetime. A standard galvanised SWA install in a marina has typically 5-7
-              year service life before replacement; marine-grade install runs 20+ years. The
-              customer&apos;s lifecycle cost is the conversation, not just first-fit cost.
-            </p>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <FAQ items={faqItems} />
-
-          <KeyTakeaways
-            points={[
-              'Section 705 (agricultural) is driven by livestock touch-current and fire risk: TT typical, 30 mA RCD on every final circuit (Reg 705.422), supplementary bonding throughout livestock zones, IP / IK selection for wash-down and impact, AFDD consideration under A4 Reg 421.1.7.',
-              'Section 708 (caravan parks): individual 30 mA RCD per BS EN 60309-2 outlet, individual MCB per outlet, max three outlets per circuit (Reg 708.553.1.13), IP44 minimum, 0.5-1.5 m mounting height.',
-              'Section 709 (marinas): standard 30 mA RCD per outlet; Type B (or RDC-DD, or per-berth isolation transformer) where on-board inverters / lithium chargers can produce smooth DC residuals (Reg 709.531). Isolation transformers also mitigate galvanic corrosion.',
-              'Section 711 (exhibitions / stands) and Section 740 (fairgrounds) treat each re-erection as a new installation requiring initial verification per Part 6 — heavy-duty flexible cables, BS EN 60309-2 connectors, pre-opening functional tests of every RCD and CPC.',
-              'Outdoor general: cable burial depth driven by Reg 522.8.10 (sufficient to avoid mechanical damage) — UK practice 450-600 mm cultivated, marker tape and additional protection where vehicles cross. Bonding to outbuildings: TT typical for agricultural sub-buildings.',
-            ]}
-          />
-
-          <Quiz questions={quizQuestions} />
-
-          <div className="grid grid-cols-2 gap-3 pt-2">
-            <button
-              type="button"
-              onClick={() => navigate('/electrician/upskilling/bs7671-module-7')}
-              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
-                <ChevronLeft className="h-3 w-3" /> Module 7
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-white truncate">
-                Module overview
-              </div>
-            </button>
-            <button
-              type="button"
-              onClick={() => navigate('/electrician/upskilling/bs7671-module-7-section-4')}
-              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
-                Next section <ChevronRight className="h-3 w-3" />
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-black truncate">
-                7.4 Medical, commercial, industrial
-              </div>
-            </button>
-          </div>
-        </PageFrame>
-      </div>
-    </div>
+            <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+              Next section <ChevronRight className="h-3 w-3" />
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-black truncate">
+              7.4 Medical, commercial, industrial
+            </div>
+          </button>
+        </div>
+      </HubBody>
+    </HubPage>
   );
 };
 

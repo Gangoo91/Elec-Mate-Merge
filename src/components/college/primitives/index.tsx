@@ -4,6 +4,7 @@
  * Every college hub/section/feature composes from these.
  */
 
+import { CARD_BASE, CARD_NEUTRAL, CARD_SURFACE } from '@/components/ui/card-recipe';
 import { cn } from '@/lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
 import { forwardRef, type ReactNode } from 'react';
@@ -35,18 +36,40 @@ export type Tone =
   | 'indigo'
   | 'grey';
 
+const VOLT_HAIRLINE = 'from-elec-yellow/0 via-elec-yellow/55 to-elec-yellow/0';
+
+/**
+ * The accent hairline above a page hero.
+ *
+ * 2026-08-28: collapsed from eleven three-hue gradients to one volt line.
+ *
+ * The old map gave every page its own colourway — blue/cyan, purple/violet/
+ * indigo, emerald/green, rose/red — across ~2,000 `tone=` usages. None of it
+ * meant anything: `tone` was chosen per page for variety, so purple did not
+ * indicate anything a reader could learn, and the Study Centre ended up with
+ * eight palettes competing with the one brand colour it actually has.
+ *
+ * The hub answered this already. `HubKpi` uses a single volt hairline and
+ * varies only the alpha — /55 normally, /90 when the card has something to
+ * report. Same idea here.
+ *
+ * The keys stay so no page has to change. `tone` still types and still works;
+ * it simply no longer paints a rainbow. Semantic colour lives in `toneText`
+ * and `toneDot` below, where red genuinely means bad — that distinction is the
+ * whole reason this map is flattened and those two are not.
+ */
 export const toneAccent: Record<Tone, string> = {
-  blue: 'from-blue-500/70 via-blue-400/70 to-cyan-400/70',
-  emerald: 'from-emerald-500/70 via-emerald-400/70 to-green-400/70',
-  amber: 'from-amber-500/70 via-amber-400/70 to-yellow-400/70',
-  purple: 'from-purple-500/70 via-violet-400/70 to-indigo-400/70',
-  yellow: 'from-elec-yellow/80 via-amber-400/70 to-orange-400/70',
-  green: 'from-green-500/70 via-emerald-400/70 to-green-400/70',
-  orange: 'from-orange-500/70 via-amber-400/70 to-orange-500/70',
-  red: 'from-red-500/70 via-rose-400/70 to-red-500/70',
-  cyan: 'from-cyan-500/70 via-sky-400/70 to-blue-400/70',
-  indigo: 'from-indigo-500/70 via-violet-400/70 to-purple-400/70',
-  grey: 'from-white/25 via-white/15 to-white/25',
+  blue: VOLT_HAIRLINE,
+  emerald: VOLT_HAIRLINE,
+  amber: VOLT_HAIRLINE,
+  purple: VOLT_HAIRLINE,
+  yellow: VOLT_HAIRLINE,
+  green: VOLT_HAIRLINE,
+  orange: VOLT_HAIRLINE,
+  red: VOLT_HAIRLINE,
+  cyan: VOLT_HAIRLINE,
+  indigo: VOLT_HAIRLINE,
+  grey: VOLT_HAIRLINE,
 };
 
 export const toneText: Record<Tone, string> = {
@@ -60,7 +83,7 @@ export const toneText: Record<Tone, string> = {
   red: 'text-red-400',
   cyan: 'text-cyan-400',
   indigo: 'text-indigo-400',
-  grey: 'text-white/55',
+  grey: 'text-white',
 };
 
 export const toneDot: Record<Tone, string> = {
@@ -92,7 +115,11 @@ export const containerVariants = {
 
 export const itemVariants = {
   hidden: { opacity: 0, y: 8 },
-  visible: { opacity: 1, y: 0, transition: { type: 'spring' as const, stiffness: 300, damping: 24 } },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { type: 'spring' as const, stiffness: 300, damping: 24 },
+  },
 };
 
 /* ────────────────────────────────────────────────────────
@@ -102,10 +129,7 @@ export const itemVariants = {
 export function Eyebrow({ children, className }: { children: ReactNode; className?: string }) {
   return (
     <div
-      className={cn(
-        'text-[10px] font-medium uppercase tracking-[0.18em] text-white',
-        className
-      )}
+      className={cn('text-[10px] font-medium uppercase tracking-[0.18em] text-white', className)}
     >
       {children}
     </div>
@@ -141,7 +165,7 @@ export function Pill({
                     : tone === 'indigo'
                       ? 'bg-indigo-500/10 text-indigo-400 border-indigo-500/20'
                       : tone === 'grey'
-                        ? 'bg-white/[0.06] text-white/55 border-white/10'
+                        ? 'bg-white/[0.06] text-white border-white/10'
                         : 'bg-elec-yellow/10 text-elec-yellow border-elec-yellow/20';
   return (
     <span
@@ -193,31 +217,45 @@ interface PageHeroProps {
   tone?: Tone;
 }
 
+/**
+ * The page hero — on 1,179 pages, 1,132 of them in the Study Centre tree.
+ *
+ * 2026-08-28: cut down, for the reason `HubPrimitives` gives for dropping its
+ * own — the hero "cost roughly 300px before an electrician reached a single
+ * tool". This one ran `pt-6 sm:pt-8 lg:pt-10` into a `lg:text-5xl` title, so a
+ * desktop reader spent 40px of padding and a 48px headline before the first
+ * card. On a course page the title is almost always the thing you just tapped
+ * to get here; it needs to confirm where you are, not announce itself.
+ *
+ * `lg:text-5xl` → `lg:text-[28px]`, and the top padding halves. Still a clear
+ * page title, roughly 120px lighter above the fold.
+ *
+ * The tone strip stays but is now a single volt hairline for every tone — see
+ * the note on `toneAccent`. It is also no longer conditional on `tone`, since
+ * every page wants the same line and half of them simply never passed one.
+ */
 export function PageHero({ eyebrow, title, description, actions, tone }: PageHeroProps) {
   return (
     <div className="relative">
-      {tone && (
-        <div
-          className={cn(
-            'absolute inset-x-0 top-0 h-px bg-gradient-to-r opacity-70',
-            toneAccent[tone]
-          )}
-        />
-      )}
-      <div className="pt-6 sm:pt-8 lg:pt-10 pb-2 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 sm:gap-6">
+      <div
+        aria-hidden
+        className={cn(
+          'pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r',
+          toneAccent[tone ?? 'yellow']
+        )}
+      />
+      <div className="flex flex-col gap-3 pb-2 pt-4 sm:flex-row sm:items-end sm:justify-between sm:gap-6 sm:pt-5">
         <div className="min-w-0 flex-1">
           {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
-          <h1 className="mt-1.5 text-[22px] sm:text-[32px] lg:text-5xl font-semibold text-white tracking-tight leading-[1.15] sm:leading-[1.08] break-words hyphens-auto">
+          <h1 className="mt-1 hyphens-auto break-words text-[19px] font-semibold leading-[1.15] tracking-tight text-white sm:text-[24px] lg:text-[28px]">
             {title}
           </h1>
           {description && (
-            <p className="mt-3 text-[13px] sm:text-sm text-white max-w-2xl leading-relaxed">
-              {description}
-            </p>
+            <p className="mt-2 max-w-2xl text-[13px] leading-relaxed text-white">{description}</p>
           )}
         </div>
         {actions && (
-          <div className="shrink-0 flex items-center gap-2 flex-wrap self-start sm:self-end">
+          <div className="flex shrink-0 flex-wrap items-center gap-2 self-start sm:self-end">
             {actions}
           </div>
         )}
@@ -277,19 +315,30 @@ interface StatStripProps {
   className?: string;
 }
 
-// Per-tone soft background gradient for stat cells — adds a splash of
-// colour without overwhelming the dark theme.
+/**
+ * Stat-cell background.
+ *
+ * 2026-08-28: was a per-tone "splash of colour" — eleven translucent coloured
+ * washes across a card face, including `from-elec-yellow/[0.10]`, which is the
+ * exact case `card-recipe` names: spread a low-alpha colour over near-black and
+ * it mixes into sludge rather than reading as the colour you picked.
+ *
+ * Now the one real surface every other card in the app is made of. Keys stay so
+ * callers do not change; the tone still drives the volt hairline and the
+ * semantic text colour, which is where tone belongs.
+ */
 const toneCellBg: Record<Tone, string> = {
-  blue: 'bg-gradient-to-br from-blue-500/[0.10] via-blue-500/[0.03] to-transparent',
-  emerald: 'bg-gradient-to-br from-emerald-500/[0.10] via-emerald-500/[0.03] to-transparent',
-  amber: 'bg-gradient-to-br from-amber-500/[0.10] via-amber-500/[0.03] to-transparent',
-  purple: 'bg-gradient-to-br from-purple-500/[0.10] via-purple-500/[0.03] to-transparent',
-  yellow: 'bg-gradient-to-br from-elec-yellow/[0.10] via-amber-500/[0.03] to-transparent',
-  green: 'bg-gradient-to-br from-green-500/[0.10] via-green-500/[0.03] to-transparent',
-  orange: 'bg-gradient-to-br from-orange-500/[0.10] via-orange-500/[0.03] to-transparent',
-  red: 'bg-gradient-to-br from-red-500/[0.10] via-red-500/[0.03] to-transparent',
-  cyan: 'bg-gradient-to-br from-cyan-500/[0.10] via-cyan-500/[0.03] to-transparent',
-  indigo: 'bg-gradient-to-br from-indigo-500/[0.10] via-indigo-500/[0.03] to-transparent',
+  blue: CARD_SURFACE,
+  emerald: CARD_SURFACE,
+  amber: CARD_SURFACE,
+  purple: CARD_SURFACE,
+  yellow: CARD_SURFACE,
+  green: CARD_SURFACE,
+  orange: CARD_SURFACE,
+  red: CARD_SURFACE,
+  cyan: CARD_SURFACE,
+  indigo: CARD_SURFACE,
+  grey: CARD_SURFACE,
 };
 
 export function StatStrip({ stats, columns = 4, className }: StatStripProps) {
@@ -303,13 +352,7 @@ export function StatStrip({ stats, columns = 4, className }: StatStripProps) {
           : 'grid-cols-2 md:grid-cols-4';
 
   return (
-    <div
-      className={cn(
-        'grid gap-px bg-white/[0.06] border border-white/[0.06] rounded-2xl overflow-hidden',
-        colClass,
-        className
-      )}
-    >
+    <div className={cn('grid gap-2.5 sm:gap-3', colClass, className)}>
       {stats.map((stat, i) => {
         const valueClass = stat.accent
           ? 'text-elec-yellow'
@@ -320,32 +363,25 @@ export function StatStrip({ stats, columns = 4, className }: StatStripProps) {
         // Long text values (e.g. "Foundation") need a smaller scale than
         // pure numbers so they don't overflow the cell on mobile.
         const valueStr = String(stat.value);
-        const isNumericish =
-          typeof stat.value === 'number' || /^[\d.,+\-/%hkm]+$/i.test(valueStr);
+        const isNumericish = typeof stat.value === 'number' || /^[\d.,+\-/%hkm]+$/i.test(valueStr);
         const sizeClass =
           isNumericish || valueStr.length <= 4
-            ? 'text-3xl sm:text-5xl lg:text-6xl'
+            ? 'text-[26px] sm:text-[30px]'
             : valueStr.length <= 8
-              ? 'text-xl sm:text-3xl lg:text-4xl'
-              : 'text-base sm:text-2xl lg:text-3xl';
+              ? 'text-xl sm:text-2xl'
+              : 'text-base sm:text-xl';
 
         const content = (
           <>
-            {stat.tone && (
-              <div
-                className={cn(
-                  'absolute inset-x-0 top-0 h-px bg-gradient-to-r opacity-80',
-                  toneAccent[stat.tone]
-                )}
-              />
-            )}
-            <Eyebrow
+            <div
+              aria-hidden
               className={cn(
-                'truncate w-full',
-                stat.tone ? toneText[stat.tone] : undefined
+                'pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r',
+                toneAccent[stat.tone ?? 'yellow']
               )}
-            >
-              {String(i + 1).padStart(2, '0')} · {stat.label}
+            />
+            <Eyebrow className={cn('truncate w-full', stat.tone ? toneText[stat.tone] : undefined)}>
+              {stat.label}
             </Eyebrow>
             <span
               className={cn(
@@ -356,13 +392,13 @@ export function StatStrip({ stats, columns = 4, className }: StatStripProps) {
             >
               {stat.value}
             </span>
-            {stat.sub && <span className="mt-3 text-[11px] text-white/70">{stat.sub}</span>}
+            {stat.sub && <span className="mt-3 text-[11px] text-white">{stat.sub}</span>}
           </>
         );
 
         const baseClass = cn(
-          'group relative flex flex-col items-start transition-colors px-5 py-6 sm:px-6 sm:py-7 lg:px-7 lg:py-8 text-left',
-          stat.tone ? toneCellBg[stat.tone] : 'bg-[hsl(0_0%_12%)]'
+          'group relative flex flex-col items-start overflow-hidden rounded-2xl border border-elec-yellow/35 px-4 py-3.5 text-left sm:p-5',
+          stat.tone ? toneCellBg[stat.tone] : CARD_SURFACE
         );
 
         return stat.onClick ? (
@@ -407,24 +443,26 @@ export function HubGrid({
         : columns === 2
           ? 'grid-cols-1 sm:grid-cols-2'
           : 'grid-cols-1';
-  return (
-    <div
-      className={cn(
-        'grid gap-px bg-white/[0.06] border border-white/[0.06] rounded-2xl overflow-hidden',
-        colClass,
-        className
-      )}
-    >
-      {children}
-    </div>
-  );
+  return <div className={cn('grid gap-3', colClass, className)}>{children}</div>;
 }
 
 /* ────────────────────────────────────────────────────────
-   Hub card — big numbered editorial card
+   Hub card
    ──────────────────────────────────────────────────────── */
 
 interface HubCardProps {
+  /**
+   * @deprecated Accepted but NOT RENDERED, and deliberately so.
+   *
+   * This card used to lead with `01 · CATEGORY`, which implied an order the
+   * groups never had — nobody reads the fourth course last because it is
+   * numbered 04. The prefix was dropped 2026-08-28 along with the rest of the
+   * numbered editorial dialect.
+   *
+   * The prop is kept only so the dozen-odd call sites still passing it keep
+   * compiling; it is a no-op. Don't reach for it expecting a number to appear,
+   * and drop the argument when you next touch one of those files.
+   */
   number?: string;
   eyebrow: string;
   title: string;
@@ -450,18 +488,17 @@ export function HubCard({
   badge,
   cta = 'Open',
 }: HubCardProps) {
-  const minH =
-    size === 'sm' ? 'min-h-[140px] sm:min-h-[160px]' : 'min-h-[200px] sm:min-h-[240px] lg:min-h-[260px]';
+  const minH = size === 'sm' ? 'min-h-[128px]' : 'min-h-[150px] sm:min-h-[170px]';
   const titleClass =
-    size === 'sm'
-      ? 'text-lg sm:text-xl font-semibold'
-      : 'text-2xl sm:text-[26px] lg:text-[30px] font-semibold';
+    size === 'sm' ? 'text-[15px] font-semibold' : 'text-[17px] sm:text-[19px] font-semibold';
 
   return (
     <button
       onClick={onClick}
       className={cn(
-        'group relative bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] active:bg-[hsl(0_0%_16%)] active:scale-[0.99] transition-[background-color,transform] p-6 sm:p-7 lg:p-8 text-left touch-manipulation flex flex-col',
+        CARD_BASE,
+        CARD_NEUTRAL,
+        'relative overflow-hidden px-4 py-3.5 sm:p-5 lg:hover:-translate-y-0.5',
         minH
       )}
     >
@@ -472,19 +509,12 @@ export function HubCard({
         )}
       />
       <div className="flex items-start justify-between gap-3">
-        <Eyebrow className="truncate min-w-0 flex-1">
-          {number ? `${number} · ` : ''}
-          {eyebrow}
-        </Eyebrow>
+        <Eyebrow className="truncate min-w-0 flex-1">{eyebrow}</Eyebrow>
         {badge && <span className="shrink-0">{badge}</span>}
       </div>
-      <h3 className={cn('mt-4 text-white tracking-tight leading-[1.1]', titleClass)}>
-        {title}
-      </h3>
+      <h3 className={cn('mt-1.5 leading-tight tracking-tight text-white', titleClass)}>{title}</h3>
       {description && (
-        <p className="mt-2.5 text-[13px] leading-relaxed text-white max-w-[34ch]">
-          {description}
-        </p>
+        <p className="mt-2.5 text-[13px] leading-relaxed text-white max-w-[34ch]">{description}</p>
       )}
       <div className="flex-grow" />
       <div className="mt-6 flex items-center justify-between pt-4 border-t border-white/[0.06]">
@@ -501,17 +531,12 @@ export function HubCard({
    List card — card surface wrapping hairline-divided rows
    ──────────────────────────────────────────────────────── */
 
-export function ListCard({
-  className,
-  children,
-}: {
-  className?: string;
-  children: ReactNode;
-}) {
+export function ListCard({ className, children }: { className?: string; children: ReactNode }) {
   return (
     <div
       className={cn(
-        'bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden divide-y divide-white/[0.06]',
+        CARD_SURFACE,
+        'overflow-hidden rounded-2xl border border-elec-yellow/35 divide-y divide-white/[0.08]',
         className
       )}
     >
@@ -546,17 +571,12 @@ export function ListRow({
   const Inner = (
     <>
       {accent && (
-        <span
-          aria-hidden
-          className={cn('w-[3px] h-10 rounded-full shrink-0', toneDot[accent])}
-        />
+        <span aria-hidden className={cn('w-[3px] h-10 rounded-full shrink-0', toneDot[accent])} />
       )}
       {lead && <div className="shrink-0">{lead}</div>}
       <div className="flex-1 min-w-0">
         <div className="text-sm sm:text-[15px] font-medium text-white truncate">{title}</div>
-        {subtitle && (
-          <div className="mt-0.5 text-[11.5px] text-white truncate">{subtitle}</div>
-        )}
+        {subtitle && <div className="mt-0.5 text-[11.5px] text-white truncate">{subtitle}</div>}
       </div>
       {trailing && <div className="shrink-0">{trailing}</div>}
     </>
@@ -597,7 +617,8 @@ export const EmptyState = forwardRef<
     <div
       ref={ref}
       className={cn(
-        'bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-6 py-10 sm:py-14 text-center',
+        CARD_SURFACE,
+        'rounded-2xl border border-elec-yellow/35 px-6 py-10 text-center sm:py-14',
         className
       )}
     >
@@ -662,13 +683,7 @@ export function TextAction({
    Page frame — wraps the whole page: max-w, motion, spacing
    ──────────────────────────────────────────────────────── */
 
-export function PageFrame({
-  children,
-  className,
-}: {
-  children: ReactNode;
-  className?: string;
-}) {
+export function PageFrame({ children, className }: { children: ReactNode; className?: string }) {
   return (
     <motion.div
       variants={containerVariants}
@@ -821,7 +836,8 @@ export function FormCard({
   return (
     <div
       className={cn(
-        'bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 space-y-3',
+        CARD_SURFACE,
+        'space-y-3 rounded-2xl border border-elec-yellow/35 p-5',
         className
       )}
     >
@@ -1006,21 +1022,19 @@ export function SheetShell({
       <div className="flex-shrink-0 border-b border-white/[0.06] px-5 pb-4">
         {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
         <SheetTitle asChild>
-          <div className="mt-1 text-[20px] font-semibold text-white leading-tight">
-            {title}
-          </div>
+          <div className="mt-1 text-[20px] font-semibold text-white leading-tight">{title}</div>
         </SheetTitle>
         {description ? (
           <SheetDescription asChild>
             <div className="mt-1.5 text-[12.5px] text-white">{description}</div>
           </SheetDescription>
         ) : (
-          <SheetDescription className="sr-only">{typeof title === 'string' ? title : 'Sheet'}</SheetDescription>
+          <SheetDescription className="sr-only">
+            {typeof title === 'string' ? title : 'Sheet'}
+          </SheetDescription>
         )}
       </div>
-      <div className="flex-1 overflow-y-auto overscroll-contain p-5 space-y-4">
-        {children}
-      </div>
+      <div className="flex-1 overflow-y-auto overscroll-contain p-5 space-y-4">{children}</div>
       {footer && (
         <div
           className="flex-shrink-0 border-t border-white/[0.06] p-4 flex flex-row gap-2 bg-[hsl(0_0%_8%)]"

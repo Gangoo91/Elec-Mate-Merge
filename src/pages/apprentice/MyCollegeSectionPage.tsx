@@ -33,14 +33,7 @@ import { CollegeAiCard } from '@/components/apprentice-hub/CollegeAiCard';
    ========================================================================== */
 
 type Section =
-  | 'today'
-  | 'plan'
-  | 'progress'
-  | 'activities'
-  | 'epa'
-  | 'voice'
-  | 'compliance'
-  | 'activity';
+  'today' | 'plan' | 'progress' | 'activities' | 'epa' | 'voice' | 'compliance' | 'activity';
 
 interface SectionDef {
   eyebrow: string;
@@ -106,7 +99,7 @@ const SECTIONS: Record<Section, SectionDef> = {
     eyebrow: 'End-point assessment',
     title: 'EPA brief & simulator',
     description:
-      'Read your personalised pre-EPA brief and practice with timed mocks. Your scores feed into your tutor\'s read of your readiness.',
+      "Read your personalised pre-EPA brief and practice with timed mocks. Your scores feed into your tutor's read of your readiness.",
     render: () => (
       <>
         <MyEpaBriefCard />
@@ -119,7 +112,8 @@ const SECTIONS: Record<Section, SectionDef> = {
   voice: {
     eyebrow: 'Your voice',
     title: 'Surveys & reflection',
-    description: 'Tell the college how it\'s going. Your input shapes what your tutor focuses on next.',
+    description:
+      "Tell the college how it's going. Your input shapes what your tutor focuses on next.",
     render: () => (
       <>
         <MyVoiceSurveyCard />

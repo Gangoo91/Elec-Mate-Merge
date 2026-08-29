@@ -5,10 +5,10 @@
  */
 
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
-import { PageFrame, PageHero } from '@/components/college/primitives';
 import {
   CommonMistake,
   ConceptBlock,
@@ -281,644 +281,649 @@ const HNCModule5Section4_4 = () => {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
-      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
-        <PageFrame>
+    <HubPage>
+      <HubMasthead
+        section="Module 5 · Section 4 · Subsection 4"
+        title="Installation Quality"
+        backTo="/study-centre/apprentice/h-n-c-module5-section4"
+      />
+      <HubBody>
+        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
+          Workmanship standards, supervision requirements, quality audits, and progressive
+          verification in building services installation.
+        </p>
+
+        <TLDR
+          points={[
+            'Installation quality is the gap between design intent and installed reality — closed by workmanship standards, supervision and progressive verification.',
+            'Workmanship standards documented: cable installation methods, torque values, labelling conventions, fixing standards, segregation distances.',
+            'Supervision: ratio of working supervisor to operatives 1:8 typical; foreman + chargehand structure for larger gangs.',
+            'Quality audits: weekly site walk-rounds by PM with QA inspector; findings logged and tracked to closure.',
+            'Progressive verification: BS 7671 initial verification during erection AND on completion — same principle for mechanical and BMS.',
+          ]}
+        />
+
+        <RegsCallout
+          source="BS 7671:2018+A4:2026 — Regulation 134.1.1 (Good workmanship)"
+          clause="Good workmanship by competent persons or persons under their supervision and proper materials shall be used in the erection of the electrical installation."
+          meaning={
+            <>
+              BS 7671 is explicit that workmanship is part of compliance, not separate from it. A
+              correctly designed installation badly installed is non-compliant. Reg 134.1.1 places
+              the duty on you as the person responsible for the installation; supervision of less
+              experienced operatives is the practical means.
+            </>
+          }
+          cite="Source: BS 7671:2018+A4:2026 — Regulation 134.1.1."
+        />
+
+        <LearningOutcomes
+          outcomes={[
+            'Apply BSRIA and CIBSE workmanship standards to M&E installations',
+            'Determine appropriate supervision ratios for different work types',
+            'Plan and conduct quality walk-down inspections effectively',
+            'Develop installation checklists for consistent quality verification',
+            'Maintain photographic and documentary quality records',
+            'Implement progressive verification throughout installation phases',
+          ]}
+        />
+
+        <SectionRule />
+
+        <ConceptBlock title="Workmanship Standards">
+          <p>
+            Workmanship standards provide objective benchmarks for assessing installation quality.
+            In building services, BSRIA and CIBSE publications establish industry-recognised
+            criteria that enable consistent quality assessment across different contractors, sites,
+            and inspection personnel.
+          </p>
+          <p>
+            <strong>Key BSRIA publications:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>BG 55/2020:</strong> Illustrated Guide to Electrical Building Services
+              (containment, wiring, accessories)
+            </li>
+            <li>
+              <strong>BG 56/2020:</strong> Illustrated Guide to Mechanical Building Services
+              (pipework, ductwork, plant)
+            </li>
+            <li>
+              <strong>BG 29:</strong> Pre-Commission Cleaning of Pipework Systems
+            </li>
+            <li>
+              <strong>BG 8:</strong> Model Specifications for BMS
+            </li>
+          </ul>
+          <p>
+            <strong>BSRIA workmanship assessment approach — good vs poor practice:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Cable tray runs — Good:</strong> Level, aligned, consistent fixings, proper
+              joints
+            </li>
+            <li>
+              <strong>Cable tray runs — Poor:</strong> Sagging, misaligned, mixed fixing types
+            </li>
+            <li>
+              <strong>Conduit bends — Good:</strong> Smooth radius, no kinks, consistent spacing
+            </li>
+            <li>
+              <strong>Conduit bends — Poor:</strong> Kinked, varying radii, uneven fixing centres
+            </li>
+            <li>
+              <strong>Accessory mounting — Good:</strong> Level, secure, consistent heights, correct
+              orientation
+            </li>
+            <li>
+              <strong>Accessory mounting — Poor:</strong> Crooked, loose, varying heights across
+              room
+            </li>
+            <li>
+              <strong>Cable terminations — Good:</strong> Correct torque, neat dressing, proper
+              identification
+            </li>
+            <li>
+              <strong>Cable terminations — Poor:</strong> Over/under-tightened, untidy, missing
+              labels
+            </li>
+            <li>
+              <strong>Distribution boards — Good:</strong> Tidy wiring, clear labelling, circuits
+              identified
+            </li>
+            <li>
+              <strong>Distribution boards — Poor:</strong> Tangled cables, illegible labels, unknown
+              circuits
+            </li>
+          </ul>
+          <p>
+            <strong>CIBSE quality guidance:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>CIBSE Guide M:</strong> Maintenance Engineering and Management - installation
+              for maintainability
+            </li>
+            <li>
+              <strong>CIBSE Guide W:</strong> Water Distribution Systems - pipework quality
+              standards
+            </li>
+            <li>
+              <strong>CIBSE TM52:</strong> Thermal Performance - installation affecting energy
+              performance
+            </li>
+            <li>
+              <strong>CIBSE Commissioning Codes:</strong> A-R series covering all services
+            </li>
+          </ul>
+          <p>
+            <strong>Contractual status:</strong> BSRIA and CIBSE standards are typically specified
+            in contract documents. Non-compliance constitutes a contractual breach requiring
+            remediation at contractor cost.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...quickCheckQuestions[0]} />
+
+        <SectionRule />
+
+        <ConceptBlock title="Supervision Requirements">
+          <p>
+            Effective supervision is fundamental to installation quality. The supervisor acts as the
+            primary quality control mechanism, ensuring work complies with specifications,
+            identifying issues early, and providing technical guidance to operatives.
+          </p>
+          <p>
+            <strong>Complex M&E work (ratio 1:8 to 1:12):</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Main plant rooms</li>
+            <li>Distribution boards</li>
+            <li>BMS integration</li>
+            <li>Commissioning activities</li>
+          </ul>
+          <p>
+            <strong>Standard installation (ratio 1:15 to 1:20):</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Containment runs</li>
+            <li>General wiring</li>
+            <li>Accessory installation</li>
+            <li>Repetitive fit-out</li>
+          </ul>
+          <p>
+            <strong>High-risk activities (ratio 1:4 to 1:6):</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Live working</li>
+            <li>Confined spaces</li>
+            <li>Working at height</li>
+            <li>HV installations</li>
+          </ul>
+          <p>
+            <strong>Supervisor competence requirements:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Technical knowledge:</strong> NVQ Level 3 / AM2, relevant trade background
+            </li>
+            <li>
+              <strong>Regulatory awareness:</strong> BS 7671:2018+A4:2026, Building Regulations
+            </li>
+            <li>
+              <strong>Quality management:</strong> Quality inspection training, ITP understanding
+            </li>
+            <li>
+              <strong>Health and safety:</strong> SMSTS/SSSTS, risk assessment competence
+            </li>
+            <li>
+              <strong>Documentation:</strong> Record keeping, report writing ability
+            </li>
+          </ul>
+          <p>
+            <strong>Supervision documentation:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Daily log:</strong> Areas supervised, operatives present, work completed
+            </li>
+            <li>
+              <strong>Inspection record:</strong> Checks conducted, results, any defects
+            </li>
+            <li>
+              <strong>Issue log:</strong> Problems identified, actions taken, resolution
+            </li>
+            <li>
+              <strong>Toolbox talks:</strong> Topics covered, attendees, signed register
+            </li>
+          </ul>
+          <p>
+            <strong>Quality principle:</strong> Supervision is preventative quality control.
+            Adequate supervision prevents defects; inadequate supervision merely discovers them
+            later at higher cost.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...quickCheckQuestions[1]} />
+
+        <SectionRule />
+
+        <ConceptBlock title="Quality Walk-Downs and Audits">
+          <p>
+            Quality walk-downs and audits provide structured verification that installation work
+            meets specifications. Walk-downs are physical inspections of installed work; audits are
+            systematic reviews of quality systems, procedures, and records.
+          </p>
+          <p>
+            <strong>Critical walk-down timing:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Before ceiling closure:</strong> Verify above-ceiling services, supports, fire
+              stopping
+            </li>
+            <li>
+              <strong>Before wall lining:</strong> Check concealed wiring, back boxes, first fix
+            </li>
+            <li>
+              <strong>Before floor screed:</strong> Inspect underfloor services, conduit routes
+            </li>
+            <li>
+              <strong>Before riser closure:</strong> Verify vertical containment, firestopping
+            </li>
+            <li>
+              <strong>Before energisation:</strong> Final check of all accessible installations
+            </li>
+          </ul>
+          <p>
+            <strong>Quality walk-down process:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Preparation:</strong> Review drawings, specs, previous snags — Checklist,
+              reference documents
+            </li>
+            <li>
+              <strong>Inspection:</strong> Systematic area-by-area review — Defect notes,
+              photographs
+            </li>
+            <li>
+              <strong>Documentation:</strong> Complete snagging list, categorise items — Formal snag
+              report
+            </li>
+            <li>
+              <strong>Remediation:</strong> Contractor addresses defects — Remediation evidence
+            </li>
+            <li>
+              <strong>Close-out:</strong> Re-inspect, verify remediation — Signed-off snag list
+            </li>
+          </ul>
+          <p>
+            <strong>Process audit questions:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Are quality procedures being followed?</li>
+            <li>Are records being maintained?</li>
+            <li>Is supervision adequate?</li>
+            <li>Are hold points being observed?</li>
+          </ul>
+          <p>
+            <strong>Product audit questions:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Does installed work meet specification?</li>
+            <li>Are materials as approved?</li>
+            <li>Is workmanship acceptable?</li>
+            <li>Are test results compliant?</li>
+          </ul>
+          <p>
+            <strong>Defect categorisation:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Category A (Critical):</strong> Safety risk or major non-compliance - stop
+              work, immediate remedy
+            </li>
+            <li>
+              <strong>Category B (Major):</strong> Significant non-compliance - remedy before
+              proceeding
+            </li>
+            <li>
+              <strong>Category C (Minor):</strong> Cosmetic or minor deviation - remedy before
+              handover
+            </li>
+            <li>
+              <strong>Observation:</strong> Not a defect but improvement opportunity
+            </li>
+          </ul>
+          <p>
+            <strong>Real-world example:</strong> On a London hospital project, systematic walk-downs
+            before ceiling closure identified 340 containment support deficiencies. Remediation took
+            3 days. Had these been found after ceiling installation, remediation would have required
+            ceiling removal, costing 6 weeks and £180,000.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...quickCheckQuestions[2]} />
+
+        <SectionRule />
+
+        <ConceptBlock title="Installation Checklists and Progressive Verification">
+          <p>
+            Installation checklists provide systematic frameworks for quality verification, ensuring
+            consistent inspection regardless of who conducts it. Progressive verification ensures
+            quality is built in throughout installation, not checked only at completion.
+          </p>
+          <p>
+            <strong>Electrical installation checklist elements:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Containment:</strong> Type correct, fixing centres, level/plumb, earthing
+              continuity, fire barriers
+            </li>
+            <li>
+              <strong>Cables:</strong> Type/CSA per schedule, bend radii, segregation,
+              identification, damage-free
+            </li>
+            <li>
+              <strong>Distribution boards:</strong> Location correct, mounting height, labelling,
+              circuit schedules, spare ways
+            </li>
+            <li>
+              <strong>Accessories:</strong> Height/position, type correct, fixing secure, level, no
+              damage
+            </li>
+            <li>
+              <strong>Terminations:</strong> Correct terminals, torque verified, insulation intact,
+              dressing neat
+            </li>
+            <li>
+              <strong>Luminaires:</strong> Position per drawing, suspension secure, emergency
+              function, lamp type
+            </li>
+          </ul>
+          <p>
+            <strong>Progressive verification stages:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>1. First Fix Verification:</strong> Containment routes, back boxes, cable runs
+              before covering
+            </li>
+            <li>
+              <strong>2. Distribution Verification:</strong> Boards installed, cables terminated,
+              circuit identification
+            </li>
+            <li>
+              <strong>3. Second Fix Verification:</strong> Accessories, luminaires, final
+              connections
+            </li>
+            <li>
+              <strong>4. Pre-Commissioning Verification:</strong> Visual inspection complete, ready
+              for testing
+            </li>
+          </ul>
+          <p>
+            <strong>What to photograph:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>All concealed installations</li>
+            <li>Fire barrier installations</li>
+            <li>Complex terminations</li>
+            <li>Any variations from drawings</li>
+            <li>First-of-type installations</li>
+            <li>Defects before and after repair</li>
+          </ul>
+          <p>
+            <strong>Photo standards:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Include location reference board</li>
+            <li>Context shot plus detail shot</li>
+            <li>Consistent file naming convention</li>
+            <li>Metadata with date/time/location</li>
+            <li>Cross-reference to ITP/drawings</li>
+            <li>Stored in project QA system</li>
+          </ul>
+          <p>
+            <strong>First-of-type approval process:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Step 1:</strong> Install single exemplar of repetitive element (e.g., one
+              room, one floor)
+            </li>
+            <li>
+              <strong>Step 2:</strong> Contractor self-inspection against specification
+            </li>
+            <li>
+              <strong>Step 3:</strong> Joint inspection with consultant/client representative
+            </li>
+            <li>
+              <strong>Step 4:</strong> Formal sign-off documenting approved standard
+            </li>
+            <li>
+              <strong>Step 5:</strong> Photographic record as benchmark for subsequent work
+            </li>
+            <li>
+              <strong>Step 6:</strong> Proceed with mass installation referencing approved exemplar
+            </li>
+          </ul>
+          <p>
+            <strong>Cost of quality:</strong> Studies show prevention activities (first-of-type,
+            progressive verification) cost approximately 3% of installation value. Failure costs
+            (rework, delays, claims) average 10-15% on projects with poor quality management.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...quickCheckQuestions[3]} />
+
+        <SectionRule />
+
+        <ConceptBlock title="Worked Examples">
+          <p>
+            <strong>Example 1 — Supervision planning:</strong> A commercial fit-out has 45
+            electrical operatives installing general distribution and lighting. How many supervisors
+            are required?
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Work type: Standard installation (containment, wiring, accessories)</li>
+            <li>Recommended ratio: 1:15 to 1:20</li>
+            <li>
+              Using 1:15 (conservative): 45 ÷ 15 = <strong>3 supervisors</strong>
+            </li>
+            <li>
+              Using 1:20 (minimum): 45 ÷ 20 = 2.25 = <strong>3 supervisors</strong>
+            </li>
+            <li>
+              <strong>Answer:</strong> Minimum 3 supervisors required
+            </li>
+            <li>
+              Note: If any complex work (main switchgear, BMS), increase ratio for those areas
+            </li>
+          </ul>
+          <p>
+            <strong>Example 2 — Quality inspection sampling:</strong> A project has 200 identical
+            office lighting installations. How many should be formally inspected?
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>CIBSE recommendation: 25% minimum sample for repetitive work</li>
+            <li>
+              Sample size: 200 × 0.25 = <strong>50 installations</strong>
+            </li>
+            <li>100% first-of-type (first installation)</li>
+            <li>Increased sampling if defects found</li>
+            <li>Random selection across all areas</li>
+            <li>
+              <strong>Answer:</strong> 50 formal inspections plus first-of-type approval
+            </li>
+          </ul>
+          <p>
+            <strong>Example 3 — Cost of quality analysis:</strong> A containment defect found after
+            ceiling installation. Original installation cost £2,000. What is the likely remediation
+            cost?
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Remove ceiling tiles: 2 days labour @ £400/day = £800</li>
+            <li>Scaffold/access: £600</li>
+            <li>Containment remediation: £500</li>
+            <li>Reinstate ceiling: 1 day @ £400 = £400</li>
+            <li>Re-inspection: £200</li>
+            <li>
+              Total remediation cost: <strong>£2,500</strong>
+            </li>
+            <li>
+              Cost multiplier: 2,500 ÷ 2,000 = <strong>1.25×</strong> original cost
+            </li>
+            <li>Had defect been found before ceiling: remediation ~£300</li>
+            <li>
+              <strong>Early detection saving:</strong> £2,200 (88% saving)
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <ConceptBlock title="Practical guidance">
+          <p>
+            <strong>Quality walk-down checklist:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Review specification and approved drawings before walk-down</li>
+            <li>Take previous snag list to verify closures</li>
+            <li>Work systematically area-by-area, system-by-system</li>
+            <li>Photograph all defects with location reference</li>
+            <li>Categorise defects by severity (A/B/C)</li>
+            <li>Issue formal report within 24 hours</li>
+          </ul>
+          <p>
+            <strong>Key values to remember:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              Supervision ratio complex work: <strong>1:10</strong>
+            </li>
+            <li>
+              Supervision ratio standard work: <strong>1:15-20</strong>
+            </li>
+            <li>
+              Sample inspection rate: <strong>25% minimum</strong>
+            </li>
+            <li>
+              First-of-type: <strong>100% inspection</strong>
+            </li>
+            <li>
+              Quality cost prevention: <strong>~3% of value</strong>
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <CommonMistake
+          title="Common quality failures"
+          whatHappens={
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+              <li>
+                <strong>Inadequate supervision:</strong> Work proceeds without checking
+              </li>
+              <li>
+                <strong>Late inspection:</strong> Defects found after covering up
+              </li>
+              <li>
+                <strong>No first-of-type:</strong> Errors repeated across installation
+              </li>
+              <li>
+                <strong>Poor records:</strong> No evidence of compliance
+              </li>
+              <li>
+                <strong>Snag list drift:</strong> Defects not closed out
+              </li>
+            </ul>
+          }
+          doInstead="Resource supervision to BSRIA/CIBSE ratios, walk down progressively before each cover-up, lock in a first-of-type benchmark, photograph and file every concealed run, and chase every snag to formal close-out."
+        />
+
+        <SectionRule />
+
+        <Scenario
+          title="Cable installation defects discovered at testing stage"
+          situation={
+            <>
+              At first-fix complete, the QA inspector finds: cables sharing containment with data
+              cables (segregation breach), cable ties over-tight causing insulation deformation, and
+              no labelling on circuit cables in the riser. Across the floor, 800m of cable needs
+              reworking. Cost: £15k labour. Programme impact: 1 week.
+            </>
+          }
+          whatToDo={
+            <>
+              Stop second-fix until first-fix is signed off floor by floor. Re-brief electrical
+              operatives on workmanship standards: segregation per BS 6701, cable tie spacing and
+              tension, labelling at every termination. Implement a workmanship sample audit at each
+              floor — first 50m installed by each operative inspected, defects rectified before they
+              continue. Update the ITP to include a workmanship hold point at first-fix complete on
+              each floor.
+            </>
+          }
+          whyItMatters={
+            <>
+              Workmanship defects compound — the rework cost on first-fix is small; the rework cost
+              when the same defects are buried under second-fix and ceilings is enormous. Catching
+              defects at the workface is the cheapest place to fix them. Supervision is investment,
+              not cost.
+            </>
+          }
+        />
+
+        <SectionRule />
+
+        <FAQ items={faqs} />
+
+        <SectionRule />
+
+        <KeyTakeaways
+          points={[
+            'Workmanship = the gap between design and reality — closed by standards, supervision, verification.',
+            'Documented workmanship standards: methods, torques, labels, fixings, segregation.',
+            'Supervision ratio 1:8 typical; foreman + chargehand structure for larger gangs.',
+            'Weekly QA walk-rounds with PM and inspector; findings tracked to closure.',
+            'Progressive verification: catch defects at workface, not at handover.',
+            'BS 7671 Reg 134.1.1: good workmanship is a regulatory requirement.',
+            'Sample audit of first work by new operatives before letting them produce at volume.',
+            'Workmanship discipline is project margin — rework cost compounds with time.',
+          ]}
+        />
+
+        <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+
+        <div className="grid grid-cols-2 gap-3 pt-2">
           <button
             onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section4')}
-            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
           >
-            <ArrowLeft className="h-4 w-4" /> Back
+            <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+              <ChevronLeft className="h-3 w-3" /> Back to section
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-white truncate">
+              Quality management
+            </div>
           </button>
-
-          <PageHero
-            eyebrow="Module 5 · Section 4 · Subsection 4"
-            title="Installation Quality"
-            description="Workmanship standards, supervision requirements, quality audits, and progressive verification in building services installation."
-            tone="purple"
-          />
-
-          <TLDR
-            points={[
-              "Installation quality is the gap between design intent and installed reality — closed by workmanship standards, supervision and progressive verification.",
-              "Workmanship standards documented: cable installation methods, torque values, labelling conventions, fixing standards, segregation distances.",
-              "Supervision: ratio of working supervisor to operatives 1:8 typical; foreman + chargehand structure for larger gangs.",
-              "Quality audits: weekly site walk-rounds by PM with QA inspector; findings logged and tracked to closure.",
-              "Progressive verification: BS 7671 initial verification during erection AND on completion — same principle for mechanical and BMS.",
-            ]}
-          />
-
-          <RegsCallout
-            source="BS 7671:2018+A4:2026 — Regulation 134.1.1 (Good workmanship)"
-            clause="Good workmanship by competent persons or persons under their supervision and proper materials shall be used in the erection of the electrical installation."
-            meaning={
-              <>
-                BS 7671 is explicit that workmanship is part of compliance, not separate from it. A correctly designed installation badly installed is non-compliant. Reg 134.1.1 places the duty on you as the person responsible for the installation; supervision of less experienced operatives is the practical means.
-              </>
-            }
-            cite="Source: BS 7671:2018+A4:2026 — Regulation 134.1.1."
-          />
-
-
-          <LearningOutcomes
-            outcomes={[
-              'Apply BSRIA and CIBSE workmanship standards to M&E installations',
-              'Determine appropriate supervision ratios for different work types',
-              'Plan and conduct quality walk-down inspections effectively',
-              'Develop installation checklists for consistent quality verification',
-              'Maintain photographic and documentary quality records',
-              'Implement progressive verification throughout installation phases',
-            ]}
-          />
-
-          <SectionRule />
-
-          <ConceptBlock title="Workmanship Standards">
-            <p>
-              Workmanship standards provide objective benchmarks for assessing installation quality.
-              In building services, BSRIA and CIBSE publications establish industry-recognised
-              criteria that enable consistent quality assessment across different contractors,
-              sites, and inspection personnel.
-            </p>
-            <p>
-              <strong>Key BSRIA publications:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>BG 55/2020:</strong> Illustrated Guide to Electrical Building Services
-                (containment, wiring, accessories)
-              </li>
-              <li>
-                <strong>BG 56/2020:</strong> Illustrated Guide to Mechanical Building Services
-                (pipework, ductwork, plant)
-              </li>
-              <li>
-                <strong>BG 29:</strong> Pre-Commission Cleaning of Pipework Systems
-              </li>
-              <li>
-                <strong>BG 8:</strong> Model Specifications for BMS
-              </li>
-            </ul>
-            <p>
-              <strong>BSRIA workmanship assessment approach — good vs poor practice:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Cable tray runs — Good:</strong> Level, aligned, consistent fixings, proper
-                joints
-              </li>
-              <li>
-                <strong>Cable tray runs — Poor:</strong> Sagging, misaligned, mixed fixing types
-              </li>
-              <li>
-                <strong>Conduit bends — Good:</strong> Smooth radius, no kinks, consistent spacing
-              </li>
-              <li>
-                <strong>Conduit bends — Poor:</strong> Kinked, varying radii, uneven fixing centres
-              </li>
-              <li>
-                <strong>Accessory mounting — Good:</strong> Level, secure, consistent heights,
-                correct orientation
-              </li>
-              <li>
-                <strong>Accessory mounting — Poor:</strong> Crooked, loose, varying heights across
-                room
-              </li>
-              <li>
-                <strong>Cable terminations — Good:</strong> Correct torque, neat dressing, proper
-                identification
-              </li>
-              <li>
-                <strong>Cable terminations — Poor:</strong> Over/under-tightened, untidy, missing
-                labels
-              </li>
-              <li>
-                <strong>Distribution boards — Good:</strong> Tidy wiring, clear labelling, circuits
-                identified
-              </li>
-              <li>
-                <strong>Distribution boards — Poor:</strong> Tangled cables, illegible labels,
-                unknown circuits
-              </li>
-            </ul>
-            <p>
-              <strong>CIBSE quality guidance:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>CIBSE Guide M:</strong> Maintenance Engineering and Management -
-                installation for maintainability
-              </li>
-              <li>
-                <strong>CIBSE Guide W:</strong> Water Distribution Systems - pipework quality
-                standards
-              </li>
-              <li>
-                <strong>CIBSE TM52:</strong> Thermal Performance - installation affecting energy
-                performance
-              </li>
-              <li>
-                <strong>CIBSE Commissioning Codes:</strong> A-R series covering all services
-              </li>
-            </ul>
-            <p>
-              <strong>Contractual status:</strong> BSRIA and CIBSE standards are typically specified
-              in contract documents. Non-compliance constitutes a contractual breach requiring
-              remediation at contractor cost.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...quickCheckQuestions[0]} />
-
-          <SectionRule />
-
-          <ConceptBlock title="Supervision Requirements">
-            <p>
-              Effective supervision is fundamental to installation quality. The supervisor acts as
-              the primary quality control mechanism, ensuring work complies with specifications,
-              identifying issues early, and providing technical guidance to operatives.
-            </p>
-            <p>
-              <strong>Complex M&E work (ratio 1:8 to 1:12):</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Main plant rooms</li>
-              <li>Distribution boards</li>
-              <li>BMS integration</li>
-              <li>Commissioning activities</li>
-            </ul>
-            <p>
-              <strong>Standard installation (ratio 1:15 to 1:20):</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Containment runs</li>
-              <li>General wiring</li>
-              <li>Accessory installation</li>
-              <li>Repetitive fit-out</li>
-            </ul>
-            <p>
-              <strong>High-risk activities (ratio 1:4 to 1:6):</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Live working</li>
-              <li>Confined spaces</li>
-              <li>Working at height</li>
-              <li>HV installations</li>
-            </ul>
-            <p>
-              <strong>Supervisor competence requirements:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Technical knowledge:</strong> NVQ Level 3 / AM2, relevant trade background
-              </li>
-              <li>
-                <strong>Regulatory awareness:</strong> BS 7671:2018+A4:2026, Building Regulations
-              </li>
-              <li>
-                <strong>Quality management:</strong> Quality inspection training, ITP understanding
-              </li>
-              <li>
-                <strong>Health and safety:</strong> SMSTS/SSSTS, risk assessment competence
-              </li>
-              <li>
-                <strong>Documentation:</strong> Record keeping, report writing ability
-              </li>
-            </ul>
-            <p>
-              <strong>Supervision documentation:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Daily log:</strong> Areas supervised, operatives present, work completed
-              </li>
-              <li>
-                <strong>Inspection record:</strong> Checks conducted, results, any defects
-              </li>
-              <li>
-                <strong>Issue log:</strong> Problems identified, actions taken, resolution
-              </li>
-              <li>
-                <strong>Toolbox talks:</strong> Topics covered, attendees, signed register
-              </li>
-            </ul>
-            <p>
-              <strong>Quality principle:</strong> Supervision is preventative quality control.
-              Adequate supervision prevents defects; inadequate supervision merely discovers them
-              later at higher cost.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...quickCheckQuestions[1]} />
-
-          <SectionRule />
-
-          <ConceptBlock title="Quality Walk-Downs and Audits">
-            <p>
-              Quality walk-downs and audits provide structured verification that installation work
-              meets specifications. Walk-downs are physical inspections of installed work; audits
-              are systematic reviews of quality systems, procedures, and records.
-            </p>
-            <p>
-              <strong>Critical walk-down timing:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Before ceiling closure:</strong> Verify above-ceiling services, supports,
-                fire stopping
-              </li>
-              <li>
-                <strong>Before wall lining:</strong> Check concealed wiring, back boxes, first fix
-              </li>
-              <li>
-                <strong>Before floor screed:</strong> Inspect underfloor services, conduit routes
-              </li>
-              <li>
-                <strong>Before riser closure:</strong> Verify vertical containment, firestopping
-              </li>
-              <li>
-                <strong>Before energisation:</strong> Final check of all accessible installations
-              </li>
-            </ul>
-            <p>
-              <strong>Quality walk-down process:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Preparation:</strong> Review drawings, specs, previous snags — Checklist,
-                reference documents
-              </li>
-              <li>
-                <strong>Inspection:</strong> Systematic area-by-area review — Defect notes,
-                photographs
-              </li>
-              <li>
-                <strong>Documentation:</strong> Complete snagging list, categorise items — Formal
-                snag report
-              </li>
-              <li>
-                <strong>Remediation:</strong> Contractor addresses defects — Remediation evidence
-              </li>
-              <li>
-                <strong>Close-out:</strong> Re-inspect, verify remediation — Signed-off snag list
-              </li>
-            </ul>
-            <p>
-              <strong>Process audit questions:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Are quality procedures being followed?</li>
-              <li>Are records being maintained?</li>
-              <li>Is supervision adequate?</li>
-              <li>Are hold points being observed?</li>
-            </ul>
-            <p>
-              <strong>Product audit questions:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Does installed work meet specification?</li>
-              <li>Are materials as approved?</li>
-              <li>Is workmanship acceptable?</li>
-              <li>Are test results compliant?</li>
-            </ul>
-            <p>
-              <strong>Defect categorisation:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Category A (Critical):</strong> Safety risk or major non-compliance - stop
-                work, immediate remedy
-              </li>
-              <li>
-                <strong>Category B (Major):</strong> Significant non-compliance - remedy before
-                proceeding
-              </li>
-              <li>
-                <strong>Category C (Minor):</strong> Cosmetic or minor deviation - remedy before
-                handover
-              </li>
-              <li>
-                <strong>Observation:</strong> Not a defect but improvement opportunity
-              </li>
-            </ul>
-            <p>
-              <strong>Real-world example:</strong> On a London hospital project, systematic
-              walk-downs before ceiling closure identified 340 containment support deficiencies.
-              Remediation took 3 days. Had these been found after ceiling installation, remediation
-              would have required ceiling removal, costing 6 weeks and £180,000.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...quickCheckQuestions[2]} />
-
-          <SectionRule />
-
-          <ConceptBlock title="Installation Checklists and Progressive Verification">
-            <p>
-              Installation checklists provide systematic frameworks for quality verification,
-              ensuring consistent inspection regardless of who conducts it. Progressive verification
-              ensures quality is built in throughout installation, not checked only at completion.
-            </p>
-            <p>
-              <strong>Electrical installation checklist elements:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Containment:</strong> Type correct, fixing centres, level/plumb, earthing
-                continuity, fire barriers
-              </li>
-              <li>
-                <strong>Cables:</strong> Type/CSA per schedule, bend radii, segregation,
-                identification, damage-free
-              </li>
-              <li>
-                <strong>Distribution boards:</strong> Location correct, mounting height, labelling,
-                circuit schedules, spare ways
-              </li>
-              <li>
-                <strong>Accessories:</strong> Height/position, type correct, fixing secure, level,
-                no damage
-              </li>
-              <li>
-                <strong>Terminations:</strong> Correct terminals, torque verified, insulation
-                intact, dressing neat
-              </li>
-              <li>
-                <strong>Luminaires:</strong> Position per drawing, suspension secure, emergency
-                function, lamp type
-              </li>
-            </ul>
-            <p>
-              <strong>Progressive verification stages:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>1. First Fix Verification:</strong> Containment routes, back boxes, cable
-                runs before covering
-              </li>
-              <li>
-                <strong>2. Distribution Verification:</strong> Boards installed, cables terminated,
-                circuit identification
-              </li>
-              <li>
-                <strong>3. Second Fix Verification:</strong> Accessories, luminaires, final
-                connections
-              </li>
-              <li>
-                <strong>4. Pre-Commissioning Verification:</strong> Visual inspection complete,
-                ready for testing
-              </li>
-            </ul>
-            <p>
-              <strong>What to photograph:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>All concealed installations</li>
-              <li>Fire barrier installations</li>
-              <li>Complex terminations</li>
-              <li>Any variations from drawings</li>
-              <li>First-of-type installations</li>
-              <li>Defects before and after repair</li>
-            </ul>
-            <p>
-              <strong>Photo standards:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Include location reference board</li>
-              <li>Context shot plus detail shot</li>
-              <li>Consistent file naming convention</li>
-              <li>Metadata with date/time/location</li>
-              <li>Cross-reference to ITP/drawings</li>
-              <li>Stored in project QA system</li>
-            </ul>
-            <p>
-              <strong>First-of-type approval process:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Step 1:</strong> Install single exemplar of repetitive element (e.g., one
-                room, one floor)
-              </li>
-              <li>
-                <strong>Step 2:</strong> Contractor self-inspection against specification
-              </li>
-              <li>
-                <strong>Step 3:</strong> Joint inspection with consultant/client representative
-              </li>
-              <li>
-                <strong>Step 4:</strong> Formal sign-off documenting approved standard
-              </li>
-              <li>
-                <strong>Step 5:</strong> Photographic record as benchmark for subsequent work
-              </li>
-              <li>
-                <strong>Step 6:</strong> Proceed with mass installation referencing approved
-                exemplar
-              </li>
-            </ul>
-            <p>
-              <strong>Cost of quality:</strong> Studies show prevention activities (first-of-type,
-              progressive verification) cost approximately 3% of installation value. Failure costs
-              (rework, delays, claims) average 10-15% on projects with poor quality management.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...quickCheckQuestions[3]} />
-
-          <SectionRule />
-
-          <ConceptBlock title="Worked Examples">
-            <p>
-              <strong>Example 1 — Supervision planning:</strong> A commercial fit-out has 45
-              electrical operatives installing general distribution and lighting. How many
-              supervisors are required?
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Work type: Standard installation (containment, wiring, accessories)</li>
-              <li>Recommended ratio: 1:15 to 1:20</li>
-              <li>
-                Using 1:15 (conservative): 45 ÷ 15 = <strong>3 supervisors</strong>
-              </li>
-              <li>
-                Using 1:20 (minimum): 45 ÷ 20 = 2.25 = <strong>3 supervisors</strong>
-              </li>
-              <li>
-                <strong>Answer:</strong> Minimum 3 supervisors required
-              </li>
-              <li>
-                Note: If any complex work (main switchgear, BMS), increase ratio for those areas
-              </li>
-            </ul>
-            <p>
-              <strong>Example 2 — Quality inspection sampling:</strong> A project has 200 identical
-              office lighting installations. How many should be formally inspected?
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>CIBSE recommendation: 25% minimum sample for repetitive work</li>
-              <li>
-                Sample size: 200 × 0.25 = <strong>50 installations</strong>
-              </li>
-              <li>100% first-of-type (first installation)</li>
-              <li>Increased sampling if defects found</li>
-              <li>Random selection across all areas</li>
-              <li>
-                <strong>Answer:</strong> 50 formal inspections plus first-of-type approval
-              </li>
-            </ul>
-            <p>
-              <strong>Example 3 — Cost of quality analysis:</strong> A containment defect found
-              after ceiling installation. Original installation cost £2,000. What is the likely
-              remediation cost?
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Remove ceiling tiles: 2 days labour @ £400/day = £800</li>
-              <li>Scaffold/access: £600</li>
-              <li>Containment remediation: £500</li>
-              <li>Reinstate ceiling: 1 day @ £400 = £400</li>
-              <li>Re-inspection: £200</li>
-              <li>
-                Total remediation cost: <strong>£2,500</strong>
-              </li>
-              <li>
-                Cost multiplier: 2,500 ÷ 2,000 = <strong>1.25×</strong> original cost
-              </li>
-              <li>Had defect been found before ceiling: remediation ~£300</li>
-              <li>
-                <strong>Early detection saving:</strong> £2,200 (88% saving)
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <ConceptBlock title="Practical guidance">
-            <p>
-              <strong>Quality walk-down checklist:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Review specification and approved drawings before walk-down</li>
-              <li>Take previous snag list to verify closures</li>
-              <li>Work systematically area-by-area, system-by-system</li>
-              <li>Photograph all defects with location reference</li>
-              <li>Categorise defects by severity (A/B/C)</li>
-              <li>Issue formal report within 24 hours</li>
-            </ul>
-            <p>
-              <strong>Key values to remember:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                Supervision ratio complex work: <strong>1:10</strong>
-              </li>
-              <li>
-                Supervision ratio standard work: <strong>1:15-20</strong>
-              </li>
-              <li>
-                Sample inspection rate: <strong>25% minimum</strong>
-              </li>
-              <li>
-                First-of-type: <strong>100% inspection</strong>
-              </li>
-              <li>
-                Quality cost prevention: <strong>~3% of value</strong>
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <CommonMistake
-            title="Common quality failures"
-            whatHappens={
-              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
-                <li>
-                  <strong>Inadequate supervision:</strong> Work proceeds without checking
-                </li>
-                <li>
-                  <strong>Late inspection:</strong> Defects found after covering up
-                </li>
-                <li>
-                  <strong>No first-of-type:</strong> Errors repeated across installation
-                </li>
-                <li>
-                  <strong>Poor records:</strong> No evidence of compliance
-                </li>
-                <li>
-                  <strong>Snag list drift:</strong> Defects not closed out
-                </li>
-              </ul>
-            }
-            doInstead="Resource supervision to BSRIA/CIBSE ratios, walk down progressively before each cover-up, lock in a first-of-type benchmark, photograph and file every concealed run, and chase every snag to formal close-out."
-          />
-
-          <SectionRule />
-
-          <Scenario
-            title="Cable installation defects discovered at testing stage"
-            situation={
-              <>
-                At first-fix complete, the QA inspector finds: cables sharing containment with data cables (segregation breach), cable ties over-tight causing insulation deformation, and no labelling on circuit cables in the riser. Across the floor, 800m of cable needs reworking. Cost: £15k labour. Programme impact: 1 week.
-              </>
-            }
-            whatToDo={
-              <>
-                Stop second-fix until first-fix is signed off floor by floor. Re-brief electrical operatives on workmanship standards: segregation per BS 6701, cable tie spacing and tension, labelling at every termination. Implement a workmanship sample audit at each floor — first 50m installed by each operative inspected, defects rectified before they continue. Update the ITP to include a workmanship hold point at first-fix complete on each floor.
-              </>
-            }
-            whyItMatters={
-              <>
-                Workmanship defects compound — the rework cost on first-fix is small; the rework cost when the same defects are buried under second-fix and ceilings is enormous. Catching defects at the workface is the cheapest place to fix them. Supervision is investment, not cost.
-              </>
-            }
-          />
-
-          <SectionRule />
-
-          <FAQ items={faqs} />
-
-          <SectionRule />
-
-                    <KeyTakeaways
-            points={[
-              "Workmanship = the gap between design and reality — closed by standards, supervision, verification.",
-              "Documented workmanship standards: methods, torques, labels, fixings, segregation.",
-              "Supervision ratio 1:8 typical; foreman + chargehand structure for larger gangs.",
-              "Weekly QA walk-rounds with PM and inspector; findings tracked to closure.",
-              "Progressive verification: catch defects at workface, not at handover.",
-              "BS 7671 Reg 134.1.1: good workmanship is a regulatory requirement.",
-              "Sample audit of first work by new operatives before letting them produce at volume.",
-              "Workmanship discipline is project margin — rework cost compounds with time.",
-            ]}
-          />
-
-
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-
-          <div className="grid grid-cols-2 gap-3 pt-2">
-            <button
-              onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section4')}
-              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
-                <ChevronLeft className="h-3 w-3" /> Back to section
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-white truncate">
-                Quality management
-              </div>
-            </button>
-            <button
-              onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section4-5')}
-              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
-                Next subsection <ChevronRight className="h-3 w-3" />
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-black truncate">
-                Testing and verification
-              </div>
-            </button>
-          </div>
-        </PageFrame>
-      </div>
-    </div>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section4-5')}
+            className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+          >
+            <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+              Next subsection <ChevronRight className="h-3 w-3" />
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-black truncate">
+              Testing and verification
+            </div>
+          </button>
+        </div>
+      </HubBody>
+    </HubPage>
   );
 };
 

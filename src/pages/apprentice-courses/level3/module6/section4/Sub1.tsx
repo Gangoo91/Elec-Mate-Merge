@@ -12,12 +12,12 @@
  */
 
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import VoltageDropCalculator from '@/components/apprentice-courses/VoltageDropCalculator';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
-import { PageFrame, PageHero } from '@/components/college/primitives';
 import {
   TLDR,
   ConceptBlock,
@@ -41,7 +41,7 @@ const checks = [
   {
     id: 'it-vs-iz',
     question:
-      "A 4 mm² 70 °C T&E cable has a tabulated It of 36 A in Reference Method C. With Ca = 0.94 and Cg = 0.80 applied to a 32 A radial, what is Iz, and does the cable comply with Reg 433.1.1?",
+      'A 4 mm² 70 °C T&E cable has a tabulated It of 36 A in Reference Method C. With Ca = 0.94 and Cg = 0.80 applied to a 32 A radial, what is Iz, and does the cable comply with Reg 433.1.1?',
     options: [
       'Iz = 36 × 0.94 × 0.80 ≈ 27.07 A, does NOT comply — Iz is below In = 32 A.',
       'Iz = 36 + (0.94 + 0.80) = 37.74 A, complies.',
@@ -50,7 +50,7 @@ const checks = [
     ],
     correctIndex: 0,
     explanation:
-      "Iz = It × (product of all derate factors) = 36 × 0.94 × 0.80 ≈ 27.07 A. The required compliance line is Ib ≤ In ≤ Iz, so 32 A ≤ 27.07 A is false — the cable does not satisfy Reg 433.1.1 in those install conditions. You either step up to 6 mm², change the install method to one with a higher It, or remove the derate cause (split the group, reduce ambient).",
+      'Iz = It × (product of all derate factors) = 36 × 0.94 × 0.80 ≈ 27.07 A. The required compliance line is Ib ≤ In ≤ Iz, so 32 A ≤ 27.07 A is false — the cable does not satisfy Reg 433.1.1 in those install conditions. You either step up to 6 mm², change the install method to one with a higher It, or remove the derate cause (split the group, reduce ambient).',
   },
   {
     id: 'reference-30',
@@ -64,12 +64,12 @@ const checks = [
     ],
     correctIndex: 2,
     explanation:
-      "The ambient correction Ca lives in Table 4B1 (or the OSG equivalent, Table 6A). For a 70 °C thermoplastic cable in 40 °C ambient air, Ca ≈ 0.87. The base table figures assume 30 °C; whenever the actual ambient is hotter, you derate by Ca to keep the conductor below its operating temperature limit.",
+      'The ambient correction Ca lives in Table 4B1 (or the OSG equivalent, Table 6A). For a 70 °C thermoplastic cable in 40 °C ambient air, Ca ≈ 0.87. The base table figures assume 30 °C; whenever the actual ambient is hotter, you derate by Ca to keep the conductor below its operating temperature limit.',
   },
   {
     id: 'osg-tables',
     question:
-      "Which IET On-Site Guide table is the everyday equivalent of BS 7671 Appendix 4 Table 4D5 for 70 °C thermoplastic two-core T&E flat cable?",
+      'Which IET On-Site Guide table is the everyday equivalent of BS 7671 Appendix 4 Table 4D5 for 70 °C thermoplastic two-core T&E flat cable?',
     options: [
       'Table F7 (current-carrying capacity, 70 °C thermoplastic singles in conduit / trunking).',
       'Table F9 (current-carrying capacity, steel-wire-armoured cable for sub-mains).',
@@ -95,12 +95,12 @@ const quizQuestions = [
     ],
     correctAnswer: 1,
     explanation:
-      "Iz is the maximum continuous current the cable can carry indefinitely without the conductor exceeding the temperature its insulation is rated for — 70 °C for standard thermoplastic, 90 °C for thermosetting. At Iz, the cable runs hot but stable; above Iz, insulation degrades, the cable ages prematurely, and eventually fails.",
+      'Iz is the maximum continuous current the cable can carry indefinitely without the conductor exceeding the temperature its insulation is rated for — 70 °C for standard thermoplastic, 90 °C for thermosetting. At Iz, the cable runs hot but stable; above Iz, insulation degrades, the cable ages prematurely, and eventually fails.',
   },
   {
     id: 2,
     question:
-      "Tabulated current-carrying capacity (It) in BS 7671 Appendix 4 is the value before or after correction factors are applied?",
+      'Tabulated current-carrying capacity (It) in BS 7671 Appendix 4 is the value before or after correction factors are applied?',
     options: [
       'After — the table already builds in typical grouping and ambient allowances, so no further correction is needed.',
       'Before for thermoplastic cables but after for thermosetting cables, because the two insulation types are tabulated differently.',
@@ -109,21 +109,16 @@ const quizQuestions = [
     ],
     correctAnswer: 2,
     explanation:
-      "It is the as-tabulated baseline, taken from the relevant Appendix 4 table at the standard reference conditions: 30 °C ambient air, single circuit (no grouping), not in thermal insulation. Iz is the derated capacity actually available in your specific install: Iz = It × Ca × Cg × Ci × any other applicable factor.",
+      'It is the as-tabulated baseline, taken from the relevant Appendix 4 table at the standard reference conditions: 30 °C ambient air, single circuit (no grouping), not in thermal insulation. Iz is the derated capacity actually available in your specific install: Iz = It × Ca × Cg × Ci × any other applicable factor.',
   },
   {
     id: 3,
     question:
-      "Reg 433.1.1 of BS 7671 expresses the structural compliance line for cable selection as which inequality?",
-    options: [
-      'In ≤ Ib ≤ Iz',
-      'Ib ≤ Iz ≤ In',
-      'Ib = In = Iz',
-      'Ib ≤ In ≤ Iz',
-    ],
+      'Reg 433.1.1 of BS 7671 expresses the structural compliance line for cable selection as which inequality?',
+    options: ['In ≤ Ib ≤ Iz', 'Ib ≤ Iz ≤ In', 'Ib = In = Iz', 'Ib ≤ In ≤ Iz'],
     correctAnswer: 3,
     explanation:
-      "Reg 433.1.1: Ib ≤ In ≤ Iz. The protective device must let the design current through (In ≥ Ib), and the cable must be able to carry whatever the device passes, including overload, until the device operates (Iz ≥ In). The order is structural — load, then device, then cable.",
+      'Reg 433.1.1: Ib ≤ In ≤ Iz. The protective device must let the design current through (In ≥ Ib), and the cable must be able to carry whatever the device passes, including overload, until the device operates (Iz ≥ In). The order is structural — load, then device, then cable.',
   },
   {
     id: 4,
@@ -137,40 +132,35 @@ const quizQuestions = [
     ],
     correctAnswer: 0,
     explanation:
-      "Methods 100/101/102/103 cover cables in thermal insulation (loft, ceiling void, partial enclosure). The Ci derate is baked into those columns; you do not apply Ci separately. Reading Method C and then applying Ci on top would either over- or under-derate. Pick the column that matches the actual install.",
+      'Methods 100/101/102/103 cover cables in thermal insulation (loft, ceiling void, partial enclosure). The Ci derate is baked into those columns; you do not apply Ci separately. Reading Method C and then applying Ci on top would either over- or under-derate. Pick the column that matches the actual install.',
   },
   {
     id: 5,
     question:
-      "If a tabulated It is 27 A and the install conditions give Ca = 0.91, Cg = 0.85 and Ci = 1.0, what is Iz?",
-    options: [
-      '27 A',
-      '≈20.88 A',
-      '≈25.43 A',
-      '≈34.91 A',
-    ],
+      'If a tabulated It is 27 A and the install conditions give Ca = 0.91, Cg = 0.85 and Ci = 1.0, what is Iz?',
+    options: ['27 A', '≈20.88 A', '≈25.43 A', '≈34.91 A'],
     correctAnswer: 1,
     explanation:
-      "Iz = It × Ca × Cg × Ci = 27 × 0.91 × 0.85 × 1.0 = 27 × 0.7735 = 20.88 A. That is the actual capacity available in the install. If your design current is above 20.88 A you must size up.",
+      'Iz = It × Ca × Cg × Ci = 27 × 0.91 × 0.85 × 1.0 = 27 × 0.7735 = 20.88 A. That is the actual capacity available in the install. If your design current is above 20.88 A you must size up.',
   },
   {
     id: 6,
     question:
-      "Why does BS 7671 quote 70 °C and 90 °C operating limits rather than a single safe temperature?",
+      'Why does BS 7671 quote 70 °C and 90 °C operating limits rather than a single safe temperature?',
     options: [
-      "The two figures are the limits for single-phase and three-phase circuits respectively — 70 °C for single-phase, 90 °C for three-phase.",
-      "70 °C is the conductor limit during normal operation and 90 °C is the limit during a short-circuit fault, for the same cable.",
+      'The two figures are the limits for single-phase and three-phase circuits respectively — 70 °C for single-phase, 90 °C for three-phase.',
+      '70 °C is the conductor limit during normal operation and 90 °C is the limit during a short-circuit fault, for the same cable.',
       "The insulation chemistry differs — standard thermoplastic (PVC) softens above ~70 °C, modern thermosetting (LSF, XLPE) cross-links and tolerates 90 °C continuously. The cable's tabulated CCC depends on which insulation it has.",
-      "70 °C applies to copper conductors and 90 °C to aluminium conductors, because aluminium dissipates heat more readily.",
+      '70 °C applies to copper conductors and 90 °C to aluminium conductors, because aluminium dissipates heat more readily.',
     ],
     correctAnswer: 2,
     explanation:
-      "Insulation type sets the temperature ceiling. Thermoplastic (PVC, BS 6004 T&E, BS 7211 LSF) is rated to 70 °C continuous. Thermosetting (XLPE, EPR) is rated to 90 °C continuous. Higher operating temperature means higher tabulated CCC for the same CSA — a 4 mm² thermosetting carries more current than a 4 mm² thermoplastic in the same install method.",
+      'Insulation type sets the temperature ceiling. Thermoplastic (PVC, BS 6004 T&E, BS 7211 LSF) is rated to 70 °C continuous. Thermosetting (XLPE, EPR) is rated to 90 °C continuous. Higher operating temperature means higher tabulated CCC for the same CSA — a 4 mm² thermosetting carries more current than a 4 mm² thermoplastic in the same install method.',
   },
   {
     id: 7,
     question:
-      "The IET On-Site Guide and BS 7671 Appendix 4 should give matching CCC numbers for the same cable in the same install method. If they disagree, what should you do?",
+      'The IET On-Site Guide and BS 7671 Appendix 4 should give matching CCC numbers for the same cable in the same install method. If they disagree, what should you do?',
     options: [
       'Use the OSG figure — its condensed tables include extra safety margin that the full Appendix 4 omits.',
       'Average the two figures, since both are authoritative and the true value lies between them.',
@@ -179,39 +169,39 @@ const quizQuestions = [
     ],
     correctAnswer: 3,
     explanation:
-      "BS 7671 is the standard; the OSG is a derivative published by the IET to make the same data quicker to use on site. They should agree. When they disagree, it usually means one is from an older edition. Check the publication dates and use the version aligned with the current amendment (BS 7671:2018+A4:2026 at the time of writing).",
+      'BS 7671 is the standard; the OSG is a derivative published by the IET to make the same data quicker to use on site. They should agree. When they disagree, it usually means one is from an older edition. Check the publication dates and use the version aligned with the current amendment (BS 7671:2018+A4:2026 at the time of writing).',
   },
   {
     id: 8,
     question:
-      "On a typical job sheet the design pencils Ib = 26 A and the contractor fits a 32 A Type B MCB. The chosen cable, after derates, has Iz = 30 A. Does this comply with Reg 433.1.1?",
+      'On a typical job sheet the design pencils Ib = 26 A and the contractor fits a 32 A Type B MCB. The chosen cable, after derates, has Iz = 30 A. Does this comply with Reg 433.1.1?',
     options: [
-      "No — the test is Ib ≤ In ≤ Iz, so In = 32 A and Iz = 30 A means the cable cannot safely carry the device rating; either size up the cable to give Iz ≥ 32 A or drop In to 25 A (assuming Ib = 26 A still leaves you a fit — it does not, so the cable size must increase).",
-      "Yes — Ib = 26 A is below Iz = 30 A, and the design current is what the cable has to carry, so the device rating is irrelevant to this test.",
-      "Yes — Iz = 30 A is within 10 percent of In = 32 A, and BS 7671 permits a 10 percent tolerance on the In ≤ Iz condition.",
-      "No — but only because Ib = 26 A is not a standard device rating; round Ib up to 32 A and the inequality then passes.",
+      'No — the test is Ib ≤ In ≤ Iz, so In = 32 A and Iz = 30 A means the cable cannot safely carry the device rating; either size up the cable to give Iz ≥ 32 A or drop In to 25 A (assuming Ib = 26 A still leaves you a fit — it does not, so the cable size must increase).',
+      'Yes — Ib = 26 A is below Iz = 30 A, and the design current is what the cable has to carry, so the device rating is irrelevant to this test.',
+      'Yes — Iz = 30 A is within 10 percent of In = 32 A, and BS 7671 permits a 10 percent tolerance on the In ≤ Iz condition.',
+      'No — but only because Ib = 26 A is not a standard device rating; round Ib up to 32 A and the inequality then passes.',
     ],
     correctAnswer: 0,
     explanation:
-      "Reg 433.1.1 wants In ≤ Iz. With In = 32 A and Iz = 30 A, that fails: on overload, the device permits 1.45 × In = 46.4 A for a defined time before tripping, and the cable cannot survive that. The fix is either to size up the cable (more CSA, larger Iz) or pick a smaller device — but In must still be ≥ Ib, so if Ib = 26 A then In must be at least 32 A and the cable has to grow.",
+      'Reg 433.1.1 wants In ≤ Iz. With In = 32 A and Iz = 30 A, that fails: on overload, the device permits 1.45 × In = 46.4 A for a defined time before tripping, and the cable cannot survive that. The fix is either to size up the cable (more CSA, larger Iz) or pick a smaller device — but In must still be ≥ Ib, so if Ib = 26 A then In must be at least 32 A and the cable has to grow.',
   },
 ];
 
 const faqs = [
   {
-    question: "What is the difference between It and Iz in plain language?",
+    question: 'What is the difference between It and Iz in plain language?',
     answer:
-      "It is what the BS 7671 table tells you the cable can carry under the standard reference conditions — 30 °C ambient air, on its own, in free air, no insulation. Iz is what that same cable can actually carry in your specific install once you have multiplied It by every applicable correction factor for ambient, grouping, thermal insulation, harmonics and so on. It is the catalogue figure; Iz is the on-the-job figure. Reg 433.1.1 only ever cares about Iz.",
+      'It is what the BS 7671 table tells you the cable can carry under the standard reference conditions — 30 °C ambient air, on its own, in free air, no insulation. Iz is what that same cable can actually carry in your specific install once you have multiplied It by every applicable correction factor for ambient, grouping, thermal insulation, harmonics and so on. It is the catalogue figure; Iz is the on-the-job figure. Reg 433.1.1 only ever cares about Iz.',
   },
   {
-    question: "Why does Appendix 4 split into so many tables (4D1, 4D2, 4D5, 4E1…)?",
+    question: 'Why does Appendix 4 split into so many tables (4D1, 4D2, 4D5, 4E1…)?',
     answer:
-      "Each table covers a different cable construction. 4D1 is single-core 70 °C thermoplastic non-armoured; 4D2 is multi-core 70 °C thermoplastic non-armoured; 4D4 / 4D5 is 70 °C thermoplastic flat T&E; 4E1 / 4E4 is the 90 °C thermosetting equivalents; 4F is mineral-insulated; 4H is paper-insulated. You pick the table that matches the cable family you are using, then read down the column for the install method.",
+      'Each table covers a different cable construction. 4D1 is single-core 70 °C thermoplastic non-armoured; 4D2 is multi-core 70 °C thermoplastic non-armoured; 4D4 / 4D5 is 70 °C thermoplastic flat T&E; 4E1 / 4E4 is the 90 °C thermosetting equivalents; 4F is mineral-insulated; 4H is paper-insulated. You pick the table that matches the cable family you are using, then read down the column for the install method.',
   },
   {
-    question: "Where do the BS 7671 tabulated values actually come from?",
+    question: 'Where do the BS 7671 tabulated values actually come from?',
     answer:
-      "Heat-balance equations done by the IEC. Each It value is the steady-state current that brings the conductor exactly to its insulation temperature limit when the cable is installed in the reference method, in still 30 °C air. The IEC publishes them in IEC 60364 series; BS 7671 Appendix 4 is the UK adaptation. The maths is real — the values are not arbitrary safety margins, they are physics.",
+      'Heat-balance equations done by the IEC. Each It value is the steady-state current that brings the conductor exactly to its insulation temperature limit when the cable is installed in the reference method, in still 30 °C air. The IEC publishes them in IEC 60364 series; BS 7671 Appendix 4 is the UK adaptation. The maths is real — the values are not arbitrary safety margins, they are physics.',
   },
   {
     question: "Can I use the manufacturer's data sheet instead of Appendix 4?",
@@ -219,14 +209,15 @@ const faqs = [
       "Yes, for non-standard cables (mineral, fire-resistant, special temperature, large industrial single-cores), the manufacturer's data sheet is the right source and BS 7671 expects you to use it. For standard 70 °C T&E, 90 °C thermosetting and SWA in the everyday CSAs, Appendix 4 / OSG is what you reach for and what an inspector will check against. Always document which source you used.",
   },
   {
-    question: "Does the cable temperature limit ever come into play directly, not just through CCC?",
+    question:
+      'Does the cable temperature limit ever come into play directly, not just through CCC?',
     answer:
-      "Yes — in two places. First, the thermal-constraint check (Sub 5) uses the same temperature limit to verify the cable can survive a fault for the disconnection time without the conductor exceeding the short-circuit temperature ceiling. Second, the resistance of the conductor at full load is calculated at the operating temperature (typically using the 1.20 multiplier for copper at 70 °C above 20 °C ambient), which feeds into the Vd and Zs gates.",
+      'Yes — in two places. First, the thermal-constraint check (Sub 5) uses the same temperature limit to verify the cable can survive a fault for the disconnection time without the conductor exceeding the short-circuit temperature ceiling. Second, the resistance of the conductor at full load is calculated at the operating temperature (typically using the 1.20 multiplier for copper at 70 °C above 20 °C ambient), which feeds into the Vd and Zs gates.',
   },
   {
     question: "Is the 'design current Ib' the same as the load nameplate?",
     answer:
-      "Sometimes, sometimes not. For a fixed appliance with a continuous nameplate (a 7 kW shower draws 30.4 A continuously, full stop), Ib equals the nameplate divided by voltage. For a sockets circuit serving variable loads, BS 7671 Appendix A diversity rules let you treat Ib as a fraction of the connected load — a domestic ring final has Ib of 32 A by convention even though the connected sockets could potentially draw more if everything were used at once. Diversity is the bridge between connected load and design current; get it wrong and your sizing is wrong from the first gate.",
+      'Sometimes, sometimes not. For a fixed appliance with a continuous nameplate (a 7 kW shower draws 30.4 A continuously, full stop), Ib equals the nameplate divided by voltage. For a sockets circuit serving variable loads, BS 7671 Appendix A diversity rules let you treat Ib as a fraction of the connected load — a domestic ring final has Ib of 32 A by convention even though the connected sockets could potentially draw more if everything were used at once. Diversity is the bridge between connected load and design current; get it wrong and your sizing is wrong from the first gate.',
   },
 ];
 
@@ -235,443 +226,540 @@ export default function Sub1() {
   useSEO({ title: TITLE, description: DESCRIPTION });
 
   return (
-    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
-      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
-        <PageFrame>
-          <button
-            onClick={() => navigate('/study-centre/apprentice/level3-module6-section4')}
-            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
-          >
-            <ArrowLeft className="h-4 w-4" /> Section 4
-          </button>
+    <HubPage>
+      <HubMasthead
+        section="Module 6 · Section 4 · Subsection 1"
+        title="Current-carrying capacity (CCC) and the Appendix 4 method"
+        backTo="/study-centre/apprentice/level3-module6-section4"
+      />
+      <HubBody>
+        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
+          What the BS 7671 tables actually tell you, what they do not, and how the IET On-Site Guide
+          collapses the same data into something you can use on the van. Tabulated It, derated Iz,
+          the 30 °C reference baseline and the inequality Ib ≤ In ≤ Iz.
+        </p>
 
-          <PageHero
-            eyebrow="Module 6 · Section 4 · Subsection 1"
-            title="Current-carrying capacity (CCC) and the Appendix 4 method"
-            description="What the BS 7671 tables actually tell you, what they do not, and how the IET On-Site Guide collapses the same data into something you can use on the van. Tabulated It, derated Iz, the 30 °C reference baseline and the inequality Ib ≤ In ≤ Iz."
-            tone="yellow"
-          />
+        <TLDR
+          points={[
+            'Iz is the actual, derated current-carrying capacity of a cable in its real install. It is the as-tabulated value from BS 7671 Appendix 4 at the 30 °C reference baseline, with no grouping and no insulation. Iz = It × Ca × Cg × Ci × any other applicable factor.',
+            'Reg 433.1.1 sets the structural inequality for cable selection: Ib ≤ In ≤ Iz. Get any of the three out of order and the install is non-compliant on day one — either the device nuisance-trips on load, or the cable cooks on overload before the device responds.',
+            'The IET On-Site Guide tables (F6, F7, F8, F9) are the working equivalent of Appendix 4 for everyday domestic and small commercial work — same data, condensed. For special cables, large CSAs or unusual install methods you go back to Appendix 4 in full.',
+          ]}
+        />
 
-          <TLDR
-            points={[
-              'Iz is the actual, derated current-carrying capacity of a cable in its real install. It is the as-tabulated value from BS 7671 Appendix 4 at the 30 °C reference baseline, with no grouping and no insulation. Iz = It × Ca × Cg × Ci × any other applicable factor.',
-              'Reg 433.1.1 sets the structural inequality for cable selection: Ib ≤ In ≤ Iz. Get any of the three out of order and the install is non-compliant on day one — either the device nuisance-trips on load, or the cable cooks on overload before the device responds.',
-              'The IET On-Site Guide tables (F6, F7, F8, F9) are the working equivalent of Appendix 4 for everyday domestic and small commercial work — same data, condensed. For special cables, large CSAs or unusual install methods you go back to Appendix 4 in full.',
-            ]}
-          />
+        <LearningOutcomes
+          outcomes={[
+            'Define current-carrying capacity (CCC, Iz) and explain why it is set by the cable insulation temperature limit, not by an arbitrary safety figure.',
+            'Read BS 7671 Appendix 4 Tables 4D2, 4D5, 4E2 and 4E5 confidently — selecting the correct cable construction and the column that matches the install Reference Method.',
+            'Apply the inequality Ib ≤ In ≤ Iz from Reg 433.1.1 to verify a chosen cable / device combination.',
+            "Use the IET On-Site Guide tables (F6, F7, F8, F9) as the everyday companion to Appendix 4, and recognise when the OSG's condensed layout is inadequate and you must return to the full standard.",
+            'Distinguish tabulated It (as-published, reference conditions) from derated Iz (the on-site value), and never confuse the two when answering an inspector or documenting a design.',
+            'Recognise the 30 °C ambient air reference baseline that sits behind every Appendix 4 column, and understand why a hotter or cooler ambient triggers the Ca correction.',
+          ]}
+          initialVisibleCount={3}
+        />
 
-          <LearningOutcomes
-            outcomes={[
-              'Define current-carrying capacity (CCC, Iz) and explain why it is set by the cable insulation temperature limit, not by an arbitrary safety figure.',
-              'Read BS 7671 Appendix 4 Tables 4D2, 4D5, 4E2 and 4E5 confidently — selecting the correct cable construction and the column that matches the install Reference Method.',
-              'Apply the inequality Ib ≤ In ≤ Iz from Reg 433.1.1 to verify a chosen cable / device combination.',
-              "Use the IET On-Site Guide tables (F6, F7, F8, F9) as the everyday companion to Appendix 4, and recognise when the OSG's condensed layout is inadequate and you must return to the full standard.",
-              "Distinguish tabulated It (as-published, reference conditions) from derated Iz (the on-site value), and never confuse the two when answering an inspector or documenting a design.",
-              'Recognise the 30 °C ambient air reference baseline that sits behind every Appendix 4 column, and understand why a hotter or cooler ambient triggers the Ca correction.',
-            ]}
-            initialVisibleCount={3}
-          />
+        <ConceptBlock
+          title="What current-carrying capacity actually is"
+          plainEnglish="Cables get hot when current flows through them. Push too much current through and the insulation melts, the conductor anneals, and eventually the whole thing fails as a fire risk. CCC is the maximum continuous current that keeps the cable running below the temperature its insulation is built for."
+          onSite="Treat CCC as a thermal limit, not a magic safety number. Every other gate in the cable-selection process exists to make sure the cable never breaches that thermal ceiling under any normal or overload condition."
+        >
+          <p>
+            When current flows through a conductor, electrical resistance turns a fraction of that
+            energy into heat. That heat has to escape — either by conduction into the surrounding
+            wall, by convection into the air around the cable, or by radiation. If the heat in
+            equals the heat out, the conductor sits at a stable temperature. If the heat in exceeds
+            the heat out, the temperature climbs until something gives way.
+          </p>
+          <p>
+            The temperature limit is set by the insulation. Standard 70 °C thermoplastic (PVC)
+            insulation softens and degrades above 70 °C; modern 90 °C thermosetting (XLPE, EPR) is
+            cross-linked and tolerates 90 °C continuously. BS 7671 Appendix 4 publishes a tabulated
+            current-carrying capacity (symbol It) for every standard cable construction at every
+            standard install method — that figure is the steady-state current that brings the
+            conductor to exactly its insulation temperature limit when the cable is installed in the
+            reference conditions.
+          </p>
+          <p>
+            The reference conditions are tight: 30 °C ambient air, the cable on its own (no grouping
+            with other circuits), not enclosed in thermal insulation. Any deviation from those
+            conditions means the cable cannot carry the tabulated It — you must derate. The derated
+            figure is called Iz. <strong>Iz is the value Reg 433.1.1 cares about.</strong>
+          </p>
+        </ConceptBlock>
 
-          <ConceptBlock
-            title="What current-carrying capacity actually is"
-            plainEnglish="Cables get hot when current flows through them. Push too much current through and the insulation melts, the conductor anneals, and eventually the whole thing fails as a fire risk. CCC is the maximum continuous current that keeps the cable running below the temperature its insulation is built for."
-            onSite="Treat CCC as a thermal limit, not a magic safety number. Every other gate in the cable-selection process exists to make sure the cable never breaches that thermal ceiling under any normal or overload condition."
-          >
-            <p>
-              When current flows through a conductor, electrical resistance turns a fraction of that energy into heat. That heat has to escape — either by conduction into the surrounding wall, by convection into the air around the cable, or by radiation. If the heat in equals the heat out, the conductor sits at a stable temperature. If the heat in exceeds the heat out, the temperature climbs until something gives way.
-            </p>
-            <p>
-              The temperature limit is set by the insulation. Standard 70 °C thermoplastic (PVC) insulation softens and degrades above 70 °C; modern 90 °C thermosetting (XLPE, EPR) is cross-linked and tolerates 90 °C continuously. BS 7671 Appendix 4 publishes a tabulated current-carrying capacity (symbol It) for every standard cable construction at every standard install method — that figure is the steady-state current that brings the conductor to exactly its insulation temperature limit when the cable is installed in the reference conditions.
-            </p>
-            <p>
-              The reference conditions are tight: 30 °C ambient air, the cable on its own (no grouping with other circuits), not enclosed in thermal insulation. Any deviation from those conditions means the cable cannot carry the tabulated It — you must derate. The derated figure is called Iz. <strong>Iz is the value Reg 433.1.1 cares about.</strong>
-            </p>
-          </ConceptBlock>
-
-          <RegsCallout
-            source="BS 7671:2018+A4:2026 — Regulation 433.1.1 (Coordination between conductor and overload protective device)"
-            clause={`Regulation 433.1.1 sets three conditions, all of which must be satisfied:
+        <RegsCallout
+          source="BS 7671:2018+A4:2026 — Regulation 433.1.1 (Coordination between conductor and overload protective device)"
+          clause={`Regulation 433.1.1 sets three conditions, all of which must be satisfied:
 (a) The rated current or current setting of the protective device (In) is not less than the design current (Ib) of the circuit. For adjustable protective devices, In is the current setting selected.
 (b) The rated current or current setting (In) shall not exceed the lowest of the current-carrying capacities (Iz) of any of the conductors of the circuit.
 (c) The current (Iop) causing effective operation of the protective device shall not exceed 1.45 times the lowest current-carrying capacity (Iz) of any of the conductors. Iop is taken from the device product standard or from the manufacturer.`}
-            meaning={
-              <>
-                The classroom shorthand <strong>Ib ≤ In ≤ Iz</strong> covers conditions (a) and
-                (b). Condition <strong>(c) — Iop ≤ 1.45 Iz</strong> is the one that gets
-                forgotten: it stops the protective device's actual tripping current from cooking
-                the cable. Standard BS EN 60898 / 60947-2 circuit-breakers and BS 88 fuses are
-                designed to satisfy condition (c) automatically when conditions (a) and (b) hold,
-                which is why most apprentice teaching collapses to the inequality — but for
-                non-standard or adjustable devices you have to verify (c) directly. The derate
-                machinery in Appendix 4 exists to get from tabulated It to derated Iz so the
-                inequality can be tested honestly.
-              </>
-            }
-            cite="Source: BS 7671:2018+A4:2026 Part 4, Chapter 43, Regulation 433.1.1."
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>The Appendix 4 method, end to end</ContentEyebrow>
-
-          <ConceptBlock
-            title="The five steps the standard wants you to walk"
-            plainEnglish="Appendix 4 is structured. You pick a cable family, pick an install method, read the tabulated It, multiply by every applicable correction factor to get Iz, then test against Ib ≤ In ≤ Iz. Five steps, in order, every time."
-          >
-            <ol className="space-y-1.5 list-decimal pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Pick the cable family.</strong> 70 °C thermoplastic (Tables 4D1–4D5), 90 °C thermosetting (Tables 4E1–4E5), MICC (Table 4F), SWA (4D4 / 4E4 with armour columns) — each has its own dedicated table set.
-              </li>
-              <li>
-                <strong>Pick the Reference Method.</strong> Methods A through G for everyday wiring, Methods 100–103 for cables in thermal insulation. The Reference Method describes how the cable is physically installed (clipped, in conduit, in trunking, in insulation) and that drives the column you read.
-              </li>
-              <li>
-                <strong>Read tabulated It.</strong> Down the column at your chosen CSA, the table gives you It — the current the cable can carry at the reference conditions (30 °C ambient, single circuit, free air or as the method describes).
-              </li>
-              <li>
-                <strong>Apply the correction factors.</strong> Ca for ambient temperature (Table 4B1), Cg for grouping (Tables 4C1–4C5), Ci for thermal insulation (built into Methods 100–103 — do not double-apply), and any others that apply (e.g. Ch for harmonic content on multi-core cables with significant third-harmonic load). Multiply them all together with It to get Iz.
-              </li>
-              <li>
-                <strong>Test the inequality.</strong> Verify Ib ≤ In ≤ Iz. If it fails, either size up the CSA (revisit step 3 with the next bigger conductor) or change the install conditions to reduce the derate (split the group, lower the ambient, get the cable out of the insulation).
-              </li>
-            </ol>
-            <p>
-              That is the entire method. Every other gate — voltage drop, thermal constraint, Zs — is a separate downstream check. The Appendix 4 method itself is just these five steps and the inequality at the end.
-            </p>
-          </ConceptBlock>
-
-          <div className="my-4">
-            <ContentEyebrow>Try the calculator</ContentEyebrow>
-            <VoltageDropCalculator />
-          </div>
-
-          <ConceptBlock
-            title="Why heat is the real enemy — insulation ageing in plain English"
-            plainEnglish="Insulation does not fail catastrophically the first time it gets too hot. It ages. Each excursion above the temperature limit accelerates the chemistry of degradation. Five years later the cable looks fine but the insulation crumbles when you bend it."
-            onSite="An old loft cable that crumbles at the back of a luminaire is almost always a cable that lived its life one CSA bracket too small. The Iz number you calculate today determines whether that loft cable survives twenty years or fifteen."
-          >
-            <p>
-              The Arrhenius rule of thumb in electrical-insulation engineering: every 10 °C above the design temperature roughly halves the cable’s service life. A 70 °C cable run continuously at 80 °C does not fail — it just ages twice as fast. Run at 90 °C and it ages four times as fast. That is why CCC compliance is non-negotiable: the consequences are spread over years, not weeks, and they show up as periodic-inspection downgrades and rewires rather than dramatic failures.
-            </p>
-            <p>
-              The corollary: a cable that comfortably clears Iz with margin will outlast a cable that just scrapes Iz. The 30 percent thermal margin between &quot;passes by 1 A&quot; and &quot;passes by 10 A&quot; can mean the difference between a 25-year service life and a 40-year service life. On long buried runs, sub-mains and any concealed cable, that margin is real money saved on the next rewire.
-            </p>
-          </ConceptBlock>
-
-          <ConceptBlock
-            title="Worked example — a 32 A radial socket circuit"
-            plainEnglish="Walk a real circuit through the five steps. We will use BS 7671 Appendix 4 Table 4D5 because the cable is 70 °C T&E flat (the bread-and-butter domestic option)."
-            onSite="Two-thirds of the cable selections you will ever do are this exact pattern. Memorise the shape of the calc and the rest is just changing the input numbers."
-          >
-            <p>
-              <strong>The brief:</strong> a 32 A radial socket circuit, single-phase 230 V, T&E flat cable clipped direct to the joists in a small loft, ambient air up to 35 °C in summer, four other final-circuit cables touching at the consumer-unit entry zone for the first 0.5 m of the run.
-            </p>
-            <ol className="space-y-2 list-decimal pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Cable family:</strong> 70 °C thermoplastic flat T&E → BS 7671 Table 4D5.
-              </li>
-              <li>
-                <strong>Reference Method:</strong> clipped direct to a non-metallic surface → Method C.
-              </li>
-              <li>
-                <strong>Tabulated It (Method C, 4 mm²):</strong> from Table 4D5 column for Method C, 4 mm² → It ≈ 36 A. (Indicative; check the live edition for exact figures.)
-              </li>
-              <li>
-                <strong>Correction factors:</strong> Ca = 0.94 at 35 °C ambient (Table 4B1, 70 °C cable). Cg = 0.80 for five circuits grouped together touching, single layer (Table 4C1). Ci = 1.0 (no insulation enclosure). Combined = 0.94 × 0.80 × 1.0 = 0.752.
-              </li>
-              <li>
-                <strong>Iz:</strong> 36 × 0.752 = <strong>27.07 A</strong>. Test the inequality: Ib (32 A) ≤ In (32 A) ≤ Iz (27.07 A) → <em>fails</em>. The cable does not have enough capacity once the derates are applied. Solution: step up to 6 mm².
-              </li>
-            </ol>
-            <p>
-              Re-running step 3 with 6 mm² in Method C: It ≈ 47 A. Iz = 47 × 0.752 = 35.34 A. Test: 32 ≤ 32 ≤ 35.34 → <strong>passes.</strong> 6 mm² T&E is the minimum CSA for this exact install. If we could remove the grouping (route the entry zone differently so the five cables are not touching for that 0.5 m), Cg becomes 1.0, the combined derate becomes 0.94, and 4 mm² might just clear (36 × 0.94 = 33.84 A ≥ 32 A — passes by a whisker). That kind of mechanical fix sometimes saves a CSA bracket.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck
-            id={checks[0].id}
-            question={checks[0].question}
-            options={checks[0].options}
-            correctIndex={checks[0].correctIndex}
-            explanation={checks[0].explanation}
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>The 30 °C reference baseline</ContentEyebrow>
-
-          <ConceptBlock
-            title="Why every Appendix 4 table assumes 30 °C ambient air"
-            plainEnglish="The IEC test rig that produces the tabulated values runs at 30 °C. Every It in BS 7671 is calibrated to that condition. Hotter ambient means the cable has less thermal headroom — less heat can leave — so it carries less current safely. Ca is the multiplier that compensates."
-            onSite="UK lofts in July hit 40–45 °C. Plant rooms can reach 50–55 °C. External walls in direct sun can pass 40 °C. None of those are the reference baseline. Always ask what the actual ambient is and apply Ca."
-          >
-            <p>
-              The 30 °C figure is not a UK climate average — it is the standard test condition used by the IEC for the underlying heat-balance maths. The cable is suspended in still air at 30 °C and the current is wound up until the conductor sits at exactly its insulation temperature limit (70 °C for thermoplastic, giving a 40 °C temperature rise at full It). That current becomes the tabulated value.
-            </p>
-            <p>
-              The implication: any installation hotter than 30 °C ambient has less than the full 40 °C of thermal headroom. The cable cannot safely carry the tabulated It under those conditions — you must derate to keep the conductor below 70 °C. Appendix 4 Table 4B1 publishes the Ca values for 70 °C cable at every common ambient: 35 °C → Ca = 0.94; 40 °C → Ca = 0.87; 45 °C → Ca = 0.79; 50 °C → Ca = 0.71. The same table publishes a different (more generous) Ca column for 90 °C thermosetting cable because the higher temperature ceiling gives more thermal headroom to start with.
-            </p>
-            <p>
-              Conversely, ambient cooler than 30 °C means more headroom and Ca above 1.0 — a 25 °C ambient gives Ca = 1.03 for 70 °C cable. In practice most UK designers do not apply Ca above 1.0 because the saving is tiny and the thermal margin is welcome insurance. Compliance does not require it.
-            </p>
-          </ConceptBlock>
-
-          <RegsCallout
-            source="BS 7671:2018+A4:2026 — Regulation 522.1.1 (Ambient temperature)"
-            clause="A wiring system shall be selected and erected so as to be suitable for the highest and lowest local ambient temperatures and so that the limiting temperature in normal operation (see Table 52.2) and the limiting temperature in case of a fault (see Table 43.1) will not be exceeded."
-            meaning={
-              <>
-                Reg 522.1.1 is the regulation behind the Ca derate. It tells the designer to
-                select the cable and the install method so that the operating-temperature limit
-                in Table 52.2 (the normal-operation ceiling, e.g. 70 °C for thermoplastic)
-                and the short-circuit limit in Table 43.1 (e.g. 160 °C for thermoplastic
-                conductors during a fault) are never exceeded. Ca is the maths that ties an
-                ambient temperature to a cable temperature, so the regulation can be satisfied
-                in design rather than rediscovered after the cable has cooked.
-              </>
-            }
-            cite="Source: BS 7671:2018+A4:2026 Part 5, Chapter 52, Regulation 522.1.1; Ca correction values in Appendix 4 Table 4B1."
-          />
-
-          <InlineCheck
-            id={checks[1].id}
-            question={checks[1].question}
-            options={checks[1].options}
-            correctIndex={checks[1].correctIndex}
-            explanation={checks[1].explanation}
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>Insulation type sets the ceiling</ContentEyebrow>
-
-          <ConceptBlock
-            title="70 °C thermoplastic vs 90 °C thermosetting — same conductor, different ceiling"
-            plainEnglish="A 4 mm² thermosetting cable carries more current than a 4 mm² thermoplastic cable in the same install method. Not because the copper is different — it is identical — but because the insulation can sit hotter without degrading. More thermal headroom means more current."
-            onSite="On commercial fit-outs you will increasingly see XLPE / LSF singles in trunking instead of T&E. The thermosetting jacket gives you a CSA bracket back compared to the thermoplastic equivalent — sometimes the difference between 6 mm² and 4 mm² on a marginal calc."
-          >
-            <p>
-              The same 6 mm² copper conductor carries different tabulated currents depending on which insulation surrounds it. Indicative figures from Appendix 4 (Method C, two-core, single-phase):
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>6 mm² 70 °C thermoplastic T&E</strong> (Table 4D5 Method C) — It ≈ 47 A.
-              </li>
-              <li>
-                <strong>6 mm² 90 °C thermosetting two-core</strong> (Table 4E5 Method C) — It ≈ 56 A.
-              </li>
-            </ul>
-            <p>
-              That is roughly a 19 percent uplift, achieved purely by changing the insulation chemistry. The cost: thermosetting cable is more expensive per metre, and the higher operating temperature can cause issues if the cable terminates into equipment rated only to 70 °C — some older accessories cap their terminal block to 70 °C, so the cable ages prematurely at the gland even if the run is fine. Always check the terminal compatibility before sizing on a thermosetting basis.
-            </p>
-            <p>
-              In design office practice, thermosetting is the routine choice for any sub-main, any commercial sockets / lighting on conduit / trunking, and any installation where the cable runs through hot environments (plant rooms, roof voids). T&E remains the dominant choice for domestic final circuits because the cost difference is meaningful at small CSAs and the install method usually leaves enough headroom on thermoplastic anyway.
-            </p>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <ContentEyebrow>The OSG as everyday companion</ContentEyebrow>
-
-          <ConceptBlock
-            title="What the IET On-Site Guide actually replaces"
-            plainEnglish="The OSG condenses Appendix 4 down to the four or five tables an electrician actually opens on a domestic or small commercial job. Same physics, faster lookup, smaller book."
-            onSite="Carry the OSG in the van, keep BS 7671 in the office. The OSG is enough for 90 percent of cable selections you will ever do; the other 10 percent (large CSAs, special cables, complex grouping, harmonics) drive you back to the full standard."
-          >
-            <p>
-              The OSG (currently Edition 9, aligned with BS 7671:2018+A4:2026) reproduces the bread-and-butter Appendix 4 data in a stripped-down format:
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>OSG Table F6</strong> — 70 °C thermoplastic flat T&E (BS 6004 / 7211): current-carrying capacity by Reference Method, mV/A/m alongside, for the everyday CSAs (1.0 → 16 mm²). The single most-used table in the book.
-              </li>
-              <li>
-                <strong>OSG Table F7</strong> — 70 °C thermoplastic singles in conduit / trunking, Method B / E. Used for commercial fit-outs and steel-conduit work.
-              </li>
-              <li>
-                <strong>OSG Table F8</strong> — 90 °C thermosetting equivalents.
-              </li>
-              <li>
-                <strong>OSG Table F9</strong> — SWA (BS 5467 / 6724) for sub-mains, outbuildings, garden EV chargers and the like.
-              </li>
-              <li>
-                <strong>OSG Tables 6A / 6B</strong> — Ca and Cg correction factors in compact form.
-              </li>
-            </ul>
-            <p>
-              For a 32 A radial in domestic loft / wall cavity, you can do the entire CCC calc using only OSG Table F6 and Tables 6A / 6B. For a 200 A sub-main on SWA from a panel to an outbuilding, OSG F9 + 6A / 6B gives you the answer. Anything outside those everyday cases — paper-insulated cable in a high-voltage transformer feed, mineral-insulated fire-survival circuit, multi-core flex with harmonic content — sends you to the full Appendix 4.
-            </p>
-            <p>
-              The OSG is published by the IET (the same body that publishes BS 7671 itself), so the data is authoritative and inspectors accept it without quibble. What inspectors will not accept is a calc done against an out-of-date OSG (e.g. Edition 8 numbers used on an A4:2026 install) — always check the front cover.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck
-            id={checks[2].id}
-            question={checks[2].question}
-            options={checks[2].options}
-            correctIndex={checks[2].correctIndex}
-            explanation={checks[2].explanation}
-          />
-
-          <ConceptBlock
-            title="Where the OSG falls short — and you reach for the full Appendix 4"
-            plainEnglish="The OSG covers the everyday cases. Anything unusual sends you back to the full standard. Knowing when to switch is a competence in its own right."
-          >
-            <p>
-              The OSG drops out (or simplifies past the point of usefulness) for several common L3 scenarios:
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Large CSAs (above 35 mm² or so).</strong> OSG tables stop or get sparse at the larger CSAs; sub-mains and supply-side cables need the full BS 7671 4D / 4E / 4F tables.
-              </li>
-              <li>
-                <strong>Three-phase grouping with mixed circuits.</strong> Cg for mixed single-phase / three-phase groups is properly handled in Appendix 4 Tables 4C1–4C5 with the full method; the OSG gives a simplified version that can over-derate.
-              </li>
-              <li>
-                <strong>Harmonic content above 15 percent.</strong> The harmonic correction for multi-core cables carrying significant third-harmonic neutral current (typical of switched-mode loads, UPS, large LED arrays) lives in BS 7671 Appendix 4 Section 5.5 — not the OSG at all.
-              </li>
-              <li>
-                <strong>Underground cables in soil.</strong> Appendix 4 Tables 4D4 / 4E4 publish CCC values for direct-buried and ducted cables with thermal-resistivity correction factors (Table 4B3); the OSG only summarises the most common case.
-              </li>
-              <li>
-                <strong>MICC (mineral-insulated copper-clad).</strong> BS 7671 Table 4F is dedicated to MICC; the OSG hardly touches it. Used in fire-survival circuits, you go to the standard or the manufacturer.
-              </li>
-            </ul>
-            <p>
-              The general principle: the OSG is a working subset, not a substitute. Anyone designing professionally needs the full BS 7671 to hand for the cases the OSG was never written to cover.
-            </p>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <ContentEyebrow>Things that catch people out</ContentEyebrow>
-
-          <CommonMistake
-            title="Reading the It column and calling that the answer"
-            whatHappens={
-              <>
-                The apprentice opens Table 4D5, finds 4 mm² in the Method C column at 36 A, and writes
-                'cable rated 36 A, comfortably above the 32 A device, complies'. The actual install
-                has Ca = 0.94, Cg = 0.80, so Iz is 27 A, not 36 A. The cable is undersized; the
-                inspector codes it C2 at the next periodic; the customer pays for rework.
-              </>
-            }
-            doInstead={
-              <>
-                Always write the calc as <strong>It → multiply derates → Iz → test inequality</strong>.
-                Never quote the table figure as if it were Iz. On the design sheet, show It,
-                show every Ca / Cg / Ci you applied, show the product, show Iz, then write the
-                Reg 433.1.1 line with all three numbers. That paper trail is what defends the
-                design at periodic inspection.
-              </>
-            }
-          />
-
-          <Scenario
-            title="The site survey says 35 °C ambient. The customer says 'it's never that hot up there'."
-            situation={
-              <>
-                You are designing a new 40 A circuit for a heat pump that lives in a converted
-                loft. Your survey reads 34 °C ambient on a warm September day, and you size
-                with Ca = 0.94 (35 °C, 70 °C cable). The customer says they have lived in
-                the house twenty years and the loft never gets hotter than &quot;normal room&quot; —
-                they want you to use Ca = 1.0 to save them the cost of stepping up a CSA.
+          meaning={
+            <>
+              The classroom shorthand <strong>Ib ≤ In ≤ Iz</strong> covers conditions (a) and (b).
+              Condition <strong>(c) — Iop ≤ 1.45 Iz</strong> is the one that gets forgotten: it
+              stops the protective device's actual tripping current from cooking the cable. Standard
+              BS EN 60898 / 60947-2 circuit-breakers and BS 88 fuses are designed to satisfy
+              condition (c) automatically when conditions (a) and (b) hold, which is why most
+              apprentice teaching collapses to the inequality — but for non-standard or adjustable
+              devices you have to verify (c) directly. The derate machinery in Appendix 4 exists to
+              get from tabulated It to derated Iz so the inequality can be tested honestly.
             </>
-            }
-            whatToDo={
-              <>
-                Politely refuse to back the design off. Your survey reading is the evidence;
-                the customer's recollection is not. Ca is a thermal safety derate — the
-                consequence of getting it wrong is accelerated insulation ageing and eventual
-                fault. Document the survey temperature on the design sheet, document the
-                customer's preference, and proceed with Ca = 0.94. If they insist, walk away
-                from the job rather than certify a non-compliant design — you carry the
-                liability for years after they have forgotten the conversation.
+          }
+          cite="Source: BS 7671:2018+A4:2026 Part 4, Chapter 43, Regulation 433.1.1."
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>The Appendix 4 method, end to end</ContentEyebrow>
+
+        <ConceptBlock
+          title="The five steps the standard wants you to walk"
+          plainEnglish="Appendix 4 is structured. You pick a cable family, pick an install method, read the tabulated It, multiply by every applicable correction factor to get Iz, then test against Ib ≤ In ≤ Iz. Five steps, in order, every time."
+        >
+          <ol className="space-y-1.5 list-decimal pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Pick the cable family.</strong> 70 °C thermoplastic (Tables 4D1–4D5), 90 °C
+              thermosetting (Tables 4E1–4E5), MICC (Table 4F), SWA (4D4 / 4E4 with armour columns) —
+              each has its own dedicated table set.
+            </li>
+            <li>
+              <strong>Pick the Reference Method.</strong> Methods A through G for everyday wiring,
+              Methods 100–103 for cables in thermal insulation. The Reference Method describes how
+              the cable is physically installed (clipped, in conduit, in trunking, in insulation)
+              and that drives the column you read.
+            </li>
+            <li>
+              <strong>Read tabulated It.</strong> Down the column at your chosen CSA, the table
+              gives you It — the current the cable can carry at the reference conditions (30 °C
+              ambient, single circuit, free air or as the method describes).
+            </li>
+            <li>
+              <strong>Apply the correction factors.</strong> Ca for ambient temperature (Table 4B1),
+              Cg for grouping (Tables 4C1–4C5), Ci for thermal insulation (built into Methods
+              100–103 — do not double-apply), and any others that apply (e.g. Ch for harmonic
+              content on multi-core cables with significant third-harmonic load). Multiply them all
+              together with It to get Iz.
+            </li>
+            <li>
+              <strong>Test the inequality.</strong> Verify Ib ≤ In ≤ Iz. If it fails, either size up
+              the CSA (revisit step 3 with the next bigger conductor) or change the install
+              conditions to reduce the derate (split the group, lower the ambient, get the cable out
+              of the insulation).
+            </li>
+          </ol>
+          <p>
+            That is the entire method. Every other gate — voltage drop, thermal constraint, Zs — is
+            a separate downstream check. The Appendix 4 method itself is just these five steps and
+            the inequality at the end.
+          </p>
+        </ConceptBlock>
+
+        <div className="my-4">
+          <ContentEyebrow>Try the calculator</ContentEyebrow>
+          <VoltageDropCalculator />
+        </div>
+
+        <ConceptBlock
+          title="Why heat is the real enemy — insulation ageing in plain English"
+          plainEnglish="Insulation does not fail catastrophically the first time it gets too hot. It ages. Each excursion above the temperature limit accelerates the chemistry of degradation. Five years later the cable looks fine but the insulation crumbles when you bend it."
+          onSite="An old loft cable that crumbles at the back of a luminaire is almost always a cable that lived its life one CSA bracket too small. The Iz number you calculate today determines whether that loft cable survives twenty years or fifteen."
+        >
+          <p>
+            The Arrhenius rule of thumb in electrical-insulation engineering: every 10 °C above the
+            design temperature roughly halves the cable’s service life. A 70 °C cable run
+            continuously at 80 °C does not fail — it just ages twice as fast. Run at 90 °C and it
+            ages four times as fast. That is why CCC compliance is non-negotiable: the consequences
+            are spread over years, not weeks, and they show up as periodic-inspection downgrades and
+            rewires rather than dramatic failures.
+          </p>
+          <p>
+            The corollary: a cable that comfortably clears Iz with margin will outlast a cable that
+            just scrapes Iz. The 30 percent thermal margin between &quot;passes by 1 A&quot; and
+            &quot;passes by 10 A&quot; can mean the difference between a 25-year service life and a
+            40-year service life. On long buried runs, sub-mains and any concealed cable, that
+            margin is real money saved on the next rewire.
+          </p>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="Worked example — a 32 A radial socket circuit"
+          plainEnglish="Walk a real circuit through the five steps. We will use BS 7671 Appendix 4 Table 4D5 because the cable is 70 °C T&E flat (the bread-and-butter domestic option)."
+          onSite="Two-thirds of the cable selections you will ever do are this exact pattern. Memorise the shape of the calc and the rest is just changing the input numbers."
+        >
+          <p>
+            <strong>The brief:</strong> a 32 A radial socket circuit, single-phase 230 V, T&E flat
+            cable clipped direct to the joists in a small loft, ambient air up to 35 °C in summer,
+            four other final-circuit cables touching at the consumer-unit entry zone for the first
+            0.5 m of the run.
+          </p>
+          <ol className="space-y-2 list-decimal pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Cable family:</strong> 70 °C thermoplastic flat T&E → BS 7671 Table 4D5.
+            </li>
+            <li>
+              <strong>Reference Method:</strong> clipped direct to a non-metallic surface → Method
+              C.
+            </li>
+            <li>
+              <strong>Tabulated It (Method C, 4 mm²):</strong> from Table 4D5 column for Method C, 4
+              mm² → It ≈ 36 A. (Indicative; check the live edition for exact figures.)
+            </li>
+            <li>
+              <strong>Correction factors:</strong> Ca = 0.94 at 35 °C ambient (Table 4B1, 70 °C
+              cable). Cg = 0.80 for five circuits grouped together touching, single layer (Table
+              4C1). Ci = 1.0 (no insulation enclosure). Combined = 0.94 × 0.80 × 1.0 = 0.752.
+            </li>
+            <li>
+              <strong>Iz:</strong> 36 × 0.752 = <strong>27.07 A</strong>. Test the inequality: Ib
+              (32 A) ≤ In (32 A) ≤ Iz (27.07 A) → <em>fails</em>. The cable does not have enough
+              capacity once the derates are applied. Solution: step up to 6 mm².
+            </li>
+          </ol>
+          <p>
+            Re-running step 3 with 6 mm² in Method C: It ≈ 47 A. Iz = 47 × 0.752 = 35.34 A. Test: 32
+            ≤ 32 ≤ 35.34 → <strong>passes.</strong> 6 mm² T&E is the minimum CSA for this exact
+            install. If we could remove the grouping (route the entry zone differently so the five
+            cables are not touching for that 0.5 m), Cg becomes 1.0, the combined derate becomes
+            0.94, and 4 mm² might just clear (36 × 0.94 = 33.84 A ≥ 32 A — passes by a whisker).
+            That kind of mechanical fix sometimes saves a CSA bracket.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck
+          id={checks[0].id}
+          question={checks[0].question}
+          options={checks[0].options}
+          correctIndex={checks[0].correctIndex}
+          explanation={checks[0].explanation}
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>The 30 °C reference baseline</ContentEyebrow>
+
+        <ConceptBlock
+          title="Why every Appendix 4 table assumes 30 °C ambient air"
+          plainEnglish="The IEC test rig that produces the tabulated values runs at 30 °C. Every It in BS 7671 is calibrated to that condition. Hotter ambient means the cable has less thermal headroom — less heat can leave — so it carries less current safely. Ca is the multiplier that compensates."
+          onSite="UK lofts in July hit 40–45 °C. Plant rooms can reach 50–55 °C. External walls in direct sun can pass 40 °C. None of those are the reference baseline. Always ask what the actual ambient is and apply Ca."
+        >
+          <p>
+            The 30 °C figure is not a UK climate average — it is the standard test condition used by
+            the IEC for the underlying heat-balance maths. The cable is suspended in still air at 30
+            °C and the current is wound up until the conductor sits at exactly its insulation
+            temperature limit (70 °C for thermoplastic, giving a 40 °C temperature rise at full It).
+            That current becomes the tabulated value.
+          </p>
+          <p>
+            The implication: any installation hotter than 30 °C ambient has less than the full 40 °C
+            of thermal headroom. The cable cannot safely carry the tabulated It under those
+            conditions — you must derate to keep the conductor below 70 °C. Appendix 4 Table 4B1
+            publishes the Ca values for 70 °C cable at every common ambient: 35 °C → Ca = 0.94; 40
+            °C → Ca = 0.87; 45 °C → Ca = 0.79; 50 °C → Ca = 0.71. The same table publishes a
+            different (more generous) Ca column for 90 °C thermosetting cable because the higher
+            temperature ceiling gives more thermal headroom to start with.
+          </p>
+          <p>
+            Conversely, ambient cooler than 30 °C means more headroom and Ca above 1.0 — a 25 °C
+            ambient gives Ca = 1.03 for 70 °C cable. In practice most UK designers do not apply Ca
+            above 1.0 because the saving is tiny and the thermal margin is welcome insurance.
+            Compliance does not require it.
+          </p>
+        </ConceptBlock>
+
+        <RegsCallout
+          source="BS 7671:2018+A4:2026 — Regulation 522.1.1 (Ambient temperature)"
+          clause="A wiring system shall be selected and erected so as to be suitable for the highest and lowest local ambient temperatures and so that the limiting temperature in normal operation (see Table 52.2) and the limiting temperature in case of a fault (see Table 43.1) will not be exceeded."
+          meaning={
+            <>
+              Reg 522.1.1 is the regulation behind the Ca derate. It tells the designer to select
+              the cable and the install method so that the operating-temperature limit in Table 52.2
+              (the normal-operation ceiling, e.g. 70 °C for thermoplastic) and the short-circuit
+              limit in Table 43.1 (e.g. 160 °C for thermoplastic conductors during a fault) are
+              never exceeded. Ca is the maths that ties an ambient temperature to a cable
+              temperature, so the regulation can be satisfied in design rather than rediscovered
+              after the cable has cooked.
             </>
-            }
-            whyItMatters={
-              <>
-                Ca is one of the easiest derates to argue away on a site visit and one of the
-                most expensive to undo if you get it wrong. A loft converted to a habitable space
-                with a heat pump in it will see hotter peak temperatures than the same loft used
-                for storage — and the cable runs through a cavity where convection is poor.
-                Stick to the survey number; that is what it is for.
+          }
+          cite="Source: BS 7671:2018+A4:2026 Part 5, Chapter 52, Regulation 522.1.1; Ca correction values in Appendix 4 Table 4B1."
+        />
+
+        <InlineCheck
+          id={checks[1].id}
+          question={checks[1].question}
+          options={checks[1].options}
+          correctIndex={checks[1].correctIndex}
+          explanation={checks[1].explanation}
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>Insulation type sets the ceiling</ContentEyebrow>
+
+        <ConceptBlock
+          title="70 °C thermoplastic vs 90 °C thermosetting — same conductor, different ceiling"
+          plainEnglish="A 4 mm² thermosetting cable carries more current than a 4 mm² thermoplastic cable in the same install method. Not because the copper is different — it is identical — but because the insulation can sit hotter without degrading. More thermal headroom means more current."
+          onSite="On commercial fit-outs you will increasingly see XLPE / LSF singles in trunking instead of T&E. The thermosetting jacket gives you a CSA bracket back compared to the thermoplastic equivalent — sometimes the difference between 6 mm² and 4 mm² on a marginal calc."
+        >
+          <p>
+            The same 6 mm² copper conductor carries different tabulated currents depending on which
+            insulation surrounds it. Indicative figures from Appendix 4 (Method C, two-core,
+            single-phase):
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>6 mm² 70 °C thermoplastic T&E</strong> (Table 4D5 Method C) — It ≈ 47 A.
+            </li>
+            <li>
+              <strong>6 mm² 90 °C thermosetting two-core</strong> (Table 4E5 Method C) — It ≈ 56 A.
+            </li>
+          </ul>
+          <p>
+            That is roughly a 19 percent uplift, achieved purely by changing the insulation
+            chemistry. The cost: thermosetting cable is more expensive per metre, and the higher
+            operating temperature can cause issues if the cable terminates into equipment rated only
+            to 70 °C — some older accessories cap their terminal block to 70 °C, so the cable ages
+            prematurely at the gland even if the run is fine. Always check the terminal
+            compatibility before sizing on a thermosetting basis.
+          </p>
+          <p>
+            In design office practice, thermosetting is the routine choice for any sub-main, any
+            commercial sockets / lighting on conduit / trunking, and any installation where the
+            cable runs through hot environments (plant rooms, roof voids). T&E remains the dominant
+            choice for domestic final circuits because the cost difference is meaningful at small
+            CSAs and the install method usually leaves enough headroom on thermoplastic anyway.
+          </p>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <ContentEyebrow>The OSG as everyday companion</ContentEyebrow>
+
+        <ConceptBlock
+          title="What the IET On-Site Guide actually replaces"
+          plainEnglish="The OSG condenses Appendix 4 down to the four or five tables an electrician actually opens on a domestic or small commercial job. Same physics, faster lookup, smaller book."
+          onSite="Carry the OSG in the van, keep BS 7671 in the office. The OSG is enough for 90 percent of cable selections you will ever do; the other 10 percent (large CSAs, special cables, complex grouping, harmonics) drive you back to the full standard."
+        >
+          <p>
+            The OSG (currently Edition 9, aligned with BS 7671:2018+A4:2026) reproduces the
+            bread-and-butter Appendix 4 data in a stripped-down format:
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>OSG Table F6</strong> — 70 °C thermoplastic flat T&E (BS 6004 / 7211):
+              current-carrying capacity by Reference Method, mV/A/m alongside, for the everyday CSAs
+              (1.0 → 16 mm²). The single most-used table in the book.
+            </li>
+            <li>
+              <strong>OSG Table F7</strong> — 70 °C thermoplastic singles in conduit / trunking,
+              Method B / E. Used for commercial fit-outs and steel-conduit work.
+            </li>
+            <li>
+              <strong>OSG Table F8</strong> — 90 °C thermosetting equivalents.
+            </li>
+            <li>
+              <strong>OSG Table F9</strong> — SWA (BS 5467 / 6724) for sub-mains, outbuildings,
+              garden EV chargers and the like.
+            </li>
+            <li>
+              <strong>OSG Tables 6A / 6B</strong> — Ca and Cg correction factors in compact form.
+            </li>
+          </ul>
+          <p>
+            For a 32 A radial in domestic loft / wall cavity, you can do the entire CCC calc using
+            only OSG Table F6 and Tables 6A / 6B. For a 200 A sub-main on SWA from a panel to an
+            outbuilding, OSG F9 + 6A / 6B gives you the answer. Anything outside those everyday
+            cases — paper-insulated cable in a high-voltage transformer feed, mineral-insulated
+            fire-survival circuit, multi-core flex with harmonic content — sends you to the full
+            Appendix 4.
+          </p>
+          <p>
+            The OSG is published by the IET (the same body that publishes BS 7671 itself), so the
+            data is authoritative and inspectors accept it without quibble. What inspectors will not
+            accept is a calc done against an out-of-date OSG (e.g. Edition 8 numbers used on an
+            A4:2026 install) — always check the front cover.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck
+          id={checks[2].id}
+          question={checks[2].question}
+          options={checks[2].options}
+          correctIndex={checks[2].correctIndex}
+          explanation={checks[2].explanation}
+        />
+
+        <ConceptBlock
+          title="Where the OSG falls short — and you reach for the full Appendix 4"
+          plainEnglish="The OSG covers the everyday cases. Anything unusual sends you back to the full standard. Knowing when to switch is a competence in its own right."
+        >
+          <p>
+            The OSG drops out (or simplifies past the point of usefulness) for several common L3
+            scenarios:
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Large CSAs (above 35 mm² or so).</strong> OSG tables stop or get sparse at the
+              larger CSAs; sub-mains and supply-side cables need the full BS 7671 4D / 4E / 4F
+              tables.
+            </li>
+            <li>
+              <strong>Three-phase grouping with mixed circuits.</strong> Cg for mixed single-phase /
+              three-phase groups is properly handled in Appendix 4 Tables 4C1–4C5 with the full
+              method; the OSG gives a simplified version that can over-derate.
+            </li>
+            <li>
+              <strong>Harmonic content above 15 percent.</strong> The harmonic correction for
+              multi-core cables carrying significant third-harmonic neutral current (typical of
+              switched-mode loads, UPS, large LED arrays) lives in BS 7671 Appendix 4 Section 5.5 —
+              not the OSG at all.
+            </li>
+            <li>
+              <strong>Underground cables in soil.</strong> Appendix 4 Tables 4D4 / 4E4 publish CCC
+              values for direct-buried and ducted cables with thermal-resistivity correction factors
+              (Table 4B3); the OSG only summarises the most common case.
+            </li>
+            <li>
+              <strong>MICC (mineral-insulated copper-clad).</strong> BS 7671 Table 4F is dedicated
+              to MICC; the OSG hardly touches it. Used in fire-survival circuits, you go to the
+              standard or the manufacturer.
+            </li>
+          </ul>
+          <p>
+            The general principle: the OSG is a working subset, not a substitute. Anyone designing
+            professionally needs the full BS 7671 to hand for the cases the OSG was never written to
+            cover.
+          </p>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <ContentEyebrow>Things that catch people out</ContentEyebrow>
+
+        <CommonMistake
+          title="Reading the It column and calling that the answer"
+          whatHappens={
+            <>
+              The apprentice opens Table 4D5, finds 4 mm² in the Method C column at 36 A, and writes
+              'cable rated 36 A, comfortably above the 32 A device, complies'. The actual install
+              has Ca = 0.94, Cg = 0.80, so Iz is 27 A, not 36 A. The cable is undersized; the
+              inspector codes it C2 at the next periodic; the customer pays for rework.
             </>
-            }
-          />
+          }
+          doInstead={
+            <>
+              Always write the calc as <strong>It → multiply derates → Iz → test inequality</strong>
+              . Never quote the table figure as if it were Iz. On the design sheet, show It, show
+              every Ca / Cg / Ci you applied, show the product, show Iz, then write the Reg 433.1.1
+              line with all three numbers. That paper trail is what defends the design at periodic
+              inspection.
+            </>
+          }
+        />
 
-          <RegsCallout
-            source="BS 7671:2018+A4:2026 — Appendix 4 (current-carrying capacity)"
-            clause={
-              <>
-                Tabulated current-carrying capacity of a cable is the tabulated current-carrying
-                capacity (in amperes) of a cable as given in relevant tables. This is the
-                reference value used before applying installation correction factors. The
-                current-carrying capacity of a cable for continuous service under the particular
-                installation conditions concerned is the current-carrying capacity (in amperes)
-                of a cable when installed in the specific conditions of the installation. This
-                accounts for grouping, temperature, and other correction factors.
-              </>
-            }
-            meaning={
-              <>
-                Cable sizing pulls a tabulated value from Appendix 4 then applies correction
-                factors for grouping, ambient temperature and any thermal insulation. The
-                designer documents the tabulated value, the corrections applied, and the final
-                installed-condition current-carrying capacity. Sizing is not a single look-up —
-                it is a documented derivation.
-              </>
-            }
-            cite="Source: BS 7671:2018+A4:2026 Appendix 4 — definitions."
-          />
+        <Scenario
+          title="The site survey says 35 °C ambient. The customer says 'it's never that hot up there'."
+          situation={
+            <>
+              You are designing a new 40 A circuit for a heat pump that lives in a converted loft.
+              Your survey reads 34 °C ambient on a warm September day, and you size with Ca = 0.94
+              (35 °C, 70 °C cable). The customer says they have lived in the house twenty years and
+              the loft never gets hotter than &quot;normal room&quot; — they want you to use Ca =
+              1.0 to save them the cost of stepping up a CSA.
+            </>
+          }
+          whatToDo={
+            <>
+              Politely refuse to back the design off. Your survey reading is the evidence; the
+              customer's recollection is not. Ca is a thermal safety derate — the consequence of
+              getting it wrong is accelerated insulation ageing and eventual fault. Document the
+              survey temperature on the design sheet, document the customer's preference, and
+              proceed with Ca = 0.94. If they insist, walk away from the job rather than certify a
+              non-compliant design — you carry the liability for years after they have forgotten the
+              conversation.
+            </>
+          }
+          whyItMatters={
+            <>
+              Ca is one of the easiest derates to argue away on a site visit and one of the most
+              expensive to undo if you get it wrong. A loft converted to a habitable space with a
+              heat pump in it will see hotter peak temperatures than the same loft used for storage
+              — and the cable runs through a cavity where convection is poor. Stick to the survey
+              number; that is what it is for.
+            </>
+          }
+        />
 
-          <SectionRule />
+        <RegsCallout
+          source="BS 7671:2018+A4:2026 — Appendix 4 (current-carrying capacity)"
+          clause={
+            <>
+              Tabulated current-carrying capacity of a cable is the tabulated current-carrying
+              capacity (in amperes) of a cable as given in relevant tables. This is the reference
+              value used before applying installation correction factors. The current-carrying
+              capacity of a cable for continuous service under the particular installation
+              conditions concerned is the current-carrying capacity (in amperes) of a cable when
+              installed in the specific conditions of the installation. This accounts for grouping,
+              temperature, and other correction factors.
+            </>
+          }
+          meaning={
+            <>
+              Cable sizing pulls a tabulated value from Appendix 4 then applies correction factors
+              for grouping, ambient temperature and any thermal insulation. The designer documents
+              the tabulated value, the corrections applied, and the final installed-condition
+              current-carrying capacity. Sizing is not a single look-up — it is a documented
+              derivation.
+            </>
+          }
+          cite="Source: BS 7671:2018+A4:2026 Appendix 4 — definitions."
+        />
 
-          <FAQ items={faqs} />
+        <SectionRule />
 
-          <SectionRule />
+        <FAQ items={faqs} />
 
-          <KeyTakeaways
-            points={[
-              'Iz is the cable’s actual derated current-carrying capacity in your specific install. It is the BS 7671 Appendix 4 tabulated baseline at 30 °C ambient with no grouping and no insulation. Iz = It × Ca × Cg × Ci × any other applicable factor.',
-              'Reg 433.1.1 expresses the structural compliance line as Ib ≤ In ≤ Iz. The protective device must let the load through; the cable must carry whatever the device passes until the device operates. That order is non-negotiable.',
-              'The 30 °C ambient air reference baseline drives every Appendix 4 column. Hotter ambient means less thermal headroom; Ca compensates via Table 4B1.',
-              'BS 7671 publishes separate tables for each cable family (4D for 70 °C thermoplastic, 4E for 90 °C thermosetting, 4F for MICC, 4H for paper) — pick the table that matches your cable.',
-              'Methods 100–103 already build the Ci insulation derate into their tabulated values; do not apply Ci on top, that is double-counting.',
-              'The IET OSG (Tables F6, F7, F8, F9 plus 6A / 6B) is the working tradesperson’s companion to Appendix 4 — same data, faster lookup. Inspectors accept either source as long as it is the current edition.',
-              'Always document the calc as It → derates → Iz, with every correction factor itemised. Quoting the as-tabulated It as if it were Iz is the single most common cable-sizing error in apprentice work.',
-            ]}
-          />
+        <SectionRule />
 
-          <Quiz title="Current-carrying capacity — knowledge check" questions={quizQuestions} />
+        <KeyTakeaways
+          points={[
+            'Iz is the cable’s actual derated current-carrying capacity in your specific install. It is the BS 7671 Appendix 4 tabulated baseline at 30 °C ambient with no grouping and no insulation. Iz = It × Ca × Cg × Ci × any other applicable factor.',
+            'Reg 433.1.1 expresses the structural compliance line as Ib ≤ In ≤ Iz. The protective device must let the load through; the cable must carry whatever the device passes until the device operates. That order is non-negotiable.',
+            'The 30 °C ambient air reference baseline drives every Appendix 4 column. Hotter ambient means less thermal headroom; Ca compensates via Table 4B1.',
+            'BS 7671 publishes separate tables for each cable family (4D for 70 °C thermoplastic, 4E for 90 °C thermosetting, 4F for MICC, 4H for paper) — pick the table that matches your cable.',
+            'Methods 100–103 already build the Ci insulation derate into their tabulated values; do not apply Ci on top, that is double-counting.',
+            'The IET OSG (Tables F6, F7, F8, F9 plus 6A / 6B) is the working tradesperson’s companion to Appendix 4 — same data, faster lookup. Inspectors accept either source as long as it is the current edition.',
+            'Always document the calc as It → derates → Iz, with every correction factor itemised. Quoting the as-tabulated It as if it were Iz is the single most common cable-sizing error in apprentice work.',
+          ]}
+        />
 
-          <div className="grid grid-cols-2 gap-3 pt-2">
-            <button
-              onClick={() => navigate('/study-centre/apprentice/level3-module6-section4')}
-              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
-                <ChevronLeft className="h-3 w-3" /> Section landing
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-white truncate">
-                Section 4 — Cable selection
-              </div>
-            </button>
-            <button
-              onClick={() => navigate('/study-centre/apprentice/level3-module6-section4-2')}
-              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
-                Next subsection <ChevronRight className="h-3 w-3" />
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-black truncate">
-                4.2 Reference Methods A–G and 100–103
-              </div>
-            </button>
-          </div>
-        </PageFrame>
-      </div>
-    </div>
+        <Quiz title="Current-carrying capacity — knowledge check" questions={quizQuestions} />
+
+        <div className="grid grid-cols-2 gap-3 pt-2">
+          <button
+            onClick={() => navigate('/study-centre/apprentice/level3-module6-section4')}
+            className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+          >
+            <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+              <ChevronLeft className="h-3 w-3" /> Section landing
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-white truncate">
+              Section 4 — Cable selection
+            </div>
+          </button>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/level3-module6-section4-2')}
+            className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+          >
+            <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+              Next subsection <ChevronRight className="h-3 w-3" />
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-black truncate">
+              4.2 Reference Methods A–G and 100–103
+            </div>
+          </button>
+        </div>
+      </HubBody>
+    </HubPage>
   );
 }

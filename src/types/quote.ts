@@ -244,9 +244,16 @@ export interface Quote {
   site_visit_id?: string;
   // Linked certificate fields (when created from EICR/EIC/Minor Works)
   linked_certificate_id?: string;
-  linked_certificate_type?: 'EICR' | 'EIC' | 'Minor Works';
+  // Display label — EICR / EIC / Minor Works / Fire Alarm / PAT / … (free
+  // text; printed on the email, PDF and release notification).
+  linked_certificate_type?: string;
   linked_certificate_reference?: string;
   linked_certificate_pdf_url?: string;
+  // "Hold until paid" — with_invoice (default) attaches the cert to the
+  // invoice email; on_payment withholds it and release-certificate emails it
+  // automatically when the invoice is paid.
+  certificate_release_mode?: 'with_invoice' | 'on_payment';
+  certificate_released_at?: string | null;
   // Project linking
   project_id?: string;
   // CRM linking — customers.id this quote/invoice belongs to

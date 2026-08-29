@@ -125,10 +125,7 @@ export default function LearningVideos({ backTo = '/apprentice' }: { backTo?: st
   // Default landing state: no search, no category filter → show spotlight + grouped sections
   const isDefaultView = activeCategory === 'all' && !searchQuery.trim();
 
-  const featuredVideo = useMemo(
-    () => curatedVideos.find((v) => v.id === FEATURED_ID) ?? null,
-    []
-  );
+  const featuredVideo = useMemo(() => curatedVideos.find((v) => v.id === FEATURED_ID) ?? null, []);
 
   // Group the (filtered) videos by category, in data order, dropping empty groups
   const groupedVideos = useMemo(() => {
@@ -588,10 +585,7 @@ function VideoTile({
           {/* Resume progress bar */}
           {inProgress && (
             <span className="absolute inset-x-0 bottom-0 h-[3px] bg-black/40">
-              <span
-                className="block h-full bg-elec-yellow"
-                style={{ width: `${progressPct}%` }}
-              />
+              <span className="block h-full bg-elec-yellow" style={{ width: `${progressPct}%` }} />
             </span>
           )}
         </button>
@@ -618,9 +612,7 @@ function VideoTile({
           {video.title}
         </h4>
         <div className="mt-1.5 flex items-center gap-2">
-          <span className="flex-1 min-w-0 text-[11px] text-white/50 truncate">
-            {video.channel}
-          </span>
+          <span className="flex-1 min-w-0 text-[11px] text-white/50 truncate">{video.channel}</span>
           <span
             className={`shrink-0 px-1.5 py-0.5 rounded border text-[9px] font-medium uppercase tracking-wide ${levelChip}`}
           >

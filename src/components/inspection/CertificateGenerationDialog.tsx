@@ -34,6 +34,19 @@ interface CertificateGenerationDialogProps {
   errorMessage?: string | null;
   /** Label shown in the title, e.g. "Certificate" or "Invoice" */
   documentLabel?: string;
+  /**
+   * Follow-on actions rendered under the download button on success.
+   *
+   * Optional, so every existing certificate is untouched. Added for the
+   * pre-purchase survey (ELE-1634), where the end of the flow is the most
+   * valuable moment in it — the electrician knows exactly what the property
+   * needs and is still in front of the client — and a lone Download button
+   * threw that away.
+   *
+   * When supplied, the built-in Download button is dropped: the slot is
+   * expected to offer its own, so the dialog does not show two.
+   */
+  actions?: React.ReactNode;
 }
 
 export default function CertificateGenerationDialog({
@@ -44,6 +57,7 @@ export default function CertificateGenerationDialog({
   pdfFilename = 'document.pdf',
   errorMessage,
   documentLabel = 'Certificate',
+  actions,
 }: CertificateGenerationDialogProps) {
   const handleDownload = async () => {
     if (!pdfUrl) return;
@@ -69,7 +83,9 @@ export default function CertificateGenerationDialog({
           <DialogDescription className="sr-only">Certificate generation progress and download</DialogDescription>
         </DialogHeader>
 
-        <div className="flex flex-col items-center gap-4 py-4">
+        {/* Scrolls when a cert supplies follow-on actions — a survey's work
+            list can run to several items and must not push the buttons off. */}
+        <div className="flex max-h-[70vh] flex-col items-center gap-4 overflow-y-auto py-4">
           {/* ── Generating ─────────────────────────────────────── */}
           {isGenerating && (
             <>
@@ -102,13 +118,15 @@ export default function CertificateGenerationDialog({
               <p className="text-sm text-white">
                 {documentLabel} generated successfully!
               </p>
-              <Button
-                onClick={handleDownload}
-                className="h-11 touch-manipulation bg-yellow-500 hover:bg-yellow-600 text-black font-semibold w-full"
-              >
-                <Download className="mr-2 h-4 w-4" />
-                Download {documentLabel}
-              </Button>
+              {actions ?? (
+                <Button
+                  onClick={handleDownload}
+                  className="h-11 touch-manipulation bg-yellow-500 hover:bg-yellow-600 text-black font-semibold w-full"
+                >
+                  <Download className="mr-2 h-4 w-4" />
+                  Download {documentLabel}
+                </Button>
+              )}
             </>
           )}
         </div>

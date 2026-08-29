@@ -6,10 +6,10 @@
  * checklist.
  */
 
-import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft, CheckCircle2, AlertTriangle, FolderTree } from 'lucide-react';
-import { PageFrame, PageHero, itemVariants } from '@/components/college/primitives';
+import { CheckCircle2, AlertTriangle, FolderTree } from 'lucide-react';
+import { itemVariants } from '@/components/college/primitives';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { Eyebrow, SectionHeader } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
 import { DEFAULT_OTJ_STANDARD, OTJ_HOURS_FLOOR } from '@/data/otjStandards';
 
@@ -197,106 +197,166 @@ const monthlyChecklist = [
 ];
 
 const StructurePage = () => {
-  const navigate = useNavigate();
   return (
-    <PageFrame className="px-4 sm:px-6 lg:px-8">
-      <motion.div variants={itemVariants}>
-        <button
-          onClick={() => navigate('/apprentice/toolbox/portfolio-building')}
-          className="inline-flex items-center gap-2 h-11 -ml-2 px-2 rounded-md text-[12px] uppercase tracking-[0.18em] text-white/55 hover:text-white/85 transition-colors touch-manipulation"
-        >
-          <ArrowLeft className="h-4 w-4" />
-          Back
-        </button>
-      </motion.div>
-
-      <motion.div variants={itemVariants}>
-        <PageHero
-          eyebrow="Apprentice · Portfolio · Structure"
-          title="Structure & planning"
-          description="How to lay the portfolio out, what goes where, and the structure your assessor and EPAO actually want to see."
-          tone="yellow"
-        />
-      </motion.div>
-
-      {/* ── Intro ───────────────────────────────────────────────── */}
-      <motion.div variants={itemVariants}>
-        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-2">
-          <Eyebrow>Why structure matters</Eyebrow>
-          <p className="text-[13.5px] text-white/85 leading-relaxed">
-            A well-structured portfolio makes it easy for assessors to find evidence, demonstrates
-            your organisational skills, and ensures you cover all required KSBs. Plan your structure
-            early and stick to it.
-          </p>
-        </div>
-      </motion.div>
-
-      {/* ── Recommended structure ──────────────────────────────── */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <SectionHeader
-          eyebrow="Recommended structure"
-          title="Eight sections that work"
-          meta="Your training provider may have their own template — follow theirs first"
-          action={
-            <span className="inline-flex items-center justify-center w-8 h-8 rounded-md border border-elec-yellow/25 bg-elec-yellow/[0.06]">
-              <FolderTree className="h-4 w-4 text-elec-yellow" />
-            </span>
+    <HubPage>
+      <HubMasthead
+        section="Apprentice · Portfolio · Structure"
+        title="Structure & planning"
+        backTo="/apprentice/toolbox/portfolio-building"
+      />
+      <HubBody>
+        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
+          {
+            'How to lay the portfolio out, what goes where, and the structure your assessor and EPAO actually want to see.'
           }
-        />
-        <ul className="space-y-2">
-          {portfolioSections.map((item) => (
-            <li
-              key={item.section}
-              className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-2"
-            >
-              <h3 className="text-[13.5px] font-semibold text-elec-yellow tracking-tight">
-                {item.section}
-              </h3>
-              <ul className="space-y-1">
-                {item.contents.map((content) => (
+        </p>
+
+        {/* ── Intro ───────────────────────────────────────────────── */}
+        <motion.div variants={itemVariants}>
+          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-2">
+            <Eyebrow>Why structure matters</Eyebrow>
+            <p className="text-[13.5px] text-white/85 leading-relaxed">
+              A well-structured portfolio makes it easy for assessors to find evidence, demonstrates
+              your organisational skills, and ensures you cover all required KSBs. Plan your
+              structure early and stick to it.
+            </p>
+          </div>
+        </motion.div>
+
+        {/* ── Recommended structure ──────────────────────────────── */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <SectionHeader
+            eyebrow="Recommended structure"
+            title="Eight sections that work"
+            meta="Your training provider may have their own template — follow theirs first"
+            action={
+              <span className="inline-flex items-center justify-center w-8 h-8 rounded-md border border-elec-yellow/25 bg-elec-yellow/[0.06]">
+                <FolderTree className="h-4 w-4 text-elec-yellow" />
+              </span>
+            }
+          />
+          <ul className="space-y-2">
+            {portfolioSections.map((item) => (
+              <li
+                key={item.section}
+                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-2"
+              >
+                <h3 className="text-[13.5px] font-semibold text-elec-yellow tracking-tight">
+                  {item.section}
+                </h3>
+                <ul className="space-y-1">
+                  {item.contents.map((content) => (
+                    <li
+                      key={content}
+                      className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                    >
+                      <span className="text-elec-yellow/70 mt-0.5">·</span>
+                      <span>{content}</span>
+                    </li>
+                  ))}
+                </ul>
+              </li>
+            ))}
+          </ul>
+        </motion.section>
+
+        {/* ── Gateway & OTJ hours ─────────────────────────────────── */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <SectionHeader
+            eyebrow="Section 8 — what gateway checks"
+            title="Off-the-job training hours"
+            meta="Your portfolio sits behind your gateway sign-off — not a percentage"
+          />
+          <div className="rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-3">
+            <p className="text-[13.5px] text-white/85 leading-relaxed">
+              Off-the-job (OTJ) training is now a fixed number of hours per standard, not a
+              percentage of your working week. For {DEFAULT_OTJ_STANDARD.name} (
+              {DEFAULT_OTJ_STANDARD.code}) the requirement is{' '}
+              <span className="font-mono text-elec-yellow tabular-nums">
+                {DEFAULT_OTJ_STANDARD.otjHours.toLocaleString()} hours
+              </span>{' '}
+              (absolute floor {OTJ_HOURS_FLOOR}h), delivered over a provider-agreed timeframe. Your
+              Section 8 log evidences these hours — keep it current.
+            </p>
+            <div className="space-y-1.5 pt-2 border-t border-elec-yellow/15">
+              <Eyebrow className="text-elec-yellow/85">
+                What your provider confirms at gateway
+              </Eyebrow>
+              <ul className="space-y-1.5">
+                {[
+                  'The technical qualification — e.g. City & Guilds 2365 + NVQ 2357, or an EAL route (your provider confirms the exact units)',
+                  'Maths and English at Level 2',
+                  'Your OTJ hours evidenced and signed off',
+                  'Full KSB coverage across your portfolio',
+                ].map((item) => (
                   <li
-                    key={content}
+                    key={item}
                     className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
                   >
-                    <span className="text-elec-yellow/70 mt-0.5">·</span>
-                    <span>{content}</span>
+                    <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
+                    <span>{item}</span>
                   </li>
                 ))}
               </ul>
-            </li>
-          ))}
-        </ul>
-      </motion.section>
+            </div>
+            <p className="text-[12px] text-white/70 leading-relaxed pt-2 border-t border-elec-yellow/15">
+              Gateway is your provider confirming you are ready for End-Point Assessment. The EPA
+              itself is the AM2S practical assessment, not a portfolio review.
+            </p>
+          </div>
+        </motion.section>
 
-      {/* ── Gateway & OTJ hours ─────────────────────────────────── */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <SectionHeader
-          eyebrow="Section 8 — what gateway checks"
-          title="Off-the-job training hours"
-          meta="Your portfolio sits behind your gateway sign-off — not a percentage"
-        />
-        <div className="rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-3">
-          <p className="text-[13.5px] text-white/85 leading-relaxed">
-            Off-the-job (OTJ) training is now a fixed number of hours per standard, not a percentage
-            of your working week. For {DEFAULT_OTJ_STANDARD.name} ({DEFAULT_OTJ_STANDARD.code}) the
-            requirement is{' '}
-            <span className="font-mono text-elec-yellow tabular-nums">
-              {DEFAULT_OTJ_STANDARD.otjHours.toLocaleString()} hours
-            </span>{' '}
-            (absolute floor {OTJ_HOURS_FLOOR}h), delivered over a provider-agreed timeframe. Your
-            Section 8 log evidences these hours — keep it current.
-          </p>
-          <div className="space-y-1.5 pt-2 border-t border-elec-yellow/15">
-            <Eyebrow className="text-elec-yellow/85">
-              What your provider confirms at gateway
-            </Eyebrow>
+        {/* ── 5-step planning ─────────────────────────────────────── */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <SectionHeader
+            eyebrow="Planning guide"
+            title="Five steps from setup to gateway"
+            meta="Do these in order — each builds on the last"
+          />
+          <ol className="space-y-2">
+            {planningSteps.map((item) => (
+              <li
+                key={item.step}
+                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3"
+              >
+                <div className="flex items-start gap-3">
+                  <span className="inline-flex items-center justify-center w-7 h-7 rounded-md border border-elec-yellow/30 bg-elec-yellow/[0.06] text-[12px] font-mono font-semibold tabular-nums text-elec-yellow flex-shrink-0">
+                    {item.step}
+                  </span>
+                  <h3 className="text-[14px] font-semibold text-white tracking-tight pt-0.5">
+                    {item.title}
+                  </h3>
+                </div>
+                <ul className="space-y-1.5 pl-10">
+                  {item.tasks.map((task) => (
+                    <li
+                      key={task}
+                      className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                    >
+                      <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
+                      <span>{task}</span>
+                    </li>
+                  ))}
+                </ul>
+              </li>
+            ))}
+          </ol>
+        </motion.section>
+
+        {/* ── KSB tracking method ─────────────────────────────────── */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <SectionHeader
+            eyebrow="KSB tracking method"
+            title="A 7-column tracker"
+            meta="Simple spreadsheet or table — review monthly"
+          />
+          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3">
+            <p className="text-[13px] text-white/85 leading-relaxed">
+              Create a simple spreadsheet with these columns to track your evidence against each
+              KSB:
+            </p>
             <ul className="space-y-1.5">
-              {[
-                'The technical qualification — e.g. City & Guilds 2365 + NVQ 2357, or an EAL route (your provider confirms the exact units)',
-                'Maths and English at Level 2',
-                'Your OTJ hours evidenced and signed off',
-                'Full KSB coverage across your portfolio',
-              ].map((item) => (
+              {ksbColumns.map((item) => (
                 <li
                   key={item}
                   className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
@@ -306,154 +366,88 @@ const StructurePage = () => {
                 </li>
               ))}
             </ul>
+            <p className="text-[12.5px] text-white/70 leading-relaxed pt-2 border-t border-white/[0.04]">
+              Review this tracker monthly. Aim for 2–3 pieces of evidence per KSB by gateway.
+              Quality over quantity.
+            </p>
           </div>
-          <p className="text-[12px] text-white/70 leading-relaxed pt-2 border-t border-elec-yellow/15">
-            Gateway is your provider confirming you are ready for End-Point Assessment. The EPA
-            itself is the AM2S practical assessment, not a portfolio review.
-          </p>
-        </div>
-      </motion.section>
+        </motion.section>
 
-      {/* ── 5-step planning ─────────────────────────────────────── */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <SectionHeader
-          eyebrow="Planning guide"
-          title="Five steps from setup to gateway"
-          meta="Do these in order — each builds on the last"
-        />
-        <ol className="space-y-2">
-          {planningSteps.map((item) => (
-            <li
-              key={item.step}
-              className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3"
-            >
-              <div className="flex items-start gap-3">
-                <span className="inline-flex items-center justify-center w-7 h-7 rounded-md border border-elec-yellow/30 bg-elec-yellow/[0.06] text-[12px] font-mono font-semibold tabular-nums text-elec-yellow flex-shrink-0">
-                  {item.step}
-                </span>
-                <h3 className="text-[14px] font-semibold text-white tracking-tight pt-0.5">
-                  {item.title}
-                </h3>
-              </div>
-              <ul className="space-y-1.5 pl-10">
-                {item.tasks.map((task) => (
+        {/* ── File naming ────────────────────────────────────────── */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <SectionHeader
+            eyebrow="File naming conventions"
+            title="Saves hours when searching for evidence"
+            meta="Use a consistent format throughout"
+          />
+          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3">
+            <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3 space-y-1">
+              <Eyebrow className="text-elec-yellow/85">Format</Eyebrow>
+              <p className="text-[13px] font-mono text-elec-yellow">
+                YYYY-MM-DD_KSB-ref_description.ext
+              </p>
+            </div>
+            <div className="space-y-2">
+              <Eyebrow>Examples</Eyebrow>
+              <ul className="space-y-1">
+                {namingExamples.map((example) => (
                   <li
-                    key={task}
-                    className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                    key={example}
+                    className="text-[12px] font-mono text-white/85 leading-relaxed break-all"
                   >
-                    <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
-                    <span>{task}</span>
+                    {example}
                   </li>
                 ))}
               </ul>
-            </li>
-          ))}
-        </ol>
-      </motion.section>
-
-      {/* ── KSB tracking method ─────────────────────────────────── */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <SectionHeader
-          eyebrow="KSB tracking method"
-          title="A 7-column tracker"
-          meta="Simple spreadsheet or table — review monthly"
-        />
-        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3">
-          <p className="text-[13px] text-white/85 leading-relaxed">
-            Create a simple spreadsheet with these columns to track your evidence against each KSB:
-          </p>
-          <ul className="space-y-1.5">
-            {ksbColumns.map((item) => (
-              <li
-                key={item}
-                className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
-              >
-                <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
-                <span>{item}</span>
-              </li>
-            ))}
-          </ul>
-          <p className="text-[12.5px] text-white/70 leading-relaxed pt-2 border-t border-white/[0.04]">
-            Review this tracker monthly. Aim for 2–3 pieces of evidence per KSB by gateway. Quality
-            over quantity.
-          </p>
-        </div>
-      </motion.section>
-
-      {/* ── File naming ────────────────────────────────────────── */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <SectionHeader
-          eyebrow="File naming conventions"
-          title="Saves hours when searching for evidence"
-          meta="Use a consistent format throughout"
-        />
-        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3">
-          <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3 space-y-1">
-            <Eyebrow className="text-elec-yellow/85">Format</Eyebrow>
-            <p className="text-[13px] font-mono text-elec-yellow">
-              YYYY-MM-DD_KSB-ref_description.ext
-            </p>
+            </div>
           </div>
-          <div className="space-y-2">
-            <Eyebrow>Examples</Eyebrow>
-            <ul className="space-y-1">
-              {namingExamples.map((example) => (
+        </motion.section>
+
+        {/* ── Pitfalls ────────────────────────────────────────────── */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <SectionHeader
+            eyebrow="Planning pitfalls"
+            title="Seven traps to avoid"
+            meta="Keep it simple, follow the template"
+          />
+          <div className="rounded-xl border border-red-500/25 bg-red-500/[0.04] p-4 sm:p-5">
+            <ul className="space-y-1.5">
+              {pitfalls.map((item) => (
                 <li
-                  key={example}
-                  className="text-[12px] font-mono text-white/85 leading-relaxed break-all"
+                  key={item}
+                  className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
                 >
-                  {example}
+                  <AlertTriangle className="h-3.5 w-3.5 text-red-300 flex-shrink-0 mt-0.5" />
+                  <span>{item}</span>
                 </li>
               ))}
             </ul>
           </div>
-        </div>
-      </motion.section>
+        </motion.section>
 
-      {/* ── Pitfalls ────────────────────────────────────────────── */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <SectionHeader
-          eyebrow="Planning pitfalls"
-          title="Seven traps to avoid"
-          meta="Keep it simple, follow the template"
-        />
-        <div className="rounded-xl border border-red-500/25 bg-red-500/[0.04] p-4 sm:p-5">
-          <ul className="space-y-1.5">
-            {pitfalls.map((item) => (
-              <li
-                key={item}
-                className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
-              >
-                <AlertTriangle className="h-3.5 w-3.5 text-red-300 flex-shrink-0 mt-0.5" />
-                <span>{item}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </motion.section>
-
-      {/* ── Monthly review ─────────────────────────────────────── */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <SectionHeader
-          eyebrow="Monthly review"
-          title="Ten questions to ask yourself"
-          meta="Run this at the start of every month"
-        />
-        <div className="rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.04] p-4 sm:p-5">
-          <ul className="space-y-1.5">
-            {monthlyChecklist.map((item) => (
-              <li
-                key={item}
-                className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
-              >
-                <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow flex-shrink-0 mt-0.5" />
-                <span>{item}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </motion.section>
-    </PageFrame>
+        {/* ── Monthly review ─────────────────────────────────────── */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <SectionHeader
+            eyebrow="Monthly review"
+            title="Ten questions to ask yourself"
+            meta="Run this at the start of every month"
+          />
+          <div className="rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.04] p-4 sm:p-5">
+            <ul className="space-y-1.5">
+              {monthlyChecklist.map((item) => (
+                <li
+                  key={item}
+                  className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                >
+                  <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow flex-shrink-0 mt-0.5" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </motion.section>
+      </HubBody>
+    </HubPage>
   );
 };
 

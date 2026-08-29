@@ -90,8 +90,10 @@ export function ExamReviewPanel({
 
   return (
     <div className="min-h-screen bg-[hsl(0_0%_8%)]">
-      <div className="fixed right-0 z-40 border-b border-white/[0.1] bg-background/95 backdrop-blur-md"
-        style={{ top: 'var(--header-height, 56px)', left: 'var(--sidebar-width, 0px)' }}>
+      <div
+        className="fixed right-0 z-40 border-b border-white/[0.1] bg-background/95 backdrop-blur-md"
+        style={{ top: 'var(--header-height, 56px)', left: 'var(--sidebar-width, 0px)' }}
+      >
         <div className="mx-auto flex max-w-5xl items-center gap-3 px-4 py-2.5 sm:px-6 lg:px-8">
           <button
             type="button"
@@ -136,7 +138,9 @@ export function ExamReviewPanel({
         </div>
 
         {visible.length === 0 ? (
-          <div className={cn('rounded-2xl border border-elec-yellow/35 p-8 text-center', CARD_SURFACE)}>
+          <div
+            className={cn('rounded-2xl border border-elec-yellow/35 p-8 text-center', CARD_SURFACE)}
+          >
             <p className="text-[15px] font-semibold text-white">Nothing in this filter</p>
             <p className="mt-1.5 text-[13px] text-white">
               {filter === 'incorrect'
@@ -159,7 +163,8 @@ export function ExamReviewPanel({
                 <div
                   key={index}
                   className={cn(
-                    'overflow-hidden rounded-2xl border bg-[hsl(0_0%_10%)]',
+                    CARD_SURFACE,
+                    'overflow-hidden rounded-2xl border',
                     status === 'correct'
                       ? 'border-emerald-500/25'
                       : status === 'incorrect'
@@ -193,7 +198,11 @@ export function ExamReviewPanel({
                             : 'border-white/[0.14] bg-white/[0.05] text-white'
                       )}
                     >
-                      {status === 'correct' ? 'Correct' : status === 'incorrect' ? 'Wrong' : 'Skipped'}
+                      {status === 'correct'
+                        ? 'Correct'
+                        : status === 'incorrect'
+                          ? 'Wrong'
+                          : 'Skipped'}
                     </span>
                   </div>
 
@@ -265,7 +274,12 @@ export function ExamReviewPanel({
                     )}
 
                     {question.explanation && (
-                      <div className={cn('mt-4 rounded-xl border border-elec-yellow/35 p-4', CARD_SURFACE)}>
+                      <div
+                        className={cn(
+                          'mt-4 rounded-xl border border-elec-yellow/35 p-4',
+                          CARD_SURFACE
+                        )}
+                      >
                         <p className="mb-1.5 text-[10.5px] font-semibold uppercase tracking-[0.18em] text-elec-yellow">
                           Why
                         </p>

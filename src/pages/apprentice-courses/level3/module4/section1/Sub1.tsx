@@ -14,11 +14,11 @@
  */
 
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
-import { PageFrame, PageHero } from '@/components/college/primitives';
 import {
   TLDR,
   ConceptBlock,
@@ -33,8 +33,7 @@ import {
 } from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
-const TITLE =
-  'Dangers of electricity in fault diagnosis (1.1) | Level 3 Module 4.1.1 | Elec-Mate';
+const TITLE = 'Dangers of electricity in fault diagnosis (1.1) | Level 3 Module 4.1.1 | Elec-Mate';
 const DESCRIPTION =
   'Why fault diagnosis is the most electrically dangerous task an electrician does — partial isolation, induced voltage, capacitive charge, hidden parallel paths, unverified circuits — and how the BS 7671 / EAWR / HSG85 framework keeps you alive.';
 
@@ -45,7 +44,7 @@ const checks = [
       "You've isolated the lighting circuit at a Hager DB to chase a switch fault. Your Martindale VI-13800 reads 23 V L–E on the dead conductor before it falls to zero. Where's that voltage coming from?",
     options: [
       "Report it to your insurer promptly within the timeframe specified in the policy (often within 7-30 days). Preserve evidence (photos, statements, certificates). Don't admit liability — let the insurer handle the negotiation. Failure to notify within the policy timeframe can void cover for that claim.",
-      "Test instruments (MFTs and voltage indicators), insulated tools, electrical PPE (gloves, mats, face shields where applicable), lock-off devices, warning labels — all of it. Reg 4(4) is why your MFT must be in calibration, why your voltage indicator must comply with HSE GS38, why your insulated tools must be in date and undamaged, and why your lock-off kit has to actually work. Use unsuitable equipment and you breach Reg 4(4) regardless of whether the install itself is sound.",
+      'Test instruments (MFTs and voltage indicators), insulated tools, electrical PPE (gloves, mats, face shields where applicable), lock-off devices, warning labels — all of it. Reg 4(4) is why your MFT must be in calibration, why your voltage indicator must comply with HSE GS38, why your insulated tools must be in date and undamaged, and why your lock-off kit has to actually work. Use unsuitable equipment and you breach Reg 4(4) regardless of whether the install itself is sound.',
       "EPA (End-Point Assessment) is the apprenticeship-standard's formal assessment at the end of the apprenticeship, conducted by an independent End-Point Assessment Organisation (EPAO). For the Installation Electrician apprenticeship the EPA is built around the AM2, the AM2E and additional knowledge tests and a professional discussion. AM2 is the practical test; EPA is the holistic wrap that also includes the trade test, the knowledge tests and the discussion.",
       "Induced voltage from a parallel cable run. Your dead lighting cable runs through the same ceiling void as the live ring final and the live shower circuit. Capacitive coupling and electromagnetic induction will leak a small voltage onto the dead conductor — it's not enough to kill on its own but it's enough to remind you the cable is in a live environment, and it can rise sharply if there's a fault on the parallel circuit.",
     ],
@@ -58,9 +57,9 @@ const checks = [
     question:
       "You're diagnosing a faulty 230 V single-phase capacitor-start motor on a workshop extractor fan. The motor's been off for two minutes. What's the residual hazard before you put a meter on the windings?",
     options: [
-      "The run capacitor (typically 8–25 µF on a single-phase motor of that size) holds a charge. A 16 µF cap charged to 230 V peak (≈ 325 V) stores about 0.85 J — enough to throw your hand off a terminal if you bridge it. Standard discharge: short the capacitor terminals through a 10 kΩ resistor (NOT directly with a screwdriver — that pits the contacts and can weld). Test for residual voltage with the MFT before you touch.",
+      'The run capacitor (typically 8–25 µF on a single-phase motor of that size) holds a charge. A 16 µF cap charged to 230 V peak (≈ 325 V) stores about 0.85 J — enough to throw your hand off a terminal if you bridge it. Standard discharge: short the capacitor terminals through a 10 kΩ resistor (NOT directly with a screwdriver — that pits the contacts and can weld). Test for residual voltage with the MFT before you touch.',
       "On a TN-C-S supply the PEN conductor combines neutral and protective earth between the substation and the cut-out. If the PEN breaks open between the substation and the property, the property's earthing rises toward line voltage depending on the load balance on neighbouring properties on the same PEN. For an EV on a driveway, the car body sits at the elevated PME potential while the surrounding ground (concrete, soil, gravel) stays at true earth potential — the touch-voltage between the car body and the ground can be lethal.",
-      "Code it on the EICR (C1 immediate danger / C2 potentially dangerous / C3 improvement recommended / FI further investigation). Inform the customer / dutyholder. Recommend remedial action with timescales appropriate to the code. C1 requires immediate action — make safe on the day. The EICR itself is the formal report; it goes to the dutyholder.",
+      'Code it on the EICR (C1 immediate danger / C2 potentially dangerous / C3 improvement recommended / FI further investigation). Inform the customer / dutyholder. Recommend remedial action with timescales appropriate to the code. C1 requires immediate action — make safe on the day. The EICR itself is the formal report; it goes to the dutyholder.',
       "Use the tester's 'no-trip' or 'low-current' Zs mode. The tester limits its test current below the RCD trip threshold (typically 15 mA peak for a 30 mA RCD), giving a slightly less accurate reading but avoiding nuisance trip during the test. Standard 'high-current' Zs mode would draw enough current to trip the RCD, interrupting other circuits on the same RCD.",
     ],
     correctIndex: 0,
@@ -72,8 +71,8 @@ const checks = [
     question:
       "An apprentice has 'isolated' a lighting circuit at the breaker, but a downstairs landing light is still working. What's gone wrong?",
     options: [
-      "Micro-hydro can deliver excellent baseload renewable electricity if the site has the head (vertical drop) and flow rate to support it. Unlike wind and PV, hydro runs 24/7 and tracks demand reasonably well. Practical issues: Environment Agency / Natural Resources Wales abstraction licensing, fish protection requirements, weir and intake construction cost, and connection to the property (often hundreds of metres of buried cable). The right site is rare; where it exists, micro-hydro is one of the best-performing renewables per pound spent.",
-      "The order in which the HSE expects risks to be controlled — eliminate the hazard first, then substitute with something less dangerous, then engineering controls (extraction, guards, RCDs), then administrative controls (work rotation, signage, training), and only then PPE. PPE is the last line because it depends on individual behaviour and only protects the wearer.",
+      'Micro-hydro can deliver excellent baseload renewable electricity if the site has the head (vertical drop) and flow rate to support it. Unlike wind and PV, hydro runs 24/7 and tracks demand reasonably well. Practical issues: Environment Agency / Natural Resources Wales abstraction licensing, fish protection requirements, weir and intake construction cost, and connection to the property (often hundreds of metres of buried cable). The right site is rare; where it exists, micro-hydro is one of the best-performing renewables per pound spent.',
+      'The order in which the HSE expects risks to be controlled — eliminate the hazard first, then substitute with something less dangerous, then engineering controls (extraction, guards, RCDs), then administrative controls (work rotation, signage, training), and only then PPE. PPE is the last line because it depends on individual behaviour and only protects the wearer.',
       "There's a parallel supply path you didn't account for. Common causes — borrowed neutral from another circuit (very common in older installations where a sparks 'borrowed' a neutral from the ring final to feed a new lighting point), a cross-connection inside an old joint box, or a circuit labelled wrong at the DB and you've actually isolated something else. Bottom line — proving dead at every accessible point on the circuit is non-negotiable. The breaker label is a hint, not a guarantee.",
       "Every 3 months — formal PAT (combined visual + electrical test) for harsh-environment use. HSE HSG107 'Maintaining portable electrical equipment' and the IET Code of Practice for In-service Inspection and Testing of Electrical Equipment (5th ed.) publish typical intervals; construction-site Class I portable tools are at the short end at 3 months. Office Class I equipment is 12 months (the low-risk regime in HSE INDG236). Class II (double-insulated) and battery chargers are typically longer.",
     ],
@@ -89,10 +88,10 @@ const quizQuestions = [
     question:
       "Why is fault diagnosis considered electrically more dangerous than installation work, even when you've been trained on both?",
     options: [
-      "Three crimpers — (1) ratchet H-die crimper for bootlace ferrules and small insulated lugs (0.5 to 6 mm² covers 90% of domestic / small commercial work, e.g. Knipex 97 53 04). (2) Hex-die ratchet crimper for compression lugs 10 to 25 mm² (e.g. Knipex 97 51 19). (3) Hydraulic crimper for compression lugs and bushings 25 to 240 mm² (e.g. Klauke EK 50 cordless or hand-pump units for one-off work). Layered range, each tool sized to its job.",
+      'Three crimpers — (1) ratchet H-die crimper for bootlace ferrules and small insulated lugs (0.5 to 6 mm² covers 90% of domestic / small commercial work, e.g. Knipex 97 53 04). (2) Hex-die ratchet crimper for compression lugs 10 to 25 mm² (e.g. Knipex 97 51 19). (3) Hydraulic crimper for compression lugs and bushings 25 to 240 mm² (e.g. Klauke EK 50 cordless or hand-pump units for one-off work). Layered range, each tool sized to its job.',
       "On installation work the system arrives dead and stays dead until you hand it over. On fault diagnosis the system is the patient — it's already energised, the fault itself may be intermittent or unpredictable, and the very condition you're investigating may have created hidden parallel paths, damaged insulation, or a partially-broken protective conductor. You're working in a system whose state you don't fully know — that's the structural reason fault diagnosis sits higher on the risk register.",
       "Wood-pellet or wood-chip boilers and stoves. Burns sustainably-sourced biomass to drive a wet heating system. Counts as 'low-carbon' because the CO₂ released is offset by what the trees absorbed during growth (debated within the carbon accounting community). Fuel storage, ash handling and air-quality regulation (Clean Air Act zones; the Ecodesign Directive for new appliances) make biomass operationally heavier than gas or heat pumps. Best fit: rural off-gas-grid properties with space for a fuel store. Worst fit: urban smoke-control areas with poor PM2.5 ratings.",
-      "Lithium-ion batteries are classed as hazardous waste under the Hazardous Waste Regulations and Waste Electrical and Electronic Equipment Regulations (WEEE). They cannot go to landfill; they cannot go to general recycling. Authorised battery treatment centres handle them via specialist waste carriers. The battery manufacturer or installer often arranges take-back via the producer compliance scheme. Battery transport is itself regulated (ADR for road transport of hazardous goods); the licensed waste carrier handles this. Improper disposal is a criminal offence with significant fines and creates a material fire risk in waste streams.",
+      'Lithium-ion batteries are classed as hazardous waste under the Hazardous Waste Regulations and Waste Electrical and Electronic Equipment Regulations (WEEE). They cannot go to landfill; they cannot go to general recycling. Authorised battery treatment centres handle them via specialist waste carriers. The battery manufacturer or installer often arranges take-back via the producer compliance scheme. Battery transport is itself regulated (ADR for road transport of hazardous goods); the licensed waste carrier handles this. Improper disposal is a criminal offence with significant fines and creates a material fire risk in waste streams.',
     ],
     correctAnswer: 1,
     explanation:
@@ -101,12 +100,12 @@ const quizQuestions = [
   {
     id: 2,
     question:
-      "Electricity at Work Regulations 1989 (EAWR) Regulation 14 sets out the conditions under which live work is permitted. What are the three conjoint tests?",
+      'Electricity at Work Regulations 1989 (EAWR) Regulation 14 sets out the conditions under which live work is permitted. What are the three conjoint tests?',
     options: [
       "The certificate references the edition in force on the date of installation (e.g. BS 7671:2018+A4:2026). Subsequent amendments don't make the install non-compliant retrospectively, but they DO change what's required for any future addition / alteration / EICR you do on the same installation. Periodic inspection (EICR) is carried out to the standard in force at the time of the inspection — so a 2026 install will be EICR'd against whatever amendment is current in 2031.",
       "Consistently demonstrating: (1) framing work as a learning problem ('what can we learn from this?'), (2) acknowledging your own fallibility ('I may have missed something — what do you see?'), (3) modelling curiosity by asking genuine questions, (4) responding to mistakes with inquiry rather than blame, (5) following through on commitments made when people do speak up, and (6) explicitly thanking people for raising concerns even when the news is unwelcome",
-      "Three tests, ALL of which must be satisfied: (a) it is unreasonable in all the circumstances for the conductor to be dead, AND (b) it is reasonable in all the circumstances for the work to be carried out live, AND (c) suitable precautions are taken to prevent injury. All three — not any one. Most fault diagnosis live working passes test (a) (you need voltage to measure) but tests (b) and (c) are where most risk-assessment failures sit.",
-      "When the inspector believes a specific activity involves or will involve a risk of SERIOUS personal injury. The notice prohibits the activity (immediately, or from a stated time) until the risk has been remedied. Like an Improvement Notice, it can be appealed to an Employment Tribunal within 21 days — but the appeal does NOT suspend the notice (unlike an Improvement Notice). The activity must stop while the appeal is heard.",
+      'Three tests, ALL of which must be satisfied: (a) it is unreasonable in all the circumstances for the conductor to be dead, AND (b) it is reasonable in all the circumstances for the work to be carried out live, AND (c) suitable precautions are taken to prevent injury. All three — not any one. Most fault diagnosis live working passes test (a) (you need voltage to measure) but tests (b) and (c) are where most risk-assessment failures sit.',
+      'When the inspector believes a specific activity involves or will involve a risk of SERIOUS personal injury. The notice prohibits the activity (immediately, or from a stated time) until the risk has been remedied. Like an Improvement Notice, it can be appealed to an Employment Tribunal within 21 days — but the appeal does NOT suspend the notice (unlike an Improvement Notice). The activity must stop while the appeal is heard.',
     ],
     correctAnswer: 2,
     explanation:
@@ -119,7 +118,7 @@ const quizQuestions = [
     options: [
       "Type A RCDs detect AC residual currents and pulsating DC residual currents. They cannot detect smooth (continuous) DC residual currents — these can blind the device. Type B RCDs detect AC, pulsating DC and smooth DC residual currents. EV charge points produce smooth DC fault currents that a Type A alone cannot reliably trip. Two acceptable solutions per Section 722: (1) the unit includes its own RDC-DD (6 mA DC detection per IEC 62752 / 61851-1) and the upstream RCD can be Type A; (2) the unit does not include an RDC-DD and the upstream device must be Type B. Modern UK domestic units almost universally include the RDC-DD, so Type A upstream is the dominant choice. Always confirm against the unit's data sheet.",
       "The HEMS schedules the heat pump's main run-time toward cheap off-peak windows where possible (e.g. overnight on Octopus Go). The battery charges during the same off-peak window. During the expensive peak window (typically 16:00-19:00) the battery discharges to cover the property load, including any heat pump running, while the grid import drops to near zero. Net peak grid demand from the property falls; the customer's bill falls; the grid stress falls. Some smart tariffs explicitly reward this — Octopus Cosy, for example, has dedicated cheap windows aligned with heat-pump run preferences.",
-      "RESOLUTION — the smallest increment the instrument can detect and display, usually expressed as a count of the least-significant digit (e.g. 0.01 Omega resolution means the display can show changes of 0.01 Omega). ACCURACY — how close the displayed reading is to the true value, expressed as a percentage tolerance plus a digit count (e.g. plus or minus 5 percent plus or minus 3 digits at full mode, plus or minus 10 percent at no-trip mode). A high-resolution instrument with poor accuracy gives precise-looking but unreliable readings; a high-accuracy instrument with low resolution gives reliable but imprecise readings. You need both — modern MFTs typically achieve 0.01 Omega resolution and plus or minus 5-10 percent accuracy depending on mode.",
+      'RESOLUTION — the smallest increment the instrument can detect and display, usually expressed as a count of the least-significant digit (e.g. 0.01 Omega resolution means the display can show changes of 0.01 Omega). ACCURACY — how close the displayed reading is to the true value, expressed as a percentage tolerance plus a digit count (e.g. plus or minus 5 percent plus or minus 3 digits at full mode, plus or minus 10 percent at no-trip mode). A high-resolution instrument with poor accuracy gives precise-looking but unreliable readings; a high-accuracy instrument with low resolution gives reliable but imprecise readings. You need both — modern MFTs typically achieve 0.01 Omega resolution and plus or minus 5-10 percent accuracy depending on mode.',
       "Under TN-C-S the neutral and the protective earth share a combined PEN conductor between the transformer and the cut-out. A break in the PEN somewhere upstream (the DNO side, not the consumer side) lifts the neutral — and therefore the customer's bonded metalwork — to a fraction of phase voltage relative to true earth. While you're investigating an unrelated fault, the system can be carrying a hidden TT-equivalent hazard if the PEN is compromised. Always read the voltage L–N AND L–E AND N–E at the cut-out before you start; if N–E is more than a few volts, stop and call the DNO.",
     ],
     correctAnswer: 3,
@@ -132,9 +131,9 @@ const quizQuestions = [
       "What's the practical difference between a high-impedance multimeter (e.g. Fluke 117 on V AC, 10 MΩ input) and a low-impedance two-pole voltage tester (Martindale VI-13800) when you're proving dead?",
     options: [
       "The multimeter has 10 MΩ input impedance and will read induced voltages and 'phantom' voltages that aren't a real source — it can show 30–80 V on a dead conductor that has nothing dangerous on it, leading you to assume the circuit is live when it isn't (a false positive). The two-pole tester has low input impedance (typically a few kΩ) and 'loads' the circuit — phantom voltages collapse to zero, real sources hold. GS38 specifically prefers two-pole testers for proving dead because the low impedance gives an unambiguous answer.",
-      "Protection against electric shock shall be provided by a device which electrically disconnects the vehicle from the live conductors of the supply and from protective earth in accordance with Regulation 543.3.3.101(b) within 5 s in the event of the utilisation voltage at the charging point, between the line and neutral conductors, being greater than 253 V RMS or less than 207 V RMS. The device shall provide isolation and be selected in accordance with Table 537.4.",
-      "Wide statutory powers under s.20 — enter premises at any reasonable time, take photographs / measurements, take samples, require any person to answer questions, require production of documents, take possession of articles. Plus the power under s.21/s.22 to issue improvement and prohibition notices on the spot. Refusing or obstructing an inspector is itself a criminal offence under s.33.",
-      "Significant. A south-facing roof at 30-40° pitch is the optimal UK orientation, posting 100% of reference yield. East-facing or west-facing roofs typically produce 80-85% of optimal. North-facing produces 50-65% (still positive but with much longer payback). Steeper pitches favour winter performance; shallower pitches favour summer performance. Flat roofs get an A-frame mount to set a target pitch and azimuth. The MCS Yield Calculator handles all of this — produces the kWh figure for the SAP and the customer handover.",
+      'Protection against electric shock shall be provided by a device which electrically disconnects the vehicle from the live conductors of the supply and from protective earth in accordance with Regulation 543.3.3.101(b) within 5 s in the event of the utilisation voltage at the charging point, between the line and neutral conductors, being greater than 253 V RMS or less than 207 V RMS. The device shall provide isolation and be selected in accordance with Table 537.4.',
+      'Wide statutory powers under s.20 — enter premises at any reasonable time, take photographs / measurements, take samples, require any person to answer questions, require production of documents, take possession of articles. Plus the power under s.21/s.22 to issue improvement and prohibition notices on the spot. Refusing or obstructing an inspector is itself a criminal offence under s.33.',
+      'Significant. A south-facing roof at 30-40° pitch is the optimal UK orientation, posting 100% of reference yield. East-facing or west-facing roofs typically produce 80-85% of optimal. North-facing produces 50-65% (still positive but with much longer payback). Steeper pitches favour winter performance; shallower pitches favour summer performance. Flat roofs get an A-frame mount to set a target pitch and azimuth. The MCS Yield Calculator handles all of this — produces the kWh figure for the SAP and the customer handover.',
     ],
     correctAnswer: 0,
     explanation:
@@ -143,11 +142,11 @@ const quizQuestions = [
   {
     id: 5,
     question:
-      "An installation has a 1.2 kW thermal store with a 230 V immersion. After you isolate at the breaker and prove dead at the immersion terminal, you should still take what additional precaution before unscrewing the head?",
+      'An installation has a 1.2 kW thermal store with a 230 V immersion. After you isolate at the breaker and prove dead at the immersion terminal, you should still take what additional precaution before unscrewing the head?',
     options: [
       "The supervision is appropriate when the supervisor is themselves competent for the task, has direct visibility of the work AND the trainee, can intervene before a danger materialises, and the degree of supervision is matched to BOTH the task danger AND the trainee's experience level. A second-year on socket extensions is light supervision; a first-year on a CU change is direct, hands-on supervision throughout. Token oversight from elsewhere on site doesn't meet the regulation.",
       "Treat the immersion element as a stored-thermal hazard even after electrical isolation — the water in the cylinder is at 60–80 °C and the element is in direct contact. The metal flange transfers heat for 10–15 minutes after isolation. Use a glove or an insulated spanner; don't grab the brass nut bare-handed. Separate from the electrical hazards, fault diagnosis on heating equipment carries a thermal-burn risk that's easy to forget once your head is in 'is it dead?' mode.",
-      "A dedicated radial circuit, typically 32 A or 40 A (Type C MCB to handle the inrush from the compressor and fan), in 6 mm² or 10 mm² T&E or SWA depending on length and method. RCD protection per BS 7671 Section 411.3.3 / 415.1. A local rotary or DP isolator outdoors at the unit. Smart controls integration via dedicated low-voltage cable. Cyclic-rated cable selection — heat pumps run for hours, not minutes. Bonding to the unit chassis if it forms an extraneous-conductive part.",
+      'A dedicated radial circuit, typically 32 A or 40 A (Type C MCB to handle the inrush from the compressor and fan), in 6 mm² or 10 mm² T&E or SWA depending on length and method. RCD protection per BS 7671 Section 411.3.3 / 415.1. A local rotary or DP isolator outdoors at the unit. Smart controls integration via dedicated low-voltage cable. Cyclic-rated cable selection — heat pumps run for hours, not minutes. Bonding to the unit chassis if it forms an extraneous-conductive part.',
       "(1) Strict liability — pollution incidents are offences regardless of intent; (2) duty of care under EPA 1990 s.34 + the Polluter Pays principle; (3) MHSWR Reg 14 (employee duty to report shortcomings); (4) operator's environmental permit conditions; (5) reputational and commercial consequences of an undetected pollution event downstream; (6) personal liability under HASAWA s.7 if the environmental hazard also creates a worker safety hazard.",
     ],
     correctAnswer: 1,
@@ -173,10 +172,10 @@ const quizQuestions = [
     question:
       "A senior electrician hands you a Megger MFT1741 and says 'go and IR-test the lighting circuit at 500 V'. The circuit was reported faulty by the customer. Before you press Test, what dangers do you specifically need to think about?",
     options: [
-      "Plan budget: scheme membership and update events typically £400-800/year if scheme-affiliated (NICEIC, NAPIT) include some CPD; one BS 7671 refresher per amendment year £150-300; one specialist training £400-800; IET Academy / scheme platform online learning typically included with subscription; manufacturer training often free; trade events (ECA Live etc.) £100-300. Total CPD spend typically £1,000-2,500/year for an active QS.",
-      "Loose terminals can short against neighbouring batteries or against tools and metal fixings, generating heat and potentially triggering a thermal runaway. Cardboard provides no fire resistance. A van interior in summer can reach 50-60 degC, raising the rest state of every cell. If one cell vents the entire box can propagate the runaway. The right arrangement is a metal or fire-resistant container with cell-tray separation or terminal taping, kept out of direct sun, and emptied to a recycling point regularly.",
+      'Plan budget: scheme membership and update events typically £400-800/year if scheme-affiliated (NICEIC, NAPIT) include some CPD; one BS 7671 refresher per amendment year £150-300; one specialist training £400-800; IET Academy / scheme platform online learning typically included with subscription; manufacturer training often free; trade events (ECA Live etc.) £100-300. Total CPD spend typically £1,000-2,500/year for an active QS.',
+      'Loose terminals can short against neighbouring batteries or against tools and metal fixings, generating heat and potentially triggering a thermal runaway. Cardboard provides no fire resistance. A van interior in summer can reach 50-60 degC, raising the rest state of every cell. If one cell vents the entire box can propagate the runaway. The right arrangement is a metal or fire-resistant container with cell-tray separation or terminal taping, kept out of direct sun, and emptied to a recycling point regularly.',
       "An MID-compliant generation meter measures the total electrical output of the PV array. Required by Smart Export Guarantee (the supplier needs accurate metering to pay the export tariff) and increasingly by BUS / SEG-equivalent schemes for performance monitoring. At commissioning the meter is verified to read correctly (display zero before energising, increment as the inverter delivers, accumulate accurately over the first day's run). The customer can read the meter themselves to verify ongoing performance. The smart meter at the property handles the import / export reading for the supplier.",
-      "Three layers. (1) Confirm the circuit is fully isolated AND proved dead with a separate two-pole tester — the MFT is a tester, not a prover. (2) Confirm there are no electronic loads on the circuit (LED drivers, presence sensors, dimmer modules) that 500 V will damage; if there are, disconnect them or test at 250 V on the MFT. (3) Confirm no parallel paths back to other circuits via shared neutrals; a 500 V test current finds those paths and can damage equipment on the OTHER circuit. The IR test is one of the highest-energy tests on the MFT and the rules around it are layered for a reason.",
+      'Three layers. (1) Confirm the circuit is fully isolated AND proved dead with a separate two-pole tester — the MFT is a tester, not a prover. (2) Confirm there are no electronic loads on the circuit (LED drivers, presence sensors, dimmer modules) that 500 V will damage; if there are, disconnect them or test at 250 V on the MFT. (3) Confirm no parallel paths back to other circuits via shared neutrals; a 500 V test current finds those paths and can damage equipment on the OTHER circuit. The IR test is one of the highest-energy tests on the MFT and the rules around it are layered for a reason.',
     ],
     correctAnswer: 3,
     explanation:
@@ -188,9 +187,9 @@ const quizQuestions = [
       "The HSE's HSG85 'Electricity at work — safe working practices' lists the categories of electrical hazard. Which set captures the FAULT-DIAGNOSIS-specific hazards the L2 installation apprentice didn't have to worry about?",
     options: [
       "Six fault-specific categories on top of the generic shock + arc + burn list: (1) hidden parallel paths and borrowed neutrals, (2) induced voltages from adjacent live circuits, (3) capacitive / inductive stored energy in equipment, (4) compromised protective conductors (CPC missing or high-resistance), (5) compromised supply earthing (open PEN, lost main earth), (6) unverified circuit identification (the breaker label says 'lights' but actually feeds the boiler). All six are present BECAUSE the system is in fault — the fault itself created or revealed the hazard.",
-      "MCB / RCBO thermal element — overload (sustained excess current). MCB / RCBO magnetic element — short circuit and high-current fault. RCD / RCBO residual element — earth fault through CPC (residual current). AFDD — series and parallel arc faults (degraded contacts, arc tracking). SPD — transient over-voltage. Fuse (BS 88 HRC) — short circuit and overload (slower than MCB but higher breaking capacity, used at supply origins). Each device is designed for a specific fault type; using the wrong device leaves the corresponding fault uncovered.",
+      'MCB / RCBO thermal element — overload (sustained excess current). MCB / RCBO magnetic element — short circuit and high-current fault. RCD / RCBO residual element — earth fault through CPC (residual current). AFDD — series and parallel arc faults (degraded contacts, arc tracking). SPD — transient over-voltage. Fuse (BS 88 HRC) — short circuit and overload (slower than MCB but higher breaking capacity, used at supply origins). Each device is designed for a specific fault type; using the wrong device leaves the corresponding fault uncovered.',
       "A space substantially enclosed (whether or not entirely) and where a 'specified risk' could arise — fire/explosion (gas, vapour, dust), loss of consciousness from fumes or lack of oxygen, drowning, asphyxiation from free-flowing solid, or trapping/heat-related illness. Reg 4 prohibits entry unless reasonably practicable to do the work without entering. Reg 5 requires a safe system of work (entry permit, atmospheric monitoring, rescue arrangements) where entry is necessary.",
-      "Three documents. (1) Updated EICR (or supplementary report) — codes the previously-failed item as now compliant; references the rectification work. (2) Minor Electrical Installation Works Certificate (MEIWC) for the rectification work — formal compliance certificate for the new / repaired work under BS 7671. (3) Customer-friendly summary — what the certificates mean in plain English. The customer keeps all three; the firm retains copies for 7+ years. NICEIC / NAPIT registration audits will check the certificate trail.",
+      'Three documents. (1) Updated EICR (or supplementary report) — codes the previously-failed item as now compliant; references the rectification work. (2) Minor Electrical Installation Works Certificate (MEIWC) for the rectification work — formal compliance certificate for the new / repaired work under BS 7671. (3) Customer-friendly summary — what the certificates mean in plain English. The customer keeps all three; the firm retains copies for 7+ years. NICEIC / NAPIT registration audits will check the certificate trail.',
     ],
     correctAnswer: 0,
     explanation:
@@ -202,7 +201,7 @@ const faqs = [
   {
     question: "Why can't I just rely on the breaker being off when I diagnose a fault?",
     answer:
-      "Three reasons. First — the breaker label might be wrong (very common on older boards where circuits have been added or moved). Second — the circuit might have a borrowed neutral from another circuit, so the cable is dead L–E but live N–E. Third — the breaker itself might be faulty (a stuck contact in a worn MCB will switch off mechanically but stay electrically closed on one pole). EAWR Reg 14 makes proving dead at the work point — not at the DB — your duty as the operative. The standard procedure is test, isolate, lock-off, prove dead at the work point with a separate GS38 two-pole tester proved on a known live source before and after.",
+      'Three reasons. First — the breaker label might be wrong (very common on older boards where circuits have been added or moved). Second — the circuit might have a borrowed neutral from another circuit, so the cable is dead L–E but live N–E. Third — the breaker itself might be faulty (a stuck contact in a worn MCB will switch off mechanically but stay electrically closed on one pole). EAWR Reg 14 makes proving dead at the work point — not at the DB — your duty as the operative. The standard procedure is test, isolate, lock-off, prove dead at the work point with a separate GS38 two-pole tester proved on a known live source before and after.',
   },
   {
     question: "What's a 'borrowed neutral' and why is it a fault-diagnosis nightmare?",
@@ -210,22 +209,23 @@ const faqs = [
       "A borrowed neutral is when a sparks at some point in the past wired a new circuit's neutral back to a different circuit's neutral terminal — usually because they ran out of capacity in a cable run and 'borrowed' from the nearest other neutral. It looks fine in normal operation. The problem appears the moment you isolate one of the two circuits — the OTHER circuit is still live, and current is now flowing through the 'isolated' circuit's neutral back to the supply. Worst case: you cut the dead-looking cable and 16 A appears across your cutters. Borrowed neutrals are illegal under BS 7671 (Reg 314.4 — each circuit shall be electrically separate from every other) but they exist in older installations and they're the classic 'I thought it was dead' shock cause.",
   },
   {
-    question: "Is a multimeter ever acceptable for proving dead?",
+    question: 'Is a multimeter ever acceptable for proving dead?',
     answer:
-      "Not as the primary instrument. HSE GS38 is explicit — proving dead should be done with a two-pole voltage tester (low impedance, GS38 finger guards, lamp + LED + audible). A multimeter has the wrong impedance characteristic (too high — sees phantom voltages), wrong probe geometry (long uninsulated tips fail GS38), and wrong indication mode (a digit on a screen, not a definitive lit lamp). The multimeter is your measurement instrument; the two-pole is your proving instrument. The two are not interchangeable, and the cost of getting it wrong is fatal.",
+      'Not as the primary instrument. HSE GS38 is explicit — proving dead should be done with a two-pole voltage tester (low impedance, GS38 finger guards, lamp + LED + audible). A multimeter has the wrong impedance characteristic (too high — sees phantom voltages), wrong probe geometry (long uninsulated tips fail GS38), and wrong indication mode (a digit on a screen, not a definitive lit lamp). The multimeter is your measurement instrument; the two-pole is your proving instrument. The two are not interchangeable, and the cost of getting it wrong is fatal.',
   },
   {
-    question: "How do I know when a fault diagnosis job is beyond my L3 apprentice level and I should call the supervisor?",
+    question:
+      'How do I know when a fault diagnosis job is beyond my L3 apprentice level and I should call the supervisor?',
     answer:
       "Four red flags. (1) The fault involves the supply side of the cut-out — that's a DNO call, never an apprentice call. (2) The fault is on three-phase equipment you've not been trained on (motor controls, VSDs, large heating banks). (3) The customer description doesn't match what you find on the meter (e.g. they report 'all lights out' but you're reading 230 V on every lamp holder — that suggests a measurement error or a hidden hazard). (4) Anything where you've isolated, proved dead, started work, and a reading appears that you can't immediately explain. EAWR Reg 16 makes 'I'll work it out' a non-defence — competent supervision is a phone call away and using it is the L3 apprentice's defence.",
   },
   {
     question: "What's the difference between EAWR and HSWA — they both seem to apply?",
     answer:
-      "HSWA (Health and Safety at Work etc. Act 1974) is the umbrella legislation — primary duty on the employer to provide a safe system of work and on the employee to take reasonable care. EAWR (Electricity at Work Regulations 1989) is made UNDER HSWA and is the specific electrical-work code. HSWA gives you the headline duty; EAWR gives you the regulations that translate it into electrical practice — Reg 4 (systems shall be safe), Reg 13 (dead working is the default), Reg 14 (live working only with three tests passed), Reg 16 (competence). On any prosecution, the HSE charges under EAWR for the specific failure and HSWA for the umbrella failure together.",
+      'HSWA (Health and Safety at Work etc. Act 1974) is the umbrella legislation — primary duty on the employer to provide a safe system of work and on the employee to take reasonable care. EAWR (Electricity at Work Regulations 1989) is made UNDER HSWA and is the specific electrical-work code. HSWA gives you the headline duty; EAWR gives you the regulations that translate it into electrical practice — Reg 4 (systems shall be safe), Reg 13 (dead working is the default), Reg 14 (live working only with three tests passed), Reg 16 (competence). On any prosecution, the HSE charges under EAWR for the specific failure and HSWA for the umbrella failure together.',
   },
   {
-    question: "Can I use an LED indicator screwdriver to prove dead?",
+    question: 'Can I use an LED indicator screwdriver to prove dead?',
     answer:
       "No. The 'neon' or 'LED' indicator screwdrivers (sometimes called test screwdrivers) work by passing a small current through your body to ground to light an internal lamp. They're capacitively coupled and will light on induced voltages and phantom voltages while missing real low-voltage hazards. They're not GS38-compliant and they've been the cause of multiple fatalities where an electrician thought a circuit was dead because the screwdriver didn't light. They have one legitimate use — a quick first-pass continuity check on a known-live circuit (e.g. 'is this socket live before I plug in?'). They are NEVER the instrument that confirms dead before you put your hand on a conductor.",
   },
@@ -236,393 +236,525 @@ export default function Sub1() {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
-      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
-        <PageFrame>
+    <HubPage>
+      <HubMasthead
+        section="Module 4 · Section 1 · Subsection 1"
+        title="Dangers of electricity in fault diagnosis"
+        backTo="/study-centre/apprentice/level3-module4-section1"
+      />
+      <HubBody>
+        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
+          Fault diagnosis is structurally more dangerous than installation — the system is the
+          patient, the fault may have created hidden parallel paths, induced voltages and
+          compromised protective conductors. Walks the seven categories of electrical danger an L3
+          apprentice meets on diagnosis work and the EAWR / HSG85 framework that keeps you alive.
+        </p>
+
+        <TLDR
+          points={[
+            "Fault diagnosis is more dangerous than installation because the very condition you're investigating may have created the hazard — borrowed neutrals, induced voltage, compromised CPCs, lost neutral.",
+            "EAWR 1989 Reg 13 says dead working is the default. Reg 14 sets three conjoint tests for when live working is allowed. Reg 16 says you only do work you're competent to do — under supervision if not.",
+            'Always prove dead at the WORK POINT with a GS38 two-pole tester proved on a known live source BEFORE and AFTER. The breaker label is a hint, not a guarantee.',
+          ]}
+        />
+
+        <LearningOutcomes
+          outcomes={[
+            'State the dangers of electricity that are specific to fault diagnosis work — induced voltage, capacitive charge, parallel paths, borrowed neutrals, compromised protective conductors, open PEN.',
+            'Explain why EAWR 1989 Reg 13 (dead working as the default) and Reg 14 (three conjoint tests for live working) apply to every fault diagnosis decision.',
+            'Distinguish a high-impedance instrument (multimeter, 10 MΩ) from a low-impedance two-pole tester (GS38-compliant) and state when each is the right tool.',
+            'Describe the additional supply-side hazards of TN-C-S (PME) installations including open PEN faults that a normal RCD does not detect.',
+            'Recognise stored energy hazards in equipment after electrical isolation — capacitors, batteries, thermal stores, hydraulic accumulators.',
+            'Apply EAWR Reg 16 (competence) to know when a fault diagnosis task exceeds L3 apprentice authority and requires escalation.',
+          ]}
+          initialVisibleCount={3}
+        />
+
+        <ContentEyebrow>Why this Sub matters</ContentEyebrow>
+
+        <ConceptBlock
+          title="Fault diagnosis is structurally more dangerous than installation"
+          plainEnglish="On installation work the system arrives dead and stays dead until commissioning. On fault diagnosis you're working with an installation that's already energised, the fault is the symptom, and the very condition you're investigating may have created hidden hazards — a missing CPC, a damaged neutral, a wet insulation join, a borrowed neutral from a circuit you didn't know existed."
+          onSite="HSE prosecution data shows fault diagnosis and maintenance accounts for a disproportionate share of fatal electrical accidents to electricians — the system being 'in fault' is itself the hazard amplifier. That's why the L3 syllabus elevates the safe-working content above what L2 covered."
+        >
+          <p>
+            The L3 step-up rests on six fault-specific hazards on top of the generic shock,
+            arc-flash and burn risks the L2 apprentice already knows about:
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Hidden parallel paths and borrowed neutrals</strong> — a circuit you've
+              isolated may still carry current through a shared neutral with another live circuit.
+            </li>
+            <li>
+              <strong>Induced voltages</strong> — capacitive and inductive coupling from adjacent
+              live cables raises a few tens of volts on the dead conductor.
+            </li>
+            <li>
+              <strong>Stored energy</strong> — capacitors in motor circuits, drives, fluorescent
+              ballasts, UPS systems hold lethal charge for minutes after isolation.
+            </li>
+            <li>
+              <strong>Compromised protective conductors</strong> — a CPC that\'s broken or
+              high-resistance won\'t trigger an RCD on a fault but DOES allow exposed metalwork to
+              rise to phase voltage.
+            </li>
+            <li>
+              <strong>Compromised supply earthing</strong> — open PEN on TN-C-S (PME) lifts customer
+              earth toward phase voltage. RCDs don\'t detect it.
+            </li>
+            <li>
+              <strong>Unverified circuit identification</strong> — a circuit labelled \'lights' may
+              actually feed the boiler. The label is a starting hypothesis, not a guarantee.
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <ContentEyebrow>The legal framework — EAWR + HSWA + GS38</ContentEyebrow>
+
+        <ConceptBlock
+          title="EAWR 1989 — three regulations you live by every fault job"
+          onSite="Every fault diagnosis breach the HSE prosecutes lands on at least one of EAWR Regs 13, 14 or 16. Knowing how the three interlock isn't legal trivia — it's how you defend your own decisions on site when something goes wrong."
+        >
+          <p>The three EAWR regulations that frame fault work:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Reg 13 — dead working is the default.</strong> No work shall be carried out on
+              or near a conductor that\'s been or could become live unless \'either it is
+              disconnected from every source of electrical energy OR otherwise rendered electrically
+              safe\'.
+            </li>
+            <li>
+              <strong>Reg 14 — three conjoint tests for live working.</strong> Live work is
+              permitted only when (a) it\'s unreasonable for the conductor to be dead, AND (b) it\'s
+              reasonable in all the circumstances for the work to be carried out live, AND (c)
+              suitable precautions are taken. ALL three.
+            </li>
+            <li>
+              <strong>Reg 16 — competence.</strong> No person shall be engaged in work activity
+              where technical knowledge or experience is necessary to prevent danger unless they
+              possess that knowledge or are under appropriate supervision.
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <RegsCallout
+          source="Electricity at Work Regulations 1989 — Reg 14"
+          clause={
+            <>
+              "No person shall be engaged in any work activity on or so near any live conductor
+              (other than one suitably covered with insulating material so as to prevent danger)
+              that danger may arise unless — (a) it is unreasonable in all the circumstances for it
+              to be dead; (b) it is reasonable in all the circumstances for him to be at work on or
+              near it while it is live; AND (c) suitable precautions (including where necessary the
+              provision of suitable protective equipment) are taken to prevent injury."
+            </>
+          }
+          meaning={
+            <>
+              Three conjoint tests, all of which must be satisfied before live working is permitted.
+              Fault diagnosis usually clears (a) by necessity (you need voltage to measure). Test
+              (b) requires a documented risk assessment justifying live over dead. Test (c) is the
+              practical layer &mdash; GS38 instruments, insulated tools, defined work area,
+              accompanied where required. Falling short on any one breaches the regulation.
+            </>
+          }
+          cite="Source: Electricity at Work Regulations 1989 (S.I. 1989/635), Reg 14."
+        />
+
+        <InlineCheck
+          id={checks[2].id}
+          question={checks[2].question}
+          options={checks[2].options}
+          correctIndex={checks[2].correctIndex}
+          explanation={checks[2].explanation}
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>Induced voltage — the silent ghost</ContentEyebrow>
+
+        <ConceptBlock
+          title="Why a \'dead' cable can read 30–80 V on a multimeter"
+          plainEnglish="When two cables run in the same containment or joist void, the live cable couples electromagnetically and capacitively to its dead neighbour. The induced voltage is high impedance — there\'s no real source behind it — so a high-impedance multimeter (10 MΩ) reads it as a real voltage when it isn\'t a real shock hazard. A low-impedance two-pole tester loads it down to zero in a fraction of a second."
+          onSite="On a typical domestic landing where the lighting cable runs alongside the ring final and the shower cable, you\'ll routinely read 20–60 V on the dead lighting conductor with a Fluke 117. Switch to your Martindale VI-13800 and the indication drops to zero. That\'s the GS38 difference in practice."
+        >
+          <p>The danger isn\'t the induced voltage itself — it\'s three-fold:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Misinterpretation</strong> — apprentice sees 60 V on the meter, assumes the
+              breaker is wrong, walks away from a circuit that is actually safe to work on.
+            </li>
+            <li>
+              <strong>Escalation under fault</strong> — if the parallel live circuit develops an L–E
+              fault while you\'re working, the induced trickle becomes a full-voltage path through
+              your dead cable.
+            </li>
+            <li>
+              <strong>False-positive isolation</strong> — apprentice sees 5 V on the meter,
+              dismisses it as \'induced', and starts work. But the 5 V is actually a real source
+              from a borrowed neutral. The two-pole tester would have made the difference clear.
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <InlineCheck
+          id={checks[0].id}
+          question={checks[0].question}
+          options={checks[0].options}
+          correctIndex={checks[0].correctIndex}
+          explanation={checks[0].explanation}
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>Stored energy — capacitors, batteries, thermal stores</ContentEyebrow>
+
+        <ConceptBlock
+          title="Electrical isolation isn't the same as 'electrically safe'"
+          onSite="Every motor with a run cap (single-phase induction motors — workshop extractors, kitchen extractors, cooling fans, CH circulator pumps), every fluorescent fitting with a power-factor cap, every drive unit, every UPS, every emergency lighting battery pack — all hold stored energy after the supply is isolated. EAWR Reg 13 requires the conductor or equipment to be 'electrically safe', not just 'disconnected'. Discharging stored energy is part of making it safe."
+        >
+          <p>The standard discharge routine for site-encountered stored energy:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Capacitors</strong> — wait the manufacturer's bleed-down period (usually 1–5
+              minutes), then short the terminals through a 5–10 kΩ resistor with insulated leads.
+              Verify with the meter. NEVER short a capacitor with a screwdriver — the discharge arc
+              pits the contacts and can weld the metal.
+            </li>
+            <li>
+              <strong>Battery banks (UPS, emergency lighting)</strong> — isolation switches the
+              load, NOT the battery. The battery remains energised until physically disconnected.
+              Treat every UPS battery cabinet as live until proved dead at every cell terminal.
+            </li>
+            <li>
+              <strong>Thermal stores</strong> — cylinders carry stored heat for hours after the
+              immersion is isolated. Burn risk is real — use insulated tools, gloves.
+            </li>
+            <li>
+              <strong>Drive capacitors (VSDs, soft starters)</strong> — much larger capacitance than
+              motor caps. Manufacturer\'s manual gives the bleed-down period (typically 5–15
+              minutes). Pre-discharge bleed resistors are usually built in but verify with the
+              meter.
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <InlineCheck
+          id={checks[1].id}
+          question={checks[1].question}
+          options={checks[1].options}
+          correctIndex={checks[1].correctIndex}
+          explanation={checks[1].explanation}
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>Compromised supply earthing — TN-C-S open PEN</ContentEyebrow>
+
+        <ConceptBlock
+          title="Why an open PEN on TN-C-S is the L3 hazard you didn\'t meet at L2"
+          plainEnglish="On TN-C-S (the most common UK supply arrangement), the neutral and protective earth share a combined PEN conductor between the transformer and your cut-out. If that PEN breaks anywhere upstream, your customer\'s earth bonding rises toward phase voltage relative to true earth. RCDs don\'t see it (no residual current). The first sign is a tingle on a metal kitchen tap or a 30+ V reading N–E at the cut-out."
+          onSite="A4:2026 reinforced the protective measures around TN-C-S precisely because of open PEN — Protective Equipotential Bonding (PEB) at the cut-out, S-type RCDs upstream of EV chargers (because the EV connects the customer\'s bonded metalwork to the chassis of a vehicle that someone might be touching from true earth). Knowing the hazard exists is half the protection."
+        >
+          <p>The L3 fault diagnosis routine on TN-C-S installations:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              Take an L–N, L–E and N–E reading at the cut-out before any work. L–E should equal L–N
+              (within a volt or two). N–E should be near zero.
+            </li>
+            <li>
+              If N–E reads more than 5 V — STOP. Possible PEN compromise. DNO call, not your job.
+            </li>
+            <li>
+              If voltages all check out, proceed — but log them on the job sheet so there\'s a
+              record of the supply state at the start of the visit.
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <RegsCallout
+          source="BS 7671:2018+A4:2026 — Reg 411.4.1"
+          clause={
+            <>
+              "In a TN system, the integrity of the earthing of the installation depends on the
+              reliable and effective connection of the PEN or PE conductors to Earth. Where the
+              earthing is provided from a public or other supply system, compliance with the
+              necessary conditions external to the installation is the responsibility of the
+              distributor."
+            </>
+          }
+          meaning={
+            <>
+              On every TN-C-S supply you investigate, the reliability of the earth path lives
+              outside the consumer&apos;s installation &mdash; in the DNO&apos;s PEN. The Regulation
+              makes that plain: the distributor owns the upstream integrity and you have no way of
+              testing it from the customer side. That&apos;s why an unexpected N&ndash;E reading at
+              the cut-out is a STOP-and-call moment, not something you try to chase yourself.
+            </>
+          }
+          cite="Source: BS 7671:2018 incorporating Amendment 4:2026 — Reg 411.4.1, verbatim."
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>Where it goes wrong</ContentEyebrow>
+
+        <CommonMistake
+          title="Trusting the breaker label without proving dead at the work point"
+          whatHappens={
+            <>
+              Apprentice flips the breaker labelled "kitchen sockets", goes upstairs to the ceiling
+              void, cuts a cable to make a join. The label was wrong &mdash; the breaker they
+              actually flipped was the spare. The cable they cut was the kitchen ring, still live at
+              230 V. The cutters arc, the breaker upstairs trips, the customer hears a bang, the
+              apprentice is lucky to walk away with a singed hand instead of a fatality. The
+              post-incident investigation finds the firm in breach of EAWR Reg 14 (no safe system of
+              work) and Reg 16 (inadequate supervision of an apprentice).
+            </>
+          }
+          doInstead={
+            <>
+              Test, isolate, lock-off, prove dead at the work point with a GS38 two-pole tester
+              (Martindale VI-13800, Fluke T130, Kewtech KT1780) proved on a known live source BEFORE
+              and AFTER the test &mdash; every time. The work-point test is the one that counts. The
+              breaker label is a hypothesis you verify with the tester. No exceptions, no shortcuts,
+              no "this is a small job".
+            </>
+          }
+        />
+
+        <CommonMistake
+          title="Reading 60 V on a multimeter and assuming the breaker is wrong"
+          whatHappens={
+            <>
+              Apprentice has correctly isolated the lighting circuit at the DB. Probes the cable at
+              the switch with a Fluke 117 &mdash; reads 58 V L&ndash;E. Assumes the breaker label is
+              wrong, opens the DB to investigate, and starts probing live conductors at the busbar
+              to find which breaker is "really" the lighting. Now in unnecessary live work, in a
+              live consumer unit, with no permit, no risk assessment, no supervision and an
+              instrument that doesn\'t meet GS38 for live work. EAWR Reg 14 breach wholesale.
+            </>
+          }
+          doInstead={
+            <>
+              When a multimeter shows a small voltage on a circuit you\'ve isolated, repeat the test
+              with a low-impedance two-pole tester. If the two-pole says zero, the multimeter was
+              reading induced voltage and the circuit is genuinely dead. If the two-pole says
+              voltage, you have a real source &mdash; STOP, escalate to the supervisor, and don\'t
+              open the DB on your own initiative.
+            </>
+          }
+        />
+
+        <Scenario
+          title="The faulty downlight that\'s still live"
+          situation={
+            <>
+              Customer reports a downlight in the kitchen has stopped working. You isolate the
+              lighting circuit at the Hager DB, lock-off, prove dead at the switch with your
+              Martindale VI-13800, and start to remove the failed lamp. As you withdraw the GU10
+              connector you feel a tingle on the chrome ring of the housing.
+            </>
+          }
+          whatToDo={
+            <>
+              Stop. Do not touch the housing again. Re-test the connector and the housing with the
+              two-pole tester &mdash; if it reads voltage, you have a parallel path. The most common
+              cause: the lighting circuit shares a neutral with the under-cabinet LED strip on a
+              separate circuit that\'s still live, OR the housing is bonded to a gas / water service
+              that\'s at a different potential because of an open PEN upstream. Move the cable
+              safely to one side, test L&ndash;N, L&ndash;E and N&ndash;E at the cut-out. If
+              anything other than the expected 230&nbsp;V L&ndash;E shows up, call the supervisor
+              &mdash; this is a supply-side or cross-circuit-neutral problem, not an apprentice fix.
+            </>
+          }
+          whyItMatters={
+            <>
+              The "dead circuit that gives you a tingle" is the canonical L3 fault-diagnosis hazard.
+              Almost every reported electrocution of an electrician on diagnosis work comes back to
+              a parallel path the operative didn\'t know about &mdash; borrowed neutral, shared
+              neutral, lost main earth, open PEN, or wrong circuit identification. Knowing to STOP
+              at the first unexpected reading, rather than push through assuming "it\'s just
+              induced", is the competence test EAWR Reg 16 is actually checking.
+            </>
+          }
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>Compromised CPC — the silent killer</ContentEyebrow>
+
+        <ConceptBlock
+          title="A broken or high-resistance CPC defeats the protection you assumed was there"
+          plainEnglish="The circuit protective conductor (CPC) is the green/yellow you bond every accessory to. If it's broken, corroded, or has a high-resistance joint somewhere along its length, an L-E fault won't drive enough current to trip the MCB or RCD — and the exposed metalwork it bonds rises to phase voltage. Standard fault-diagnosis check: R1+R2 with the Megger MFT1741+ at the end of every dead circuit; verify against design value. Anything more than +50% of expected = suspect joint."
+          onSite="Common CPC failure points: green/yellow tail crushed inside a back-box (clip-fix or screw onto braid); aluminium-on-copper corrosion at older twin-and-earth terminations; loose grub screw in a junction box; CPC spurred onto an SWA gland that has lost mechanical bond; CPC accidentally disconnected during a previous accessory change. The Megger MFT1741+ continuity test (200 mA, autoranging) reads R1+R2 in seconds; a Kewtech KT64+ does the same with a wander-lead mode for long radials."
+        >
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>R1+R2 expected ranges</strong> — a 32 A 4 mm² ring final at 30 m: R1+R2 ≈ 0.45
+              Ω. A 6 A 1 mm² lighting radial at 15 m: ≈ 0.40 Ω. Compare to the tabulated (R1+R2)
+              values in the IET On-Site Guide or GN3 — BS 7671 itself does not tabulate them.
+            </li>
+            <li>
+              <strong>Live-only check</strong> — Zs at the furthest accessory should match (R1+R2 +
+              Ze). Big mismatch = broken CPC somewhere between origin and accessory.
+            </li>
+            <li>
+              <strong>Touch-voltage test</strong> — Megger MFT1741+ "touch voltage" mode reports the
+              voltage that would appear on the exposed metalwork during an L-E fault. Above 50 V AC
+              = unsafe even with RCD protection.
+            </li>
+            <li>
+              <strong>Diagnosis routine</strong> — split the circuit at the midpoint, retest each
+              half, walk it back to the joint with the elevated resistance. Don't trust visual
+              inspection alone — hidden CPC breaks inside conduit are common.
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <ContentEyebrow>Working space, lighting and access</ContentEyebrow>
+
+        <ConceptBlock
+          title="EAWR Reg 15 — adequate working space, access and lighting"
+          plainEnglish="Reg 15 makes the firm provide enough working space, enough access, and enough lighting to do the work safely. On fault diagnosis this matters more than installation — you're often investigating in cramped voids, dark cellars, plant rooms with no fixed lighting, or a CU mounted behind a freezer."
+          onSite="The L3 expectation is to recognise when the working environment doesn't satisfy Reg 15 and to STOP and address it — bring temporary lighting (Unilite SP-750R rechargeable LED, Milwaukee M18 ROVER), clear obstructions (move the freezer, remove the boiler casing access panel), or escalate if the access is genuinely unsafe. A CU you can't reach safely is a CU you don't work on alone."
+        >
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Working space</strong> — at least 700 mm clear in front of any LV switchgear
+              (HSG85 guidance), with no obstructions that would prevent rapid retreat in a fault.
+            </li>
+            <li>
+              <strong>Access</strong> — safe approach AND safe egress, no climbing over stored
+              material, no balancing on unstable surfaces. Use podium steps (Youngman Boss / Werner)
+              for ceiling-void work, never a stepladder.
+            </li>
+            <li>
+              <strong>Lighting</strong> — minimum 200 lux at the work face for general electrical
+              work; 500 lux for fine terminations. Clip-on LED inspection lamps (Milwaukee 2367-20,
+              Unilite PS-FL12) bring the lux level up where fixed lighting is poor.
+            </li>
+            <li>
+              <strong>Temperature / damp</strong> — humid plant rooms or unheated lofts increase
+              shock risk (skin resistance drops). Dry the work area where possible; use a
+              vapour-barrier cloth on damp masonry.
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <RegsCallout
+          source="BS 7671:2018+A4:2026 — Regulation 132.16 (Additions and alterations) and Regulation 513.1 (accessibility)"
+          clause={
+            <>
+              "No addition or alteration, temporary or permanent, shall be made to an existing
+              installation, unless it has been ascertained that the rating and the condition of any
+              existing equipment, including that of the distributor, will be adequate for the
+              altered circumstances. Furthermore, the earthing and bonding arrangements, if
+              necessary for the protective measure applied for the safety of the addition or
+              alteration, shall be adequate."
+            </>
+          }
+          meaning={
+            <>
+              Working space is a regulation, not a nice-to-have. If you&apos;ve been sent to
+              investigate a fault on a CU stuffed behind a freezer or a switch panel jammed against
+              a stud wall, you&apos;ve already got a Reg 132.16 / 513.1 problem before you&apos;ve
+              picked up a meter — the existing access conditions are inadequate for the work
+              proposed. Recognise it, log it on the job sheet, and address access before testing
+              &mdash; not during.
+            </>
+          }
+          cite="Source: BS 7671:2018+A4:2026 Regulation 132.16 (verbatim) and Regulation 513.1."
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>Arc-flash on fault investigation</ContentEyebrow>
+
+        <ConceptBlock
+          title="The arc-flash hazard is highest at the cut-out and the main switchgear"
+          plainEnglish="An arc-flash is the explosive plasma release that follows a phase-to-phase or phase-to-earth short on energised equipment. Even a 230 V single-phase fault at a UK domestic cut-out can release 1-3 cal/cm² of incident energy — enough to cause second-degree burns to unprotected skin. On commercial 400 V three-phase the figures climb to 8-25 cal/cm². The PPE matrix in Sub 1.2 is what stands between you and the burn."
+          onSite="The L3 fault investigator who works on cut-outs, main switches or distribution boards is in the highest-arc-flash zone of the installation. Standard precaution: minimise the time the cover is off, never work close to the busbar with metallic tools (always insulated to IEC 60900 / 1000 V AC, e.g. Wera Kraftform Kompakt VDE), keep your face out of the plane of the busbar, and wear an arc-flash face shield (Oberon AFW or NSA AS-50) for any work that requires opening a live enclosure."
+        >
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Sources of arc</strong> — dropped tool across busbars, loose terminal arcing
+              under load, insulation failure on a cable inside switchgear, water ingress bridging
+              phases.
+            </li>
+            <li>
+              <strong>Arc-flash boundary</strong> — the distance at which incident energy drops to
+              1.2 cal/cm² (the threshold for second-degree burn). For a 230 V CU: ~600 mm. For a 400
+              V commercial DB: 1.0-1.5 m. Outside the boundary, base PPE; inside, full arc-rated
+              kit.
+            </li>
+            <li>
+              <strong>Working position</strong> — stand to the side of the enclosure, never directly
+              in front. The arc-blast direction is forwards out of the open door. A side-stance
+              reduces the dose by 60-80%.
+            </li>
+            <li>
+              <strong>Single-handed working</strong> — when probing inside live enclosures keep your
+              other hand in your pocket. Hand-to-hand current path is the lethal one (across the
+              chest); single-handed limits the path to ground via your boots.
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <FAQ items={faqs} />
+
+        <SectionRule />
+
+        <KeyTakeaways
+          points={[
+            'Fault diagnosis is structurally more dangerous than installation because the fault itself may have created hidden hazards — borrowed neutrals, induced voltage, compromised CPCs, open PEN.',
+            "EAWR Reg 13 says dead working is the default. Reg 14 sets three conjoint tests for live working. Reg 16 says you only do work you're competent to do — under supervision if not.",
+            'Always prove dead at the WORK POINT with a GS38 two-pole tester (Martindale VI-13800, Fluke T130, Kewtech KT1780) proved on a known live source BEFORE and AFTER. Every time.',
+            "A multimeter is a measurement instrument, not a proving instrument. Its 10 MΩ input reads induced and phantom voltages as if they were real. The two-pole's low impedance loads them out.",
+            'Stored energy in capacitors, drives, UPS batteries and thermal stores survives electrical isolation. Discharge through a resistor, never with a screwdriver, and verify with the meter.',
+            "TN-C-S open PEN is the supply-side hazard a normal RCD doesn't detect. Read N–E at the cut-out before any work — anything more than a few volts means STOP.",
+            "Borrowed neutrals are illegal under BS 7671 314.4 but exist in older installations. They're the classic 'I thought it was dead' cause of electrician shock.",
+            'Knowing where your apprentice authority stops — and calling the supervisor — is part of the EAWR Reg 16 competence duty, not a sign of weakness.',
+          ]}
+        />
+
+        <Quiz
+          title="Dangers of electricity in fault diagnosis — knowledge check"
+          questions={quizQuestions}
+        />
+
+        <div className="grid grid-cols-2 gap-3 pt-2">
           <button
-            onClick={() => navigate('/study-centre/apprentice/level3-module4-section1')}
-            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            onClick={() => navigate('/study-centre/apprentice/level3-module4')}
+            className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
           >
-            <ArrowLeft className="h-4 w-4" /> Section 1
+            <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+              <ChevronLeft className="h-3 w-3" /> Module 4
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-white truncate">
+              Module overview
+            </div>
           </button>
-
-          <PageHero
-            eyebrow="Module 4 · Section 1 · Subsection 1"
-            title="Dangers of electricity in fault diagnosis"
-            description="Fault diagnosis is structurally more dangerous than installation — the system is the patient, the fault may have created hidden parallel paths, induced voltages and compromised protective conductors. Walks the seven categories of electrical danger an L3 apprentice meets on diagnosis work and the EAWR / HSG85 framework that keeps you alive."
-            tone="emerald"
-          />
-
-          <TLDR
-            points={[
-              "Fault diagnosis is more dangerous than installation because the very condition you're investigating may have created the hazard — borrowed neutrals, induced voltage, compromised CPCs, lost neutral.",
-              "EAWR 1989 Reg 13 says dead working is the default. Reg 14 sets three conjoint tests for when live working is allowed. Reg 16 says you only do work you're competent to do — under supervision if not.",
-              "Always prove dead at the WORK POINT with a GS38 two-pole tester proved on a known live source BEFORE and AFTER. The breaker label is a hint, not a guarantee.",
-            ]}
-          />
-
-          <LearningOutcomes
-            outcomes={[
-              "State the dangers of electricity that are specific to fault diagnosis work — induced voltage, capacitive charge, parallel paths, borrowed neutrals, compromised protective conductors, open PEN.",
-              "Explain why EAWR 1989 Reg 13 (dead working as the default) and Reg 14 (three conjoint tests for live working) apply to every fault diagnosis decision.",
-              "Distinguish a high-impedance instrument (multimeter, 10 MΩ) from a low-impedance two-pole tester (GS38-compliant) and state when each is the right tool.",
-              "Describe the additional supply-side hazards of TN-C-S (PME) installations including open PEN faults that a normal RCD does not detect.",
-              "Recognise stored energy hazards in equipment after electrical isolation — capacitors, batteries, thermal stores, hydraulic accumulators.",
-              "Apply EAWR Reg 16 (competence) to know when a fault diagnosis task exceeds L3 apprentice authority and requires escalation.",
-            ]}
-            initialVisibleCount={3}
-          />
-
-          <ContentEyebrow>Why this Sub matters</ContentEyebrow>
-
-          <ConceptBlock
-            title="Fault diagnosis is structurally more dangerous than installation"
-            plainEnglish="On installation work the system arrives dead and stays dead until commissioning. On fault diagnosis you're working with an installation that's already energised, the fault is the symptom, and the very condition you're investigating may have created hidden hazards — a missing CPC, a damaged neutral, a wet insulation join, a borrowed neutral from a circuit you didn't know existed."
-            onSite="HSE prosecution data shows fault diagnosis and maintenance accounts for a disproportionate share of fatal electrical accidents to electricians — the system being 'in fault' is itself the hazard amplifier. That's why the L3 syllabus elevates the safe-working content above what L2 covered."
+          <button
+            onClick={() => navigate('/study-centre/apprentice/level3-module4-section1-2')}
+            className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
           >
-            <p>
-              The L3 step-up rests on six fault-specific hazards on top of the generic shock, arc-flash and burn risks the L2 apprentice already knows about:
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Hidden parallel paths and borrowed neutrals</strong> — a circuit you've isolated may still carry current through a shared neutral with another live circuit.</li>
-              <li><strong>Induced voltages</strong> — capacitive and inductive coupling from adjacent live cables raises a few tens of volts on the dead conductor.</li>
-              <li><strong>Stored energy</strong> — capacitors in motor circuits, drives, fluorescent ballasts, UPS systems hold lethal charge for minutes after isolation.</li>
-              <li><strong>Compromised protective conductors</strong> — a CPC that\'s broken or high-resistance won\'t trigger an RCD on a fault but DOES allow exposed metalwork to rise to phase voltage.</li>
-              <li><strong>Compromised supply earthing</strong> — open PEN on TN-C-S (PME) lifts customer earth toward phase voltage. RCDs don\'t detect it.</li>
-              <li><strong>Unverified circuit identification</strong> — a circuit labelled \'lights' may actually feed the boiler. The label is a starting hypothesis, not a guarantee.</li>
-            </ul>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <ContentEyebrow>The legal framework — EAWR + HSWA + GS38</ContentEyebrow>
-
-          <ConceptBlock
-            title="EAWR 1989 — three regulations you live by every fault job"
-            onSite="Every fault diagnosis breach the HSE prosecutes lands on at least one of EAWR Regs 13, 14 or 16. Knowing how the three interlock isn't legal trivia — it's how you defend your own decisions on site when something goes wrong."
-          >
-            <p>
-              The three EAWR regulations that frame fault work:
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Reg 13 — dead working is the default.</strong> No work shall be carried out on or near a conductor that\'s been or could become live unless \'either it is disconnected from every source of electrical energy OR otherwise rendered electrically safe\'.</li>
-              <li><strong>Reg 14 — three conjoint tests for live working.</strong> Live work is permitted only when (a) it\'s unreasonable for the conductor to be dead, AND (b) it\'s reasonable in all the circumstances for the work to be carried out live, AND (c) suitable precautions are taken. ALL three.</li>
-              <li><strong>Reg 16 — competence.</strong> No person shall be engaged in work activity where technical knowledge or experience is necessary to prevent danger unless they possess that knowledge or are under appropriate supervision.</li>
-            </ul>
-          </ConceptBlock>
-
-          <RegsCallout
-            source="Electricity at Work Regulations 1989 — Reg 14"
-            clause={
-              <>
-                "No person shall be engaged in any work activity on or so near any live conductor (other than one suitably covered with insulating material so as to prevent danger) that danger may arise unless — (a) it is unreasonable in all the circumstances for it to be dead; (b) it is reasonable in all the circumstances for him to be at work on or near it while it is live; AND (c) suitable precautions (including where necessary the provision of suitable protective equipment) are taken to prevent injury."
-              </>
-            }
-            meaning={
-              <>
-                Three conjoint tests, all of which must be satisfied before live working is permitted. Fault diagnosis usually clears (a) by necessity (you need voltage to measure). Test (b) requires a documented risk assessment justifying live over dead. Test (c) is the practical layer &mdash; GS38 instruments, insulated tools, defined work area, accompanied where required. Falling short on any one breaches the regulation.
-              </>
-            }
-            cite="Source: Electricity at Work Regulations 1989 (S.I. 1989/635), Reg 14."
-          />
-
-          <InlineCheck
-            id={checks[2].id}
-            question={checks[2].question}
-            options={checks[2].options}
-            correctIndex={checks[2].correctIndex}
-            explanation={checks[2].explanation}
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>Induced voltage — the silent ghost</ContentEyebrow>
-
-          <ConceptBlock
-            title="Why a \'dead' cable can read 30–80 V on a multimeter"
-            plainEnglish="When two cables run in the same containment or joist void, the live cable couples electromagnetically and capacitively to its dead neighbour. The induced voltage is high impedance — there\'s no real source behind it — so a high-impedance multimeter (10 MΩ) reads it as a real voltage when it isn\'t a real shock hazard. A low-impedance two-pole tester loads it down to zero in a fraction of a second."
-            onSite="On a typical domestic landing where the lighting cable runs alongside the ring final and the shower cable, you\'ll routinely read 20–60 V on the dead lighting conductor with a Fluke 117. Switch to your Martindale VI-13800 and the indication drops to zero. That\'s the GS38 difference in practice."
-          >
-            <p>
-              The danger isn\'t the induced voltage itself — it\'s three-fold:
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Misinterpretation</strong> — apprentice sees 60 V on the meter, assumes the breaker is wrong, walks away from a circuit that is actually safe to work on.</li>
-              <li><strong>Escalation under fault</strong> — if the parallel live circuit develops an L–E fault while you\'re working, the induced trickle becomes a full-voltage path through your dead cable.</li>
-              <li><strong>False-positive isolation</strong> — apprentice sees 5 V on the meter, dismisses it as \'induced', and starts work. But the 5 V is actually a real source from a borrowed neutral. The two-pole tester would have made the difference clear.</li>
-            </ul>
-          </ConceptBlock>
-
-          <InlineCheck
-            id={checks[0].id}
-            question={checks[0].question}
-            options={checks[0].options}
-            correctIndex={checks[0].correctIndex}
-            explanation={checks[0].explanation}
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>Stored energy — capacitors, batteries, thermal stores</ContentEyebrow>
-
-          <ConceptBlock
-            title="Electrical isolation isn't the same as 'electrically safe'"
-            onSite="Every motor with a run cap (single-phase induction motors — workshop extractors, kitchen extractors, cooling fans, CH circulator pumps), every fluorescent fitting with a power-factor cap, every drive unit, every UPS, every emergency lighting battery pack — all hold stored energy after the supply is isolated. EAWR Reg 13 requires the conductor or equipment to be 'electrically safe', not just 'disconnected'. Discharging stored energy is part of making it safe."
-          >
-            <p>
-              The standard discharge routine for site-encountered stored energy:
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Capacitors</strong> — wait the manufacturer's bleed-down period (usually 1–5 minutes), then short the terminals through a 5–10 kΩ resistor with insulated leads. Verify with the meter. NEVER short a capacitor with a screwdriver — the discharge arc pits the contacts and can weld the metal.</li>
-              <li><strong>Battery banks (UPS, emergency lighting)</strong> — isolation switches the load, NOT the battery. The battery remains energised until physically disconnected. Treat every UPS battery cabinet as live until proved dead at every cell terminal.</li>
-              <li><strong>Thermal stores</strong> — cylinders carry stored heat for hours after the immersion is isolated. Burn risk is real — use insulated tools, gloves.</li>
-              <li><strong>Drive capacitors (VSDs, soft starters)</strong> — much larger capacitance than motor caps. Manufacturer\'s manual gives the bleed-down period (typically 5–15 minutes). Pre-discharge bleed resistors are usually built in but verify with the meter.</li>
-            </ul>
-          </ConceptBlock>
-
-          <InlineCheck
-            id={checks[1].id}
-            question={checks[1].question}
-            options={checks[1].options}
-            correctIndex={checks[1].correctIndex}
-            explanation={checks[1].explanation}
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>Compromised supply earthing — TN-C-S open PEN</ContentEyebrow>
-
-          <ConceptBlock
-            title="Why an open PEN on TN-C-S is the L3 hazard you didn\'t meet at L2"
-            plainEnglish="On TN-C-S (the most common UK supply arrangement), the neutral and protective earth share a combined PEN conductor between the transformer and your cut-out. If that PEN breaks anywhere upstream, your customer\'s earth bonding rises toward phase voltage relative to true earth. RCDs don\'t see it (no residual current). The first sign is a tingle on a metal kitchen tap or a 30+ V reading N–E at the cut-out."
-            onSite="A4:2026 reinforced the protective measures around TN-C-S precisely because of open PEN — Protective Equipotential Bonding (PEB) at the cut-out, S-type RCDs upstream of EV chargers (because the EV connects the customer\'s bonded metalwork to the chassis of a vehicle that someone might be touching from true earth). Knowing the hazard exists is half the protection."
-          >
-            <p>
-              The L3 fault diagnosis routine on TN-C-S installations:
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Take an L–N, L–E and N–E reading at the cut-out before any work. L–E should equal L–N (within a volt or two). N–E should be near zero.</li>
-              <li>If N–E reads more than 5 V — STOP. Possible PEN compromise. DNO call, not your job.</li>
-              <li>If voltages all check out, proceed — but log them on the job sheet so there\'s a record of the supply state at the start of the visit.</li>
-            </ul>
-          </ConceptBlock>
-
-          <RegsCallout
-            source="BS 7671:2018+A4:2026 — Reg 411.4.1"
-            clause={
-              <>
-                "In a TN system, the integrity of the earthing of the installation depends on the reliable and effective connection of the PEN or PE conductors to Earth. Where the earthing is provided from a public or other supply system, compliance with the necessary conditions external to the installation is the responsibility of the distributor."
-              </>
-            }
-            meaning={
-              <>
-                On every TN-C-S supply you investigate, the reliability of the earth path lives outside the consumer&apos;s installation &mdash; in the DNO&apos;s PEN. The Regulation makes that plain: the distributor owns the upstream integrity and you have no way of testing it from the customer side. That&apos;s why an unexpected N&ndash;E reading at the cut-out is a STOP-and-call moment, not something you try to chase yourself.
-              </>
-            }
-            cite="Source: BS 7671:2018 incorporating Amendment 4:2026 — Reg 411.4.1, verbatim."
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>Where it goes wrong</ContentEyebrow>
-
-          <CommonMistake
-            title="Trusting the breaker label without proving dead at the work point"
-            whatHappens={
-              <>
-                Apprentice flips the breaker labelled "kitchen sockets", goes upstairs to the
-                ceiling void, cuts a cable to make a join. The label was wrong &mdash; the breaker
-                they actually flipped was the spare. The cable they cut was the kitchen ring,
-                still live at 230 V. The cutters arc, the breaker upstairs trips, the customer
-                hears a bang, the apprentice is lucky to walk away with a singed hand instead of a
-                fatality. The post-incident investigation finds the firm in breach of EAWR Reg 14
-                (no safe system of work) and Reg 16 (inadequate supervision of an apprentice).
-              </>
-            }
-            doInstead={
-              <>
-                Test, isolate, lock-off, prove dead at the work point with a GS38 two-pole tester
-                (Martindale VI-13800, Fluke T130, Kewtech KT1780) proved on a known live source
-                BEFORE and AFTER the test &mdash; every time. The work-point test is the one that
-                counts. The breaker label is a hypothesis you verify with the tester. No
-                exceptions, no shortcuts, no "this is a small job".
-              </>
-            }
-          />
-
-          <CommonMistake
-            title="Reading 60 V on a multimeter and assuming the breaker is wrong"
-            whatHappens={
-              <>
-                Apprentice has correctly isolated the lighting circuit at the DB. Probes the cable
-                at the switch with a Fluke 117 &mdash; reads 58 V L&ndash;E. Assumes the breaker
-                label is wrong, opens the DB to investigate, and starts probing live conductors at
-                the busbar to find which breaker is "really" the lighting. Now in unnecessary live
-                work, in a live consumer unit, with no permit, no risk assessment, no supervision
-                and an instrument that doesn\'t meet GS38 for live work. EAWR Reg 14 breach
-                wholesale.
-              </>
-            }
-            doInstead={
-              <>
-                When a multimeter shows a small voltage on a circuit you\'ve isolated, repeat the
-                test with a low-impedance two-pole tester. If the two-pole says zero, the
-                multimeter was reading induced voltage and the circuit is genuinely dead. If the
-                two-pole says voltage, you have a real source &mdash; STOP, escalate to the
-                supervisor, and don\'t open the DB on your own initiative.
-              </>
-            }
-          />
-
-          <Scenario
-            title="The faulty downlight that\'s still live"
-            situation={
-              <>
-                Customer reports a downlight in the kitchen has stopped working. You isolate the
-                lighting circuit at the Hager DB, lock-off, prove dead at the switch with your
-                Martindale VI-13800, and start to remove the failed lamp. As you withdraw the GU10
-                connector you feel a tingle on the chrome ring of the housing.
-              </>
-            }
-            whatToDo={
-              <>
-                Stop. Do not touch the housing again. Re-test the connector and the housing with
-                the two-pole tester &mdash; if it reads voltage, you have a parallel path. The
-                most common cause: the lighting circuit shares a neutral with the under-cabinet
-                LED strip on a separate circuit that\'s still live, OR the housing is bonded to a
-                gas / water service that\'s at a different potential because of an open PEN
-                upstream. Move the cable safely to one side, test L&ndash;N, L&ndash;E and
-                N&ndash;E at the cut-out. If anything other than the expected 230&nbsp;V L&ndash;E
-                shows up, call the supervisor &mdash; this is a supply-side or
-                cross-circuit-neutral problem, not an apprentice fix.
-              </>
-            }
-            whyItMatters={
-              <>
-                The "dead circuit that gives you a tingle" is the canonical L3 fault-diagnosis
-                hazard. Almost every reported electrocution of an electrician on diagnosis work
-                comes back to a parallel path the operative didn\'t know about &mdash; borrowed
-                neutral, shared neutral, lost main earth, open PEN, or wrong circuit
-                identification. Knowing to STOP at the first unexpected reading, rather than push
-                through assuming "it\'s just induced", is the competence test EAWR Reg 16 is
-                actually checking.
-              </>
-            }
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>Compromised CPC — the silent killer</ContentEyebrow>
-
-          <ConceptBlock
-            title="A broken or high-resistance CPC defeats the protection you assumed was there"
-            plainEnglish="The circuit protective conductor (CPC) is the green/yellow you bond every accessory to. If it's broken, corroded, or has a high-resistance joint somewhere along its length, an L-E fault won't drive enough current to trip the MCB or RCD — and the exposed metalwork it bonds rises to phase voltage. Standard fault-diagnosis check: R1+R2 with the Megger MFT1741+ at the end of every dead circuit; verify against design value. Anything more than +50% of expected = suspect joint."
-            onSite="Common CPC failure points: green/yellow tail crushed inside a back-box (clip-fix or screw onto braid); aluminium-on-copper corrosion at older twin-and-earth terminations; loose grub screw in a junction box; CPC spurred onto an SWA gland that has lost mechanical bond; CPC accidentally disconnected during a previous accessory change. The Megger MFT1741+ continuity test (200 mA, autoranging) reads R1+R2 in seconds; a Kewtech KT64+ does the same with a wander-lead mode for long radials."
-          >
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>R1+R2 expected ranges</strong> — a 32 A 4 mm² ring final at 30 m: R1+R2 ≈ 0.45 Ω. A 6 A 1 mm² lighting radial at 15 m: ≈ 0.40 Ω. Compare to the tabulated (R1+R2) values in the IET On-Site Guide or GN3 — BS 7671 itself does not tabulate them.</li>
-              <li><strong>Live-only check</strong> — Zs at the furthest accessory should match (R1+R2 + Ze). Big mismatch = broken CPC somewhere between origin and accessory.</li>
-              <li><strong>Touch-voltage test</strong> — Megger MFT1741+ "touch voltage" mode reports the voltage that would appear on the exposed metalwork during an L-E fault. Above 50 V AC = unsafe even with RCD protection.</li>
-              <li><strong>Diagnosis routine</strong> — split the circuit at the midpoint, retest each half, walk it back to the joint with the elevated resistance. Don't trust visual inspection alone — hidden CPC breaks inside conduit are common.</li>
-            </ul>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <ContentEyebrow>Working space, lighting and access</ContentEyebrow>
-
-          <ConceptBlock
-            title="EAWR Reg 15 — adequate working space, access and lighting"
-            plainEnglish="Reg 15 makes the firm provide enough working space, enough access, and enough lighting to do the work safely. On fault diagnosis this matters more than installation — you're often investigating in cramped voids, dark cellars, plant rooms with no fixed lighting, or a CU mounted behind a freezer."
-            onSite="The L3 expectation is to recognise when the working environment doesn't satisfy Reg 15 and to STOP and address it — bring temporary lighting (Unilite SP-750R rechargeable LED, Milwaukee M18 ROVER), clear obstructions (move the freezer, remove the boiler casing access panel), or escalate if the access is genuinely unsafe. A CU you can't reach safely is a CU you don't work on alone."
-          >
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Working space</strong> — at least 700 mm clear in front of any LV switchgear (HSG85 guidance), with no obstructions that would prevent rapid retreat in a fault.</li>
-              <li><strong>Access</strong> — safe approach AND safe egress, no climbing over stored material, no balancing on unstable surfaces. Use podium steps (Youngman Boss / Werner) for ceiling-void work, never a stepladder.</li>
-              <li><strong>Lighting</strong> — minimum 200 lux at the work face for general electrical work; 500 lux for fine terminations. Clip-on LED inspection lamps (Milwaukee 2367-20, Unilite PS-FL12) bring the lux level up where fixed lighting is poor.</li>
-              <li><strong>Temperature / damp</strong> — humid plant rooms or unheated lofts increase shock risk (skin resistance drops). Dry the work area where possible; use a vapour-barrier cloth on damp masonry.</li>
-            </ul>
-          </ConceptBlock>
-
-          <RegsCallout
-            source="BS 7671:2018+A4:2026 — Regulation 132.16 (Additions and alterations) and Regulation 513.1 (accessibility)"
-            clause={
-              <>
-                "No addition or alteration, temporary or permanent, shall be made to an existing installation, unless it has been ascertained that the rating and the condition of any existing equipment, including that of the distributor, will be adequate for the altered circumstances. Furthermore, the earthing and bonding arrangements, if necessary for the protective measure applied for the safety of the addition or alteration, shall be adequate."
-              </>
-            }
-            meaning={
-              <>
-                Working space is a regulation, not a nice-to-have. If you&apos;ve been sent to investigate a fault on a CU stuffed behind a freezer or a switch panel jammed against a stud wall, you&apos;ve already got a Reg 132.16 / 513.1 problem before you&apos;ve picked up a meter — the existing access conditions are inadequate for the work proposed. Recognise it, log it on the job sheet, and address access before testing &mdash; not during.
-              </>
-            }
-            cite="Source: BS 7671:2018+A4:2026 Regulation 132.16 (verbatim) and Regulation 513.1."
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>Arc-flash on fault investigation</ContentEyebrow>
-
-          <ConceptBlock
-            title="The arc-flash hazard is highest at the cut-out and the main switchgear"
-            plainEnglish="An arc-flash is the explosive plasma release that follows a phase-to-phase or phase-to-earth short on energised equipment. Even a 230 V single-phase fault at a UK domestic cut-out can release 1-3 cal/cm² of incident energy — enough to cause second-degree burns to unprotected skin. On commercial 400 V three-phase the figures climb to 8-25 cal/cm². The PPE matrix in Sub 1.2 is what stands between you and the burn."
-            onSite="The L3 fault investigator who works on cut-outs, main switches or distribution boards is in the highest-arc-flash zone of the installation. Standard precaution: minimise the time the cover is off, never work close to the busbar with metallic tools (always insulated to IEC 60900 / 1000 V AC, e.g. Wera Kraftform Kompakt VDE), keep your face out of the plane of the busbar, and wear an arc-flash face shield (Oberon AFW or NSA AS-50) for any work that requires opening a live enclosure."
-          >
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Sources of arc</strong> — dropped tool across busbars, loose terminal arcing under load, insulation failure on a cable inside switchgear, water ingress bridging phases.</li>
-              <li><strong>Arc-flash boundary</strong> — the distance at which incident energy drops to 1.2 cal/cm² (the threshold for second-degree burn). For a 230 V CU: ~600 mm. For a 400 V commercial DB: 1.0-1.5 m. Outside the boundary, base PPE; inside, full arc-rated kit.</li>
-              <li><strong>Working position</strong> — stand to the side of the enclosure, never directly in front. The arc-blast direction is forwards out of the open door. A side-stance reduces the dose by 60-80%.</li>
-              <li><strong>Single-handed working</strong> — when probing inside live enclosures keep your other hand in your pocket. Hand-to-hand current path is the lethal one (across the chest); single-handed limits the path to ground via your boots.</li>
-            </ul>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <FAQ items={faqs} />
-
-          <SectionRule />
-
-          <KeyTakeaways
-            points={[
-              "Fault diagnosis is structurally more dangerous than installation because the fault itself may have created hidden hazards — borrowed neutrals, induced voltage, compromised CPCs, open PEN.",
-              "EAWR Reg 13 says dead working is the default. Reg 14 sets three conjoint tests for live working. Reg 16 says you only do work you're competent to do — under supervision if not.",
-              "Always prove dead at the WORK POINT with a GS38 two-pole tester (Martindale VI-13800, Fluke T130, Kewtech KT1780) proved on a known live source BEFORE and AFTER. Every time.",
-              "A multimeter is a measurement instrument, not a proving instrument. Its 10 MΩ input reads induced and phantom voltages as if they were real. The two-pole's low impedance loads them out.",
-              "Stored energy in capacitors, drives, UPS batteries and thermal stores survives electrical isolation. Discharge through a resistor, never with a screwdriver, and verify with the meter.",
-              "TN-C-S open PEN is the supply-side hazard a normal RCD doesn't detect. Read N–E at the cut-out before any work — anything more than a few volts means STOP.",
-              "Borrowed neutrals are illegal under BS 7671 314.4 but exist in older installations. They're the classic 'I thought it was dead' cause of electrician shock.",
-              "Knowing where your apprentice authority stops — and calling the supervisor — is part of the EAWR Reg 16 competence duty, not a sign of weakness.",
-            ]}
-          />
-
-          <Quiz title="Dangers of electricity in fault diagnosis — knowledge check" questions={quizQuestions} />
-
-          <div className="grid grid-cols-2 gap-3 pt-2">
-            <button
-              onClick={() => navigate('/study-centre/apprentice/level3-module4')}
-              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
-                <ChevronLeft className="h-3 w-3" /> Module 4
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-white truncate">
-                Module overview
-              </div>
-            </button>
-            <button
-              onClick={() => navigate('/study-centre/apprentice/level3-module4-section1-2')}
-              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
-                Next subsection <ChevronRight className="h-3 w-3" />
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-black truncate">
-                1.2 H&S framework
-              </div>
-            </button>
-          </div>
-        </PageFrame>
-      </div>
-    </div>
+            <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+              Next subsection <ChevronRight className="h-3 w-3" />
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-black truncate">
+              1.2 H&S framework
+            </div>
+          </button>
+        </div>
+      </HubBody>
+    </HubPage>
   );
 }

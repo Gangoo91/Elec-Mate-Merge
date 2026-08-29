@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Quote } from '@/types/quote';
 import { buildCategoryBreakdowns, computeQuoteTotals } from '@/utils/quote-calculations';
 import { Card } from '@/components/ui/card';
@@ -27,6 +28,7 @@ import {
   AlertTriangle,
   Eye,
   GitBranch,
+  RotateCw,
 } from 'lucide-react';
 import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
@@ -38,6 +40,7 @@ interface QuoteDetailViewProps {
 
 export const QuoteDetailView = ({ quote }: QuoteDetailViewProps) => {
   const [variationOpen, setVariationOpen] = useState(false);
+  const navigate = useNavigate();
 
   const categoryBreakdowns = useMemo(
     () => buildCategoryBreakdowns(quote.items || [], quote.settings),
@@ -742,6 +745,37 @@ export const QuoteDetailView = ({ quote }: QuoteDetailViewProps) => {
                 className="border-elec-yellow/40 text-elec-yellow hover:bg-elec-yellow/10"
               >
                 Create variation →
+              </Button>
+            </div>
+          </div>
+        </Card>
+      )}
+
+      {/* ELE-430 — an accepted quote is the moment to lock in the repeat
+          visit. Opens the contract sheet on Renewals & Contracts, pre-filled
+          from this quote. */}
+      {(quote.acceptance_status === 'accepted' || quote.status === 'approved') && (
+        <Card className="glass-premium p-5">
+          <div className="flex items-start gap-3">
+            <RotateCw className="h-5 w-5 text-elec-yellow shrink-0 mt-0.5" />
+            <div className="flex-1">
+              <h3 className="font-semibold text-white mb-1">Regular work for this customer?</h3>
+              <p className="text-sm text-white mb-3">
+                Put it on a maintenance contract — each visit lands in your tasks automatically,
+                with an optional draft invoice and customer reminder.
+              </p>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  const params = new URLSearchParams({ contract: '1' });
+                  if (quote.client?.name) params.set('customer', quote.client.name);
+                  if (quote.jobDetails?.title) params.set('job', quote.jobDetails.title);
+                  navigate(`/electrician/renewals?${params.toString()}`);
+                }}
+                className="border-elec-yellow/40 text-elec-yellow hover:bg-elec-yellow/10"
+              >
+                Set up a contract →
               </Button>
             </div>
           </div>

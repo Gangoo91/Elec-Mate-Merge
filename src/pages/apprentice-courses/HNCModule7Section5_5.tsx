@@ -5,10 +5,10 @@
  */
 
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
-import { PageFrame, PageHero } from '@/components/college/primitives';
 import {
   ConceptBlock,
   CommonMistake,
@@ -225,12 +225,7 @@ const quizQuestions = [
     id: 12,
     question:
       'Which demand management strategy involves permanently shifting load to off-peak periods?',
-    options: [
-      'Load shifting',
-      'Demand response',
-      'Load shedding',
-      'Peak shaving',
-    ],
+    options: ['Load shifting', 'Demand response', 'Load shedding', 'Peak shaving'],
     correctAnswer: 0,
     explanation:
       'Load shifting permanently reschedules energy-intensive processes (such as water heating, ice storage, or batch processes) to off-peak periods when electricity costs are lower, without reducing total consumption.',
@@ -275,309 +270,501 @@ const HNCModule7Section5_5 = () => {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
-      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
-        <PageFrame>
+    <HubPage>
+      <HubMasthead
+        section="Module 7 · Section 5 · Subsection 5"
+        title="Demand Management"
+        backTo="/study-centre/apprentice/h-n-c-module7-section5"
+      />
+      <HubBody>
+        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
+          Load shedding, peak shaving, demand response, tariff optimisation, and smart grid
+          integration
+        </p>
+
+        <LearningOutcomes
+          outcomes={[
+            'Understand maximum demand and its impact on electricity costs',
+            'Apply load shedding strategies to reduce peak demand',
+            'Evaluate peak shaving technologies including BESS',
+            'Navigate DUoS and TNUoS charging structures',
+            'Implement Triad avoidance strategies',
+            'Integrate demand response and smart grid technologies',
+          ]}
+        />
+
+        <SectionRule />
+
+        <ConceptBlock title="Maximum Demand and Load Shedding">
+          <p>
+            Maximum demand (MD) is the highest power drawn from the supply during a defined period,
+            typically measured in 30-minute intervals in the UK. It directly impacts capacity
+            charges and network costs, often representing 20-40% of a commercial customer's
+            electricity bill.
+          </p>
+          <p>
+            <strong>Maximum Demand Concepts:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Contracted capacity:</strong> Agreed maximum import (kVA) with DNO - exceeding
+              incurs penalties
+            </li>
+            <li>
+              <strong>Measured maximum demand:</strong> Highest recorded value in billing period
+            </li>
+            <li>
+              <strong>Diversity factor:</strong> Ratio of actual MD to sum of individual load MDs
+            </li>
+            <li>
+              <strong>Load factor:</strong> Average demand ÷ maximum demand - indicates demand
+              profile efficiency
+            </li>
+          </ul>
+          <p>
+            <strong>Load Shedding Strategies</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Priority-based shedding:</strong> Shed lowest priority first — Non-essential
+              HVAC, decorative lighting
+            </li>
+            <li>
+              <strong>Rotational shedding:</strong> Cycle loads on/off — Refrigeration, water
+              heating, chillers
+            </li>
+            <li>
+              <strong>Demand limiting:</strong> Prevent threshold breach — EV charging, industrial
+              processes
+            </li>
+            <li>
+              <strong>Predictive control:</strong> Pre-emptive reduction — BMS-controlled systems
+            </li>
+          </ul>
+          <p>
+            <strong>Load Priority Classification</strong>
+          </p>
+          <p>
+            <span>Priority 1 (Never shed):</span> Life safety, emergency lighting, fire systems,
+            critical IT
+          </p>
+          <p>
+            <span>Priority 2 (Last resort):</span> Essential production, server rooms, security
+          </p>
+          <p>
+            <span>Priority 3 (Shed if needed):</span> General HVAC, non-critical processes
+          </p>
+          <p>
+            <span>Priority 4 (First to shed):</span> EV charging, water heating, unoccupied area
+            HVAC
+          </p>
+          <p>
+            <strong>Key principle:</strong> Effective load shedding reduces maximum demand without
+            impacting critical operations or occupant comfort.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...quickCheckQuestions[0]} />
+
+        <SectionRule />
+
+        <ConceptBlock title="Peak Shaving and Energy Storage">
+          <p>
+            Peak shaving uses on-site generation or energy storage to reduce grid demand during peak
+            periods. Unlike load shedding (which reduces consumption), peak shaving maintains full
+            supply to loads while reducing the power drawn from the distribution network.
+          </p>
+          <p>
+            <strong>Battery Energy Storage (BESS)</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Charge during off-peak periods</li>
+            <li>Discharge to reduce grid demand at peak</li>
+            <li>Sub-second response capability</li>
+            <li>Silent operation, zero emissions</li>
+            <li>Multiple revenue streams possible</li>
+          </ul>
+          <p>
+            <strong>On-site Generation</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Diesel/gas generators for peak periods</li>
+            <li>CHP for combined heat and power</li>
+            <li>Solar PV with battery storage</li>
+            <li>May require planning permission</li>
+            <li>Emission and noise considerations</li>
+          </ul>
+          <p>
+            <strong>BESS Operating Modes</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Peak shaving:</strong> Reduce maximum demand — Capacity charge reduction
+            </li>
+            <li>
+              <strong>Triad avoidance:</strong> Discharge during Triad warnings — TNUoS charge
+              reduction
+            </li>
+            <li>
+              <strong>Arbitrage:</strong> Buy cheap, sell/use expensive — Energy cost savings
+            </li>
+            <li>
+              <strong>Frequency response:</strong> Grid balancing services — Ancillary services
+              revenue
+            </li>
+            <li>
+              <strong>Backup power:</strong> UPS function during outages — Business continuity value
+            </li>
+          </ul>
+          <p>
+            <strong>BESS Sizing Example</strong>
+          </p>
+          <p>Site maximum demand: 800 kW</p>
+          <p>Target maximum demand: 500 kW</p>
+          <p>Required reduction: 300 kW</p>
+          <p>Peak duration: 3 hours</p>
+          <p>Minimum capacity = 300 kW × 3 h = 900 kWh</p>
+          <p>With 80% depth of discharge: 900 ÷ 0.8 = 1,125 kWh installed</p>
+          <p>System specification: 300 kW / 1,125 kWh lithium-ion BESS</p>
+          <p>
+            <strong>Investment tip:</strong> Stack multiple revenue streams (peak shaving + Triad +
+            frequency response) to improve BESS payback period.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...quickCheckQuestions[1]} />
+
+        <SectionRule />
+
+        <ConceptBlock title="Tariff Structures and Network Charges">
+          <p>
+            Understanding electricity tariff components enables effective demand management. Network
+            charges (DUoS and TNUoS) often represent 25-35% of total electricity costs for
+            commercial consumers and are directly influenced by consumption patterns and maximum
+            demand.
+          </p>
+          <p>
+            <strong>Electricity Bill Components</strong>
+          </p>
+          <p>
+            <span>Wholesale energy:</span> Commodity cost of electricity (40-50%)
+          </p>
+          <p>
+            <span>DUoS charges:</span> Distribution network costs (15-20%)
+          </p>
+          <p>
+            <span>TNUoS charges:</span> Transmission network costs (5-10%)
+          </p>
+          <p>
+            <span>BSUoS charges:</span> Balancing Services Use of System (2-5%)
+          </p>
+          <p>
+            <span>Supplier margin:</span> Supplier costs and profit (5-10%)
+          </p>
+          <p>
+            <span>Levies:</span> RO, FiT, CFD, CM, CCL (15-25%)
+          </p>
+          <p>
+            <strong>DUoS Time Bands (Typical Winter)</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Red:</strong> 16:00-19:00 weekdays — Highest (10x green) — Minimise
+              consumption
+            </li>
+            <li>
+              <strong>Amber:</strong> 07:00-16:00, 19:00-20:00 — Medium (3x green) — Manage where
+              possible
+            </li>
+            <li>
+              <strong>Green:</strong> 20:00-07:00, weekends — Lowest (baseline) — Shift loads here
+            </li>
+          </ul>
+          <p>
+            <strong>TNUoS and Triad Charges</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Triads:</strong> Three half-hours of highest national demand (Nov-Feb)
+            </li>
+            <li>
+              <strong>Separation:</strong> Each Triad at least 10 clear days apart
+            </li>
+            <li>
+              <strong>Zonal charges:</strong> Vary by location (£40-75/kW/year typically)
+            </li>
+            <li>
+              <strong>Calculation:</strong> Average of your demand during the three Triads × zonal
+              rate
+            </li>
+            <li>
+              <strong>Avoidance value:</strong> Reducing demand by 100 kW could save
+              £4,000-7,500/year
+            </li>
+          </ul>
+          <p>
+            <strong>Capacity and Reactive Power Charges</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Agreed capacity:</strong> Contracted kVA — Right-size to actual need
+            </li>
+            <li>
+              <strong>Excess capacity:</strong> kVA exceeding agreement — Load shedding, peak
+              shaving
+            </li>
+            <li>
+              <strong>Reactive power:</strong> kVArh when PF &lt; 0.95 — Power factor correction
+            </li>
+          </ul>
+          <p>
+            <strong>Tariff optimisation:</strong> Review your load profile against tariff structure
+            - often 10-15% savings are achievable through demand management alone.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...quickCheckQuestions[2]} />
+
+        <SectionRule />
+
+        <ConceptBlock title="Demand Response and Smart Grid Integration">
+          <p>
+            Demand response (DR) programmes enable consumers to actively participate in grid
+            balancing by adjusting consumption in response to price signals or operator requests.
+            Smart grid technologies enable automated, real-time demand management across the
+            electricity system.
+          </p>
+          <p>
+            <strong>Demand Response Programme Types:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Price-based DR:</strong> Respond to time-of-use or dynamic pricing signals
+            </li>
+            <li>
+              <strong>Incentive-based DR:</strong> Receive payments for reducing demand when
+              requested
+            </li>
+            <li>
+              <strong>Emergency DR:</strong> Mandatory reduction during grid emergencies
+            </li>
+            <li>
+              <strong>Ancillary services:</strong> Provide frequency response or reserve capacity
+            </li>
+          </ul>
+          <p>
+            <strong>UK Flexibility Markets</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Capacity Market (CM)</li>
+            <li>Firm Frequency Response (FFR)</li>
+            <li>Dynamic Containment (DC)</li>
+            <li>Short-Term Operating Reserve (STOR)</li>
+            <li>DNO flexibility services</li>
+          </ul>
+          <p>
+            <strong>Participation Requirements</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Half-hourly metering (mandatory)</li>
+            <li>Minimum capacity threshold</li>
+            <li>Response time capability</li>
+            <li>Telemetry and communication</li>
+            <li>Aggregator contract (for smaller sites)</li>
+          </ul>
+          <p>
+            <strong>Smart Grid Technologies</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Smart meters:</strong> HH consumption recording — Enables settlement and
+              monitoring
+            </li>
+            <li>
+              <strong>AMI/AMR:</strong> Automatic meter reading — Real-time data for control
+            </li>
+            <li>
+              <strong>EMS/BMS:</strong> Building/energy management — Automated demand response
+            </li>
+            <li>
+              <strong>IoT devices:</strong> Connected equipment — Granular load control
+            </li>
+            <li>
+              <strong>AI/ML platforms:</strong> Predictive optimisation — Forecast-driven scheduling
+            </li>
+          </ul>
+          <p>
+            <strong>Half-Hourly Settlement (MHHS)</strong>
+          </p>
+          <p>
+            Market-wide Half-Hourly Settlement (MHHS) now applies to all non-domestic customers:
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Consumption recorded every 30 minutes via smart/AMR meters</li>
+            <li>Bills reflect actual consumption patterns, not profiles</li>
+            <li>Direct incentive to shift consumption to cheaper periods</li>
+            <li>Enables participation in flexibility markets</li>
+            <li>Foundation for time-of-use and dynamic tariffs</li>
+          </ul>
+          <p>
+            <strong>Future trend:</strong> The transition to a smart, flexible grid means demand
+            management will become increasingly automated, with AI-driven systems optimising
+            consumption in real-time against multiple signals.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...quickCheckQuestions[3]} />
+
+        <SectionRule />
+
+        <ConceptBlock title="Worked Examples">
+          <p>
+            <strong>Example 1: Triad Avoidance Savings Calculation</strong>
+          </p>
+          <p>
+            <strong>Scenario:</strong> Calculate potential savings from Triad avoidance at a
+            manufacturing site.
+          </p>
+          <p>Given data:</p>
+          <p>Current average Triad demand: 450 kW</p>
+          <p>Target Triad demand: 150 kW (using BESS)</p>
+          <p>TNUoS zonal rate: £62/kW/year</p>
+          <p>Calculation:</p>
+          <p>Demand reduction = 450 - 150 = 300 kW</p>
+          <p>Annual saving = 300 kW × £62/kW = £18,600/year</p>
+          <p>Triad avoidance value: £18,600 per year</p>
+          <p>Note: This alone could justify significant BESS investment</p>
+          <p>
+            <strong>Example 2: DUoS Band Optimisation</strong>
+          </p>
+          <p>
+            <strong>Scenario:</strong> Evaluate cost savings from shifting EV charging from red to
+            green band.
+          </p>
+          <p>Current pattern (red band charging 16:00-19:00):</p>
+          <p>EV charging load: 100 kW for 3 hours = 300 kWh daily</p>
+          <p>Red band DUoS: 15p/kWh</p>
+          <p>Daily DUoS cost: 300 × £0.15 = £45</p>
+          <p>Optimised pattern (green band charging 22:00-01:00):</p>
+          <p>Green band DUoS: 1.5p/kWh</p>
+          <p>Daily DUoS cost: 300 × £0.015 = £4.50</p>
+          <p>Daily saving: £40.50</p>
+          <p>Annual saving: £40.50 × 250 days = £10,125</p>
+          <p>
+            <strong>Example 3: Load Factor Improvement</strong>
+          </p>
+          <p>
+            <strong>Scenario:</strong> Assess the impact of demand management on load factor.
+          </p>
+          <p>Before demand management:</p>
+          <p>Average demand: 400 kW</p>
+          <p>Maximum demand: 800 kW</p>
+          <p>Load factor = 400 ÷ 800 = 0.50 (50%)</p>
+          <p>After implementing load shedding and peak shaving:</p>
+          <p>Average demand: 400 kW (unchanged)</p>
+          <p>Maximum demand: 550 kW (reduced)</p>
+          <p>New load factor = 400 ÷ 550 = 0.73 (73%)</p>
+          <p>Improvement: 23 percentage points</p>
+          <p>Higher load factor = better utilisation of contracted capacity</p>
+          <p>Capacity charge reduction: (800-550) × £8/kVA/month = £2,000/month</p>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <ConceptBlock title="Practical guidance">
+          <p>
+            <strong>Demand Management Implementation Checklist:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Analyse historical consumption data (HH meter data essential)</li>
+            <li>Identify peak demand periods and contributing loads</li>
+            <li>Classify loads by priority and flexibility</li>
+            <li>Model financial impact of demand reduction strategies</li>
+            <li>Implement monitoring and control systems</li>
+            <li>Establish operational procedures for demand events</li>
+          </ul>
+          <p>
+            <strong>Key Values to Remember:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              DUoS red band: <strong>16:00-19:00 weekdays</strong> (winter)
+            </li>
+            <li>
+              Triads: <strong>November to February</strong>, typically 17:00-18:00
+            </li>
+            <li>
+              TNUoS rates: <strong>£40-75/kW/year</strong> depending on zone
+            </li>
+            <li>
+              Power factor threshold: <strong>0.95</strong> (charges apply below)
+            </li>
+            <li>
+              HH settlement period: <strong>30 minutes</strong>
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <CommonMistake
+          title="Common mistakes to avoid"
+          whatHappens={
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+              <li>
+                <strong>Ignoring network charges</strong> - Often 25-35% of bill, directly
+                controllable
+              </li>
+              <li>
+                <strong>Oversizing contracted capacity</strong> - Review annually against actual MD
+              </li>
+              <li>
+                <strong>Missing Triad warnings</strong> - Subscribe to forecasting services
+              </li>
+              <li>
+                <strong>Poor load priority classification</strong> - May shed critical loads
+                inappropriately
+              </li>
+              <li>
+                <strong>Neglecting power factor</strong> - Reactive charges add up significantly
+              </li>
+            </ul>
+          }
+          doInstead="Cross-check assumptions against published guidance, validate measured values against design intent, and engage the wider team early when interface issues emerge."
+        />
+
+        <SectionRule />
+
+        <FAQ items={faqs} />
+
+        <SectionRule />
+
+        <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+
+        <div className="grid grid-cols-2 gap-3 pt-2">
           <button
-            onClick={() => navigate("/study-centre/apprentice/h-n-c-module7-section5")}
-            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module7-section5-4')}
+            className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
           >
-            <ArrowLeft className="h-4 w-4" /> Back
+            <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+              <ChevronLeft className="h-3 w-3" /> Previous
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-white truncate">
+              Energy metering
+            </div>
           </button>
-
-          <PageHero
-            eyebrow="Module 7 · Section 5 · Subsection 5"
-            title="Demand Management"
-            description="Load shedding, peak shaving, demand response, tariff optimisation, and smart grid integration"
-            tone="purple"
-          />
-
-          <LearningOutcomes
-            outcomes={[
-              "Understand maximum demand and its impact on electricity costs",
-              "Apply load shedding strategies to reduce peak demand",
-              "Evaluate peak shaving technologies including BESS",
-              "Navigate DUoS and TNUoS charging structures",
-              "Implement Triad avoidance strategies",
-              "Integrate demand response and smart grid technologies",
-            ]}
-          />
-
-          <SectionRule />
-
-          <ConceptBlock title="Maximum Demand and Load Shedding">
-            <p>Maximum demand (MD) is the highest power drawn from the supply during a defined period, typically measured in 30-minute intervals in the UK. It directly impacts capacity charges and network costs, often representing 20-40% of a commercial customer's electricity bill.</p>
-            <p><strong>Maximum Demand Concepts:</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Contracted capacity:</strong> Agreed maximum import (kVA) with DNO - exceeding incurs penalties</li>
-              <li><strong>Measured maximum demand:</strong> Highest recorded value in billing period</li>
-              <li><strong>Diversity factor:</strong> Ratio of actual MD to sum of individual load MDs</li>
-              <li><strong>Load factor:</strong> Average demand ÷ maximum demand - indicates demand profile efficiency</li>
-            </ul>
-            <p><strong>Load Shedding Strategies</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Priority-based shedding:</strong> Shed lowest priority first — Non-essential HVAC, decorative lighting</li>
-              <li><strong>Rotational shedding:</strong> Cycle loads on/off — Refrigeration, water heating, chillers</li>
-              <li><strong>Demand limiting:</strong> Prevent threshold breach — EV charging, industrial processes</li>
-              <li><strong>Predictive control:</strong> Pre-emptive reduction — BMS-controlled systems</li>
-            </ul>
-            <p><strong>Load Priority Classification</strong></p>
-            <p><span>Priority 1 (Never shed):</span> Life safety, emergency lighting, fire systems, critical IT</p>
-            <p><span>Priority 2 (Last resort):</span> Essential production, server rooms, security</p>
-            <p><span>Priority 3 (Shed if needed):</span> General HVAC, non-critical processes</p>
-            <p><span>Priority 4 (First to shed):</span> EV charging, water heating, unoccupied area HVAC</p>
-            <p><strong>Key principle:</strong> Effective load shedding reduces maximum demand without impacting critical operations or occupant comfort.</p>
-          </ConceptBlock>
-
-          <InlineCheck {...quickCheckQuestions[0]} />
-
-          <SectionRule />
-
-          <ConceptBlock title="Peak Shaving and Energy Storage">
-            <p>Peak shaving uses on-site generation or energy storage to reduce grid demand during peak periods. Unlike load shedding (which reduces consumption), peak shaving maintains full supply to loads while reducing the power drawn from the distribution network.</p>
-            <p><strong>Battery Energy Storage (BESS)</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Charge during off-peak periods</li>
-              <li>Discharge to reduce grid demand at peak</li>
-              <li>Sub-second response capability</li>
-              <li>Silent operation, zero emissions</li>
-              <li>Multiple revenue streams possible</li>
-            </ul>
-            <p><strong>On-site Generation</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Diesel/gas generators for peak periods</li>
-              <li>CHP for combined heat and power</li>
-              <li>Solar PV with battery storage</li>
-              <li>May require planning permission</li>
-              <li>Emission and noise considerations</li>
-            </ul>
-            <p><strong>BESS Operating Modes</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Peak shaving:</strong> Reduce maximum demand — Capacity charge reduction</li>
-              <li><strong>Triad avoidance:</strong> Discharge during Triad warnings — TNUoS charge reduction</li>
-              <li><strong>Arbitrage:</strong> Buy cheap, sell/use expensive — Energy cost savings</li>
-              <li><strong>Frequency response:</strong> Grid balancing services — Ancillary services revenue</li>
-              <li><strong>Backup power:</strong> UPS function during outages — Business continuity value</li>
-            </ul>
-            <p><strong>BESS Sizing Example</strong></p>
-            <p>Site maximum demand: 800 kW</p>
-            <p>Target maximum demand: 500 kW</p>
-            <p>Required reduction: 300 kW</p>
-            <p>Peak duration: 3 hours</p>
-            <p>Minimum capacity = 300 kW × 3 h = 900 kWh</p>
-            <p>With 80% depth of discharge: 900 ÷ 0.8 = 1,125 kWh installed</p>
-            <p>System specification: 300 kW / 1,125 kWh lithium-ion BESS</p>
-            <p><strong>Investment tip:</strong> Stack multiple revenue streams (peak shaving + Triad + frequency response) to improve BESS payback period.</p>
-          </ConceptBlock>
-
-          <InlineCheck {...quickCheckQuestions[1]} />
-
-          <SectionRule />
-
-          <ConceptBlock title="Tariff Structures and Network Charges">
-            <p>Understanding electricity tariff components enables effective demand management. Network charges (DUoS and TNUoS) often represent 25-35% of total electricity costs for commercial consumers and are directly influenced by consumption patterns and maximum demand.</p>
-            <p><strong>Electricity Bill Components</strong></p>
-            <p><span>Wholesale energy:</span> Commodity cost of electricity (40-50%)</p>
-            <p><span>DUoS charges:</span> Distribution network costs (15-20%)</p>
-            <p><span>TNUoS charges:</span> Transmission network costs (5-10%)</p>
-            <p><span>BSUoS charges:</span> Balancing Services Use of System (2-5%)</p>
-            <p><span>Supplier margin:</span> Supplier costs and profit (5-10%)</p>
-            <p><span>Levies:</span> RO, FiT, CFD, CM, CCL (15-25%)</p>
-            <p><strong>DUoS Time Bands (Typical Winter)</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Red:</strong> 16:00-19:00 weekdays — Highest (10x green) — Minimise consumption</li>
-              <li><strong>Amber:</strong> 07:00-16:00, 19:00-20:00 — Medium (3x green) — Manage where possible</li>
-              <li><strong>Green:</strong> 20:00-07:00, weekends — Lowest (baseline) — Shift loads here</li>
-            </ul>
-            <p><strong>TNUoS and Triad Charges</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Triads:</strong> Three half-hours of highest national demand (Nov-Feb)</li>
-              <li><strong>Separation:</strong> Each Triad at least 10 clear days apart</li>
-              <li><strong>Zonal charges:</strong> Vary by location (£40-75/kW/year typically)</li>
-              <li><strong>Calculation:</strong> Average of your demand during the three Triads × zonal rate</li>
-              <li><strong>Avoidance value:</strong> Reducing demand by 100 kW could save £4,000-7,500/year</li>
-            </ul>
-            <p><strong>Capacity and Reactive Power Charges</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Agreed capacity:</strong> Contracted kVA — Right-size to actual need</li>
-              <li><strong>Excess capacity:</strong> kVA exceeding agreement — Load shedding, peak shaving</li>
-              <li><strong>Reactive power:</strong> kVArh when PF &lt; 0.95 — Power factor correction</li>
-            </ul>
-            <p><strong>Tariff optimisation:</strong> Review your load profile against tariff structure - often 10-15% savings are achievable through demand management alone.</p>
-          </ConceptBlock>
-
-          <InlineCheck {...quickCheckQuestions[2]} />
-
-          <SectionRule />
-
-          <ConceptBlock title="Demand Response and Smart Grid Integration">
-            <p>Demand response (DR) programmes enable consumers to actively participate in grid balancing by adjusting consumption in response to price signals or operator requests. Smart grid technologies enable automated, real-time demand management across the electricity system.</p>
-            <p><strong>Demand Response Programme Types:</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Price-based DR:</strong> Respond to time-of-use or dynamic pricing signals</li>
-              <li><strong>Incentive-based DR:</strong> Receive payments for reducing demand when requested</li>
-              <li><strong>Emergency DR:</strong> Mandatory reduction during grid emergencies</li>
-              <li><strong>Ancillary services:</strong> Provide frequency response or reserve capacity</li>
-            </ul>
-            <p><strong>UK Flexibility Markets</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Capacity Market (CM)</li>
-              <li>Firm Frequency Response (FFR)</li>
-              <li>Dynamic Containment (DC)</li>
-              <li>Short-Term Operating Reserve (STOR)</li>
-              <li>DNO flexibility services</li>
-            </ul>
-            <p><strong>Participation Requirements</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Half-hourly metering (mandatory)</li>
-              <li>Minimum capacity threshold</li>
-              <li>Response time capability</li>
-              <li>Telemetry and communication</li>
-              <li>Aggregator contract (for smaller sites)</li>
-            </ul>
-            <p><strong>Smart Grid Technologies</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Smart meters:</strong> HH consumption recording — Enables settlement and monitoring</li>
-              <li><strong>AMI/AMR:</strong> Automatic meter reading — Real-time data for control</li>
-              <li><strong>EMS/BMS:</strong> Building/energy management — Automated demand response</li>
-              <li><strong>IoT devices:</strong> Connected equipment — Granular load control</li>
-              <li><strong>AI/ML platforms:</strong> Predictive optimisation — Forecast-driven scheduling</li>
-            </ul>
-            <p><strong>Half-Hourly Settlement (MHHS)</strong></p>
-            <p>Market-wide Half-Hourly Settlement (MHHS) now applies to all non-domestic customers:</p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Consumption recorded every 30 minutes via smart/AMR meters</li>
-              <li>Bills reflect actual consumption patterns, not profiles</li>
-              <li>Direct incentive to shift consumption to cheaper periods</li>
-              <li>Enables participation in flexibility markets</li>
-              <li>Foundation for time-of-use and dynamic tariffs</li>
-            </ul>
-            <p><strong>Future trend:</strong> The transition to a smart, flexible grid means demand management will become increasingly automated, with AI-driven systems optimising consumption in real-time against multiple signals.</p>
-          </ConceptBlock>
-
-          <InlineCheck {...quickCheckQuestions[3]} />
-
-          <SectionRule />
-
-          <ConceptBlock title="Worked Examples">
-            <p>
-              <strong>Example 1: Triad Avoidance Savings Calculation</strong>
-            </p>
-            <p><strong>Scenario:</strong> Calculate potential savings from Triad avoidance at a manufacturing site.</p>
-            <p>Given data:</p>
-            <p>Current average Triad demand: 450 kW</p>
-            <p>Target Triad demand: 150 kW (using BESS)</p>
-            <p>TNUoS zonal rate: £62/kW/year</p>
-            <p>Calculation:</p>
-            <p>Demand reduction = 450 - 150 = 300 kW</p>
-            <p>Annual saving = 300 kW × £62/kW = £18,600/year</p>
-            <p>Triad avoidance value: £18,600 per year</p>
-            <p>Note: This alone could justify significant BESS investment</p>
-            <p>
-              <strong>Example 2: DUoS Band Optimisation</strong>
-            </p>
-            <p><strong>Scenario:</strong> Evaluate cost savings from shifting EV charging from red to green band.</p>
-            <p>Current pattern (red band charging 16:00-19:00):</p>
-            <p>EV charging load: 100 kW for 3 hours = 300 kWh daily</p>
-            <p>Red band DUoS: 15p/kWh</p>
-            <p>Daily DUoS cost: 300 × £0.15 = £45</p>
-            <p>Optimised pattern (green band charging 22:00-01:00):</p>
-            <p>Green band DUoS: 1.5p/kWh</p>
-            <p>Daily DUoS cost: 300 × £0.015 = £4.50</p>
-            <p>Daily saving: £40.50</p>
-            <p>Annual saving: £40.50 × 250 days = £10,125</p>
-            <p>
-              <strong>Example 3: Load Factor Improvement</strong>
-            </p>
-            <p><strong>Scenario:</strong> Assess the impact of demand management on load factor.</p>
-            <p>Before demand management:</p>
-            <p>Average demand: 400 kW</p>
-            <p>Maximum demand: 800 kW</p>
-            <p>Load factor = 400 ÷ 800 = 0.50 (50%)</p>
-            <p>After implementing load shedding and peak shaving:</p>
-            <p>Average demand: 400 kW (unchanged)</p>
-            <p>Maximum demand: 550 kW (reduced)</p>
-            <p>New load factor = 400 ÷ 550 = 0.73 (73%)</p>
-            <p>Improvement: 23 percentage points</p>
-            <p>Higher load factor = better utilisation of contracted capacity</p>
-            <p>Capacity charge reduction: (800-550) × £8/kVA/month = £2,000/month</p>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <ConceptBlock title="Practical guidance">
-            <p>
-              <strong>Demand Management Implementation Checklist:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Analyse historical consumption data (HH meter data essential)</li>
-              <li>Identify peak demand periods and contributing loads</li>
-              <li>Classify loads by priority and flexibility</li>
-              <li>Model financial impact of demand reduction strategies</li>
-              <li>Implement monitoring and control systems</li>
-              <li>Establish operational procedures for demand events</li>
-            </ul>
-            <p>
-              <strong>Key Values to Remember:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>DUoS red band: <strong>16:00-19:00 weekdays</strong> (winter)</li>
-              <li>Triads: <strong>November to February</strong>, typically 17:00-18:00</li>
-              <li>TNUoS rates: <strong>£40-75/kW/year</strong> depending on zone</li>
-              <li>Power factor threshold: <strong>0.95</strong> (charges apply below)</li>
-              <li>HH settlement period: <strong>30 minutes</strong></li>
-            </ul>
-          </ConceptBlock>
-
-          <CommonMistake
-            title="Common mistakes to avoid"
-            whatHappens={
-              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
-                <li><strong>Ignoring network charges</strong> - Often 25-35% of bill, directly controllable</li>
-                <li><strong>Oversizing contracted capacity</strong> - Review annually against actual MD</li>
-                <li><strong>Missing Triad warnings</strong> - Subscribe to forecasting services</li>
-                <li><strong>Poor load priority classification</strong> - May shed critical loads inappropriately</li>
-                <li><strong>Neglecting power factor</strong> - Reactive charges add up significantly</li>
-              </ul>
-            }
-            doInstead="Cross-check assumptions against published guidance, validate measured values against design intent, and engage the wider team early when interface issues emerge."
-          />
-
-          <SectionRule />
-
-          <FAQ items={faqs} />
-
-          <SectionRule />
-
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-
-          <div className="grid grid-cols-2 gap-3 pt-2">
-            <button
-              onClick={() => navigate("/study-centre/apprentice/h-n-c-module7-section5-4")}
-              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
-                <ChevronLeft className="h-3 w-3" /> Previous
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-white truncate">
-                Energy metering
-              </div>
-            </button>
-            <button
-              onClick={() => navigate("/study-centre/apprentice/h-n-c-module7-section5-6")}
-              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
-                Next subsection <ChevronRight className="h-3 w-3" />
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-black truncate">
-                Efficiency retrofits
-              </div>
-            </button>
-          </div>
-        </PageFrame>
-      </div>
-    </div>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module7-section5-6')}
+            className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+          >
+            <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+              Next subsection <ChevronRight className="h-3 w-3" />
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-black truncate">
+              Efficiency retrofits
+            </div>
+          </button>
+        </div>
+      </HubBody>
+    </HubPage>
   );
 };
 

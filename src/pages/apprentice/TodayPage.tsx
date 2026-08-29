@@ -128,10 +128,11 @@ export default function TodayPage() {
   const continuePath = lastLocation?.path ?? '/study-centre';
 
   // Once-a-week "your week" moment — only fires for a week with real activity.
-  const { recap, show: showRecap, dismiss: dismissRecap } = useWeeklyRecap(
-    user?.id ?? null,
-    streak
-  );
+  const {
+    recap,
+    show: showRecap,
+    dismiss: dismissRecap,
+  } = useWeeklyRecap(user?.id ?? null, streak);
 
   const heroLoading = isLoading || quizzesLoading || ilpLoading || programme.loading;
 
@@ -244,7 +245,10 @@ export default function TodayPage() {
     if (notStartedQuizzes.length > 0) {
       items.push({
         id: 'newquiz',
-        label: notStartedQuizzes.length === 1 ? 'New quiz from your tutor' : 'New quizzes from your tutor',
+        label:
+          notStartedQuizzes.length === 1
+            ? 'New quiz from your tutor'
+            : 'New quizzes from your tutor',
         icon: ClipboardList,
         to: hasCollegeLink ? '/apprentice/college-plan' : '/study-centre',
         count: notStartedQuizzes.length,
@@ -505,7 +509,7 @@ export default function TodayPage() {
                 <ArrowRight
                   className={cn(
                     'h-4 w-4 shrink-0 transition-all group-hover:translate-x-0.5',
-                    am2Urgent ? "text-red-300" : "text-white group-hover:text-elec-yellow"
+                    am2Urgent ? 'text-red-300' : 'text-white group-hover:text-elec-yellow'
                   )}
                 />
               </div>
@@ -552,145 +556,145 @@ export default function TodayPage() {
             right. Stacks on a phone, where the sidebar simply follows. */}
         <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_340px]">
           <div className="min-w-0 space-y-6">
-        {/* 3b · ON YOUR PLATE — the rest of today's open items */}
-        {!heroLoading && plateItems.length > 0 && (
-          <section className="space-y-3" aria-label="On your plate">
-            <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white">
-              On your plate
-            </span>
-            <div className="bg-[hsl(0_0%_10%)] border border-white/[0.08] rounded-2xl overflow-hidden divide-y divide-white/[0.05]">
-              {plateItems.map(({ id, label, icon: Icon, to, count, urgent }) => (
-                <button
-                  key={id}
-                  type="button"
-                  onClick={() => navigate(to)}
-                  className="group w-full flex items-center gap-3 px-4 py-3 text-left touch-manipulation hover:bg-white/[0.06] transition-colors"
-                >
-                  <span
+            {/* 3b · ON YOUR PLATE — the rest of today's open items */}
+            {!heroLoading && plateItems.length > 0 && (
+              <section className="space-y-3" aria-label="On your plate">
+                <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white">
+                  On your plate
+                </span>
+                <div className="bg-[hsl(0_0%_10%)] border border-white/[0.08] rounded-2xl overflow-hidden divide-y divide-white/[0.05]">
+                  {plateItems.map(({ id, label, icon: Icon, to, count, urgent }) => (
+                    <button
+                      key={id}
+                      type="button"
+                      onClick={() => navigate(to)}
+                      className="group w-full flex items-center gap-3 px-4 py-3 text-left touch-manipulation hover:bg-white/[0.06] transition-colors"
+                    >
+                      <span
+                        className={cn(
+                          'flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border',
+                          urgent
+                            ? 'border-red-400/25 bg-red-500/[0.08]'
+                            : 'border-elec-yellow/20 bg-elec-yellow/[0.06]'
+                        )}
+                      >
+                        <Icon
+                          className={cn('h-4 w-4', urgent ? 'text-red-300' : 'text-elec-yellow')}
+                          strokeWidth={2}
+                        />
+                      </span>
+                      <span className="flex-1 min-w-0 text-[13.5px] font-medium text-white truncate">
+                        {label}
+                      </span>
+                      {count != null && count > 0 && (
+                        <span
+                          className={cn(
+                            'shrink-0 text-[10px] font-semibold tabular-nums px-1.5 py-0.5 rounded border',
+                            urgent
+                              ? 'text-red-300 border-red-400/30 bg-red-500/10'
+                              : 'text-elec-yellow border-elec-yellow/30 bg-elec-yellow/10'
+                          )}
+                        >
+                          {count}
+                        </span>
+                      )}
+                      <ArrowRight className="h-4 w-4 shrink-0 text-white group-hover:text-elec-yellow group-hover:translate-x-0.5 transition-all" />
+                    </button>
+                  ))}
+                </div>
+              </section>
+            )}
+
+            {/* 4 · Quick actions */}
+            <section className="space-y-3" aria-label="Quick actions">
+              <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white">
+                Quick actions
+              </span>
+              {/* Four across once there's room — two-up in a wide column made each
+              tile 500px of empty space around a 20px icon. */}
+              <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+                {quickActions.map(({ label, icon: Icon, onClick }) => (
+                  <button
+                    key={label}
+                    type="button"
+                    onClick={onClick}
                     className={cn(
-                      'flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border',
-                      urgent
-                        ? 'border-red-400/25 bg-red-500/[0.08]'
-                        : 'border-elec-yellow/20 bg-elec-yellow/[0.06]'
+                      'h-[84px] rounded-2xl border border-white/[0.08] bg-[hsl(0_0%_10%)]',
+                      'flex flex-col items-center justify-center gap-2 touch-manipulation',
+                      'hover:bg-[hsl(0_0%_15%)] active:scale-[0.98] transition-all'
                     )}
                   >
-                    <Icon
-                      className={cn('h-4 w-4', urgent ? 'text-red-300' : 'text-elec-yellow')}
-                      strokeWidth={2}
-                    />
-                  </span>
-                  <span className="flex-1 min-w-0 text-[13.5px] font-medium text-white truncate">
-                    {label}
-                  </span>
-                  {count != null && count > 0 && (
-                    <span
-                      className={cn(
-                        'shrink-0 text-[10px] font-semibold tabular-nums px-1.5 py-0.5 rounded border',
-                        urgent
-                          ? 'text-red-300 border-red-400/30 bg-red-500/10'
-                          : 'text-elec-yellow border-elec-yellow/30 bg-elec-yellow/10'
-                      )}
-                    >
-                      {count}
-                    </span>
-                  )}
-                  <ArrowRight className="h-4 w-4 shrink-0 text-white group-hover:text-elec-yellow group-hover:translate-x-0.5 transition-all" />
-                </button>
-              ))}
-            </div>
-          </section>
-        )}
-
-        {/* 4 · Quick actions */}
-        <section className="space-y-3" aria-label="Quick actions">
-          <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white">
-            Quick actions
-          </span>
-          {/* Four across once there's room — two-up in a wide column made each
-              tile 500px of empty space around a 20px icon. */}
-          <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-            {quickActions.map(({ label, icon: Icon, onClick }) => (
-              <button
-                key={label}
-                type="button"
-                onClick={onClick}
-                className={cn(
-                  'h-[84px] rounded-2xl border border-white/[0.08] bg-[hsl(0_0%_10%)]',
-                  'flex flex-col items-center justify-center gap-2 touch-manipulation',
-                  'hover:bg-[hsl(0_0%_15%)] active:scale-[0.98] transition-all'
-                )}
-              >
-                <Icon className="h-5 w-5 text-elec-yellow" strokeWidth={2} />
-                <span className="text-[12.5px] font-medium text-white">{label}</span>
-              </button>
-            ))}
-          </div>
-        </section>
+                    <Icon className="h-5 w-5 text-elec-yellow" strokeWidth={2} />
+                    <span className="text-[12.5px] font-medium text-white">{label}</span>
+                  </button>
+                ))}
+              </div>
+            </section>
           </div>
 
           <aside className="space-y-6 lg:sticky lg:top-20 lg:self-start">
-        {/* 4b · NEXT BADGE — the closest locked achievement, live progress */}
-        {nextBadge && (
-          <section aria-label="Next achievement">
-            <button
-              type="button"
-              onClick={() => navigate('/apprentice/hub?tab=progress')}
-              className="group w-full flex items-center gap-3 rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_10%)] px-4 py-3.5 text-left touch-manipulation hover:bg-[hsl(0_0%_15%)] transition-colors"
-            >
-              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-elec-yellow/20 bg-elec-yellow/[0.06]">
-                <Trophy className="h-4 w-4 text-elec-yellow" strokeWidth={2} />
-              </span>
-              <span className="flex-1 min-w-0">
-                <span className="flex items-baseline justify-between gap-2">
-                  <span className="text-[13.5px] font-medium text-white truncate">
-                    {nextBadge.title}
+            {/* 4b · NEXT BADGE — the closest locked achievement, live progress */}
+            {nextBadge && (
+              <section aria-label="Next achievement">
+                <button
+                  type="button"
+                  onClick={() => navigate('/apprentice/hub?tab=progress')}
+                  className="group w-full flex items-center gap-3 rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_10%)] px-4 py-3.5 text-left touch-manipulation hover:bg-[hsl(0_0%_15%)] transition-colors"
+                >
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-elec-yellow/20 bg-elec-yellow/[0.06]">
+                    <Trophy className="h-4 w-4 text-elec-yellow" strokeWidth={2} />
                   </span>
-                  <span className="text-[11px] font-mono tabular-nums text-white shrink-0">
-                    {nextBadge.current}/{nextBadge.target}
+                  <span className="flex-1 min-w-0">
+                    <span className="flex items-baseline justify-between gap-2">
+                      <span className="text-[13.5px] font-medium text-white truncate">
+                        {nextBadge.title}
+                      </span>
+                      <span className="text-[11px] font-mono tabular-nums text-white shrink-0">
+                        {nextBadge.current}/{nextBadge.target}
+                      </span>
+                    </span>
+                    <span className="mt-1.5 block h-1 rounded-full bg-white/[0.06] overflow-hidden">
+                      <span
+                        className="block h-full rounded-full bg-elec-yellow transition-all"
+                        style={{ width: `${nextBadge.pct}%` }}
+                      />
+                    </span>
                   </span>
-                </span>
-                <span className="mt-1.5 block h-1 rounded-full bg-white/[0.06] overflow-hidden">
-                  <span
-                    className="block h-full rounded-full bg-elec-yellow transition-all"
-                    style={{ width: `${nextBadge.pct}%` }}
-                  />
-                </span>
-              </span>
-              <ArrowRight className="h-4 w-4 shrink-0 text-white group-hover:text-elec-yellow group-hover:translate-x-0.5 transition-all" />
-            </button>
-          </section>
-        )}
+                  <ArrowRight className="h-4 w-4 shrink-0 text-white group-hover:text-elec-yellow group-hover:translate-x-0.5 transition-all" />
+                </button>
+              </section>
+            )}
 
-        {/* 5 · FROM YOUR COLLEGE — college-linked apprentices only */}
-        {hasCollegeLink && (
-          <section aria-label="From your college">
-            <button
-              type="button"
-              onClick={() => navigate('/apprentice/college-plan')}
-              className="group w-full flex items-center gap-3 rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_10%)] px-4 py-3.5 text-left touch-manipulation hover:bg-[hsl(0_0%_15%)] transition-colors"
-            >
-              <GraduationCap className="h-5 w-5 shrink-0 text-elec-yellow" strokeWidth={2} />
-              <span className="flex-1 min-w-0">
-                <span className="block text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white">
-                  From your college
-                </span>
-                <span className="block text-[13.5px] font-medium text-white truncate">
-                  Goals &amp; quizzes from your tutor
-                </span>
-              </span>
-              {overdueQuizzes.length > 0 ? (
-                <span className="text-[9px] font-semibold uppercase tracking-[0.14em] text-red-300 border border-red-400/30 bg-red-500/10 px-1.5 py-0.5 rounded shrink-0">
-                  {overdueQuizzes.length} overdue
-                </span>
-              ) : newCount > 0 ? (
-                <span className="text-[9px] font-semibold uppercase tracking-[0.14em] text-elec-yellow border border-elec-yellow/30 bg-elec-yellow/10 px-1.5 py-0.5 rounded shrink-0">
-                  {newCount} new
-                </span>
-              ) : null}
-              <ArrowRight className="h-4 w-4 shrink-0 text-white group-hover:translate-x-0.5 transition-transform" />
-            </button>
-          </section>
-        )}
+            {/* 5 · FROM YOUR COLLEGE — college-linked apprentices only */}
+            {hasCollegeLink && (
+              <section aria-label="From your college">
+                <button
+                  type="button"
+                  onClick={() => navigate('/apprentice/college-plan')}
+                  className="group w-full flex items-center gap-3 rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_10%)] px-4 py-3.5 text-left touch-manipulation hover:bg-[hsl(0_0%_15%)] transition-colors"
+                >
+                  <GraduationCap className="h-5 w-5 shrink-0 text-elec-yellow" strokeWidth={2} />
+                  <span className="flex-1 min-w-0">
+                    <span className="block text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white">
+                      From your college
+                    </span>
+                    <span className="block text-[13.5px] font-medium text-white truncate">
+                      Goals &amp; quizzes from your tutor
+                    </span>
+                  </span>
+                  {overdueQuizzes.length > 0 ? (
+                    <span className="text-[9px] font-semibold uppercase tracking-[0.14em] text-red-300 border border-red-400/30 bg-red-500/10 px-1.5 py-0.5 rounded shrink-0">
+                      {overdueQuizzes.length} overdue
+                    </span>
+                  ) : newCount > 0 ? (
+                    <span className="text-[9px] font-semibold uppercase tracking-[0.14em] text-elec-yellow border border-elec-yellow/30 bg-elec-yellow/10 px-1.5 py-0.5 rounded shrink-0">
+                      {newCount} new
+                    </span>
+                  ) : null}
+                  <ArrowRight className="h-4 w-4 shrink-0 text-white group-hover:translate-x-0.5 transition-transform" />
+                </button>
+              </section>
+            )}
           </aside>
         </div>
 

@@ -12,7 +12,7 @@ export interface AM2Question {
   topic: string;
   category:
     | 'Safe Isolation & Safety Procedures'
-    | 'BS7671 Electrical Regulations'
+    | 'BS 7671 Electrical Regulations'
     | 'Inspection & Testing'
     | 'Fault Finding'
     | 'Installation Methods'
@@ -123,7 +123,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Protection',
     difficulty: 'intermediate',
     topic: 'Earth Fault Loop Impedance',
-    category: 'BS7671 Electrical Regulations',
+    category: 'BS 7671 Electrical Regulations',
   },
   {
     id: 77,
@@ -141,7 +141,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Earthing',
     difficulty: 'intermediate',
     topic: 'Protective Bonding',
-    category: 'BS7671 Electrical Regulations',
+    category: 'BS 7671 Electrical Regulations',
   },
   {
     id: 78,
@@ -159,7 +159,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Special Locations',
     difficulty: 'intermediate',
     topic: 'Bathroom Zones',
-    category: 'BS7671 Electrical Regulations',
+    category: 'BS 7671 Electrical Regulations',
   },
   {
     id: 79,
@@ -176,7 +176,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Supply Systems',
     difficulty: 'basic',
     topic: 'Voltage Levels',
-    category: 'BS7671 Electrical Regulations',
+    category: 'BS 7671 Electrical Regulations',
   },
   {
     id: 80,
@@ -193,7 +193,7 @@ export const am2QuestionBank: AM2Question[] = [
     section: 'Protection',
     difficulty: 'intermediate',
     topic: 'Disconnection Times',
-    category: 'BS7671 Electrical Regulations',
+    category: 'BS 7671 Electrical Regulations',
   },
 
   // Inspection & Testing (75 questions)
@@ -579,7 +579,7 @@ export const getRandomQuestions = (
 ): AM2Question[] => {
   const categories: AM2Question['category'][] = [
     'Safe Isolation & Safety Procedures',
-    'BS7671 Electrical Regulations',
+    'BS 7671 Electrical Regulations',
     'Inspection & Testing',
     'Fault Finding',
     'Installation Methods',

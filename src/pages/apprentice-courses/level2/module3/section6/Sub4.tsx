@@ -12,11 +12,11 @@
  */
 
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
-import { PageFrame, PageHero } from '@/components/college/primitives';
 import {
   TLDR,
   ConceptBlock,
@@ -98,8 +98,7 @@ const quizQuestions = [
   },
   {
     id: 2,
-    question:
-      'MCS — what does it stand for and what does it actually do?',
+    question: 'MCS — what does it stand for and what does it actually do?',
     options: [
       'Mains Connection Standard — a DNO scheme that approves the meter and cut-out arrangement before any micro-generation can be connected to the supply.',
       'Micro Combined Supply — an energy-supplier tariff that guarantees a fixed export price for the life of a renewable installation.',
@@ -140,8 +139,7 @@ const quizQuestions = [
   },
   {
     id: 5,
-    question:
-      'ENA G98 vs G99 — what is the threshold and how do the connection processes differ?',
+    question: 'ENA G98 vs G99 — what is the threshold and how do the connection processes differ?',
     options: [
       'G98 covers single-phase generation only; G99 covers all three-phase generation regardless of the per-phase current, so the split is on phase count rather than current.',
       'G98 covers parallel-connected generation up to and including 16 A per phase (informal post-installation notification to the DNO); G99 covers generation greater than 16 A per phase (full pre-installation application to the DNO, with the DNO able to refuse or impose conditions).',
@@ -234,492 +232,486 @@ export default function Sub4() {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
-      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
-        <PageFrame>
+    <HubPage>
+      <HubMasthead
+        section="Module 3 · Section 6 · Subsection 4"
+        title="Installation requirements for micro-renewables"
+        backTo=".."
+      />
+      <HubBody>
+        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
+          Hooking up generation to the grid is regulated. Three independent rule tracks apply at
+          once — BS 7671 (the wiring standard), ENA G98/G99 (DNO connection paperwork) and MCS (the
+          UK certification scheme). Skip any of them and you’re either disconnected, fined, or both.
+        </p>
+
+        <TLDR
+          points={[
+            'Three separate regulatory tracks: BS 7671 (Section 712 for PV; Section 551 for other parallel generation), ENA G98 (≤ 16 A per phase) or G99 (> 16 A per phase) for DNO connection, and MCS for installer/product certification.',
+            'PV needs both a DC isolator (panels-side) and an AC isolator (grid-side) — Reg 712.410.101 makes it explicit that the DC side stays energised even when the AC side is dead.',
+            'Anti-islanding: the inverter must disconnect within 200 ms of losing the grid (G98/G99). Type B RCD is the default for transformerless inverters (Reg 712.531.3.5.1).',
+          ]}
+        />
+
+        <LearningOutcomes
+          outcomes={[
+            'Identify ENA G98 and G99 thresholds and explain the difference between the post-installation notification (G98) and pre-installation application (G99) processes.',
+            'State the role of the Microgeneration Certification Scheme (MCS) — for installers, for products, and for the customer’s SEG eligibility.',
+            'Identify BS 7671 Section 712 as the dedicated PV regulation and cite the key clauses on DC-side energisation, isolation, RCD type, and PV-array earthing.',
+            'Explain why both DC and AC isolation are required for any PV or battery install, and why anti-islanding (200 ms) protects DNO engineers.',
+            'Specify the correct RCD type (typically Type B) for a transformerless inverter under Reg 712.531.3.5.1.',
+            'List the documentation pack handed over at commissioning: EIC, manufacturer commissioning sheet, G98/G99 notice, MCS certificate, building-regs notification.',
+          ]}
+          initialVisibleCount={3}
+        />
+
+        <ContentEyebrow>The three regulatory tracks</ContentEyebrow>
+
+        <ConceptBlock
+          title="BS 7671, ENA G98/G99 and MCS — three separate tracks, all apply at once"
+          plainEnglish="BS 7671 says how to wire it. G98/G99 say whether the DNO will let you connect it. MCS says whether the customer can claim SEG or sell the house cleanly. Skip any one and you’ve got a problem."
+          onSite="Apprentices often hear the three names mixed up — “MCS regs”, “G98 rules”, “the wiring regs”. They’re not the same thing and they cover different bases. Get this straight in the first month."
+        >
+          <p>
+            Every domestic micro-renewable install in the UK has to satisfy three independent
+            regulatory frameworks simultaneously. They’re published by different bodies, they cover
+            different concerns, and skipping any one of them creates a different kind of problem:
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>BS 7671:2018+A4:2026 — the IET Wiring Regulations.</strong> A British Standard
+              covering electrical safety. For PV, the home section is <strong>Section 712</strong>.
+              For wind, hydro, CHP and other generators in parallel with the supply, it’s{' '}
+              <strong>Section 551</strong> (low voltage generating sets), specifically{' '}
+              <strong>551.7</strong> on parallel operation.
+            </li>
+            <li>
+              <strong>ENA Engineering Recommendation G98 / G99.</strong> Published by the Energy
+              Networks Association on behalf of the GB Distribution Network Operators (DNOs). These
+              tell the DNO what you’re connecting to their network — <strong>G98</strong> for
+              connections up to and including 16 A per phase (informal notification after the
+              install),
+              <strong> G99</strong> for connections greater than 16 A per phase (formal application
+              before the install).
+            </li>
+            <li>
+              <strong>MCS — Microgeneration Certification Scheme.</strong> A UK-government-backed
+              certification scheme covering both <em>installers</em> (the person and company doing
+              the work) and <em>products</em> (panels, inverters, batteries, heat pumps). MCS is
+              required in practice for the customer to claim Smart Export Guarantee (SEG) payments
+              and for clean house-sale evidence.
+            </li>
+          </ul>
+          <p>
+            These three are not sub-sections of each other. BS 7671 is a British Standard. G98/G99
+            are ENA documents. MCS is a separate scheme. They overlap at the install but they’re
+            published and enforced by three different bodies.
+          </p>
+        </ConceptBlock>
+
+        <RegsCallout
+          source="BS 7671:2018+A4:2026 — Section 551 NOTE 1 (cross-reference to ENA G98/G99) (paraphrased)"
+          clause="The parallel operation of a private source with the public supply network is subject to authorization by the distribution network operator (DNO). This may require special devices, for example to prevent reverse power. Refer also to Section 551, the D Code (Distribution Code of licensed distribution operators) and ENA Engineering Recommendations G98 (up to and including 16 A per phase) and G99 (greater than 16 A per phase)."
+          meaning={
+            <>
+              BS 7671 itself defers the connection paperwork to the DNO via the ENA Engineering
+              Recommendations. The Wiring Regulations explicitly cross-reference G98 and G99 in this
+              NOTE. So when somebody says “the regs cover micro-generation”, the answer is: BS 7671
+              covers the wiring side and tells you to read G98/G99 for the DNO side. You can’t do
+              one without the other.
+            </>
+          }
+          cite="Verbatim wording paraphrased — see BS 7671:2018+A4:2026 Section 551 NOTE 1 for full text. G98 and G99 are ENA Engineering Recommendations published separately and downloadable from the ENA Connection Portal."
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>G98 vs G99 — the per-phase 16 A threshold</ContentEyebrow>
+
+        <ConceptBlock
+          title="G98 — small generation, post-installation notification"
+          plainEnglish="If your inverter is rated at 16 A per phase or less, you fit it first and tell the DNO afterwards. 28 days is the usual window. The DNO files the notification — they very rarely refuse."
+          onSite="A 3.68 kW single-phase inverter at 230 V draws exactly 16 A — that’s why so many UK domestic installs land on 3.68 kW. Anything smaller is automatically G98 territory. A 4 kW inverter is technically over the threshold (≈17.4 A) — most installers either drop the inverter to 3.68 kW or limit the export."
+        >
+          <p>
+            G98 covers connections of <strong>≤ 16 A per phase</strong>. The process:
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Install the kit using a G98-listed (Type Tested) inverter.</li>
+            <li>
+              Commission against the DNO’s required grid-protection settings (the DNO publishes
+              approved settings; the inverter is configured to match).
+            </li>
+            <li>
+              Submit the G98 commissioning notice to the DNO within 28 days — usually via an online
+              portal. Includes site address, inverter details, MCS certificate number.
+            </li>
+          </ul>
+          <p>
+            The DNO almost never refuses a G98 connection — that’s the point of the threshold. At 16
+            A per phase, the local network can absorb the export without significant impact, so the
+            process is informal.
+          </p>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="G99 — bigger generation, application BEFORE you install"
+          plainEnglish="Anything over 16 A per phase needs the DNO’s permission BEFORE you start. They might say no, they might require network reinforcement (paid for by the customer), they might insist on a witness test. Plan extra weeks into the job."
+          onSite="A 5 kW inverter on a single-phase supply (~21.7 A) is G99. So is any three-phase install over 16 A per phase. So is a battery system that can export over the threshold. Don’t assume G98 just because it’s domestic."
+        >
+          <p>
+            G99 covers connections <strong>greater than 16 A per phase</strong>. The process:
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              Submit a G99 application to the DNO <em>before</em> any work starts. Includes proposed
+              inverter, export rating, single-line diagram, grid-protection settings.
+            </li>
+            <li>
+              The DNO reviews local network capacity. They can: approve, approve with conditions
+              (e.g. an export limit), require network reinforcement (the customer pays for
+              transformer or cable upgrades), or refuse.
+            </li>
+            <li>
+              Install per the DNO’s conditions. For larger installs the DNO may witness-test the
+              anti-islanding and grid-protection settings on commissioning.
+            </li>
+            <li>Submit the G99 commissioning report to the DNO with the test evidence.</li>
+          </ul>
+          <p>
+            G99 timelines are weeks-to-months on more constrained network areas. Build the DNO
+            process into the customer quote up front — “we need DNO approval before we can give you
+            a firm install date” is a normal conversation.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck
+          id={checks[0].id}
+          question={checks[0].question}
+          options={checks[0].options}
+          correctIndex={checks[0].correctIndex}
+          explanation={checks[0].explanation}
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>MCS — the certification scheme, not a regulation</ContentEyebrow>
+
+        <ConceptBlock
+          title="MCS in plain English"
+          plainEnglish="A UK quality-mark scheme. The installer is MCS-certified, the products they fit are MCS-listed. The certificate they issue at handover is what the customer needs to claim SEG payments from their energy supplier."
+          onSite="The customer doesn’t care about your MCS scope letter — they care that you can hand them an MCS certificate at the end. Without it, no SEG. With it, the install effectively pays for part of itself over the years."
+        >
+          <p>
+            MCS — the Microgeneration Certification Scheme — is a UK-wide certification body backed
+            by government. It covers two things:
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Installer certification:</strong> The company doing the install (and the
+              individual installer) is MCS-certified for the technology in question (PV, wind, heat
+              pumps, batteries, biomass, etc.). MCS audits the company’s processes, training
+              records, quality management.
+            </li>
+            <li>
+              <strong>Product certification:</strong> Panels, inverters, heat pumps and batteries
+              are tested against MCS product standards (MCS 005 series for products) and listed in
+              the MCS product database.
+            </li>
+          </ul>
+          <p>
+            At handover the installer issues an <strong>MCS certificate</strong> — a document with a
+            unique reference number that the customer registers with their energy supplier to apply
+            for the Smart Export Guarantee (SEG) tariff. SEG rates vary by supplier (currently
+            roughly 3p to 15p per kWh exported, depending on tariff and supplier).
+          </p>
+          <p>
+            MCS is a <em>scheme</em>, not a legal regulation. It’s perfectly legal to install PV
+            without being MCS-certified — but the customer can’t claim SEG, can’t demonstrate
+            compliance for some house-sale processes, and may have insurance issues. In practice,
+            every domestic install in the UK is done by an MCS-certified installer.
+          </p>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <ContentEyebrow>BS 7671 Section 712 — the PV install rulebook</ContentEyebrow>
+
+        <ConceptBlock
+          title="DC isolation and AC isolation — both are required, neither is optional"
+          plainEnglish="The PV string and the grid are two completely independent live sources. You isolate them independently, you prove them dead independently, and you only then work on the kit between them."
+          onSite="The single most common safety failure on PV work: electrician assumes the AC isolator on the consumer unit kills everything, sticks his fingers into the inverter terminals, and gets a 400 V DC slap from a string that’s been running on a sunny afternoon."
+        >
+          <p>A PV install has two live sources sitting either side of the inverter:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>The DC side</strong> — the PV string, typically 300–500 V DC depending on the
+              array configuration. Energised by daylight on the panels. Disconnected by the
+              <strong> DC isolator</strong> (a rotary or knife-blade isolator rated for DC, fitted
+              on the array side of the inverter).
+            </li>
+            <li>
+              <strong>The AC side</strong> — the inverter output, 230 V AC at grid frequency.
+              Energised by the grid. Disconnected by the <strong>AC isolator</strong> (a rotary
+              isolator fitted between the inverter and the consumer unit, plus the dedicated
+              MCB/RCBO in the consumer unit).
+            </li>
+          </ul>
+          <p>
+            Both isolators are required by Section 712. Both must be operated and proved dead before
+            any work on the inverter, the combiner box or the cabling between them. A genuine DC
+            voltmeter — not just an AC tester — is needed to verify the DC side dead, because the
+            voltage is high enough to be lethal but it won’t register on an AC-only proving unit.
+          </p>
+        </ConceptBlock>
+
+        <RegsCallout
+          source="BS 7671:2018+A4:2026 — Regulation 712.410.101 (DC side energised even when AC is disconnected)"
+          clause="Electrical equipment on the DC side shall be considered to be energized, even when the AC side is disconnected from the grid or when the inverter is disconnected from the DC side."
+          meaning={
+            <>
+              The text BS 7671 uses to drill into every PV installer’s head. The DC side is alive
+              whenever there is daylight on the panels. Pulling the AC isolator at the consumer unit
+              does not kill the panels. The DC isolator does — and even then, you prove dead with a
+              DC voltmeter before you trust it. This is the single regulation that prevents the most
+              PV shocks.
+            </>
+          }
+          cite="Source: BS 7671:2018+A4:2026 Part 7, Section 712, Regulation 712.410.101."
+        />
+
+        <RegsCallout
+          source="BS 7671:2018+A4:2026 — Regulation 712.531.3.5.1 (RCD type for PV AC supply circuit)"
+          clause="Where an RCD is used for protection of the PV AC supply circuit, the RCD shall be of Type B according to BS EN 62423 or BS EN 60947-2, unless: (a) the inverter provides at least simple separation between the AC side and the DC side; or (b) the installation provides at least simple separation between the inverter and the RCD by means of separate windings of a transformer; or (c) the inverter does not require a Type B RCD as stated by the manufacturer of the inverter. NOTE 2: Installation methods that do not require additional protection by use of an RCD are recommended."
+          meaning={
+            <>
+              Most modern PV inverters are transformerless — they don’t internally isolate AC from
+              DC. Under fault, they can pass smooth DC fault current to the AC side, which a Type AC
+              or Type A RCD will fail to detect (the toroid saturates). So the default Section 712
+              answer is Type B. The exceptions are inverters with internal transformers, downstream
+              isolating transformers, or where the manufacturer has specifically certified that Type
+              B is not required. Always check the inverter datasheet.
+            </>
+          }
+          cite="Source: BS 7671:2018+A4:2026 Part 7, Section 712, Regulation 712.531.3.5.1."
+        />
+
+        <InlineCheck
+          id={checks[2].id}
+          question={checks[2].question}
+          options={checks[2].options}
+          correctIndex={checks[2].correctIndex}
+          explanation={checks[2].explanation}
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>Anti-islanding — protecting the DNO engineer</ContentEyebrow>
+
+        <ConceptBlock
+          title="200 ms — the headline anti-islanding figure"
+          plainEnglish="If the grid drops, the inverter must shut up and stop generating within 200 ms. Otherwise it’s back-feeding a dead network and electrocuting whoever is working on the lines."
+          onSite="The figure isn’t in BS 7671 — it’s in ENA G98/G99 and the underlying BS EN 50549-1/50549-2 product standards. But it’s the question apprentices get asked at college: how fast must the inverter disconnect? 200 milliseconds."
+        >
+          <p>
+            An <em>islanded</em> inverter is one that is still generating into a section of the
+            network that the DNO has isolated for maintenance. From the DNO engineer’s point of
+            view, the cable is supposed to be dead — they’ve opened their isolator. From the
+            inverter’s point of view, it’s still seeing a load (the customer’s house) and so it
+            keeps generating. The cable between is live with “islanded” customer-side generation,
+            and the engineer can be killed.
+          </p>
+          <p>
+            The fix: every G98/G99-compliant inverter has built-in anti-islanding logic. It monitors
+            the grid frequency and voltage references continuously. The instant the grid signature
+            drops (the frequency drifts or the voltage collapses), the inverter recognises it has
+            been islanded and trips its internal contactors within <strong>200 ms</strong>. The
+            standard is ENA G98 / G99 with BS EN 50549-1 (≤ 16 A per phase) and BS EN 50549-2
+            (greater) underneath. BS 7671 Reg 551.7.5 echoes the requirement.
+          </p>
+          <p>
+            For commissioning, you set the inverter’s grid code (G98 or G99 settings appropriate to
+            your DNO) and the inverter then enforces the right frequency/voltage trip thresholds and
+            the 200 ms disconnect time automatically.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck
+          id={checks[1].id}
+          question={checks[1].question}
+          options={checks[1].options}
+          correctIndex={checks[1].correctIndex}
+          explanation={checks[1].explanation}
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>Earthing of the PV array</ContentEyebrow>
+
+        <ConceptBlock
+          title="The metallic frame of the array needs an earth"
+          onSite="Mounting rails and panel frames are typically aluminium — exposed-conductive-parts that need earthing under BS 7671. A 6 mm² earthing conductor back to the MET (or to the inverter chassis if it’s designed to take it) covers it."
+        >
+          <p>
+            The aluminium rails and panel frames are exposed-conductive-parts in BS 7671 terms. They
+            need an equipotential bonding conductor back to the main earthing terminal of the
+            installation. Typically a 6 mm² earthing conductor running with the DC string cables,
+            with accessible test points so it can be verified during inspection and testing.
+          </p>
+          <p>
+            The detailed requirements are in Section 712 (the earthing-of-PV-arrays clauses), the
+            inverter manufacturer’s instructions, the MCS install standard MIS 3002, and the IET
+            Code of Practice for Grid-Connected Solar PV Systems. Any one of those alone isn’t
+            enough — the install needs to satisfy all of them.
+          </p>
+          <p>
+            Reg 712.312.2 also permits earthing of one of the live conductors of the DC side, where
+            there is at least simple separation between the AC and DC sides. That’s a design choice
+            the inverter manufacturer makes — it doesn’t change the requirement to bond the metallic
+            array structure.
+          </p>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <ContentEyebrow>Documentation — the handover wallet</ContentEyebrow>
+
+        <ConceptBlock
+          title="What the customer leaves the install holding"
+          plainEnglish="A wallet of paperwork that proves the install is safe, certified, and eligible for SEG payments."
+        >
+          <p>A correctly handed-over PV install gives the customer:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>EIC (Electrical Installation Certificate)</strong> for the new circuit and any
+              additions/alterations to the consumer unit, signed by the designer, constructor and
+              inspector (often the same person on a domestic job).
+            </li>
+            <li>
+              <strong>Inverter manufacturer’s commissioning sheet</strong> — a printout (or digital
+              report) from the inverter showing it was commissioned with the correct G98/G99 grid
+              code, with self-test results.
+            </li>
+            <li>
+              <strong>G98 commissioning notice</strong> (or{' '}
+              <strong>G99 commissioning report</strong>) — submitted to the DNO and copied to the
+              customer.
+            </li>
+            <li>
+              <strong>MCS certificate</strong> — the document the customer registers with their
+              energy supplier to apply for SEG. Issued by the installer through the MCS portal.
+            </li>
+            <li>
+              <strong>Building Regulations notification</strong> — typically through Part P
+              self-certification (if the installer is a Competent Person Scheme member) or through a
+              building control notice. Covers the alteration to the consumer unit.
+            </li>
+            <li>
+              <strong>Single-line diagram and labels</strong> — the SLD goes on the consumer unit.
+              Required by Section 712 to make it clear to anyone working on the installation in
+              future that there is an additional source of supply.
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <CommonMistake
+          title="Treating PV DC isolation as optional because the AC side is already isolated"
+          whatHappens={
+            <>
+              You’re fault-finding on a PV install. The customer says the system has stopped
+              exporting. You pull the AC isolator at the consumer unit, switch off the dedicated
+              MCB, and start opening the inverter to check the connections — assuming you’ve killed
+              the install. You haven’t. The DC string is still pumping 400 V DC into the inverter
+              terminals because the sun is up.
+            </>
+          }
+          doInstead={
+            <>
+              Reg 712.410.101: the DC side stays energised whenever there is daylight on the panels,
+              regardless of what you’ve done on the AC side. Always operate the DC isolator on the
+              array side AND the AC isolator on the grid side. Prove both dead — the DC side with a
+              proper DC voltmeter, not an AC-only proving unit. Lock both isolators off if you’re
+              going to be away from the install during the work.
+            </>
+          }
+        />
+
+        <Scenario
+          title="A 4 kW PV inverter on an EV-charger house — what trips you up"
+          situation={
+            <>
+              You’re fitting a 4 kW PV array with a transformerless string inverter on a house that
+              already has a 7 kW EV charger. The inverter rating is 4 kW (≈17.4 A on a 230 V single
+              phase). The customer wants the install signed off this week so they can claim SEG.
+            </>
+          }
+          whatToDo={
+            <>
+              Three things to nail down. First, the inverter is over 16 A per phase, so it’s G99 not
+              G98 — you need a DNO application BEFORE installing, which can take weeks. Many
+              installers drop to a 3.68 kW inverter (or use an export limiter) to keep the install
+              in G98 territory and avoid the G99 timeline. Second, the EV charger needs Type B RCD
+              on its circuit (already a given), and the PV inverter circuit also needs Type B unless
+              the manufacturer states otherwise per Reg 712.531.3.5.1 — check the datasheet. Third,
+              the MCS certificate has to be issued by the installing company through the MCS portal
+              — the customer needs that number to register for SEG with their energy supplier.
+            </>
+          }
+          whyItMatters={
+            <>
+              Apprentices regularly walk into PV jobs assuming it’s a quick install — wrong inverter
+              size, no DNO application, wrong RCD type, missing MCS paperwork. Any one of those
+              problems delays handover by weeks and costs the company money. Get the regulatory
+              framework right before you put a panel on a roof.
+            </>
+          }
+        />
+
+        <SectionRule />
+
+        <FAQ items={faqs} />
+
+        <SectionRule />
+
+        <KeyTakeaways
+          points={[
+            'Three regulatory tracks apply to every install: BS 7671 (wiring safety), ENA G98/G99 (DNO connection paperwork), MCS (certification for installer/products and customer’s SEG eligibility).',
+            'G98 covers ≤ 16 A per phase — informal post-installation notification within 28 days. G99 covers > 16 A per phase — formal application BEFORE install, DNO can refuse or impose conditions.',
+            'BS 7671 Section 712 is the dedicated PV section. Reg 712.1 sets the scope; Reg 712.410.101 makes the DC side a permanent live source whenever there is daylight on the panels.',
+            'PV needs both a DC isolator (panels-side) and an AC isolator (grid-side). Operate both, prove both dead with the right meter (DC voltmeter for the DC side), then work.',
+            'Anti-islanding: 200 ms maximum disconnect time after loss of grid (G98/G99, BS EN 50549-1/-2). Built into the inverter through its grid-code commissioning settings.',
+            'RCD type for transformerless PV inverters defaults to Type B per Reg 712.531.3.5.1, unless the inverter provides simple separation or the manufacturer states otherwise.',
+            'Documentation pack: EIC, inverter commissioning sheet, G98/G99 notice, MCS certificate, building regs notification, single-line diagram on the consumer unit.',
+          ]}
+        />
+
+        <Quiz title="Micro-renewables installation — knowledge check" questions={quizQuestions} />
+
+        <div className="grid grid-cols-2 gap-3 pt-2">
           <button
-            onClick={() => navigate('..')}
-            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            onClick={() => navigate('/study-centre/apprentice/level2/module3/section6/6-3')}
+            className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
           >
-            <ArrowLeft className="h-4 w-4" /> Section 6
+            <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+              <ChevronLeft className="h-3 w-3" /> Previous
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-white truncate">
+              6.3 Battery storage deep dive
+            </div>
           </button>
-
-          <PageHero
-            eyebrow="Module 3 · Section 6 · Subsection 4"
-            title="Installation requirements for micro-renewables"
-            description="Hooking up generation to the grid is regulated. Three independent rule tracks apply at once — BS 7671 (the wiring standard), ENA G98/G99 (DNO connection paperwork) and MCS (the UK certification scheme). Skip any of them and you’re either disconnected, fined, or both."
-            tone="emerald"
-          />
-
-          <TLDR
-            points={[
-              'Three separate regulatory tracks: BS 7671 (Section 712 for PV; Section 551 for other parallel generation), ENA G98 (≤ 16 A per phase) or G99 (> 16 A per phase) for DNO connection, and MCS for installer/product certification.',
-              'PV needs both a DC isolator (panels-side) and an AC isolator (grid-side) — Reg 712.410.101 makes it explicit that the DC side stays energised even when the AC side is dead.',
-              'Anti-islanding: the inverter must disconnect within 200 ms of losing the grid (G98/G99). Type B RCD is the default for transformerless inverters (Reg 712.531.3.5.1).',
-            ]}
-          />
-
-          <LearningOutcomes
-            outcomes={[
-              'Identify ENA G98 and G99 thresholds and explain the difference between the post-installation notification (G98) and pre-installation application (G99) processes.',
-              'State the role of the Microgeneration Certification Scheme (MCS) — for installers, for products, and for the customer’s SEG eligibility.',
-              'Identify BS 7671 Section 712 as the dedicated PV regulation and cite the key clauses on DC-side energisation, isolation, RCD type, and PV-array earthing.',
-              'Explain why both DC and AC isolation are required for any PV or battery install, and why anti-islanding (200 ms) protects DNO engineers.',
-              'Specify the correct RCD type (typically Type B) for a transformerless inverter under Reg 712.531.3.5.1.',
-              'List the documentation pack handed over at commissioning: EIC, manufacturer commissioning sheet, G98/G99 notice, MCS certificate, building-regs notification.',
-            ]}
-            initialVisibleCount={3}
-          />
-
-          <ContentEyebrow>The three regulatory tracks</ContentEyebrow>
-
-          <ConceptBlock
-            title="BS 7671, ENA G98/G99 and MCS — three separate tracks, all apply at once"
-            plainEnglish="BS 7671 says how to wire it. G98/G99 say whether the DNO will let you connect it. MCS says whether the customer can claim SEG or sell the house cleanly. Skip any one and you’ve got a problem."
-            onSite="Apprentices often hear the three names mixed up — “MCS regs”, “G98 rules”, “the wiring regs”. They’re not the same thing and they cover different bases. Get this straight in the first month."
+          <button
+            onClick={() => navigate('/study-centre/apprentice/level2/module3/section6/6-5')}
+            className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
           >
-            <p>
-              Every domestic micro-renewable install in the UK has to satisfy three independent
-              regulatory frameworks simultaneously. They’re published by different bodies, they cover
-              different concerns, and skipping any one of them creates a different kind of problem:
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>BS 7671:2018+A4:2026 — the IET Wiring Regulations.</strong> A British Standard
-                covering electrical safety. For PV, the home section is <strong>Section 712</strong>. For
-                wind, hydro, CHP and other generators in parallel with the supply, it’s <strong>Section
-                551</strong> (low voltage generating sets), specifically <strong>551.7</strong> on
-                parallel operation.
-              </li>
-              <li>
-                <strong>ENA Engineering Recommendation G98 / G99.</strong> Published by the Energy
-                Networks Association on behalf of the GB Distribution Network Operators (DNOs). These tell
-                the DNO what you’re connecting to their network — <strong>G98</strong> for connections up
-                to and including 16 A per phase (informal notification after the install),
-                <strong> G99</strong> for connections greater than 16 A per phase (formal application
-                before the install).
-              </li>
-              <li>
-                <strong>MCS — Microgeneration Certification Scheme.</strong> A UK-government-backed
-                certification scheme covering both <em>installers</em> (the person and company doing the
-                work) and <em>products</em> (panels, inverters, batteries, heat pumps). MCS is required
-                in practice for the customer to claim Smart Export Guarantee (SEG) payments and for clean
-                house-sale evidence.
-              </li>
-            </ul>
-            <p>
-              These three are not sub-sections of each other. BS 7671 is a British Standard. G98/G99 are
-              ENA documents. MCS is a separate scheme. They overlap at the install but they’re published
-              and enforced by three different bodies.
-            </p>
-          </ConceptBlock>
-
-          <RegsCallout
-            source="BS 7671:2018+A4:2026 — Section 551 NOTE 1 (cross-reference to ENA G98/G99) (paraphrased)"
-            clause="The parallel operation of a private source with the public supply network is subject to authorization by the distribution network operator (DNO). This may require special devices, for example to prevent reverse power. Refer also to Section 551, the D Code (Distribution Code of licensed distribution operators) and ENA Engineering Recommendations G98 (up to and including 16 A per phase) and G99 (greater than 16 A per phase)."
-            meaning={
-              <>
-                BS 7671 itself defers the connection paperwork to the DNO via the ENA Engineering
-                Recommendations. The Wiring Regulations explicitly cross-reference G98 and G99 in this
-                NOTE. So when somebody says “the regs cover micro-generation”, the answer is: BS 7671
-                covers the wiring side and tells you to read G98/G99 for the DNO side. You can’t do one
-                without the other.
-              </>
-            }
-            cite="Verbatim wording paraphrased — see BS 7671:2018+A4:2026 Section 551 NOTE 1 for full text. G98 and G99 are ENA Engineering Recommendations published separately and downloadable from the ENA Connection Portal."
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>G98 vs G99 — the per-phase 16 A threshold</ContentEyebrow>
-
-          <ConceptBlock
-            title="G98 — small generation, post-installation notification"
-            plainEnglish="If your inverter is rated at 16 A per phase or less, you fit it first and tell the DNO afterwards. 28 days is the usual window. The DNO files the notification — they very rarely refuse."
-            onSite="A 3.68 kW single-phase inverter at 230 V draws exactly 16 A — that’s why so many UK domestic installs land on 3.68 kW. Anything smaller is automatically G98 territory. A 4 kW inverter is technically over the threshold (≈17.4 A) — most installers either drop the inverter to 3.68 kW or limit the export."
-          >
-            <p>
-              G98 covers connections of <strong>≤ 16 A per phase</strong>. The process:
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Install the kit using a G98-listed (Type Tested) inverter.</li>
-              <li>
-                Commission against the DNO’s required grid-protection settings (the DNO publishes
-                approved settings; the inverter is configured to match).
-              </li>
-              <li>
-                Submit the G98 commissioning notice to the DNO within 28 days — usually via an online
-                portal. Includes site address, inverter details, MCS certificate number.
-              </li>
-            </ul>
-            <p>
-              The DNO almost never refuses a G98 connection — that’s the point of the threshold. At 16 A
-              per phase, the local network can absorb the export without significant impact, so the
-              process is informal.
-            </p>
-          </ConceptBlock>
-
-          <ConceptBlock
-            title="G99 — bigger generation, application BEFORE you install"
-            plainEnglish="Anything over 16 A per phase needs the DNO’s permission BEFORE you start. They might say no, they might require network reinforcement (paid for by the customer), they might insist on a witness test. Plan extra weeks into the job."
-            onSite="A 5 kW inverter on a single-phase supply (~21.7 A) is G99. So is any three-phase install over 16 A per phase. So is a battery system that can export over the threshold. Don’t assume G98 just because it’s domestic."
-          >
-            <p>
-              G99 covers connections <strong>greater than 16 A per phase</strong>. The process:
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                Submit a G99 application to the DNO <em>before</em> any work starts. Includes proposed
-                inverter, export rating, single-line diagram, grid-protection settings.
-              </li>
-              <li>
-                The DNO reviews local network capacity. They can: approve, approve with conditions
-                (e.g. an export limit), require network reinforcement (the customer pays for transformer
-                or cable upgrades), or refuse.
-              </li>
-              <li>
-                Install per the DNO’s conditions. For larger installs the DNO may witness-test the
-                anti-islanding and grid-protection settings on commissioning.
-              </li>
-              <li>
-                Submit the G99 commissioning report to the DNO with the test evidence.
-              </li>
-            </ul>
-            <p>
-              G99 timelines are weeks-to-months on more constrained network areas. Build the DNO process
-              into the customer quote up front — “we need DNO approval before we can give you a firm
-              install date” is a normal conversation.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck
-            id={checks[0].id}
-            question={checks[0].question}
-            options={checks[0].options}
-            correctIndex={checks[0].correctIndex}
-            explanation={checks[0].explanation}
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>MCS — the certification scheme, not a regulation</ContentEyebrow>
-
-          <ConceptBlock
-            title="MCS in plain English"
-            plainEnglish="A UK quality-mark scheme. The installer is MCS-certified, the products they fit are MCS-listed. The certificate they issue at handover is what the customer needs to claim SEG payments from their energy supplier."
-            onSite="The customer doesn’t care about your MCS scope letter — they care that you can hand them an MCS certificate at the end. Without it, no SEG. With it, the install effectively pays for part of itself over the years."
-          >
-            <p>
-              MCS — the Microgeneration Certification Scheme — is a UK-wide certification body backed by
-              government. It covers two things:
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Installer certification:</strong> The company doing the install (and the
-                individual installer) is MCS-certified for the technology in question (PV, wind, heat
-                pumps, batteries, biomass, etc.). MCS audits the company’s processes, training records,
-                quality management.
-              </li>
-              <li>
-                <strong>Product certification:</strong> Panels, inverters, heat pumps and batteries are
-                tested against MCS product standards (MCS 005 series for products) and listed in the MCS
-                product database.
-              </li>
-            </ul>
-            <p>
-              At handover the installer issues an <strong>MCS certificate</strong> — a document with a
-              unique reference number that the customer registers with their energy supplier to apply for
-              the Smart Export Guarantee (SEG) tariff. SEG rates vary by supplier (currently roughly 3p
-              to 15p per kWh exported, depending on tariff and supplier).
-            </p>
-            <p>
-              MCS is a <em>scheme</em>, not a legal regulation. It’s perfectly legal to install PV
-              without being MCS-certified — but the customer can’t claim SEG, can’t demonstrate
-              compliance for some house-sale processes, and may have insurance issues. In practice, every
-              domestic install in the UK is done by an MCS-certified installer.
-            </p>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <ContentEyebrow>BS 7671 Section 712 — the PV install rulebook</ContentEyebrow>
-
-          <ConceptBlock
-            title="DC isolation and AC isolation — both are required, neither is optional"
-            plainEnglish="The PV string and the grid are two completely independent live sources. You isolate them independently, you prove them dead independently, and you only then work on the kit between them."
-            onSite="The single most common safety failure on PV work: electrician assumes the AC isolator on the consumer unit kills everything, sticks his fingers into the inverter terminals, and gets a 400 V DC slap from a string that’s been running on a sunny afternoon."
-          >
-            <p>
-              A PV install has two live sources sitting either side of the inverter:
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>The DC side</strong> — the PV string, typically 300–500 V DC depending on the
-                array configuration. Energised by daylight on the panels. Disconnected by the
-                <strong> DC isolator</strong> (a rotary or knife-blade isolator rated for DC, fitted on
-                the array side of the inverter).
-              </li>
-              <li>
-                <strong>The AC side</strong> — the inverter output, 230 V AC at grid frequency.
-                Energised by the grid. Disconnected by the <strong>AC isolator</strong> (a rotary
-                isolator fitted between the inverter and the consumer unit, plus the dedicated MCB/RCBO
-                in the consumer unit).
-              </li>
-            </ul>
-            <p>
-              Both isolators are required by Section 712. Both must be operated and proved dead before
-              any work on the inverter, the combiner box or the cabling between them. A genuine DC
-              voltmeter — not just an AC tester — is needed to verify the DC side dead, because the
-              voltage is high enough to be lethal but it won’t register on an AC-only proving unit.
-            </p>
-          </ConceptBlock>
-
-          <RegsCallout
-            source="BS 7671:2018+A4:2026 — Regulation 712.410.101 (DC side energised even when AC is disconnected)"
-            clause="Electrical equipment on the DC side shall be considered to be energized, even when the AC side is disconnected from the grid or when the inverter is disconnected from the DC side."
-            meaning={
-              <>
-                The text BS 7671 uses to drill into every PV installer’s head. The DC side is alive
-                whenever there is daylight on the panels. Pulling the AC isolator at the consumer unit
-                does not kill the panels. The DC isolator does — and even then, you prove dead with a DC
-                voltmeter before you trust it. This is the single regulation that prevents the most PV
-                shocks.
-              </>
-            }
-            cite="Source: BS 7671:2018+A4:2026 Part 7, Section 712, Regulation 712.410.101."
-          />
-
-          <RegsCallout
-            source="BS 7671:2018+A4:2026 — Regulation 712.531.3.5.1 (RCD type for PV AC supply circuit)"
-            clause="Where an RCD is used for protection of the PV AC supply circuit, the RCD shall be of Type B according to BS EN 62423 or BS EN 60947-2, unless: (a) the inverter provides at least simple separation between the AC side and the DC side; or (b) the installation provides at least simple separation between the inverter and the RCD by means of separate windings of a transformer; or (c) the inverter does not require a Type B RCD as stated by the manufacturer of the inverter. NOTE 2: Installation methods that do not require additional protection by use of an RCD are recommended."
-            meaning={
-              <>
-                Most modern PV inverters are transformerless — they don’t internally isolate AC from DC.
-                Under fault, they can pass smooth DC fault current to the AC side, which a Type AC or
-                Type A RCD will fail to detect (the toroid saturates). So the default Section 712 answer
-                is Type B. The exceptions are inverters with internal transformers, downstream isolating
-                transformers, or where the manufacturer has specifically certified that Type B is not
-                required. Always check the inverter datasheet.
-              </>
-            }
-            cite="Source: BS 7671:2018+A4:2026 Part 7, Section 712, Regulation 712.531.3.5.1."
-          />
-
-          <InlineCheck
-            id={checks[2].id}
-            question={checks[2].question}
-            options={checks[2].options}
-            correctIndex={checks[2].correctIndex}
-            explanation={checks[2].explanation}
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>Anti-islanding — protecting the DNO engineer</ContentEyebrow>
-
-          <ConceptBlock
-            title="200 ms — the headline anti-islanding figure"
-            plainEnglish="If the grid drops, the inverter must shut up and stop generating within 200 ms. Otherwise it’s back-feeding a dead network and electrocuting whoever is working on the lines."
-            onSite="The figure isn’t in BS 7671 — it’s in ENA G98/G99 and the underlying BS EN 50549-1/50549-2 product standards. But it’s the question apprentices get asked at college: how fast must the inverter disconnect? 200 milliseconds."
-          >
-            <p>
-              An <em>islanded</em> inverter is one that is still generating into a section of the network
-              that the DNO has isolated for maintenance. From the DNO engineer’s point of view, the
-              cable is supposed to be dead — they’ve opened their isolator. From the inverter’s point of
-              view, it’s still seeing a load (the customer’s house) and so it keeps generating. The cable
-              between is live with “islanded” customer-side generation, and the engineer can be killed.
-            </p>
-            <p>
-              The fix: every G98/G99-compliant inverter has built-in anti-islanding logic. It monitors
-              the grid frequency and voltage references continuously. The instant the grid signature
-              drops (the frequency drifts or the voltage collapses), the inverter recognises it has been
-              islanded and trips its internal contactors within <strong>200 ms</strong>. The standard is
-              ENA G98 / G99 with BS EN 50549-1 (≤ 16 A per phase) and BS EN 50549-2 (greater) underneath.
-              BS 7671 Reg 551.7.5 echoes the requirement.
-            </p>
-            <p>
-              For commissioning, you set the inverter’s grid code (G98 or G99 settings appropriate to
-              your DNO) and the inverter then enforces the right frequency/voltage trip thresholds and
-              the 200 ms disconnect time automatically.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck
-            id={checks[1].id}
-            question={checks[1].question}
-            options={checks[1].options}
-            correctIndex={checks[1].correctIndex}
-            explanation={checks[1].explanation}
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>Earthing of the PV array</ContentEyebrow>
-
-          <ConceptBlock
-            title="The metallic frame of the array needs an earth"
-            onSite="Mounting rails and panel frames are typically aluminium — exposed-conductive-parts that need earthing under BS 7671. A 6 mm² earthing conductor back to the MET (or to the inverter chassis if it’s designed to take it) covers it."
-          >
-            <p>
-              The aluminium rails and panel frames are exposed-conductive-parts in BS 7671 terms. They
-              need an equipotential bonding conductor back to the main earthing terminal of the
-              installation. Typically a 6 mm² earthing conductor running with the DC string cables, with
-              accessible test points so it can be verified during inspection and testing.
-            </p>
-            <p>
-              The detailed requirements are in Section 712 (the earthing-of-PV-arrays clauses), the
-              inverter manufacturer’s instructions, the MCS install standard MIS 3002, and the IET Code
-              of Practice for Grid-Connected Solar PV Systems. Any one of those alone isn’t enough — the
-              install needs to satisfy all of them.
-            </p>
-            <p>
-              Reg 712.312.2 also permits earthing of one of the live conductors of the DC side, where
-              there is at least simple separation between the AC and DC sides. That’s a design choice
-              the inverter manufacturer makes — it doesn’t change the requirement to bond the metallic
-              array structure.
-            </p>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <ContentEyebrow>Documentation — the handover wallet</ContentEyebrow>
-
-          <ConceptBlock
-            title="What the customer leaves the install holding"
-            plainEnglish="A wallet of paperwork that proves the install is safe, certified, and eligible for SEG payments."
-          >
-            <p>A correctly handed-over PV install gives the customer:</p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>EIC (Electrical Installation Certificate)</strong> for the new circuit and any
-                additions/alterations to the consumer unit, signed by the designer, constructor and
-                inspector (often the same person on a domestic job).
-              </li>
-              <li>
-                <strong>Inverter manufacturer’s commissioning sheet</strong> — a printout (or digital
-                report) from the inverter showing it was commissioned with the correct G98/G99 grid
-                code, with self-test results.
-              </li>
-              <li>
-                <strong>G98 commissioning notice</strong> (or <strong>G99 commissioning report</strong>)
-                — submitted to the DNO and copied to the customer.
-              </li>
-              <li>
-                <strong>MCS certificate</strong> — the document the customer registers with their
-                energy supplier to apply for SEG. Issued by the installer through the MCS portal.
-              </li>
-              <li>
-                <strong>Building Regulations notification</strong> — typically through Part P
-                self-certification (if the installer is a Competent Person Scheme member) or through a
-                building control notice. Covers the alteration to the consumer unit.
-              </li>
-              <li>
-                <strong>Single-line diagram and labels</strong> — the SLD goes on the consumer unit.
-                Required by Section 712 to make it clear to anyone working on the installation in
-                future that there is an additional source of supply.
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <CommonMistake
-            title="Treating PV DC isolation as optional because the AC side is already isolated"
-            whatHappens={
-              <>
-                You’re fault-finding on a PV install. The customer says the system has stopped exporting.
-                You pull the AC isolator at the consumer unit, switch off the dedicated MCB, and start
-                opening the inverter to check the connections — assuming you’ve killed the install. You
-                haven’t. The DC string is still pumping 400 V DC into the inverter terminals because the
-                sun is up.
-              </>
-            }
-            doInstead={
-              <>
-                Reg 712.410.101: the DC side stays energised whenever there is daylight on the panels,
-                regardless of what you’ve done on the AC side. Always operate the DC isolator on the
-                array side AND the AC isolator on the grid side. Prove both dead — the DC side with a
-                proper DC voltmeter, not an AC-only proving unit. Lock both isolators off if you’re
-                going to be away from the install during the work.
-              </>
-            }
-          />
-
-          <Scenario
-            title="A 4 kW PV inverter on an EV-charger house — what trips you up"
-            situation={
-              <>
-                You’re fitting a 4 kW PV array with a transformerless string inverter on a house that
-                already has a 7 kW EV charger. The inverter rating is 4 kW (≈17.4 A on a 230 V single
-                phase). The customer wants the install signed off this week so they can claim SEG.
-              </>
-            }
-            whatToDo={
-              <>
-                Three things to nail down. First, the inverter is over 16 A per phase, so it’s G99 not
-                G98 — you need a DNO application BEFORE installing, which can take weeks. Many installers
-                drop to a 3.68 kW inverter (or use an export limiter) to keep the install in G98
-                territory and avoid the G99 timeline. Second, the EV charger needs Type B RCD on its
-                circuit (already a given), and the PV inverter circuit also needs Type B unless the
-                manufacturer states otherwise per Reg 712.531.3.5.1 — check the datasheet. Third, the
-                MCS certificate has to be issued by the installing company through the MCS portal — the
-                customer needs that number to register for SEG with their energy supplier.
-              </>
-            }
-            whyItMatters={
-              <>
-                Apprentices regularly walk into PV jobs assuming it’s a quick install — wrong inverter
-                size, no DNO application, wrong RCD type, missing MCS paperwork. Any one of those
-                problems delays handover by weeks and costs the company money. Get the regulatory
-                framework right before you put a panel on a roof.
-              </>
-            }
-          />
-
-          <SectionRule />
-
-          <FAQ items={faqs} />
-
-          <SectionRule />
-
-          <KeyTakeaways
-            points={[
-              'Three regulatory tracks apply to every install: BS 7671 (wiring safety), ENA G98/G99 (DNO connection paperwork), MCS (certification for installer/products and customer’s SEG eligibility).',
-              'G98 covers ≤ 16 A per phase — informal post-installation notification within 28 days. G99 covers > 16 A per phase — formal application BEFORE install, DNO can refuse or impose conditions.',
-              'BS 7671 Section 712 is the dedicated PV section. Reg 712.1 sets the scope; Reg 712.410.101 makes the DC side a permanent live source whenever there is daylight on the panels.',
-              'PV needs both a DC isolator (panels-side) and an AC isolator (grid-side). Operate both, prove both dead with the right meter (DC voltmeter for the DC side), then work.',
-              'Anti-islanding: 200 ms maximum disconnect time after loss of grid (G98/G99, BS EN 50549-1/-2). Built into the inverter through its grid-code commissioning settings.',
-              'RCD type for transformerless PV inverters defaults to Type B per Reg 712.531.3.5.1, unless the inverter provides simple separation or the manufacturer states otherwise.',
-              'Documentation pack: EIC, inverter commissioning sheet, G98/G99 notice, MCS certificate, building regs notification, single-line diagram on the consumer unit.',
-            ]}
-          />
-
-          <Quiz title="Micro-renewables installation — knowledge check" questions={quizQuestions} />
-
-          <div className="grid grid-cols-2 gap-3 pt-2">
-            <button
-              onClick={() => navigate('/study-centre/apprentice/level2/module3/section6/6-3')}
-              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
-                <ChevronLeft className="h-3 w-3" /> Previous
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-white truncate">
-                6.3 Battery storage deep dive
-              </div>
-            </button>
-            <button
-              onClick={() => navigate('/study-centre/apprentice/level2/module3/section6/6-5')}
-              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
-                Next subsection <ChevronRight className="h-3 w-3" />
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-black truncate">
-                6.5 Advantages and disadvantages
-              </div>
-            </button>
-          </div>
-        </PageFrame>
-      </div>
-    </div>
+            <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+              Next subsection <ChevronRight className="h-3 w-3" />
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-black truncate">
+              6.5 Advantages and disadvantages
+            </div>
+          </button>
+        </div>
+      </HubBody>
+    </HubPage>
   );
 }

@@ -5,10 +5,10 @@
  */
 
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
-import { PageFrame, PageHero } from '@/components/college/primitives';
 import {
   ConceptBlock,
   CommonMistake,
@@ -52,12 +52,7 @@ const quickCheckQuestions = [
   {
     id: 'accel-ramp',
     question: 'What is the typical default acceleration time for HVAC fan and pump applications?',
-    options: [
-      '1-2 seconds',
-      '30-60 seconds',
-      '5-15 seconds',
-      '120 seconds',
-    ],
+    options: ['1-2 seconds', '30-60 seconds', '5-15 seconds', '120 seconds'],
     correctIndex: 2,
     explanation:
       'HVAC applications typically use acceleration times of 5-15 seconds for fans and pumps. This provides smooth starting, reduces mechanical stress on couplings and belts, and prevents water hammer in pumping systems. Longer ramps may be needed for high-inertia loads.',
@@ -151,7 +146,7 @@ const quizQuestions = [
     id: 6,
     question: "What does an 'Earth Fault' or 'Ground Fault' trip on a VSD typically indicate?",
     options: [
-      'The supply voltage has dropped below the drive\'s minimum threshold',
+      "The supply voltage has dropped below the drive's minimum threshold",
       'The motor is regenerating energy back to the DC bus',
       'Insulation breakdown in motor or cable to earth',
       'The acceleration ramp time has been set too long',
@@ -229,12 +224,7 @@ const quizQuestions = [
   {
     id: 12,
     question: 'What is the typical switching frequency range for modern HVAC VSDs?',
-    options: [
-      '2-16 kHz',
-      '1-5 MHz',
-      '50-100 Hz',
-      '50-100 kHz',
-    ],
+    options: ['2-16 kHz', '1-5 MHz', '50-100 Hz', '50-100 kHz'],
     correctAnswer: 0,
     explanation:
       'Modern VSDs typically operate at 2-16 kHz switching frequency. Higher frequencies reduce motor noise but increase cable EMC emissions and switching losses. HVAC applications often use 4-8 kHz as a compromise between acoustic noise and EMC performance.',
@@ -279,377 +269,781 @@ const HNCModule8Section4_6 = () => {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
-      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
-        <PageFrame>
+    <HubPage>
+      <HubMasthead
+        section="Module 8 · Section 4 · Subsection 6"
+        title="Installation and Commissioning"
+        backTo="/study-centre/apprentice/h-n-c-module8-section4"
+      />
+      <HubBody>
+        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
+          Cable requirements, EMC considerations, drive setup and fault finding for VSD
+          installations
+        </p>
+
+        <ConceptBlock title="Motor Cable Requirements for VSD Applications">
+          <p>
+            Variable speed drives generate high-frequency pulse width modulation (PWM) waveforms
+            that place unique demands on motor cables. Unlike conventional DOL motor circuits, VSD
+            cables must contain electromagnetic emissions, withstand voltage reflections, and
+            maintain motor insulation integrity.
+          </p>
+          <p>
+            <strong>VSD Cable Selection Criteria</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Screened/shielded construction:</strong> Braided copper screen or foil with
+              drain wire
+            </li>
+            <li>
+              <strong>Symmetrical geometry:</strong> Three phases plus earth in balanced
+              configuration
+            </li>
+            <li>
+              <strong>Low capacitance:</strong> Reduces charging current and earth leakage
+            </li>
+            <li>
+              <strong>Appropriate voltage rating:</strong> Consider voltage spikes from reflections
+            </li>
+            <li>
+              <strong>Flexible construction:</strong> For motor terminal box connections
+            </li>
+          </ul>
+          <p>
+            <strong>Recommended Cable Types</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Dedicated VSD cable:</strong> Symmetrical cores, copper braid screen, PE outer
+              — Preferred for all VSD installations
+            </li>
+            <li>
+              <strong>SY/CY cable:</strong> Steel or copper braided screen, flexible — Suitable for
+              shorter runs, panel connections
+            </li>
+            <li>
+              <strong>Screened SWA:</strong> Armour over copper tape screen — Where mechanical
+              protection required
+            </li>
+            <li>
+              <strong>EMC-compliant trunking:</strong> Metal trunking with bonded joints —
+              Alternative to screened cable if properly installed
+            </li>
+          </ul>
+          <p>
+            <strong>Cable Length Considerations</strong>
+          </p>
+          <p>
+            Long motor cables cause voltage reflections that stress motor insulation. The reflected
+            wave can double the peak voltage at motor terminals, particularly with fast-switching
+            IGBTs.
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>&lt; 25m:</strong> Screened cable usually sufficient
+            </li>
+            <li>
+              <strong>25-100m:</strong> Consider output reactor (choke) at drive
+            </li>
+            <li>
+              <strong>&gt; 100m:</strong> dV/dt filter or sine-wave filter essential
+            </li>
+          </ul>
+          <p>
+            <strong>Important: Motor Insulation</strong>
+          </p>
+          <p>
+            Standard motors may not withstand the voltage stresses from VSD operation, particularly
+            on long cable runs. Inverter-duty motors with reinforced insulation (typically rated for
+            1600V peak or Class F/H insulation systems) are recommended for all new installations.
+            For existing motors, output filters should be considered.
+          </p>
+          <p>
+            <strong>Key rule:</strong> Cable selection affects EMC compliance, motor life and system
+            reliability. Never substitute standard cable types to reduce costs.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...quickCheckQuestions[0]} />
+
+        <SectionRule />
+
+        <ConceptBlock title="EMC Considerations and Filtering">
+          <p>
+            Electromagnetic compatibility (EMC) is a critical consideration for VSD installations.
+            The high-frequency switching generates both conducted and radiated emissions that can
+            interfere with nearby equipment including BMS systems, radio communications and
+            sensitive instrumentation.
+          </p>
+          <p>
+            <strong>Sources of EMC Emissions</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Conducted emissions:</strong> High-frequency noise conducted back onto mains
+              supply
+            </li>
+            <li>
+              <strong>Radiated emissions:</strong> Electromagnetic fields from motor cables acting
+              as antennas
+            </li>
+            <li>
+              <strong>Common-mode currents:</strong> High-frequency currents flowing through earth
+              paths
+            </li>
+            <li>
+              <strong>Bearing currents:</strong> Capacitively coupled currents through motor
+              bearings
+            </li>
+          </ul>
+          <p>
+            <strong>EMC Installation Categories</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>C1 (First environment):</strong> Domestic, commercial, light industrial —
+              Strictest limits, internal EMC filter + external filter often required
+            </li>
+            <li>
+              <strong>C2 (Second environment):</strong> Industrial, restricted distribution — Less
+              strict, internal EMC filter typically sufficient
+            </li>
+            <li>
+              <strong>C3 (Industrial only):</strong> Dedicated industrial installation — No
+              conducted emission limits (radiated only)
+            </li>
+          </ul>
+          <p>
+            <strong>EMC Filter Functions</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Common-mode choke:</strong> Blocks high-frequency noise on all conductors
+            </li>
+            <li>
+              <strong>Differential-mode inductors:</strong> Filter line-to-line noise
+            </li>
+            <li>
+              <strong>X capacitors:</strong> Line-to-line decoupling
+            </li>
+            <li>
+              <strong>Y capacitors:</strong> Line-to-earth decoupling
+            </li>
+          </ul>
+          <p>
+            <strong>Filter Installation Points</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Supply input:</strong> Main EMC filter location
+            </li>
+            <li>
+              <strong>Motor output:</strong> dV/dt or sine-wave filter if required
+            </li>
+            <li>
+              <strong>Control inputs:</strong> Ferrite cores on signal cables
+            </li>
+            <li>
+              <strong>Encoder cables:</strong> Screened with separate earthing
+            </li>
+          </ul>
+          <p>
+            <strong>Cable Screening and Earthing</strong>
+          </p>
+          <p>
+            Proper screen termination is critical for EMC performance. The screen provides a
+            low-impedance path for high-frequency currents, preventing them from radiating as
+            interference.
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>360-degree termination:</strong> Use EMC glands providing full circumferential
+              contact
+            </li>
+            <li>
+              <strong>Both ends:</strong> Earth screen at both drive and motor ends
+            </li>
+            <li>
+              <strong>Avoid pigtails:</strong> Pigtail earth connections act as antennas at high
+              frequency
+            </li>
+            <li>
+              <strong>Continuous bonding:</strong> Ensure electrical continuity of metallic
+              enclosures
+            </li>
+          </ul>
+          <p>
+            <strong>Cable Routing Best Practice</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Separation:</strong> Minimum 300mm between motor cables and signal/control
+              cables
+            </li>
+            <li>
+              <strong>Crossings:</strong> Where cables must cross, do so at 90 degrees
+            </li>
+            <li>
+              <strong>Parallel runs:</strong> Avoid parallel routing with sensitive cables
+            </li>
+            <li>
+              <strong>Metal containment:</strong> Use metal trunking/tray with bonded joints
+            </li>
+            <li>
+              <strong>BMS cables:</strong> Route well away from VSD motor cables
+            </li>
+          </ul>
+          <p>
+            <strong>HVAC context:</strong> Building management systems are particularly susceptible
+            to VSD interference. Proper EMC installation prevents false readings, communication
+            errors and control instability.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...quickCheckQuestions[1]} />
+
+        <SectionRule />
+
+        <ConceptBlock title="Drive Parameter Setup">
+          <p>
+            Correct parameter configuration is essential for safe and efficient VSD operation.
+            Modern drives contain hundreds of parameters, but a core set must be configured
+            correctly during commissioning for the drive to match the motor and application
+            requirements.
+          </p>
+          <p>
+            <strong>Essential Motor Parameters</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Motor nominal current (In):</strong> Nameplate FLC — Thermal protection,
+              current limit
+            </li>
+            <li>
+              <strong>Motor nominal voltage (Un):</strong> Nameplate — V/f ratio calculation
+            </li>
+            <li>
+              <strong>Motor nominal frequency:</strong> Nameplate (50Hz UK) — Base frequency for V/f
+              control
+            </li>
+            <li>
+              <strong>Motor nominal speed:</strong> Nameplate RPM — Slip calculation, speed feedback
+            </li>
+            <li>
+              <strong>Motor power (Pn):</strong> Nameplate kW — Auto-tuning, parameter estimation
+            </li>
+            <li>
+              <strong>Motor cos phi:</strong> Nameplate power factor — Magnetising current
+              calculation
+            </li>
+          </ul>
+          <p>
+            <strong>Motor Auto-Tune (ID Run)</strong>
+          </p>
+          <p>
+            Most modern drives include an auto-tune or motor identification function that measures
+            motor electrical parameters for optimal control. This should be performed during
+            commissioning.
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Stationary tune:</strong> Measures resistance and inductance with motor
+              stopped
+            </li>
+            <li>
+              <strong>Rotating tune:</strong> Measures at various speeds (motor must be uncoupled)
+            </li>
+            <li>
+              <strong>Benefits:</strong> Improved efficiency, better dynamic response, accurate
+              current control
+            </li>
+            <li>
+              <strong>When to perform:</strong> After entering motor nameplate data, before
+              commissioning
+            </li>
+          </ul>
+          <p>
+            <strong>Acceleration and Deceleration Ramps</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Centrifugal pumps:</strong> 5-15 seconds — 10-30 seconds — Prevent water
+              hammer, check valves
+            </li>
+            <li>
+              <strong>Centrifugal fans:</strong> 10-30 seconds — 20-60 seconds — High inertia, belt
+              slip prevention
+            </li>
+            <li>
+              <strong>AHU supply fans:</strong> 15-45 seconds — 30-90 seconds — Large inertia, avoid
+              regeneration
+            </li>
+            <li>
+              <strong>Cooling towers:</strong> 20-60 seconds — Coast to stop — Very high inertia
+              fans
+            </li>
+          </ul>
+          <p>
+            <strong>Frequency Limits</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Maximum frequency:</strong> Typically 50-60Hz for fans/pumps
+            </li>
+            <li>
+              <strong>Minimum frequency:</strong> 20-30Hz for centrifugal pumps
+            </li>
+            <li>
+              <strong>Skip frequencies:</strong> Avoid mechanical resonance bands
+            </li>
+            <li>
+              <strong>Base frequency:</strong> Motor rated frequency (50Hz)
+            </li>
+          </ul>
+          <p>
+            <strong>Control Mode Selection</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>V/f control:</strong> Standard for fans and pumps
+            </li>
+            <li>
+              <strong>V/f with flux optimisation:</strong> Energy saving mode
+            </li>
+            <li>
+              <strong>Sensorless vector:</strong> Better dynamic response
+            </li>
+            <li>
+              <strong>Closed-loop vector:</strong> Precise speed control (encoder)
+            </li>
+          </ul>
+          <p>
+            <strong>Analogue Input/Output Configuration</strong>
+          </p>
+          <p>
+            HVAC applications typically use 0-10V or 4-20mA signals from BMS for speed reference and
+            feedback.
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Speed reference:</strong> 0-10V = 0-100% speed (or 4-20mA)
+            </li>
+            <li>
+              <strong>Speed feedback:</strong> 0-10V output proportional to actual speed
+            </li>
+            <li>
+              <strong>Run status:</strong> Relay output indicating drive running
+            </li>
+            <li>
+              <strong>Fault status:</strong> Relay output indicating fault condition
+            </li>
+          </ul>
+          <p>
+            <strong>Documentation:</strong> Always record all parameter settings during
+            commissioning. Many drives allow parameter backup to memory card or PC for restoration
+            and documentation.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...quickCheckQuestions[2]} />
+
+        <SectionRule />
+
+        <ConceptBlock title="Commissioning Procedures and Fault Finding">
+          <p>
+            Systematic commissioning ensures safe, reliable VSD operation. A structured approach
+            prevents damage to equipment and identifies installation issues before they cause
+            operational problems. Understanding fault codes enables rapid diagnosis of problems.
+          </p>
+          <p>
+            <strong>Pre-Commissioning Checks</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Visual inspection:</strong> Check all connections, cable routing, gland
+              terminations
+            </li>
+            <li>
+              <strong>Motor insulation:</strong> Measure IR with motor disconnected (&gt;1M ohm at
+              500V DC)
+            </li>
+            <li>
+              <strong>Cable insulation:</strong> Test motor cables separately from motor
+            </li>
+            <li>
+              <strong>Earth continuity:</strong> Verify protective conductor continuity
+            </li>
+            <li>
+              <strong>Supply voltage:</strong> Confirm within drive specification (+/-10% typical)
+            </li>
+            <li>
+              <strong>Mechanical checks:</strong> Coupling alignment, guards fitted, rotation free
+            </li>
+          </ul>
+          <p>
+            <strong>Commissioning Sequence</strong>
+          </p>
+          <p>
+            <strong>Step 1:</strong> Enter motor nameplate parameters
+          </p>
+          <p>
+            <strong>Step 2:</strong> Set acceleration/deceleration times for application
+          </p>
+          <p>
+            <strong>Step 3:</strong> Configure frequency limits (min/max)
+          </p>
+          <p>
+            <strong>Step 4:</strong> Run motor auto-tune (if available)
+          </p>
+          <p>
+            <strong>Step 5:</strong> Check rotation direction at low speed (10Hz)
+          </p>
+          <p>
+            <strong>Step 6:</strong> Gradually increase speed, observe motor and load
+          </p>
+          <p>
+            <strong>Step 7:</strong> Check vibration at various speeds (avoid resonances)
+          </p>
+          <p>
+            <strong>Step 8:</strong> Verify current draw against motor rating
+          </p>
+          <p>
+            <strong>Step 9:</strong> Test control signals (analogue, digital I/O)
+          </p>
+          <p>
+            <strong>Step 10:</strong> Document all parameter settings and test results
+          </p>
+          <p>
+            <strong>Common VSD Fault Codes</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Overcurrent (OC):</strong> Short circuit, earth fault, incorrect parameters,
+              seized motor — Check motor IR, verify parameters, inspect for mechanical jam
+            </li>
+            <li>
+              <strong>Earth Fault (EF):</strong> Motor winding fault, cable damage, moisture ingress
+              — Insulation resistance test motor and cable separately
+            </li>
+            <li>
+              <strong>DC Overvoltage (OV):</strong> Rapid deceleration, high inertia load,
+              regenerating — Increase decel time, consider braking resistor
+            </li>
+            <li>
+              <strong>DC Undervoltage (UV):</strong> Supply dips, supply loss, loose connections —
+              Check supply voltage and connections
+            </li>
+            <li>
+              <strong>Motor Overload (OL):</strong> Overload condition, incorrect motor current
+              setting — Verify motor In parameter, check load condition
+            </li>
+            <li>
+              <strong>Overtemperature (OT):</strong> Blocked cooling, high ambient, overload — Clean
+              filters, check ventilation, reduce load
+            </li>
+            <li>
+              <strong>Output Phase Loss:</strong> Open circuit in motor or cable, loose connection —
+              Check motor and cable continuity
+            </li>
+          </ul>
+          <p>
+            <strong>Troubleshooting Intermittent Faults</strong>
+          </p>
+          <p>
+            Intermittent faults are often the most difficult to diagnose. Check drive fault history
+            for patterns (time of day, operating conditions). Common causes include: loose
+            connections that make/break under vibration, EMC interference from nearby equipment,
+            supply voltage variations during building peak loads, and thermal issues that appear
+            only when drive/motor reaches operating temperature.
+          </p>
+          <p>
+            <strong>Diagnostic Tools</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Drive keypad:</strong> Fault history, real-time monitoring
+            </li>
+            <li>
+              <strong>Multimeter:</strong> Voltage, current, continuity checks
+            </li>
+            <li>
+              <strong>Insulation tester:</strong> Motor and cable IR testing
+            </li>
+            <li>
+              <strong>Clamp meter:</strong> Phase balance, earth leakage
+            </li>
+            <li>
+              <strong>Oscilloscope:</strong> Advanced waveform analysis
+            </li>
+          </ul>
+          <p>
+            <strong>When to Replace vs Repair</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Replace drive:</strong> IGBT failure, control board fault
+            </li>
+            <li>
+              <strong>Repair on-site:</strong> Blown fuses, loose connections
+            </li>
+            <li>
+              <strong>Replace motor:</strong> Winding failure, bearing seizure
+            </li>
+            <li>
+              <strong>Replace cable:</strong> Insulation breakdown, screen damage
+            </li>
+          </ul>
+          <p>
+            <strong>Handover Documentation</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Parameter list:</strong> All configured parameters with values
+            </li>
+            <li>
+              <strong>Test results:</strong> Insulation resistance, functional tests
+            </li>
+            <li>
+              <strong>Commissioning sheet:</strong> Date, engineer, tests performed
+            </li>
+            <li>
+              <strong>O&M manuals:</strong> Drive and motor documentation
+            </li>
+            <li>
+              <strong>Training records:</strong> Client staff trained on basic operation
+            </li>
+            <li>
+              <strong>Warranty information:</strong> Supplier and manufacturer contacts
+            </li>
+          </ul>
+          <p>
+            <strong>Best practice:</strong> Clear the fault history after successful commissioning
+            so any future faults are easily identifiable. Record a baseline of normal operating
+            parameters for future reference.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...quickCheckQuestions[3]} />
+
+        <SectionRule />
+
+        <ConceptBlock title="Worked Examples">
+          <p>
+            <strong>Example 1: Cable Selection for AHU Fan</strong>
+          </p>
+          <p>
+            <strong>Question:</strong> An 11kW AHU supply fan motor is located 45 metres from the
+            VSD panel. The motor FLC is 22A. Select an appropriate cable and specify any additional
+            measures.
+          </p>
+          <p>Motor current: 22A</p>
+          <p>Cable selection: 4mm squared 3-core + earth screened VSD cable</p>
+          <p>(Rated approximately 30A depending on installation method)</p>
+          <p>Cable length: 45m - within typical limits (50-100m)</p>
+          <p>Additional measures at this length:</p>
+          <p>- Consider output reactor (choke) at drive if motor not inverter-duty</p>
+          <p>- Use 360-degree EMC glands at both ends</p>
+          <p>- Route separately from BMS signal cables (300mm min)</p>
+          <p>Recommendation: 4mm sq. screened VSD cable with output reactor</p>
+          <p>
+            <strong>Example 2: Acceleration Time Calculation</strong>
+          </p>
+          <p>
+            <strong>Question:</strong> A 15kW centrifugal fan has a moment of inertia of 12 kg.m
+            squared and runs at 1450 rpm. The drive current limit is set at 150% of motor FLC.
+            Calculate the minimum acceleration time to avoid overcurrent trips.
+          </p>
+          <p>Motor power: 15kW at 1450 rpm</p>
+          <p>Motor torque Tn = (P x 9550) / n = (15 x 9550) / 1450 = 98.8 Nm</p>
+          <p>Available accelerating torque at 150% current:</p>
+          <p>Ta = 1.5 x Tn = 1.5 x 98.8 = 148.2 Nm (assuming linear T-I relationship)</p>
+          <p>Angular acceleration: alpha = T / J = 148.2 / 12 = 12.35 rad/s squared</p>
+          <p>Final speed: omega = (1450 x 2 x pi) / 60 = 151.8 rad/s</p>
+          <p>Minimum acceleration time:</p>
+          <p>
+            t = omega / alpha = 151.8 / 12.35 = <strong>12.3 seconds minimum</strong>
+          </p>
+          <p>Set acceleration time to 15-20 seconds to allow margin</p>
+          <p>
+            <strong>Example 3: Troubleshooting Earth Fault</strong>
+          </p>
+          <p>
+            <strong>Scenario:</strong> A VSD supplying a chilled water pump trips on earth fault
+            after running for 2-3 hours. The fault does not occur on initial start-up.
+          </p>
+          <p>Diagnostic steps:</p>
+          <p>1. Check insulation resistance when motor is cold: 15M ohm - PASS</p>
+          <p>2. Run motor from drive until fault occurs</p>
+          <p>3. Immediately test IR when warm: 0.8M ohm - MARGINAL</p>
+          <p>Analysis:</p>
+          <p>- IR drops significantly when motor heated</p>
+          <p>- Indicates moisture ingress or insulation degradation</p>
+          <p>- Common with pumps due to humid environment</p>
+          <p>Investigation:</p>
+          <p>- Motor terminal box inspected - condensation present</p>
+          <p>- Cable gland not properly sealed</p>
+          <p>Solution: Dry out motor, reseal terminal box, install breather</p>
+          <p>
+            <strong>Example 4: EMC Filter Selection</strong>
+          </p>
+          <p>
+            <strong>Question:</strong> A 7.5kW VSD is being installed in a hospital plantroom (C1
+            environment). The drive has a basic internal EMC filter. Specify additional EMC
+            requirements.
+          </p>
+          <p>Environment: Hospital = sensitive electromagnetic environment (C1)</p>
+          <p>C1 requires strictest EMC emission limits</p>
+          <p>Requirements:</p>
+          <p>1. External EMC filter at drive input (matched to drive rating)</p>
+          <p>- Filter rating: 7.5kW / 3-phase / 400V</p>
+          <p>- Select filter with C1 compliance certification</p>
+          <p>2. Screened motor cable with 360-degree termination</p>
+          <p>3. Output reactor if motor cable &gt; 25m</p>
+          <p>4. Ferrite cores on control cables</p>
+          <p>5. Metal back-plate with dedicated EMC earth bar</p>
+          <p>Note: Install EMC filter as close to drive as possible</p>
+          <p>Maximum 300mm between filter and drive</p>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <ConceptBlock title="Practical guidance">
+          <p>
+            <strong>Pre-Commissioning Checklist:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Motor IR test:</strong> &gt;1M ohm at 500V DC minimum (&gt;100M ohm preferred)
+            </li>
+            <li>
+              <strong>Cable IR test:</strong> &gt;1M ohm with motor disconnected
+            </li>
+            <li>
+              <strong>Earth continuity:</strong> &lt;0.5 ohm from MET to motor frame
+            </li>
+            <li>
+              <strong>Supply voltage:</strong> Verify within +/-10% of drive rating
+            </li>
+            <li>
+              <strong>Phase sequence:</strong> Check if drive requires correct sequence
+            </li>
+            <li>
+              <strong>Mechanical freedom:</strong> Ensure motor and load rotate freely
+            </li>
+          </ul>
+          <p>
+            <strong>Key Parameters to Record:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Motor nominal current:</strong> From nameplate (most critical parameter)
+            </li>
+            <li>
+              <strong>Acceleration time:</strong> 5-15s for fans/pumps, longer for high inertia
+            </li>
+            <li>
+              <strong>Deceleration time:</strong> 10-60s depending on inertia and regen capability
+            </li>
+            <li>
+              <strong>Minimum frequency:</strong> 20-30Hz for centrifugal pumps
+            </li>
+            <li>
+              <strong>Maximum frequency:</strong> 50Hz unless extended speed required
+            </li>
+            <li>
+              <strong>Control mode:</strong> V/f for most HVAC, vector for dynamic loads
+            </li>
+          </ul>
+          <p>
+            <strong>Fault Diagnosis Quick Guide:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Immediate OC on start:</strong> Check motor parameters, look for short/earth
+              fault
+            </li>
+            <li>
+              <strong>OC during acceleration:</strong> Increase accel time, check for mechanical
+              binding
+            </li>
+            <li>
+              <strong>OV during deceleration:</strong> Increase decel time, add braking resistor
+            </li>
+            <li>
+              <strong>Earth fault:</strong> Test motor and cable IR separately
+            </li>
+            <li>
+              <strong>Intermittent trips:</strong> Check connections, look for thermal or EMC issues
+            </li>
+            <li>
+              <strong>Motor overheating:</strong> Check load, verify cooling, check minimum speed
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <CommonMistake
+          title="Common mistakes to avoid"
+          whatHappens={
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+              <li>
+                <strong>Pigtail screen termination:</strong> Creates antenna, use 360-degree glands
+              </li>
+              <li>
+                <strong>Screen earthed one end only:</strong> Must be earthed at both ends
+              </li>
+              <li>
+                <strong>Motor cables with signal cables:</strong> Maintain 300mm separation
+              </li>
+              <li>
+                <strong>EMC filter remote from drive:</strong> Must be within 300mm of drive
+              </li>
+              <li>
+                <strong>Incorrect motor parameters:</strong> Verify against nameplate, not
+                assumptions
+              </li>
+              <li>
+                <strong>Missing output protection:</strong> Long cables need dV/dt filters
+              </li>
+            </ul>
+          }
+          doInstead="Cross-check assumptions against published guidance, validate measured values against design intent, and engage the wider team early when interface issues emerge."
+        />
+
+        <SectionRule />
+
+        <FAQ items={faqs} />
+
+        <SectionRule />
+
+        <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+
+        <div className="grid grid-cols-2 gap-3 pt-2">
           <button
-            onClick={() => navigate("/study-centre/apprentice/h-n-c-module8-section4")}
-            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module8-section4-5')}
+            className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
           >
-            <ArrowLeft className="h-4 w-4" /> Back
+            <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+              <ChevronLeft className="h-3 w-3" /> Previous
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-white truncate">
+              Energy efficiency
+            </div>
           </button>
-
-          <PageHero
-            eyebrow="Module 8 · Section 4 · Subsection 6"
-            title="Installation and Commissioning"
-            description="Cable requirements, EMC considerations, drive setup and fault finding for VSD installations"
-            tone="purple"
-          />
-
-          <ConceptBlock title="Motor Cable Requirements for VSD Applications">
-            <p>Variable speed drives generate high-frequency pulse width modulation (PWM) waveforms that place unique demands on motor cables. Unlike conventional DOL motor circuits, VSD cables must contain electromagnetic emissions, withstand voltage reflections, and maintain motor insulation integrity.</p>
-            <p><strong>VSD Cable Selection Criteria</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Screened/shielded construction:</strong> Braided copper screen or foil with drain wire</li>
-              <li><strong>Symmetrical geometry:</strong> Three phases plus earth in balanced configuration</li>
-              <li><strong>Low capacitance:</strong> Reduces charging current and earth leakage</li>
-              <li><strong>Appropriate voltage rating:</strong> Consider voltage spikes from reflections</li>
-              <li><strong>Flexible construction:</strong> For motor terminal box connections</li>
-            </ul>
-            <p><strong>Recommended Cable Types</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Dedicated VSD cable:</strong> Symmetrical cores, copper braid screen, PE outer — Preferred for all VSD installations</li>
-              <li><strong>SY/CY cable:</strong> Steel or copper braided screen, flexible — Suitable for shorter runs, panel connections</li>
-              <li><strong>Screened SWA:</strong> Armour over copper tape screen — Where mechanical protection required</li>
-              <li><strong>EMC-compliant trunking:</strong> Metal trunking with bonded joints — Alternative to screened cable if properly installed</li>
-            </ul>
-            <p><strong>Cable Length Considerations</strong></p>
-            <p>Long motor cables cause voltage reflections that stress motor insulation. The reflected wave can double the peak voltage at motor terminals, particularly with fast-switching IGBTs.</p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>&lt; 25m:</strong> Screened cable usually sufficient</li>
-              <li><strong>25-100m:</strong> Consider output reactor (choke) at drive</li>
-              <li><strong>&gt; 100m:</strong> dV/dt filter or sine-wave filter essential</li>
-            </ul>
-            <p><strong>Important: Motor Insulation</strong></p>
-            <p>Standard motors may not withstand the voltage stresses from VSD operation, particularly on long cable runs. Inverter-duty motors with reinforced insulation (typically rated for 1600V peak or Class F/H insulation systems) are recommended for all new installations. For existing motors, output filters should be considered.</p>
-            <p><strong>Key rule:</strong> Cable selection affects EMC compliance, motor life and system reliability. Never substitute standard cable types to reduce costs.</p>
-          </ConceptBlock>
-
-          <InlineCheck {...quickCheckQuestions[0]} />
-
-          <SectionRule />
-
-          <ConceptBlock title="EMC Considerations and Filtering">
-            <p>Electromagnetic compatibility (EMC) is a critical consideration for VSD installations. The high-frequency switching generates both conducted and radiated emissions that can interfere with nearby equipment including BMS systems, radio communications and sensitive instrumentation.</p>
-            <p><strong>Sources of EMC Emissions</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Conducted emissions:</strong> High-frequency noise conducted back onto mains supply</li>
-              <li><strong>Radiated emissions:</strong> Electromagnetic fields from motor cables acting as antennas</li>
-              <li><strong>Common-mode currents:</strong> High-frequency currents flowing through earth paths</li>
-              <li><strong>Bearing currents:</strong> Capacitively coupled currents through motor bearings</li>
-            </ul>
-            <p><strong>EMC Installation Categories</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>C1 (First environment):</strong> Domestic, commercial, light industrial — Strictest limits, internal EMC filter + external filter often required</li>
-              <li><strong>C2 (Second environment):</strong> Industrial, restricted distribution — Less strict, internal EMC filter typically sufficient</li>
-              <li><strong>C3 (Industrial only):</strong> Dedicated industrial installation — No conducted emission limits (radiated only)</li>
-            </ul>
-            <p><strong>EMC Filter Functions</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Common-mode choke:</strong> Blocks high-frequency noise on all conductors</li>
-              <li><strong>Differential-mode inductors:</strong> Filter line-to-line noise</li>
-              <li><strong>X capacitors:</strong> Line-to-line decoupling</li>
-              <li><strong>Y capacitors:</strong> Line-to-earth decoupling</li>
-            </ul>
-            <p><strong>Filter Installation Points</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Supply input:</strong> Main EMC filter location</li>
-              <li><strong>Motor output:</strong> dV/dt or sine-wave filter if required</li>
-              <li><strong>Control inputs:</strong> Ferrite cores on signal cables</li>
-              <li><strong>Encoder cables:</strong> Screened with separate earthing</li>
-            </ul>
-            <p><strong>Cable Screening and Earthing</strong></p>
-            <p>Proper screen termination is critical for EMC performance. The screen provides a low-impedance path for high-frequency currents, preventing them from radiating as interference.</p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>360-degree termination:</strong> Use EMC glands providing full circumferential contact</li>
-              <li><strong>Both ends:</strong> Earth screen at both drive and motor ends</li>
-              <li><strong>Avoid pigtails:</strong> Pigtail earth connections act as antennas at high frequency</li>
-              <li><strong>Continuous bonding:</strong> Ensure electrical continuity of metallic enclosures</li>
-            </ul>
-            <p><strong>Cable Routing Best Practice</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Separation:</strong> Minimum 300mm between motor cables and signal/control cables</li>
-              <li><strong>Crossings:</strong> Where cables must cross, do so at 90 degrees</li>
-              <li><strong>Parallel runs:</strong> Avoid parallel routing with sensitive cables</li>
-              <li><strong>Metal containment:</strong> Use metal trunking/tray with bonded joints</li>
-              <li><strong>BMS cables:</strong> Route well away from VSD motor cables</li>
-            </ul>
-            <p><strong>HVAC context:</strong> Building management systems are particularly susceptible to VSD interference. Proper EMC installation prevents false readings, communication errors and control instability.</p>
-          </ConceptBlock>
-
-          <InlineCheck {...quickCheckQuestions[1]} />
-
-          <SectionRule />
-
-          <ConceptBlock title="Drive Parameter Setup">
-            <p>Correct parameter configuration is essential for safe and efficient VSD operation. Modern drives contain hundreds of parameters, but a core set must be configured correctly during commissioning for the drive to match the motor and application requirements.</p>
-            <p><strong>Essential Motor Parameters</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Motor nominal current (In):</strong> Nameplate FLC — Thermal protection, current limit</li>
-              <li><strong>Motor nominal voltage (Un):</strong> Nameplate — V/f ratio calculation</li>
-              <li><strong>Motor nominal frequency:</strong> Nameplate (50Hz UK) — Base frequency for V/f control</li>
-              <li><strong>Motor nominal speed:</strong> Nameplate RPM — Slip calculation, speed feedback</li>
-              <li><strong>Motor power (Pn):</strong> Nameplate kW — Auto-tuning, parameter estimation</li>
-              <li><strong>Motor cos phi:</strong> Nameplate power factor — Magnetising current calculation</li>
-            </ul>
-            <p><strong>Motor Auto-Tune (ID Run)</strong></p>
-            <p>Most modern drives include an auto-tune or motor identification function that measures motor electrical parameters for optimal control. This should be performed during commissioning.</p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Stationary tune:</strong> Measures resistance and inductance with motor stopped</li>
-              <li><strong>Rotating tune:</strong> Measures at various speeds (motor must be uncoupled)</li>
-              <li><strong>Benefits:</strong> Improved efficiency, better dynamic response, accurate current control</li>
-              <li><strong>When to perform:</strong> After entering motor nameplate data, before commissioning</li>
-            </ul>
-            <p><strong>Acceleration and Deceleration Ramps</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Centrifugal pumps:</strong> 5-15 seconds — 10-30 seconds — Prevent water hammer, check valves</li>
-              <li><strong>Centrifugal fans:</strong> 10-30 seconds — 20-60 seconds — High inertia, belt slip prevention</li>
-              <li><strong>AHU supply fans:</strong> 15-45 seconds — 30-90 seconds — Large inertia, avoid regeneration</li>
-              <li><strong>Cooling towers:</strong> 20-60 seconds — Coast to stop — Very high inertia fans</li>
-            </ul>
-            <p><strong>Frequency Limits</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Maximum frequency:</strong> Typically 50-60Hz for fans/pumps</li>
-              <li><strong>Minimum frequency:</strong> 20-30Hz for centrifugal pumps</li>
-              <li><strong>Skip frequencies:</strong> Avoid mechanical resonance bands</li>
-              <li><strong>Base frequency:</strong> Motor rated frequency (50Hz)</li>
-            </ul>
-            <p><strong>Control Mode Selection</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>V/f control:</strong> Standard for fans and pumps</li>
-              <li><strong>V/f with flux optimisation:</strong> Energy saving mode</li>
-              <li><strong>Sensorless vector:</strong> Better dynamic response</li>
-              <li><strong>Closed-loop vector:</strong> Precise speed control (encoder)</li>
-            </ul>
-            <p><strong>Analogue Input/Output Configuration</strong></p>
-            <p>HVAC applications typically use 0-10V or 4-20mA signals from BMS for speed reference and feedback.</p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Speed reference:</strong> 0-10V = 0-100% speed (or 4-20mA)</li>
-              <li><strong>Speed feedback:</strong> 0-10V output proportional to actual speed</li>
-              <li><strong>Run status:</strong> Relay output indicating drive running</li>
-              <li><strong>Fault status:</strong> Relay output indicating fault condition</li>
-            </ul>
-            <p><strong>Documentation:</strong> Always record all parameter settings during commissioning. Many drives allow parameter backup to memory card or PC for restoration and documentation.</p>
-          </ConceptBlock>
-
-          <InlineCheck {...quickCheckQuestions[2]} />
-
-          <SectionRule />
-
-          <ConceptBlock title="Commissioning Procedures and Fault Finding">
-            <p>Systematic commissioning ensures safe, reliable VSD operation. A structured approach prevents damage to equipment and identifies installation issues before they cause operational problems. Understanding fault codes enables rapid diagnosis of problems.</p>
-            <p><strong>Pre-Commissioning Checks</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Visual inspection:</strong> Check all connections, cable routing, gland terminations</li>
-              <li><strong>Motor insulation:</strong> Measure IR with motor disconnected (&gt;1M ohm at 500V DC)</li>
-              <li><strong>Cable insulation:</strong> Test motor cables separately from motor</li>
-              <li><strong>Earth continuity:</strong> Verify protective conductor continuity</li>
-              <li><strong>Supply voltage:</strong> Confirm within drive specification (+/-10% typical)</li>
-              <li><strong>Mechanical checks:</strong> Coupling alignment, guards fitted, rotation free</li>
-            </ul>
-            <p><strong>Commissioning Sequence</strong></p>
-            <p><strong>Step 1:</strong> Enter motor nameplate parameters</p>
-            <p><strong>Step 2:</strong> Set acceleration/deceleration times for application</p>
-            <p><strong>Step 3:</strong> Configure frequency limits (min/max)</p>
-            <p><strong>Step 4:</strong> Run motor auto-tune (if available)</p>
-            <p><strong>Step 5:</strong> Check rotation direction at low speed (10Hz)</p>
-            <p><strong>Step 6:</strong> Gradually increase speed, observe motor and load</p>
-            <p><strong>Step 7:</strong> Check vibration at various speeds (avoid resonances)</p>
-            <p><strong>Step 8:</strong> Verify current draw against motor rating</p>
-            <p><strong>Step 9:</strong> Test control signals (analogue, digital I/O)</p>
-            <p><strong>Step 10:</strong> Document all parameter settings and test results</p>
-            <p><strong>Common VSD Fault Codes</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Overcurrent (OC):</strong> Short circuit, earth fault, incorrect parameters, seized motor — Check motor IR, verify parameters, inspect for mechanical jam</li>
-              <li><strong>Earth Fault (EF):</strong> Motor winding fault, cable damage, moisture ingress — Insulation resistance test motor and cable separately</li>
-              <li><strong>DC Overvoltage (OV):</strong> Rapid deceleration, high inertia load, regenerating — Increase decel time, consider braking resistor</li>
-              <li><strong>DC Undervoltage (UV):</strong> Supply dips, supply loss, loose connections — Check supply voltage and connections</li>
-              <li><strong>Motor Overload (OL):</strong> Overload condition, incorrect motor current setting — Verify motor In parameter, check load condition</li>
-              <li><strong>Overtemperature (OT):</strong> Blocked cooling, high ambient, overload — Clean filters, check ventilation, reduce load</li>
-              <li><strong>Output Phase Loss:</strong> Open circuit in motor or cable, loose connection — Check motor and cable continuity</li>
-            </ul>
-            <p><strong>Troubleshooting Intermittent Faults</strong></p>
-            <p>Intermittent faults are often the most difficult to diagnose. Check drive fault history for patterns (time of day, operating conditions). Common causes include: loose connections that make/break under vibration, EMC interference from nearby equipment, supply voltage variations during building peak loads, and thermal issues that appear only when drive/motor reaches operating temperature.</p>
-            <p><strong>Diagnostic Tools</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Drive keypad:</strong> Fault history, real-time monitoring</li>
-              <li><strong>Multimeter:</strong> Voltage, current, continuity checks</li>
-              <li><strong>Insulation tester:</strong> Motor and cable IR testing</li>
-              <li><strong>Clamp meter:</strong> Phase balance, earth leakage</li>
-              <li><strong>Oscilloscope:</strong> Advanced waveform analysis</li>
-            </ul>
-            <p><strong>When to Replace vs Repair</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Replace drive:</strong> IGBT failure, control board fault</li>
-              <li><strong>Repair on-site:</strong> Blown fuses, loose connections</li>
-              <li><strong>Replace motor:</strong> Winding failure, bearing seizure</li>
-              <li><strong>Replace cable:</strong> Insulation breakdown, screen damage</li>
-            </ul>
-            <p><strong>Handover Documentation</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Parameter list:</strong> All configured parameters with values</li>
-              <li><strong>Test results:</strong> Insulation resistance, functional tests</li>
-              <li><strong>Commissioning sheet:</strong> Date, engineer, tests performed</li>
-              <li><strong>O&M manuals:</strong> Drive and motor documentation</li>
-              <li><strong>Training records:</strong> Client staff trained on basic operation</li>
-              <li><strong>Warranty information:</strong> Supplier and manufacturer contacts</li>
-            </ul>
-            <p><strong>Best practice:</strong> Clear the fault history after successful commissioning so any future faults are easily identifiable. Record a baseline of normal operating parameters for future reference.</p>
-          </ConceptBlock>
-
-          <InlineCheck {...quickCheckQuestions[3]} />
-
-          <SectionRule />
-
-          <ConceptBlock title="Worked Examples">
-            <p>
-              <strong>Example 1: Cable Selection for AHU Fan</strong>
-            </p>
-            <p><strong>Question:</strong> An 11kW AHU supply fan motor is located 45 metres from the VSD panel. The motor FLC is 22A. Select an appropriate cable and specify any additional measures.</p>
-            <p>Motor current: 22A</p>
-            <p>Cable selection: 4mm squared 3-core + earth screened VSD cable</p>
-            <p>(Rated approximately 30A depending on installation method)</p>
-            <p>Cable length: 45m - within typical limits (50-100m)</p>
-            <p>Additional measures at this length:</p>
-            <p>- Consider output reactor (choke) at drive if motor not inverter-duty</p>
-            <p>- Use 360-degree EMC glands at both ends</p>
-            <p>- Route separately from BMS signal cables (300mm min)</p>
-            <p>Recommendation: 4mm sq. screened VSD cable with output reactor</p>
-            <p>
-              <strong>Example 2: Acceleration Time Calculation</strong>
-            </p>
-            <p><strong>Question:</strong> A 15kW centrifugal fan has a moment of inertia of 12 kg.m squared and runs at 1450 rpm. The drive current limit is set at 150% of motor FLC. Calculate the minimum acceleration time to avoid overcurrent trips.</p>
-            <p>Motor power: 15kW at 1450 rpm</p>
-            <p>Motor torque Tn = (P x 9550) / n = (15 x 9550) / 1450 = 98.8 Nm</p>
-            <p>Available accelerating torque at 150% current:</p>
-            <p>Ta = 1.5 x Tn = 1.5 x 98.8 = 148.2 Nm (assuming linear T-I relationship)</p>
-            <p>Angular acceleration: alpha = T / J = 148.2 / 12 = 12.35 rad/s squared</p>
-            <p>Final speed: omega = (1450 x 2 x pi) / 60 = 151.8 rad/s</p>
-            <p>Minimum acceleration time:</p>
-            <p>t = omega / alpha = 151.8 / 12.35 = <strong>12.3 seconds minimum</strong></p>
-            <p>Set acceleration time to 15-20 seconds to allow margin</p>
-            <p>
-              <strong>Example 3: Troubleshooting Earth Fault</strong>
-            </p>
-            <p><strong>Scenario:</strong> A VSD supplying a chilled water pump trips on earth fault after running for 2-3 hours. The fault does not occur on initial start-up.</p>
-            <p>Diagnostic steps:</p>
-            <p>1. Check insulation resistance when motor is cold: 15M ohm - PASS</p>
-            <p>2. Run motor from drive until fault occurs</p>
-            <p>3. Immediately test IR when warm: 0.8M ohm - MARGINAL</p>
-            <p>Analysis:</p>
-            <p>- IR drops significantly when motor heated</p>
-            <p>- Indicates moisture ingress or insulation degradation</p>
-            <p>- Common with pumps due to humid environment</p>
-            <p>Investigation:</p>
-            <p>- Motor terminal box inspected - condensation present</p>
-            <p>- Cable gland not properly sealed</p>
-            <p>Solution: Dry out motor, reseal terminal box, install breather</p>
-            <p>
-              <strong>Example 4: EMC Filter Selection</strong>
-            </p>
-            <p><strong>Question:</strong> A 7.5kW VSD is being installed in a hospital plantroom (C1 environment). The drive has a basic internal EMC filter. Specify additional EMC requirements.</p>
-            <p>Environment: Hospital = sensitive electromagnetic environment (C1)</p>
-            <p>C1 requires strictest EMC emission limits</p>
-            <p>Requirements:</p>
-            <p>1. External EMC filter at drive input (matched to drive rating)</p>
-            <p>- Filter rating: 7.5kW / 3-phase / 400V</p>
-            <p>- Select filter with C1 compliance certification</p>
-            <p>2. Screened motor cable with 360-degree termination</p>
-            <p>3. Output reactor if motor cable &gt; 25m</p>
-            <p>4. Ferrite cores on control cables</p>
-            <p>5. Metal back-plate with dedicated EMC earth bar</p>
-            <p>Note: Install EMC filter as close to drive as possible</p>
-            <p>Maximum 300mm between filter and drive</p>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <ConceptBlock title="Practical guidance">
-            <p>
-              <strong>Pre-Commissioning Checklist:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Motor IR test:</strong> &gt;1M ohm at 500V DC minimum (&gt;100M ohm preferred)</li>
-              <li><strong>Cable IR test:</strong> &gt;1M ohm with motor disconnected</li>
-              <li><strong>Earth continuity:</strong> &lt;0.5 ohm from MET to motor frame</li>
-              <li><strong>Supply voltage:</strong> Verify within +/-10% of drive rating</li>
-              <li><strong>Phase sequence:</strong> Check if drive requires correct sequence</li>
-              <li><strong>Mechanical freedom:</strong> Ensure motor and load rotate freely</li>
-            </ul>
-            <p>
-              <strong>Key Parameters to Record:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Motor nominal current:</strong> From nameplate (most critical parameter)</li>
-              <li><strong>Acceleration time:</strong> 5-15s for fans/pumps, longer for high inertia</li>
-              <li><strong>Deceleration time:</strong> 10-60s depending on inertia and regen capability</li>
-              <li><strong>Minimum frequency:</strong> 20-30Hz for centrifugal pumps</li>
-              <li><strong>Maximum frequency:</strong> 50Hz unless extended speed required</li>
-              <li><strong>Control mode:</strong> V/f for most HVAC, vector for dynamic loads</li>
-            </ul>
-            <p>
-              <strong>Fault Diagnosis Quick Guide:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li><strong>Immediate OC on start:</strong> Check motor parameters, look for short/earth fault</li>
-              <li><strong>OC during acceleration:</strong> Increase accel time, check for mechanical binding</li>
-              <li><strong>OV during deceleration:</strong> Increase decel time, add braking resistor</li>
-              <li><strong>Earth fault:</strong> Test motor and cable IR separately</li>
-              <li><strong>Intermittent trips:</strong> Check connections, look for thermal or EMC issues</li>
-              <li><strong>Motor overheating:</strong> Check load, verify cooling, check minimum speed</li>
-            </ul>
-          </ConceptBlock>
-
-          <CommonMistake
-            title="Common mistakes to avoid"
-            whatHappens={
-              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
-                <li><strong>Pigtail screen termination:</strong> Creates antenna, use 360-degree glands</li>
-                <li><strong>Screen earthed one end only:</strong> Must be earthed at both ends</li>
-                <li><strong>Motor cables with signal cables:</strong> Maintain 300mm separation</li>
-                <li><strong>EMC filter remote from drive:</strong> Must be within 300mm of drive</li>
-                <li><strong>Incorrect motor parameters:</strong> Verify against nameplate, not assumptions</li>
-                <li><strong>Missing output protection:</strong> Long cables need dV/dt filters</li>
-              </ul>
-            }
-            doInstead="Cross-check assumptions against published guidance, validate measured values against design intent, and engage the wider team early when interface issues emerge."
-          />
-
-          <SectionRule />
-
-          <FAQ items={faqs} />
-
-          <SectionRule />
-
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-
-          <div className="grid grid-cols-2 gap-3 pt-2">
-            <button
-              onClick={() => navigate("/study-centre/apprentice/h-n-c-module8-section4-5")}
-              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
-                <ChevronLeft className="h-3 w-3" /> Previous
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-white truncate">
-                Energy efficiency
-              </div>
-            </button>
-            <button
-              onClick={() => navigate("/study-centre/apprentice/h-n-c-module8-section5")}
-              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
-                Next section <ChevronRight className="h-3 w-3" />
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-black truncate">
-                BMS integration
-              </div>
-            </button>
-          </div>
-        </PageFrame>
-      </div>
-    </div>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module8-section5')}
+            className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+          >
+            <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+              Next section <ChevronRight className="h-3 w-3" />
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-black truncate">
+              BMS integration
+            </div>
+          </button>
+        </div>
+      </HubBody>
+    </HubPage>
   );
 };
 

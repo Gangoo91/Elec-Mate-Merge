@@ -5,10 +5,10 @@
  */
 
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
-import { PageFrame, PageHero } from '@/components/college/primitives';
 import {
   CommonMistake,
   ConceptBlock,
@@ -125,12 +125,7 @@ const quizQuestions = [
   {
     id: 4,
     question: 'What is the typical review period for submittals specified in most contracts?',
-    options: [
-      '7-14 days',
-      '1 day',
-      '3 months',
-      'No time limit',
-    ],
+    options: ['7-14 days', '1 day', '3 months', 'No time limit'],
     correctAnswer: 0,
     explanation:
       'Most contracts specify a 7-14 day review period for submittals, though this can vary. Contractors should factor this into their procurement programme.',
@@ -191,12 +186,7 @@ const quizQuestions = [
   {
     id: 9,
     question: 'What status indicates a submittal cannot proceed without modification?',
-    options: [
-      'Approved',
-      'Rejected - resubmit',
-      'Approved as noted',
-      'For information only',
-    ],
+    options: ['Approved', 'Rejected - resubmit', 'Approved as noted', 'For information only'],
     correctAnswer: 1,
     explanation:
       "'Rejected - resubmit' indicates the submittal does not meet specification requirements and must be revised and resubmitted before approval can be granted.",
@@ -281,527 +271,533 @@ const HNCModule5Section4_3 = () => {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
-      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
-        <PageFrame>
+    <HubPage>
+      <HubMasthead
+        section="Module 5 · Section 4 · Subsection 3"
+        title="Material and Equipment Approval"
+        backTo="/study-centre/apprentice/h-n-c-module5-section4"
+      />
+      <HubBody>
+        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
+          Submittal processes, sample approval, mock-up requirements, and specification compliance
+          for building services.
+        </p>
+
+        <TLDR
+          points={[
+            'Submittal process: contractor submits product data, cut sheets, schedules and samples; design team reviews against specification; approves or rejects with comments.',
+            'Approval is "approved", "approved as noted" (with conditions), or "rejected" — never "noted" or "received" which carry no contractual force.',
+            'Long-lead items prioritised — submittals lodged early enough that approval, manufacture and delivery fit the programme.',
+            'Mock-ups for visible elements (luminaire types, control panels, finishes) — installed once, approved or rectified, then full installation proceeds.',
+            'NCRs raised when non-approved equipment is installed — full removal and re-installation at contractor cost.',
+          ]}
+        />
+
+        <RegsCallout
+          source="BS 7671:2018+A4:2026 — Regulation 511.1 (General — Conformity to standards)"
+          clause="Every item of equipment shall comply with the appropriate British Standard, harmonised European Standard or its equivalent. The conformity of equipment shall be verified by means of a manufacturer’s declaration, certificate of conformity or other appropriate documentation."
+          meaning={
+            <>
+              BS 7671 requires every item of electrical equipment to comply with the relevant
+              standard, with documented evidence of conformity. The submittal process is how this is
+              verified at design stage; goods-in inspection verifies on delivery. UKCA/CE marking,
+              manufacturer declarations and certificates of conformity are the audit trail.
+            </>
+          }
+          cite="Source: BS 7671:2018+A4:2026 — Regulation 511.1."
+        />
+
+        <LearningOutcomes
+          outcomes={[
+            'Establish and maintain a comprehensive submittal register',
+            'Prepare technical data sheets for specification compliance',
+            'Manage the sample approval process effectively',
+            'Understand mock-up requirements for quality benchmarking',
+            'Process alternative product and substitution requests',
+            'Track approved status and maintain audit trails',
+          ]}
+        />
+
+        <SectionRule />
+
+        <ConceptBlock title="Submittal Register and Process">
+          <p>
+            The submittal register is the cornerstone of material and equipment approval management.
+            It provides a comprehensive log of all items requiring approval, their current status,
+            and a complete audit trail throughout the project lifecycle.
+          </p>
+          <p>
+            <strong>Submittal register contents:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Unique reference number:</strong> Sequential numbering system (e.g.,
+              SUB-E-001)
+            </li>
+            <li>
+              <strong>Specification clause:</strong> Reference to relevant specification section
+            </li>
+            <li>
+              <strong>Description:</strong> Clear description of material or equipment
+            </li>
+            <li>
+              <strong>Submission date:</strong> Date submittal was issued for review
+            </li>
+            <li>
+              <strong>Required date:</strong> Date approval is needed for procurement
+            </li>
+            <li>
+              <strong>Revision number:</strong> Track resubmissions (Rev A, B, C)
+            </li>
+            <li>
+              <strong>Status:</strong> Current approval status
+            </li>
+          </ul>
+          <p>
+            <strong>Approval status categories:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Approved:</strong> Fully compliant, no changes — Proceed with procurement
+            </li>
+            <li>
+              <strong>Approved as Noted:</strong> Acceptable with comments — Incorporate comments,
+              then proceed
+            </li>
+            <li>
+              <strong>Revise and Resubmit:</strong> Changes required — Address comments, resubmit
+            </li>
+            <li>
+              <strong>Rejected:</strong> Does not meet specification — Submit compliant alternative
+            </li>
+            <li>
+              <strong>For Information:</strong> No approval required — File for record
+            </li>
+          </ul>
+          <p>
+            <strong>Programme impact:</strong> Allow 7-14 days for review. Factor submittal approval
+            into procurement lead times.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...quickCheckQuestions[0]} />
+
+        <SectionRule />
+
+        <ConceptBlock title="Technical Data Sheets and Documentation">
+          <p>
+            Technical data sheets form the documentary evidence that proposed materials and
+            equipment comply with specification requirements. Complete and accurate documentation is
+            essential for efficient review and approval.
+          </p>
+          <p>
+            <strong>Electrical equipment data:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Rated voltage and current</li>
+            <li>IP rating (ingress protection)</li>
+            <li>Fault rating (kA)</li>
+            <li>Operating temperature range</li>
+            <li>Compliance certifications (BS/EN)</li>
+            <li>CE/UKCA marking documentation</li>
+          </ul>
+          <p>
+            <strong>Luminaire data:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Photometric data (IES/LDT files)</li>
+            <li>Lumen output and efficacy</li>
+            <li>Colour temperature (CCT)</li>
+            <li>Colour rendering index (CRI)</li>
+            <li>Emergency conversion options</li>
+            <li>DALI/control compatibility</li>
+          </ul>
+          <p>
+            <strong>Required submittal documentation:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Product data sheet:</strong> Technical specifications — All equipment
+            </li>
+            <li>
+              <strong>Declaration of conformity:</strong> Regulatory compliance — All CE/UKCA marked
+              items
+            </li>
+            <li>
+              <strong>Test certificates:</strong> Third-party verification — Switchgear, cables,
+              containment
+            </li>
+            <li>
+              <strong>Installation instructions:</strong> Correct installation method — All
+              equipment
+            </li>
+            <li>
+              <strong>Maintenance schedule:</strong> Lifecycle requirements — Major plant items
+            </li>
+            <li>
+              <strong>Warranty terms:</strong> Guarantee conditions — As specified
+            </li>
+          </ul>
+          <p>
+            <strong>Best practice:</strong> Compile all documentation into a single PDF with clear
+            indexing. Highlight specification compliance on each data sheet.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...quickCheckQuestions[1]} />
+
+        <SectionRule />
+
+        <ConceptBlock title="Sample Approval and Mock-ups">
+          <p>
+            Physical samples and mock-up installations provide tangible verification of quality
+            standards that cannot be fully assessed from documentation alone. They establish the
+            benchmark against which all subsequent work will be measured.
+          </p>
+          <p>
+            <strong>Sample approval process:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Step 1:</strong> Submit sample with data sheet and specification reference
+            </li>
+            <li>
+              <strong>Step 2:</strong> Client/engineer inspects for colour, finish, and quality
+            </li>
+            <li>
+              <strong>Step 3:</strong> Written approval or comments issued
+            </li>
+            <li>
+              <strong>Step 4:</strong> Approved sample retained as project benchmark
+            </li>
+            <li>
+              <strong>Step 5:</strong> Delivered materials compared against approved sample
+            </li>
+          </ul>
+          <p>
+            <strong>Typical mock-up — cable containment:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>3m minimum run of each type</li>
+            <li>Include bends, tees, and crossings</li>
+            <li>Earthing bonding connections</li>
+            <li>Support bracket spacing</li>
+            <li>Lid and cover alignment</li>
+          </ul>
+          <p>
+            <strong>Typical mock-up — feature lighting:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Full luminaire with trim/bezel</li>
+            <li>Ceiling integration detail</li>
+            <li>Light output demonstration</li>
+            <li>Control dimming range</li>
+            <li>Emergency function (if applicable)</li>
+          </ul>
+          <p>
+            <strong>Mock-up approval checklist:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Location:</strong> Representative of final installation conditions
+            </li>
+            <li>
+              <strong>Coordination:</strong> Other trades' interfaces included
+            </li>
+            <li>
+              <strong>Documentation:</strong> Photographic record before and after approval
+            </li>
+            <li>
+              <strong>Sign-off:</strong> Written approval from client representative
+            </li>
+            <li>
+              <strong>Retention:</strong> Mock-up retained until bulk installation accepted
+            </li>
+          </ul>
+          <p>
+            <strong>Commercial consideration:</strong> Where mock-ups form part of the permanent
+            works, coordinate location to avoid abortive work and double handling.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...quickCheckQuestions[2]} />
+
+        <SectionRule />
+
+        <ConceptBlock title="Alternative Products and Specification Compliance">
+          <p>
+            When specified products are unavailable or the contractor wishes to propose
+            alternatives, a formal substitution process ensures that replacement items meet or
+            exceed the original specification requirements.
+          </p>
+          <p>
+            <strong>Substitution request requirements:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Reason for substitution (cost, availability, improved performance)</li>
+            <li>Side-by-side comparison of technical specifications</li>
+            <li>Evidence of equal or better performance</li>
+            <li>Compliance with same standards and regulations</li>
+            <li>Impact on warranties and guarantees</li>
+            <li>Cost implication (saving or additional)</li>
+          </ul>
+          <p>
+            <strong>Specification compliance verification — example:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>IP rating:</strong> Specified IP65 — Proposed IP66 — Exceeds
+            </li>
+            <li>
+              <strong>Lumen output:</strong> Specified 3000lm — Proposed 3100lm — Exceeds
+            </li>
+            <li>
+              <strong>Colour temp:</strong> Specified 4000K — Proposed 4000K — Meets
+            </li>
+            <li>
+              <strong>CRI:</strong> Specified &gt;90 — Proposed 85 — Below spec
+            </li>
+            <li>
+              <strong>Warranty:</strong> Specified 5 years — Proposed 5 years — Meets
+            </li>
+            <li>Example: CRI below specification would likely result in rejection</li>
+          </ul>
+          <p>
+            <strong>Approved status tracking:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Approved products list:</strong> Maintained and updated throughout project
+            </li>
+            <li>
+              <strong>Distribution:</strong> Issued to procurement, site teams, and QA manager
+            </li>
+            <li>
+              <strong>Goods receipt:</strong> Check delivered materials against approved list
+            </li>
+            <li>
+              <strong>Traceability:</strong> Retain batch numbers and delivery records
+            </li>
+            <li>
+              <strong>Change control:</strong> Any changes require re-approval process
+            </li>
+          </ul>
+          <p>
+            <strong>Key principle:</strong> Never install materials without prior approval. The cost
+            of removal always exceeds the cost of waiting for approval.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...quickCheckQuestions[3]} />
+
+        <SectionRule />
+
+        <ConceptBlock title="Worked Examples">
+          <p>
+            <strong>Example 1 — Managing a rejected submittal:</strong> Cable tray submittal
+            rejected - specified perforated base but submitted solid base.
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Review rejection comments carefully</li>
+            <li>Identify correct product from same manufacturer (perforated variant)</li>
+            <li>Prepare revised submittal (Rev B) with correct data sheet</li>
+            <li>Submittal cover sheet notes: "Resubmission addressing rejection comments.</li>
+            <li>Now submitting perforated cable tray per specification</li>
+            <li>clause 5.2.3. See highlighted compliance on data sheet."</li>
+            <li>
+              <strong>Action:</strong> Submit within 3 working days to maintain programme
+            </li>
+          </ul>
+          <p>
+            <strong>Example 2 — Substitution request:</strong> Specified distribution board has
+            16-week lead time; alternative available in 4 weeks.
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Specified:</strong> Manufacturer A, Type DB-250
+            </li>
+            <li>
+              <strong>Proposed:</strong> Manufacturer B, Type PowerBoard-250
+            </li>
+            <li>
+              <strong>Reason:</strong> Lead time reduction (16 weeks to 4 weeks)
+            </li>
+            <li>Same fault rating (25kA)</li>
+            <li>Same IP rating (IP41)</li>
+            <li>Compatible outgoing ways</li>
+            <li>Both BS EN 61439 compliant</li>
+            <li>
+              <strong>Cost impact:</strong> +£450 per board (6 boards = £2,700)
+            </li>
+            <li>
+              <strong>Action:</strong> Submit with programme showing critical path impact
+            </li>
+          </ul>
+          <p>
+            <strong>Example 3 — Mock-up coordination:</strong> Exposed stainless steel containment
+            in reception area requires mock-up approval.
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>4m straight run with support brackets at 1.2m centres</li>
+            <li>One 90° bend with radius piece</li>
+            <li>One tee junction</li>
+            <li>Earth bonding at each joint</li>
+            <li>
+              <strong>Location:</strong> Plant room corridor (not visible in final scheme)
+            </li>
+            <li>
+              <strong>Witness inspection — Architect:</strong> finish and alignment
+            </li>
+            <li>
+              <strong>Witness inspection — M&E Engineer:</strong> technical compliance
+            </li>
+            <li>
+              <strong>Witness inspection — Client:</strong> overall acceptance
+            </li>
+            <li>
+              <strong>Action:</strong> Photograph and file approval signatures before bulk install
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <ConceptBlock title="Practical guidance">
+          <p>
+            <strong>Submittal preparation checklist:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>Reference the specification clause requiring the submittal</li>
+            <li>Include complete product data sheets (not just brochures)</li>
+            <li>Highlight compliance with each specification requirement</li>
+            <li>Attach all relevant certificates and test reports</li>
+            <li>Include installation and maintenance information</li>
+            <li>Submit as searchable PDF with clear indexing</li>
+          </ul>
+          <p>
+            <strong>Key values to remember:</strong>
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              Review period: <strong>7-14 days</strong> (check contract)
+            </li>
+            <li>
+              Resubmission target: <strong>3-5 working days</strong>
+            </li>
+            <li>
+              Sample retention: <strong>Until bulk installation accepted</strong>
+            </li>
+            <li>
+              Record retention: <strong>Through defects liability period</strong>
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <CommonMistake
+          title="Common mistakes to avoid"
+          whatHappens={
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+              <li>
+                <strong>Submitting marketing brochures</strong> — Use technical data sheets
+              </li>
+              <li>
+                <strong>Not referencing specification</strong> — Always cite the clause
+              </li>
+              <li>
+                <strong>Installing before approval</strong> — Risk of costly removal
+              </li>
+              <li>
+                <strong>Ignoring approval conditions</strong> — 'Approved as noted' means action
+                required
+              </li>
+              <li>
+                <strong>Poor record keeping</strong> — Maintain complete audit trail
+              </li>
+            </ul>
+          }
+          doInstead="Submit technical data sheets (not brochures) cited against the spec clause, wait for written approval before installing, action all 'approved as noted' comments, and keep the submittal register live throughout the job."
+        />
+
+        <SectionRule />
+
+        <Scenario
+          title="Unapproved switchgear installed — full removal demanded"
+          situation={
+            <>
+              The electrical sub orders LV switchgear from an alternative manufacturer to the
+              specified one because of lead time. They do not submit for approval. The switchgear
+              arrives, is installed and is energised. At witness testing, the design team identifies
+              the switchgear is non-compliant — short-circuit rating below specification. The client
+              demands removal and replacement.
+            </>
+          }
+          whatToDo={
+            <>
+              Confirm the contractual position: installing non-approved equipment is a defect; the
+              cost of removal, replacement and re-installation is the subcontractor's. Issue an NCR.
+              Audit the supply chain to find any other unapproved substitutions. Re-brief the entire
+              site team and supply chain on the submittal process — no order placed without approved
+              submittal. Update the procurement procedure to require approved submittal as a gate
+              before purchase order release.
+            </>
+          }
+          whyItMatters={
+            <>
+              Submittal discipline is what keeps the client's building compliant with the
+              specification, BS 7671 and the contract. A bypassed submittal is not a process
+              irritation — it is a contractual breach with cost consequences. Better the lead-time
+              impact of waiting for approval than the cost-and-programme impact of rip-out.
+            </>
+          }
+        />
+
+        <SectionRule />
+
+        <FAQ items={faqs} />
+
+        <SectionRule />
+
+        <KeyTakeaways
+          points={[
+            'Submittal = product data, cut sheets, schedules, samples for design team review against spec.',
+            'Approval status: approved / approved as noted / rejected — never "noted" or "received".',
+            'Long-lead items prioritised — approval + manufacture + delivery must fit programme.',
+            'Mock-ups for visible elements installed, approved, then rolled out at scale.',
+            'Non-approved equipment installed = NCR + removal + re-installation at contractor cost.',
+            'BS 7671 Reg 511.1 requires equipment compliance with relevant standards, documented.',
+            'Submittal register tracks every item: status, dates, comments, resolution.',
+            'Procurement gate: no PO released until submittal approved (or risk-based exception logged).',
+          ]}
+        />
+
+        <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+
+        <div className="grid grid-cols-2 gap-3 pt-2">
           <button
             onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section4')}
-            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
           >
-            <ArrowLeft className="h-4 w-4" /> Back
+            <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+              <ChevronLeft className="h-3 w-3" /> Back to section
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-white truncate">
+              Quality management
+            </div>
           </button>
-
-          <PageHero
-            eyebrow="Module 5 · Section 4 · Subsection 3"
-            title="Material and Equipment Approval"
-            description="Submittal processes, sample approval, mock-up requirements, and specification compliance for building services."
-            tone="purple"
-          />
-
-          <TLDR
-            points={[
-              "Submittal process: contractor submits product data, cut sheets, schedules and samples; design team reviews against specification; approves or rejects with comments.",
-              "Approval is \"approved\", \"approved as noted\" (with conditions), or \"rejected\" — never \"noted\" or \"received\" which carry no contractual force.",
-              "Long-lead items prioritised — submittals lodged early enough that approval, manufacture and delivery fit the programme.",
-              "Mock-ups for visible elements (luminaire types, control panels, finishes) — installed once, approved or rectified, then full installation proceeds.",
-              "NCRs raised when non-approved equipment is installed — full removal and re-installation at contractor cost.",
-            ]}
-          />
-
-          <RegsCallout
-            source="BS 7671:2018+A4:2026 — Regulation 511.1 (General — Conformity to standards)"
-            clause="Every item of equipment shall comply with the appropriate British Standard, harmonised European Standard or its equivalent. The conformity of equipment shall be verified by means of a manufacturer’s declaration, certificate of conformity or other appropriate documentation."
-            meaning={
-              <>
-                BS 7671 requires every item of electrical equipment to comply with the relevant standard, with documented evidence of conformity. The submittal process is how this is verified at design stage; goods-in inspection verifies on delivery. UKCA/CE marking, manufacturer declarations and certificates of conformity are the audit trail.
-              </>
-            }
-            cite="Source: BS 7671:2018+A4:2026 — Regulation 511.1."
-          />
-
-
-          <LearningOutcomes
-            outcomes={[
-              'Establish and maintain a comprehensive submittal register',
-              'Prepare technical data sheets for specification compliance',
-              'Manage the sample approval process effectively',
-              'Understand mock-up requirements for quality benchmarking',
-              'Process alternative product and substitution requests',
-              'Track approved status and maintain audit trails',
-            ]}
-          />
-
-          <SectionRule />
-
-          <ConceptBlock title="Submittal Register and Process">
-            <p>
-              The submittal register is the cornerstone of material and equipment approval
-              management. It provides a comprehensive log of all items requiring approval, their
-              current status, and a complete audit trail throughout the project lifecycle.
-            </p>
-            <p>
-              <strong>Submittal register contents:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Unique reference number:</strong> Sequential numbering system (e.g.,
-                SUB-E-001)
-              </li>
-              <li>
-                <strong>Specification clause:</strong> Reference to relevant specification section
-              </li>
-              <li>
-                <strong>Description:</strong> Clear description of material or equipment
-              </li>
-              <li>
-                <strong>Submission date:</strong> Date submittal was issued for review
-              </li>
-              <li>
-                <strong>Required date:</strong> Date approval is needed for procurement
-              </li>
-              <li>
-                <strong>Revision number:</strong> Track resubmissions (Rev A, B, C)
-              </li>
-              <li>
-                <strong>Status:</strong> Current approval status
-              </li>
-            </ul>
-            <p>
-              <strong>Approval status categories:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Approved:</strong> Fully compliant, no changes — Proceed with procurement
-              </li>
-              <li>
-                <strong>Approved as Noted:</strong> Acceptable with comments — Incorporate comments,
-                then proceed
-              </li>
-              <li>
-                <strong>Revise and Resubmit:</strong> Changes required — Address comments, resubmit
-              </li>
-              <li>
-                <strong>Rejected:</strong> Does not meet specification — Submit compliant
-                alternative
-              </li>
-              <li>
-                <strong>For Information:</strong> No approval required — File for record
-              </li>
-            </ul>
-            <p>
-              <strong>Programme impact:</strong> Allow 7-14 days for review. Factor submittal
-              approval into procurement lead times.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...quickCheckQuestions[0]} />
-
-          <SectionRule />
-
-          <ConceptBlock title="Technical Data Sheets and Documentation">
-            <p>
-              Technical data sheets form the documentary evidence that proposed materials and
-              equipment comply with specification requirements. Complete and accurate documentation
-              is essential for efficient review and approval.
-            </p>
-            <p>
-              <strong>Electrical equipment data:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Rated voltage and current</li>
-              <li>IP rating (ingress protection)</li>
-              <li>Fault rating (kA)</li>
-              <li>Operating temperature range</li>
-              <li>Compliance certifications (BS/EN)</li>
-              <li>CE/UKCA marking documentation</li>
-            </ul>
-            <p>
-              <strong>Luminaire data:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Photometric data (IES/LDT files)</li>
-              <li>Lumen output and efficacy</li>
-              <li>Colour temperature (CCT)</li>
-              <li>Colour rendering index (CRI)</li>
-              <li>Emergency conversion options</li>
-              <li>DALI/control compatibility</li>
-            </ul>
-            <p>
-              <strong>Required submittal documentation:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Product data sheet:</strong> Technical specifications — All equipment
-              </li>
-              <li>
-                <strong>Declaration of conformity:</strong> Regulatory compliance — All CE/UKCA
-                marked items
-              </li>
-              <li>
-                <strong>Test certificates:</strong> Third-party verification — Switchgear, cables,
-                containment
-              </li>
-              <li>
-                <strong>Installation instructions:</strong> Correct installation method — All
-                equipment
-              </li>
-              <li>
-                <strong>Maintenance schedule:</strong> Lifecycle requirements — Major plant items
-              </li>
-              <li>
-                <strong>Warranty terms:</strong> Guarantee conditions — As specified
-              </li>
-            </ul>
-            <p>
-              <strong>Best practice:</strong> Compile all documentation into a single PDF with clear
-              indexing. Highlight specification compliance on each data sheet.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...quickCheckQuestions[1]} />
-
-          <SectionRule />
-
-          <ConceptBlock title="Sample Approval and Mock-ups">
-            <p>
-              Physical samples and mock-up installations provide tangible verification of quality
-              standards that cannot be fully assessed from documentation alone. They establish the
-              benchmark against which all subsequent work will be measured.
-            </p>
-            <p>
-              <strong>Sample approval process:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Step 1:</strong> Submit sample with data sheet and specification reference
-              </li>
-              <li>
-                <strong>Step 2:</strong> Client/engineer inspects for colour, finish, and quality
-              </li>
-              <li>
-                <strong>Step 3:</strong> Written approval or comments issued
-              </li>
-              <li>
-                <strong>Step 4:</strong> Approved sample retained as project benchmark
-              </li>
-              <li>
-                <strong>Step 5:</strong> Delivered materials compared against approved sample
-              </li>
-            </ul>
-            <p>
-              <strong>Typical mock-up — cable containment:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>3m minimum run of each type</li>
-              <li>Include bends, tees, and crossings</li>
-              <li>Earthing bonding connections</li>
-              <li>Support bracket spacing</li>
-              <li>Lid and cover alignment</li>
-            </ul>
-            <p>
-              <strong>Typical mock-up — feature lighting:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Full luminaire with trim/bezel</li>
-              <li>Ceiling integration detail</li>
-              <li>Light output demonstration</li>
-              <li>Control dimming range</li>
-              <li>Emergency function (if applicable)</li>
-            </ul>
-            <p>
-              <strong>Mock-up approval checklist:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Location:</strong> Representative of final installation conditions
-              </li>
-              <li>
-                <strong>Coordination:</strong> Other trades' interfaces included
-              </li>
-              <li>
-                <strong>Documentation:</strong> Photographic record before and after approval
-              </li>
-              <li>
-                <strong>Sign-off:</strong> Written approval from client representative
-              </li>
-              <li>
-                <strong>Retention:</strong> Mock-up retained until bulk installation accepted
-              </li>
-            </ul>
-            <p>
-              <strong>Commercial consideration:</strong> Where mock-ups form part of the permanent
-              works, coordinate location to avoid abortive work and double handling.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...quickCheckQuestions[2]} />
-
-          <SectionRule />
-
-          <ConceptBlock title="Alternative Products and Specification Compliance">
-            <p>
-              When specified products are unavailable or the contractor wishes to propose
-              alternatives, a formal substitution process ensures that replacement items meet or
-              exceed the original specification requirements.
-            </p>
-            <p>
-              <strong>Substitution request requirements:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Reason for substitution (cost, availability, improved performance)</li>
-              <li>Side-by-side comparison of technical specifications</li>
-              <li>Evidence of equal or better performance</li>
-              <li>Compliance with same standards and regulations</li>
-              <li>Impact on warranties and guarantees</li>
-              <li>Cost implication (saving or additional)</li>
-            </ul>
-            <p>
-              <strong>Specification compliance verification — example:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>IP rating:</strong> Specified IP65 — Proposed IP66 — Exceeds
-              </li>
-              <li>
-                <strong>Lumen output:</strong> Specified 3000lm — Proposed 3100lm — Exceeds
-              </li>
-              <li>
-                <strong>Colour temp:</strong> Specified 4000K — Proposed 4000K — Meets
-              </li>
-              <li>
-                <strong>CRI:</strong> Specified &gt;90 — Proposed 85 — Below spec
-              </li>
-              <li>
-                <strong>Warranty:</strong> Specified 5 years — Proposed 5 years — Meets
-              </li>
-              <li>Example: CRI below specification would likely result in rejection</li>
-            </ul>
-            <p>
-              <strong>Approved status tracking:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Approved products list:</strong> Maintained and updated throughout project
-              </li>
-              <li>
-                <strong>Distribution:</strong> Issued to procurement, site teams, and QA manager
-              </li>
-              <li>
-                <strong>Goods receipt:</strong> Check delivered materials against approved list
-              </li>
-              <li>
-                <strong>Traceability:</strong> Retain batch numbers and delivery records
-              </li>
-              <li>
-                <strong>Change control:</strong> Any changes require re-approval process
-              </li>
-            </ul>
-            <p>
-              <strong>Key principle:</strong> Never install materials without prior approval. The
-              cost of removal always exceeds the cost of waiting for approval.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...quickCheckQuestions[3]} />
-
-          <SectionRule />
-
-          <ConceptBlock title="Worked Examples">
-            <p>
-              <strong>Example 1 — Managing a rejected submittal:</strong> Cable tray submittal
-              rejected - specified perforated base but submitted solid base.
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Review rejection comments carefully</li>
-              <li>Identify correct product from same manufacturer (perforated variant)</li>
-              <li>Prepare revised submittal (Rev B) with correct data sheet</li>
-              <li>Submittal cover sheet notes: "Resubmission addressing rejection comments.</li>
-              <li>Now submitting perforated cable tray per specification</li>
-              <li>clause 5.2.3. See highlighted compliance on data sheet."</li>
-              <li>
-                <strong>Action:</strong> Submit within 3 working days to maintain programme
-              </li>
-            </ul>
-            <p>
-              <strong>Example 2 — Substitution request:</strong> Specified distribution board has
-              16-week lead time; alternative available in 4 weeks.
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Specified:</strong> Manufacturer A, Type DB-250
-              </li>
-              <li>
-                <strong>Proposed:</strong> Manufacturer B, Type PowerBoard-250
-              </li>
-              <li>
-                <strong>Reason:</strong> Lead time reduction (16 weeks to 4 weeks)
-              </li>
-              <li>Same fault rating (25kA)</li>
-              <li>Same IP rating (IP41)</li>
-              <li>Compatible outgoing ways</li>
-              <li>Both BS EN 61439 compliant</li>
-              <li>
-                <strong>Cost impact:</strong> +£450 per board (6 boards = £2,700)
-              </li>
-              <li>
-                <strong>Action:</strong> Submit with programme showing critical path impact
-              </li>
-            </ul>
-            <p>
-              <strong>Example 3 — Mock-up coordination:</strong> Exposed stainless steel containment
-              in reception area requires mock-up approval.
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>4m straight run with support brackets at 1.2m centres</li>
-              <li>One 90° bend with radius piece</li>
-              <li>One tee junction</li>
-              <li>Earth bonding at each joint</li>
-              <li>
-                <strong>Location:</strong> Plant room corridor (not visible in final scheme)
-              </li>
-              <li>
-                <strong>Witness inspection — Architect:</strong> finish and alignment
-              </li>
-              <li>
-                <strong>Witness inspection — M&E Engineer:</strong> technical compliance
-              </li>
-              <li>
-                <strong>Witness inspection — Client:</strong> overall acceptance
-              </li>
-              <li>
-                <strong>Action:</strong> Photograph and file approval signatures before bulk install
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <ConceptBlock title="Practical guidance">
-            <p>
-              <strong>Submittal preparation checklist:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>Reference the specification clause requiring the submittal</li>
-              <li>Include complete product data sheets (not just brochures)</li>
-              <li>Highlight compliance with each specification requirement</li>
-              <li>Attach all relevant certificates and test reports</li>
-              <li>Include installation and maintenance information</li>
-              <li>Submit as searchable PDF with clear indexing</li>
-            </ul>
-            <p>
-              <strong>Key values to remember:</strong>
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                Review period: <strong>7-14 days</strong> (check contract)
-              </li>
-              <li>
-                Resubmission target: <strong>3-5 working days</strong>
-              </li>
-              <li>
-                Sample retention: <strong>Until bulk installation accepted</strong>
-              </li>
-              <li>
-                Record retention: <strong>Through defects liability period</strong>
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <CommonMistake
-            title="Common mistakes to avoid"
-            whatHappens={
-              <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
-                <li>
-                  <strong>Submitting marketing brochures</strong> — Use technical data sheets
-                </li>
-                <li>
-                  <strong>Not referencing specification</strong> — Always cite the clause
-                </li>
-                <li>
-                  <strong>Installing before approval</strong> — Risk of costly removal
-                </li>
-                <li>
-                  <strong>Ignoring approval conditions</strong> — 'Approved as noted' means action
-                  required
-                </li>
-                <li>
-                  <strong>Poor record keeping</strong> — Maintain complete audit trail
-                </li>
-              </ul>
-            }
-            doInstead="Submit technical data sheets (not brochures) cited against the spec clause, wait for written approval before installing, action all 'approved as noted' comments, and keep the submittal register live throughout the job."
-          />
-
-          <SectionRule />
-
-          <Scenario
-            title="Unapproved switchgear installed — full removal demanded"
-            situation={
-              <>
-                The electrical sub orders LV switchgear from an alternative manufacturer to the specified one because of lead time. They do not submit for approval. The switchgear arrives, is installed and is energised. At witness testing, the design team identifies the switchgear is non-compliant — short-circuit rating below specification. The client demands removal and replacement.
-              </>
-            }
-            whatToDo={
-              <>
-                Confirm the contractual position: installing non-approved equipment is a defect; the cost of removal, replacement and re-installation is the subcontractor's. Issue an NCR. Audit the supply chain to find any other unapproved substitutions. Re-brief the entire site team and supply chain on the submittal process — no order placed without approved submittal. Update the procurement procedure to require approved submittal as a gate before purchase order release.
-              </>
-            }
-            whyItMatters={
-              <>
-                Submittal discipline is what keeps the client's building compliant with the specification, BS 7671 and the contract. A bypassed submittal is not a process irritation — it is a contractual breach with cost consequences. Better the lead-time impact of waiting for approval than the cost-and-programme impact of rip-out.
-              </>
-            }
-          />
-
-          <SectionRule />
-
-          <FAQ items={faqs} />
-
-          <SectionRule />
-
-                    <KeyTakeaways
-            points={[
-              "Submittal = product data, cut sheets, schedules, samples for design team review against spec.",
-              "Approval status: approved / approved as noted / rejected — never \"noted\" or \"received\".",
-              "Long-lead items prioritised — approval + manufacture + delivery must fit programme.",
-              "Mock-ups for visible elements installed, approved, then rolled out at scale.",
-              "Non-approved equipment installed = NCR + removal + re-installation at contractor cost.",
-              "BS 7671 Reg 511.1 requires equipment compliance with relevant standards, documented.",
-              "Submittal register tracks every item: status, dates, comments, resolution.",
-              "Procurement gate: no PO released until submittal approved (or risk-based exception logged).",
-            ]}
-          />
-
-
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-
-          <div className="grid grid-cols-2 gap-3 pt-2">
-            <button
-              onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section4')}
-              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
-                <ChevronLeft className="h-3 w-3" /> Back to section
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-white truncate">
-                Quality management
-              </div>
-            </button>
-            <button
-              onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section4-4')}
-              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
-                Next subsection <ChevronRight className="h-3 w-3" />
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-black truncate">
-                Installation quality
-              </div>
-            </button>
-          </div>
-        </PageFrame>
-      </div>
-    </div>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/h-n-c-module5-section4-4')}
+            className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+          >
+            <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+              Next subsection <ChevronRight className="h-3 w-3" />
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-black truncate">
+              Installation quality
+            </div>
+          </button>
+        </div>
+      </HubBody>
+    </HubPage>
   );
 };
 

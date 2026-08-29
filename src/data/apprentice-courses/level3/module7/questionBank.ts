@@ -1450,7 +1450,7 @@ export const module7Questions: Question[] = [
     question: 'Estimating and quantity surveying in electrical contracting:',
     options: [
       'Needs only numeracy and pricing skills',
-      'Is fully automated with no human judgment',
+      'Is fully automated with no human judgement',
       'Is an accounting role away from site work',
       'Benefits greatly from hands-on electrical experience',
     ],

@@ -6,10 +6,10 @@
  * incoming Growth & Skills Levy.
  */
 
-import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Compass, HelpCircle } from 'lucide-react';
-import { PageFrame, PageHero, itemVariants } from '@/components/college/primitives';
+import { Compass, HelpCircle } from 'lucide-react';
+import { itemVariants } from '@/components/college/primitives';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { Eyebrow, SectionHeader } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
 import { NMW_RATES } from '@/data/nmwRates';
 
@@ -248,77 +248,68 @@ const glossary = [
 ];
 
 const FundingFAQsPage = () => {
-  const navigate = useNavigate();
   return (
-    <PageFrame className="px-4 sm:px-6 lg:px-8">
-      <motion.div variants={itemVariants}>
-        <button
-          onClick={() => navigate('/apprentice/toolbox/apprenticeship-funding')}
-          className="inline-flex items-center gap-2 h-11 -ml-2 px-2 rounded-md text-[12px] uppercase tracking-[0.18em] text-white/55 hover:text-white/85 transition-colors touch-manipulation"
-        >
-          <ArrowLeft className="h-4 w-4" />
-          Back
-        </button>
-      </motion.div>
+    <HubPage>
+      <HubMasthead
+        section="Apprentice · Funding"
+        title="FAQs & glossary"
+        backTo="/apprentice/toolbox/apprenticeship-funding"
+      />
+      <HubBody>
+        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
+          {'The questions that keep coming up, plus 25 funding terms worth knowing.'}
+        </p>
 
-      <motion.div variants={itemVariants}>
-        <PageHero
-          eyebrow="Apprentice · Funding"
-          title="FAQs & glossary"
-          description="The questions that keep coming up, plus 25 funding terms worth knowing."
-          tone="yellow"
-        />
-      </motion.div>
-
-      {/* ── FAQs ────────────────────────────────────────────────── */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <SectionHeader
-          eyebrow="Frequently asked"
-          title={`${faqs.length} questions, answered`}
-          meta="Funding rules, levy, CITB grants, redundancy, resits"
-        />
-        <ul className="space-y-2">
-          {faqs.map((faq) => (
-            <li
-              key={faq.question}
-              className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-1.5"
-            >
-              <div className="flex items-start gap-2">
-                <HelpCircle className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
-                <h3 className="text-[13.5px] font-semibold text-white tracking-tight">
-                  {faq.question}
-                </h3>
-              </div>
-              <p className="text-[12.5px] text-white/85 leading-relaxed pl-5">{faq.answer}</p>
-            </li>
-          ))}
-        </ul>
-      </motion.section>
-
-      {/* ── Glossary ────────────────────────────────────────────── */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <SectionHeader
-          eyebrow="Glossary"
-          title={`${glossary.length} funding terms`}
-          meta="Bookmark this — apprenticeship admin uses these every day"
-        />
-        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5">
-          <ul className="space-y-2.5">
-            {glossary.map((item) => (
-              <li key={item.term} className="flex items-start gap-3">
-                <Compass className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
-                <div className="space-y-0.5">
-                  <span className="text-[12.5px] font-mono font-semibold text-elec-yellow">
-                    {item.term}
-                  </span>
-                  <p className="text-[12.5px] text-white/85 leading-relaxed">{item.definition}</p>
+        {/* ── FAQs ────────────────────────────────────────────────── */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <SectionHeader
+            eyebrow="Frequently asked"
+            title={`${faqs.length} questions, answered`}
+            meta="Funding rules, levy, CITB grants, redundancy, resits"
+          />
+          <ul className="space-y-2">
+            {faqs.map((faq) => (
+              <li
+                key={faq.question}
+                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-1.5"
+              >
+                <div className="flex items-start gap-2">
+                  <HelpCircle className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
+                  <h3 className="text-[13.5px] font-semibold text-white tracking-tight">
+                    {faq.question}
+                  </h3>
                 </div>
+                <p className="text-[12.5px] text-white/85 leading-relaxed pl-5">{faq.answer}</p>
               </li>
             ))}
           </ul>
-        </div>
-      </motion.section>
-    </PageFrame>
+        </motion.section>
+
+        {/* ── Glossary ────────────────────────────────────────────── */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <SectionHeader
+            eyebrow="Glossary"
+            title={`${glossary.length} funding terms`}
+            meta="Bookmark this — apprenticeship admin uses these every day"
+          />
+          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5">
+            <ul className="space-y-2.5">
+              {glossary.map((item) => (
+                <li key={item.term} className="flex items-start gap-3">
+                  <Compass className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
+                  <div className="space-y-0.5">
+                    <span className="text-[12.5px] font-mono font-semibold text-elec-yellow">
+                      {item.term}
+                    </span>
+                    <p className="text-[12.5px] text-white/85 leading-relaxed">{item.definition}</p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </motion.section>
+      </HubBody>
+    </HubPage>
   );
 };
 

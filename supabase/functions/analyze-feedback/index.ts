@@ -1,5 +1,9 @@
 import { serve } from '../_shared/deps.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+import { Resend } from '../_shared/mailer.ts';
+
+/** Who receives the weekly AI-feedback digest. */
+const DIGEST_RECIPIENT = 'andrewgangoo91@gmail.com';
 import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
@@ -35,11 +39,45 @@ serve(async (req) => {
 
     if (fetchError) throw fetchError;
 
+    // Elec-AI chat feedback lives in its own table (elec_ai_feedback — the
+    // chat's votes never fit this table's v3-agent CHECK constraints). Map its
+    // negatives into the same shape; the one-tap reasons stand in for
+    // user_correction, which is exactly the diagnosable detail the analysis
+    // prompt wants.
+    const { data: elecAiNegative, error: elecErr } = await supabase
+      .from('elec_ai_feedback')
+      .select('*')
+      .eq('rating', 'negative')
+      .gte('created_at', sevenDaysAgo.toISOString())
+      .order('created_at', { ascending: false });
+    if (elecErr) throw elecErr;
+
+    const allNegative = [
+      ...(negativeFeedback || []),
+      ...(elecAiNegative || []).map((r) => ({
+        // Not an ai_interaction_feedback id — learning_review_queue.feedback_id
+        // has an FK to that table, so these rows must carry null.
+        id: null,
+        agent_name: r.agent,
+        question: r.question,
+        ai_response: r.answer,
+        user_correction:
+          [
+            (r.reasons || []).join(', '),
+            (r.cited_regulations || []).length
+              ? `cited: ${r.cited_regulations.join(', ')}`
+              : '',
+          ]
+            .filter(Boolean)
+            .join(' — ') || null,
+      })),
+    ];
+
     console.log(
-      `[analyze-feedback] Found ${negativeFeedback?.length || 0} negative feedback items`
+      `[analyze-feedback] Found ${allNegative.length} negative feedback items (${elecAiNegative?.length || 0} from elec-ai)`
     );
 
-    if (!negativeFeedback || negativeFeedback.length === 0) {
+    if (allNegative.length === 0) {
       return new Response(
         JSON.stringify({
           success: true,
@@ -52,7 +90,7 @@ serve(async (req) => {
     }
 
     // Group by agent
-    const feedbackByAgent = negativeFeedback.reduce(
+    const feedbackByAgent = allNegative.reduce(
       (acc, item) => {
         if (!acc[item.agent_name]) acc[item.agent_name] = [];
         acc[item.agent_name].push(item);
@@ -135,10 +173,71 @@ Your task:
 
     console.log(`[analyze-feedback] Created ${suggestions.length} learning suggestions`);
 
+    // Weekly digest to a human — the review queue had no reader, so patterns
+    // were landing in a table nobody opened. Sent whenever the week had ANY
+    // negative feedback (including single complaints below the ≥2 pattern
+    // threshold); quiet weeks send nothing.
+    try {
+      const apiKey = Deno.env.get('RESEND_API_KEY'); // holds the Brevo key
+      if (apiKey) {
+        const byAgent = new Map<string, typeof allNegative>();
+        for (const f of allNegative) {
+          const list = byAgent.get(f.agent_name) ?? [];
+          list.push(f);
+          byAgent.set(f.agent_name, list);
+        }
+        const esc = (s: string) =>
+          s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        const agentBlocks = [...byAgent.entries()]
+          .map(([agent, items]) => {
+            const patterns = suggestions.find((s) => s.agent === agent)?.patterns as
+              | string[]
+              | undefined;
+            const rows = items
+              .slice(0, 5)
+              .map(
+                (f) =>
+                  `<li style="margin-bottom:6px"><strong>Q:</strong> ${esc(
+                    (f.question || '').slice(0, 160)
+                  )}${f.user_correction ? `<br/><em>${esc(f.user_correction.slice(0, 160))}</em>` : ''}</li>`
+              )
+              .join('');
+            return `<h3 style="margin:16px 0 4px">${esc(agent)} — ${items.length} negative</h3>${
+              patterns
+                ? `<p style="margin:4px 0"><strong>Patterns:</strong> ${esc(patterns.join('; '))}</p>`
+                : `<p style="margin:4px 0">Below the 2-per-week pattern threshold — raw items below.</p>`
+            }<ul style="margin:4px 0 0;padding-left:18px">${rows}</ul>`;
+          })
+          .join('');
+
+        const resend = new Resend(apiKey);
+        const { error: mailError } = await resend.emails.send({
+          from: 'Elec-Mate <founder@elec-mate.com>',
+          to: DIGEST_RECIPIENT,
+          subject: `Elec-AI feedback: ${allNegative.length} negative this week, ${suggestions.length} pattern${suggestions.length === 1 ? '' : 's'}`,
+          html: `<div style="font-family:sans-serif;max-width:600px">
+            <h2 style="margin:0 0 8px">Weekly AI feedback digest</h2>
+            <p style="margin:0 0 12px">${allNegative.length} negative rating${allNegative.length === 1 ? '' : 's'} in the last 7 days across ${byAgent.size} agent${byAgent.size === 1 ? '' : 's'}. Full detail in <code>learning_review_queue</code> / <code>elec_ai_feedback</code>.</p>
+            ${agentBlocks}
+          </div>`,
+        });
+        if (mailError) {
+          console.error('[analyze-feedback] digest email failed:', mailError);
+        } else {
+          console.log('[analyze-feedback] digest email sent');
+        }
+      } else {
+        console.warn('[analyze-feedback] RESEND_API_KEY not set — digest skipped');
+      }
+    } catch (mailErr) {
+      // The analysis result must never fail because the digest did.
+      console.error('[analyze-feedback] digest email threw:', mailErr);
+    }
+
     return new Response(
       JSON.stringify({
         success: true,
-        analyzedFeedback: negativeFeedback.length,
+        analyzedFeedback: allNegative.length,
         suggestionsCreated: suggestions.length,
         suggestions,
       }),

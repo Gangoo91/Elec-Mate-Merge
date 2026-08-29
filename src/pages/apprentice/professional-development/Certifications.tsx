@@ -7,10 +7,10 @@
  * editorial pattern.
  */
 
-import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft, CheckCircle2 } from 'lucide-react';
-import { PageFrame, PageHero, itemVariants } from '@/components/college/primitives';
+import { CheckCircle2 } from 'lucide-react';
+import { itemVariants } from '@/components/college/primitives';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { Eyebrow, SectionHeader } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
 
 interface CoreCert {
@@ -263,239 +263,233 @@ const qualificationRoute = [
 ];
 
 const Certifications = () => {
-  const navigate = useNavigate();
   return (
-    <PageFrame className="px-4 sm:px-6 lg:px-8">
-      <motion.div variants={itemVariants}>
-        <button
-          onClick={() => navigate('/apprentice/professional-development')}
-          className="inline-flex items-center gap-2 h-11 -ml-2 px-2 rounded-md text-[12px] uppercase tracking-[0.18em] text-white/55 hover:text-white/85 transition-colors touch-manipulation"
-        >
-          <ArrowLeft className="h-4 w-4" />
-          Back
-        </button>
-      </motion.div>
+    <HubPage>
+      <HubMasthead
+        section="Apprentice · Qualifications"
+        title="Certifications & qualifications"
+        backTo="/apprentice/professional-development"
+      />
+      <HubBody>
+        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
+          {
+            'The right certifications open doors to higher pay, specialist work, and career progression. From essentials to competent-person schemes — what each one is for and when to chase it.'
+          }
+        </p>
 
-      <motion.div variants={itemVariants}>
-        <PageHero
-          eyebrow="Apprentice · Qualifications"
-          title="Certifications & qualifications"
-          description="The right certifications open doors to higher pay, specialist work, and career progression. From essentials to competent-person schemes — what each one is for and when to chase it."
-          tone="yellow"
-        />
-      </motion.div>
-
-      {/* ── Qualification route ──────────────────────────────────── */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <SectionHeader
-          eyebrow="The route"
-          title="How you actually qualify"
-          meta="From the classroom to the Gold card — the path every apprentice walks"
-        />
-        <ol className="space-y-2">
-          {qualificationRoute.map((q, i) => (
-            <li
-              key={q.step}
-              className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5"
-            >
-              <div className="flex items-start gap-3">
-                <div className="h-8 w-8 rounded-md border border-elec-yellow/30 bg-elec-yellow/[0.06] flex items-center justify-center flex-shrink-0">
-                  <span className="text-[13px] font-mono font-semibold text-elec-yellow tabular-nums">
-                    {i + 1}
-                  </span>
-                </div>
-                <div className="flex-1 min-w-0 space-y-1">
-                  <div className="flex items-baseline justify-between gap-3 flex-wrap">
-                    <h3 className="text-[15px] font-semibold text-white tracking-tight">
-                      {q.step}
-                    </h3>
-                    <span className="text-[11px] font-mono text-white/55">{q.code}</span>
-                  </div>
-                  <p className="text-[13px] text-white/85 leading-relaxed pt-0.5">{q.detail}</p>
-                </div>
-              </div>
-            </li>
-          ))}
-        </ol>
-        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-            No apprenticeship? The experienced-worker route
-          </span>
-          <p className="mt-1.5 text-[13px] text-white/80 leading-relaxed">
-            Adults already working in the trade can qualify through the Experienced Worker
-            Assessment (EWA — e.g. C&G 2346) and the{' '}
-            <span className="text-white font-medium">AM2E</span>, instead of a formal apprenticeship
-            and AM2S.
-          </p>
-        </div>
-      </motion.section>
-
-      {/* ── Core certifications ──────────────────────────────────── */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <SectionHeader
-          eyebrow="Core certifications"
-          title="The five every electrician needs"
-          meta="Foundation tier — most employers and schemes expect these"
-        />
-        <ul className="space-y-2.5">
-          {coreCertifications.map((cert) => (
-            <li
-              key={cert.title}
-              className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3"
-            >
-              <h3 className="text-[15px] font-semibold text-white tracking-tight leading-snug">
-                {cert.title}
-              </h3>
-              <p className="text-[13px] text-white/85 leading-relaxed">{cert.description}</p>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 pt-1 border-t border-white/[0.04]">
-                <KpiTile label="Provider" value={cert.provider} />
-                <KpiTile label="Cost" value={cert.cost} mono />
-                <KpiTile label="Duration" value={cert.duration} mono />
-                <KpiTile label="Validity" value={cert.validity} />
-              </div>
-              <div className="pt-1">
-                <Eyebrow>Prerequisites</Eyebrow>
-                <p className="text-[12px] text-white/70 leading-relaxed mt-1">
-                  {cert.prerequisites}
-                </p>
-              </div>
-            </li>
-          ))}
-        </ul>
-      </motion.section>
-
-      {/* ── Specialist certifications ────────────────────────────── */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <SectionHeader
-          eyebrow="Specialist categories"
-          title="Eight high-demand areas"
-          meta="Pick what matches your local market"
-        />
-        <ul className="space-y-2.5">
-          {specialistCategories.map((cat) => (
-            <li
-              key={cat.category}
-              className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3"
-            >
-              <div className="flex items-baseline justify-between gap-3 flex-wrap">
-                <h3 className="text-[15px] font-semibold text-white tracking-tight">
-                  {cat.category}
-                </h3>
-                <span
-                  className={
-                    'inline-flex items-center h-6 px-2 rounded-md border text-[10px] font-medium uppercase tracking-[0.14em] ' +
-                    (cat.growth === 'Premium' || cat.growth.endsWith('%')
-                      ? 'border-elec-yellow/30 bg-elec-yellow/[0.06] text-elec-yellow'
-                      : 'border-white/[0.10] bg-white/[0.03] text-white/85')
-                  }
-                >
-                  {cat.growth} growth
-                </span>
-              </div>
-              <ul className="space-y-2">
-                {cat.certs.map((c) => (
-                  <li
-                    key={c.name}
-                    className="rounded-md border border-white/[0.06] bg-white/[0.02] p-3 space-y-1"
-                  >
-                    <p className="text-[13px] font-medium text-white leading-snug">{c.name}</p>
-                    <div className="flex items-center gap-2 text-[11px] font-mono tabular-nums text-white/55">
-                      <span>{c.cost}</span>
-                      <span>·</span>
-                      <span>{c.duration}</span>
-                    </div>
-                    {c.note && (
-                      <p className="text-[11.5px] text-white/70 leading-relaxed mt-1">{c.note}</p>
-                    )}
-                  </li>
-                ))}
-              </ul>
-            </li>
-          ))}
-        </ul>
-      </motion.section>
-
-      {/* ── Competent person schemes ─────────────────────────────── */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <SectionHeader
-          eyebrow="Competent person schemes"
-          title="Three main routes"
-          meta="Required once you self-certify Part P work"
-        />
-        <ul className="space-y-2.5">
-          {competentPersonSchemes.map((scheme) => (
-            <li
-              key={scheme.name}
-              className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3"
-            >
-              <div className="flex items-baseline justify-between gap-3 flex-wrap">
-                <h3 className="text-[15px] font-semibold text-white tracking-tight">
-                  {scheme.name}
-                </h3>
-                <span className="text-[11px] font-mono text-elec-yellow tabular-nums">
-                  {scheme.cost}
-                </span>
-              </div>
-              <p className="text-[13px] text-white/85 leading-relaxed">{scheme.description}</p>
-              <ul className="space-y-1.5">
-                {scheme.benefits.map((b) => (
-                  <li
-                    key={b}
-                    className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
-                  >
-                    <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
-                    <span>{b}</span>
-                  </li>
-                ))}
-              </ul>
-            </li>
-          ))}
-        </ul>
-      </motion.section>
-
-      {/* ── Planning strategy ────────────────────────────────────── */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <SectionHeader
-          eyebrow="Planning"
-          title="Nine moves that pay off"
-          meta="The sequencing that gets you the highest return"
-        />
-        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5">
-          <ul className="space-y-2">
-            {planningTips.map((tip) => (
+        {/* ── Qualification route ──────────────────────────────────── */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <SectionHeader
+            eyebrow="The route"
+            title="How you actually qualify"
+            meta="From the classroom to the Gold card — the path every apprentice walks"
+          />
+          <ol className="space-y-2">
+            {qualificationRoute.map((q, i) => (
               <li
-                key={tip}
-                className="flex items-start gap-2 text-[13px] text-white/85 leading-relaxed"
+                key={q.step}
+                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5"
               >
-                <CheckCircle2 className="h-4 w-4 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
-                <span>{tip}</span>
+                <div className="flex items-start gap-3">
+                  <div className="h-8 w-8 rounded-md border border-elec-yellow/30 bg-elec-yellow/[0.06] flex items-center justify-center flex-shrink-0">
+                    <span className="text-[13px] font-mono font-semibold text-elec-yellow tabular-nums">
+                      {i + 1}
+                    </span>
+                  </div>
+                  <div className="flex-1 min-w-0 space-y-1">
+                    <div className="flex items-baseline justify-between gap-3 flex-wrap">
+                      <h3 className="text-[15px] font-semibold text-white tracking-tight">
+                        {q.step}
+                      </h3>
+                      <span className="text-[11px] font-mono text-white/55">{q.code}</span>
+                    </div>
+                    <p className="text-[13px] text-white/85 leading-relaxed pt-0.5">{q.detail}</p>
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ol>
+          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              No apprenticeship? The experienced-worker route
+            </span>
+            <p className="mt-1.5 text-[13px] text-white/80 leading-relaxed">
+              Adults already working in the trade can qualify through the Experienced Worker
+              Assessment (EWA — e.g. C&G 2346) and the{' '}
+              <span className="text-white font-medium">AM2E</span>, instead of a formal
+              apprenticeship and AM2S.
+            </p>
+          </div>
+        </motion.section>
+
+        {/* ── Core certifications ──────────────────────────────────── */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <SectionHeader
+            eyebrow="Core certifications"
+            title="The five every electrician needs"
+            meta="Foundation tier — most employers and schemes expect these"
+          />
+          <ul className="space-y-2.5">
+            {coreCertifications.map((cert) => (
+              <li
+                key={cert.title}
+                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3"
+              >
+                <h3 className="text-[15px] font-semibold text-white tracking-tight leading-snug">
+                  {cert.title}
+                </h3>
+                <p className="text-[13px] text-white/85 leading-relaxed">{cert.description}</p>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 pt-1 border-t border-white/[0.04]">
+                  <KpiTile label="Provider" value={cert.provider} />
+                  <KpiTile label="Cost" value={cert.cost} mono />
+                  <KpiTile label="Duration" value={cert.duration} mono />
+                  <KpiTile label="Validity" value={cert.validity} />
+                </div>
+                <div className="pt-1">
+                  <Eyebrow>Prerequisites</Eyebrow>
+                  <p className="text-[12px] text-white/70 leading-relaxed mt-1">
+                    {cert.prerequisites}
+                  </p>
+                </div>
               </li>
             ))}
           </ul>
-        </div>
-      </motion.section>
+        </motion.section>
 
-      {/* ── Recommended order ────────────────────────────────────── */}
-      <motion.section variants={itemVariants}>
-        <div className="rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-1.5">
-          <Eyebrow className="text-elec-yellow/85">Recommended order</Eyebrow>
-          <p className="text-[13.5px] text-white/85 leading-relaxed">
-            Years 1–3: 18th Edition + AM2 + Part P. Years 3–5: 2391 + PAT Testing + first specialist
-            cert (EV, Solar, or Fire Alarm). Year 5+: advanced specialisms (BESS, HV, Data Centres,
-            PLC) + competent person scheme. This gives you the widest range of opportunities while
-            building on solid foundations.
+        {/* ── Specialist certifications ────────────────────────────── */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <SectionHeader
+            eyebrow="Specialist categories"
+            title="Eight high-demand areas"
+            meta="Pick what matches your local market"
+          />
+          <ul className="space-y-2.5">
+            {specialistCategories.map((cat) => (
+              <li
+                key={cat.category}
+                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3"
+              >
+                <div className="flex items-baseline justify-between gap-3 flex-wrap">
+                  <h3 className="text-[15px] font-semibold text-white tracking-tight">
+                    {cat.category}
+                  </h3>
+                  <span
+                    className={
+                      'inline-flex items-center h-6 px-2 rounded-md border text-[10px] font-medium uppercase tracking-[0.14em] ' +
+                      (cat.growth === 'Premium' || cat.growth.endsWith('%')
+                        ? 'border-elec-yellow/30 bg-elec-yellow/[0.06] text-elec-yellow'
+                        : 'border-white/[0.10] bg-white/[0.03] text-white/85')
+                    }
+                  >
+                    {cat.growth} growth
+                  </span>
+                </div>
+                <ul className="space-y-2">
+                  {cat.certs.map((c) => (
+                    <li
+                      key={c.name}
+                      className="rounded-md border border-white/[0.06] bg-white/[0.02] p-3 space-y-1"
+                    >
+                      <p className="text-[13px] font-medium text-white leading-snug">{c.name}</p>
+                      <div className="flex items-center gap-2 text-[11px] font-mono tabular-nums text-white/55">
+                        <span>{c.cost}</span>
+                        <span>·</span>
+                        <span>{c.duration}</span>
+                      </div>
+                      {c.note && (
+                        <p className="text-[11.5px] text-white/70 leading-relaxed mt-1">{c.note}</p>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              </li>
+            ))}
+          </ul>
+        </motion.section>
+
+        {/* ── Competent person schemes ─────────────────────────────── */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <SectionHeader
+            eyebrow="Competent person schemes"
+            title="Three main routes"
+            meta="Required once you self-certify Part P work"
+          />
+          <ul className="space-y-2.5">
+            {competentPersonSchemes.map((scheme) => (
+              <li
+                key={scheme.name}
+                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3"
+              >
+                <div className="flex items-baseline justify-between gap-3 flex-wrap">
+                  <h3 className="text-[15px] font-semibold text-white tracking-tight">
+                    {scheme.name}
+                  </h3>
+                  <span className="text-[11px] font-mono text-elec-yellow tabular-nums">
+                    {scheme.cost}
+                  </span>
+                </div>
+                <p className="text-[13px] text-white/85 leading-relaxed">{scheme.description}</p>
+                <ul className="space-y-1.5">
+                  {scheme.benefits.map((b) => (
+                    <li
+                      key={b}
+                      className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                    >
+                      <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
+                      <span>{b}</span>
+                    </li>
+                  ))}
+                </ul>
+              </li>
+            ))}
+          </ul>
+        </motion.section>
+
+        {/* ── Planning strategy ────────────────────────────────────── */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <SectionHeader
+            eyebrow="Planning"
+            title="Nine moves that pay off"
+            meta="The sequencing that gets you the highest return"
+          />
+          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5">
+            <ul className="space-y-2">
+              {planningTips.map((tip) => (
+                <li
+                  key={tip}
+                  className="flex items-start gap-2 text-[13px] text-white/85 leading-relaxed"
+                >
+                  <CheckCircle2 className="h-4 w-4 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
+                  <span>{tip}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </motion.section>
+
+        {/* ── Recommended order ────────────────────────────────────── */}
+        <motion.section variants={itemVariants}>
+          <div className="rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-1.5">
+            <Eyebrow className="text-elec-yellow/85">Recommended order</Eyebrow>
+            <p className="text-[13.5px] text-white/85 leading-relaxed">
+              Years 1–3: 18th Edition + AM2 + Part P. Years 3–5: 2391 + PAT Testing + first
+              specialist cert (EV, Solar, or Fire Alarm). Year 5+: advanced specialisms (BESS, HV,
+              Data Centres, PLC) + competent person scheme. This gives you the widest range of
+              opportunities while building on solid foundations.
+            </p>
+          </div>
+        </motion.section>
+
+        {/* ── Footnote ─────────────────────────────────────────────── */}
+        <motion.section variants={itemVariants}>
+          <p className="text-[11px] text-white/40 leading-relaxed">
+            Certification costs and durations are indicative and vary by provider and location.
+            Check with approved training providers for current pricing. Reflects BS
+            7671:2018+A4:2026.
           </p>
-        </div>
-      </motion.section>
-
-      {/* ── Footnote ─────────────────────────────────────────────── */}
-      <motion.section variants={itemVariants}>
-        <p className="text-[11px] text-white/40 leading-relaxed">
-          Certification costs and durations are indicative and vary by provider and location. Check
-          with approved training providers for current pricing. Reflects BS 7671:2018+A4:2026.
-        </p>
-      </motion.section>
-    </PageFrame>
+        </motion.section>
+      </HubBody>
+    </HubPage>
   );
 };
 

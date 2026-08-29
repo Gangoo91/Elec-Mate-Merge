@@ -1,8 +1,8 @@
-import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { useNavigate } from 'react-router-dom';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
-import { PageFrame, PageHero } from '@/components/college/primitives';
 import {
   TLDR,
   ConceptBlock,
@@ -22,8 +22,7 @@ import useSEO from '@/hooks/useSEO';
 const inlineChecks = [
   {
     id: 'm10s3-seg-definition',
-    question:
-      'What is the Smart Export Guarantee (SEG) in UK 2025-26?',
+    question: 'What is the Smart Export Guarantee (SEG) in UK 2025-26?',
     options: [
       'An Ofgem-administered statutory scheme paying licensed suppliers for exported low-carbon electricity',
       'A specific requirement set out within BS 7671 for export-capable installations',
@@ -36,8 +35,7 @@ const inlineChecks = [
   },
   {
     id: 'm10s3-mcs-requirement',
-    question:
-      'Why does SEG eligibility require MCS certification of the install?',
+    question: 'Why does SEG eligibility require MCS certification of the install?',
     options: [
       'It is a marketing badge only and has no bearing on whether the export is paid',
       'It replaces the need for a BS 7671 EIC and an installation certificate',
@@ -50,8 +48,7 @@ const inlineChecks = [
   },
   {
     id: 'm10s3-export-mpan',
-    question:
-      'What is an export MPAN and why does SEG need one?',
+    question: 'What is an export MPAN and why does SEG need one?',
     options: [
       'A second physical export meter fitted in the consumer unit alongside the import meter',
       'The serial number printed on the body of the smart meter itself',
@@ -106,8 +103,7 @@ const quizQuestions = [
       'About 2,400-2,650 kWh/year is exported; at ~15p that is £360-400, at ~3p only £70-80 — so supplier choice materially affects payback. Practical UK 2025-26 SEG-only PV economics: (1) Annual generation — 4 kWp × 850-950 kWh/kWp/year (UK average yield depends on orientation, shading, latitude). Take 900 kWh/kWp × 4 = 3,600 kWh/year. (2) Self-consumption — working-from-office household (no daytime occupant) typically 25-35% self-consumption from PV-only. Take 30% → 1,080 kWh self-used; 2,520 kWh exported. (3) Avoided import — 1,080 kWh × £0.27/kWh = £292/year saved. (4) SEG income — varies by supplier: £0.03 × 2,520 = £76/year (low end EDF Export); £0.05 × 2,520 = £126 (Good Energy); £0.15 × 2,520 = £378/year (Octopus Outgoing Fixed). (5) Total annual benefit: £292 + £76 = £368 (worst case) to £292 + £378 = £670 (best case Octopus). (6) System cost £5,000-7,000 typical 4 kWp install — simple payback 10-19 years depending on supplier choice. (7) Adding 5 kWh BESS (£3,000-5,000 extra) shifts self-consumption from 30% to ≈70%; reduces export but maximises avoided import (£680/year saved); reduces SEG income (~£120 remaining); total £800/year; reduced payback in years 1-10. (8) Customer-facing advice: shop SEG annually — difference between 3p and 15p is the difference between BESS-makes-sense and PV-only-makes-sense for the export portion.',
   },
   {
-    question:
-      'Does SEG require BS 7671 compliance of the install?',
+    question: 'Does SEG require BS 7671 compliance of the install?',
     options: [
       'Indirectly yes: SEG requires MCS, and MCS Installer Standards require BS 7671 compliance',
       'No — SEG installs are entirely exempt from BS 7671 because they are generation, not consumption',
@@ -145,8 +141,7 @@ const quizQuestions = [
       'UK domestic PV economic story has shifted post-FiT: (1) FiT era (2010-2019) — generous generation + export tariff (4-50p/kWh for the generation portion depending on cohort + technology). Customers signed up + got 20-25 year index-linked income. Primary economic driver. (2) FiT closed to new applicants 31 March 2019. SEG launched 1 January 2020. (3) SEG era (2020-) — export-only tariff at 3-15p/kWh. NOT generous like FiT. Customer benefit is dominated by AVOIDED IMPORT (self-consumption × import tariff). (4) Honest customer conversation: ‘PV is now economic because import electricity is expensive (25-30p/kWh), not because export pays well. Maximise self-consumption + shop SEG annually + consider BESS to shift more PV to self-consumption.’ (5) Numbers customer-facing: 4 kWp PV × 3,600 kWh/year × 50% self-consumption (with BESS) × £0.27/kWh = £486 avoided + 1,800 kWh export × £0.10/kWh (mid-range) = £180 SEG = £666/year total. Payback 8-12 years on PV-only; 10-15 on PV+BESS. (6) Avoid: ‘guaranteed XX% return’, ‘your solar pays for itself in N years’ — customer-facing economic claims must reflect real ranges + current tariffs. Cert evidence + customer documentation should be neutral on economics; quote-stage economic modelling is the right place for the customer-specific numbers.',
   },
   {
-    question:
-      'A customer doesn’t have a smart meter. What’s the SEG impact?',
+    question: 'A customer doesn’t have a smart meter. What’s the SEG impact?',
     options: [
       'No impact — SEG can be registered on a traditional analogue meter without any change',
       'A minor issue — the DNO simply reads the export manually each quarter instead',
@@ -191,413 +186,378 @@ export default function RenewableEnergyModule10Section3() {
   const navigate = useNavigate();
 
   useSEO({
-    title: 'Smart Export Guarantee (SEG) for UK renewable systems | Renewable Energy 10.3 | Elec-Mate',
+    title:
+      'Smart Export Guarantee (SEG) for UK renewable systems | Renewable Energy 10.3 | Elec-Mate',
     description:
       'UK Smart Export Guarantee (SEG) framework — Ofgem-administered, replaced FiT 2020. Licensed suppliers (>150k customers) must offer SEG tariff for low-carbon export. Eligibility: MCS certification + smart meter export MPAN. Tariff landscape (Octopus Outgoing Fixed / Agile, EDF Export, E.ON, Good Energy). Self-consumption vs export economics.',
   });
 
   return (
-    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
-      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
-        <PageFrame>
+    <HubPage>
+      <HubMasthead
+        section="Module 10 · Section 3 · UK Ofgem statutory framework + commercial supplier tariffs"
+        title="Smart Export Guarantee (SEG)"
+        backTo="../renewable-energy-module-10"
+      />
+      <HubBody>
+        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
+          The UK statutory framework for paid export of low-carbon electricity from small-scale (≤5
+          MW PV / wind / hydro / AD; ≤50 kW micro-CHP) installations. Ofgem-administered, in force
+          since 1 January 2020. Replaced the Feed-in Tariff (closed 31 March 2019). Eligibility: MCS
+          certification of the install + smart meter with half-hourly export reading. Commercial
+          supplier offers vary widely: Octopus Outgoing Fixed / Agile, EDF Export, E.ON Next Export,
+          Good Energy, OVO, British Gas.
+        </p>
+
+        <TLDR
+          points={[
+            'SEG = Smart Export Guarantee. UK statutory framework, Ofgem-administered. In force since 1 Jan 2020. Replaced the Feed-in Tariff (FiT, closed to new applicants 31 Mar 2019).',
+            'Licensed suppliers with ≥150,000 domestic customers MUST offer at least one SEG tariff. Smaller suppliers may offer voluntarily.',
+            'Eligible technologies: PV (up to 5 MW), wind (up to 5 MW), hydro (up to 5 MW), AD (up to 5 MW), micro-CHP (up to 50 kW). Solar thermal NOT eligible (not electricity). BESS standalone NOT eligible (not generation).',
+            'Eligibility requires: (a) MCS certification of the install (MIS 3002 PV, MIS 3003 wind, MIS 3007 micro-CHP, MIS 3008 hydro); (b) smart meter with half-hourly export reading (SMETS2 standard).',
+            'UK 2025-26 tariff range: 3-15p/kWh + dynamic options (Octopus Outgoing Agile can spike higher during peak demand). Octopus Outgoing Fixed ≈15p/kWh, EDF Export Variable ≈3p/kWh, E.ON Next ≈16.5p, Good Energy ≈5p.',
+            'Self-consumption is more valuable per kWh than export in UK 2025-26: avoided import 25-30p/kWh >> SEG export 3-15p/kWh. EMS priority: PV → self-consume → BESS → export.',
+            'Compliance chain: SEG ← MCS certificate ← BS 7671 EIC + MCS handover pack. Cert evidence bundle: MCS cert + EIC + smart meter MPAN + customer’s SEG application record.',
+            'Customer process: installer hands over MCS cert + EIC + smart meter MPAN → customer chooses SEG supplier + submits application → supplier registers + pays per kWh exported per their tariff.',
+            'NOT a BS 7671 reg — UK statutory + Ofgem framework + commercial offers. BS 7671 compliance required INDIRECTLY via the MCS ← BS 7671 chain.',
+          ]}
+        />
+
+        <LearningOutcomes
+          outcomes={[
+            'Define the SEG framework, its statutory basis, and the year it replaced FiT.',
+            'Identify SEG-eligible technologies and the capacity limits per technology.',
+            'Apply the eligibility requirements: MCS certification + smart meter export MPAN.',
+            'Compare UK 2025-26 SEG tariff offerings across major suppliers.',
+            'Explain why self-consumption is typically more valuable per kWh than export in UK 2025-26.',
+            'Apply the compliance chain SEG ← MCS ← BS 7671 for cert evidence bundle composition.',
+            'Advise a customer on the SEG registration process and the role of supplier shopping.',
+            'Honestly frame UK 2025-26 PV economics: avoided import is primary, SEG is secondary.',
+          ]}
+          initialVisibleCount={3}
+        />
+
+        <Pullquote>
+          FiT made customers feed-in millionaires. SEG makes them feed-in pragmatists. The economics
+          of UK 2025-26 PV are dominated by avoided import — not export earnings. Customer
+          conversations should reflect that.
+        </Pullquote>
+
+        <ContentEyebrow>SEG framework + eligibility</ContentEyebrow>
+
+        <ConceptBlock
+          title="What SEG is and how it replaced FiT"
+          plainEnglish="SEG (Smart Export Guarantee) is the UK statutory framework that obligates large licensed electricity suppliers to offer a tariff for low-carbon electricity exported from small-scale installations. It came into force on 1 January 2020 after the Feed-in Tariff (FiT) closed to new applicants on 31 March 2019. Operated by Ofgem; commercial offers by individual suppliers."
+          onSite="UK 2025-26 reality: SEG is the export-revenue mechanism for any new PV / wind / hydro / micro-CHP install. Existing FiT customers (signed up before 31 March 2019) continue on their FiT contracts — those run for 20-25 years from sign-up. New customers from 1 January 2020 onwards: SEG only."
+        >
+          <p>SEG vs FiT comparison + UK 2025-26 reality:</p>
+          <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+            <li>
+              <strong className="text-white">FiT (2010-2019)</strong>— paid for BOTH generation (per
+              kWh generated, whether self-consumed or exported, often deemed at 50% export) AND
+              export (per kWh metered as exported). Index-linked 20-25 year contracts.
+              Government-subsidised. Generous — 4-50p/kWh generation in early cohorts
+            </li>
+            <li>
+              <strong className="text-white">FiT closure</strong>— closed to new applicants 31 March
+              2019. Existing customers continue. New customers from 1 January 2020 must use SEG
+            </li>
+            <li>
+              <strong className="text-white">SEG (2020-)</strong>— export only (per kWh metered
+              exported, no generation payment). Market-based supplier offers (not
+              government-subsidised). 3-15p/kWh typical range; dynamic options higher during peak
+              demand
+            </li>
+            <li>
+              <strong className="text-white">Statutory basis</strong>— Smart Export Guarantee Order
+              2019 + Energy Act 2008 amendments. Ofgem administers compliance + publishes guidance
+            </li>
+            <li>
+              <strong className="text-white">Mandatory suppliers</strong>— licensed suppliers with
+              ≥150,000 domestic customers in GB MUST offer at least one SEG tariff. Smaller
+              suppliers may offer voluntarily
+            </li>
+            <li>
+              <strong className="text-white">Tariff structure</strong>— each supplier sets its own
+              SEG tariff price + terms. Customer can choose any supplier offering SEG — doesn’t need
+              to be their import supplier (though bundled offers common)
+            </li>
+            <li>
+              <strong className="text-white">UK 2025-26 customer process</strong> — install with
+              MCS-certified company → receive MCS cert + EIC → ensure smart meter with export MPAN →
+              choose SEG supplier + apply → receive per-kWh payment quarterly / monthly
+            </li>
+            <li>
+              <strong className="text-white">Cert evidence bundle</strong> — installer’s
+              contribution: MCS cert + BS 7671 EIC + smart meter MPAN documentation + customer
+              handover noting SEG registration steps
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <SegFramework caption="The Smart Export Guarantee pays for exported units — what replaced the Feed-in Tariff." />
+
+        <ConceptBlock
+          title="Eligibility: MCS + smart meter + capacity limits"
+          plainEnglish="SEG eligibility has three requirements: (1) install must be MCS-certified (with the appropriate MIS standard for the technology); (2) site must have a smart meter capable of half-hourly export readings; (3) installed capacity within scheme limits (5 MW for PV / wind / hydro / AD, 50 kW for micro-CHP). All three must be met before a supplier will register the customer."
+          onSite="UK 2025-26 installer pre-quote checklist: (a) does the customer have an MCS-certified company doing the install? — yes for any normal renewable retrofit; (b) does the customer have a SMETS2 smart meter with working export reading? — verify before quoting; (c) is the install within the SEG capacity scope? — yes for domestic + light-commercial."
+        >
+          <p>Eligibility requirements in detail:</p>
+          <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+            <li>
+              <strong className="text-white">MCS certification</strong>— install certified to the
+              relevant MCS Installer Standard (MIS 3002 PV, MIS 3003 wind, MIS 3007 micro-CHP, MIS
+              3008 hydro, AD via MCS dedicated standard). MCS company issues certificate per install
+              with capacity + technology + commissioning date
+            </li>
+            <li>
+              <strong className="text-white">BS 7671 EIC</strong>— MCS requires BS 7671 compliance;
+              EIC is the proof. Installer issues at commissioning. Included in MCS handover pack
+            </li>
+            <li>
+              <strong className="text-white">Smart meter</strong>— SMETS2 (current standard)
+              provides half-hourly import + export readings via DCC. SMETS1 (older) being phased
+              out. Customer must request from their import supplier if not already installed
+            </li>
+            <li>
+              <strong className="text-white">Export MPAN</strong>— most UK 2025-26 sites: single
+              MPAN with dual register (import + export) on SMETS2 meter. Legacy: separate export
+              MPAN. Documented in customer handover
+            </li>
+            <li>
+              <strong className="text-white">Capacity limits</strong>— PV / wind / hydro / AD: ≤5
+              MW. Micro-CHP: ≤50 kW. Almost all UK 2025-26 domestic + light-commercial installs sit
+              well within
+            </li>
+            <li>
+              <strong className="text-white">Excluded technologies</strong> — solar thermal (not
+              electricity); heat pumps (consume, not generate); standalone BESS (storage, not
+              generation); biomass heat-only; hydrogen heating (not electricity + emerging policy
+              direction)
+            </li>
+            <li>
+              <strong className="text-white">Multi-source PEI</strong>— SEG eligibility is
+              per-generator (PV registered separately from wind etc.) but the export meter reads
+              aggregate gross export. Customer + supplier reconcile based on MCS-stated capacities.
+              PEI cert evidence bundle records each generator’s MCS cert
+            </li>
+            <li>
+              <strong className="text-white">Cert evidence bundle</strong> — per-generator MCS cert
+              + BS 7671 EIC (or per-technology EIC sections of an integrated PEI EIC) + smart meter
+              documentation + customer SEG application record
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <RegsCallout
+          source="UK statutory · Smart Export Guarantee Order 2019 (Ofgem-administered) — not BS 7671"
+          clause="From 1 January 2020, licensed electricity suppliers in Great Britain with ≥150,000 domestic customers must offer at least one Smart Export Guarantee (SEG) tariff to small-scale low-carbon generators (PV / wind / hydro / AD up to 5 MW; micro-CHP up to 50 kW). The tariff must pay per kWh exported, must be greater than zero, and must be settled at least quarterly. The installation must be MCS-certified (or equivalent for non-MCS technologies) and metered with a smart meter providing half-hourly export readings."
+          meaning="SEG is a UK statutory + Ofgem-administered framework — not a BS 7671 regulation. It sits in commercial / regulatory space alongside MCS + EREC. The compliance chain matters: SEG eligibility requires MCS certification, which requires BS 7671 compliance (the install must meet all applicable standards including the wiring regulations). The installer’s direct responsibility under BS 7671 is the EIC + Section 712 / Chapter 57 / Section 722 / Section 551 / Chapter 82 compliance; the MCS company packages this into the MCS handover pack; the customer uses the MCS handover pack to register for SEG with their chosen supplier. UK 2025-26 customer-facing reality: SEG is part of the installer’s scope of advice (‘you’ll register for SEG with a supplier; here’s typical UK 2025-26 rates; we recommend shopping around’) but the SEG contract is between customer and supplier, not installer."
+        />
+
+        <InlineCheck {...inlineChecks[0]} />
+
+        <InlineCheck {...inlineChecks[1]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>Tariff landscape + supplier shopping</ContentEyebrow>
+
+        <Pullquote>
+          UK 2025-26 SEG tariffs vary 5× across suppliers. Customers who set-and-forget at 3p/kWh
+          leave £200-400/year on the table they could have earned at 15p/kWh. Supplier shopping is a
+          real customer-value lever.
+        </Pullquote>
+
+        <ConceptBlock
+          title="UK 2025-26 SEG supplier landscape"
+          plainEnglish="UK 2025-26 SEG market has 5-10 active suppliers across the price range 3-15p/kWh + dynamic options. Highest fixed rates typically require the customer to also be on that supplier’s import tariff. Dynamic options (Octopus Outgoing Agile, Tesla Energy Plan) follow wholesale half-hourly + can exceed the fixed alternatives during peak demand events."
+          onSite="Practical installer advice: tell customer ‘shop SEG annually; the rate ranges 3-15p/kWh + Agile options; combining import + export with the same supplier often unlocks higher rates’. UK 2025-26 reality: Octopus is the price leader for SEG; British Gas / EDF / E.ON match for their own bundle customers; Good Energy / OVO sit mid-pack."
+        >
+          <p>UK 2025-26 SEG supplier snapshot (rates indicative — verify current):</p>
+          <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+            <li>
+              <strong className="text-white">Octopus Outgoing Fixed</strong> — ≈15p/kWh, fixed rate,
+              requires Octopus import customer
+            </li>
+            <li>
+              <strong className="text-white">Octopus Outgoing Agile</strong> — tracks day-ahead
+              wholesale half-hourly + Octopus margin. Can exceed 30p/kWh during peak demand, can
+              drop below 5p in off-peak. Average ≈10-20p/kWh. Requires Octopus import customer
+            </li>
+            <li>
+              <strong className="text-white">EDF Export Variable</strong> — ≈3p/kWh, no import
+              restriction. Lowest fixed rate
+            </li>
+            <li>
+              <strong className="text-white">E.ON Next Export Exclusive</strong> — ≈16.5p/kWh fixed,
+              requires E.ON Next import customer
+            </li>
+            <li>
+              <strong className="text-white">British Gas Export</strong>— ≈15p/kWh fixed, requires
+              BG import customer
+            </li>
+            <li>
+              <strong className="text-white">Good Energy SEG</strong>— ≈5p/kWh fixed, no import
+              restriction
+            </li>
+            <li>
+              <strong className="text-white">OVO SEG</strong> — ≈4p/kWh fixed, no import restriction
+            </li>
+            <li>
+              <strong className="text-white">ScottishPower SmartGen</strong> — ≈12p/kWh, requires SP
+              import
+            </li>
+            <li>
+              <strong className="text-white">Bundle restriction pattern</strong> — highest SEG rates
+              require same supplier for import. Customer must weigh: ‘is my import tariff
+              competitive on this supplier?’. Combined import + export economics matter
+            </li>
+            <li>
+              <strong className="text-white">Dynamic vs fixed</strong>— fixed: predictable income,
+              simpler; dynamic (Agile, Tesla Energy Plan): higher upside if customer can time export
+              to peak demand (BESS discharge during evening peak — EMS handles), more price risk
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="Self-consumption vs export economics"
+          plainEnglish="The dominant economic driver of UK 2025-26 PV is avoided import (25-30p/kWh saved per kWh self-consumed), not SEG export (3-15p/kWh earned per kWh exported). Self-consumption is typically 2-4× more valuable per kWh than export. EMS priority logic reflects this: self-consume PV first, then store in BESS, then export."
+          onSite="Customer-facing arithmetic: 4 kWp PV × 3,600 kWh/year × 50% self-consumption (with BESS) = 1,800 kWh self-used × £0.27/kWh avoided = £486/year. Plus 1,800 kWh exported × £0.10/kWh SEG (mid-range) = £180/year. Total £666/year. The avoided-import portion is the larger lever — BESS to shift more PV to self-consumption is the dominant retrofit upgrade."
+        >
+          <p>Self-consumption vs export economic analysis:</p>
+          <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+            <li>
+              <strong className="text-white">Avoided import value</strong>— each kWh self-consumed
+              saves the import tariff rate. UK 2025-26 standard variable: ≈25-30p/kWh. Most valuable
+              kWh
+            </li>
+            <li>
+              <strong className="text-white">SEG export value</strong>— each kWh exported earns the
+              SEG rate. UK 2025-26: 3-15p/kWh fixed; dynamic options higher in peak windows
+            </li>
+            <li>
+              <strong className="text-white">Differential</strong>— £0.10-0.25/kWh in favour of
+              self-consumption. BESS economic case driven by this differential
+            </li>
+            <li>
+              <strong className="text-white">Typical self-consumption %</strong> — PV-only no-BESS:
+              25-35% (working-from-office household) to 50-60% (high daytime consumption); PV+BESS:
+              65-80%
+            </li>
+            <li>
+              <strong className="text-white">BESS payback driver</strong>— typical 5-10 kWh BESS
+              retrofit £3,000-5,000. Annual arbitrage value: shifted PV (£0.20/kWh × 700 kWh =
+              £140-280) + ToU arbitrage (£0.20/kWh × 300 cycles × 10 kWh = £600). Total
+              £500-900/year. Payback 5-10 years
+            </li>
+            <li>
+              <strong className="text-white">EMS priority consequence</strong> — default UK 2025-26:
+              PV → self-consume first → BESS charge → SEG export. Maximises customer economic
+              outcome
+            </li>
+            <li>
+              <strong className="text-white">Edge case: dynamic export tariff</strong> — Octopus
+              Outgoing Agile during peak demand event can exceed import tariff briefly. EMS may
+              prefer export over BESS-charging in those half-hours. PredBat + advanced logic handle
+              this
+            </li>
+            <li>
+              <strong className="text-white">Cert evidence + customer honesty</strong> — economic
+              modelling at quote stage. Cert evidence neutral on economics (not the BS 7671
+              install’s scope). Customer handover acknowledges expected operating mode + economic
+              logic
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <InlineCheck {...inlineChecks[2]} />
+
+        <RegsCallout
+          source="BS 7671:2018+A4:2026 · Reg 132.13 + Reg 514 family — documentation + customer handover (SEG eligibility chain)"
+          clause="Reg 132.13: The designer shall provide such information as is necessary for the use, operation + maintenance of the installation. Reg 514 family: warning notices, identification labels, diagrams, charts, schedules + similar information shall be provided at the consumer position + included in the customer handover documentation. Reg 132.16: Where appropriate, the design + erection shall facilitate compliance with statutory requirements + regulations issued by the public supply authority."
+          meaning="Reg 132.13 + the Reg 514 documentation family are the BS 7671 anchors that support the customer-facing SEG registration chain. SEG is not a BS 7671 reg; but the EIC + MCS handover pack the customer needs for SEG registration ARE BS 7671 deliverables (Reg 132.13 designer-information duty; Reg 514 warning notices + cert evidence). The cert evidence bundle the installer issues at commissioning is the foundation: BS 7671 EIC + MCS cert + smart meter MPAN documentation + customer handover instructions for SEG application. Customer submits this evidence to chosen SEG supplier; supplier registers + pays per kWh exported per their tariff. Without the BS 7671 EIC + MCS cert handover, the customer cannot register for SEG — the install’s commercial value via SEG depends on the cert evidence bundle quality."
+        />
+
+        <InlineCheck {...inlineChecks[3]} />
+
+        <SectionRule />
+
+        <Scenario
+          title="Domestic PV-only retrofit — customer chooses SEG supplier"
+          situation="UK 2025-26 typical: 4 kWp PV install on a 1990s semi-detached house. No BESS (yet). 3,600 kWh/year expected generation. Family of 4, both adults working away from home, daytime self-consumption ≈30%. MCS-certified company doing the install. Customer’s current import supplier: British Gas (variable rate ≈30p/kWh)."
+          whatToDo="Installer scope: (1) BS 7671 install + Section 712 EIC + Reg 826 PEI compliance summary (PV + DNO = single-source PEI under Chapter 82); (2) MCS company issues MIS 3002 PV cert + MCS handover pack containing the EIC; (3) verify customer has working SMETS2 smart meter with export reading enabled (CHECK at quote stage — if not, customer requests from British Gas + lead time 2-8 weeks); (4) configure inverter export per default (no G100 limit unless DNO-imposed); (5) commissioning record + customer handover including SEG registration guidance. Customer SEG choice: (a) British Gas SEG ≈15p/kWh (bundle with existing import) — simplest, decent rate; (b) Octopus Outgoing Fixed 15p — requires Octopus import switch; (c) Octopus Outgoing Agile dynamic 10-20p average — if customer wants upside + price exposure; (d) EDF Export 3p — lowest. Customer chooses British Gas SEG (no switch needed). Expected income: 2,520 kWh exported × £0.15 = £378/year SEG + 1,080 kWh self-consumed × £0.30 avoided = £324/year. Total £702/year. PV cost £6,000 → simple payback 8-9 years. Cert evidence bundle: EIC + MCS cert + smart meter MPAN documentation + customer handover noting SEG steps + commissioning record."
+          whyItMatters="UK 2025-26 domestic PV-only retrofit = the simplest SEG case. Single-vendor, single-technology, established supplier landscape, MCS chain straightforward. The installer’s SEG-specific scope is small (advise customer + ensure smart meter + handover pack quality) but the customer-value impact is real — difference between 3p (EDF default) and 15p (Octopus / British Gas / E.ON bundle) is £300/year for this site. Honest customer conversation matters."
+        />
+
+        <Scenario
+          title="PV + BESS + future EV + heat pump — multi-source PEI SEG strategy"
+          situation="Customer with 5 kWp PV + 10 kWh BESS installed year 1. Planning to add 7 kW EV charger year 2 + 8 kW ASHP year 3. End state: 4-source PEI under Chapter 82 with substantial import + export flexibility. Currently on Octopus Energy (Flexible Octopus import tariff, Octopus Outgoing Fixed 15p SEG)."
+          whatToDo="Multi-source PEI SEG strategy + EMS optimisation. Year 1 PV+BESS: SEG export ~1,500 kWh/year (BESS captures most surplus); self-consumption ~70% via BESS arbitrage. Income: 1,500 × £0.15 = £225 SEG + 3,500 self-consumed × £0.27 = £945 avoided = £1,170/year. Year 2 EV addition (Section 722): if home charging, opportunity to consume more PV → EV directly (zero-cost ‘fuel’) or schedule EV charging during cheap Octopus Go window. Customer switches to Intelligent Octopus Go (4-7p/kWh EV cheap-rate window) + retains Outgoing Fixed 15p for export. EV charged 95% on cheap-rate, ~2,000 kWh/year EV demand × £0.05 = £100. Year 3 ASHP (M8 fixed equipment): heat pump runs largely off PV during day + cheap-rate at night via EMS scheduling; ~3,000 kWh/year ASHP electricity demand. Total Year 3 site economics: SEG export ≈20% of generation (~1,000 kWh @ 15p = £150); avoided import + cheap-rate optimisation dominant. EMS: SolarEdge native + Home Assistant overlay for dynamic logic + Octopus tariff API. Cert evidence: integrated PEI EIC (supersedes year-1 PV EIC) + MCS certs per addition + smart meter MPAN + Octopus tariff record + EMS architecture diagram + commissioning verification per year’s upgrade."
+          whyItMatters="UK 2025-26 multi-source PEI build-out is the dominant retrofit pattern. SEG is one of multiple revenue / saving streams: cheap-rate EV charging via Intelligent Octopus Go is often a larger annual saving than SEG export income. Honest customer conversation: SEG income decreases per kWh PV as BESS captures more self-consumption, but TOTAL site economic outcome improves — because the kWh that doesn’t export is the kWh that avoids the highest-cost import. Cert evidence bundle is the integrating document showing all sources + EMS + tariff strategy across the multi-year build-out."
+        />
+
+        <CommonMistake
+          title="Telling customers SEG will pay for the PV install"
+          whatHappens="Installer at quote stage says ‘your SEG will pay back the PV in 4-5 years’. Customer expects FiT-era generosity. Reality: UK 2025-26 SEG-only economics give 8-15 year payback for PV (longer without BESS). Customer disappointed; complaints; reputation damage."
+          doInstead="Honest customer-facing economics. UK 2025-26 PV is economic because IMPORT electricity is expensive (£0.25-0.30/kWh), not because export pays well. Total annual benefit = avoided import (large) + SEG export (small). PV-only typical payback 10-15 years; PV + BESS 8-12 years; PV + BESS + EV with smart tariff strategy 7-10 years. Quote-stage economic modelling should be customer-specific (their consumption profile + tariff + selected SEG supplier) and conservative. Avoid ‘your solar pays for itself in N years’ marketing copy — use realistic ranges + explain the dominant driver is import-cost avoidance."
+        />
+
+        <CommonMistake
+          title="Forgetting the smart meter dependency"
+          whatHappens="Installer commissions a PV install, customer applies for SEG with their supplier, gets rejected because customer has a traditional analogue meter (or non-functional SMETS1). Customer angry that installer didn’t flag this at quote. PV runs in self-consumption-only mode + export goes to grid earning nothing until smart meter installed (often 4-8 weeks lead time)."
+          doInstead="Quote-stage smart meter check is essential. Ask customer: ‘do you have a smart meter? Can you see half-hourly export readings on your in-home display or supplier app?’. If not, advise customer to request smart meter from their current import supplier BEFORE the PV install — typical lead time 2-8 weeks. Cert evidence bundle handover notes smart meter status + customer’s SEG application action. If customer is in a smart meter installation slot during the PV install, sequence: PV commissioning → SEG application submitted but pending → smart meter installed → SEG activates. Honest expectation-setting up front avoids the complaint later."
+        />
+
+        <SectionRule />
+
+        <KeyTakeaways
+          points={[
+            'SEG = Smart Export Guarantee. UK statutory framework, Ofgem-administered. In force since 1 January 2020. Replaced FiT (closed 31 March 2019).',
+            'Mandatory for licensed suppliers ≥150,000 domestic customers; voluntary for smaller suppliers.',
+            'Eligible technologies: PV / wind / hydro / AD up to 5 MW; micro-CHP up to 50 kW. Excluded: solar thermal, heat pumps, standalone BESS, biomass heat, hydrogen.',
+            'Eligibility requirements: MCS certification of the install (MIS standard per technology) + smart meter (SMETS2 typical) with half-hourly export reading + customer SEG application.',
+            'Compliance chain: SEG ← MCS certificate ← BS 7671 EIC. SEG is NOT a BS 7671 reg; BS 7671 compliance is required indirectly via the MCS chain.',
+            'UK 2025-26 supplier rates 3-15p/kWh fixed + dynamic options (Octopus Outgoing Agile higher in peak demand). Highest rates often require bundled import tariff with same supplier.',
+            'Self-consumption (avoided import 25-30p/kWh) typically 2-4× more valuable per kWh than SEG export (3-15p/kWh). EMS priority: PV → self-consume → BESS → SEG export.',
+            'UK 2025-26 PV economics dominated by avoided import; SEG is secondary. Honest customer messaging matters. PV-only payback 10-15 years; PV+BESS 8-12; PV+BESS+EV+smart tariff 7-10.',
+            'Customer registration: installer hands over MCS cert + EIC + smart meter MPAN → customer applies to chosen SEG supplier → supplier registers + pays per kWh exported per their tariff.',
+            'Cert evidence bundle: MCS cert + BS 7671 EIC + smart meter MPAN documentation + customer handover noting SEG registration steps + commissioning record verifying export configuration.',
+          ]}
+        />
+
+        <FAQ items={faqs} />
+
+        <Quiz questions={quizQuestions} title="Section 3 · Knowledge check" />
+
+        <div className="grid grid-cols-2 gap-3 pt-2">
           <button
             type="button"
-            onClick={() => navigate('../renewable-energy-module-10')}
-            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            onClick={() => navigate('/electrician/upskilling/renewable-energy-module-10-section-2')}
+            className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
           >
-            <ArrowLeft className="h-4 w-4" /> Module 10
+            <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+              <ChevronLeft className="h-3 w-3" /> Section 2
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-white truncate">
+              10.2 Energy Management Systems (EMS)
+            </div>
           </button>
-
-          <PageHero
-            eyebrow="Module 10 · Section 3 · UK Ofgem statutory framework + commercial supplier tariffs"
-            title="Smart Export Guarantee (SEG)"
-            description="The UK statutory framework for paid export of low-carbon electricity from small-scale (≤5 MW PV / wind / hydro / AD; ≤50 kW micro-CHP) installations. Ofgem-administered, in force since 1 January 2020. Replaced the Feed-in Tariff (closed 31 March 2019). Eligibility: MCS certification of the install + smart meter with half-hourly export reading. Commercial supplier offers vary widely: Octopus Outgoing Fixed / Agile, EDF Export, E.ON Next Export, Good Energy, OVO, British Gas."
-            tone="yellow"
-          />
-
-          <TLDR
-            points={[
-              'SEG = Smart Export Guarantee. UK statutory framework, Ofgem-administered. In force since 1 Jan 2020. Replaced the Feed-in Tariff (FiT, closed to new applicants 31 Mar 2019).',
-              'Licensed suppliers with ≥150,000 domestic customers MUST offer at least one SEG tariff. Smaller suppliers may offer voluntarily.',
-              'Eligible technologies: PV (up to 5 MW), wind (up to 5 MW), hydro (up to 5 MW), AD (up to 5 MW), micro-CHP (up to 50 kW). Solar thermal NOT eligible (not electricity). BESS standalone NOT eligible (not generation).',
-              'Eligibility requires: (a) MCS certification of the install (MIS 3002 PV, MIS 3003 wind, MIS 3007 micro-CHP, MIS 3008 hydro); (b) smart meter with half-hourly export reading (SMETS2 standard).',
-              'UK 2025-26 tariff range: 3-15p/kWh + dynamic options (Octopus Outgoing Agile can spike higher during peak demand). Octopus Outgoing Fixed ≈15p/kWh, EDF Export Variable ≈3p/kWh, E.ON Next ≈16.5p, Good Energy ≈5p.',
-              'Self-consumption is more valuable per kWh than export in UK 2025-26: avoided import 25-30p/kWh >> SEG export 3-15p/kWh. EMS priority: PV → self-consume → BESS → export.',
-              'Compliance chain: SEG ← MCS certificate ← BS 7671 EIC + MCS handover pack. Cert evidence bundle: MCS cert + EIC + smart meter MPAN + customer’s SEG application record.',
-              'Customer process: installer hands over MCS cert + EIC + smart meter MPAN → customer chooses SEG supplier + submits application → supplier registers + pays per kWh exported per their tariff.',
-              'NOT a BS 7671 reg — UK statutory + Ofgem framework + commercial offers. BS 7671 compliance required INDIRECTLY via the MCS ← BS 7671 chain.',
-            ]}
-          />
-
-          <LearningOutcomes
-            outcomes={[
-              'Define the SEG framework, its statutory basis, and the year it replaced FiT.',
-              'Identify SEG-eligible technologies and the capacity limits per technology.',
-              'Apply the eligibility requirements: MCS certification + smart meter export MPAN.',
-              'Compare UK 2025-26 SEG tariff offerings across major suppliers.',
-              'Explain why self-consumption is typically more valuable per kWh than export in UK 2025-26.',
-              'Apply the compliance chain SEG ← MCS ← BS 7671 for cert evidence bundle composition.',
-              'Advise a customer on the SEG registration process and the role of supplier shopping.',
-              'Honestly frame UK 2025-26 PV economics: avoided import is primary, SEG is secondary.',
-            ]}
-            initialVisibleCount={3}
-          />
-
-          <Pullquote>
-            FiT made customers feed-in millionaires. SEG makes them feed-in pragmatists. The economics of UK 2025-26 PV are dominated by avoided import — not export earnings. Customer conversations should reflect that.
-          </Pullquote>
-
-          <ContentEyebrow>SEG framework + eligibility</ContentEyebrow>
-
-          <ConceptBlock
-            title="What SEG is and how it replaced FiT"
-            plainEnglish="SEG (Smart Export Guarantee) is the UK statutory framework that obligates large licensed electricity suppliers to offer a tariff for low-carbon electricity exported from small-scale installations. It came into force on 1 January 2020 after the Feed-in Tariff (FiT) closed to new applicants on 31 March 2019. Operated by Ofgem; commercial offers by individual suppliers."
-            onSite="UK 2025-26 reality: SEG is the export-revenue mechanism for any new PV / wind / hydro / micro-CHP install. Existing FiT customers (signed up before 31 March 2019) continue on their FiT contracts — those run for 20-25 years from sign-up. New customers from 1 January 2020 onwards: SEG only."
+          <button
+            type="button"
+            onClick={() => navigate('/electrician/upskilling/renewable-energy-module-10-section-4')}
+            className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
           >
-            <p>SEG vs FiT comparison + UK 2025-26 reality:</p>
-            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
-              <li>
-                <strong className="text-white">FiT (2010-2019)</strong>
-                — paid for BOTH generation (per kWh generated, whether
-                self-consumed or exported, often deemed at 50% export) AND export
-                (per kWh metered as exported). Index-linked 20-25 year contracts.
-                Government-subsidised. Generous — 4-50p/kWh generation in early
-                cohorts
-              </li>
-              <li>
-                <strong className="text-white">FiT closure</strong>
-                — closed to new applicants 31 March 2019. Existing customers
-                continue. New customers from 1 January 2020 must use SEG
-              </li>
-              <li>
-                <strong className="text-white">SEG (2020-)</strong>
-                — export only (per kWh metered exported, no generation
-                payment). Market-based supplier offers (not government-subsidised).
-                3-15p/kWh typical range; dynamic options higher during peak demand
-              </li>
-              <li>
-                <strong className="text-white">Statutory basis</strong>
-                — Smart Export Guarantee Order 2019 + Energy Act 2008
-                amendments. Ofgem administers compliance + publishes guidance
-              </li>
-              <li>
-                <strong className="text-white">Mandatory suppliers</strong>
-                — licensed suppliers with ≥150,000 domestic customers in
-                GB MUST offer at least one SEG tariff. Smaller suppliers may offer
-                voluntarily
-              </li>
-              <li>
-                <strong className="text-white">Tariff structure</strong>
-                — each supplier sets its own SEG tariff price + terms.
-                Customer can choose any supplier offering SEG — doesn’t need
-                to be their import supplier (though bundled offers common)
-              </li>
-              <li>
-                <strong className="text-white">UK 2025-26 customer
-                  process</strong> — install with MCS-certified company →
-                receive MCS cert + EIC → ensure smart meter with export MPAN
-                → choose SEG supplier + apply → receive per-kWh payment
-                quarterly / monthly
-              </li>
-              <li>
-                <strong className="text-white">Cert evidence
-                  bundle</strong> — installer’s contribution: MCS cert + BS
-                7671 EIC + smart meter MPAN documentation + customer handover
-                noting SEG registration steps
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <SegFramework caption="The Smart Export Guarantee pays for exported units — what replaced the Feed-in Tariff." />
-
-          <ConceptBlock
-            title="Eligibility: MCS + smart meter + capacity limits"
-            plainEnglish="SEG eligibility has three requirements: (1) install must be MCS-certified (with the appropriate MIS standard for the technology); (2) site must have a smart meter capable of half-hourly export readings; (3) installed capacity within scheme limits (5 MW for PV / wind / hydro / AD, 50 kW for micro-CHP). All three must be met before a supplier will register the customer."
-            onSite="UK 2025-26 installer pre-quote checklist: (a) does the customer have an MCS-certified company doing the install? — yes for any normal renewable retrofit; (b) does the customer have a SMETS2 smart meter with working export reading? — verify before quoting; (c) is the install within the SEG capacity scope? — yes for domestic + light-commercial."
-          >
-            <p>Eligibility requirements in detail:</p>
-            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
-              <li>
-                <strong className="text-white">MCS certification</strong>
-                — install certified to the relevant MCS Installer Standard
-                (MIS 3002 PV, MIS 3003 wind, MIS 3007 micro-CHP, MIS 3008 hydro,
-                AD via MCS dedicated standard). MCS company issues certificate per
-                install with capacity + technology + commissioning date
-              </li>
-              <li>
-                <strong className="text-white">BS 7671 EIC</strong>
-                — MCS requires BS 7671 compliance; EIC is the proof. Installer
-                issues at commissioning. Included in MCS handover pack
-              </li>
-              <li>
-                <strong className="text-white">Smart meter</strong>
-                — SMETS2 (current standard) provides half-hourly import +
-                export readings via DCC. SMETS1 (older) being phased out. Customer
-                must request from their import supplier if not already installed
-              </li>
-              <li>
-                <strong className="text-white">Export MPAN</strong>
-                — most UK 2025-26 sites: single MPAN with dual register
-                (import + export) on SMETS2 meter. Legacy: separate export MPAN.
-                Documented in customer handover
-              </li>
-              <li>
-                <strong className="text-white">Capacity limits</strong>
-                — PV / wind / hydro / AD: ≤5 MW. Micro-CHP: ≤50 kW.
-                Almost all UK 2025-26 domestic + light-commercial installs sit
-                well within
-              </li>
-              <li>
-                <strong className="text-white">Excluded
-                  technologies</strong> — solar thermal (not electricity);
-                heat pumps (consume, not generate); standalone BESS (storage, not
-                generation); biomass heat-only; hydrogen heating (not electricity
-                + emerging policy direction)
-              </li>
-              <li>
-                <strong className="text-white">Multi-source PEI</strong>
-                — SEG eligibility is per-generator (PV registered separately
-                from wind etc.) but the export meter reads aggregate gross export.
-                Customer + supplier reconcile based on MCS-stated capacities. PEI
-                cert evidence bundle records each generator’s MCS cert
-              </li>
-              <li>
-                <strong className="text-white">Cert evidence
-                  bundle</strong> — per-generator MCS cert + BS 7671 EIC (or
-                per-technology EIC sections of an integrated PEI EIC) + smart
-                meter documentation + customer SEG application record
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <RegsCallout
-            source="UK statutory · Smart Export Guarantee Order 2019 (Ofgem-administered) — not BS 7671"
-            clause="From 1 January 2020, licensed electricity suppliers in Great Britain with ≥150,000 domestic customers must offer at least one Smart Export Guarantee (SEG) tariff to small-scale low-carbon generators (PV / wind / hydro / AD up to 5 MW; micro-CHP up to 50 kW). The tariff must pay per kWh exported, must be greater than zero, and must be settled at least quarterly. The installation must be MCS-certified (or equivalent for non-MCS technologies) and metered with a smart meter providing half-hourly export readings."
-            meaning="SEG is a UK statutory + Ofgem-administered framework — not a BS 7671 regulation. It sits in commercial / regulatory space alongside MCS + EREC. The compliance chain matters: SEG eligibility requires MCS certification, which requires BS 7671 compliance (the install must meet all applicable standards including the wiring regulations). The installer’s direct responsibility under BS 7671 is the EIC + Section 712 / Chapter 57 / Section 722 / Section 551 / Chapter 82 compliance; the MCS company packages this into the MCS handover pack; the customer uses the MCS handover pack to register for SEG with their chosen supplier. UK 2025-26 customer-facing reality: SEG is part of the installer’s scope of advice (‘you’ll register for SEG with a supplier; here’s typical UK 2025-26 rates; we recommend shopping around’) but the SEG contract is between customer and supplier, not installer."
-          />
-
-          <InlineCheck {...inlineChecks[0]} />
-
-          <InlineCheck {...inlineChecks[1]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>Tariff landscape + supplier shopping</ContentEyebrow>
-
-          <Pullquote>
-            UK 2025-26 SEG tariffs vary 5× across suppliers. Customers who set-and-forget at 3p/kWh leave £200-400/year on the table they could have earned at 15p/kWh. Supplier shopping is a real customer-value lever.
-          </Pullquote>
-
-          <ConceptBlock
-            title="UK 2025-26 SEG supplier landscape"
-            plainEnglish="UK 2025-26 SEG market has 5-10 active suppliers across the price range 3-15p/kWh + dynamic options. Highest fixed rates typically require the customer to also be on that supplier’s import tariff. Dynamic options (Octopus Outgoing Agile, Tesla Energy Plan) follow wholesale half-hourly + can exceed the fixed alternatives during peak demand events."
-            onSite="Practical installer advice: tell customer ‘shop SEG annually; the rate ranges 3-15p/kWh + Agile options; combining import + export with the same supplier often unlocks higher rates’. UK 2025-26 reality: Octopus is the price leader for SEG; British Gas / EDF / E.ON match for their own bundle customers; Good Energy / OVO sit mid-pack."
-          >
-            <p>UK 2025-26 SEG supplier snapshot (rates indicative — verify current):</p>
-            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
-              <li>
-                <strong className="text-white">Octopus Outgoing
-                  Fixed</strong> — ≈15p/kWh, fixed rate, requires Octopus
-                import customer
-              </li>
-              <li>
-                <strong className="text-white">Octopus Outgoing
-                  Agile</strong> — tracks day-ahead wholesale half-hourly +
-                Octopus margin. Can exceed 30p/kWh during peak demand, can drop
-                below 5p in off-peak. Average ≈10-20p/kWh. Requires Octopus
-                import customer
-              </li>
-              <li>
-                <strong className="text-white">EDF Export
-                  Variable</strong> — ≈3p/kWh, no import restriction. Lowest
-                fixed rate
-              </li>
-              <li>
-                <strong className="text-white">E.ON Next Export
-                  Exclusive</strong> — ≈16.5p/kWh fixed, requires E.ON Next
-                import customer
-              </li>
-              <li>
-                <strong className="text-white">British Gas Export</strong>
-                — ≈15p/kWh fixed, requires BG import customer
-              </li>
-              <li>
-                <strong className="text-white">Good Energy SEG</strong>
-                — ≈5p/kWh fixed, no import restriction
-              </li>
-              <li>
-                <strong className="text-white">OVO SEG</strong> —
-                ≈4p/kWh fixed, no import restriction
-              </li>
-              <li>
-                <strong className="text-white">ScottishPower
-                  SmartGen</strong> — ≈12p/kWh, requires SP import
-              </li>
-              <li>
-                <strong className="text-white">Bundle restriction
-                  pattern</strong> — highest SEG rates require same supplier for
-                import. Customer must weigh: ‘is my import tariff competitive on
-                this supplier?’. Combined import + export economics matter
-              </li>
-              <li>
-                <strong className="text-white">Dynamic vs fixed</strong>
-                — fixed: predictable income, simpler; dynamic (Agile, Tesla
-                Energy Plan): higher upside if customer can time export to peak
-                demand (BESS discharge during evening peak — EMS handles), more
-                price risk
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <ConceptBlock
-            title="Self-consumption vs export economics"
-            plainEnglish="The dominant economic driver of UK 2025-26 PV is avoided import (25-30p/kWh saved per kWh self-consumed), not SEG export (3-15p/kWh earned per kWh exported). Self-consumption is typically 2-4× more valuable per kWh than export. EMS priority logic reflects this: self-consume PV first, then store in BESS, then export."
-            onSite="Customer-facing arithmetic: 4 kWp PV × 3,600 kWh/year × 50% self-consumption (with BESS) = 1,800 kWh self-used × £0.27/kWh avoided = £486/year. Plus 1,800 kWh exported × £0.10/kWh SEG (mid-range) = £180/year. Total £666/year. The avoided-import portion is the larger lever — BESS to shift more PV to self-consumption is the dominant retrofit upgrade."
-          >
-            <p>Self-consumption vs export economic analysis:</p>
-            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
-              <li>
-                <strong className="text-white">Avoided import value</strong>
-                — each kWh self-consumed saves the import tariff rate. UK
-                2025-26 standard variable: ≈25-30p/kWh. Most valuable kWh
-              </li>
-              <li>
-                <strong className="text-white">SEG export value</strong>
-                — each kWh exported earns the SEG rate. UK 2025-26: 3-15p/kWh
-                fixed; dynamic options higher in peak windows
-              </li>
-              <li>
-                <strong className="text-white">Differential</strong>
-                — £0.10-0.25/kWh in favour of self-consumption. BESS
-                economic case driven by this differential
-              </li>
-              <li>
-                <strong className="text-white">Typical
-                  self-consumption %</strong> — PV-only no-BESS: 25-35%
-                (working-from-office household) to 50-60% (high daytime
-                consumption); PV+BESS: 65-80%
-              </li>
-              <li>
-                <strong className="text-white">BESS payback driver</strong>
-                — typical 5-10 kWh BESS retrofit £3,000-5,000. Annual
-                arbitrage value: shifted PV (£0.20/kWh × 700 kWh =
-                £140-280) + ToU arbitrage (£0.20/kWh × 300 cycles ×
-                10 kWh = £600). Total £500-900/year. Payback 5-10 years
-              </li>
-              <li>
-                <strong className="text-white">EMS priority
-                  consequence</strong> — default UK 2025-26: PV → self-consume
-                first → BESS charge → SEG export. Maximises customer
-                economic outcome
-              </li>
-              <li>
-                <strong className="text-white">Edge case: dynamic
-                  export tariff</strong> — Octopus Outgoing Agile during peak
-                demand event can exceed import tariff briefly. EMS may prefer
-                export over BESS-charging in those half-hours. PredBat + advanced
-                logic handle this
-              </li>
-              <li>
-                <strong className="text-white">Cert evidence + customer
-                  honesty</strong> — economic modelling at quote stage. Cert
-                evidence neutral on economics (not the BS 7671 install’s
-                scope). Customer handover acknowledges expected operating mode +
-                economic logic
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <InlineCheck {...inlineChecks[2]} />
-
-          <RegsCallout
-            source="BS 7671:2018+A4:2026 · Reg 132.13 + Reg 514 family — documentation + customer handover (SEG eligibility chain)"
-            clause="Reg 132.13: The designer shall provide such information as is necessary for the use, operation + maintenance of the installation. Reg 514 family: warning notices, identification labels, diagrams, charts, schedules + similar information shall be provided at the consumer position + included in the customer handover documentation. Reg 132.16: Where appropriate, the design + erection shall facilitate compliance with statutory requirements + regulations issued by the public supply authority."
-            meaning="Reg 132.13 + the Reg 514 documentation family are the BS 7671 anchors that support the customer-facing SEG registration chain. SEG is not a BS 7671 reg; but the EIC + MCS handover pack the customer needs for SEG registration ARE BS 7671 deliverables (Reg 132.13 designer-information duty; Reg 514 warning notices + cert evidence). The cert evidence bundle the installer issues at commissioning is the foundation: BS 7671 EIC + MCS cert + smart meter MPAN documentation + customer handover instructions for SEG application. Customer submits this evidence to chosen SEG supplier; supplier registers + pays per kWh exported per their tariff. Without the BS 7671 EIC + MCS cert handover, the customer cannot register for SEG — the install’s commercial value via SEG depends on the cert evidence bundle quality."
-          />
-
-          <InlineCheck {...inlineChecks[3]} />
-
-          <SectionRule />
-
-          <Scenario
-            title="Domestic PV-only retrofit — customer chooses SEG supplier"
-            situation="UK 2025-26 typical: 4 kWp PV install on a 1990s semi-detached house. No BESS (yet). 3,600 kWh/year expected generation. Family of 4, both adults working away from home, daytime self-consumption ≈30%. MCS-certified company doing the install. Customer’s current import supplier: British Gas (variable rate ≈30p/kWh)."
-            whatToDo="Installer scope: (1) BS 7671 install + Section 712 EIC + Reg 826 PEI compliance summary (PV + DNO = single-source PEI under Chapter 82); (2) MCS company issues MIS 3002 PV cert + MCS handover pack containing the EIC; (3) verify customer has working SMETS2 smart meter with export reading enabled (CHECK at quote stage — if not, customer requests from British Gas + lead time 2-8 weeks); (4) configure inverter export per default (no G100 limit unless DNO-imposed); (5) commissioning record + customer handover including SEG registration guidance. Customer SEG choice: (a) British Gas SEG ≈15p/kWh (bundle with existing import) — simplest, decent rate; (b) Octopus Outgoing Fixed 15p — requires Octopus import switch; (c) Octopus Outgoing Agile dynamic 10-20p average — if customer wants upside + price exposure; (d) EDF Export 3p — lowest. Customer chooses British Gas SEG (no switch needed). Expected income: 2,520 kWh exported × £0.15 = £378/year SEG + 1,080 kWh self-consumed × £0.30 avoided = £324/year. Total £702/year. PV cost £6,000 → simple payback 8-9 years. Cert evidence bundle: EIC + MCS cert + smart meter MPAN documentation + customer handover noting SEG steps + commissioning record."
-            whyItMatters="UK 2025-26 domestic PV-only retrofit = the simplest SEG case. Single-vendor, single-technology, established supplier landscape, MCS chain straightforward. The installer’s SEG-specific scope is small (advise customer + ensure smart meter + handover pack quality) but the customer-value impact is real — difference between 3p (EDF default) and 15p (Octopus / British Gas / E.ON bundle) is £300/year for this site. Honest customer conversation matters."
-          />
-
-          <Scenario
-            title="PV + BESS + future EV + heat pump — multi-source PEI SEG strategy"
-            situation="Customer with 5 kWp PV + 10 kWh BESS installed year 1. Planning to add 7 kW EV charger year 2 + 8 kW ASHP year 3. End state: 4-source PEI under Chapter 82 with substantial import + export flexibility. Currently on Octopus Energy (Flexible Octopus import tariff, Octopus Outgoing Fixed 15p SEG)."
-            whatToDo="Multi-source PEI SEG strategy + EMS optimisation. Year 1 PV+BESS: SEG export ~1,500 kWh/year (BESS captures most surplus); self-consumption ~70% via BESS arbitrage. Income: 1,500 × £0.15 = £225 SEG + 3,500 self-consumed × £0.27 = £945 avoided = £1,170/year. Year 2 EV addition (Section 722): if home charging, opportunity to consume more PV → EV directly (zero-cost ‘fuel’) or schedule EV charging during cheap Octopus Go window. Customer switches to Intelligent Octopus Go (4-7p/kWh EV cheap-rate window) + retains Outgoing Fixed 15p for export. EV charged 95% on cheap-rate, ~2,000 kWh/year EV demand × £0.05 = £100. Year 3 ASHP (M8 fixed equipment): heat pump runs largely off PV during day + cheap-rate at night via EMS scheduling; ~3,000 kWh/year ASHP electricity demand. Total Year 3 site economics: SEG export ≈20% of generation (~1,000 kWh @ 15p = £150); avoided import + cheap-rate optimisation dominant. EMS: SolarEdge native + Home Assistant overlay for dynamic logic + Octopus tariff API. Cert evidence: integrated PEI EIC (supersedes year-1 PV EIC) + MCS certs per addition + smart meter MPAN + Octopus tariff record + EMS architecture diagram + commissioning verification per year’s upgrade."
-            whyItMatters="UK 2025-26 multi-source PEI build-out is the dominant retrofit pattern. SEG is one of multiple revenue / saving streams: cheap-rate EV charging via Intelligent Octopus Go is often a larger annual saving than SEG export income. Honest customer conversation: SEG income decreases per kWh PV as BESS captures more self-consumption, but TOTAL site economic outcome improves — because the kWh that doesn’t export is the kWh that avoids the highest-cost import. Cert evidence bundle is the integrating document showing all sources + EMS + tariff strategy across the multi-year build-out."
-          />
-
-          <CommonMistake
-            title="Telling customers SEG will pay for the PV install"
-            whatHappens="Installer at quote stage says ‘your SEG will pay back the PV in 4-5 years’. Customer expects FiT-era generosity. Reality: UK 2025-26 SEG-only economics give 8-15 year payback for PV (longer without BESS). Customer disappointed; complaints; reputation damage."
-            doInstead="Honest customer-facing economics. UK 2025-26 PV is economic because IMPORT electricity is expensive (£0.25-0.30/kWh), not because export pays well. Total annual benefit = avoided import (large) + SEG export (small). PV-only typical payback 10-15 years; PV + BESS 8-12 years; PV + BESS + EV with smart tariff strategy 7-10 years. Quote-stage economic modelling should be customer-specific (their consumption profile + tariff + selected SEG supplier) and conservative. Avoid ‘your solar pays for itself in N years’ marketing copy — use realistic ranges + explain the dominant driver is import-cost avoidance."
-          />
-
-          <CommonMistake
-            title="Forgetting the smart meter dependency"
-            whatHappens="Installer commissions a PV install, customer applies for SEG with their supplier, gets rejected because customer has a traditional analogue meter (or non-functional SMETS1). Customer angry that installer didn’t flag this at quote. PV runs in self-consumption-only mode + export goes to grid earning nothing until smart meter installed (often 4-8 weeks lead time)."
-            doInstead="Quote-stage smart meter check is essential. Ask customer: ‘do you have a smart meter? Can you see half-hourly export readings on your in-home display or supplier app?’. If not, advise customer to request smart meter from their current import supplier BEFORE the PV install — typical lead time 2-8 weeks. Cert evidence bundle handover notes smart meter status + customer’s SEG application action. If customer is in a smart meter installation slot during the PV install, sequence: PV commissioning → SEG application submitted but pending → smart meter installed → SEG activates. Honest expectation-setting up front avoids the complaint later."
-          />
-
-          <SectionRule />
-
-          <KeyTakeaways
-            points={[
-              'SEG = Smart Export Guarantee. UK statutory framework, Ofgem-administered. In force since 1 January 2020. Replaced FiT (closed 31 March 2019).',
-              'Mandatory for licensed suppliers ≥150,000 domestic customers; voluntary for smaller suppliers.',
-              'Eligible technologies: PV / wind / hydro / AD up to 5 MW; micro-CHP up to 50 kW. Excluded: solar thermal, heat pumps, standalone BESS, biomass heat, hydrogen.',
-              'Eligibility requirements: MCS certification of the install (MIS standard per technology) + smart meter (SMETS2 typical) with half-hourly export reading + customer SEG application.',
-              'Compliance chain: SEG ← MCS certificate ← BS 7671 EIC. SEG is NOT a BS 7671 reg; BS 7671 compliance is required indirectly via the MCS chain.',
-              'UK 2025-26 supplier rates 3-15p/kWh fixed + dynamic options (Octopus Outgoing Agile higher in peak demand). Highest rates often require bundled import tariff with same supplier.',
-              'Self-consumption (avoided import 25-30p/kWh) typically 2-4× more valuable per kWh than SEG export (3-15p/kWh). EMS priority: PV → self-consume → BESS → SEG export.',
-              'UK 2025-26 PV economics dominated by avoided import; SEG is secondary. Honest customer messaging matters. PV-only payback 10-15 years; PV+BESS 8-12; PV+BESS+EV+smart tariff 7-10.',
-              'Customer registration: installer hands over MCS cert + EIC + smart meter MPAN → customer applies to chosen SEG supplier → supplier registers + pays per kWh exported per their tariff.',
-              'Cert evidence bundle: MCS cert + BS 7671 EIC + smart meter MPAN documentation + customer handover noting SEG registration steps + commissioning record verifying export configuration.',
-            ]}
-          />
-
-          <FAQ items={faqs} />
-
-          <Quiz questions={quizQuestions} title="Section 3 · Knowledge check" />
-
-          <div className="grid grid-cols-2 gap-3 pt-2">
-            <button
-              type="button"
-              onClick={() =>
-                navigate('/electrician/upskilling/renewable-energy-module-10-section-2')
-              }
-              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
-                <ChevronLeft className="h-3 w-3" /> Section 2
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-white truncate">
-                10.2 Energy Management Systems (EMS)
-              </div>
-            </button>
-            <button
-              type="button"
-              onClick={() =>
-                navigate('/electrician/upskilling/renewable-energy-module-10-section-4')
-              }
-              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
-                Next section <ChevronRight className="h-3 w-3" />
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-black truncate">
-                10.4 EREC G100 export limit
-              </div>
-            </button>
-          </div>
-        </PageFrame>
-      </div>
-    </div>
+            <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+              Next section <ChevronRight className="h-3 w-3" />
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-black truncate">
+              10.4 EREC G100 export limit
+            </div>
+          </button>
+        </div>
+      </HubBody>
+    </HubPage>
   );
 }

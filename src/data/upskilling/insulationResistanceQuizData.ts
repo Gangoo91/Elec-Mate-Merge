@@ -38,7 +38,7 @@ export const insulationResistanceQuizQuestions: QuizQuestion[] = [
     ],
     correctAnswer: 3,
     explanation:
-      'For circuits ≤500V (including 230V), the minimum acceptable insulation resistance is 1 MΩ according to BS7671.',
+      'For circuits ≤500V (including 230V), the minimum acceptable insulation resistance is 1 MΩ according to BS 7671.',
   },
   {
     id: 4,

@@ -71,6 +71,48 @@ const REMINDER_OPTIONS = [
 ];
 
 const EVENT_TYPES = Object.keys(EVENT_TYPE_LABELS) as CalendarEventType[];
+
+/*
+ * Starter titles per type — the work the trade actually books, with the
+ * length each usually takes (minutes; null = all day). The learned-habit
+ * suggestions replace these as a diary builds up, but a new account should
+ * never face a blank "What is it?" with nothing to tap.
+ */
+const STARTER_TITLES: Record<CalendarEventType, Array<{ title: string; minutes: number | null }>> = {
+  job: [
+    { title: 'Consumer unit change', minutes: null },
+    { title: 'Fault find', minutes: 120 },
+    { title: 'Extra sockets', minutes: 240 },
+    { title: 'EV charger install', minutes: null },
+    { title: 'Lighting install', minutes: 240 },
+    { title: 'First fix', minutes: null },
+    { title: 'Second fix', minutes: null },
+  ],
+  site_visit: [
+    { title: 'Quote visit', minutes: 60 },
+    { title: 'Survey', minutes: 60 },
+    { title: 'Measure up', minutes: 60 },
+  ],
+  inspection: [
+    { title: 'EICR', minutes: 240 },
+    { title: 'PAT testing', minutes: 240 },
+    { title: 'Fire alarm service', minutes: 120 },
+    { title: 'Emergency lighting test', minutes: 120 },
+  ],
+  meeting: [
+    { title: 'Client meeting', minutes: 60 },
+    { title: 'Supplier meeting', minutes: 60 },
+    { title: 'Wholesaler run', minutes: 60 },
+  ],
+  personal: [
+    { title: 'Appointment', minutes: 60 },
+    { title: 'Day off', minutes: null },
+  ],
+  general: [
+    { title: 'Pick up materials', minutes: 60 },
+    { title: 'Paperwork', minutes: 120 },
+  ],
+};
 const HOURS = Array.from({ length: 24 }, (_, i) => i);
 const MINUTES = [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55];
 
@@ -421,6 +463,20 @@ const CalendarEventSheet = ({
    * takes — the three things that were being retyped every time for work that
    * has not changed since the last forty.
    */
+  /*
+   * What the title chips show: the user's own learned habits first, topped up
+   * with trade-standard starters for the selected type. A new account taps
+   * "Consumer unit change" instead of facing a blank box; a veteran's own
+   * regulars take the front slots.
+   */
+  const quickTitles = useMemo(() => {
+    const seen = new Set(history.map((h) => h.title.toLowerCase()));
+    const starters = (STARTER_TITLES[eventType] || [])
+      .filter((st) => !seen.has(st.title.toLowerCase()))
+      .map((st) => ({ title: st.title, minutes: st.minutes, eventType: null as CalendarEventType | null }));
+    return [...history, ...starters].slice(0, 8);
+  }, [history, eventType]);
+
   const applySuggestion = useCallback(
     (suggestion: { title: string; minutes: number | null; eventType: CalendarEventType | null }) => {
       setTitle(suggestion.title);
@@ -475,11 +531,19 @@ const CalendarEventSheet = ({
   }, []);
 
   const handleSubmit = () => {
-    if (!title.trim() || endsBeforeItStarts) return;
+    if (endsBeforeItStarts) return;
     const chosen = customers.find((c) => c.id === clientId);
+    /*
+     * The title writes itself when a customer is picked — "EICR — Mrs Smith"
+     * beats forcing a phone keyboard open for the one field that can be
+     * derived. Free typing still wins when they do type.
+     */
+    const finalTitle =
+      title.trim() || (chosen ? `${EVENT_TYPE_LABELS[eventType]} — ${chosen.name}` : '');
+    if (!finalTitle) return;
     onSave(
       {
-        title: title.trim(),
+        title: finalTitle,
         description: description.trim() || undefined,
         start_at: startAt.toISOString(),
         end_at: endAt.toISOString(),
@@ -537,7 +601,7 @@ const CalendarEventSheet = ({
     const out: string[] = [];
     if (createProject) out.push('starts a job');
     if (createSiteVisit) out.push('starts a site visit');
-    if (selectedCustomer) out.push(`offers to tell ${selectedCustomer.name.split(/\s+/)[0]}`);
+    if (selectedCustomer) out.push(`offers to let ${selectedCustomer.name.split(/\s+/)[0]} know`);
     return out;
   }, [createProject, createSiteVisit, selectedCustomer]);
 
@@ -551,15 +615,20 @@ const CalendarEventSheet = ({
           <div className="h-1 shrink-0 transition-colors" style={{ backgroundColor: colour }} />
 
           <SheetHeader className="shrink-0 px-4 py-3">
-            <SheetTitle className="text-left text-[17px] font-semibold tracking-tight text-white">
-              {isEditing ? 'Edit event' : 'New event'}
-            </SheetTitle>
-            <SheetDescription className="sr-only">
-              {isEditing ? 'Edit event details' : 'Create a new calendar event'}
-            </SheetDescription>
+            {/* Contained on desktop — a phone-first sheet stretched edge to
+                edge across a big screen reads as broken, not as spacious. */}
+            <div className="mx-auto w-full max-w-3xl 2xl:max-w-4xl">
+              <SheetTitle className="text-left text-[17px] font-semibold tracking-tight text-white">
+                {isEditing ? 'Edit event' : 'New event'}
+              </SheetTitle>
+              <SheetDescription className="sr-only">
+                {isEditing ? 'Edit event details' : 'Create a new calendar event'}
+              </SheetDescription>
+            </div>
           </SheetHeader>
 
-          <div className="flex-1 space-y-5 overflow-y-auto px-4 pb-6">
+          <div className="flex-1 overflow-y-auto px-4 pb-6">
+            <div className="mx-auto w-full max-w-3xl space-y-5 2xl:max-w-4xl">
             {/* WHO, first.
                 
                 The form used to open on "What is it?". That is not how the call
@@ -771,42 +840,6 @@ const CalendarEventSheet = ({
             </div>
 
             {/* Title */}
-            <div>
-              <label className={labelCn} htmlFor="event-title">
-                Event title
-              </label>
-              <input
-                id="event-title"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                placeholder="What is it?"
-                className={fieldCn}
-              />
-
-              {/* The work you actually book, learned from your own diary. One
-                  tap sets the title, its usual type and its usual length —
-                  three things that were being retyped for jobs that have not
-                  changed in a year. Renders nothing until there is a habit to
-                  spot, so a new account never sees an empty row. */}
-              {history.length > 0 && (
-                <div className="scrollbar-hide -mx-4 mt-2 flex gap-2 overflow-x-auto px-4 pb-1">
-                  {history.map((h) => (
-                    <button
-                      key={h.title}
-                      type="button"
-                      onClick={() => applySuggestion(h)}
-                      className={cn(
-                        chipBase,
-                        title.trim().toLowerCase() === h.title.toLowerCase() ? chipOn : chipOff
-                      )}
-                    >
-                      {h.title}
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
-
             {/* Type */}
             <div>
               <span className={labelCn}>Type</span>
@@ -832,6 +865,46 @@ const CalendarEventSheet = ({
               </div>
             </div>
 
+            <div>
+              <label className={labelCn} htmlFor="event-title">
+                Event title
+              </label>
+              <input
+                id="event-title"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                placeholder={
+                  selectedCustomer
+                    ? `${EVENT_TYPE_LABELS[eventType]} — ${selectedCustomer.name}`
+                    : 'What is it?'
+                }
+                className={fieldCn}
+              />
+
+              {/* The work you actually book, learned from your own diary. One
+                  tap sets the title, its usual type and its usual length —
+                  three things that were being retyped for jobs that have not
+                  changed in a year. Renders nothing until there is a habit to
+                  spot, so a new account never sees an empty row. */}
+              {quickTitles.length > 0 && (
+                <div className="scrollbar-hide -mx-4 mt-2 flex gap-2 overflow-x-auto px-4 pb-1">
+                  {quickTitles.map((h) => (
+                    <button
+                      key={h.title}
+                      type="button"
+                      onClick={() => applySuggestion(h)}
+                      className={cn(
+                        chipBase,
+                        title.trim().toLowerCase() === h.title.toLowerCase() ? chipOn : chipOff
+                      )}
+                    >
+                      {h.title}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+
             {/* When they could actually come.
                 
                 The question every booking starts with, previously answered by
@@ -851,7 +924,9 @@ const CalendarEventSheet = ({
                         onClick={() => applySlot(slot)}
                         className={cn(
                           chipBase,
-                          'flex-col items-start justify-center gap-0 px-3 py-1 leading-tight',
+                          // chipBase has no display class — without `flex` the
+                          // date and time render inline as "Tomorrow08:00".
+                          'flex flex-col items-start justify-center gap-0 px-3 py-1 leading-tight',
                           chosen ? chipOn : chipOff
                         )}
                       >
@@ -1259,6 +1334,7 @@ const CalendarEventSheet = ({
                 className={cn(textareaCn, 'min-h-[72px]')}
               />
             </div>
+            </div>
           </div>
 
           {/* Footer */}
@@ -1266,27 +1342,29 @@ const CalendarEventSheet = ({
             className="shrink-0 border-t border-white/[0.10] px-4 pt-3"
             style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom))' }}
           >
-            {/* What pressing the button will actually do.
-                
-                It said "Create event" while also starting a job, opening a site
-                visit and putting a confirmation in front of you. Side effects
-                you did not ask about are how an app loses trust; side effects
-                you switched on yourself and were reminded of are just useful. */}
-            {!isEditing && sideEffects.length > 0 && (
-              <p className="mb-2 text-[12px] leading-snug text-white">
-                Also: {sideEffects.join(' · ')}
-              </p>
-            )}
+            <div className="mx-auto w-full max-w-3xl 2xl:max-w-4xl">
+              {/* What pressing the button will actually do.
 
-            <button
-              type="button"
-              onClick={handleSubmit}
-              disabled={!title.trim() || endsBeforeItStarts || saving}
-              className="flex h-12 w-full items-center justify-center rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-colors touch-manipulation active:scale-[0.98] disabled:opacity-50"
-            >
-              {saving && <Loader2 className="mr-2 h-5 w-5 animate-spin" />}
-              {isEditing ? 'Save changes' : selectedCustomer ? 'Book it in' : 'Create event'}
-            </button>
+                  It said "Create event" while also starting a job, opening a site
+                  visit and putting a confirmation in front of you. Side effects
+                  you did not ask about are how an app loses trust; side effects
+                  you switched on yourself and were reminded of are just useful. */}
+              {!isEditing && sideEffects.length > 0 && (
+                <p className="mb-2 text-[12px] leading-snug text-white">
+                  Also: {sideEffects.join(' · ')}
+                </p>
+              )}
+
+              <button
+                type="button"
+                onClick={handleSubmit}
+                disabled={(!title.trim() && !selectedCustomer) || endsBeforeItStarts || saving}
+                className="flex h-12 w-full items-center justify-center rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-colors touch-manipulation active:scale-[0.98] disabled:opacity-50"
+              >
+                {saving && <Loader2 className="mr-2 h-5 w-5 animate-spin" />}
+                {isEditing ? 'Save changes' : selectedCustomer ? 'Book it in' : 'Create event'}
+              </button>
+            </div>
           </div>
         </div>
       </SheetContent>

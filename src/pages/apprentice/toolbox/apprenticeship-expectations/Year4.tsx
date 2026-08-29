@@ -8,10 +8,8 @@
  */
 
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
-  ArrowLeft,
   Zap,
   Target,
   CheckCircle2,
@@ -30,7 +28,8 @@ import {
   DollarSign,
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
-import { PageFrame, PageHero, itemVariants } from '@/components/college/primitives';
+import { itemVariants } from '@/components/college/primitives';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { Eyebrow, SectionHeader } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
 import { cn } from '@/lib/utils';
 
@@ -308,405 +307,400 @@ const weeklyScheduleExample: {
 ];
 
 export default function Year4() {
-  const navigate = useNavigate();
   const [expandedMonth, setExpandedMonth] = useState<number | null>(0);
   const [expandedPathway, setExpandedPathway] = useState<number | null>(null);
 
   return (
-    <PageFrame className="px-4 sm:px-6 lg:px-8">
-      <motion.div variants={itemVariants}>
-        <button
-          onClick={() => navigate('/apprentice/toolbox/apprenticeship-expectations')}
-          className="inline-flex items-center gap-2 h-11 -ml-2 px-2 rounded-md text-[12px] uppercase tracking-[0.18em] text-white/55 hover:text-white/85 transition-colors touch-manipulation"
+    <HubPage>
+      <HubMasthead
+        section="Apprentice · Year 4"
+        title="Qualification & career launch"
+        backTo="/apprentice/toolbox/apprenticeship-expectations"
+      />
+      <HubBody>
+        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
+          {
+            "The finish line is in sight. Year 4 is about completing your EPA, choosing your specialisation, and launching your career as a fully qualified electrician. This is what you've been working towards."
+          }
+        </p>
+
+        {/* Year progress strip — complete */}
+        <motion.div variants={itemVariants} className="space-y-2">
+          <div className="flex items-center gap-1.5">
+            <div className="h-2 w-12 sm:w-16 rounded-full bg-elec-yellow" />
+            <div className="h-2 w-12 sm:w-16 rounded-full bg-elec-yellow" />
+            <div className="h-2 w-12 sm:w-16 rounded-full bg-elec-yellow" />
+            <div className="h-2 w-12 sm:w-16 rounded-full bg-elec-yellow" />
+            <span className="text-[11px] uppercase tracking-[0.18em] text-elec-yellow ml-2">
+              Year 4 of 4 · Final
+            </span>
+          </div>
+        </motion.div>
+
+        {/* KPI strip */}
+        <motion.div
+          variants={itemVariants}
+          className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3"
         >
-          <ArrowLeft className="h-4 w-4" />
-          Back
-        </button>
-      </motion.div>
+          <StatCell label="Duration" value="12 mo" />
+          <StatCell label="Salary" value="£28–35k" mono />
+          <StatCell label="Your goal" value="AM2S" highlight />
+          <StatCell label="At year end" value="Qualified" highlight />
+        </motion.div>
 
-      <motion.div variants={itemVariants}>
-        <PageHero
-          eyebrow="Apprentice · Year 4"
-          title="Qualification & career launch"
-          description="The finish line is in sight. Year 4 is about completing your EPA, choosing your specialisation, and launching your career as a fully qualified electrician. This is what you've been working towards."
-          tone="yellow"
-        />
-      </motion.div>
-
-      {/* Year progress strip — complete */}
-      <motion.div variants={itemVariants} className="space-y-2">
-        <div className="flex items-center gap-1.5">
-          <div className="h-2 w-12 sm:w-16 rounded-full bg-elec-yellow" />
-          <div className="h-2 w-12 sm:w-16 rounded-full bg-elec-yellow" />
-          <div className="h-2 w-12 sm:w-16 rounded-full bg-elec-yellow" />
-          <div className="h-2 w-12 sm:w-16 rounded-full bg-elec-yellow" />
-          <span className="text-[11px] uppercase tracking-[0.18em] text-elec-yellow ml-2">
-            Year 4 of 4 · Final
-          </span>
-        </div>
-      </motion.div>
-
-      {/* KPI strip */}
-      <motion.div
-        variants={itemVariants}
-        className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3"
-      >
-        <StatCell label="Duration" value="12 mo" />
-        <StatCell label="Salary" value="£28–35k" mono />
-        <StatCell label="Your goal" value="AM2S" highlight />
-        <StatCell label="At year end" value="Qualified" highlight />
-      </motion.div>
-
-      {/* ── Complete salary journey ─────────────────────────────── */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <SectionHeader
-          eyebrow="The complete journey"
-          title="From £16.5k to £35k+"
-          meta="Year-by-year salary growth across the apprenticeship"
-        />
-        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3">
-          <div className="grid grid-cols-5 gap-2">
-            <SalaryYear label="Yr 1" value="£16.5k" />
-            <SalaryYear label="Yr 2" value="£20k" />
-            <SalaryYear label="Yr 3" value="£26k" />
-            <SalaryYear label="Yr 4" value="£32k" highlight />
-            <SalaryYear label="Qual." value="£35k+" highlight />
+        {/* ── Complete salary journey ─────────────────────────────── */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <SectionHeader
+            eyebrow="The complete journey"
+            title="From £16.5k to £35k+"
+            meta="Year-by-year salary growth across the apprenticeship"
+          />
+          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3">
+            <div className="grid grid-cols-5 gap-2">
+              <SalaryYear label="Yr 1" value="£16.5k" />
+              <SalaryYear label="Yr 2" value="£20k" />
+              <SalaryYear label="Yr 3" value="£26k" />
+              <SalaryYear label="Yr 4" value="£32k" highlight />
+              <SalaryYear label="Qual." value="£35k+" highlight />
+            </div>
+            <div className="flex items-start gap-2 pt-2 border-t border-white/[0.04]">
+              <TrendingUp className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
+              <p className="text-[12.5px] text-white/85 leading-relaxed">
+                From <span className="font-mono text-white">£16.5k</span> to{' '}
+                <span className="font-mono text-elec-yellow">£35k+</span> in 4 years — more than
+                double your starting salary. Specialists and self-employed sparks can earn{' '}
+                <span className="font-mono text-elec-yellow">£45k–£60k+</span>.
+              </p>
+            </div>
           </div>
-          <div className="flex items-start gap-2 pt-2 border-t border-white/[0.04]">
-            <TrendingUp className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
-            <p className="text-[12.5px] text-white/85 leading-relaxed">
-              From <span className="font-mono text-white">£16.5k</span> to{' '}
-              <span className="font-mono text-elec-yellow">£35k+</span> in 4 years — more than
-              double your starting salary. Specialists and self-employed sparks can earn{' '}
-              <span className="font-mono text-elec-yellow">£45k–£60k+</span>.
+        </motion.section>
+
+        {/* ── EPA success ─────────────────────────────────────────── */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <SectionHeader
+            eyebrow="EPA success"
+            title="Strong odds if you've done the work"
+            meta="AM2S via NET — graded Fail / Pass / Distinction"
+          />
+          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-4">
+            <p className="text-[13px] text-white/85 leading-relaxed">
+              The AM2S is one integrated practical assessment with an embedded online knowledge
+              test, graded Fail / Pass / Distinction. Most apprentices who reach the gateway well
+              prepared — portfolio complete, safe isolation and testing sequences mastered, mocks
+              attended — pass first time. Treat preparation, not luck, as the deciding factor.
             </p>
+            <div className="pt-3 border-t border-white/[0.04] space-y-2">
+              <Eyebrow className="text-elec-yellow/85">Maximise your odds</Eyebrow>
+              <ul className="space-y-1.5">
+                {epaTips.map((tip) => (
+                  <li
+                    key={tip}
+                    className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                  >
+                    <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
+                    <span>{tip}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
-        </div>
-      </motion.section>
+        </motion.section>
 
-      {/* ── EPA success ─────────────────────────────────────────── */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <SectionHeader
-          eyebrow="EPA success"
-          title="Strong odds if you've done the work"
-          meta="AM2S via NET — graded Fail / Pass / Distinction"
-        />
-        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-4">
-          <p className="text-[13px] text-white/85 leading-relaxed">
-            The AM2S is one integrated practical assessment with an embedded online knowledge test,
-            graded Fail / Pass / Distinction. Most apprentices who reach the gateway well prepared —
-            portfolio complete, safe isolation and testing sequences mastered, mocks attended — pass
-            first time. Treat preparation, not luck, as the deciding factor.
-          </p>
-          <div className="pt-3 border-t border-white/[0.04] space-y-2">
-            <Eyebrow className="text-elec-yellow/85">Maximise your odds</Eyebrow>
-            <ul className="space-y-1.5">
-              {epaTips.map((tip) => (
+        {/* ── Specialisation pathways ─────────────────────────────── */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <SectionHeader
+            eyebrow="Specialisation pathways"
+            title="Four directions to consider"
+            meta="Pick what excites you — you can always pivot later"
+          />
+          <ul className="space-y-2">
+            {specialisationOptions.map((spec) => {
+              const Icon = spec.icon;
+              return (
                 <li
-                  key={tip}
-                  className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                  key={spec.title}
+                  className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3"
                 >
-                  <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
-                  <span>{tip}</span>
+                  <div className="flex items-baseline justify-between gap-3 flex-wrap">
+                    <div className="flex items-center gap-2 min-w-0">
+                      <Icon className="h-4 w-4 text-elec-yellow flex-shrink-0" />
+                      <h3 className="text-[15px] font-semibold text-white tracking-tight">
+                        {spec.title}
+                      </h3>
+                    </div>
+                    <span className="text-[11px] font-mono tabular-nums text-elec-yellow">
+                      {spec.averageSalary}
+                    </span>
+                  </div>
+                  <p className="text-[13px] text-white/85 leading-relaxed">{spec.description}</p>
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-2 border-t border-white/[0.04]">
+                    <KeyValue label="Career paths" items={spec.careerPaths} />
+                    <KeyValue label="Outlook" items={[spec.growth]} highlight />
+                    <KeyValue label="Qualifications" items={spec.qualifications} />
+                  </div>
                 </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </motion.section>
+              );
+            })}
+          </ul>
+        </motion.section>
 
-      {/* ── Specialisation pathways ─────────────────────────────── */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <SectionHeader
-          eyebrow="Specialisation pathways"
-          title="Four directions to consider"
-          meta="Pick what excites you — you can always pivot later"
-        />
-        <ul className="space-y-2">
-          {specialisationOptions.map((spec) => {
-            const Icon = spec.icon;
-            return (
-              <li
-                key={spec.title}
-                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3"
-              >
-                <div className="flex items-baseline justify-between gap-3 flex-wrap">
-                  <div className="flex items-center gap-2 min-w-0">
+        {/* ── Career pathways ─────────────────────────────────────── */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <SectionHeader
+            eyebrow="Career pathways"
+            title="Three routes post-qualification"
+            meta="Each has trade-offs — read the considerations"
+          />
+          <ul className="space-y-2">
+            {careerPathways.map((path, index) => {
+              const Icon = path.icon;
+              const isExpanded = expandedPathway === index;
+              return (
+                <li
+                  key={path.path}
+                  className={cn(
+                    'rounded-xl border overflow-hidden transition-colors',
+                    isExpanded
+                      ? 'border-elec-yellow/25 bg-elec-yellow/[0.04]'
+                      : 'border-white/[0.06] bg-[hsl(0_0%_10%)]'
+                  )}
+                >
+                  <button
+                    onClick={() => setExpandedPathway(isExpanded ? null : index)}
+                    className="w-full text-left p-4 sm:p-5 touch-manipulation"
+                  >
+                    <div className="flex items-start gap-3">
+                      <Icon
+                        className={cn(
+                          'h-4 w-4 flex-shrink-0 mt-0.5',
+                          isExpanded ? 'text-elec-yellow' : 'text-white/55'
+                        )}
+                      />
+                      <div className="flex-1 min-w-0 space-y-1">
+                        <div className="flex items-baseline justify-between gap-3 flex-wrap">
+                          <h3 className="text-[14px] font-semibold text-white leading-snug">
+                            {path.path}
+                          </h3>
+                          <span className="text-[11px] font-mono tabular-nums text-elec-yellow">
+                            {path.typicalSalary}
+                          </span>
+                        </div>
+                        <p className="text-[12.5px] text-white/70 leading-snug">
+                          {path.description}
+                        </p>
+                      </div>
+                      <ChevronDown
+                        className={cn(
+                          'h-4 w-4 text-white/40 flex-shrink-0 transition-transform mt-0.5',
+                          isExpanded && 'rotate-180'
+                        )}
+                      />
+                    </div>
+                  </button>
+                  {isExpanded && (
+                    <div className="px-4 sm:px-5 pb-4 sm:pb-5 border-t border-elec-yellow/15 pt-3 animate-fade-in">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pl-7">
+                        <div className="space-y-2">
+                          <Eyebrow className="text-elec-yellow/85">Advantages</Eyebrow>
+                          <ul className="space-y-1.5">
+                            {path.advantages.map((a) => (
+                              <li
+                                key={a}
+                                className="flex items-start gap-2 text-[12px] text-white/85 leading-relaxed"
+                              >
+                                <CheckCircle2 className="h-3 w-3 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
+                                <span>{a}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                        <div className="space-y-2">
+                          <Eyebrow>Considerations</Eyebrow>
+                          <ul className="space-y-1.5">
+                            {path.considerations.map((c) => (
+                              <li
+                                key={c}
+                                className="flex items-start gap-2 text-[12px] text-white/85 leading-relaxed"
+                              >
+                                <Target className="h-3 w-3 text-white/40 flex-shrink-0 mt-0.5" />
+                                <span>{c}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </li>
+              );
+            })}
+          </ul>
+        </motion.section>
+
+        {/* ── Job search tips ─────────────────────────────────────── */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <SectionHeader
+            eyebrow="Job search"
+            title="Three skills to land the right role"
+            meta="The CV, the interview, and the negotiation"
+          />
+          <ul className="grid grid-cols-1 md:grid-cols-3 gap-2.5">
+            {jobSearchTips.map((s) => {
+              const Icon = s.icon;
+              return (
+                <li
+                  key={s.category}
+                  className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3"
+                >
+                  <div className="flex items-center gap-2">
                     <Icon className="h-4 w-4 text-elec-yellow flex-shrink-0" />
-                    <h3 className="text-[15px] font-semibold text-white tracking-tight">
-                      {spec.title}
+                    <h3 className="text-[14px] font-semibold text-white tracking-tight">
+                      {s.category}
                     </h3>
                   </div>
-                  <span className="text-[11px] font-mono tabular-nums text-elec-yellow">
-                    {spec.averageSalary}
-                  </span>
-                </div>
-                <p className="text-[13px] text-white/85 leading-relaxed">{spec.description}</p>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-2 border-t border-white/[0.04]">
-                  <KeyValue label="Career paths" items={spec.careerPaths} />
-                  <KeyValue label="Outlook" items={[spec.growth]} highlight />
-                  <KeyValue label="Qualifications" items={spec.qualifications} />
-                </div>
-              </li>
-            );
-          })}
-        </ul>
-      </motion.section>
+                  <ul className="space-y-1.5">
+                    {s.tips.map((tip) => (
+                      <li
+                        key={tip}
+                        className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                      >
+                        <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
+                        <span>{tip}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </li>
+              );
+            })}
+          </ul>
+        </motion.section>
 
-      {/* ── Career pathways ─────────────────────────────────────── */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <SectionHeader
-          eyebrow="Career pathways"
-          title="Three routes post-qualification"
-          meta="Each has trade-offs — read the considerations"
-        />
-        <ul className="space-y-2">
-          {careerPathways.map((path, index) => {
-            const Icon = path.icon;
-            const isExpanded = expandedPathway === index;
-            return (
-              <li
-                key={path.path}
-                className={cn(
-                  'rounded-xl border overflow-hidden transition-colors',
-                  isExpanded
-                    ? 'border-elec-yellow/25 bg-elec-yellow/[0.04]'
-                    : 'border-white/[0.06] bg-[hsl(0_0%_10%)]'
-                )}
-              >
-                <button
-                  onClick={() => setExpandedPathway(isExpanded ? null : index)}
-                  className="w-full text-left p-4 sm:p-5 touch-manipulation"
+        {/* ── Monthly timeline ────────────────────────────────────── */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <SectionHeader
+            eyebrow="Year 4 timeline"
+            title="The final 12 months"
+            meta="Specialise → EPA → launch → graduate"
+          />
+          <ul className="space-y-2">
+            {monthlyBreakdown.map((period, index) => {
+              const Icon = period.icon;
+              const isExpanded = expandedMonth === index;
+              return (
+                <li
+                  key={index}
+                  className={cn(
+                    'rounded-xl border overflow-hidden transition-colors',
+                    isExpanded
+                      ? 'border-elec-yellow/25 bg-elec-yellow/[0.04]'
+                      : 'border-white/[0.06] bg-[hsl(0_0%_10%)]'
+                  )}
                 >
-                  <div className="flex items-start gap-3">
-                    <Icon
-                      className={cn(
-                        'h-4 w-4 flex-shrink-0 mt-0.5',
-                        isExpanded ? 'text-elec-yellow' : 'text-white/55'
-                      )}
-                    />
-                    <div className="flex-1 min-w-0 space-y-1">
-                      <div className="flex items-baseline justify-between gap-3 flex-wrap">
-                        <h3 className="text-[14px] font-semibold text-white leading-snug">
-                          {path.path}
-                        </h3>
-                        <span className="text-[11px] font-mono tabular-nums text-elec-yellow">
-                          {path.typicalSalary}
-                        </span>
+                  <button
+                    onClick={() => setExpandedMonth(isExpanded ? null : index)}
+                    className="w-full text-left p-4 sm:p-5 touch-manipulation"
+                  >
+                    <div className="flex items-start gap-3">
+                      <Icon
+                        className={cn(
+                          'h-4 w-4 flex-shrink-0 mt-0.5',
+                          isExpanded ? 'text-elec-yellow' : 'text-white/55'
+                        )}
+                      />
+                      <div className="flex-1 min-w-0 space-y-1">
+                        <div className="flex items-baseline justify-between gap-3 flex-wrap">
+                          <h3 className="text-[14px] font-semibold text-white leading-snug">
+                            {period.title}
+                          </h3>
+                          <span className="text-[10.5px] font-mono uppercase tracking-[0.14em] text-white/55">
+                            {period.month}
+                          </span>
+                        </div>
+                        <p className="text-[12px] text-white/70 leading-snug">{period.focus}</p>
                       </div>
-                      <p className="text-[12.5px] text-white/70 leading-snug">{path.description}</p>
+                      <ChevronDown
+                        className={cn(
+                          'h-4 w-4 text-white/40 flex-shrink-0 transition-transform mt-0.5',
+                          isExpanded && 'rotate-180'
+                        )}
+                      />
                     </div>
-                    <ChevronDown
-                      className={cn(
-                        'h-4 w-4 text-white/40 flex-shrink-0 transition-transform mt-0.5',
-                        isExpanded && 'rotate-180'
-                      )}
-                    />
-                  </div>
-                </button>
-                {isExpanded && (
-                  <div className="px-4 sm:px-5 pb-4 sm:pb-5 border-t border-elec-yellow/15 pt-3 animate-fade-in">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pl-7">
-                      <div className="space-y-2">
-                        <Eyebrow className="text-elec-yellow/85">Advantages</Eyebrow>
+                  </button>
+                  {isExpanded && (
+                    <div className="px-4 sm:px-5 pb-4 sm:pb-5 border-t border-elec-yellow/15 pt-3 animate-fade-in">
+                      <div className="pl-7 space-y-3">
+                        <p className="text-[12.5px] text-white/85 italic leading-relaxed">
+                          "{period.dayInLife}"
+                        </p>
                         <ul className="space-y-1.5">
-                          {path.advantages.map((a) => (
+                          {period.activities.map((activity, idx) => (
                             <li
-                              key={a}
-                              className="flex items-start gap-2 text-[12px] text-white/85 leading-relaxed"
+                              key={idx}
+                              className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
                             >
-                              <CheckCircle2 className="h-3 w-3 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
-                              <span>{a}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                      <div className="space-y-2">
-                        <Eyebrow>Considerations</Eyebrow>
-                        <ul className="space-y-1.5">
-                          {path.considerations.map((c) => (
-                            <li
-                              key={c}
-                              className="flex items-start gap-2 text-[12px] text-white/85 leading-relaxed"
-                            >
-                              <Target className="h-3 w-3 text-white/40 flex-shrink-0 mt-0.5" />
-                              <span>{c}</span>
+                              <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
+                              <span>{activity}</span>
                             </li>
                           ))}
                         </ul>
                       </div>
                     </div>
-                  </div>
-                )}
-              </li>
-            );
-          })}
-        </ul>
-      </motion.section>
+                  )}
+                </li>
+              );
+            })}
+          </ul>
+        </motion.section>
 
-      {/* ── Job search tips ─────────────────────────────────────── */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <SectionHeader
-          eyebrow="Job search"
-          title="Three skills to land the right role"
-          meta="The CV, the interview, and the negotiation"
-        />
-        <ul className="grid grid-cols-1 md:grid-cols-3 gap-2.5">
-          {jobSearchTips.map((s) => {
-            const Icon = s.icon;
-            return (
-              <li
-                key={s.category}
-                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3"
-              >
-                <div className="flex items-center gap-2">
-                  <Icon className="h-4 w-4 text-elec-yellow flex-shrink-0" />
-                  <h3 className="text-[14px] font-semibold text-white tracking-tight">
-                    {s.category}
-                  </h3>
-                </div>
-                <ul className="space-y-1.5">
-                  {s.tips.map((tip) => (
-                    <li
-                      key={tip}
-                      className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
-                    >
-                      <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
-                      <span>{tip}</span>
-                    </li>
-                  ))}
-                </ul>
-              </li>
-            );
-          })}
-        </ul>
-      </motion.section>
-
-      {/* ── Monthly timeline ────────────────────────────────────── */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <SectionHeader
-          eyebrow="Year 4 timeline"
-          title="The final 12 months"
-          meta="Specialise → EPA → launch → graduate"
-        />
-        <ul className="space-y-2">
-          {monthlyBreakdown.map((period, index) => {
-            const Icon = period.icon;
-            const isExpanded = expandedMonth === index;
-            return (
-              <li
-                key={index}
-                className={cn(
-                  'rounded-xl border overflow-hidden transition-colors',
-                  isExpanded
-                    ? 'border-elec-yellow/25 bg-elec-yellow/[0.04]'
-                    : 'border-white/[0.06] bg-[hsl(0_0%_10%)]'
-                )}
-              >
-                <button
-                  onClick={() => setExpandedMonth(isExpanded ? null : index)}
-                  className="w-full text-left p-4 sm:p-5 touch-manipulation"
+        {/* ── Typical week ────────────────────────────────────────── */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <SectionHeader
+            eyebrow="Typical week"
+            title="Specialisation, EPA, and minimal supervision"
+            meta="Your week starts looking like a qualified electrician's"
+          />
+          <ul className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] divide-y divide-white/[0.04] overflow-hidden">
+            {weeklyScheduleExample.map(({ day, location, activities }) => (
+              <li key={day} className="flex items-center gap-2.5 sm:gap-4 p-3.5 sm:p-4">
+                <span className="w-14 sm:w-20 shrink-0 text-[12.5px] font-medium text-white">
+                  {day}
+                </span>
+                <span
+                  className={cn(
+                    'inline-flex items-center justify-center h-6 px-2 rounded-md border text-[10px] font-medium uppercase tracking-[0.14em] flex-shrink-0 w-14 sm:w-16',
+                    location === 'College' || location === 'EPA'
+                      ? 'border-elec-yellow/30 bg-elec-yellow/[0.06] text-elec-yellow'
+                      : 'border-white/[0.10] bg-white/[0.03] text-white/85'
+                  )}
                 >
-                  <div className="flex items-start gap-3">
-                    <Icon
-                      className={cn(
-                        'h-4 w-4 flex-shrink-0 mt-0.5',
-                        isExpanded ? 'text-elec-yellow' : 'text-white/55'
-                      )}
-                    />
-                    <div className="flex-1 min-w-0 space-y-1">
-                      <div className="flex items-baseline justify-between gap-3 flex-wrap">
-                        <h3 className="text-[14px] font-semibold text-white leading-snug">
-                          {period.title}
-                        </h3>
-                        <span className="text-[10.5px] font-mono uppercase tracking-[0.14em] text-white/55">
-                          {period.month}
-                        </span>
-                      </div>
-                      <p className="text-[12px] text-white/70 leading-snug">{period.focus}</p>
-                    </div>
-                    <ChevronDown
-                      className={cn(
-                        'h-4 w-4 text-white/40 flex-shrink-0 transition-transform mt-0.5',
-                        isExpanded && 'rotate-180'
-                      )}
-                    />
-                  </div>
-                </button>
-                {isExpanded && (
-                  <div className="px-4 sm:px-5 pb-4 sm:pb-5 border-t border-elec-yellow/15 pt-3 animate-fade-in">
-                    <div className="pl-7 space-y-3">
-                      <p className="text-[12.5px] text-white/85 italic leading-relaxed">
-                        "{period.dayInLife}"
-                      </p>
-                      <ul className="space-y-1.5">
-                        {period.activities.map((activity, idx) => (
-                          <li
-                            key={idx}
-                            className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
-                          >
-                            <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
-                            <span>{activity}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                )}
+                  {location}
+                </span>
+                <span className="text-[12.5px] text-white/85 flex-1 min-w-0 leading-snug">
+                  {activities}
+                </span>
               </li>
-            );
-          })}
-        </ul>
-      </motion.section>
+            ))}
+          </ul>
+        </motion.section>
 
-      {/* ── Typical week ────────────────────────────────────────── */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <SectionHeader
-          eyebrow="Typical week"
-          title="Specialisation, EPA, and minimal supervision"
-          meta="Your week starts looking like a qualified electrician's"
-        />
-        <ul className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] divide-y divide-white/[0.04] overflow-hidden">
-          {weeklyScheduleExample.map(({ day, location, activities }) => (
-            <li key={day} className="flex items-center gap-2.5 sm:gap-4 p-3.5 sm:p-4">
-              <span className="w-14 sm:w-20 shrink-0 text-[12.5px] font-medium text-white">
-                {day}
-              </span>
-              <span
-                className={cn(
-                  'inline-flex items-center justify-center h-6 px-2 rounded-md border text-[10px] font-medium uppercase tracking-[0.14em] flex-shrink-0 w-14 sm:w-16',
-                  location === 'College' || location === 'EPA'
-                    ? 'border-elec-yellow/30 bg-elec-yellow/[0.06] text-elec-yellow'
-                    : 'border-white/[0.10] bg-white/[0.03] text-white/85'
-                )}
-              >
-                {location}
-              </span>
-              <span className="text-[12.5px] text-white/85 flex-1 min-w-0 leading-snug">
-                {activities}
-              </span>
-            </li>
-          ))}
-        </ul>
-      </motion.section>
-
-      {/* ── Closer ──────────────────────────────────────────────── */}
-      <motion.section variants={itemVariants}>
-        <div className="rounded-xl border border-elec-yellow/30 bg-elec-yellow/[0.06] p-4 sm:p-5 space-y-1.5">
-          <div className="flex items-center gap-2">
-            <PartyPopper className="h-4 w-4 text-elec-yellow" />
-            <Eyebrow className="text-elec-yellow/85">Qualified</Eyebrow>
+        {/* ── Closer ──────────────────────────────────────────────── */}
+        <motion.section variants={itemVariants}>
+          <div className="rounded-xl border border-elec-yellow/30 bg-elec-yellow/[0.06] p-4 sm:p-5 space-y-1.5">
+            <div className="flex items-center gap-2">
+              <PartyPopper className="h-4 w-4 text-elec-yellow" />
+              <Eyebrow className="text-elec-yellow/85">Qualified</Eyebrow>
+            </div>
+            <p className="text-[13.5px] text-white/85 leading-relaxed">
+              When you finish Year 4 you'll be a{' '}
+              <span className="font-semibold text-elec-yellow">qualified electrician</span>— Level 3
+              Diploma, NVQ Level 3, AM2S passed, 18th Edition, ECS electrician card. From here it's
+              your career to shape: employed, self-employed, specialist, designer, foreman, or
+              trainer. The trade needs you.
+            </p>
           </div>
-          <p className="text-[13.5px] text-white/85 leading-relaxed">
-            When you finish Year 4 you'll be a{' '}
-            <span className="font-semibold text-elec-yellow">qualified electrician</span>— Level 3
-            Diploma, NVQ Level 3, AM2S passed, 18th Edition, ECS electrician card. From here it's
-            your career to shape: employed, self-employed, specialist, designer, foreman, or
-            trainer. The trade needs you.
-          </p>
-        </div>
-      </motion.section>
-    </PageFrame>
+        </motion.section>
+      </HubBody>
+    </HubPage>
   );
 }
 

@@ -9,11 +9,11 @@
  */
 
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
-import { PageFrame, PageHero } from '@/components/college/primitives';
 import {
   TLDR,
   ConceptBlock,
@@ -37,13 +37,12 @@ const DESCRIPTION =
 const checks = [
   {
     id: 'mod4-s2-sub2-hierarchy',
-    question:
-      "Why is PPE described as the LAST line of defence in the HSE's hierarchy of control?",
+    question: "Why is PPE described as the LAST line of defence in the HSE's hierarchy of control?",
     options: [
-      "Because PPE is the most expensive control to provide, so cheaper measures must always be tried before any budget is spent on it.",
-      "Because PPE takes the longest to fit and inspect, so it sits last in the order even though it gives the strongest protection.",
+      'Because PPE is the most expensive control to provide, so cheaper measures must always be tried before any budget is spent on it.',
+      'Because PPE takes the longest to fit and inspect, so it sits last in the order even though it gives the strongest protection.',
       "Because it protects only the wearer, depends on individual behaviour and doesn't reduce the hazard, so higher controls take priority.",
-      "Because PPE is only legally required once an incident has occurred, the controls above it being the preventive measures.",
+      'Because PPE is only legally required once an incident has occurred, the controls above it being the preventive measures.',
     ],
     correctIndex: 2,
     explanation:
@@ -54,24 +53,24 @@ const checks = [
     question:
       "You're about to start chasing a vertical channel into a sand-and-cement plastered wall to drop a 2.5 mm² T&E to a new socket. Walk-round done. What's the minimum PPE before you switch the chaser on?",
     options: [
-      "FFP3 mask, impact-rated eye protection, hearing protection, cut-resistant gloves, plus on-tool Class M dust extraction.",
+      'FFP3 mask, impact-rated eye protection, hearing protection, cut-resistant gloves, plus on-tool Class M dust extraction.',
       "FFP1 nuisance mask and safety glasses only — soft plaster makes coarse dust, so gloves and ear defenders aren't needed.",
-      "Safety glasses and cut-resistant gloves only — debris and the chaser wheel are the priority, and a short chase makes little dust.",
-      "P3 half-mask and ear defenders only — respiratory and noise dominate, and the chaser guard deflects debris from the eyes.",
+      'Safety glasses and cut-resistant gloves only — debris and the chaser wheel are the priority, and a short chase makes little dust.',
+      'P3 half-mask and ear defenders only — respiratory and noise dominate, and the chaser guard deflects debris from the eyes.',
     ],
     correctIndex: 0,
     explanation:
-      "Respirable crystalline silica is an HSE priority and the workplace exposure limit is being kept under review. Chasing brick or sand-and-cement plaster generates fine silica dust that causes silicosis, COPD and lung cancer — FFP3 is the bare minimum and on-tool extraction (Class M for masonry dust) should be in place where reasonably practicable. Eye protection should be impact-rated (Z87 / EN 166 F or higher) and chasers run at 95-105 dB, so hearing protection is required. The combination of dust + noise + impact debris is why chasing has the heaviest PPE load of any common electrician task short of live work.",
+      'Respirable crystalline silica is an HSE priority and the workplace exposure limit is being kept under review. Chasing brick or sand-and-cement plaster generates fine silica dust that causes silicosis, COPD and lung cancer — FFP3 is the bare minimum and on-tool extraction (Class M for masonry dust) should be in place where reasonably practicable. Eye protection should be impact-rated (Z87 / EN 166 F or higher) and chasers run at 95-105 dB, so hearing protection is required. The combination of dust + noise + impact debris is why chasing has the heaviest PPE load of any common electrician task short of live work.',
   },
   {
     id: 'mod4-s2-sub2-fit',
     question:
-      "Your colleague has a beard and is wearing a disposable FFP3 mask while chasing. Why is that a serious problem?",
+      'Your colleague has a beard and is wearing a disposable FFP3 mask while chasing. Why is that a serious problem?',
     options: [
-      "A beard makes the mask uncomfortable, so the wearer tends to loosen the straps and the protection is lost through fiddling rather than the seal.",
-      "Facial hair traps dust against the skin inside the mask, so the beard becomes a secondary exposure route after the mask comes off.",
-      "Disposable masks rely on a tight face seal; facial hair in the seal area lets a large fraction of inhaled air bypass the filter, so the rated protection is lost.",
-      "A beard increases breathing resistance, so the wearer draws harder and forces fine particles straight through the filter material itself.",
+      'A beard makes the mask uncomfortable, so the wearer tends to loosen the straps and the protection is lost through fiddling rather than the seal.',
+      'Facial hair traps dust against the skin inside the mask, so the beard becomes a secondary exposure route after the mask comes off.',
+      'Disposable masks rely on a tight face seal; facial hair in the seal area lets a large fraction of inhaled air bypass the filter, so the rated protection is lost.',
+      'A beard increases breathing resistance, so the wearer draws harder and forces fine particles straight through the filter material itself.',
     ],
     correctIndex: 2,
     explanation:
@@ -84,13 +83,12 @@ const checks = [
 const quizQuestions = [
   {
     id: 1,
-    question:
-      "What does 'the hierarchy of control' refer to in the context of selecting PPE?",
+    question: "What does 'the hierarchy of control' refer to in the context of selecting PPE?",
     options: [
-      "The order in which PPE items are put on and taken off — head first, then eye, respiratory and hand protection, removed in reverse to avoid being partly unprotected.",
-      "The order in which risks must be controlled — eliminate, substitute, engineering controls, administrative controls, then PPE last because it only protects the wearer.",
-      "The ranking of PPE by protection class — Category I for minimal risk up to Category III for serious risk — used to decide the grade of equipment a task needs.",
-      "The chain of responsibility for issuing PPE on site — principal contractor, employer, supervisor, then operative — setting out who provides and checks each item.",
+      'The order in which PPE items are put on and taken off — head first, then eye, respiratory and hand protection, removed in reverse to avoid being partly unprotected.',
+      'The order in which risks must be controlled — eliminate, substitute, engineering controls, administrative controls, then PPE last because it only protects the wearer.',
+      'The ranking of PPE by protection class — Category I for minimal risk up to Category III for serious risk — used to decide the grade of equipment a task needs.',
+      'The chain of responsibility for issuing PPE on site — principal contractor, employer, supervisor, then operative — setting out who provides and checks each item.',
     ],
     correctAnswer: 1,
     explanation:
@@ -99,12 +97,12 @@ const quizQuestions = [
   {
     id: 2,
     question:
-      "Under the Personal Protective Equipment at Work Regulations 1992 (as amended 2022) Reg 4, when must an employer provide PPE?",
+      'Under the Personal Protective Equipment at Work Regulations 1992 (as amended 2022) Reg 4, when must an employer provide PPE?',
     options: [
-      "Only when the worker specifically requests PPE in writing — the duty is triggered by the employee identifying a need and the employer then supplying it.",
-      "Whenever a worker is on a construction site, regardless of the task — site PPE must be provided to everyone on site as a blanket requirement.",
-      "When the worker may be exposed to a risk at work, except where that risk is already adequately controlled by other equally or more effective means.",
-      "Only after a risk assessment has found a residual risk and the worker has completed formal PPE training — both conditions must be met first.",
+      'Only when the worker specifically requests PPE in writing — the duty is triggered by the employee identifying a need and the employer then supplying it.',
+      'Whenever a worker is on a construction site, regardless of the task — site PPE must be provided to everyone on site as a blanket requirement.',
+      'When the worker may be exposed to a risk at work, except where that risk is already adequately controlled by other equally or more effective means.',
+      'Only after a risk assessment has found a residual risk and the worker has completed formal PPE training — both conditions must be met first.',
     ],
     correctAnswer: 2,
     explanation:
@@ -115,24 +113,24 @@ const quizQuestions = [
     question:
       "Which PPE category covers most electrical-installer hand protection — and what's the key consideration when choosing the right glove?",
     options: [
-      "Category I — minimal risk, covering all general work gloves, because hand injuries on an installation are treated as low-consequence and any CE-marked glove will do.",
-      "Category III — complex risk, covering every glove an installer wears, because hand protection on electrical work is always classed against a serious hazard.",
-      "There is no category system for gloves — selection is by EN 388 cut level alone, so you simply pick the highest cut rating for every task to be safe.",
-      "Category II — intermediate risk, with the key being to match the EN 388 cut/abrasion rating to the task rather than over- or under-arming the hand.",
+      'Category I — minimal risk, covering all general work gloves, because hand injuries on an installation are treated as low-consequence and any CE-marked glove will do.',
+      'Category III — complex risk, covering every glove an installer wears, because hand protection on electrical work is always classed against a serious hazard.',
+      'There is no category system for gloves — selection is by EN 388 cut level alone, so you simply pick the highest cut rating for every task to be safe.',
+      'Category II — intermediate risk, with the key being to match the EN 388 cut/abrasion rating to the task rather than over- or under-arming the hand.',
     ],
     correctAnswer: 3,
     explanation:
-      "PPE is grouped into three categories under the EU/UK regulations: Category I (minimal risk — sun, gardening), Category II (intermediate — most general work PPE), Category III (complex / serious risk — voltage-rated gloves, fall arrest, RPE protecting against gases). EN 388 is the cut/abrasion standard; the marking on the glove tells you the resistance levels. Picking by EN rating against the task is what makes the choice defensible.",
+      'PPE is grouped into three categories under the EU/UK regulations: Category I (minimal risk — sun, gardening), Category II (intermediate — most general work PPE), Category III (complex / serious risk — voltage-rated gloves, fall arrest, RPE protecting against gases). EN 388 is the cut/abrasion standard; the marking on the glove tells you the resistance levels. Picking by EN rating against the task is what makes the choice defensible.',
   },
   {
     id: 4,
     question:
-      "When are voltage-rated insulating gloves (Class 0, Class 1, Class 2 etc.) actually required?",
+      'When are voltage-rated insulating gloves (Class 0, Class 1, Class 2 etc.) actually required?',
     options: [
-      "Only for work on or near LIVE conductors that has been specifically authorised under EAWR 1989 Reg 14 — not for the dead working that is the default after safe isolation.",
-      "Whenever you work inside a consumer unit, even after isolation, because residual charge in capacitors and SPDs can still give a shock until the unit is discharged.",
-      "On every electrical installation task as standard PPE, because any work on a wiring system carries a shock risk and Class 0 gloves are part of the baseline kit.",
-      "During safe isolation only, for the proving and locking-off steps, because testing for dead is the moment of greatest shock risk and the gloves come off after.",
+      'Only for work on or near LIVE conductors that has been specifically authorised under EAWR 1989 Reg 14 — not for the dead working that is the default after safe isolation.',
+      'Whenever you work inside a consumer unit, even after isolation, because residual charge in capacitors and SPDs can still give a shock until the unit is discharged.',
+      'On every electrical installation task as standard PPE, because any work on a wiring system carries a shock risk and Class 0 gloves are part of the baseline kit.',
+      'During safe isolation only, for the proving and locking-off steps, because testing for dead is the moment of greatest shock risk and the gloves come off after.',
     ],
     correctAnswer: 0,
     explanation:
@@ -143,10 +141,10 @@ const quizQuestions = [
     question:
       "You're about to use a 110V chop saw to cut a length of galvanised steel cable tray. The walk-round is done. What PPE combination is required for this single task?",
     options: [
-      "Eye protection and cut-resistant gloves only — a 110V chop saw is contained and guarded, so the spark and sharp edge are the only real hazards for a single cut.",
-      "Impact-rated eye protection, hearing protection, cut-resistant gloves, RPE if cutting galvanised steel indoors (zinc oxide fume), and sturdy boots with long sleeves for the sparks.",
-      "A full-face arc-flash visor, voltage-rated insulating gloves and arc-rated clothing — cutting metalwork near a board demands the same kit as live electrical work.",
-      "Hearing protection and an FFP3 mask only — the noise and fine metal dust dominate, so the spark and cut edge do not warrant eye protection or gloves for a quick cut.",
+      'Eye protection and cut-resistant gloves only — a 110V chop saw is contained and guarded, so the spark and sharp edge are the only real hazards for a single cut.',
+      'Impact-rated eye protection, hearing protection, cut-resistant gloves, RPE if cutting galvanised steel indoors (zinc oxide fume), and sturdy boots with long sleeves for the sparks.',
+      'A full-face arc-flash visor, voltage-rated insulating gloves and arc-rated clothing — cutting metalwork near a board demands the same kit as live electrical work.',
+      'Hearing protection and an FFP3 mask only — the noise and fine metal dust dominate, so the spark and cut edge do not warrant eye protection or gloves for a quick cut.',
     ],
     correctAnswer: 1,
     explanation:
@@ -155,12 +153,12 @@ const quizQuestions = [
   {
     id: 6,
     question:
-      "An apprentice arrives on site without their hi-vis vest because they forgot it in the van. The site rule says hi-vis is mandatory. What should they do?",
+      'An apprentice arrives on site without their hi-vis vest because they forgot it in the van. The site rule says hi-vis is mandatory. What should they do?',
     options: [
-      "Work in the area furthest from plant and vehicles, since keeping clear of the traffic routes means the missing vest is not a real risk for that part of the job.",
-      "Borrow any fluorescent jacket from another trade and carry on, since any high-visibility garment satisfies the rule and avoids a wasted trip to the van.",
-      "Stop and either fetch the vest, borrow a site-office spare, or step off site until equipped — working without required PPE breaches HASAWA s.7 and CDM 2015 Reg 15.",
-      "Sign in, note on the induction sheet that the vest is in the van, and fetch it at the next break, since recording the omission honestly discharges the duty.",
+      'Work in the area furthest from plant and vehicles, since keeping clear of the traffic routes means the missing vest is not a real risk for that part of the job.',
+      'Borrow any fluorescent jacket from another trade and carry on, since any high-visibility garment satisfies the rule and avoids a wasted trip to the van.',
+      'Stop and either fetch the vest, borrow a site-office spare, or step off site until equipped — working without required PPE breaches HASAWA s.7 and CDM 2015 Reg 15.',
+      'Sign in, note on the induction sheet that the vest is in the van, and fetch it at the next break, since recording the omission honestly discharges the duty.',
     ],
     correctAnswer: 2,
     explanation:
@@ -169,11 +167,11 @@ const quizQuestions = [
   {
     id: 7,
     question:
-      "Why does the PPE Regulations require employees to inspect their PPE before each use, and what should they do if they find damage?",
+      'Why does the PPE Regulations require employees to inspect their PPE before each use, and what should they do if they find damage?',
     options: [
-      "Because PPE is consumable and the inspection is really a stock-check for reordering — damaged kit can be used until the replacement arrives.",
+      'Because PPE is consumable and the inspection is really a stock-check for reordering — damaged kit can be used until the replacement arrives.',
       "Because insurers require a daily inspection log for employer's liability cover — a defective item can still be worn if the defect is recorded.",
-      "Because PPE must be portable-appliance tested before each shift — the pre-use check is the visual part of that PAT regime.",
+      'Because PPE must be portable-appliance tested before each shift — the pre-use check is the visual part of that PAT regime.',
       "Because damaged PPE doesn't give the rated protection — Reg 10 requires the employee to report defects, and the item must be taken out of service.",
     ],
     correctAnswer: 3,
@@ -183,16 +181,16 @@ const quizQuestions = [
   {
     id: 8,
     question:
-      "Hot work — using a gas torch to make a soldered joint on a copper bonding tail to a water pipe. What PPE and additional controls do you need beyond the standard install kit?",
+      'Hot work — using a gas torch to make a soldered joint on a copper bonding tail to a water pipe. What PPE and additional controls do you need beyond the standard install kit?',
     options: [
-      "Heat-resistant leather gloves, thermal-rated eye protection, natural-fibre long sleeves, a fire blanket or extinguisher within reach, combustibles cleared, plus a hot-works permit.",
-      "Voltage-rated insulating gloves and an arc-flash visor — the torch flame and bonding tail are electrically connected, so the soldering carries a shock and arc risk.",
-      "An FFP3 respirator and on-tool dust extraction — the dominant added hazard is fine particulate from the flux and heated copper, so the extra controls are respiratory.",
-      "Cryogenic gloves and a cold-burn face shield — soldering rapidly cools the joint, so the added risk is contact with chilled metalwork as it sets.",
+      'Heat-resistant leather gloves, thermal-rated eye protection, natural-fibre long sleeves, a fire blanket or extinguisher within reach, combustibles cleared, plus a hot-works permit.',
+      'Voltage-rated insulating gloves and an arc-flash visor — the torch flame and bonding tail are electrically connected, so the soldering carries a shock and arc risk.',
+      'An FFP3 respirator and on-tool dust extraction — the dominant added hazard is fine particulate from the flux and heated copper, so the extra controls are respiratory.',
+      'Cryogenic gloves and a cold-burn face shield — soldering rapidly cools the joint, so the added risk is contact with chilled metalwork as it sets.',
     ],
     correctAnswer: 0,
     explanation:
-      "Hot work has its own controls because the consequence (fire) extends well beyond the moment of the work — a smouldering ember can ignite hours later. PPE is layered with admin controls (hot-works permit, fire watch for 30-60 minutes after work ceases) and engineering controls (clearance of combustibles, fire blanket on the substrate). On modern installs the soldered earth bond is being replaced by clamp-on connections precisely to design out the hot-work risk.",
+      'Hot work has its own controls because the consequence (fire) extends well beyond the moment of the work — a smouldering ember can ignite hours later. PPE is layered with admin controls (hot-works permit, fire watch for 30-60 minutes after work ceases) and engineering controls (clearance of combustibles, fire blanket on the substrate). On modern installs the soldered earth bond is being replaced by clamp-on connections precisely to design out the hot-work risk.',
   },
 ];
 
@@ -200,22 +198,22 @@ const quizQuestions = [
 
 const faqs = [
   {
-    question: "Do I have to pay for my own PPE?",
+    question: 'Do I have to pay for my own PPE?',
     answer:
       "No. PPE Regs Reg 4 places the duty on the employer to PROVIDE suitable PPE — and Reg 9(3) explicitly prohibits the employer from charging for PPE that is provided to comply with the regulations. Specialist branded items beyond the regulatory minimum (premium-brand boots, designer shades) are a different conversation, but the working PPE you need to do the job safely is the employer's cost.",
   },
   {
     question: "If I'm a self-employed sub-contractor on a site, who provides my PPE?",
     answer:
-      "You do — for your own. The 2022 amendment to the PPE Regulations extended the employer-provision duty to limb (b) workers, but a self-employed person who runs their own business is responsible for their own PPE. On a CDM site the principal contractor may impose site-specific PPE requirements (e.g. high-vis, helmet, glasses), and you have to meet those at your own cost.",
+      'You do — for your own. The 2022 amendment to the PPE Regulations extended the employer-provision duty to limb (b) workers, but a self-employed person who runs their own business is responsible for their own PPE. On a CDM site the principal contractor may impose site-specific PPE requirements (e.g. high-vis, helmet, glasses), and you have to meet those at your own cost.',
   },
   {
-    question: "How often does PPE need to be replaced?",
+    question: 'How often does PPE need to be replaced?',
     answer:
-      "PPE Regs Reg 7 requires the employer to maintain PPE in good repair and efficient working order, including replacement when needed. There is no fixed schedule — it depends on the item and the use. Disposable masks: single-shift typically. Safety glasses: when scratched or damaged. Helmets: per manufacturer (often 3-5 years from manufacture date stamped inside, replaced sooner if struck). Boots: when sole worn, toe cap exposed or upper damaged. The pre-use inspection is what catches the right moment.",
+      'PPE Regs Reg 7 requires the employer to maintain PPE in good repair and efficient working order, including replacement when needed. There is no fixed schedule — it depends on the item and the use. Disposable masks: single-shift typically. Safety glasses: when scratched or damaged. Helmets: per manufacturer (often 3-5 years from manufacture date stamped inside, replaced sooner if struck). Boots: when sole worn, toe cap exposed or upper damaged. The pre-use inspection is what catches the right moment.',
   },
   {
-    question: "Why does the rated protection on a mask depend on me being clean-shaven?",
+    question: 'Why does the rated protection on a mask depend on me being clean-shaven?',
     answer:
       "Tight-fitting RPE relies on a face seal. Stubble or beard in the seal area allows leakage past the filter — the air bypasses the protection. INDG479 (HSE guidance on RPE fit testing) and HSG53 are explicit that bearded workers cannot use disposable FFP1/2/3 masks or any other tight-fitting mask. The alternative is a powered air-purifying respirator (PAPR) with a loose-fitting hood, which doesn't rely on a face seal.",
   },
@@ -225,9 +223,9 @@ const faqs = [
       "The 1-5 scale (EN 388:2003) used a coup test that gave inconsistent results for high-cut materials. The A-F scale (EN 388:2016, ISO 13997) uses the TDM-100 test, which applies a known force to a sharp blade and measures the distance to cut-through. The two scales aren't directly equivalent — a glove can carry both ratings during the transition period. For electrical-installer cut hazards (cable, tray edges, snips) levels B-D on the new scale cover most general work; level E-F is for heavy steel handling.",
   },
   {
-    question: "Is a hi-vis vest PPE in the formal sense?",
+    question: 'Is a hi-vis vest PPE in the formal sense?',
     answer:
-      "Yes — it falls under PPE Regs as it protects the wearer from a risk (being struck by a vehicle or plant by not being seen). It also has its own product standards (EN ISO 20471 for high-visibility clothing, with classes 1-3 by amount of reflective and fluorescent material). On a construction site Class 2 is typical for daytime, Class 3 for night work or roadside work. The colour (yellow or orange) is dictated by visibility against the working background — both are acceptable under EN ISO 20471.",
+      'Yes — it falls under PPE Regs as it protects the wearer from a risk (being struck by a vehicle or plant by not being seen). It also has its own product standards (EN ISO 20471 for high-visibility clothing, with classes 1-3 by amount of reflective and fluorescent material). On a construction site Class 2 is typical for daytime, Class 3 for night work or roadside work. The colour (yellow or orange) is dictated by visibility against the working background — both are acceptable under EN ISO 20471.',
   },
 ];
 
@@ -236,561 +234,516 @@ export default function Sub2() {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
-      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
-        <PageFrame>
+    <HubPage>
+      <HubMasthead
+        section="Module 4 · Section 2 · Subsection 2"
+        title="PPE for different tasks"
+        backTo=".."
+      />
+      <HubBody>
+        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
+          Choosing PPE that matches the task — drilling masonry, cable pulling, live testing,
+          working at height, hot work. PPE is the last line of defence in the hierarchy of control,
+          not the first.
+        </p>
+
+        <TLDR
+          points={[
+            'PPE is the LAST line of defence in the hierarchy of control. Eliminate, substitute, engineering controls, admin controls, then PPE. Reaching for PPE before considering the controls above it is the most common audit finding.',
+            "Pick PPE by the task — not by what's in the van. Chasing masonry, cable pulling, live testing and hot work each demand a different PPE combination.",
+            'Tight-fitting RPE (FFP3 dust masks) only works on a clean-shaven face — INDG479 fit-testing rules apply. Bearded workers need a powered air-purifying respirator with a loose-fitting hood.',
+          ]}
+        />
+
+        <LearningOutcomes
+          outcomes={[
+            'Identify the hierarchy of control under MHSWR 1999 Schedule 1 and explain why PPE sits at the bottom.',
+            'State the duties of the employer under PPE Regulations 1992 (as amended 2022) Reg 4 (provide suitable PPE) and Reg 9(3) (no charge to the worker).',
+            'State the duties of the employee under PPE Regulations Reg 10 to use PPE per training and report defects.',
+            'Match PPE to the specific task — drilling masonry, cable pulling, live testing, working at height, hot work.',
+            'Recognise the limits of disposable filtering facepiece masks and the role of fit-testing under HSE INDG479 / HSG53.',
+            'Carry out a pre-use inspection of safety glasses, gloves, hi-vis, hard hat and RPE before commencing work.',
+          ]}
+          initialVisibleCount={3}
+        />
+
+        <ContentEyebrow>Where PPE sits in the safety system</ContentEyebrow>
+
+        <ConceptBlock
+          title="The hierarchy of control — why PPE is at the bottom"
+          plainEnglish="The HSE expects risks to be controlled in a fixed order. Eliminate the hazard first (don't do the dangerous task at all). Substitute with something less dangerous. Engineering controls (dust extraction, guards, RCDs). Administrative controls (work rotation, signage, training). Only then PPE. PPE is last because it depends on the operative remembering, fitting and inspecting it — and it only protects the wearer, not anyone else in the area."
+          onSite="The first question on any task is 'can I avoid doing this dangerous thing?' (eliminate). Then 'can I do it a less dangerous way?' (substitute). Then 'can I add an engineering control?' (e.g. on-tool dust extraction for chasing). Then 'is there an admin control that helps?' (e.g. work rotation to reduce noise exposure). Only when those have been worked through does the question become 'what PPE do I need?'."
+        >
+          <p>The hierarchy as set out in Schedule 1 of MHSWR 1999:</p>
+          <ol className="space-y-1.5 list-decimal pl-5 marker:text-elec-yellow/70">
+            <li>Avoid risks (eliminate the hazard).</li>
+            <li>Evaluate the risks that cannot be avoided.</li>
+            <li>Combat the risks at source.</li>
+            <li>Adapt the work to the individual.</li>
+            <li>Adapt to technical progress.</li>
+            <li>Replace the dangerous with the non-dangerous or less dangerous.</li>
+            <li>Develop a coherent overall prevention policy.</li>
+            <li>
+              Give collective protective measures priority over individual protective measures (i.e.
+              engineering controls before PPE).
+            </li>
+            <li>Give appropriate instructions to employees.</li>
+          </ol>
+          <p>
+            The eighth principle is the one that puts PPE last. The HSE inspector after an incident
+            will ask &quot;what came before the PPE?&quot; — if the answer is &quot;nothing, we just
+            gave them a mask&quot;, the SFAIRP defence collapses.
+          </p>
+        </ConceptBlock>
+
+        <RegsCallout
+          source="Personal Protective Equipment at Work Regulations 1992 (as amended 2022) — Reg 4(1) and Reg 9(3)"
+          clause={
+            <>
+              <p className="mb-2">
+                <strong>Reg 4(1)</strong> — &quot;Every employer shall ensure that suitable personal
+                protective equipment is provided to his employees who may be exposed to a risk to
+                their health or safety while at work except where and to the extent that such risk
+                has been adequately controlled by other means which are equally or more
+                effective.&quot;
+              </p>
+              <p>
+                <strong>Reg 9(3)</strong> — &quot;No employer shall require any employee to pay for
+                any personal protective equipment which has been supplied to him for the purposes of
+                these Regulations.&quot;
+              </p>
+            </>
+          }
+          meaning={
+            <>
+              Reg 4 is the substantive duty — provide suitable PPE unless the risk is controlled by
+              other (equally or more effective) means. Reg 9(3) is the non-charging rule — the
+              employer cannot pass the cost of compliance PPE on to the worker. The 2022 amendment
+              extended both duties to cover limb (b) workers (some categories of casual / gig
+              workers) as well as employees in the strict sense. For an apprentice this is
+              straightforward — the firm provides your working PPE at no cost.
+            </>
+          }
+          cite="Source: Personal Protective Equipment at Work Regulations 1992 (SI 1992/2966) as amended by the Personal Protective Equipment at Work (Amendment) Regulations 2022 (SI 2022/8) — verbatim from legislation.gov.uk."
+        />
+
+        <InlineCheck
+          id={checks[0].id}
+          question={checks[0].question}
+          options={checks[0].options}
+          correctIndex={checks[0].correctIndex}
+          explanation={checks[0].explanation}
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>PPE by task — drilling and cutting masonry</ContentEyebrow>
+
+        <ConceptBlock
+          title="Chasing, drilling, breaking — the highest PPE load on a typical install"
+          plainEnglish="Cutting or drilling masonry generates a particularly nasty mix — respirable crystalline silica dust, high noise, flying debris, vibration. Each one needs its own control. The combined PPE for a chasing task is heavier than for almost any other routine electrical task short of live work."
+          onSite="Engineering controls come first — on-tool dust extraction (Class M for masonry dust) is the most effective single control. PPE then sits on top of that to catch what the extraction misses. Skipping the extraction and relying on PPE alone is the textbook 'PPE-first' failure that an inspector will pull you up on."
+        >
+          <p>The PPE combination for chasing or drilling masonry:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Respiratory protection</strong> — FFP3 disposable mask (minimum) or half-mask
+              with P3 filter cartridges. Bearded? PAPR with loose-fitting hood. Fit tested under
+              INDG479 / HSG53.
+            </li>
+            <li>
+              <strong>Eye protection</strong> — impact-rated, EN 166 F (low-energy impact) or EN 166
+              B (medium-energy) for chasers. Wraparound to keep dust out the sides.
+            </li>
+            <li>
+              <strong>Hearing protection</strong> — chasers run 95-105 dB which is over the Control
+              of Noise at Work Regulations 2005 upper exposure action value (85 dB). Earplugs (SNR
+              27+) or earmuffs.
+            </li>
+            <li>
+              <strong>Gloves</strong> — cut/abrasion-resistant (EN 388 level B-D) for handling the
+              chaser and the masonry debris. Vibration-dampening palm if doing extended use.
+            </li>
+            <li>
+              <strong>Engineering control</strong> — on-tool extraction (Class M vacuum) connected
+              to the chaser. This is the single biggest reduction in dust exposure.
+            </li>
+          </ul>
+          <p>Plus baseline site PPE — boots, hi-vis, hard hat where overhead risk.</p>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <ContentEyebrow>PPE by task — cable handling</ContentEyebrow>
+
+        <ConceptBlock
+          title="Cable pulling and termination — different gloves for different tasks"
+          plainEnglish="Cable handling has two PPE problems — cut/abrasion when pulling through enclosures and dexterity when terminating. The same glove rarely does both well, so most apprentices end up with two pairs in the toolbox."
+          onSite="Cable pulling generates abrasion (the cable sheath dragging through brackets and conduit) and the occasional snag injury. Termination is fine work — the glove either has to come off or has to be a thin grip-glove that lets you feel the strands. Picking the wrong glove for the wrong half of the job is a common minor-injury source."
+        >
+          <p>The PPE combination for cable pulling and termination:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Pulling gloves</strong> — palm-coated, cut-resistant (EN 388 level B-C), full
+              grip. Protects against rope burn from pulled cable, sharp edges in enclosures, and the
+              occasional buried staple.
+            </li>
+            <li>
+              <strong>Termination gloves</strong> — thin nitrile-palm or no glove at all for fine
+              work. Conductor strands need feel; bulky gloves cause poor terminations.
+            </li>
+            <li>
+              <strong>Eye protection</strong> — light safety glasses (EN 166 F). Cable pulling can
+              spring lose ends back at face level when a pull releases.
+            </li>
+            <li>
+              <strong>Knee protection</strong> — knee pads when working at floor level for extended
+              periods. The Manual Handling Operations Regulations 1992 Reg 4 covers this as part of
+              the wider posture / load assessment.
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <ContentEyebrow>PPE by task — live work and electrical testing</ContentEyebrow>
+
+        <ConceptBlock
+          title="Live work is the exception — and the PPE reflects that"
+          plainEnglish="Almost all installation work is done dead following safe isolation. EAWR 1989 Reg 14 makes live work the explicit exception — it has to be specifically justified because the work cannot reasonably be done dead, the operative has to be competent, and suitable precautions have to be in place. PPE for live work is a higher specification than for dead work."
+          onSite="On dead work the PPE is the standard kit (eye protection, mechanical-protection gloves, baseline site PPE). On live work — and that includes voltage proving as part of safe isolation — there's a heavier kit. Class 0 voltage-rated insulating gloves (rated to 1000V AC), arc-rated clothing for higher fault-energy locations, eye protection rated for arc-flash, dielectric overshoes."
+        >
+          <p>The PPE combination for live work and live testing:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Voltage-rated insulating gloves</strong> — Class 0 rated to 1000V AC covers
+              most LV work. Worn over leather mechanical-protection gloves to protect the rubber
+              from puncture. Tested before each use (visual + air-inflation check for pinholes).
+            </li>
+            <li>
+              <strong>Arc-rated eye protection</strong> — full face shield (EN 166 with arc-flash
+              marking) for switchgear or higher-energy work. Standard safety glasses only for
+              low-energy domestic testing.
+            </li>
+            <li>
+              <strong>Arc-rated clothing</strong> — required for higher-energy commercial /
+              industrial DBs at 415V where the calculated incident energy exceeds the bare-skin
+              threshold. NFPA 70E and IEC 61482 give the calculation framework. Most domestic work
+              is below the threshold but isn't zero risk.
+            </li>
+            <li>
+              <strong>Insulated tools</strong> — VDE-rated screwdrivers and pliers (EN 60900) rated
+              to 1000V AC. Inspected for damage to the insulation before use.
+            </li>
+            <li>
+              <strong>Dielectric overshoes</strong> — for switchgear or higher-risk locations.
+              Insulated mat at the work position is the engineering-control alternative.
+            </li>
+          </ul>
+          <p>
+            The cleanest control is to do the work dead. Module 4 Section 2 Sub 5 covers the
+            live-work permit-to-work regime that has to sit around any live work that cannot be
+            avoided.
+          </p>
+        </ConceptBlock>
+
+        <RegsCallout
+          source="Electricity at Work Regulations 1989 — Reg 14"
+          clause={
+            <>
+              &quot;No person shall be engaged in any work activity on or so near any live conductor
+              (other than one suitably covered with insulating material so as to prevent danger)
+              that danger may arise unless — (a) it is unreasonable in all the circumstances for it
+              to be dead; and (b) it is reasonable in all the circumstances for him to be at work on
+              or near it while it is live; and (c) suitable precautions (including where necessary
+              the provision of suitable protective equipment) are taken to prevent injury.&quot;
+            </>
+          }
+          meaning={
+            <>
+              Reg 14 is the live-work prohibition with three cumulative exceptions. ALL THREE limbs
+              have to be satisfied — it has to be unreasonable to make the conductor dead AND
+              reasonable to work on it live AND suitable precautions in place. PPE is one of the
+              &apos;suitable precautions&apos;. If any limb fails, live work is prohibited. The HSE
+              has prosecuted electricians and their firms under Reg 14 where the &apos;could it have
+              been done dead?&apos; question wasn&apos;t honestly answered.
+            </>
+          }
+          cite="Source: Electricity at Work Regulations 1989 (SI 1989/635), Reg 14 — verbatim from legislation.gov.uk."
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>PPE by task — working at height and hot work</ContentEyebrow>
+
+        <ConceptBlock
+          title="Working at height and hot work — separate task families with their own PPE"
+          plainEnglish="Working at height is covered in detail in Sub 3 of this section, but the PPE component is worth flagging here. Hard hat where overhead risk; chinstrap on the helmet to stop it falling off when working overhead; fall arrest if scaffold or MEWP requires it (cherry picker work routinely needs full body harness with shock-absorbing lanyard clipped to the basket anchor)."
+          onSite="Hot work — using a gas torch to make a soldered joint on a copper bonding tail — has a specific PPE set. Leather gloves rather than synthetic, eye protection rated for thermal hazards, long sleeves of natural fibre (synthetics melt onto skin), a fire blanket or extinguisher within arm's reach, and clearance of combustibles from the work area."
+        >
+          <p>Working at height — PPE component (full hierarchy in Sub 3):</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Hard hat with chinstrap</strong> — when working overhead or where others are
+              working overhead.
+            </li>
+            <li>
+              <strong>Fall arrest harness + lanyard</strong> — required for MEWP basket work and for
+              some scaffold work. IPAF / PASMA training covers correct use.
+            </li>
+            <li>
+              <strong>Footwear with grip rating</strong> — particularly for ladder and scaffold
+              work. Smooth-sole boots are a fall risk.
+            </li>
+          </ul>
+          <p>Hot work — PPE plus admin controls:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Leather gloves</strong> — heat resistant, not synthetic.
+            </li>
+            <li>
+              <strong>Thermal-rated eye protection</strong> — EN 166 with thermal-hazard marking.
+            </li>
+            <li>
+              <strong>Natural-fibre clothing</strong> — long sleeves of cotton or wool. Synthetic
+              clothing melts onto skin.
+            </li>
+            <li>
+              <strong>Fire blanket / extinguisher in arm&apos;s reach</strong> — and clearance of
+              combustibles from the work area.
+            </li>
+            <li>
+              <strong>Hot-works permit</strong> — admin control on commercial premises. Sub 5 of
+              this section.
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <InlineCheck
+          id={checks[1].id}
+          question={checks[1].question}
+          options={checks[1].options}
+          correctIndex={checks[1].correctIndex}
+          explanation={checks[1].explanation}
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>Fit, inspection and storage</ContentEyebrow>
+
+        <ConceptBlock
+          title="PPE only protects when it fits and is undamaged"
+          plainEnglish="PPE Regs Reg 7 puts the maintenance duty on the employer; Reg 10 puts the inspection-and-report duty on the employee. Together they make the pre-use inspection a daily routine. Damaged PPE doesn't provide the rated protection — a cracked safety glass lens, a dust mask with a broken strap, a hi-vis with the reflective material peeling off — all need to be taken out of service before use."
+          onSite="The pre-use inspection takes thirty seconds per item. Glasses — visible cracks or scratches that obscure vision? Mask — straps intact, nose-piece formable, no holes in the filter material? Gloves — no cuts, no chemical damage, dry inside? Helmet — within manufacturer's lifespan, no impact damage to the shell? If any item fails, swap it before work starts."
+        >
+          <p>The pre-use inspection routine:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Glasses / visor</strong> — clean, no scratches that obscure vision, no cracks.
+              Side shields intact for wraparound.
+            </li>
+            <li>
+              <strong>Mask / RPE</strong> — straps intact and elastic, nose piece bendable, no holes
+              in filter material. Disposable masks are single-shift.
+            </li>
+            <li>
+              <strong>Gloves</strong> — no cuts or holes, no chemical damage, no contamination.
+              Voltage-rated gloves get an air-inflation check for pinholes.
+            </li>
+            <li>
+              <strong>Helmet</strong> — within the manufacturer&apos;s lifespan (date stamped
+              inside), no impact damage to the shell, harness intact.
+            </li>
+            <li>
+              <strong>Hi-vis</strong> — fluorescent material not faded beyond visible threshold,
+              reflective tape intact and not peeling.
+            </li>
+            <li>
+              <strong>Boots</strong> — sole tread present, toe cap not exposed, upper not split.
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <RegsCallout
+          source="Personal Protective Equipment at Work Regulations 1992 — Reg 7(1) and Reg 10(2)"
+          clause={
+            <>
+              <p className="mb-2">
+                <strong>Reg 7(1)</strong> — &quot;Every employer shall ensure that any personal
+                protective equipment provided to his employees is maintained (including replaced or
+                cleaned as appropriate) in an efficient state, in efficient working order and in
+                good repair.&quot;
+              </p>
+              <p>
+                <strong>Reg 10(2)</strong> — &quot;Every employee who has been provided with
+                personal protective equipment by virtue of regulation 4(1) shall take all reasonable
+                steps to ensure that it is returned to the accommodation provided for it after
+                use.&quot;
+              </p>
+            </>
+          }
+          meaning={
+            <>
+              Reg 7 is the maintenance duty on the employer — PPE must be kept in working order. Reg
+              10(2) puts a corresponding duty on the employee to put it back where it lives after
+              use (so the next inspection finds it in a known condition). Reg 11 requires the
+              employer to provide accommodation for PPE storage when not in use — a designated
+              locker or van compartment, not the back seat of the van under wet cable.
+            </>
+          }
+          cite="Source: Personal Protective Equipment at Work Regulations 1992 (SI 1992/2966) — verbatim from legislation.gov.uk."
+        />
+
+        <InlineCheck
+          id={checks[2].id}
+          question={checks[2].question}
+          options={checks[2].options}
+          correctIndex={checks[2].correctIndex}
+          explanation={checks[2].explanation}
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>Where it goes wrong</ContentEyebrow>
+
+        <CommonMistake
+          title="Reaching for PPE first instead of working through the hierarchy"
+          whatHappens={
+            <>
+              Apprentice is told to chase a wall by the supervisor. Supervisor hands them a
+              disposable mask and says &quot;crack on&quot;. No on-tool extraction set up, no
+              work-rotation arrangement, no consideration of whether a different cable route would
+              avoid the chase entirely. Apprentice spends three hours producing silica dust the mask
+              can&apos;t fully filter, and the supervisor has skipped everything ABOVE PPE in the
+              hierarchy. The post-incident audit (or HSE visit) finds that the PPE-only approach was
+              a breach of the principles of prevention in MHSWR Schedule 1 even though the worker
+              WAS wearing PPE.
+            </>
+          }
+          doInstead={
+            <>
+              Walk the hierarchy on every task. Can the chase be avoided (surface-mount in trunking,
+              drop from above)? If not, can a less-dusty method substitute (stitch drilling rather
+              than continuous chase)? If not, what engineering control (on-tool extraction with
+              Class M vacuum)? What admin control (rotate operative, limit exposure time)? THEN PPE.
+              The PPE is what catches what the controls above it miss — not the only thing standing
+              between you and the hazard.
+            </>
+          }
+        />
+
+        <CommonMistake
+          title="Allowing a bearded operative to use a disposable FFP3 mask"
+          whatHappens={
+            <>
+              Apprentice in week two is sent to chase a wall. He&apos;s grown a beard since joining.
+              Hands him a disposable FFP3 and waves him at the chaser. The face seal doesn&apos;t
+              work over the beard, 15-20% of his inhaled air bypasses the filter, and three
+              hours&apos; chasing exposes him to silica well above the workplace exposure limit.
+              Years later he develops respiratory symptoms. The firm cannot show that fit-testing
+              under INDG479 was carried out and the PPE provided was suitable for the user. Civil
+              claim follows alongside a HSE investigation.
+            </>
+          }
+          doInstead={
+            <>
+              Fit-testing applies to every tight-fitting RPE wearer per HSG53 and INDG479. If the
+              worker has facial hair in the seal area, the disposable mask isn&apos;t suitable —
+              switch to a powered air-purifying respirator (PAPR) with a loose-fitting hood. The
+              PAPR doesn&apos;t rely on a face seal so it works regardless of facial hair. Yes, it
+              costs more than a disposable mask. The cost of getting it wrong is much higher.
+            </>
+          }
+        />
+
+        <Scenario
+          title="Cutting a chase in plaster for a new socket — what PPE before you start?"
+          situation={
+            <>
+              You&apos;re second-year on a domestic kitchen retrofit. The customer wants a new
+              socket on a wall that&apos;s currently bare sand-and-cement plaster. The wall is an
+              external solid wall (no cavity), no concealed services flagged on the walk-round, and
+              the chase will be 25mm wide x 15mm deep over a 1.2m vertical run. You&apos;re going to
+              use a 110V wall chaser with two 125mm diamond blades. The customer is at home but in
+              another room.
+            </>
+          }
+          whatToDo={
+            <>
+              Walk the hierarchy first, then PPE. Eliminate? No — the customer wants a flush socket
+              and surface-mount conduit isn&apos;t acceptable here. Substitute? Could stitch-drill
+              the chase but the chaser is the right tool for a 1.2m run. Engineering control?
+              Connect the chaser to a Class M vacuum extractor — this is the single biggest
+              reduction in dust exposure and should be considered required for any significant
+              chasing job. Admin control? Brief the customer that the work area is off-limits while
+              the chaser runs, close the door to the rest of the house, and limit your continuous
+              chasing to short runs with breaks (work rotation reduces noise and dust exposure even
+              for a single operative). THEN PPE: FFP3 disposable mask (assuming you&apos;re
+              clean-shaven and fit-tested), wraparound impact-rated eye protection (EN 166 F),
+              hearing protection (SNR 27+ earplugs or earmuffs), cut-resistant gloves (EN 388 B-C),
+              boots, hi-vis. Inspect each item before you put it on.
+            </>
+          }
+          whyItMatters={
+            <>
+              The temptation as an apprentice is to grab the mask and the glasses and start cutting.
+              Working through the hierarchy in that order — even out loud, even just in your head
+              &mdash; is what an inspector wants to see in your routine and what turns &quot;PPE was
+              provided&quot; into &quot;risk was controlled&quot;. The PPE catches what the
+              engineering and admin controls miss. Skipping the controls above PPE and relying on
+              the mask alone is the prosecutable failure. The same walk-the-hierarchy thinking
+              applies to every task on this Sub.
+            </>
+          }
+        />
+
+        <SectionRule />
+
+        <FAQ items={faqs} />
+
+        <SectionRule />
+
+        <KeyTakeaways
+          points={[
+            'PPE is the LAST line of defence in the hierarchy of control under MHSWR 1999 Schedule 1. Eliminate, substitute, engineering controls, admin controls, then PPE.',
+            'PPE Regs 1992 (as amended 2022) Reg 4 requires the employer to provide suitable PPE; Reg 9(3) prohibits the employer from charging the worker for it.',
+            'The 2022 amendment extended PPE provision to limb (b) workers as well as employees in the strict sense.',
+            'Match PPE to the task — chasing masonry, cable handling, live testing, working at height and hot work each demand a different combination.',
+            'Tight-fitting RPE only works on a clean-shaven face. Bearded workers need a powered air-purifying respirator with a loose-fitting hood — INDG479 and HSG53 are explicit.',
+            "Live work is the exception under EAWR 1989 Reg 14. Voltage-rated gloves, arc-rated kit and insulated tools are PPE for the situations where dead working isn't reasonable. Most installation work is done dead.",
+            'Pre-use inspection of every PPE item — glasses, mask, gloves, helmet, hi-vis, boots — takes thirty seconds and catches damaged kit before it fails in use. PPE Regs Reg 10 makes the report-defect duty personal.',
+            "PPE protects only the wearer, only when worn correctly, and only when undamaged. Engineering controls (extraction, RCDs, guards) protect everyone in the area without depending on individual behaviour — that's why they sit above PPE in the hierarchy.",
+          ]}
+        />
+
+        <Quiz title="PPE selection — knowledge check" questions={quizQuestions} />
+
+        {/* ── Prev / next nav ─────────────────────────────────── */}
+        <div className="grid grid-cols-2 gap-3 pt-2">
           <button
-            onClick={() => navigate('..')}
-            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            onClick={() => navigate('/study-centre/apprentice/level2/module4/section2/2-1')}
+            className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
           >
-            <ArrowLeft className="h-4 w-4" /> Section 2
+            <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+              <ChevronLeft className="h-3 w-3" /> Previous subsection
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-white truncate">
+              2.1 Workspace hazards
+            </div>
           </button>
-
-          <PageHero
-            eyebrow="Module 4 · Section 2 · Subsection 2"
-            title="PPE for different tasks"
-            description="Choosing PPE that matches the task — drilling masonry, cable pulling, live testing, working at height, hot work. PPE is the last line of defence in the hierarchy of control, not the first."
-            tone="emerald"
-          />
-
-          <TLDR
-            points={[
-              "PPE is the LAST line of defence in the hierarchy of control. Eliminate, substitute, engineering controls, admin controls, then PPE. Reaching for PPE before considering the controls above it is the most common audit finding.",
-              "Pick PPE by the task — not by what's in the van. Chasing masonry, cable pulling, live testing and hot work each demand a different PPE combination.",
-              "Tight-fitting RPE (FFP3 dust masks) only works on a clean-shaven face — INDG479 fit-testing rules apply. Bearded workers need a powered air-purifying respirator with a loose-fitting hood.",
-            ]}
-          />
-
-          <LearningOutcomes
-            outcomes={[
-              "Identify the hierarchy of control under MHSWR 1999 Schedule 1 and explain why PPE sits at the bottom.",
-              "State the duties of the employer under PPE Regulations 1992 (as amended 2022) Reg 4 (provide suitable PPE) and Reg 9(3) (no charge to the worker).",
-              "State the duties of the employee under PPE Regulations Reg 10 to use PPE per training and report defects.",
-              "Match PPE to the specific task — drilling masonry, cable pulling, live testing, working at height, hot work.",
-              "Recognise the limits of disposable filtering facepiece masks and the role of fit-testing under HSE INDG479 / HSG53.",
-              "Carry out a pre-use inspection of safety glasses, gloves, hi-vis, hard hat and RPE before commencing work.",
-            ]}
-            initialVisibleCount={3}
-          />
-
-          <ContentEyebrow>Where PPE sits in the safety system</ContentEyebrow>
-
-          <ConceptBlock
-            title="The hierarchy of control — why PPE is at the bottom"
-            plainEnglish="The HSE expects risks to be controlled in a fixed order. Eliminate the hazard first (don't do the dangerous task at all). Substitute with something less dangerous. Engineering controls (dust extraction, guards, RCDs). Administrative controls (work rotation, signage, training). Only then PPE. PPE is last because it depends on the operative remembering, fitting and inspecting it — and it only protects the wearer, not anyone else in the area."
-            onSite="The first question on any task is 'can I avoid doing this dangerous thing?' (eliminate). Then 'can I do it a less dangerous way?' (substitute). Then 'can I add an engineering control?' (e.g. on-tool dust extraction for chasing). Then 'is there an admin control that helps?' (e.g. work rotation to reduce noise exposure). Only when those have been worked through does the question become 'what PPE do I need?'."
+          <button
+            onClick={() => navigate('/study-centre/apprentice/level2/module4/section2/2-3')}
+            className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
           >
-            <p>
-              The hierarchy as set out in Schedule 1 of MHSWR 1999:
-            </p>
-            <ol className="space-y-1.5 list-decimal pl-5 marker:text-elec-yellow/70">
-              <li>
-                Avoid risks (eliminate the hazard).
-              </li>
-              <li>
-                Evaluate the risks that cannot be avoided.
-              </li>
-              <li>
-                Combat the risks at source.
-              </li>
-              <li>
-                Adapt the work to the individual.
-              </li>
-              <li>
-                Adapt to technical progress.
-              </li>
-              <li>
-                Replace the dangerous with the non-dangerous or less dangerous.
-              </li>
-              <li>
-                Develop a coherent overall prevention policy.
-              </li>
-              <li>
-                Give collective protective measures priority over individual protective measures
-                (i.e. engineering controls before PPE).
-              </li>
-              <li>
-                Give appropriate instructions to employees.
-              </li>
-            </ol>
-            <p>
-              The eighth principle is the one that puts PPE last. The HSE inspector after an
-              incident will ask &quot;what came before the PPE?&quot; — if the answer is
-              &quot;nothing, we just gave them a mask&quot;, the SFAIRP defence collapses.
-            </p>
-          </ConceptBlock>
-
-          <RegsCallout
-            source="Personal Protective Equipment at Work Regulations 1992 (as amended 2022) — Reg 4(1) and Reg 9(3)"
-            clause={
-              <>
-                <p className="mb-2">
-                  <strong>Reg 4(1)</strong> — &quot;Every employer shall ensure that suitable
-                  personal protective equipment is provided to his employees who may be exposed to
-                  a risk to their health or safety while at work except where and to the extent
-                  that such risk has been adequately controlled by other means which are equally
-                  or more effective.&quot;
-                </p>
-                <p>
-                  <strong>Reg 9(3)</strong> — &quot;No employer shall require any employee to pay
-                  for any personal protective equipment which has been supplied to him for the
-                  purposes of these Regulations.&quot;
-                </p>
-              </>
-            }
-            meaning={
-              <>
-                Reg 4 is the substantive duty — provide suitable PPE unless the risk is controlled
-                by other (equally or more effective) means. Reg 9(3) is the non-charging rule —
-                the employer cannot pass the cost of compliance PPE on to the worker. The 2022
-                amendment extended both duties to cover limb (b) workers (some categories of
-                casual / gig workers) as well as employees in the strict sense. For an apprentice
-                this is straightforward — the firm provides your working PPE at no cost.
-              </>
-            }
-            cite="Source: Personal Protective Equipment at Work Regulations 1992 (SI 1992/2966) as amended by the Personal Protective Equipment at Work (Amendment) Regulations 2022 (SI 2022/8) — verbatim from legislation.gov.uk."
-          />
-
-          <InlineCheck
-            id={checks[0].id}
-            question={checks[0].question}
-            options={checks[0].options}
-            correctIndex={checks[0].correctIndex}
-            explanation={checks[0].explanation}
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>PPE by task — drilling and cutting masonry</ContentEyebrow>
-
-          <ConceptBlock
-            title="Chasing, drilling, breaking — the highest PPE load on a typical install"
-            plainEnglish="Cutting or drilling masonry generates a particularly nasty mix — respirable crystalline silica dust, high noise, flying debris, vibration. Each one needs its own control. The combined PPE for a chasing task is heavier than for almost any other routine electrical task short of live work."
-            onSite="Engineering controls come first — on-tool dust extraction (Class M for masonry dust) is the most effective single control. PPE then sits on top of that to catch what the extraction misses. Skipping the extraction and relying on PPE alone is the textbook 'PPE-first' failure that an inspector will pull you up on."
-          >
-            <p>
-              The PPE combination for chasing or drilling masonry:
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Respiratory protection</strong> — FFP3 disposable mask (minimum) or
-                half-mask with P3 filter cartridges. Bearded? PAPR with loose-fitting hood. Fit
-                tested under INDG479 / HSG53.
-              </li>
-              <li>
-                <strong>Eye protection</strong> — impact-rated, EN 166 F (low-energy impact) or
-                EN 166 B (medium-energy) for chasers. Wraparound to keep dust out the sides.
-              </li>
-              <li>
-                <strong>Hearing protection</strong> — chasers run 95-105 dB which is over the
-                Control of Noise at Work Regulations 2005 upper exposure action value (85 dB).
-                Earplugs (SNR 27+) or earmuffs.
-              </li>
-              <li>
-                <strong>Gloves</strong> — cut/abrasion-resistant (EN 388 level B-D) for handling
-                the chaser and the masonry debris. Vibration-dampening palm if doing extended
-                use.
-              </li>
-              <li>
-                <strong>Engineering control</strong> — on-tool extraction (Class M vacuum)
-                connected to the chaser. This is the single biggest reduction in dust exposure.
-              </li>
-            </ul>
-            <p>
-              Plus baseline site PPE — boots, hi-vis, hard hat where overhead risk.
-            </p>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <ContentEyebrow>PPE by task — cable handling</ContentEyebrow>
-
-          <ConceptBlock
-            title="Cable pulling and termination — different gloves for different tasks"
-            plainEnglish="Cable handling has two PPE problems — cut/abrasion when pulling through enclosures and dexterity when terminating. The same glove rarely does both well, so most apprentices end up with two pairs in the toolbox."
-            onSite="Cable pulling generates abrasion (the cable sheath dragging through brackets and conduit) and the occasional snag injury. Termination is fine work — the glove either has to come off or has to be a thin grip-glove that lets you feel the strands. Picking the wrong glove for the wrong half of the job is a common minor-injury source."
-          >
-            <p>
-              The PPE combination for cable pulling and termination:
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Pulling gloves</strong> — palm-coated, cut-resistant (EN 388 level B-C),
-                full grip. Protects against rope burn from pulled cable, sharp edges in
-                enclosures, and the occasional buried staple.
-              </li>
-              <li>
-                <strong>Termination gloves</strong> — thin nitrile-palm or no glove at all for
-                fine work. Conductor strands need feel; bulky gloves cause poor terminations.
-              </li>
-              <li>
-                <strong>Eye protection</strong> — light safety glasses (EN 166 F). Cable
-                pulling can spring lose ends back at face level when a pull releases.
-              </li>
-              <li>
-                <strong>Knee protection</strong> — knee pads when working at floor level for
-                extended periods. The Manual Handling Operations Regulations 1992 Reg 4 covers
-                this as part of the wider posture / load assessment.
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <ContentEyebrow>PPE by task — live work and electrical testing</ContentEyebrow>
-
-          <ConceptBlock
-            title="Live work is the exception — and the PPE reflects that"
-            plainEnglish="Almost all installation work is done dead following safe isolation. EAWR 1989 Reg 14 makes live work the explicit exception — it has to be specifically justified because the work cannot reasonably be done dead, the operative has to be competent, and suitable precautions have to be in place. PPE for live work is a higher specification than for dead work."
-            onSite="On dead work the PPE is the standard kit (eye protection, mechanical-protection gloves, baseline site PPE). On live work — and that includes voltage proving as part of safe isolation — there's a heavier kit. Class 0 voltage-rated insulating gloves (rated to 1000V AC), arc-rated clothing for higher fault-energy locations, eye protection rated for arc-flash, dielectric overshoes."
-          >
-            <p>
-              The PPE combination for live work and live testing:
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Voltage-rated insulating gloves</strong> — Class 0 rated to 1000V AC
-                covers most LV work. Worn over leather mechanical-protection gloves to protect
-                the rubber from puncture. Tested before each use (visual + air-inflation check
-                for pinholes).
-              </li>
-              <li>
-                <strong>Arc-rated eye protection</strong> — full face shield (EN 166 with
-                arc-flash marking) for switchgear or higher-energy work. Standard safety glasses
-                only for low-energy domestic testing.
-              </li>
-              <li>
-                <strong>Arc-rated clothing</strong> — required for higher-energy commercial /
-                industrial DBs at 415V where the calculated incident energy exceeds the bare-skin
-                threshold. NFPA 70E and IEC 61482 give the calculation framework. Most domestic
-                work is below the threshold but isn't zero risk.
-              </li>
-              <li>
-                <strong>Insulated tools</strong> — VDE-rated screwdrivers and pliers (EN 60900)
-                rated to 1000V AC. Inspected for damage to the insulation before use.
-              </li>
-              <li>
-                <strong>Dielectric overshoes</strong> — for switchgear or higher-risk locations.
-                Insulated mat at the work position is the engineering-control alternative.
-              </li>
-            </ul>
-            <p>
-              The cleanest control is to do the work dead. Module 4 Section 2 Sub 5 covers the
-              live-work permit-to-work regime that has to sit around any live work that cannot
-              be avoided.
-            </p>
-          </ConceptBlock>
-
-          <RegsCallout
-            source="Electricity at Work Regulations 1989 — Reg 14"
-            clause={
-              <>
-                &quot;No person shall be engaged in any work activity on or so near any live
-                conductor (other than one suitably covered with insulating material so as to
-                prevent danger) that danger may arise unless — (a) it is unreasonable in all the
-                circumstances for it to be dead; and (b) it is reasonable in all the circumstances
-                for him to be at work on or near it while it is live; and (c) suitable precautions
-                (including where necessary the provision of suitable protective equipment) are
-                taken to prevent injury.&quot;
-              </>
-            }
-            meaning={
-              <>
-                Reg 14 is the live-work prohibition with three cumulative exceptions. ALL THREE
-                limbs have to be satisfied — it has to be unreasonable to make the conductor dead
-                AND reasonable to work on it live AND suitable precautions in place. PPE is one
-                of the &apos;suitable precautions&apos;. If any limb fails, live work is
-                prohibited. The HSE has prosecuted electricians and their firms under Reg 14
-                where the &apos;could it have been done dead?&apos; question wasn&apos;t honestly
-                answered.
-              </>
-            }
-            cite="Source: Electricity at Work Regulations 1989 (SI 1989/635), Reg 14 — verbatim from legislation.gov.uk."
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>PPE by task — working at height and hot work</ContentEyebrow>
-
-          <ConceptBlock
-            title="Working at height and hot work — separate task families with their own PPE"
-            plainEnglish="Working at height is covered in detail in Sub 3 of this section, but the PPE component is worth flagging here. Hard hat where overhead risk; chinstrap on the helmet to stop it falling off when working overhead; fall arrest if scaffold or MEWP requires it (cherry picker work routinely needs full body harness with shock-absorbing lanyard clipped to the basket anchor)."
-            onSite="Hot work — using a gas torch to make a soldered joint on a copper bonding tail — has a specific PPE set. Leather gloves rather than synthetic, eye protection rated for thermal hazards, long sleeves of natural fibre (synthetics melt onto skin), a fire blanket or extinguisher within arm's reach, and clearance of combustibles from the work area."
-          >
-            <p>
-              Working at height — PPE component (full hierarchy in Sub 3):
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Hard hat with chinstrap</strong> — when working overhead or where
-                others are working overhead.
-              </li>
-              <li>
-                <strong>Fall arrest harness + lanyard</strong> — required for MEWP basket work
-                and for some scaffold work. IPAF / PASMA training covers correct use.
-              </li>
-              <li>
-                <strong>Footwear with grip rating</strong> — particularly for ladder and
-                scaffold work. Smooth-sole boots are a fall risk.
-              </li>
-            </ul>
-            <p>
-              Hot work — PPE plus admin controls:
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Leather gloves</strong> — heat resistant, not synthetic.
-              </li>
-              <li>
-                <strong>Thermal-rated eye protection</strong> — EN 166 with thermal-hazard
-                marking.
-              </li>
-              <li>
-                <strong>Natural-fibre clothing</strong> — long sleeves of cotton or wool.
-                Synthetic clothing melts onto skin.
-              </li>
-              <li>
-                <strong>Fire blanket / extinguisher in arm&apos;s reach</strong> — and clearance
-                of combustibles from the work area.
-              </li>
-              <li>
-                <strong>Hot-works permit</strong> — admin control on commercial premises. Sub 5
-                of this section.
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <InlineCheck
-            id={checks[1].id}
-            question={checks[1].question}
-            options={checks[1].options}
-            correctIndex={checks[1].correctIndex}
-            explanation={checks[1].explanation}
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>Fit, inspection and storage</ContentEyebrow>
-
-          <ConceptBlock
-            title="PPE only protects when it fits and is undamaged"
-            plainEnglish="PPE Regs Reg 7 puts the maintenance duty on the employer; Reg 10 puts the inspection-and-report duty on the employee. Together they make the pre-use inspection a daily routine. Damaged PPE doesn't provide the rated protection — a cracked safety glass lens, a dust mask with a broken strap, a hi-vis with the reflective material peeling off — all need to be taken out of service before use."
-            onSite="The pre-use inspection takes thirty seconds per item. Glasses — visible cracks or scratches that obscure vision? Mask — straps intact, nose-piece formable, no holes in the filter material? Gloves — no cuts, no chemical damage, dry inside? Helmet — within manufacturer's lifespan, no impact damage to the shell? If any item fails, swap it before work starts."
-          >
-            <p>
-              The pre-use inspection routine:
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Glasses / visor</strong> — clean, no scratches that obscure vision, no
-                cracks. Side shields intact for wraparound.
-              </li>
-              <li>
-                <strong>Mask / RPE</strong> — straps intact and elastic, nose piece bendable,
-                no holes in filter material. Disposable masks are single-shift.
-              </li>
-              <li>
-                <strong>Gloves</strong> — no cuts or holes, no chemical damage, no contamination.
-                Voltage-rated gloves get an air-inflation check for pinholes.
-              </li>
-              <li>
-                <strong>Helmet</strong> — within the manufacturer&apos;s lifespan (date stamped
-                inside), no impact damage to the shell, harness intact.
-              </li>
-              <li>
-                <strong>Hi-vis</strong> — fluorescent material not faded beyond visible threshold,
-                reflective tape intact and not peeling.
-              </li>
-              <li>
-                <strong>Boots</strong> — sole tread present, toe cap not exposed, upper not split.
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <RegsCallout
-            source="Personal Protective Equipment at Work Regulations 1992 — Reg 7(1) and Reg 10(2)"
-            clause={
-              <>
-                <p className="mb-2">
-                  <strong>Reg 7(1)</strong> — &quot;Every employer shall ensure that any personal
-                  protective equipment provided to his employees is maintained (including
-                  replaced or cleaned as appropriate) in an efficient state, in efficient working
-                  order and in good repair.&quot;
-                </p>
-                <p>
-                  <strong>Reg 10(2)</strong> — &quot;Every employee who has been provided with
-                  personal protective equipment by virtue of regulation 4(1) shall take all
-                  reasonable steps to ensure that it is returned to the accommodation provided
-                  for it after use.&quot;
-                </p>
-              </>
-            }
-            meaning={
-              <>
-                Reg 7 is the maintenance duty on the employer — PPE must be kept in working
-                order. Reg 10(2) puts a corresponding duty on the employee to put it back where
-                it lives after use (so the next inspection finds it in a known condition). Reg 11
-                requires the employer to provide accommodation for PPE storage when not in use —
-                a designated locker or van compartment, not the back seat of the van under wet
-                cable.
-              </>
-            }
-            cite="Source: Personal Protective Equipment at Work Regulations 1992 (SI 1992/2966) — verbatim from legislation.gov.uk."
-          />
-
-          <InlineCheck
-            id={checks[2].id}
-            question={checks[2].question}
-            options={checks[2].options}
-            correctIndex={checks[2].correctIndex}
-            explanation={checks[2].explanation}
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>Where it goes wrong</ContentEyebrow>
-
-          <CommonMistake
-            title="Reaching for PPE first instead of working through the hierarchy"
-            whatHappens={
-              <>
-                Apprentice is told to chase a wall by the supervisor. Supervisor hands them a
-                disposable mask and says &quot;crack on&quot;. No on-tool extraction set up,
-                no work-rotation arrangement, no consideration of whether a different cable
-                route would avoid the chase entirely. Apprentice spends three hours producing
-                silica dust the mask can&apos;t fully filter, and the supervisor has skipped
-                everything ABOVE PPE in the hierarchy. The post-incident audit (or HSE visit)
-                finds that the PPE-only approach was a breach of the principles of prevention
-                in MHSWR Schedule 1 even though the worker WAS wearing PPE.
-              </>
-            }
-            doInstead={
-              <>
-                Walk the hierarchy on every task. Can the chase be avoided (surface-mount in
-                trunking, drop from above)? If not, can a less-dusty method substitute (stitch
-                drilling rather than continuous chase)? If not, what engineering control (on-tool
-                extraction with Class M vacuum)? What admin control (rotate operative, limit
-                exposure time)? THEN PPE. The PPE is what catches what the controls above it
-                miss — not the only thing standing between you and the hazard.
-              </>
-            }
-          />
-
-          <CommonMistake
-            title="Allowing a bearded operative to use a disposable FFP3 mask"
-            whatHappens={
-              <>
-                Apprentice in week two is sent to chase a wall. He&apos;s grown a beard since
-                joining. Hands him a disposable FFP3 and waves him at the chaser. The face seal
-                doesn&apos;t work over the beard, 15-20% of his inhaled air bypasses the filter,
-                and three hours&apos; chasing exposes him to silica well above the workplace
-                exposure limit. Years later he develops respiratory symptoms. The firm cannot
-                show that fit-testing under INDG479 was carried out and the PPE provided was
-                suitable for the user. Civil claim follows alongside a HSE investigation.
-              </>
-            }
-            doInstead={
-              <>
-                Fit-testing applies to every tight-fitting RPE wearer per HSG53 and INDG479. If
-                the worker has facial hair in the seal area, the disposable mask isn&apos;t
-                suitable — switch to a powered air-purifying respirator (PAPR) with a
-                loose-fitting hood. The PAPR doesn&apos;t rely on a face seal so it works
-                regardless of facial hair. Yes, it costs more than a disposable mask. The cost
-                of getting it wrong is much higher.
-              </>
-            }
-          />
-
-          <Scenario
-            title="Cutting a chase in plaster for a new socket — what PPE before you start?"
-            situation={
-              <>
-                You&apos;re second-year on a domestic kitchen retrofit. The customer wants a new
-                socket on a wall that&apos;s currently bare sand-and-cement plaster. The wall is
-                an external solid wall (no cavity), no concealed services flagged on the
-                walk-round, and the chase will be 25mm wide x 15mm deep over a 1.2m vertical run.
-                You&apos;re going to use a 110V wall chaser with two 125mm diamond blades. The
-                customer is at home but in another room.
-              </>
-            }
-            whatToDo={
-              <>
-                Walk the hierarchy first, then PPE. Eliminate? No — the customer wants a flush
-                socket and surface-mount conduit isn&apos;t acceptable here. Substitute? Could
-                stitch-drill the chase but the chaser is the right tool for a 1.2m run. Engineering
-                control? Connect the chaser to a Class M vacuum extractor — this is the single
-                biggest reduction in dust exposure and should be considered required for any
-                significant chasing job. Admin control? Brief the customer that the work area is
-                off-limits while the chaser runs, close the door to the rest of the house, and
-                limit your continuous chasing to short runs with breaks (work rotation reduces
-                noise and dust exposure even for a single operative). THEN PPE: FFP3 disposable
-                mask (assuming you&apos;re clean-shaven and fit-tested), wraparound impact-rated
-                eye protection (EN 166 F), hearing protection (SNR 27+ earplugs or earmuffs),
-                cut-resistant gloves (EN 388 B-C), boots, hi-vis. Inspect each item before you
-                put it on.
-              </>
-            }
-            whyItMatters={
-              <>
-                The temptation as an apprentice is to grab the mask and the glasses and start
-                cutting. Working through the hierarchy in that order — even out loud, even just
-                in your head &mdash; is what an inspector wants to see in your routine and what
-                turns &quot;PPE was provided&quot; into &quot;risk was controlled&quot;. The PPE
-                catches what the engineering and admin controls miss. Skipping the controls
-                above PPE and relying on the mask alone is the prosecutable failure. The same
-                walk-the-hierarchy thinking applies to every task on this Sub.
-              </>
-            }
-          />
-
-          <SectionRule />
-
-          <FAQ items={faqs} />
-
-          <SectionRule />
-
-          <KeyTakeaways
-            points={[
-              "PPE is the LAST line of defence in the hierarchy of control under MHSWR 1999 Schedule 1. Eliminate, substitute, engineering controls, admin controls, then PPE.",
-              "PPE Regs 1992 (as amended 2022) Reg 4 requires the employer to provide suitable PPE; Reg 9(3) prohibits the employer from charging the worker for it.",
-              "The 2022 amendment extended PPE provision to limb (b) workers as well as employees in the strict sense.",
-              "Match PPE to the task — chasing masonry, cable handling, live testing, working at height and hot work each demand a different combination.",
-              "Tight-fitting RPE only works on a clean-shaven face. Bearded workers need a powered air-purifying respirator with a loose-fitting hood — INDG479 and HSG53 are explicit.",
-              "Live work is the exception under EAWR 1989 Reg 14. Voltage-rated gloves, arc-rated kit and insulated tools are PPE for the situations where dead working isn't reasonable. Most installation work is done dead.",
-              "Pre-use inspection of every PPE item — glasses, mask, gloves, helmet, hi-vis, boots — takes thirty seconds and catches damaged kit before it fails in use. PPE Regs Reg 10 makes the report-defect duty personal.",
-              "PPE protects only the wearer, only when worn correctly, and only when undamaged. Engineering controls (extraction, RCDs, guards) protect everyone in the area without depending on individual behaviour — that's why they sit above PPE in the hierarchy.",
-            ]}
-          />
-
-          <Quiz title="PPE selection — knowledge check" questions={quizQuestions} />
-
-          {/* ── Prev / next nav ─────────────────────────────────── */}
-          <div className="grid grid-cols-2 gap-3 pt-2">
-            <button
-              onClick={() => navigate('/study-centre/apprentice/level2/module4/section2/2-1')}
-              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
-                <ChevronLeft className="h-3 w-3" /> Previous subsection
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-white truncate">
-                2.1 Workspace hazards
-              </div>
-            </button>
-            <button
-              onClick={() => navigate('/study-centre/apprentice/level2/module4/section2/2-3')}
-              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
-                Next subsection <ChevronRight className="h-3 w-3" />
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-black truncate">
-                2.3 Access equipment
-              </div>
-            </button>
-          </div>
-        </PageFrame>
-      </div>
-    </div>
+            <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+              Next subsection <ChevronRight className="h-3 w-3" />
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-black truncate">
+              2.3 Access equipment
+            </div>
+          </button>
+        </div>
+      </HubBody>
+    </HubPage>
   );
 }

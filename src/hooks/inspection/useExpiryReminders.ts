@@ -10,6 +10,7 @@ export interface ExpiryReminder {
   report_id: string;
   certificate_number: string;
   client_name: string | null;
+  customer_id: string | null;
   installation_address: string | null;
   inspection_date: string | null;
   expiry_date: string;

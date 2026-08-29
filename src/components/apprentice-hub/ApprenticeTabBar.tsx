@@ -66,7 +66,6 @@ export function ApprenticeTabBar() {
   // Role gate — apprentices only. Hooks above run unconditionally.
   if (profile?.role !== 'apprentice') return null;
 
-
   const renderTab = ({ label, icon: Icon, to }: TabItem) => {
     const active = pathname.startsWith(to);
     return (
@@ -97,7 +96,8 @@ export function ApprenticeTabBar() {
       {/* ELE-1451 — data-apprentice-tabbar lets an exam screen stand this bar
           down. Exams render their own fixed bottom bar at z-50, the same layer
           as this one; being later in the DOM this one won and covered their
-          Next button. See ExamMobileLayout + `body.exam-active` in index.css. */}
+          Next button. Each paper toggles `body.exam-active`; the rules that
+              hide this bar live in index.css. */}
       <nav
         aria-label="Apprentice navigation"
         data-apprentice-tabbar

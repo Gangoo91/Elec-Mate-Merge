@@ -5,13 +5,12 @@ import { Button } from '@/components/ui/button';
 import ActiveToolContent from '@/components/apprentice/toolbox/ActiveToolContent';
 import useSEO from '@/hooks/useSEO';
 import { cn } from '@/lib/utils';
+import { CARD_BASE, CARD_NEUTRAL } from '@/components/ui/card-recipe';
+import { HubKpi, HubKpiRow, HubToolGrid } from '@/components/hub/HubPrimitives';
 import {
   PageFrame,
   PageHero,
   SectionHeader,
-  HubGrid,
-  HubCard,
-  Pill,
   itemVariants,
   type Tone,
 } from '@/components/college/primitives';
@@ -160,10 +159,10 @@ const CATEGORIES: Array<{
 ];
 
 const QUICK_STATS = [
-  { number: '01', label: 'Topics', value: '11' },
-  { number: '02', label: 'Duration', value: '3–4 yrs' },
-  { number: '03', label: 'Off-job (L3)', value: '1,066h' },
-  { number: '04', label: 'Final', value: 'Level 3' },
+  { label: 'Topics', value: '11' },
+  { label: 'Duration', value: '3–4 yrs' },
+  { label: 'Off-job (L3)', value: '1,066h' },
+  { label: 'Final', value: 'Level 3' },
 ];
 
 export default function ApprenticeToolbox() {
@@ -210,29 +209,12 @@ export default function ApprenticeToolbox() {
         />
       </motion.div>
 
-      {/* QUICK STATS — yellow editorial strip */}
       <motion.div variants={itemVariants}>
-        <div className="relative grid grid-cols-2 sm:grid-cols-4 gap-px bg-white/[0.06] border border-white/[0.08] rounded-2xl overflow-hidden">
-          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/50 to-elec-yellow/0 pointer-events-none z-10" />
-          {QUICK_STATS.map((s) => (
-            <div
-              key={s.number}
-              className={cn('bg-[hsl(0_0%_10%)] px-5 py-6 sm:px-7 sm:py-8 flex flex-col text-left')}
-            >
-              <div className="flex items-baseline gap-2 whitespace-nowrap">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">
-                  {s.number}
-                </span>
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55 truncate">
-                  · {s.label}
-                </span>
-              </div>
-              <span className="mt-3 sm:mt-4 font-semibold tabular-nums tracking-tight leading-none text-white text-3xl sm:text-4xl lg:text-5xl">
-                {s.value}
-              </span>
-            </div>
+        <HubKpiRow>
+          {QUICK_STATS.map((s, i) => (
+            <HubKpi key={s.label} label={s.label} value={s.value} accent={i === 0} />
           ))}
-        </div>
+        </HubKpiRow>
       </motion.div>
 
       {/* CATEGORY SECTIONS */}
@@ -242,22 +224,18 @@ export default function ApprenticeToolbox() {
         return (
           <motion.section key={cat.id} variants={itemVariants} className="space-y-5 sm:space-y-6">
             <SectionHeader eyebrow={cat.eyebrow} title={cat.title} />
-            <HubGrid columns={cat.id === 'wellbeing' ? 2 : 3}>
-              {items.map((item) => (
-                <HubCard
-                  key={item.id}
-                  size="sm"
-                  number={item.number}
-                  eyebrow={item.eyebrow}
-                  title={item.title}
-                  description={item.description}
-                  meta={item.badge}
-                  tone={item.tone}
-                  badge={item.badge ? <Pill tone={item.tone}>{item.badge}</Pill> : undefined}
-                  onClick={() => item.link && navigate(item.link)}
-                />
-              ))}
-            </HubGrid>
+            <HubToolGrid
+              label=""
+              columns={cat.id === 'wellbeing' ? 'two' : 'three'}
+              cards={items.map((item) => ({
+                id: item.id,
+                eyebrow: item.eyebrow,
+                title: item.title,
+                description: item.description,
+                meta: item.badge,
+                onClick: () => item.link && navigate(item.link),
+              }))}
+            />
           </motion.section>
         );
       })}
@@ -265,37 +243,39 @@ export default function ApprenticeToolbox() {
       {/* RELATED HUBS */}
       <motion.section variants={itemVariants} className="space-y-5 sm:space-y-6">
         <SectionHeader eyebrow="Need More" title="Related hubs" />
-        <HubGrid columns={2}>
-          <HubCard
-            number="12"
-            eyebrow="Wellbeing"
-            title="Mental health support"
-            description="Resources, crisis support and wellbeing tools for apprentices."
-            meta="Open hub"
-            tone="cyan"
-            onClick={() => navigate('/apprentice/mental-health')}
-          />
-          <HubCard
-            number="13"
-            eyebrow="Career"
-            title="Career pathways"
-            description="Career pathways, certifications and professional development."
-            meta="Open hub"
-            tone="emerald"
-            onClick={() => navigate('/apprentice/professional-development')}
-          />
-        </HubGrid>
+        <HubToolGrid
+          label=""
+          columns="two"
+          cards={[
+            {
+              id: 'mental-health',
+              eyebrow: 'Wellbeing',
+              title: 'Mental health support',
+              description: 'Resources, crisis support and wellbeing tools for apprentices.',
+              meta: 'Open hub',
+              onClick: () => navigate('/apprentice/mental-health'),
+            },
+            {
+              id: 'career-pathways',
+              eyebrow: 'Career',
+              title: 'Career pathways',
+              description: 'Career pathways, certifications and professional development.',
+              meta: 'Open hub',
+              onClick: () => navigate('/apprentice/professional-development'),
+            },
+          ]}
+        />
       </motion.section>
 
       {/* CRISIS / WELLBEING — one-tap helplines */}
       <motion.section variants={itemVariants} className="space-y-3 sm:space-y-4">
         <SectionHeader eyebrow="Support" title="Need to talk now?" />
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-px bg-white/[0.06] sm:border sm:border-white/[0.08] rounded-2xl overflow-hidden">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           <a
             href="tel:116123"
-            className="flex flex-col gap-1 bg-[hsl(0_0%_10%)] px-5 py-4 min-h-11 touch-manipulation active:bg-white/[0.04]"
+            className={cn(CARD_BASE, CARD_NEUTRAL, 'min-h-11 gap-1 px-4 py-3.5 sm:p-5')}
           >
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80">
+            <span className="text-[10px] font-medium uppercase tracking-[0.14em] text-elec-yellow">
               Samaritans · free, 24/7
             </span>
             <span className="text-lg font-semibold tabular-nums tracking-tight text-white">
@@ -304,9 +284,9 @@ export default function ApprenticeToolbox() {
           </a>
           <a
             href="tel:03456051956"
-            className="flex flex-col gap-1 bg-[hsl(0_0%_10%)] px-5 py-4 min-h-11 touch-manipulation active:bg-white/[0.04]"
+            className={cn(CARD_BASE, CARD_NEUTRAL, 'min-h-11 gap-1 px-4 py-3.5 sm:p-5')}
           >
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80">
+            <span className="text-[10px] font-medium uppercase tracking-[0.14em] text-elec-yellow">
               Lighthouse · construction industry
             </span>
             <span className="text-lg font-semibold tabular-nums tracking-tight text-white">

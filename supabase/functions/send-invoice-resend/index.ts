@@ -450,6 +450,15 @@ const handler = async (req: Request): Promise<Response> => {
     // ========================================================================
     // STEP 10: Build email via shared template
     // ========================================================================
+    // "Hold until paid": the electrician opted to withhold the certificate —
+    // release-certificate emails it automatically the moment any paid-path
+    // stamps the invoice, so it must NOT ride along here. Declared before the
+    // email build so the customer copy can say the cert follows on payment.
+    const certificateHeld =
+      invoice.certificate_release_mode === 'on_payment' &&
+      !invoice.certificate_released_at &&
+      !!invoice.linked_certificate_id;
+
     const emailPayload = buildInvoiceSendEmail({
       company: {
         name: companyName,
@@ -517,6 +526,9 @@ const handler = async (req: Request): Promise<Response> => {
       trackingPixelUrl: `${Deno.env.get('SUPABASE_URL')}/functions/v1/email-open?type=invoice_send&id=${invoiceId}`,
       customSubject,
       customMessage,
+      heldCertificateType: certificateHeld
+        ? invoice.linked_certificate_type || 'electrical'
+        : null,
       reviewEnabled: companyProfile?.review_request_enabled ?? false,
       reviewLinks: Array.isArray(companyProfile?.review_links) ? companyProfile.review_links : [],
       reviewMessage: companyProfile?.review_request_message ?? null,
@@ -572,8 +584,10 @@ const handler = async (req: Request): Promise<Response> => {
     // the sender-side pdfUrl fix) carry linked_certificate_id but a NULL
     // pdf_url — resolve the current PDF from the report itself instead of
     // silently skipping the attachment.
-    let linkedCertPdfUrl: string | null = invoice.linked_certificate_pdf_url || null;
-    if (!linkedCertPdfUrl && invoice.linked_certificate_id) {
+    let linkedCertPdfUrl: string | null = certificateHeld
+      ? null
+      : invoice.linked_certificate_pdf_url || null;
+    if (!certificateHeld && !linkedCertPdfUrl && invoice.linked_certificate_id) {
       try {
         const linkId = String(invoice.linked_certificate_id);
         let { data: certReport } = await supabaseClient

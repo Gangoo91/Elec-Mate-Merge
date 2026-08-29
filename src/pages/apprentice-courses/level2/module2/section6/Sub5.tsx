@@ -4,11 +4,11 @@
  * Sensors — LDR, thermistor, NTC/PTC, on-site uses.
  */
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
-import { PageFrame, PageHero } from '@/components/college/primitives';
 import {
   TLDR,
   ConceptBlock,
@@ -57,7 +57,8 @@ const checks = [
   },
   {
     id: 'ntc-application',
-    question: 'A 10 kΩ NTC thermistor is sat against the heatsink of a power MOSFET in a switch-mode PSU. What’s its job?',
+    question:
+      'A 10 kΩ NTC thermistor is sat against the heatsink of a power MOSFET in a switch-mode PSU. What’s its job?',
     options: [
       'Limit the inrush current when the supply is first switched on.',
       'Smooth the DC output ripple from the rectifier.',
@@ -100,12 +101,7 @@ const quizQuestions = [
   {
     id: 3,
     question: 'A thermistor is a resistor whose value depends on what?',
-    options: [
-      'Voltage',
-      'Light',
-      'Magnetic field',
-      'Temperature',
-    ],
+    options: ['Voltage', 'Light', 'Magnetic field', 'Temperature'],
     correctAnswer: 3,
     explanation:
       'Thermistor = thermal + resistor. Resistance changes predictably with temperature. Made from oxide ceramics with carefully chosen properties.',
@@ -113,12 +109,7 @@ const quizQuestions = [
   {
     id: 4,
     question: 'A 10 kΩ NTC thermistor at 25 °C might read what at 100 °C?',
-    options: [
-      'Roughly 1 kΩ',
-      '10 kΩ',
-      '100 kΩ',
-      '0 Ω',
-    ],
+    options: ['Roughly 1 kΩ', '10 kΩ', '100 kΩ', '0 Ω'],
     correctAnswer: 0,
     explanation:
       'Order of magnitude — for typical NTC characteristics, a 10 kΩ part at room temperature drops to around 1 kΩ at 100 °C. The exact curve is in the datasheet, but the rule of thumb is "hot = much lower resistance".',
@@ -138,7 +129,8 @@ const quizQuestions = [
   },
   {
     id: 6,
-    question: 'A dusk-till-dawn outdoor lamp uses an LDR and a small relay. Roughly how does it work?',
+    question:
+      'A dusk-till-dawn outdoor lamp uses an LDR and a small relay. Roughly how does it work?',
     options: [
       'The LDR is wired in series with the lamp, so its falling resistance in the dark lets enough current through to light it directly.',
       'A thermistor senses the drop in air temperature at dusk and switches the relay when it crosses a set point.',
@@ -151,7 +143,8 @@ const quizQuestions = [
   },
   {
     id: 7,
-    question: 'A customer’s outdoor PIR lamp keeps switching on by itself in hot weather. What might be involved?',
+    question:
+      'A customer’s outdoor PIR lamp keeps switching on by itself in hot weather. What might be involved?',
     options: [
       'The LDR has failed, so the lamp now treats hot bright afternoons as night-time and stays on.',
       'Heat has raised the resistance of the lamp circuit, causing it to latch on until the cable cools.',
@@ -164,7 +157,8 @@ const quizQuestions = [
   },
   {
     id: 8,
-    question: 'You\'re fitting underfloor heating with a digital thermostat. The thermostat uses a small probe with two wires. What\'s most likely inside the probe tip?',
+    question:
+      "You're fitting underfloor heating with a digital thermostat. The thermostat uses a small probe with two wires. What's most likely inside the probe tip?",
     options: [
       'An NTC thermistor — its changing resistance lets the thermostat work out floor temperature accurately.',
       'An LDR — it senses how much light reaches the floor to judge whether the room is occupied.',
@@ -186,7 +180,7 @@ const faqs = [
   {
     question: 'Are LDRs being replaced by anything newer?',
     answer:
-      'Yes — modern smart lights more often use a small phototransistor or photodiode + tiny IC instead of an LDR. The behaviour is similar but the response is faster and more linear. The classic LDR is still common in cheap dusk-till-dawn modules because it\'s a single passive component that sells for pennies.',
+      "Yes — modern smart lights more often use a small phototransistor or photodiode + tiny IC instead of an LDR. The behaviour is similar but the response is faster and more linear. The classic LDR is still common in cheap dusk-till-dawn modules because it's a single passive component that sells for pennies.",
   },
   {
     question: 'How do I test a thermistor on site?',
@@ -201,12 +195,12 @@ const faqs = [
   {
     question: 'Why does a PIR security light have both an LDR and a PIR sensor?',
     answer:
-      'The LDR stops it triggering in daylight (no point lighting up at noon). The PIR detects movement (warm body crossing the field of view). Both have to agree before the lamp turns on. That\'s why a PIR will sometimes go off in the dark just as a fox walks past, but never at midday no matter what.',
+      "The LDR stops it triggering in daylight (no point lighting up at noon). The PIR detects movement (warm body crossing the field of view). Both have to agree before the lamp turns on. That's why a PIR will sometimes go off in the dark just as a fox walks past, but never at midday no matter what.",
   },
   {
     question: 'Are sensors covered specifically in BS 7671?',
     answer:
-      'BS 7671 doesn\'t mandate specific sensor types but it requires that any control device used for switching and isolation complies with Chapter 53. So a thermistor protection relay protecting a motor is fine — the thermistor is the input, the relay is the switching device, and the relay needs to comply. Same for occupancy sensors switching lighting circuits — the sensor module itself usually contains a small relay or triac that\'s rated and approved for the load.',
+      "BS 7671 doesn't mandate specific sensor types but it requires that any control device used for switching and isolation complies with Chapter 53. So a thermistor protection relay protecting a motor is fine — the thermistor is the input, the relay is the switching device, and the relay needs to comply. Same for occupancy sensors switching lighting circuits — the sensor module itself usually contains a small relay or triac that's rated and approved for the load.",
   },
 ];
 
@@ -215,446 +209,430 @@ export default function Sub5() {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
-      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
-        <PageFrame>
-          <button
-            onClick={() => navigate('..')}
-            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
-          >
-            <ArrowLeft className="h-4 w-4" /> Section 6
-          </button>
+    <HubPage>
+      <HubMasthead
+        section="Module 2 · Section 6 · Subsection 5"
+        title="Sensors — LDR, thermistor, NTC/PTC"
+        backTo=".."
+      />
+      <HubBody>
+        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
+          Sensors are special resistors. Their value changes with light or temperature, and that’s
+          how every dusk-till-dawn lamp, every UFH thermostat, every motor protection relay does its
+          job.
+        </p>
 
-          <PageHero
-            eyebrow="Module 2 · Section 6 · Subsection 5"
-            title="Sensors — LDR, thermistor, NTC/PTC"
-            description="Sensors are special resistors. Their value changes with light or temperature, and that’s how every dusk-till-dawn lamp, every UFH thermostat, every motor protection relay does its job."
-            tone="emerald"
-          />
+        <TLDR
+          points={[
+            'An LDR (Light-Dependent Resistor) drops in resistance as light increases. Used in dusk-till-dawn lamps, automatic outdoor lighting, simple presence sensors.',
+            'A thermistor is a resistor whose value changes with temperature. NTC = falls when hot. PTC = rises when hot.',
+            'NTCs are the standard temperature probe in UFH, fridge thermostats, EV charger sockets and chip thermal protection. PTCs are used as self-resetting fuses and motor winding protection.',
+          ]}
+        />
 
-          <TLDR
-            points={[
-              'An LDR (Light-Dependent Resistor) drops in resistance as light increases. Used in dusk-till-dawn lamps, automatic outdoor lighting, simple presence sensors.',
-              'A thermistor is a resistor whose value changes with temperature. NTC = falls when hot. PTC = rises when hot.',
-              'NTCs are the standard temperature probe in UFH, fridge thermostats, EV charger sockets and chip thermal protection. PTCs are used as self-resetting fuses and motor winding protection.',
-            ]}
-          />
+        <LearningOutcomes
+          outcomes={[
+            'Describe how an LDR (Light-Dependent Resistor) operates and state typical resistance ranges.',
+            'Distinguish NTC and PTC thermistors and describe how their resistance changes with temperature.',
+            'Recognise the IEC symbols for LDRs and thermistors on schematics.',
+            'Identify common on-site applications: dusk-till-dawn lighting, UFH thermostats, motor winding protection, chip thermal protection, EV charger plug temperature monitoring.',
+            'Explain how a sensor combined with a comparator/microcontroller and a relay creates an automated switching circuit.',
+            'Test a thermistor or LDR on site with a multimeter and judge whether it’s in spec.',
+          ]}
+          initialVisibleCount={3}
+        />
 
-          <LearningOutcomes
-            outcomes={[
-              'Describe how an LDR (Light-Dependent Resistor) operates and state typical resistance ranges.',
-              'Distinguish NTC and PTC thermistors and describe how their resistance changes with temperature.',
-              'Recognise the IEC symbols for LDRs and thermistors on schematics.',
-              'Identify common on-site applications: dusk-till-dawn lighting, UFH thermostats, motor winding protection, chip thermal protection, EV charger plug temperature monitoring.',
-              'Explain how a sensor combined with a comparator/microcontroller and a relay creates an automated switching circuit.',
-              'Test a thermistor or LDR on site with a multimeter and judge whether it’s in spec.',
-            ]}
-            initialVisibleCount={3}
-          />
+        <ContentEyebrow>Light sensing — the LDR</ContentEyebrow>
 
-          <ContentEyebrow>Light sensing — the LDR</ContentEyebrow>
-
-          <ConceptBlock
-            title="A resistor that hates the dark"
-            plainEnglish="Bright light = electrons get freed up = resistance falls. Dark = electrons stay put = resistance rises."
-            onSite="The little orange disc with squiggly lines on a dusk-till-dawn module IS the LDR. Pop the cover, point a torch at it, and watch the lamp think it’s morning."
-          >
-            <p>
-              An LDR (Light-Dependent Resistor) is a thin film of cadmium sulphide (CdS)
-              sandwiched between two contacts. In darkness, the CdS holds onto its electrons and
-              has very high resistance — typically around 1 MΩ. When light hits the surface,
-              photons knock electrons free, the material becomes much more conductive, and the
-              resistance drops dramatically. In direct sunlight you might see a few hundred ohms.
-            </p>
-            <p>
-              The change isn’t instant — there’s a few milliseconds of lag — but it’s more than
-              fast enough for any lighting application. Because the range is so wide (5–6 orders of
-              magnitude), a simple voltage divider with a fixed resistor and a comparator chip is
-              all you need to make a working dusk-till-dawn switch.
-            </p>
-            <div className="flex justify-center pt-2">
-              <LDRSymbol label="LDR — Light-Dependent Resistor" />
-            </div>
-          </ConceptBlock>
-
-          <ConceptBlock
-            title="How a dusk-till-dawn lamp actually works"
-            onSite="Cheap modules are still LDR-based. Smart bulbs use phototransistors and microcontrollers — same idea, more flexible, more expensive."
-          >
-            <p>
-              The classic circuit: LDR in series with a fixed resistor across the supply, midpoint
-              feeding a comparator IC with built-in hysteresis. As light fades, the LDR resistance
-              rises and the midpoint voltage shifts. When it crosses the comparator’s threshold,
-              the output switches and energises a small relay coil. The relay’s contacts close,
-              the lamp comes on. At dawn, the reverse happens.
-            </p>
-            <p>
-              The hysteresis is important — without it, the lamp would chatter on and off at the
-              transition point as a cloud passed or a moth flew past the sensor. The chip’s built
-              with a deliberate gap between "switch on" and "switch off" thresholds.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck
-            id={checks[0].id}
-            question={checks[0].question}
-            options={checks[0].options}
-            correctIndex={checks[0].correctIndex}
-            explanation={checks[0].explanation}
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>Temperature sensing — the thermistor</ContentEyebrow>
-
-          <ConceptBlock
-            title="A resistor that responds to heat"
-            plainEnglish="Two flavours: NTC drops resistance when heated. PTC rises in resistance when heated. Same component family, opposite behaviour."
-          >
-            <p>
-              A thermistor is a small bead, disc or chip of carefully blended metal-oxide ceramic.
-              Its resistance changes predictably with temperature, and the manufacturer prints a
-              full curve (or a "B" parameter) on the datasheet so you can convert resistance back
-              to temperature.
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>NTC — Negative Temperature Coefficient</strong>. Resistance falls as
-                temperature rises. The standard temperature-measurement thermistor. A 10 kΩ NTC
-                at 25 °C might read ~3 kΩ at 50 °C and ~1 kΩ at 100 °C.
-              </li>
-              <li>
-                <strong>PTC — Positive Temperature Coefficient</strong>. Resistance rises as
-                temperature rises — and at a "switch" temperature, it can rise dramatically (orders
-                of magnitude). That’s the basis of self-resetting fuses and motor winding
-                protectors.
-              </li>
-            </ul>
-            <div className="flex justify-center pt-2 gap-3">
-              <ThermistorSymbol type="NTC" label="NTC thermistor" />
-              <ThermistorSymbol type="PTC" label="PTC thermistor" />
-            </div>
-          </ConceptBlock>
-
-          <ConceptBlock
-            title="Where you meet NTCs"
-            onSite="Every digital UFH thermostat. Every smart fridge. Every modern EV charger. Every laptop charger. The list is enormous — NTCs are the cheapest accurate temperature sensor money can buy."
-          >
-            <p>
-              On a typical install you’ll meet NTCs in:
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Underfloor heating thermostats</strong> — floor probe is an NTC, often a
-                10 kΩ type at 25 °C. The thermostat reads its resistance, looks up temperature on
-                a calibration curve, and switches the heating relay.
-              </li>
-              <li>
-                <strong>EV charger plugs</strong> — Type 2 plugs include NTCs in the contact
-                housing. If a contact gets hot (poor connection, dirty pin), the charger ramps
-                back the current or trips out before the plug melts.
-              </li>
-              <li>
-                <strong>LED drivers and switch-mode PSUs</strong> — NTC against the heatsink for
-                thermal foldback. Hot heatsink → lower resistance → chip reduces duty cycle →
-                output power drops → heatsink cools.
-              </li>
-              <li>
-                <strong>Smart heating controls</strong> — room sensors, hot water tank sensors,
-                outdoor compensation sensors. All NTCs.
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <ConceptBlock
-            title="Where you meet PTCs"
-            plainEnglish="PTCs are the self-resetting fuse and the motor protector. They go open when something gets too hot and reset when it cools."
-          >
-            <p>
-              The PTC story is mostly about protection:
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Polymer PTC ("polyswitch", PPTC)</strong> — self-resetting fuses in USB
-                ports, alarm panel outputs, low-voltage signalling circuits. Pull too much current,
-                the device heats up, the resistance shoots up, current is choked off. Take the
-                fault away and it resets.
-              </li>
-              <li>
-                <strong>Motor winding PTCs</strong> — sensor beads embedded in the stator windings
-                of three-phase motors. Connected to a small thermistor protection relay (e.g. a
-                "TPR-1" type) that opens the motor contactor coil if any winding overheats. More
-                accurate than a thermal overload.
-              </li>
-              <li>
-                <strong>Inrush current limiters</strong> — a special PTC variant in series with
-                rectifier inputs. Cold (powering on) → high resistance → limits the inrush.
-                Warmed up by normal current → low resistance → doesn’t waste power in normal
-                running.
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <RegsCallout
-            source="BS 7671:2018+A4:2026 — Chapter 53 (Protection, isolation and switching)"
-            clause="Every device provided for isolation or switching shall comply with the relevant requirements of Chapter 53."
-            meaning={
-              <>
-                A sensor on its own isn’t a switching device — it’s an input. The thing it
-                drives (a relay, a contactor, a triac inside an occupancy sensor) is what has to
-                comply with Chapter 53 for the load it’s switching. So when you fit a smart
-                occupancy sensor, the sensing element doesn’t need a rating, but the built-in
-                relay/triac must be rated for the lighting load and approved for that use.
-              </>
-            }
-            cite="Source: BS 7671:2018+A4:2026 Part 5, Chapter 53."
-          />
-
-          <InlineCheck
-            id={checks[1].id}
-            question={checks[1].question}
-            options={checks[1].options}
-            correctIndex={checks[1].correctIndex}
-            explanation={checks[1].explanation}
-          />
-
-          <SectionRule />
-
-          <ContentEyebrow>How sensors connect to a switching circuit</ContentEyebrow>
-
-          <ConceptBlock
-            title="The voltage divider — how a sensor produces a signal a circuit can read"
-            plainEnglish="A sensor on its own changes resistance — but a controller measures voltage. The voltage divider is the universal trick for converting a changing resistance into a changing voltage."
-            onSite="Pop the cover off any dusk-till-dawn module, UFH thermostat or PIR control board and you'll see the same pattern: the sensor (LDR or thermistor) wired in series with a fixed resistor across the supply, with the midpoint feeding into the comparator or microcontroller input."
-          >
-            <p>
-              A two-resistor divider takes a supply voltage and spits out a midpoint voltage that
-              depends on the ratio of the two resistors:
-            </p>
-            <p className="font-mono text-[15px] text-elec-yellow bg-white/[0.04] border border-white/[0.06] rounded-lg px-4 py-2.5">
-              V_mid = V_supply × R_lower ÷ (R_upper + R_lower)
-            </p>
-            <p>
-              Replace one of the resistors with a sensor and the midpoint voltage now tracks
-              whatever the sensor is sensing. Three worked examples:
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Dusk-till-dawn LDR.</strong> 5 V supply, LDR in the upper position
-                (resistance 10 kΩ in office light, 1 MΩ in pitch dark), 10 kΩ fixed resistor
-                below. In office light V_mid ≈ 5 × 10/20 = 2.5 V. In darkness V_mid ≈ 5 × 10/1010
-                ≈ 0.05 V. The big swing is what the comparator looks for.
-              </li>
-              <li>
-                <strong>UFH NTC probe.</strong> 3.3 V supply, 10 kΩ fixed resistor in the upper
-                position, 10 kΩ NTC below. At 25 °C (NTC = 10 kΩ): V_mid = 1.65 V. At 50 °C (NTC
-                ≈ 3 kΩ): V_mid ≈ 0.76 V. The microcontroller reads V_mid, looks up °C on the
-                stored curve.
-              </li>
-              <li>
-                <strong>EV plug temperature.</strong> Charger ECU sees the NTC voltage drop as
-                the contacts heat up. Below the warning threshold = full power; above = derate
-                or trip.
-              </li>
-            </ul>
-            <p>
-              Same circuit topology in every case. Two components, one signal — the simplest way
-              to turn "resistance changed" into "voltage changed", which is what every digital
-              and analogue input is actually measuring.
-            </p>
-          </ConceptBlock>
-
-          <ConceptBlock
-            title="Hysteresis — why a thermostat doesn't chatter"
-            plainEnglish="A bare comparator switches the moment the input crosses a threshold. In the real world, sensor noise sits the input near the threshold and the output rattles on/off rapidly. Hysteresis is a deliberate gap between 'switch on' and 'switch off' that stops the chatter."
-            onSite="A heating thermostat set to 19 °C might switch the boiler ON at 18.5 °C and OFF at 19.5 °C — a 1 °C dead band. The boiler runs in long, clean cycles instead of clattering on/off every few seconds. Same trick on every dusk-till-dawn lamp, every PIR, every UFH controller."
-          >
-            <p>
-              Without hysteresis, three things go wrong with a sensor-driven switching circuit:
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Chattering relays</strong> — the output relay coil bounces on/off as the
-                input drifts a millivolt either side of the threshold. Premature contact wear,
-                audible buzzing, EMI on the supply.
-              </li>
-              <li>
-                <strong>Light flicker</strong> — a dusk-till-dawn lamp at the exact "switch on"
-                light level pulses on and off as a cloud passes. Annoying for neighbours, hard on
-                the lamp's life, mistakable for a fault.
-              </li>
-              <li>
-                <strong>Boiler short-cycling</strong> — heating system that switches on for 30
-                seconds, off for 30 seconds, repeatedly. Reduces efficiency, shortens the life of
-                the boiler and the relay/contactor that drives it.
-              </li>
-            </ul>
-            <p>
-              The fix is built into almost every comparator chip and every thermostat firmware:
-              two thresholds with a deliberate gap. Switch ON at threshold A, switch OFF at
-              threshold B (A and B differ by the "hysteresis band"). The output stays in its
-              current state until the input crosses the OTHER threshold — so noise around either
-              threshold can't cause unwanted switching.
-            </p>
-            <p>
-              When you fault-find a chattering control, the cause is almost always a missing or
-              mis-set hysteresis band — sometimes a setting on the controller, sometimes a worn
-              sensor giving more noise than the band can absorb, sometimes a comparator
-              IC failed in a way that has eliminated its built-in hysteresis. Replacing the
-              sensor first usually clears it.
-            </p>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <ContentEyebrow>Fault-finding the sensor side</ContentEyebrow>
-
-          <ConceptBlock
-            title="Common failure modes"
-            onSite="With a meter on resistance you can prove an NTC or LDR is in spec in about thirty seconds. Most “the thermostat is broken” calls turn out to be a probe out of spec."
-          >
-            <p>
-              Sensors fail in three main ways:
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                <strong>Open-circuit</strong> — cable cut, dry joint, or the device itself gone
-                open. Most controllers fail safe (refuse to heat, refuse to switch) when they see
-                infinite resistance.
-              </li>
-              <li>
-                <strong>Short-circuit</strong> — two cores chafed together, or device internally
-                shorted. Controller usually reads "0 ohms" → thinks the temperature is sky-high →
-                shuts down or trips.
-              </li>
-              <li>
-                <strong>Drift</strong> — the sensor still reads, but the value is wrong (e.g. an
-                old NTC in a hot environment slowly losing accuracy). The kit appears to work but
-                runs at the wrong temperature. Hardest to spot — you have to compare the reading
-                against a known good thermometer.
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <CommonMistake
-            title="Replacing the whole controller when the probe is the fault"
-            whatHappens={
-              <>
-                Customer’s UFH thermostat shows "Probe Error" or refuses to heat. You order a
-                whole new thermostat at £80, fit it, same error. Now you’re out of pocket and
-                the customer is annoyed.
-              </>
-            }
-            doInstead={
-              <>
-                Probe and thermostat are nearly always sold separately. With your meter on
-                resistance, check the probe at the controller terminals. If it reads infinity it’s
-                cable damage; if it reads zero it’s shorted; if it reads way off the spec value
-                for room temperature it’s drifted. A replacement probe is usually £5–10 and
-                takes ten minutes.
-              </>
-            }
-          />
-
-          <Scenario
-            title="Customer’s outdoor PIR keeps triggering on hot days"
-            situation={
-              <>
-                A PIR security light works fine all winter. Come the first proper hot weather, it
-                starts triggering throughout the afternoon — sometimes when nothing is moving in
-                the garden at all.
-              </>
-            }
-            whatToDo={
-              <>
-                A PIR detects changes in infrared radiation — anything with a different
-                temperature crossing its field of view. On hot days, gusts of wind moving warm and
-                cool air through the sensor zone, sun-warmed leaves swaying, or even rapid cloud
-                shadow can register as a "change". Most units have a sensitivity dial and a
-                lux/dawn dial — turn the sensitivity down a notch and check the LDR threshold
-                isn’t so high that hot afternoons appear "dark enough" to it. Reposition if
-                possible to point away from heat sources.
-              </>
-            }
-            whyItMatters={
-              <>
-                Knowing what each sensor inside the unit does (PIR for movement, LDR for
-                light/dark) lets you give the customer a real diagnosis instead of replacing kit
-                hopefully.
-              </>
-            }
-          />
-
-          <InlineCheck
-            id={checks[2].id}
-            question={checks[2].question}
-            options={checks[2].options}
-            correctIndex={checks[2].correctIndex}
-            explanation={checks[2].explanation}
-          />
-
-          <RegsCallout
-            source="BS 7671:2018+A4:2026 — Regulation 422.3.7 (Protection of motors against excessive temperature)"
-            clause="A motor which is automatically or remotely controlled or which is not continuously supervised shall be protected against excessive temperature by a protective device with manual reset. A motor shall be protected against overtemperature in all operational modes. NOTE: Attention is drawn to danger which may arise from the loss of one phase."
-            meaning={
-              <>
-                The PTC thermistors embedded in modern motor windings exist precisely to satisfy
-                this reg — feeding a thermistor protection relay that opens the contactor coil
-                if any winding overheats. Reg 422.3.7 sits in Chapter 42 (protection against
-                fire) because an overheating motor is a fire risk. The reg specifically demands
-                MANUAL reset, so the motor can’t cycle automatically after a thermal trip and
-                hide the fault. If you’re fitting a motor with thermistor leads dangling out of
-                the terminal box, they need terminating into a TPR, not insulated and ignored.
-              </>
-            }
-            cite="Source: BS 7671:2018+A4:2026 Part 4, Chapter 42, Regulation 422.3.7."
-          />
-
-          <SectionRule />
-
-          <FAQ items={faqs} />
-
-          <SectionRule />
-
-          <KeyTakeaways
-            points={[
-              'An LDR’s resistance falls as light intensity rises — about 1 MΩ dark, a few hundred Ω in sunlight. Used in dusk-till-dawn lamps and simple presence sensors.',
-              'A thermistor changes resistance with temperature. NTC = falls with heat (the standard temperature sensor). PTC = rises with heat (used for protection and self-reset fuses).',
-              'A 10 kΩ NTC at 25 °C drops to roughly 1 kΩ at 100 °C — datasheet curve gives the exact relationship.',
-              'NTCs are everywhere on modern installs: UFH probes, EV charger plug temperature, switch-mode PSU thermal foldback, smart heating controls.',
-              'PTCs protect motors (winding sensors + thermistor relay) and act as self-resetting fuses on USB and signalling circuits.',
-              'Test a sensor with a meter on resistance — in spec at room temperature, response when warmed, no opens or shorts.',
-            ]}
-          />
-
-          <Quiz title="Sensors — LDR, thermistor, NTC/PTC — knowledge check" questions={quizQuestions} />
-
-          <div className="grid grid-cols-2 gap-3 pt-2">
-            <button
-              onClick={() => navigate('/study-centre/apprentice/level2/module2/section6/6-4')}
-              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
-                <ChevronLeft className="h-3 w-3" /> Previous
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-white truncate">
-                6.4 Transistors and switching
-              </div>
-            </button>
-            <button
-              onClick={() => navigate('/study-centre/apprentice/level2/module2/section6/6-6')}
-              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
-                Next subsection <ChevronRight className="h-3 w-3" />
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-black truncate">
-                6.6 On-site electronics
-              </div>
-            </button>
+        <ConceptBlock
+          title="A resistor that hates the dark"
+          plainEnglish="Bright light = electrons get freed up = resistance falls. Dark = electrons stay put = resistance rises."
+          onSite="The little orange disc with squiggly lines on a dusk-till-dawn module IS the LDR. Pop the cover, point a torch at it, and watch the lamp think it’s morning."
+        >
+          <p>
+            An LDR (Light-Dependent Resistor) is a thin film of cadmium sulphide (CdS) sandwiched
+            between two contacts. In darkness, the CdS holds onto its electrons and has very high
+            resistance — typically around 1 MΩ. When light hits the surface, photons knock electrons
+            free, the material becomes much more conductive, and the resistance drops dramatically.
+            In direct sunlight you might see a few hundred ohms.
+          </p>
+          <p>
+            The change isn’t instant — there’s a few milliseconds of lag — but it’s more than fast
+            enough for any lighting application. Because the range is so wide (5–6 orders of
+            magnitude), a simple voltage divider with a fixed resistor and a comparator chip is all
+            you need to make a working dusk-till-dawn switch.
+          </p>
+          <div className="flex justify-center pt-2">
+            <LDRSymbol label="LDR — Light-Dependent Resistor" />
           </div>
-        </PageFrame>
-      </div>
-    </div>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="How a dusk-till-dawn lamp actually works"
+          onSite="Cheap modules are still LDR-based. Smart bulbs use phototransistors and microcontrollers — same idea, more flexible, more expensive."
+        >
+          <p>
+            The classic circuit: LDR in series with a fixed resistor across the supply, midpoint
+            feeding a comparator IC with built-in hysteresis. As light fades, the LDR resistance
+            rises and the midpoint voltage shifts. When it crosses the comparator’s threshold, the
+            output switches and energises a small relay coil. The relay’s contacts close, the lamp
+            comes on. At dawn, the reverse happens.
+          </p>
+          <p>
+            The hysteresis is important — without it, the lamp would chatter on and off at the
+            transition point as a cloud passed or a moth flew past the sensor. The chip’s built with
+            a deliberate gap between "switch on" and "switch off" thresholds.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck
+          id={checks[0].id}
+          question={checks[0].question}
+          options={checks[0].options}
+          correctIndex={checks[0].correctIndex}
+          explanation={checks[0].explanation}
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>Temperature sensing — the thermistor</ContentEyebrow>
+
+        <ConceptBlock
+          title="A resistor that responds to heat"
+          plainEnglish="Two flavours: NTC drops resistance when heated. PTC rises in resistance when heated. Same component family, opposite behaviour."
+        >
+          <p>
+            A thermistor is a small bead, disc or chip of carefully blended metal-oxide ceramic. Its
+            resistance changes predictably with temperature, and the manufacturer prints a full
+            curve (or a "B" parameter) on the datasheet so you can convert resistance back to
+            temperature.
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>NTC — Negative Temperature Coefficient</strong>. Resistance falls as
+              temperature rises. The standard temperature-measurement thermistor. A 10 kΩ NTC at 25
+              °C might read ~3 kΩ at 50 °C and ~1 kΩ at 100 °C.
+            </li>
+            <li>
+              <strong>PTC — Positive Temperature Coefficient</strong>. Resistance rises as
+              temperature rises — and at a "switch" temperature, it can rise dramatically (orders of
+              magnitude). That’s the basis of self-resetting fuses and motor winding protectors.
+            </li>
+          </ul>
+          <div className="flex justify-center pt-2 gap-3">
+            <ThermistorSymbol type="NTC" label="NTC thermistor" />
+            <ThermistorSymbol type="PTC" label="PTC thermistor" />
+          </div>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="Where you meet NTCs"
+          onSite="Every digital UFH thermostat. Every smart fridge. Every modern EV charger. Every laptop charger. The list is enormous — NTCs are the cheapest accurate temperature sensor money can buy."
+        >
+          <p>On a typical install you’ll meet NTCs in:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Underfloor heating thermostats</strong> — floor probe is an NTC, often a 10 kΩ
+              type at 25 °C. The thermostat reads its resistance, looks up temperature on a
+              calibration curve, and switches the heating relay.
+            </li>
+            <li>
+              <strong>EV charger plugs</strong> — Type 2 plugs include NTCs in the contact housing.
+              If a contact gets hot (poor connection, dirty pin), the charger ramps back the current
+              or trips out before the plug melts.
+            </li>
+            <li>
+              <strong>LED drivers and switch-mode PSUs</strong> — NTC against the heatsink for
+              thermal foldback. Hot heatsink → lower resistance → chip reduces duty cycle → output
+              power drops → heatsink cools.
+            </li>
+            <li>
+              <strong>Smart heating controls</strong> — room sensors, hot water tank sensors,
+              outdoor compensation sensors. All NTCs.
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="Where you meet PTCs"
+          plainEnglish="PTCs are the self-resetting fuse and the motor protector. They go open when something gets too hot and reset when it cools."
+        >
+          <p>The PTC story is mostly about protection:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Polymer PTC ("polyswitch", PPTC)</strong> — self-resetting fuses in USB ports,
+              alarm panel outputs, low-voltage signalling circuits. Pull too much current, the
+              device heats up, the resistance shoots up, current is choked off. Take the fault away
+              and it resets.
+            </li>
+            <li>
+              <strong>Motor winding PTCs</strong> — sensor beads embedded in the stator windings of
+              three-phase motors. Connected to a small thermistor protection relay (e.g. a "TPR-1"
+              type) that opens the motor contactor coil if any winding overheats. More accurate than
+              a thermal overload.
+            </li>
+            <li>
+              <strong>Inrush current limiters</strong> — a special PTC variant in series with
+              rectifier inputs. Cold (powering on) → high resistance → limits the inrush. Warmed up
+              by normal current → low resistance → doesn’t waste power in normal running.
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <RegsCallout
+          source="BS 7671:2018+A4:2026 — Chapter 53 (Protection, isolation and switching)"
+          clause="Every device provided for isolation or switching shall comply with the relevant requirements of Chapter 53."
+          meaning={
+            <>
+              A sensor on its own isn’t a switching device — it’s an input. The thing it drives (a
+              relay, a contactor, a triac inside an occupancy sensor) is what has to comply with
+              Chapter 53 for the load it’s switching. So when you fit a smart occupancy sensor, the
+              sensing element doesn’t need a rating, but the built-in relay/triac must be rated for
+              the lighting load and approved for that use.
+            </>
+          }
+          cite="Source: BS 7671:2018+A4:2026 Part 5, Chapter 53."
+        />
+
+        <InlineCheck
+          id={checks[1].id}
+          question={checks[1].question}
+          options={checks[1].options}
+          correctIndex={checks[1].correctIndex}
+          explanation={checks[1].explanation}
+        />
+
+        <SectionRule />
+
+        <ContentEyebrow>How sensors connect to a switching circuit</ContentEyebrow>
+
+        <ConceptBlock
+          title="The voltage divider — how a sensor produces a signal a circuit can read"
+          plainEnglish="A sensor on its own changes resistance — but a controller measures voltage. The voltage divider is the universal trick for converting a changing resistance into a changing voltage."
+          onSite="Pop the cover off any dusk-till-dawn module, UFH thermostat or PIR control board and you'll see the same pattern: the sensor (LDR or thermistor) wired in series with a fixed resistor across the supply, with the midpoint feeding into the comparator or microcontroller input."
+        >
+          <p>
+            A two-resistor divider takes a supply voltage and spits out a midpoint voltage that
+            depends on the ratio of the two resistors:
+          </p>
+          <p className="font-mono text-[15px] text-elec-yellow bg-white/[0.04] border border-white/[0.06] rounded-lg px-4 py-2.5">
+            V_mid = V_supply × R_lower ÷ (R_upper + R_lower)
+          </p>
+          <p>
+            Replace one of the resistors with a sensor and the midpoint voltage now tracks whatever
+            the sensor is sensing. Three worked examples:
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Dusk-till-dawn LDR.</strong> 5 V supply, LDR in the upper position (resistance
+              10 kΩ in office light, 1 MΩ in pitch dark), 10 kΩ fixed resistor below. In office
+              light V_mid ≈ 5 × 10/20 = 2.5 V. In darkness V_mid ≈ 5 × 10/1010 ≈ 0.05 V. The big
+              swing is what the comparator looks for.
+            </li>
+            <li>
+              <strong>UFH NTC probe.</strong> 3.3 V supply, 10 kΩ fixed resistor in the upper
+              position, 10 kΩ NTC below. At 25 °C (NTC = 10 kΩ): V_mid = 1.65 V. At 50 °C (NTC ≈ 3
+              kΩ): V_mid ≈ 0.76 V. The microcontroller reads V_mid, looks up °C on the stored curve.
+            </li>
+            <li>
+              <strong>EV plug temperature.</strong> Charger ECU sees the NTC voltage drop as the
+              contacts heat up. Below the warning threshold = full power; above = derate or trip.
+            </li>
+          </ul>
+          <p>
+            Same circuit topology in every case. Two components, one signal — the simplest way to
+            turn "resistance changed" into "voltage changed", which is what every digital and
+            analogue input is actually measuring.
+          </p>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="Hysteresis — why a thermostat doesn't chatter"
+          plainEnglish="A bare comparator switches the moment the input crosses a threshold. In the real world, sensor noise sits the input near the threshold and the output rattles on/off rapidly. Hysteresis is a deliberate gap between 'switch on' and 'switch off' that stops the chatter."
+          onSite="A heating thermostat set to 19 °C might switch the boiler ON at 18.5 °C and OFF at 19.5 °C — a 1 °C dead band. The boiler runs in long, clean cycles instead of clattering on/off every few seconds. Same trick on every dusk-till-dawn lamp, every PIR, every UFH controller."
+        >
+          <p>Without hysteresis, three things go wrong with a sensor-driven switching circuit:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Chattering relays</strong> — the output relay coil bounces on/off as the input
+              drifts a millivolt either side of the threshold. Premature contact wear, audible
+              buzzing, EMI on the supply.
+            </li>
+            <li>
+              <strong>Light flicker</strong> — a dusk-till-dawn lamp at the exact "switch on" light
+              level pulses on and off as a cloud passes. Annoying for neighbours, hard on the lamp's
+              life, mistakable for a fault.
+            </li>
+            <li>
+              <strong>Boiler short-cycling</strong> — heating system that switches on for 30
+              seconds, off for 30 seconds, repeatedly. Reduces efficiency, shortens the life of the
+              boiler and the relay/contactor that drives it.
+            </li>
+          </ul>
+          <p>
+            The fix is built into almost every comparator chip and every thermostat firmware: two
+            thresholds with a deliberate gap. Switch ON at threshold A, switch OFF at threshold B (A
+            and B differ by the "hysteresis band"). The output stays in its current state until the
+            input crosses the OTHER threshold — so noise around either threshold can't cause
+            unwanted switching.
+          </p>
+          <p>
+            When you fault-find a chattering control, the cause is almost always a missing or
+            mis-set hysteresis band — sometimes a setting on the controller, sometimes a worn sensor
+            giving more noise than the band can absorb, sometimes a comparator IC failed in a way
+            that has eliminated its built-in hysteresis. Replacing the sensor first usually clears
+            it.
+          </p>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <ContentEyebrow>Fault-finding the sensor side</ContentEyebrow>
+
+        <ConceptBlock
+          title="Common failure modes"
+          onSite="With a meter on resistance you can prove an NTC or LDR is in spec in about thirty seconds. Most “the thermostat is broken” calls turn out to be a probe out of spec."
+        >
+          <p>Sensors fail in three main ways:</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Open-circuit</strong> — cable cut, dry joint, or the device itself gone open.
+              Most controllers fail safe (refuse to heat, refuse to switch) when they see infinite
+              resistance.
+            </li>
+            <li>
+              <strong>Short-circuit</strong> — two cores chafed together, or device internally
+              shorted. Controller usually reads "0 ohms" → thinks the temperature is sky-high →
+              shuts down or trips.
+            </li>
+            <li>
+              <strong>Drift</strong> — the sensor still reads, but the value is wrong (e.g. an old
+              NTC in a hot environment slowly losing accuracy). The kit appears to work but runs at
+              the wrong temperature. Hardest to spot — you have to compare the reading against a
+              known good thermometer.
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <CommonMistake
+          title="Replacing the whole controller when the probe is the fault"
+          whatHappens={
+            <>
+              Customer’s UFH thermostat shows "Probe Error" or refuses to heat. You order a whole
+              new thermostat at £80, fit it, same error. Now you’re out of pocket and the customer
+              is annoyed.
+            </>
+          }
+          doInstead={
+            <>
+              Probe and thermostat are nearly always sold separately. With your meter on resistance,
+              check the probe at the controller terminals. If it reads infinity it’s cable damage;
+              if it reads zero it’s shorted; if it reads way off the spec value for room temperature
+              it’s drifted. A replacement probe is usually £5–10 and takes ten minutes.
+            </>
+          }
+        />
+
+        <Scenario
+          title="Customer’s outdoor PIR keeps triggering on hot days"
+          situation={
+            <>
+              A PIR security light works fine all winter. Come the first proper hot weather, it
+              starts triggering throughout the afternoon — sometimes when nothing is moving in the
+              garden at all.
+            </>
+          }
+          whatToDo={
+            <>
+              A PIR detects changes in infrared radiation — anything with a different temperature
+              crossing its field of view. On hot days, gusts of wind moving warm and cool air
+              through the sensor zone, sun-warmed leaves swaying, or even rapid cloud shadow can
+              register as a "change". Most units have a sensitivity dial and a lux/dawn dial — turn
+              the sensitivity down a notch and check the LDR threshold isn’t so high that hot
+              afternoons appear "dark enough" to it. Reposition if possible to point away from heat
+              sources.
+            </>
+          }
+          whyItMatters={
+            <>
+              Knowing what each sensor inside the unit does (PIR for movement, LDR for light/dark)
+              lets you give the customer a real diagnosis instead of replacing kit hopefully.
+            </>
+          }
+        />
+
+        <InlineCheck
+          id={checks[2].id}
+          question={checks[2].question}
+          options={checks[2].options}
+          correctIndex={checks[2].correctIndex}
+          explanation={checks[2].explanation}
+        />
+
+        <RegsCallout
+          source="BS 7671:2018+A4:2026 — Regulation 422.3.7 (Protection of motors against excessive temperature)"
+          clause="A motor which is automatically or remotely controlled or which is not continuously supervised shall be protected against excessive temperature by a protective device with manual reset. A motor shall be protected against overtemperature in all operational modes. NOTE: Attention is drawn to danger which may arise from the loss of one phase."
+          meaning={
+            <>
+              The PTC thermistors embedded in modern motor windings exist precisely to satisfy this
+              reg — feeding a thermistor protection relay that opens the contactor coil if any
+              winding overheats. Reg 422.3.7 sits in Chapter 42 (protection against fire) because an
+              overheating motor is a fire risk. The reg specifically demands MANUAL reset, so the
+              motor can’t cycle automatically after a thermal trip and hide the fault. If you’re
+              fitting a motor with thermistor leads dangling out of the terminal box, they need
+              terminating into a TPR, not insulated and ignored.
+            </>
+          }
+          cite="Source: BS 7671:2018+A4:2026 Part 4, Chapter 42, Regulation 422.3.7."
+        />
+
+        <SectionRule />
+
+        <FAQ items={faqs} />
+
+        <SectionRule />
+
+        <KeyTakeaways
+          points={[
+            'An LDR’s resistance falls as light intensity rises — about 1 MΩ dark, a few hundred Ω in sunlight. Used in dusk-till-dawn lamps and simple presence sensors.',
+            'A thermistor changes resistance with temperature. NTC = falls with heat (the standard temperature sensor). PTC = rises with heat (used for protection and self-reset fuses).',
+            'A 10 kΩ NTC at 25 °C drops to roughly 1 kΩ at 100 °C — datasheet curve gives the exact relationship.',
+            'NTCs are everywhere on modern installs: UFH probes, EV charger plug temperature, switch-mode PSU thermal foldback, smart heating controls.',
+            'PTCs protect motors (winding sensors + thermistor relay) and act as self-resetting fuses on USB and signalling circuits.',
+            'Test a sensor with a meter on resistance — in spec at room temperature, response when warmed, no opens or shorts.',
+          ]}
+        />
+
+        <Quiz
+          title="Sensors — LDR, thermistor, NTC/PTC — knowledge check"
+          questions={quizQuestions}
+        />
+
+        <div className="grid grid-cols-2 gap-3 pt-2">
+          <button
+            onClick={() => navigate('/study-centre/apprentice/level2/module2/section6/6-4')}
+            className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+          >
+            <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+              <ChevronLeft className="h-3 w-3" /> Previous
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-white truncate">
+              6.4 Transistors and switching
+            </div>
+          </button>
+          <button
+            onClick={() => navigate('/study-centre/apprentice/level2/module2/section6/6-6')}
+            className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+          >
+            <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+              Next subsection <ChevronRight className="h-3 w-3" />
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-black truncate">
+              6.6 On-site electronics
+            </div>
+          </button>
+        </div>
+      </HubBody>
+    </HubPage>
   );
 }

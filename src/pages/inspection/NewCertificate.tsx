@@ -27,6 +27,36 @@ const coreCerts: CertDef[] = [
   { id: 'eicr', title: 'EICR', description: 'Periodic inspection & testing of existing installations', standard: 'BS 7671', accentColor: 'from-blue-500 via-blue-400 to-cyan-400' },
   { id: 'eic', title: 'EIC', description: 'New installations, major alterations & additions', standard: 'BS 7671', accentColor: 'from-emerald-500 via-emerald-400 to-green-400' },
   { id: 'minor-works', title: 'Minor Works', description: 'Small additions to existing circuits', standard: 'BS 7671', accentColor: 'from-orange-500 via-amber-400 to-yellow-400' },
+  /*
+   * ELE-1262. Sits with the core three deliberately — the decision a user is
+   * making is "which of these, given what I did today", and this is the answer
+   * when the work is neither an addition nor an alteration (a like-for-like
+   * fitting swap), so a Minor Works Certificate does not apply.
+   *
+   * 🔴 `standard` is NOT "BS 7671". Part 6 specifies three model forms and this
+   * is not one of them — the card must not imply otherwise.
+   *
+   * Routing: `handleClick` section-routes only eicr/eic/minor-works, so this
+   * correctly path-routes to /visual-condition/new.
+   */
+  { id: 'visual-condition', title: 'Visual Condition Report', description: 'Visual inspection only — no testing', standard: 'Visual only', accentColor: 'from-sky-500 via-sky-400 to-cyan-400' },
+  /*
+   * ELE-1634. Directly beneath Visual Condition, because that is the choice
+   * being made at this moment: same visual-only basis, different reader.
+   *
+   * 🔴 `standard` is "Advisory". This is not a BS 7671 model form and its
+   * reader is a house-buyer, who has no way to know that unless told.
+   */
+  { id: 'pre-purchase-survey', title: 'Pre-Purchase Survey', description: 'Photo-led advisory survey for a buyer', standard: 'Advisory', accentColor: 'from-violet-500 via-purple-400 to-fuchsia-400' },
+  /*
+   * ELE-1110. The planned-maintenance visit — an hour or two on site under a
+   * service contract, not a full EICR day.
+   *
+   * 🔴 `standard` is NOT "BS 7671". There is no BS 7671 model form for this and
+   * nothing in BS 7671 governs thermography. The badge names the duty the
+   * document actually supports: EAWR Regulation 4(2), maintenance.
+   */
+  { id: 'routine-inspection', title: 'Routine Inspection', description: 'Maintenance visit with optional thermal survey', standard: 'EAWR 1989', accentColor: 'from-orange-500 via-amber-400 to-yellow-400' },
 ];
 
 const fireSafety: CertDef[] = [

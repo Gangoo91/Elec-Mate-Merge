@@ -51,10 +51,13 @@ const PATH_ROUTED = new Set([
   'non-compliance-notice',
   'pat-testing',
   'permit-to-work',
+  'pre-purchase-survey',
+  'routine-inspection',
   'safe-isolation',
   'smoke-co-alarm',
   'solar-pv',
   'testing-only',
+  'visual-condition',
 ]);
 
 const BASE = '/electrician/inspection-testing';

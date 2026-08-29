@@ -1,5 +1,7 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import { useExamExit } from '@/hooks/useExamExit';
+import { useExamAttempt } from '@/hooks/useExamAttempt';
+import { toast } from 'sonner';
 import { useNavigate, useResolvedPath } from 'react-router-dom';
 import useSEO from '@/hooks/useSEO';
 import {
@@ -41,7 +43,9 @@ const Level2Module8MockExam3 = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const missesRecordedRef = useRef(false);
-  const startedAtRef = useRef<number | null>(null);
+  const [startedAt, setStartedAt] = useState<number | null>(null);
+  // Wall clock the paper runs out. Survives a reload; see useExamAttempt.
+  const [deadline, setDeadline] = useState<number | null>(null);
 
   // Where "back" goes. The paper is mounted under two different routes, so the
   // exit has always been a relative `..` — resolve it once to a real path so
@@ -71,6 +75,58 @@ const Level2Module8MockExam3 = () => {
     });
 
   // Initialize exam
+
+  /**
+   * Save the live attempt so a reload does not wipe it. The snapshot carries
+   * the DRAWN questions: the paper is a random draw with per-attempt option
+   * shuffling, so redrawing on resume would misalign every stored answer.
+   *
+   * ⚠️ Memoised — the clock re-renders once a second, and an inline object
+   * would rewrite the whole paper to storage on every tick.
+   */
+  const snapshot = useMemo(
+    () =>
+      examQuestions.length && startedAt !== null && deadline !== null
+        ? {
+            questions: examQuestions,
+            answers: answersArray,
+            current: currentQuestion,
+            flagged: [...flaggedQuestions],
+            startedAt,
+            deadline,
+          }
+        : null,
+    [examQuestions, answersArray, currentQuestion, flaggedQuestions, startedAt, deadline]
+  );
+
+  const { clearSaved } = useExamAttempt<QuestionBank>({
+    examId: 'level2-module8-mock3',
+    userId: user?.id ?? null,
+    active: examStarted && !showResults,
+    snapshot,
+    onRestore: (saved, secondsRemaining) => {
+      setExamQuestions(saved.questions);
+      setSelectedAnswers(
+        saved.answers.reduce<{ [key: number]: number }>((acc, a, i) => {
+          if (a !== undefined && a !== -1) acc[i] = a;
+          return acc;
+        }, {})
+      );
+      setCurrentQuestion(saved.current);
+      setFlaggedQuestions(new Set(saved.flagged));
+      setStartedAt(saved.startedAt);
+      setDeadline(saved.deadline);
+      setTimeRemaining(secondsRemaining);
+      missesRecordedRef.current = false;
+      setExamStarted(true);
+      setShowResults(false);
+      toast.info('Picked up where you left off', {
+        description: 'Your answers and flags were restored. The clock kept running.',
+        duration: 6000,
+      });
+    },
+  });
+
   const startExam = () => {
     const questions = shuffleAllQuestionOptions(
       getRandomQuestions(60, { basic: 40, intermediate: 45, advanced: 15 }),
@@ -84,24 +140,30 @@ const Level2Module8MockExam3 = () => {
     setFlaggedQuestions(new Set());
     setExamStarted(true);
     missesRecordedRef.current = false;
-    startedAtRef.current = Date.now();
+    const now = Date.now();
+    setStartedAt(now);
+    setDeadline(now + 90 * 60 * 1000);
+    // A fresh sitting supersedes any saved one.
+    clearSaved();
   };
 
-  // Timer effect
+  /**
+   * Derived from `deadline`, not decremented. A backgrounded tab throttles
+   * timers, so counting down by one per tick handed back minutes of free time;
+   * reading the wall clock is correct whatever the tab did, and it is the same
+   * value a resumed attempt restores from.
+   */
   useEffect(() => {
-    if (examStarted && !showResults && timeRemaining > 0) {
-      const timer = setInterval(() => {
-        setTimeRemaining((prev) => {
-          if (prev <= 1) {
-            handleSubmit();
-            return 0;
-          }
-          return prev - 1;
-        });
-      }, 1000);
-      return () => clearInterval(timer);
-    }
-  }, [examStarted, showResults, timeRemaining]);
+    if (!examStarted || showResults || deadline === null) return;
+    const tick = () => {
+      const left = Math.max(0, Math.ceil((deadline - Date.now()) / 1000));
+      setTimeRemaining(left);
+      if (left <= 0) handleSubmit();
+    };
+    tick();
+    const timer = setInterval(tick, 1000);
+    return () => clearInterval(timer);
+  }, [examStarted, showResults, deadline]);
 
   // Record the attempt once per sitting — the personal revision pile plus the
   // shared attempt/per-question dataset the public papers write to. Driven by
@@ -116,7 +178,7 @@ const Level2Module8MockExam3 = () => {
       examName: 'Level 2 Mock Exam 3',
       questions: examQuestions,
       answers: examQuestions.map((_, index) => selectedAnswers[index]),
-      startedAt: startedAtRef.current,
+      startedAt,
       passThreshold: 70,
       userId: user?.id ?? null,
     });

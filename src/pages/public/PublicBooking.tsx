@@ -28,6 +28,18 @@ interface ElectricianInfo {
   company: string | null;
 }
 
+interface Branding {
+  logo_url: string | null;
+  primary_color: string | null;
+}
+
+/**
+ * The three lengths a visitor can book, matching the server's fixed
+ * vocabulary — the page names a KIND, never a number of minutes, so a public
+ * client can never invent its own duration.
+ */
+type DurationKind = 'slot' | 'half_day' | 'full_day';
+
 type Step = 'loading' | 'error' | 'date' | 'time' | 'details' | 'confirmed';
 type TimePreference = 'morning' | 'afternoon' | 'flexible';
 
@@ -61,17 +73,34 @@ function formatUKPhone(value: string): string {
  * where hours exist they are a cost measure, not elapsed time. So the client
  * says when they would like to start and the electrician confirms.
  */
+// The app's underline field — bottom border only, yellow caret, no ring.
+const underlineCn =
+  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] ' +
+  'bg-transparent px-1 text-base font-medium text-white placeholder:text-white/25 ' +
+  'caret-elec-yellow shadow-none transition-colors hover:border-white/[0.3] ' +
+  'focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none ' +
+  '[color-scheme:dark] touch-manipulation';
+
 const PublicBooking = () => {
   const { electricianId } = useParams<{ electricianId: string }>();
   // ELE-955 — arriving from a quote-acceptance handoff, the URL carries
   // `?quote=<uuid>`. That is also what selects the start-date flow.
   const [searchParams] = useSearchParams();
   const quoteId = searchParams.get('quote');
+  // Loop-closers from reminder emails: booking from a renewal reminder
+  // (?rid=…) marks that renewal BOOKED in the electrician's pipeline; from a
+  // maintenance-visit reminder (?visit=…) it links the diary event to the
+  // visit. Passed through verbatim; the server validates ownership.
+  const renewalId = searchParams.get('rid');
+  const visitId = searchParams.get('visit');
   const isQuoteFlow = !!quoteId;
 
   const [step, setStep] = useState<Step>('loading');
   const [error, setError] = useState('');
   const [electrician, setElectrician] = useState<ElectricianInfo | null>(null);
+  const [branding, setBranding] = useState<Branding | null>(null);
+  const [slotMinutes, setSlotMinutes] = useState(60);
+  const [duration, setDuration] = useState<DurationKind>('slot');
   const [slots, setSlots] = useState<Slot[]>([]);
   const [openDates, setOpenDates] = useState<string[]>([]);
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
@@ -104,7 +133,10 @@ const PublicBooking = () => {
   const refreshSlots = useCallback(async () => {
     if (!electricianId) return;
     try {
-      const url = `${SUPABASE_URL}/functions/v1/public-booking?electrician_id=${electricianId}&days=${isQuoteFlow ? 56 : 14}`;
+      // 28 days for a straight booking (a fortnight was tight for anyone
+      // planning ahead), 56 for a start-date request. The server now honours
+      // both — it used to silently cap the quote flow's 56 at 30.
+      const url = `${SUPABASE_URL}/functions/v1/public-booking?electrician_id=${electricianId}&days=${isQuoteFlow ? 56 : 28}&duration=${duration}`;
       const res = await fetch(url, {
         method: 'GET',
         headers: {
@@ -121,6 +153,8 @@ const PublicBooking = () => {
 
       const result = await res.json();
       setElectrician(result.electrician);
+      setBranding(result.branding || null);
+      if (Number(result.slot_minutes) > 0) setSlotMinutes(Number(result.slot_minutes));
       setSlots(result.slots || []);
       setOpenDates(result.open_dates || []);
       return true;
@@ -128,7 +162,7 @@ const PublicBooking = () => {
       setError(err instanceof Error ? err.message : 'Failed to load availability');
       return false;
     }
-  }, [electricianId, isQuoteFlow]);
+  }, [electricianId, isQuoteFlow, duration]);
 
   useEffect(() => {
     refreshSlots().then((ok) => {
@@ -254,10 +288,56 @@ const PublicBooking = () => {
     return null;
   }, [step, isQuoteFlow]);
 
+  /*
+   * The days grouped into calendar weeks with a human label. A horizontal
+   * strip of 28 day chips showed five at a time and hid the rest behind a
+   * scroll nobody discovers — weeks read the way people actually plan:
+   * "can you do something next week?".
+   */
+  const weekGroups = useMemo(() => {
+    const mondayOf = (dateStr: string) => {
+      const d = new Date(dateStr + 'T12:00:00');
+      d.setDate(d.getDate() - ((d.getDay() + 6) % 7));
+      return d;
+    };
+    const thisMonday = mondayOf(new Date().toISOString().slice(0, 10)).getTime();
+    const groups: Array<{ label: string; dates: string[] }> = [];
+    for (const dateStr of availableDates) {
+      const mon = mondayOf(dateStr);
+      const diffWeeks = Math.round((mon.getTime() - thisMonday) / (7 * 24 * 3600 * 1000));
+      const label =
+        diffWeeks <= 0
+          ? 'This week'
+          : diffWeeks === 1
+            ? 'Next week'
+            : `Week of ${mon.toLocaleDateString('en-GB', { day: 'numeric', month: 'long' })}`;
+      const last = groups[groups.length - 1];
+      if (last && last.label === label) last.dates.push(dateStr);
+      else groups.push({ label, dates: [dateStr] });
+    }
+    return groups;
+  }, [availableDates]);
+
+  /**
+   * Changing the job size restarts the choice — the slots for a full day are
+   * different animals from the hour grid, so a selection made under the old
+   * length cannot survive. The effect above refetches automatically.
+   */
+  const handleDurationChange = (next: DurationKind) => {
+    if (next === duration) return;
+    setDuration(next);
+    setSelectedDate(null);
+    setSelectedSlot(null);
+    setError('');
+    if (step === 'time' || step === 'details') setStep('date');
+  };
+
   const handleBack = () => {
     setError('');
     if (step === 'details') {
-      if (isQuoteFlow) {
+      if (isQuoteFlow || duration === 'full_day') {
+        // Full-day bookings skip the time step — a day IS the slot.
+        setSelectedSlot(null);
         setStep('date');
       } else {
         setSelectedSlot(null);
@@ -346,6 +426,9 @@ const PublicBooking = () => {
           electrician_id: electricianId,
           date: selectedSlot.date,
           start_time: selectedSlot.start,
+          duration,
+          renewal_id: renewalId || undefined,
+          visit_id: visitId || undefined,
           client_name: name.trim(),
           client_phone: normalisedPhone(),
           client_email: email.trim() || undefined,
@@ -451,9 +534,19 @@ const PublicBooking = () => {
               <ChevronLeft className="h-5 w-5 text-white" />
             </button>
           )}
-          <div className="p-2 rounded-lg bg-elec-yellow/10">
-            <CalendarDays className="h-5 w-5 text-elec-yellow" />
-          </div>
+          {branding?.logo_url ? (
+            // Their brand, not ours — the customer is booking THEIR
+            // electrician, and the page should look like it belongs to them.
+            <img
+              src={branding.logo_url}
+              alt=""
+              className="h-10 w-10 rounded-lg object-contain bg-white/[0.06] p-0.5"
+            />
+          ) : (
+            <div className="p-2 rounded-lg bg-elec-yellow/10">
+              <CalendarDays className="h-5 w-5 text-elec-yellow" />
+            </div>
+          )}
           <div className="flex-1 min-w-0">
             <h1 className="text-lg font-bold text-white truncate">
               {electrician?.name || 'Electrician'}
@@ -593,9 +686,57 @@ const PublicBooking = () => {
           </div>
         )}
 
-        {/* ── Step 1 — the date ─────────────────────────────────────── */}
-        {!showSettled && (step === 'date' || step === 'time' || step === 'details') && (
+        {/* ── Step 1 — the date. Gone entirely by the details step: the
+            summary card there already echoes the choice, and repeating the
+            picker above the form doubled the same date on screen. ── */}
+        {!showSettled && (step === 'date' || step === 'time') && (
           <div className="space-y-3">
+            {/* How big is the job? Decides what a "slot" means below. Straight
+                bookings only — the quote flow requests a start date, where
+                length is the electrician's business. */}
+            {!isQuoteFlow && (
+              <div className="space-y-2">
+                <h2 className="text-base font-semibold tracking-tight text-white">
+                  How long do you need?
+                </h2>
+                <div className="grid grid-cols-3 gap-2">
+                  {(
+                    [
+                      {
+                        value: 'slot' as DurationKind,
+                        label: 'Quick visit',
+                        hint:
+                          slotMinutes >= 60
+                            ? `About ${slotMinutes % 60 === 0 ? slotMinutes / 60 : (slotMinutes / 60).toFixed(1)} hour${slotMinutes > 60 ? 's' : ''}`
+                            : `About ${slotMinutes} min`,
+                      },
+                      { value: 'half_day' as DurationKind, label: 'Half a day', hint: 'Around 4 hours' },
+                      { value: 'full_day' as DurationKind, label: 'Full day', hint: 'The whole day' },
+                    ]
+                  ).map((opt) => (
+                    <button
+                      key={opt.value}
+                      onClick={() => handleDurationChange(opt.value)}
+                      className={`py-2.5 px-2 rounded-xl text-center touch-manipulation transition-colors ${
+                        duration === opt.value
+                          ? 'bg-elec-yellow text-black'
+                          : 'bg-white/5 border border-white/10 text-white'
+                      }`}
+                    >
+                      <div className="text-[13px] font-semibold">{opt.label}</div>
+                      <div
+                        className={`text-[10px] mt-0.5 ${
+                          duration === opt.value ? 'text-black/60' : 'text-white'
+                        }`}
+                      >
+                        {opt.hint}
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
             <div>
               <h2 className="text-base font-semibold tracking-tight text-white">
                 {isQuoteFlow ? 'When would you like us to start?' : 'Pick a day'}
@@ -608,53 +749,87 @@ const PublicBooking = () => {
               )}
             </div>
 
-            <div className="flex gap-2 overflow-x-auto pb-2 -mx-1 px-1 scrollbar-none">
-              {availableDates.length === 0 ? (
-                <div className="text-center py-8 w-full space-y-2">
-                  <CalendarDays className="h-8 w-8 text-white mx-auto" />
-                  <p className="text-white">No dates available at the moment.</p>
-                  <p className="text-sm text-white">
-                    Give {electrician?.name || 'your electrician'} a ring and they'll sort
-                    something out.
-                  </p>
-                </div>
-              ) : (
-                availableDates.map((dateStr) => {
-                  const { dayName, dayNum, month } = formatDate(dateStr);
-                  const isSelected = selectedDate === dateStr;
-                  const slotCount = slots.filter((s) => s.date === dateStr).length;
-                  return (
-                    <button
-                      key={dateStr}
-                      onClick={() => {
-                        setSelectedDate(dateStr);
-                        setSelectedSlot(null);
-                        setError('');
-                        if (!isQuoteFlow) setStep('time');
-                      }}
-                      className={`flex-shrink-0 w-[4.5rem] py-3 rounded-xl text-center touch-manipulation transition-colors ${
-                        isSelected
-                          ? 'bg-elec-yellow text-black'
-                          : 'bg-white/5 border border-white/10 text-white'
-                      }`}
-                    >
-                      <div className="text-[10px] font-medium uppercase">{dayName}</div>
-                      <div className="text-lg font-bold">{dayNum}</div>
-                      <div className="text-[10px] font-medium uppercase">{month}</div>
-                      {/* A slot count is meaningless when the client is choosing
-                          a start date rather than an appointment. */}
-                      {!isQuoteFlow && (
-                        <div
-                          className={`text-[9px] mt-0.5 ${isSelected ? 'text-black/60' : 'text-white'}`}
-                        >
-                          {slotCount} slot{slotCount !== 1 ? 's' : ''}
-                        </div>
-                      )}
-                    </button>
-                  );
-                })
-              )}
-            </div>
+            {step !== 'date' && selectedDate ? (
+              /* A vertical week list has no business staying open above the
+                 time grid — collapse to the chosen day once it's picked. */
+              <button
+                onClick={() => {
+                  setSelectedSlot(null);
+                  setStep('date');
+                }}
+                className="flex w-full items-center justify-between rounded-xl border border-white/[0.12] bg-white/[0.06] px-3.5 py-3 touch-manipulation"
+              >
+                <span className="text-sm font-semibold text-white">
+                  {formatDate(selectedDate).full}
+                </span>
+                <span className="text-[12px] font-medium text-elec-yellow">Change day</span>
+              </button>
+            ) : availableDates.length === 0 ? (
+              <div className="text-center py-8 w-full space-y-2">
+                <CalendarDays className="h-8 w-8 text-white mx-auto" />
+                <p className="text-white">No dates available at the moment.</p>
+                <p className="text-sm text-white">
+                  Give {electrician?.name || 'your electrician'} a ring and they'll sort
+                  something out.
+                </p>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                {weekGroups.map((week) => (
+                  <div key={week.label} className="space-y-2">
+                    <h3 className="text-[12px] font-medium text-white">{week.label}</h3>
+                    <div className="flex flex-wrap gap-2">
+                      {week.dates.map((dateStr) => {
+                        const { dayName, dayNum, month } = formatDate(dateStr);
+                        const isSelected = selectedDate === dateStr;
+                        const slotCount = slots.filter((s) => s.date === dateStr).length;
+                        return (
+                          <button
+                            key={dateStr}
+                            onClick={() => {
+                              setSelectedDate(dateStr);
+                              setError('');
+                              if (isQuoteFlow) {
+                                setSelectedSlot(null);
+                              } else if (duration === 'full_day') {
+                                // One slot per day by construction — picking the
+                                // day IS picking the slot, straight to details.
+                                const daySlot = slots.find((sl) => sl.date === dateStr) ?? null;
+                                setSelectedSlot(daySlot);
+                                setStep(daySlot ? 'details' : 'time');
+                              } else {
+                                setSelectedSlot(null);
+                                setStep('time');
+                              }
+                            }}
+                            className={`w-[4rem] py-2.5 rounded-xl text-center touch-manipulation transition-colors ${
+                              isSelected
+                                ? 'bg-elec-yellow text-black'
+                                : 'bg-white/[0.06] border border-white/[0.12] text-white'
+                            }`}
+                          >
+                            <div className="text-[10px] font-medium uppercase">{dayName}</div>
+                            <div className="text-lg font-bold leading-tight">{dayNum}</div>
+                            <div className="text-[10px] font-medium uppercase">{month}</div>
+                            {/* A slot count is meaningless when the client is
+                                choosing a start date, not an appointment. */}
+                            {!isQuoteFlow && (
+                              <div
+                                className={`text-[9px] mt-0.5 font-medium ${isSelected ? 'text-black/70' : 'text-white'}`}
+                              >
+                                {duration === 'full_day'
+                                  ? 'free'
+                                  : `${slotCount} slot${slotCount !== 1 ? 's' : ''}`}
+                              </div>
+                            )}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
 
             {/* Time of day — a preference, not a reservation. */}
             {isQuoteFlow && selectedDate && (
@@ -700,7 +875,13 @@ const PublicBooking = () => {
         )}
 
         {/* ── Step 2 — the time, booking-link flow only ─────────────── */}
-        {!showSettled && !isQuoteFlow && (step === 'time' || step === 'details') && selectedDate && (
+        {/* Details already echoes the chosen time in its summary card — the
+            grid collapses once a time is picked, same as the day list. */}
+        {!showSettled &&
+          !isQuoteFlow &&
+          duration !== 'full_day' &&
+          step === 'time' &&
+          selectedDate && (
           <div className="space-y-3">
             <h2 className="text-base font-semibold tracking-tight text-white">
               What time on {formatDate(selectedDate).full}?
@@ -708,29 +889,59 @@ const PublicBooking = () => {
             {dateSlots.length === 0 ? (
               <p className="text-white py-4">Nothing free that day — try another.</p>
             ) : (
-              <div className="grid grid-cols-2 gap-2">
-                {dateSlots.map((slot) => {
-                  const isSelected =
-                    selectedSlot?.start === slot.start && selectedSlot?.date === slot.date;
-                  return (
-                    <button
-                      key={`${slot.date}-${slot.start}`}
-                      onClick={() => {
-                        setSelectedSlot(slot);
-                        setStep('details');
-                        setError('');
-                      }}
-                      className={`h-11 rounded-xl text-sm font-medium touch-manipulation transition-colors ${
-                        isSelected
-                          ? 'bg-elec-yellow text-black'
-                          : 'bg-white/5 border border-white/10 text-white'
-                      }`}
-                    >
-                      {slot.start} – {slot.end}
-                    </button>
-                  );
-                })}
-              </div>
+              /* Grouped by half of the day — ten identical chips in a wall
+                 made the customer count; "Morning / Afternoon" is how they
+                 were going to scan it anyway. Half-day chips already ARE the
+                 halves, so they keep a single grid. */
+              (duration === 'half_day'
+                ? [{ label: null as string | null, group: dateSlots }]
+                : [
+                    {
+                      label: 'Morning',
+                      group: dateSlots.filter((s) => parseInt(s.start, 10) < 12),
+                    },
+                    {
+                      label: 'Afternoon',
+                      group: dateSlots.filter((s) => parseInt(s.start, 10) >= 12),
+                    },
+                  ].filter((g) => g.group.length > 0)
+              ).map(({ label, group }) => (
+                <div key={label ?? 'all'} className="space-y-2">
+                  {label && <h3 className="text-[12px] font-medium text-white">{label}</h3>}
+                  <div className="grid grid-cols-2 gap-2">
+                    {group.map((slot) => {
+                      const isSelected =
+                        selectedSlot?.start === slot.start && selectedSlot?.date === slot.date;
+                      return (
+                        <button
+                          key={`${slot.date}-${slot.start}`}
+                          onClick={() => {
+                            setSelectedSlot(slot);
+                            setStep('details');
+                            setError('');
+                          }}
+                          className={`${duration === 'half_day' ? 'min-h-[3.5rem] py-2' : 'h-11'} rounded-xl text-sm font-medium touch-manipulation transition-colors ${
+                            isSelected
+                              ? 'bg-elec-yellow text-black'
+                              : 'bg-white/[0.06] border border-white/[0.12] text-white'
+                          }`}
+                        >
+                          {slot.start} – {slot.end}
+                          {duration === 'half_day' && (
+                            <span
+                              className={`block text-[10px] font-medium ${
+                                isSelected ? 'text-black/70' : 'text-white'
+                              }`}
+                            >
+                              {parseInt(slot.start, 10) < 12 ? 'Morning' : 'Afternoon'}
+                            </span>
+                          )}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              ))
             )}
           </div>
         )}
@@ -744,7 +955,9 @@ const PublicBooking = () => {
               </p>
               <p className="text-sm text-white">
                 {selectedSlot
-                  ? `${selectedSlot.start} – ${selectedSlot.end}`
+                  ? duration === 'full_day' && !isQuoteFlow
+                    ? `All day, ${selectedSlot.start} – ${selectedSlot.end}`
+                    : `${selectedSlot.start} – ${selectedSlot.end}`
                   : preference === 'flexible'
                     ? 'Any time of day'
                     : `${TIME_PREFERENCES.find((p) => p.value === preference)?.label} preferred`}
@@ -754,51 +967,73 @@ const PublicBooking = () => {
             <h2 className="text-base font-semibold tracking-tight text-white">
               How can {electrician?.name || 'they'} reach you?
             </h2>
-            <div className="space-y-3">
-              <Input
-                placeholder="Your name *"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
-                autoComplete="name"
-              />
-              <Input
-                placeholder="Phone number *"
-                type="tel"
-                value={phone}
-                onChange={(e) => setPhone(formatUKPhone(e.target.value))}
-                className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
-                autoComplete="tel"
-                maxLength={15}
-              />
-              <Input
-                placeholder="Email (optional)"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
-                autoComplete="email"
-              />
-              {/* Full address so it syncs to the diary as a tappable map pin
-                  (ELE-1042). */}
-              <GoogleMapsProvider>
-                <PlacesAutocomplete
-                  value={address}
-                  onChange={setAddress}
-                  placeholder={isQuoteFlow ? 'Where is the work? (optional)' : 'Job address (optional)'}
-                  className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
+            {/* Underline fields, not boxes — the boxed grey inputs were the
+                superseded form language. Labels carry the field name in full
+                white; the caret and bottom border carry focus. */}
+            <div className="space-y-5">
+              <div>
+                <label className="mb-1 block text-[12px] font-medium text-white">Your name</label>
+                <Input
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  className={underlineCn}
+                  autoComplete="name"
                 />
-              </GoogleMapsProvider>
-              <Textarea
-                placeholder={
-                  isQuoteFlow
-                    ? 'Anything they should know before starting? (optional)'
-                    : 'What do you need doing? (optional)'
-                }
-                value={jobDescription}
-                onChange={(e) => setJobDescription(e.target.value)}
-                className="touch-manipulation text-base min-h-[100px] focus:ring-2 focus:ring-elec-yellow/20 border-white/30 focus:border-yellow-500"
-              />
+              </div>
+              <div>
+                <label className="mb-1 block text-[12px] font-medium text-white">
+                  Phone number
+                </label>
+                <Input
+                  type="tel"
+                  value={phone}
+                  onChange={(e) => setPhone(formatUKPhone(e.target.value))}
+                  className={underlineCn}
+                  autoComplete="tel"
+                  maxLength={15}
+                />
+              </div>
+              <div>
+                <label className="mb-1 block text-[12px] font-medium text-white">
+                  Email <span className="font-normal">(optional)</span>
+                </label>
+                <Input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className={underlineCn}
+                  autoComplete="email"
+                />
+              </div>
+              <div>
+                <label className="mb-1 block text-[12px] font-medium text-white">
+                  {isQuoteFlow ? 'Where is the work?' : 'Job address'}{' '}
+                  <span className="font-normal">(optional)</span>
+                </label>
+                {/* Full address so it syncs to the diary as a tappable map pin
+                    (ELE-1042). */}
+                <GoogleMapsProvider>
+                  <PlacesAutocomplete
+                    value={address}
+                    onChange={setAddress}
+                    placeholder="Start typing the address"
+                    className={underlineCn}
+                  />
+                </GoogleMapsProvider>
+              </div>
+              <div>
+                <label className="mb-1 block text-[12px] font-medium text-white">
+                  {isQuoteFlow
+                    ? 'Anything they should know before starting?'
+                    : 'What do you need doing?'}{' '}
+                  <span className="font-normal">(optional)</span>
+                </label>
+                <Textarea
+                  value={jobDescription}
+                  onChange={(e) => setJobDescription(e.target.value)}
+                  className={`${underlineCn} min-h-[80px] resize-none py-2`}
+                />
+              </div>
             </div>
 
             <Button
@@ -852,16 +1087,21 @@ const PublicBooking = () => {
               </>
             ) : (
               <>
-                <div className="space-y-2">
+                <div className="space-y-3">
                   <h2 className="text-xl font-bold text-white">You're booked in</h2>
                   {/* ELE-1512 — this showed the start time only. */}
                   {confirmedSlot && (
-                    <p className="text-white">
-                      {formatDate(confirmedSlot.date).full}, {confirmedSlot.start} –{' '}
-                      {confirmedSlot.end}
-                    </p>
+                    <div className="mx-auto max-w-xs rounded-xl border border-elec-yellow/20 bg-elec-yellow/10 p-3.5 text-left">
+                      <p className="text-sm font-semibold text-white">
+                        {formatDate(confirmedSlot.date).full}
+                      </p>
+                      <p className="text-sm text-white">
+                        {duration === 'full_day' ? 'All day, ' : ''}
+                        {confirmedSlot.start} – {confirmedSlot.end} · with {who}
+                      </p>
+                      {address.trim() && <p className="mt-1 text-sm text-white">{address}</p>}
+                    </div>
                   )}
-                  <p className="text-sm text-white">with {who}</p>
                 </div>
                 {/* ELE-1514 — "Add to Calendar" removed. It is an
                     electrician-side action and had no business on a public

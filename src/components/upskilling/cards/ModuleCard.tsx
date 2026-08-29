@@ -1,9 +1,10 @@
 import React, { useMemo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { CheckCircle2, GraduationCap } from 'lucide-react';
+import { GraduationCap } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { useCourseProgress } from '@/hooks/useCourseProgress';
 import { moduleProgress } from '@/lib/courseProgressMatch';
+import { CARD_BASE, CARD_NEUTRAL, CARD_PRIMARY } from '@/components/ui/card-recipe';
 import { cn } from '@/lib/utils';
 
 interface ModuleCardProps {
@@ -20,6 +21,24 @@ interface ModuleCardProps {
   index?: number;
 }
 
+/**
+ * The module card. Matched to the Study Centre dashboard card in
+ * `BrowseCoursesPage` — see the note in SectionCard for the shared rules,
+ * including the important one: volt appears only where there is real progress.
+ *
+ * Two things are specific to this card.
+ *
+ * THE EXAM CARD IS THE PRIMARY CARD. It used to be flagged by a
+ * `bg-elec-yellow/15` icon chip — a translucent volt FILL, which the recipe
+ * bans outright because a wash of gold over near-black goes muddy brown. The
+ * final assessment genuinely is the one action in a module grid that outranks
+ * the others, which is what CARD_PRIMARY is for: a solid volt face with black
+ * ink. Stronger signal than the chip ever was, and compliant.
+ *
+ * THE SIX-COLOUR ACCENT IS GONE. `from-blue-500/70 via-violet-400/70` was the
+ * only blue and violet in the Study Centre and belonged to no palette — a
+ * decorative gradient standing in for depth.
+ */
 export const ModuleCard: React.FC<ModuleCardProps> = ({
   to,
   moduleNumber,
@@ -53,93 +72,81 @@ export const ModuleCard: React.FC<ModuleCardProps> = ({
   const progress =
     progressProp ?? (autoProgress.pct > 0 && autoProgress.pct < 100 ? autoProgress.pct : undefined);
 
-  const accent = isExam
-    ? 'from-elec-yellow/70 via-amber-400/70 to-orange-400/70'
-    : 'from-blue-500/70 via-violet-400/70 to-elec-yellow/70';
-
   const ModuleIcon = isExam ? GraduationCap : Icon;
   const eyebrow = isExam ? 'Final assessment' : `Module ${moduleNumber}`;
+
+  // On the volt face everything sits in black; on the neutral face, white.
+  const ink = isExam ? 'text-black' : 'text-white';
+  const hasProgress = isCompleted || (progress !== undefined && progress > 0);
 
   return (
     <Link
       to={to}
-      className="group block touch-manipulation focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/50 rounded-2xl"
+      className={cn(
+        CARD_BASE,
+        isExam ? CARD_PRIMARY : CARD_NEUTRAL,
+        'relative overflow-hidden px-4 py-3.5 sm:p-5 lg:hover:-translate-y-0.5'
+      )}
     >
-      <div
+      {/* A 1px volt line, not a volt surface — the same treatment HubKpi uses.
+          A translucent volt FILL goes muddy brown on this ground; a hairline
+          stays yellow because there is nothing behind it to muddy. */}
+      <span
+        aria-hidden
         className={cn(
-          'relative h-full min-h-[180px] sm:min-h-[200px]',
-          'bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors',
-          'rounded-2xl overflow-hidden',
-          'p-5 sm:p-6 flex flex-col text-left',
-          'active:scale-[0.99]'
+          'pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 to-elec-yellow/0',
+          isExam ? 'via-black/30' : hasProgress ? 'via-elec-yellow/90' : 'via-elec-yellow/55'
+        )}
+      />
+
+      <span
+        className={cn(
+          'flex items-center gap-2 text-[10px] font-medium uppercase tracking-[0.14em]',
+          isExam ? 'text-black/80' : 'text-white'
         )}
       >
-        {/* Hairline top accent */}
-        <div
-          className={cn(
-            'absolute inset-x-0 top-0 h-px bg-gradient-to-r opacity-70 group-hover:opacity-100 transition-opacity',
-            accent
-          )}
-        />
-
-        {/* Header — eyebrow + completed tick */}
-        <div className="flex items-start justify-between gap-3">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-            {eyebrow}
-          </span>
-          {isCompleted && <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0" />}
-        </div>
-
-        {/* Icon + title */}
-        <div className="mt-4 flex items-start gap-3">
-          <div
-            className={cn(
-              'shrink-0 h-9 w-9 rounded-xl flex items-center justify-center',
-              isExam
-                ? 'bg-elec-yellow/15 border border-elec-yellow/30'
-                : 'bg-white/[0.04] border border-white/[0.08]'
-            )}
-          >
-            <ModuleIcon
-              className={cn('h-4 w-4', isExam ? 'text-elec-yellow' : 'text-white')}
-              strokeWidth={1.8}
+        <ModuleIcon className="h-3.5 w-3.5 shrink-0" strokeWidth={1.8} aria-hidden />
+        {eyebrow}
+        {duration && (
+          <>
+            <span
+              className={cn('h-2.5 w-px', isExam ? 'bg-black/25' : 'bg-white/20')}
+              aria-hidden
             />
-          </div>
-          <h3 className="text-[15px] sm:text-base font-semibold text-white leading-snug tracking-tight line-clamp-2 flex-1 min-w-0">
-            {title}
-          </h3>
-        </div>
-
-        {description && (
-          <p className="mt-2.5 text-[12.5px] text-white leading-relaxed line-clamp-2">
-            {description}
-          </p>
+            {duration}
+          </>
         )}
+      </span>
 
-        <div className="flex-grow" />
+      <span className={cn('mt-1.5 text-[15px] font-semibold leading-tight tracking-tight', ink)}>
+        {title}
+      </span>
 
-        {/* Footer — duration / progress / cta */}
-        <div className="mt-5 pt-4 border-t border-white/[0.06] flex items-center justify-between gap-2">
-          <span className="text-[11px] text-white truncate">
-            {duration ?? (isExam ? 'Open exam' : 'Open module')}
-          </span>
-          {progress !== undefined && progress > 0 && progress < 100 ? (
-            <div className="flex items-center gap-2 shrink-0">
-              <div className="w-12 h-1 bg-white/10 rounded-full overflow-hidden">
-                <div
-                  className="h-full bg-elec-yellow rounded-full transition-all duration-300"
-                  style={{ width: `${progress}%` }}
-                />
-              </div>
-              <span className="text-[11px] font-medium text-elec-yellow">{progress}%</span>
-            </div>
-          ) : (
-            <span className="text-[12px] font-medium text-elec-yellow/90 group-hover:text-elec-yellow group-hover:translate-x-0.5 transition-all shrink-0">
-              {isCompleted ? 'Review' : 'Open'} →
-            </span>
+      {description && (
+        <span
+          className={cn(
+            'mt-1.5 line-clamp-2 text-[12.5px] leading-snug',
+            isExam ? 'text-black/70' : 'text-white'
           )}
-        </div>
-      </div>
+        >
+          {description}
+        </span>
+      )}
+
+      <span className="mt-3 flex items-center justify-between gap-2 text-[11.5px]">
+        <span className={cn(isExam ? 'text-black/70' : 'text-white')}>
+          {isCompleted ? 'Completed' : progress !== undefined ? `${progress}% done` : 'Not started'}
+        </span>
+        {/* Volt only where there is progress — an accent on every card means nothing. */}
+        <span
+          className={cn(
+            'font-semibold tabular-nums',
+            isExam ? 'text-black' : hasProgress ? 'text-elec-yellow' : 'text-white'
+          )}
+        >
+          {isCompleted ? 'Review' : isExam ? 'Open exam' : 'Open'}
+        </span>
+      </span>
     </Link>
   );
 };

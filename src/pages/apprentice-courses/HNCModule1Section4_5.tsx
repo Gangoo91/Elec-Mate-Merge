@@ -7,11 +7,11 @@
  */
 
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
-import { PageFrame, PageHero } from '@/components/college/primitives';
 import {
   TLDR,
   ConceptBlock,
@@ -259,608 +259,627 @@ const HNCModule1Section4_5 = () => {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
-      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
-        <PageFrame>
-          <button
-            onClick={() => navigate('../h-n-c-module1-section4')}
-            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
-          >
-            <ArrowLeft className="h-4 w-4" /> Section 4
-          </button>
+    <HubPage>
+      <HubMasthead
+        section="Module 1.4.5"
+        title="Continuous Professional Development"
+        backTo="../h-n-c-module1-section4"
+      />
+      <HubBody>
+        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
+          Maintaining and developing health and safety competence throughout your career
+        </p>
 
-          <PageHero
-            eyebrow="Module 1.4.5"
-            title="Continuous Professional Development"
-            description="Maintaining and developing health and safety competence throughout your career"
-            tone="purple"
-          />
+        <TLDR
+          points={[
+            'You will treat CPD as a structured, recorded discipline — not as “the courses I happened to attend last year”.',
+            'You can design a CPD plan with measurable outcomes against the Engineering Council UK-SPEC and the IET / CIBSE registration requirements.',
+            'You log activity (formal, informal, structured, reflective) and demonstrate impact on your day job.',
+            'You stay current on BS 7671 amendments (latest A4:2026), new technologies (EV, PV, BESS) and new regulatory regimes.',
+          ]}
+        />
 
-          <TLDR
-            points={[
-              'You will treat CPD as a structured, recorded discipline — not as “the courses I happened to attend last year”.',
-              'You can design a CPD plan with measurable outcomes against the Engineering Council UK-SPEC and the IET / CIBSE registration requirements.',
-              'You log activity (formal, informal, structured, reflective) and demonstrate impact on your day job.',
-              'You stay current on BS 7671 amendments (latest A4:2026), new technologies (EV, PV, BESS) and new regulatory regimes.',
-            ]}
-          />
+        <RegsCallout
+          source="EAWR 1989 — Regulation 16"
+          clause="No person shall be engaged in any work activity where technical knowledge or experience is necessary to prevent danger or, where appropriate, injury, unless he possesses such knowledge or experience, or is under such degree of supervision as may be appropriate having regard to the nature of the work."
+          meaning={
+            <>
+              Reg 16 requires &ldquo;technical knowledge or experience&rdquo; to prevent danger.
+              Knowledge degrades — BS 7671 amendments, new equipment, new chemistries. CPD is the
+              legal mechanism that keeps you on the right side of Reg 16 over a career.
+            </>
+          }
+          cite="Source: Electricity at Work Regulations 1989, Reg 16 — legislation.gov.uk"
+        />
 
-          <RegsCallout
-            source="EAWR 1989 — Regulation 16"
-            clause="No person shall be engaged in any work activity where technical knowledge or experience is necessary to prevent danger or, where appropriate, injury, unless he possesses such knowledge or experience, or is under such degree of supervision as may be appropriate having regard to the nature of the work."
-            meaning={
-              <>
-                Reg 16 requires &ldquo;technical knowledge or experience&rdquo; to prevent
-                danger. Knowledge degrades — BS 7671 amendments, new equipment, new chemistries.
-                CPD is the legal mechanism that keeps you on the right side of Reg 16 over a
-                career.
-              </>
-            }
-            cite="Source: Electricity at Work Regulations 1989, Reg 16 — legislation.gov.uk"
-          />
+        <LearningOutcomes
+          outcomes={[
+            'Explain the importance of CPD for health and safety competence',
+            'Identify key H&S qualifications: NEBOSH Certificate, Diploma, IOSH courses',
+            'Describe CPD activities and how to record them effectively',
+            'Understand IET membership and Chartered Engineer requirements',
+            'Plan a personal development approach for H&S competence',
+            'Explain how CPD supports regulatory and professional compliance',
+          ]}
+          initialVisibleCount={3}
+        />
 
-          <LearningOutcomes
-            outcomes={[
-              "Explain the importance of CPD for health and safety competence",
-              "Identify key H&S qualifications: NEBOSH Certificate, Diploma, IOSH courses",
-              "Describe CPD activities and how to record them effectively",
-              "Understand IET membership and Chartered Engineer requirements",
-              "Plan a personal development approach for H&S competence",
-              "Explain how CPD supports regulatory and professional compliance",
-            ]}
-            initialVisibleCount={3}
-          />
+        <SectionRule />
 
-          <SectionRule />
+        <ContentEyebrow>The Importance of CPD for Health and Safety</ContentEyebrow>
 
-          <ContentEyebrow>The Importance of CPD for Health and Safety</ContentEyebrow>
-
-          <ConceptBlock title="The Importance of CPD for Health and Safety">
-            <p>
+        <ConceptBlock title="The Importance of CPD for Health and Safety">
+          <p>
             Continuing Professional Development (CPD) is the ongoing process of maintaining and
             developing your professional knowledge, skills, and competence. In health and safety,
             CPD is particularly important because legislation, standards, and best practice are
             continuously evolving.
-            </p>
+          </p>
 
-            
-            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+          <p className="text-sm font-medium text-elec-yellow/80 mb-2">
             Why CPD is Essential for H&S
-            </p>
-            
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-            <li>
-            <strong>Legislation changes:</strong> Regulations are regularly updated
-            </li>
-            <li>
-            <strong>Standards evolve:</strong> BS 7671 amendments every 3-4 years
-            </li>
-            <li>
-            <strong>Technology advances:</strong> New equipment, systems, hazards
-            </li>
-            <li>
-            <strong>Best practice develops:</strong> Industry learns from incidents
-            </li>
-            </ul>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-            <li>
-            <strong>Competence requirement:</strong> Legal duty to remain competent
-            </li>
-            <li>
-            <strong>Professional obligation:</strong> Codes of conduct require CPD
-            </li>
-            <li>
-            <strong>Career development:</strong> Progress requires updated skills
-            </li>
-            <li>
-            <strong>Quality assurance:</strong> Clients expect current knowledge
-            </li>
-            </ul>
-            
-            
+          </p>
 
-            
-            <p className="text-sm font-medium text-elec-yellow/80 mb-2">The CPD Cycle</p>
-            <div className="grid grid-cols-4 gap-2 text-center text-sm">
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Legislation changes:</strong> Regulations are regularly updated
+            </li>
+            <li>
+              <strong>Standards evolve:</strong> BS 7671 amendments every 3-4 years
+            </li>
+            <li>
+              <strong>Technology advances:</strong> New equipment, systems, hazards
+            </li>
+            <li>
+              <strong>Best practice develops:</strong> Industry learns from incidents
+            </li>
+          </ul>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Competence requirement:</strong> Legal duty to remain competent
+            </li>
+            <li>
+              <strong>Professional obligation:</strong> Codes of conduct require CPD
+            </li>
+            <li>
+              <strong>Career development:</strong> Progress requires updated skills
+            </li>
+            <li>
+              <strong>Quality assurance:</strong> Clients expect current knowledge
+            </li>
+          </ul>
+
+          <p className="text-sm font-medium text-elec-yellow/80 mb-2">The CPD Cycle</p>
+          <div className="grid grid-cols-4 gap-2 text-center text-sm">
             <div className="p-3 rounded bg-blue-500/10 border border-blue-500/30">
-            <p className="font-bold text-blue-400 mb-1">1. Assess</p>
-            <p className="text-xs text-white">Identify development needs</p>
+              <p className="font-bold text-blue-400 mb-1">1. Assess</p>
+              <p className="text-xs text-white">Identify development needs</p>
             </div>
             <div className="p-3 rounded bg-green-500/10 border border-green-500/30">
-            <p className="font-bold text-green-400 mb-1">2. Plan</p>
-            <p className="text-xs text-white">Set learning objectives</p>
+              <p className="font-bold text-green-400 mb-1">2. Plan</p>
+              <p className="text-xs text-white">Set learning objectives</p>
             </div>
             <div className="p-3 rounded bg-purple-500/10 border border-purple-500/30">
-            <p className="font-bold text-purple-400 mb-1">3. Do</p>
-            <p className="text-xs text-white">Undertake activities</p>
+              <p className="font-bold text-purple-400 mb-1">3. Do</p>
+              <p className="text-xs text-white">Undertake activities</p>
             </div>
             <div className="p-3 rounded bg-orange-500/10 border border-orange-500/30">
-            <p className="font-bold text-orange-400 mb-1">4. Reflect</p>
-            <p className="text-xs text-white">Evaluate and record</p>
+              <p className="font-bold text-orange-400 mb-1">4. Reflect</p>
+              <p className="text-xs text-white">Evaluate and record</p>
             </div>
-            </div>
-            
+          </div>
 
-            <CommonMistake
+          <CommonMistake
             title="BS 7671 Example"
-            whatHappens={<><p className="text-sm text-white">
-            BS 7671 (the IET Wiring Regulations) is updated approximately every 3-4 years with
-            significant amendments. The 18th Edition came into force in 2018, with Amendment 2
-            in 2022 introducing changes to prosumer installations and EV charging, and Amendment 4
-            (BS 7671:2018+A4:2026) bringing AFDDs (Reg 421.1.7), TN-C-S (PNB), revised RCD
-            verification (Reg 643.3 — single AC test at IΔn) and updated Table 41.3 maxima
-            (e.g. B32 max Zs = 1.37 Ω). Electricians must undertake CPD to understand and
-            correctly apply current requirements. Working to outdated standards could result in
-            non-compliant installations.
-            </p></>}
-            doInstead={<>Follow the safe-system procedure: stop work, escalate, document, and only resume once controls are verified.</>}
-            />
+            whatHappens={
+              <>
+                <p className="text-sm text-white">
+                  BS 7671 (the IET Wiring Regulations) is updated approximately every 3-4 years with
+                  significant amendments. The 18th Edition came into force in 2018, with Amendment 2
+                  in 2022 introducing changes to prosumer installations and EV charging, and
+                  Amendment 4 (BS 7671:2018+A4:2026) bringing AFDDs (Reg 421.1.7), TN-C-S (PNB),
+                  revised RCD verification (Reg 643.3 — single AC test at IΔn) and updated Table
+                  41.3 maxima (e.g. B32 max Zs = 1.37 Ω). Electricians must undertake CPD to
+                  understand and correctly apply current requirements. Working to outdated standards
+                  could result in non-compliant installations.
+                </p>
+              </>
+            }
+            doInstead={
+              <>
+                Follow the safe-system procedure: stop work, escalate, document, and only resume
+                once controls are verified.
+              </>
+            }
+          />
 
-            <p className="text-sm text-elec-yellow/70">
+          <p className="text-sm text-elec-yellow/70">
             <strong>Legal context:</strong> The Management Regulations require employers to ensure
             workers remain competent - CPD is how this is achieved in practice.
-            </p>
-          </ConceptBlock>
+          </p>
+        </ConceptBlock>
 
-          <InlineCheck {...quickCheckQuestions[0]} />
+        <InlineCheck {...quickCheckQuestions[0]} />
 
-          <SectionRule />
+        <SectionRule />
 
-          <ContentEyebrow>Health and Safety Qualifications</ContentEyebrow>
+        <ContentEyebrow>Health and Safety Qualifications</ContentEyebrow>
 
-          <ConceptBlock title="Health and Safety Qualifications">
-            <p>
+        <ConceptBlock title="Health and Safety Qualifications">
+          <p>
             Various qualifications are available for those wanting to develop health and safety
             knowledge, from introductory courses for all workers to professional-level
             qualifications for H&S specialists.
-            </p>
+          </p>
 
-            
-            <p className="text-sm font-medium text-elec-yellow/80 mb-2">NEBOSH Qualifications</p>
-            
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-            <li><strong>Health & Safety at Work Award</strong> — Level: Introductory. Target Audience: All workers. Study Time: 1 day</li>
-            <li><strong>National General Certificate</strong> — Level: Intermediate. Target Audience: Managers, supervisors, safety reps. Study Time: 80-120 hours</li>
-            <li><strong>Construction Certificate</strong> — Level: Intermediate. Target Audience: Construction managers, supervisors. Study Time: 80-120 hours</li>
-            <li><strong>National Diploma</strong> — Level: Professional. Target Audience: H&S practitioners/professionals. Study Time: 400+ hours</li>
-            </ul>
-            
-            
+          <p className="text-sm font-medium text-elec-yellow/80 mb-2">NEBOSH Qualifications</p>
 
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Health & Safety at Work Award</strong> — Level: Introductory. Target Audience:
+              All workers. Study Time: 1 day
+            </li>
+            <li>
+              <strong>National General Certificate</strong> — Level: Intermediate. Target Audience:
+              Managers, supervisors, safety reps. Study Time: 80-120 hours
+            </li>
+            <li>
+              <strong>Construction Certificate</strong> — Level: Intermediate. Target Audience:
+              Construction managers, supervisors. Study Time: 80-120 hours
+            </li>
+            <li>
+              <strong>National Diploma</strong> — Level: Professional. Target Audience: H&S
+              practitioners/professionals. Study Time: 400+ hours
+            </li>
+          </ul>
+
+          <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
             <p className="text-sm font-medium text-blue-400 mb-2">
-            NEBOSH National General Certificate - Content
+              NEBOSH National General Certificate - Content
             </p>
             <p className="text-sm text-white mb-3">
-            The widely-recognised intermediate qualification covering:
+              The widely-recognised intermediate qualification covering:
             </p>
-            
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-            <li>Health and safety management systems</li>
-            <li>Managing health and safety risks</li>
-            <li>Health and safety monitoring and measuring</li>
-            </ul>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-            <li>Physical and psychological health hazards</li>
-            <li>Musculoskeletal hazards and controls</li>
-            <li>Work equipment, chemicals, fire, electricity</li>
-            </ul>
-            
-            </div>
 
-            
-            <p className="text-sm font-medium text-elec-yellow/80 mb-2">IOSH Qualifications</p>
-            
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-            <li><strong>Working Safely</strong> — Duration: 1 day. Target Audience: All workers. Content Focus: Essential H&S awareness</li>
-            <li><strong>Managing Safely</strong> — Duration: 3-4 days. Target Audience: Managers, supervisors. Content Focus: Practical management skills</li>
-            <li><strong>Leading Safely</strong> — Duration: 1 day. Target Audience: Senior leaders, directors. Content Focus: Strategic H&S leadership</li>
+              <li>Health and safety management systems</li>
+              <li>Managing health and safety risks</li>
+              <li>Health and safety monitoring and measuring</li>
             </ul>
-            
-            
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Physical and psychological health hazards</li>
+              <li>Musculoskeletal hazards and controls</li>
+              <li>Work equipment, chemicals, fire, electricity</li>
+            </ul>
+          </div>
 
-            <div className="my-6 p-4 rounded-lg bg-purple-500/10 border border-purple-500/30">
+          <p className="text-sm font-medium text-elec-yellow/80 mb-2">IOSH Qualifications</p>
+
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Working Safely</strong> — Duration: 1 day. Target Audience: All workers.
+              Content Focus: Essential H&S awareness
+            </li>
+            <li>
+              <strong>Managing Safely</strong> — Duration: 3-4 days. Target Audience: Managers,
+              supervisors. Content Focus: Practical management skills
+            </li>
+            <li>
+              <strong>Leading Safely</strong> — Duration: 1 day. Target Audience: Senior leaders,
+              directors. Content Focus: Strategic H&S leadership
+            </li>
+          </ul>
+
+          <div className="my-6 p-4 rounded-lg bg-purple-500/10 border border-purple-500/30">
             <p className="text-sm font-medium text-purple-400 mb-2">
-            IOSH Managing Safely - Content
+              IOSH Managing Safely - Content
             </p>
             <p className="text-sm text-white mb-3">
-            Practical course for managers and supervisors covering:
+              Practical course for managers and supervisors covering:
             </p>
-            
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-            <li>Introduction to managing safely</li>
-            <li>Assessing risks in the workplace</li>
-            <li>Controlling risks</li>
-            <li>Understanding responsibilities</li>
-            </ul>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-            <li>Common hazards identification</li>
-            <li>Investigating incidents</li>
-            <li>Measuring performance</li>
-            <li>Practical risk assessment project</li>
-            </ul>
-            
-            </div>
 
-            <p className="text-sm text-elec-yellow/70">
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Introduction to managing safely</li>
+              <li>Assessing risks in the workplace</li>
+              <li>Controlling risks</li>
+              <li>Understanding responsibilities</li>
+            </ul>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Common hazards identification</li>
+              <li>Investigating incidents</li>
+              <li>Measuring performance</li>
+              <li>Practical risk assessment project</li>
+            </ul>
+          </div>
+
+          <p className="text-sm text-elec-yellow/70">
             <strong>Which to choose:</strong> IOSH courses are shorter, practical courses. NEBOSH
             provides deeper knowledge suitable for those with significant H&S responsibilities.
-            </p>
-          </ConceptBlock>
+          </p>
+        </ConceptBlock>
 
-          <InlineCheck {...quickCheckQuestions[1]} />
+        <InlineCheck {...quickCheckQuestions[1]} />
 
-          <SectionRule />
+        <SectionRule />
 
-          <ContentEyebrow>CPD Activities and Recording</ContentEyebrow>
+        <ContentEyebrow>CPD Activities and Recording</ContentEyebrow>
 
-          <ConceptBlock title="CPD Activities and Recording">
-            <p>
-            CPD encompasses a wide range of activities beyond formal training courses. Effective
-            CPD combines different types of learning and is documented to provide evidence of
-            ongoing development.
-            </p>
+        <ConceptBlock title="CPD Activities and Recording">
+          <p>
+            CPD encompasses a wide range of activities beyond formal training courses. Effective CPD
+            combines different types of learning and is documented to provide evidence of ongoing
+            development.
+          </p>
 
-            
-            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-            Types of CPD Activities
-            </p>
-            
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-            <li><strong>Formal Learning</strong> — Examples: Courses, qualifications, webinars. Building Services Context: BS 7671 Amendment course, NEBOSH</li>
-            <li><strong>Self-Directed</strong> — Examples: Technical reading, online study. Building Services Context: Reading HSE guidance, IET publications</li>
-            <li><strong>Work-Based</strong> — Examples: Projects, new responsibilities, job rotation. Building Services Context: Leading a safety improvement project</li>
-            <li><strong>Professional</strong> — Examples: Conferences, professional body meetings. Building Services Context: IET local network events, IOSH branch</li>
-            <li><strong>Informal</strong> — Examples: Mentoring, peer discussion, toolbox talks. Building Services Context: Coaching junior staff on safety</li>
-            </ul>
-            
-            
+          <p className="text-sm font-medium text-elec-yellow/80 mb-2">Types of CPD Activities</p>
 
-            
-            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-            What to Record in CPD Logs
-            </p>
-            
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
             <li>
-            <strong>Date:</strong> When the activity took place
+              <strong>Formal Learning</strong> — Examples: Courses, qualifications, webinars.
+              Building Services Context: BS 7671 Amendment course, NEBOSH
             </li>
             <li>
-            <strong>Activity:</strong> What you did
+              <strong>Self-Directed</strong> — Examples: Technical reading, online study. Building
+              Services Context: Reading HSE guidance, IET publications
             </li>
             <li>
-            <strong>Duration:</strong> Time spent (hours)
+              <strong>Work-Based</strong> — Examples: Projects, new responsibilities, job rotation.
+              Building Services Context: Leading a safety improvement project
             </li>
             <li>
-            <strong>Provider:</strong> Who delivered it
-            </li>
-            </ul>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-            <li>
-            <strong>Learning objectives:</strong> What you aimed to learn
+              <strong>Professional</strong> — Examples: Conferences, professional body meetings.
+              Building Services Context: IET local network events, IOSH branch
             </li>
             <li>
-            <strong>Outcomes:</strong> What you actually learned
+              <strong>Informal</strong> — Examples: Mentoring, peer discussion, toolbox talks.
+              Building Services Context: Coaching junior staff on safety
             </li>
-            <li>
-            <strong>Application:</strong> How you will apply it
-            </li>
-            <li>
-            <strong>Evidence:</strong> Certificates, notes, etc.
-            </li>
-            </ul>
-            
-            
+          </ul>
 
-            
-            <p className="text-sm font-medium text-elec-yellow/80 mb-2">Reflective Practice</p>
-            <p className="text-sm text-white mb-3">
+          <p className="text-sm font-medium text-elec-yellow/80 mb-2">What to Record in CPD Logs</p>
+
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Date:</strong> When the activity took place
+            </li>
+            <li>
+              <strong>Activity:</strong> What you did
+            </li>
+            <li>
+              <strong>Duration:</strong> Time spent (hours)
+            </li>
+            <li>
+              <strong>Provider:</strong> Who delivered it
+            </li>
+          </ul>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Learning objectives:</strong> What you aimed to learn
+            </li>
+            <li>
+              <strong>Outcomes:</strong> What you actually learned
+            </li>
+            <li>
+              <strong>Application:</strong> How you will apply it
+            </li>
+            <li>
+              <strong>Evidence:</strong> Certificates, notes, etc.
+            </li>
+          </ul>
+
+          <p className="text-sm font-medium text-elec-yellow/80 mb-2">Reflective Practice</p>
+          <p className="text-sm text-white mb-3">
             Effective CPD requires reflection - thinking critically about your experiences:
-            </p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+          </p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
             <li>
-            <strong>What happened?</strong> Describe the situation or activity
+              <strong>What happened?</strong> Describe the situation or activity
             </li>
             <li>
-            <strong>What did I learn?</strong> New knowledge, skills, or insights
+              <strong>What did I learn?</strong> New knowledge, skills, or insights
             </li>
             <li>
-            <strong>What worked well?</strong> Successes to build on
+              <strong>What worked well?</strong> Successes to build on
             </li>
             <li>
-            <strong>What could improve?</strong> Areas for development
+              <strong>What could improve?</strong> Areas for development
             </li>
             <li>
-            <strong>What will I do differently?</strong> Concrete actions for the future
+              <strong>What will I do differently?</strong> Concrete actions for the future
             </li>
-            </ul>
-            
+          </ul>
 
-            <CommonMistake
+          <CommonMistake
             title="Building Services CPD Examples"
-            whatHappens={<><ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-            <li>BS 7671:2018+A4:2026 update course (8 hours)</li>
-            <li>Reading new HSE guidance on electrical safety (2 hours)</li>
-            <li>Attending IET local network seminar on arc flash (3 hours)</li>
-            <li>Leading toolbox talks on isolation procedures (1 hour)</li>
-            <li>Mentoring apprentice on safe working practices (ongoing)</li>
-            <li>Completing online module on CDM duties (4 hours)</li>
-            </ul></>}
-            doInstead={<>Follow the safe-system procedure: stop work, escalate, document, and only resume once controls are verified.</>}
-            />
+            whatHappens={
+              <>
+                <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+                  <li>BS 7671:2018+A4:2026 update course (8 hours)</li>
+                  <li>Reading new HSE guidance on electrical safety (2 hours)</li>
+                  <li>Attending IET local network seminar on arc flash (3 hours)</li>
+                  <li>Leading toolbox talks on isolation procedures (1 hour)</li>
+                  <li>Mentoring apprentice on safe working practices (ongoing)</li>
+                  <li>Completing online module on CDM duties (4 hours)</li>
+                </ul>
+              </>
+            }
+            doInstead={
+              <>
+                Follow the safe-system procedure: stop work, escalate, document, and only resume
+                once controls are verified.
+              </>
+            }
+          />
 
-            <p className="text-sm text-elec-yellow/70">
+          <p className="text-sm text-elec-yellow/70">
             <strong>Tip:</strong> Record CPD as you go, not at year end. Keep certificates, notes,
             and reflections organised for professional review.
-            </p>
-          </ConceptBlock>
+          </p>
+        </ConceptBlock>
 
-          <InlineCheck {...quickCheckQuestions[2]} />
+        <InlineCheck {...quickCheckQuestions[2]} />
 
-          <SectionRule />
+        <SectionRule />
 
-          <ContentEyebrow>IET Membership and Professional Registration</ContentEyebrow>
+        <ContentEyebrow>IET Membership and Professional Registration</ContentEyebrow>
 
-          <ConceptBlock title="IET Membership and Professional Registration">
-            <p>
+        <ConceptBlock title="IET Membership and Professional Registration">
+          <p>
             Professional registration through bodies like the IET and Engineering Council
             demonstrates competence, commitment to standards, and ethical conduct. It provides
             assurance to employers and clients and supports career development.
-            </p>
+          </p>
 
-            
-            <p className="text-sm font-medium text-elec-yellow/80 mb-2">IET Membership Grades</p>
-            
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-            <li><strong>Student</strong> — Letters: -. Requirements: Currently studying. Typical Profile: HNC/degree students</li>
-            <li><strong>Associate</strong> — Letters: AMIET. Requirements: Interest in sector. Typical Profile: Early career, allied roles</li>
-            <li><strong>Member</strong> — Letters: MIET. Requirements: Accredited degree or equivalent. Typical Profile: Graduate engineers</li>
-            <li><strong>Fellow</strong> — Letters: FIET. Requirements: Distinguished contribution. Typical Profile: Senior leaders, experts</li>
-            </ul>
-            
-            
+          <p className="text-sm font-medium text-elec-yellow/80 mb-2">IET Membership Grades</p>
 
-            <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              <strong>Student</strong> — Letters: -. Requirements: Currently studying. Typical
+              Profile: HNC/degree students
+            </li>
+            <li>
+              <strong>Associate</strong> — Letters: AMIET. Requirements: Interest in sector. Typical
+              Profile: Early career, allied roles
+            </li>
+            <li>
+              <strong>Member</strong> — Letters: MIET. Requirements: Accredited degree or
+              equivalent. Typical Profile: Graduate engineers
+            </li>
+            <li>
+              <strong>Fellow</strong> — Letters: FIET. Requirements: Distinguished contribution.
+              Typical Profile: Senior leaders, experts
+            </li>
+          </ul>
+
+          <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
             <p className="text-sm font-medium text-blue-400 mb-2">
-            Engineering Council Registration
+              Engineering Council Registration
             </p>
             <p className="text-sm text-white mb-3">
-            The Engineering Council regulates the engineering profession through licensed bodies
-            like the IET:
+              The Engineering Council regulates the engineering profession through licensed bodies
+              like the IET:
             </p>
-            
-            <div className="p-3 rounded bg-white/5 text-center">
-            <p className="font-bold text-green-400 mb-1">EngTech</p>
-            <p className="text-xs text-white">Engineering Technician</p>
-            <p className="text-xs text-white mt-1">Technician-level competence</p>
-            </div>
-            <div className="p-3 rounded bg-white/5 text-center">
-            <p className="font-bold text-yellow-400 mb-1">IEng</p>
-            <p className="text-xs text-white">Incorporated Engineer</p>
-            <p className="text-xs text-white mt-1">Degree-level competence</p>
-            </div>
-            <div className="p-3 rounded bg-white/5 text-center">
-            <p className="font-bold text-elec-yellow mb-1">CEng</p>
-            <p className="text-xs text-white">Chartered Engineer</p>
-            <p className="text-xs text-white mt-1">Master's-level competence</p>
-            </div>
-            
-            </div>
 
-            
-            <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            <div className="p-3 rounded bg-white/5 text-center">
+              <p className="font-bold text-green-400 mb-1">EngTech</p>
+              <p className="text-xs text-white">Engineering Technician</p>
+              <p className="text-xs text-white mt-1">Technician-level competence</p>
+            </div>
+            <div className="p-3 rounded bg-white/5 text-center">
+              <p className="font-bold text-yellow-400 mb-1">IEng</p>
+              <p className="text-xs text-white">Incorporated Engineer</p>
+              <p className="text-xs text-white mt-1">Degree-level competence</p>
+            </div>
+            <div className="p-3 rounded bg-white/5 text-center">
+              <p className="font-bold text-elec-yellow mb-1">CEng</p>
+              <p className="text-xs text-white">Chartered Engineer</p>
+              <p className="text-xs text-white mt-1">Master's-level competence</p>
+            </div>
+          </div>
+
+          <p className="text-sm font-medium text-elec-yellow/80 mb-2">
             Benefits of Professional Registration
-            </p>
-            
-            <div>
+          </p>
+
+          <div>
             <p className="text-sm font-medium text-white mb-2">For You</p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-            <li>Recognition of your competence</li>
-            <li>Enhanced career opportunities</li>
-            <li>Access to professional networks</li>
-            <li>Use of professional titles (CEng, IEng)</li>
-            <li>International recognition</li>
+              <li>Recognition of your competence</li>
+              <li>Enhanced career opportunities</li>
+              <li>Access to professional networks</li>
+              <li>Use of professional titles (CEng, IEng)</li>
+              <li>International recognition</li>
             </ul>
-            </div>
-            <div>
+          </div>
+          <div>
             <p className="text-sm font-medium text-white mb-2">For Employers/Clients</p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-            <li>Assurance of competence</li>
-            <li>Commitment to ethical standards</li>
-            <li>Accountability to professional body</li>
-            <li>Evidence of CPD maintenance</li>
-            <li>Benchmark for recruitment</li>
+              <li>Assurance of competence</li>
+              <li>Commitment to ethical standards</li>
+              <li>Accountability to professional body</li>
+              <li>Evidence of CPD maintenance</li>
+              <li>Benchmark for recruitment</li>
             </ul>
-            </div>
-            
-            
-
-            
-            <p className="text-sm font-medium text-elec-yellow/80 mb-2">IET CPD Requirements</p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-            <li>
-            Recommended <strong>35 hours</strong> per year across varied activities
-            </li>
-            <li>
-            All members expected to demonstrate commitment to ongoing learning
-            </li>
-            <li>
-            Chartered/Incorporated members must maintain records for professional review
-            </li>
-            <li>
-            CPD should be relevant to current role and future development
-            </li>
-            <li>
-            Combination of technical, professional, and personal development
-            </li>
-            </ul>
-            
-
-            <p className="text-sm text-elec-yellow/70">
-            <strong>Building services route:</strong> HNC provides foundation; HND/degree pathway
-            to MIET and IEng/CEng registration with experience.
-            </p>
-          </ConceptBlock>
-
-          <InlineCheck {...quickCheckQuestions[3]} />
-
-          <SectionRule />
-
-          <ConceptBlock title="Practical Guidance">
-            <div>
-            <p><strong>Planning Your CPD</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-            <li>
-            <strong>Assess current competence:</strong> What are your strengths and gaps?
-            </li>
-            <li>
-            <strong>Consider role requirements:</strong> What does your job require now and in
-            future?
-            </li>
-            <li>
-            <strong>Set SMART objectives:</strong> Specific, Measurable, Achievable, Relevant,
-            Time-bound
-            </li>
-            <li>
-            <strong>Mix activities:</strong> Combine formal, informal, and work-based learning
-            </li>
-            <li>
-            <strong>Schedule time:</strong> Block time for CPD in your calendar
-            </li>
-            <li>
-            <strong>Review regularly:</strong> Assess progress and adjust plan
-            </li>
-            </ul>
-            </div>
-
-            <div>
-            <p><strong>Key Resources for Building Services CPD</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-            <li>
-            <strong>IET:</strong> Wiring Matters, technical guidance, local networks
-            </li>
-            <li>
-            <strong>HSE:</strong> Free guidance, alerts, statistics
-            </li>
-            <li>
-            <strong>IOSH:</strong> Magazines, webinars, branch events
-            </li>
-            <li>
-            <strong>Trade bodies:</strong> ECA, SELECT, NICEIC publications
-            </li>
-            <li>
-            <strong>Manufacturers:</strong> Product training, technical updates
-            </li>
-            <li>
-            <strong>Online platforms:</strong> E-learning, webinars, podcasts
-            </li>
-            </ul>
-            </div>
-
-            <div>
-            <p><strong>Common CPD Mistakes</strong></p>
-            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-            <li>
-            <strong>Activity without learning:</strong> Attending courses without engaging or
-            applying
-            </li>
-            <li>
-            <strong>No record:</strong> Failing to document CPD for evidence
-            </li>
-            <li>
-            <strong>No reflection:</strong> Not thinking about what was learned
-            </li>
-            <li>
-            <strong>No plan:</strong> Random activities without strategic direction
-            </li>
-            <li>
-            <strong>Only formal:</strong> Ignoring informal learning opportunities
-            </li>
-            </ul>
-            </div>
-          </ConceptBlock>
-
-          <SectionRule />
-
-          <Scenario
-            title="Building a CPD plan to bridge from HNC to IEng registration"
-            situation={
-              <>
-                You have just completed your HNC and are working as a building services
-                engineer. You want to register as IEng with the IET in three years and the
-                firm has no formal CPD scheme.
-              </>
-            }
-            whatToDo={
-              <>
-                Map UK-SPEC IEng competences against your current role. Identify gaps —
-                typically design ownership, leadership of others, broader technical breadth.
-                Build a 3-year plan with named projects, courses (BS 7671 A4:2026, design
-                modules, project management), structured experience (lead a small project),
-                a mentor (chartered or incorporated). Maintain a CPD log with reflective
-                entries — not just attendance. Schedule annual reviews. Submit application
-                with evidence pack.
-              </>
-            }
-            whyItMatters={
-              <>
-                Registration is the formal recognition of competence and the door to higher
-                responsibility, fees and pay. A structured CPD record is the single biggest
-                determinant of a successful application.
-              </>
-            }
-          />
-
-          <SectionRule />
-
-          <FAQ items={faqs} />
-
-          <SectionRule />
-
-          <KeyTakeaways
-            points={[
-              'CPD is structured, recorded development — not ad-hoc course attendance.',
-              'EAWR Reg 16 makes “technical knowledge or experience” a statutory requirement that must be maintained.',
-              'Plan-Do-Reflect-Apply cycle: identify gap, undertake learning, reflect on outcome, apply in practice.',
-              'Activity types: formal courses, structured experience, conferences, technical reading, mentoring, presentations, professional papers.',
-              'CPD logs are the audit trail — date, activity, hours, outcome, reflection, evidence.',
-              'Engineering Council UK-SPEC sets competences for EngTech, IEng and CEng — each level has a CPD expectation.',
-              'IET / CIBSE / IMechE require annual CPD declarations for Members and registrants.',
-              'CPD priorities for HNC building services engineers: BS 7671 amendments (A4:2026), EV, PV, BESS, ASHP/heat pumps, CDM, fire safety.',
-            ]}
-          />
-
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-
-          {/* ── Prev / next nav ─────────────────────────────────── */}
-
-          <div className="grid grid-cols-2 gap-3 pt-2">
-            <button
-              onClick={() => navigate('../h-n-c-module1-section4')}
-              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
-                <ChevronLeft className="h-3 w-3" /> Back to section
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-white truncate">
-                Section 4
-              </div>
-            </button>
-            <button
-              onClick={() => navigate('../h-n-c-module2')}
-              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
-                Module 1 complete <ChevronRight className="h-3 w-3" />
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-black truncate">
-                Module 2 — Building Services Science
-              </div>
-            </button>
           </div>
-        </PageFrame>
-      </div>
-    </div>
+
+          <p className="text-sm font-medium text-elec-yellow/80 mb-2">IET CPD Requirements</p>
+          <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+            <li>
+              Recommended <strong>35 hours</strong> per year across varied activities
+            </li>
+            <li>All members expected to demonstrate commitment to ongoing learning</li>
+            <li>Chartered/Incorporated members must maintain records for professional review</li>
+            <li>CPD should be relevant to current role and future development</li>
+            <li>Combination of technical, professional, and personal development</li>
+          </ul>
+
+          <p className="text-sm text-elec-yellow/70">
+            <strong>Building services route:</strong> HNC provides foundation; HND/degree pathway to
+            MIET and IEng/CEng registration with experience.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck {...quickCheckQuestions[3]} />
+
+        <SectionRule />
+
+        <ConceptBlock title="Practical Guidance">
+          <div>
+            <p>
+              <strong>Planning Your CPD</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Assess current competence:</strong> What are your strengths and gaps?
+              </li>
+              <li>
+                <strong>Consider role requirements:</strong> What does your job require now and in
+                future?
+              </li>
+              <li>
+                <strong>Set SMART objectives:</strong> Specific, Measurable, Achievable, Relevant,
+                Time-bound
+              </li>
+              <li>
+                <strong>Mix activities:</strong> Combine formal, informal, and work-based learning
+              </li>
+              <li>
+                <strong>Schedule time:</strong> Block time for CPD in your calendar
+              </li>
+              <li>
+                <strong>Review regularly:</strong> Assess progress and adjust plan
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <p>
+              <strong>Key Resources for Building Services CPD</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>IET:</strong> Wiring Matters, technical guidance, local networks
+              </li>
+              <li>
+                <strong>HSE:</strong> Free guidance, alerts, statistics
+              </li>
+              <li>
+                <strong>IOSH:</strong> Magazines, webinars, branch events
+              </li>
+              <li>
+                <strong>Trade bodies:</strong> ECA, SELECT, NICEIC publications
+              </li>
+              <li>
+                <strong>Manufacturers:</strong> Product training, technical updates
+              </li>
+              <li>
+                <strong>Online platforms:</strong> E-learning, webinars, podcasts
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <p>
+              <strong>Common CPD Mistakes</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Activity without learning:</strong> Attending courses without engaging or
+                applying
+              </li>
+              <li>
+                <strong>No record:</strong> Failing to document CPD for evidence
+              </li>
+              <li>
+                <strong>No reflection:</strong> Not thinking about what was learned
+              </li>
+              <li>
+                <strong>No plan:</strong> Random activities without strategic direction
+              </li>
+              <li>
+                <strong>Only formal:</strong> Ignoring informal learning opportunities
+              </li>
+            </ul>
+          </div>
+        </ConceptBlock>
+
+        <SectionRule />
+
+        <Scenario
+          title="Building a CPD plan to bridge from HNC to IEng registration"
+          situation={
+            <>
+              You have just completed your HNC and are working as a building services engineer. You
+              want to register as IEng with the IET in three years and the firm has no formal CPD
+              scheme.
+            </>
+          }
+          whatToDo={
+            <>
+              Map UK-SPEC IEng competences against your current role. Identify gaps — typically
+              design ownership, leadership of others, broader technical breadth. Build a 3-year plan
+              with named projects, courses (BS 7671 A4:2026, design modules, project management),
+              structured experience (lead a small project), a mentor (chartered or incorporated).
+              Maintain a CPD log with reflective entries — not just attendance. Schedule annual
+              reviews. Submit application with evidence pack.
+            </>
+          }
+          whyItMatters={
+            <>
+              Registration is the formal recognition of competence and the door to higher
+              responsibility, fees and pay. A structured CPD record is the single biggest
+              determinant of a successful application.
+            </>
+          }
+        />
+
+        <SectionRule />
+
+        <FAQ items={faqs} />
+
+        <SectionRule />
+
+        <KeyTakeaways
+          points={[
+            'CPD is structured, recorded development — not ad-hoc course attendance.',
+            'EAWR Reg 16 makes “technical knowledge or experience” a statutory requirement that must be maintained.',
+            'Plan-Do-Reflect-Apply cycle: identify gap, undertake learning, reflect on outcome, apply in practice.',
+            'Activity types: formal courses, structured experience, conferences, technical reading, mentoring, presentations, professional papers.',
+            'CPD logs are the audit trail — date, activity, hours, outcome, reflection, evidence.',
+            'Engineering Council UK-SPEC sets competences for EngTech, IEng and CEng — each level has a CPD expectation.',
+            'IET / CIBSE / IMechE require annual CPD declarations for Members and registrants.',
+            'CPD priorities for HNC building services engineers: BS 7671 amendments (A4:2026), EV, PV, BESS, ASHP/heat pumps, CDM, fire safety.',
+          ]}
+        />
+
+        <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+
+        {/* ── Prev / next nav ─────────────────────────────────── */}
+
+        <div className="grid grid-cols-2 gap-3 pt-2">
+          <button
+            onClick={() => navigate('../h-n-c-module1-section4')}
+            className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+          >
+            <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+              <ChevronLeft className="h-3 w-3" /> Back to section
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-white truncate">Section 4</div>
+          </button>
+          <button
+            onClick={() => navigate('../h-n-c-module2')}
+            className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+          >
+            <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+              Module 1 complete <ChevronRight className="h-3 w-3" />
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-black truncate">
+              Module 2 — Building Services Science
+            </div>
+          </button>
+        </div>
+      </HubBody>
+    </HubPage>
   );
 };
 

@@ -12,12 +12,7 @@ const quizQuestions = [
   {
     id: 1,
     question: 'Which formula estimates voltage drop in a circuit leg?',
-    options: [
-      'Vd = V/I',
-      'Vd = I × R',
-      'Vd = P × I',
-      'Vd = R/A',
-    ],
+    options: ['Vd = V/I', 'Vd = I × R', 'Vd = P × I', 'Vd = R/A'],
     correctAnswer: 1,
     explanation:
       'Voltage drop is current multiplied by the circuit resistance along the path: Vd = I × R.',
@@ -76,12 +71,7 @@ const quizQuestions = [
   {
     id: 6,
     question: 'Higher temperature generally affects cable resistance by:',
-    options: [
-      'Decreasing it',
-      'No effect',
-      'Increasing it',
-      'Making it unstable',
-    ],
+    options: ['Decreasing it', 'No effect', 'Increasing it', 'Making it unstable'],
     correctAnswer: 2,
     explanation:
       'Most cable materials have positive temperature coefficients, meaning resistance increases with temperature.',
@@ -89,12 +79,7 @@ const quizQuestions = [
   {
     id: 7,
     question: 'For a 100A load over 80m, which factor most reduces voltage drop?',
-    options: [
-      'Shorter route',
-      'All equally effective',
-      'Lower current',
-      'Larger CSA',
-    ],
+    options: ['Shorter route', 'All equally effective', 'Lower current', 'Larger CSA'],
     correctAnswer: 3,
     explanation:
       'Doubling CSA halves resistance and voltage drop. Route and current changes may be less practical.',
@@ -109,7 +94,8 @@ const quizQuestions = [
       'Whatever temperature the designer chooses',
     ],
     correctAnswer: 1,
-    explanation: 'Tabulated mV/A/m values assume the conductor is at its maximum operating temperature; where the load is lower the value can be reduced using the C_t correction factor (Reg 125.8).',
+    explanation:
+      'Tabulated mV/A/m values assume the conductor is at its maximum operating temperature; where the load is lower the value can be reduced using the C_t correction factor (Reg 125.8).',
   },
   {
     id: 9,
@@ -121,7 +107,8 @@ const quizQuestions = [
       'An effective length (about a quarter of the ring)',
     ],
     correctAnswer: 3,
-    explanation: 'On a ring, current divides around both legs, so the effective length for a load at the midpoint is roughly a quarter of the total ring length.',
+    explanation:
+      'On a ring, current divides around both legs, so the effective length for a load at the midpoint is roughly a quarter of the total ring length.',
   },
   {
     id: 10,

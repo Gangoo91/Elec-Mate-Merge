@@ -62,7 +62,10 @@ export interface CertificateClientData {
     | 'PAT Testing'
     | 'Fire Alarm'
     | 'Solar PV'
-    | 'BESS';
+    | 'BESS'
+    // ELE-1634. Not a certificate, but it reaches the quote builder by exactly
+    // the same route and for the same reason: findings that need putting right.
+    | 'Pre-Purchase Survey';
   certificateReference?: string;
   // Certificate attachment info
   reportId?: string;

@@ -84,7 +84,10 @@ const InvoiceBuilderCreate = () => {
     if (projectId && !quoteSessionId && !certificateSessionId) {
       (async () => {
         try {
-          const [{ data: project }, { data: sessions }, { data: gotMaterials }, { data: costEntries }] =
+          const {
+            data: { user: rateUser },
+          } = await supabase.auth.getUser();
+          const [{ data: project }, { data: sessions }, { data: gotMaterials }, { data: costEntries }, { data: rateProfile }] =
             await Promise.all([
               supabase
                 .from('spark_projects')
@@ -110,26 +113,80 @@ const InvoiceBuilderCreate = () => {
                 .eq('project_id', projectId)
                 .is('invoice_id', null)
                 .order('entry_date', { ascending: true }),
+              // The user's own rates — labour bills at whatever is configured
+              // here (hourly and/or day rate), not a hardcoded number.
+              (supabase as any)
+                .from('company_profiles')
+                .select('hourly_rate, day_rate')
+                .eq('user_id', rateUser?.id ?? '')
+                .maybeSingle(),
             ]);
 
-          // Compose line items from the job's actuals (ELE-1357)
+          // Compose line items from the job's actuals (ELE-1357).
+          //
+          // Labour bills from the user's OWN rates, both of them: sessions
+          // carry the hourly rate they were tracked at (falling back to the
+          // profile rate for older untagged ones), and where a day's tracked
+          // time at hourly beats the configured DAY RATE, the day rate is
+          // applied instead — the price a fair electrician would hand-write.
+          // Untraceable rates no longer vanish: zero-rate time appears as a
+          // visible £0 line to price in the builder, never silently dropped.
           const items: any[] = [];
-          const byRate = new Map<number, { secs: number; ids: string[] }>();
+          const profileHourly = Number((rateProfile as any)?.hourly_rate) || 0;
+          const profileDay = Number((rateProfile as any)?.day_rate) || 0;
+
+          const byDay = new Map<
+            string,
+            { secs: number; ids: string[]; hourlyTotal: number; byRate: Map<number, number> }
+          >();
           for (const s of (sessions as any[]) || []) {
-            const rate = Number(s.hourly_rate) || 0;
-            const cur = byRate.get(rate) || { secs: 0, ids: [] };
-            cur.secs += Number(s.duration_seconds) || 0;
+            const secs = Number(s.duration_seconds) || 0;
+            if (secs <= 0) continue;
+            const rate = Number(s.hourly_rate) > 0 ? Number(s.hourly_rate) : profileHourly;
+            const day = String(s.started_at || '').slice(0, 10) || 'unknown';
+            const cur =
+              byDay.get(day) || { secs: 0, ids: [], hourlyTotal: 0, byRate: new Map() };
+            cur.secs += secs;
             cur.ids.push(s.id);
-            byRate.set(rate, cur);
+            cur.hourlyTotal += (secs / 3600) * rate;
+            cur.byRate.set(rate, (cur.byRate.get(rate) || 0) + secs);
+            byDay.set(day, cur);
           }
+
           const sessionIds: string[] = [];
-          for (const [rate, { secs, ids }] of byRate) {
-            if (secs <= 0 || rate <= 0) continue;
+          const hourlyByRate = new Map<number, number>();
+          for (const [day, d] of byDay) {
+            sessionIds.push(...d.ids);
+            if (profileDay > 0 && d.hourlyTotal > profileDay) {
+              const dayLabel = new Date(`${day}T00:00:00`).toLocaleDateString('en-GB', {
+                weekday: 'short',
+                day: 'numeric',
+                month: 'short',
+              });
+              items.push({
+                id: `labour-day-${day}`,
+                description: `Labour — day rate (${dayLabel}, ${Math.round((d.secs / 3600) * 10) / 10} hrs tracked)`,
+                quantity: 1,
+                unit: 'day',
+                unitPrice: profileDay,
+                totalPrice: profileDay,
+                category: 'labour',
+              });
+            } else {
+              for (const [rate, secs] of d.byRate) {
+                hourlyByRate.set(rate, (hourlyByRate.get(rate) || 0) + secs);
+              }
+            }
+          }
+          for (const [rate, secs] of hourlyByRate) {
             const hours = Math.round((secs / 3600) * 100) / 100;
-            sessionIds.push(...ids);
+            if (hours <= 0) continue;
             items.push({
               id: `labour-${rate}`,
-              description: `Labour — ${hours} hrs @ £${rate}/hr`,
+              description:
+                rate > 0
+                  ? `Labour — ${hours} hrs @ £${rate}/hr`
+                  : `Labour — ${hours} hrs (set your rate)`,
               quantity: hours,
               unit: 'hours',
               unitPrice: rate,

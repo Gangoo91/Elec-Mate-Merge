@@ -8,26 +8,44 @@ import {
   ShieldCheck,
   AlertTriangle,
   CheckCircle,
-  ArrowLeft,
 } from 'lucide-react';
 
 import {
-  PageFrame,
-  PageHero,
   StatStrip,
   ListCard,
   ListRow,
   Eyebrow,
   PrimaryButton,
 } from '@/components/college/primitives';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import useSEO from '@/hooks/useSEO';
 
 const examFeatures = [
-  { icon: BookOpen, label: '200-question bank', description: 'Randomly selected each attempt so no two exams are the same.' },
-  { icon: Target, label: '20 questions per exam', description: 'Balanced across all five content modules for fair coverage.' },
-  { icon: Clock, label: '30-minute timer', description: 'Timed under exam conditions with a 5-minute warning alert.' },
-  { icon: ShieldCheck, label: '80% pass mark (16/20)', description: 'Matches the standard required by environmental awareness assessments.' },
-  { icon: RotateCcw, label: 'Unlimited retakes', description: 'Practise as many times as you need until you feel confident.' },
+  {
+    icon: BookOpen,
+    label: '200-question bank',
+    description: 'Randomly selected each attempt so no two exams are the same.',
+  },
+  {
+    icon: Target,
+    label: '20 questions per exam',
+    description: 'Balanced across all five content modules for fair coverage.',
+  },
+  {
+    icon: Clock,
+    label: '30-minute timer',
+    description: 'Timed under exam conditions with a 5-minute warning alert.',
+  },
+  {
+    icon: ShieldCheck,
+    label: '80% pass mark (16/20)',
+    description: 'Matches the standard required by environmental awareness assessments.',
+  },
+  {
+    icon: RotateCcw,
+    label: 'Unlimited retakes',
+    description: 'Practise as many times as you need until you feel confident.',
+  },
 ];
 
 const categories = [
@@ -39,12 +57,36 @@ const categories = [
 ];
 
 const preparationTips = [
-  { title: 'Know the key legislation', description: 'Environmental Protection Act 1990, Environment Act 2021, Clean Air Act, Wildlife and Countryside Act 1981, and the duty of care for waste.' },
-  { title: 'Learn the waste hierarchy', description: 'The five steps (prevention, reuse, recycling, recovery, disposal) and how to apply them. Know the difference between hazardous and non-hazardous waste classifications.' },
-  { title: 'Understand pollution controls', description: 'Dust suppression, silt management, oil containment, noise limits, Section 61 consents, and incident response procedures for environmental spills.' },
-  { title: 'Master energy & resource topics', description: 'Scope 1, 2 and 3 carbon emissions, energy monitoring on site, water conservation methods, and how to choose sustainable materials with lower embodied carbon.' },
-  { title: 'Know biodiversity requirements', description: 'Protected species (bats, newts, badgers), when ecological surveys are needed, BREEAM rating categories, and the ISO 14001 environmental management framework.' },
-  { title: 'Flag and return', description: 'Flag questions you are unsure about and return to them later. Do not spend too long on any single question.' },
+  {
+    title: 'Know the key legislation',
+    description:
+      'Environmental Protection Act 1990, Environment Act 2021, Clean Air Act, Wildlife and Countryside Act 1981, and the duty of care for waste.',
+  },
+  {
+    title: 'Learn the waste hierarchy',
+    description:
+      'The five steps (prevention, reuse, recycling, recovery, disposal) and how to apply them. Know the difference between hazardous and non-hazardous waste classifications.',
+  },
+  {
+    title: 'Understand pollution controls',
+    description:
+      'Dust suppression, silt management, oil containment, noise limits, Section 61 consents, and incident response procedures for environmental spills.',
+  },
+  {
+    title: 'Master energy & resource topics',
+    description:
+      'Scope 1, 2 and 3 carbon emissions, energy monitoring on site, water conservation methods, and how to choose sustainable materials with lower embodied carbon.',
+  },
+  {
+    title: 'Know biodiversity requirements',
+    description:
+      'Protected species (bats, newts, badgers), when ecological surveys are needed, BREEAM rating categories, and the ISO 14001 environmental management framework.',
+  },
+  {
+    title: 'Flag and return',
+    description:
+      'Flag questions you are unsure about and return to them later. Do not spend too long on any single question.',
+  },
 ];
 
 export default function EnvironmentalSustainabilityModule6() {
@@ -56,136 +98,132 @@ export default function EnvironmentalSustainabilityModule6() {
   });
 
   return (
-    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
-      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
-        <PageFrame>
-          <button
-            onClick={() => navigate('../environmental-sustainability-course')}
-            className="inline-flex items-center gap-2 h-10 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
-          >
-            <ArrowLeft className="h-4 w-4" /> Environmental & sustainability
-          </button>
+    <HubPage>
+      <HubMasthead
+        section="Module 6 · Final assessment"
+        title="Mock exam"
+        backTo="../environmental-sustainability-course"
+      />
+      <HubBody>
+        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
+          Put your environmental and sustainability knowledge to the test under timed exam
+          conditions. Questions are drawn from a 200-question bank covering all five content
+          modules.
+        </p>
 
-          <PageHero
-            eyebrow="Module 6 · Final assessment"
-            title="Mock exam"
-            description="Put your environmental and sustainability knowledge to the test under timed exam conditions. Questions are drawn from a 200-question bank covering all five content modules."
-            tone="emerald"
-          />
+        <StatStrip
+          columns={4}
+          stats={[
+            { label: 'Questions', value: 20, sub: 'Per attempt' },
+            { label: 'Time', value: '30m', sub: 'Timer enforced' },
+            { label: 'Pass mark', value: '80%', sub: '16 / 20 correct' },
+            { label: 'Retakes', value: '∞', sub: 'No cap' },
+          ]}
+        />
 
-          <StatStrip
-            columns={4}
-            stats={[
-              { label: 'Questions', value: 20, sub: 'Per attempt' },
-              { label: 'Time', value: '30m', sub: 'Timer enforced' },
-              { label: 'Pass mark', value: '80%', sub: '16 / 20 correct' },
-              { label: 'Retakes', value: '∞', sub: 'No cap' },
-            ]}
-          />
-
-          <Link
-            to="../environmental-sustainability-mock-exam"
-            className="block touch-manipulation focus:outline-none"
-          >
-            <div className="rounded-2xl bg-gradient-to-br from-emerald-500/15 via-green-500/10 to-transparent border border-emerald-500/30 p-5 sm:p-6 active:scale-[0.99] transition-transform">
-              <div className="flex items-center justify-between gap-3">
-                <div className="min-w-0">
-                  <Eyebrow>Ready when you are</Eyebrow>
-                  <div className="mt-1.5 text-[18px] sm:text-[20px] font-semibold text-white">
-                    Start mock exam
-                  </div>
-                  <div className="mt-1 text-[12px] text-white">
-                    Different questions each attempt — retake as often as you like.
-                  </div>
+        <Link
+          to="../environmental-sustainability-mock-exam"
+          className="block touch-manipulation focus:outline-none"
+        >
+          <div className="rounded-2xl bg-gradient-to-br from-emerald-500/15 via-green-500/10 to-transparent border border-emerald-500/30 p-5 sm:p-6 active:scale-[0.99] transition-transform">
+            <div className="flex items-center justify-between gap-3">
+              <div className="min-w-0">
+                <Eyebrow>Ready when you are</Eyebrow>
+                <div className="mt-1.5 text-[18px] sm:text-[20px] font-semibold text-white">
+                  Start mock exam
                 </div>
-                <PrimaryButton size="lg" onClick={() => navigate('../environmental-sustainability-mock-exam')}>
-                  <GraduationCap className="h-5 w-5 mr-2" /> Start
-                </PrimaryButton>
+                <div className="mt-1 text-[12px] text-white">
+                  Different questions each attempt — retake as often as you like.
+                </div>
               </div>
+              <PrimaryButton
+                size="lg"
+                onClick={() => navigate('../environmental-sustainability-mock-exam')}
+              >
+                <GraduationCap className="h-5 w-5 mr-2" /> Start
+              </PrimaryButton>
             </div>
-          </Link>
-
-          {/* Exam format */}
-          <ListCard>
-            <div className="relative px-5 sm:px-6 py-3.5 sm:py-4 border-b border-white/[0.06]">
-              <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-emerald-500/70 via-green-400/70 to-teal-400/70 opacity-70" />
-              <div className="text-[13px] font-semibold text-white">Exam format</div>
-            </div>
-            <div>
-              {examFeatures.map((f) => (
-                <ListRow
-                  key={f.label}
-                  lead={
-                    <div className="h-8 w-8 rounded-lg bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center shrink-0">
-                      <f.icon className="h-4 w-4 text-emerald-300" />
-                    </div>
-                  }
-                  title={f.label}
-                  subtitle={f.description}
-                />
-              ))}
-            </div>
-          </ListCard>
-
-          {/* Category coverage */}
-          <ListCard>
-            <div className="relative px-5 sm:px-6 py-3.5 sm:py-4 border-b border-white/[0.06]">
-              <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-emerald-500/70 via-green-400/70 to-teal-400/70 opacity-70" />
-              <div className="text-[13px] font-semibold text-white">Category coverage</div>
-              <div className="mt-1 text-[11px] text-white">
-                4 questions drawn from each category per exam (20 total)
-              </div>
-            </div>
-            <div>
-              {categories.map((c) => (
-                <ListRow
-                  key={c.name}
-                  lead={<span className="h-2 w-2 rounded-full bg-emerald-400 block" />}
-                  title={c.name}
-                  subtitle={c.module}
-                  trailing={
-                    <span className="text-[11.5px] text-white">{c.count} questions</span>
-                  }
-                />
-              ))}
-            </div>
-          </ListCard>
-
-          {/* Preparation tips */}
-          <ListCard>
-            <div className="relative px-5 sm:px-6 py-3.5 sm:py-4 border-b border-white/[0.06]">
-              <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-green-500/70 via-emerald-400/70 to-teal-400/70 opacity-70" />
-              <div className="flex items-center gap-2">
-                <AlertTriangle className="h-4 w-4 text-amber-400 shrink-0" />
-                <div className="text-[13px] font-semibold text-white">Preparation tips</div>
-              </div>
-            </div>
-            <div>
-              {preparationTips.map((tip, i) => (
-                <ListRow
-                  key={tip.title}
-                  lead={
-                    <div className="h-7 w-7 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center shrink-0">
-                      <span className="text-[11px] font-bold text-emerald-300">{i + 1}</span>
-                    </div>
-                  }
-                  title={tip.title}
-                  subtitle={tip.description}
-                />
-              ))}
-            </div>
-          </ListCard>
-
-          {/* After-exam tip */}
-          <div className="rounded-2xl border border-emerald-500/20 bg-emerald-500/[0.06] p-4 flex items-start gap-3">
-            <CheckCircle className="h-4 w-4 text-emerald-400 shrink-0 mt-0.5" />
-            <p className="text-[12.5px] text-emerald-200 leading-relaxed">
-              After completing the exam you'll see a full breakdown by category, including which areas
-              need more revision. Use this to focus your study before retaking.
-            </p>
           </div>
-        </PageFrame>
-      </div>
-    </div>
+        </Link>
+
+        {/* Exam format */}
+        <ListCard>
+          <div className="relative px-5 sm:px-6 py-3.5 sm:py-4 border-b border-white/[0.06]">
+            <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-emerald-500/70 via-green-400/70 to-teal-400/70 opacity-70" />
+            <div className="text-[13px] font-semibold text-white">Exam format</div>
+          </div>
+          <div>
+            {examFeatures.map((f) => (
+              <ListRow
+                key={f.label}
+                lead={
+                  <div className="h-8 w-8 rounded-lg bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center shrink-0">
+                    <f.icon className="h-4 w-4 text-emerald-300" />
+                  </div>
+                }
+                title={f.label}
+                subtitle={f.description}
+              />
+            ))}
+          </div>
+        </ListCard>
+
+        {/* Category coverage */}
+        <ListCard>
+          <div className="relative px-5 sm:px-6 py-3.5 sm:py-4 border-b border-white/[0.06]">
+            <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-emerald-500/70 via-green-400/70 to-teal-400/70 opacity-70" />
+            <div className="text-[13px] font-semibold text-white">Category coverage</div>
+            <div className="mt-1 text-[11px] text-white">
+              4 questions drawn from each category per exam (20 total)
+            </div>
+          </div>
+          <div>
+            {categories.map((c) => (
+              <ListRow
+                key={c.name}
+                lead={<span className="h-2 w-2 rounded-full bg-emerald-400 block" />}
+                title={c.name}
+                subtitle={c.module}
+                trailing={<span className="text-[11.5px] text-white">{c.count} questions</span>}
+              />
+            ))}
+          </div>
+        </ListCard>
+
+        {/* Preparation tips */}
+        <ListCard>
+          <div className="relative px-5 sm:px-6 py-3.5 sm:py-4 border-b border-white/[0.06]">
+            <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-green-500/70 via-emerald-400/70 to-teal-400/70 opacity-70" />
+            <div className="flex items-center gap-2">
+              <AlertTriangle className="h-4 w-4 text-amber-400 shrink-0" />
+              <div className="text-[13px] font-semibold text-white">Preparation tips</div>
+            </div>
+          </div>
+          <div>
+            {preparationTips.map((tip, i) => (
+              <ListRow
+                key={tip.title}
+                lead={
+                  <div className="h-7 w-7 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center shrink-0">
+                    <span className="text-[11px] font-bold text-emerald-300">{i + 1}</span>
+                  </div>
+                }
+                title={tip.title}
+                subtitle={tip.description}
+              />
+            ))}
+          </div>
+        </ListCard>
+
+        {/* After-exam tip */}
+        <div className="rounded-2xl border border-emerald-500/20 bg-emerald-500/[0.06] p-4 flex items-start gap-3">
+          <CheckCircle className="h-4 w-4 text-emerald-400 shrink-0 mt-0.5" />
+          <p className="text-[12.5px] text-emerald-200 leading-relaxed">
+            After completing the exam you'll see a full breakdown by category, including which areas
+            need more revision. Use this to focus your study before retaking.
+          </p>
+        </div>
+      </HubBody>
+    </HubPage>
   );
 }

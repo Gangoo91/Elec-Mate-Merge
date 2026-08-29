@@ -79,7 +79,7 @@ export const testSequence = [
     description:
       'Measure external earth fault loop impedance (Ze), then earth fault loop impedance (Zs) at relevant points',
     method: 'Loop impedance tester with supply energised (line-to-earth method standard)',
-    acceptance: 'Must not exceed values in BS7671 tables',
+    acceptance: 'Must not exceed values in BS 7671 tables',
     safety:
       'Live testing - ensure test equipment is suitable and calibrated. Follow manufacturer guidance for test lead connections',
     icon: '🔋',

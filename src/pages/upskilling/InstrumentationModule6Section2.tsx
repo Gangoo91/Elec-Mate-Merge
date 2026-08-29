@@ -268,7 +268,7 @@ const InstrumentationModule6Section2 = () => {
 
         <InlineCheck
           question="Which pressure calibration equipment is considered the primary standard using known masses?"
-          answer="Deadweight tester - it uses precisely known masses on a calibrated piston to generate exact pressure values, making it the gold standard for pressure calibration."
+          correctAnswer="Deadweight tester - it uses precisely known masses on a calibrated piston to generate exact pressure values, making it the gold standard for pressure calibration."
         />
 
         {/* Section 02 - Reference Standards and Traceability */}
@@ -362,7 +362,7 @@ const InstrumentationModule6Section2 = () => {
 
         <InlineCheck
           question="What is UKAS and why is it important for calibration?"
-          answer="UKAS (United Kingdom Accreditation Service) is the UK's national accreditation body. It accredits calibration laboratories to ISO/IEC 17025 standards, ensuring their calibration certificates are internationally recognised and legally defensible."
+          correctAnswer="UKAS (United Kingdom Accreditation Service) is the UK's national accreditation body. It accredits calibration laboratories to ISO/IEC 17025 standards, ensuring their calibration certificates are internationally recognised and legally defensible."
         />
 
         {/* Section 03 - Hierarchy of Measurement Standards */}
@@ -576,7 +576,7 @@ const InstrumentationModule6Section2 = () => {
 
         <InlineCheck
           question="What is the standard reference temperature for calibration and why is it important?"
-          answer="The standard reference temperature is 20°C ±2°C. This is important because materials expand and contract with temperature, and electronic components have temperature coefficients. By standardising on 20°C, calibration results can be compared worldwide."
+          correctAnswer="The standard reference temperature is 20°C ±2°C. This is important because materials expand and contract with temperature, and electronic components have temperature coefficients. By standardising on 20°C, calibration results can be compared worldwide."
         />
 
         {/* Section 05 - Calibration Certificate Requirements */}

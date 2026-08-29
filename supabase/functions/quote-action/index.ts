@@ -226,15 +226,19 @@ const handler = async (req: Request): Promise<Response> => {
           .from('invoices')
           .insert({
             user_id: quote.user_id,
-            client_id: quote.client_id,
-            client: quote.client,
+            // Same columns as accept-quote-public — the live invoices table
+            // has status/due_date/client_data, NOT the legacy invoice_*
+            // names. This insert had been failing silently (PGRST204 inside
+            // the non-fatal catch) since the tables split; the other
+            // acceptance route was quietly creating every deposit invoice.
+            client_data: quote.client_data,
             quote_id: quote.id,
             parent_quote_id: quote.id,
             deposit_for_quote: true,
             invoice_number: depositInvoiceNumber,
-            invoice_status: 'sent',
+            status: 'sent',
             invoice_date: new Date().toISOString(),
-            invoice_due_date: dueDate.toISOString(),
+            due_date: dueDate.toISOString(),
             subtotal: depositAmount,
             total: depositAmount,
             items: [

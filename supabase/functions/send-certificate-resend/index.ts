@@ -554,6 +554,10 @@ const handler = async (req: Request): Promise<Response> => {
       // ELE-1615. The CU door label is deliberately NOT here: it is a sticker
       // for the inside of a consumer unit, not something you email a client.
       'board-schedule': 'generate-board-schedule-pdf',
+      'visual-condition': 'generate-visual-condition-pdf',
+      'routine-inspection': 'generate-routine-inspection-pdf',
+      // Same generator as the VCR — one template renders both (ELE-1634).
+      'pre-purchase-survey': 'generate-visual-condition-pdf',
     };
 
     const edgeFunctionName = PDF_FUNCTION_BY_TYPE[reportType];
@@ -716,6 +720,9 @@ const handler = async (req: Request): Promise<Response> => {
       'smoke-co-alarm': 'Smoke & CO Alarm',
       'testing-only': 'Testing Only',
       'board-schedule': 'Board Schedule',
+      'visual-condition': 'Visual Condition Report',
+      'routine-inspection': 'Routine Inspection Report',
+      'pre-purchase-survey': 'Pre-Purchase Electrical Survey',
     };
     const certificateTypeDisplay = DISPLAY_BY_TYPE[reportType] || reportType.toUpperCase();
 
@@ -845,6 +852,25 @@ const handler = async (req: Request): Promise<Response> => {
     }
 
     console.log('Email sent:', emailData?.id);
+
+    // A manual send satisfies any "hold until paid" on invoices linked to this
+    // certificate — without this stamp, the auto-release would email the same
+    // certificate a second time when payment lands. User-JWT client, so RLS
+    // scopes the update to the sender's own invoices.
+    try {
+      const linkKeys = [String(report.id ?? ''), String(report.report_id ?? '')].filter(Boolean);
+      if (linkKeys.length) {
+        await supabaseClient
+          .from('quotes')
+          .update({ certificate_released_at: new Date().toISOString() })
+          .eq('user_id', user.id)
+          .eq('certificate_release_mode', 'on_payment')
+          .is('certificate_released_at', null)
+          .in('linked_certificate_id', linkKeys);
+      }
+    } catch (stampError) {
+      console.warn('Hold-release stamp failed (non-fatal):', stampError);
+    }
 
     const duration = Date.now() - startTime;
     console.log(`Complete in ${duration}ms`);

@@ -4,17 +4,48 @@ import { ModuleShell } from '@/components/study-centre/shells';
 import useSEO from '@/hooks/useSEO';
 
 const sections = [
-  { id: 1, title: 'Measuring voltage, current and resistance', icon: Zap, description: 'Fundamental electrical measurements and techniques.' },
-  { id: 2, title: 'Frequency and time-based measurements', icon: BarChart, description: 'Measuring frequency, period and time-based parameters.' },
-  { id: 3, title: 'Instrument accuracy, resolution and error', icon: Target, description: 'Understanding measurement precision and error sources.' },
-  { id: 4, title: 'Measurement equipment: multimeters, clamp meters, oscilloscopes', icon: Gauge, description: 'Common electrical measurement instruments.' },
-  { id: 5, title: 'Interpreting and logging readings in real-world systems', icon: FileText, description: 'Practical application of measurements in industrial systems.' },
+  {
+    id: 1,
+    title: 'Measuring voltage, current and resistance',
+    icon: Zap,
+    description:
+      'Why measuring disturbs what you measure — loading, burden, self-heating, and the CT rule.',
+  },
+  {
+    id: 2,
+    title: 'Frequency and time-based measurements',
+    icon: BarChart,
+    description:
+      'The ±1 count that decides whether you measure frequency or period — and K-factors.',
+  },
+  {
+    id: 3,
+    title: 'Instrument accuracy, resolution and error',
+    icon: Target,
+    description:
+      'Accuracy vs precision vs resolution, and why the shape of an error names the fault.',
+  },
+  {
+    id: 4,
+    title: 'Measurement equipment: multimeters, clamp meters, oscilloscopes',
+    icon: Gauge,
+    description:
+      'Every instrument’s strength is also its failure mode — starting with phantom voltage.',
+  },
+  {
+    id: 5,
+    title: 'Interpreting and logging readings in real-world systems',
+    icon: FileText,
+    description:
+      'What turns a reading into a record — as-found, as-left, and what a logger cannot see.',
+  },
 ];
 
 export default function InstrumentationModule4() {
   useSEO({
     title: 'Module 4: Measurement of Electrical Quantities | Instrumentation | Elec-Mate',
-    description: 'Voltage, current, resistance, frequency and time-based measurement — accuracy, equipment and interpreting results.',
+    description:
+      'Voltage, current, resistance, frequency and time-based measurement — accuracy, equipment and interpreting results.',
   });
 
   return (

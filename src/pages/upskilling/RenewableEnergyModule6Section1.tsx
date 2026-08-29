@@ -1,8 +1,8 @@
-import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { useNavigate } from 'react-router-dom';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
-import { PageFrame, PageHero } from '@/components/college/primitives';
 import {
   TLDR,
   ConceptBlock,
@@ -22,8 +22,7 @@ import useSEO from '@/hooks/useSEO';
 const inlineChecks = [
   {
     id: 'm6s1-section-722-scope',
-    question:
-      'Section 722 of BS 7671 covers which circuits?',
+    question: 'Section 722 of BS 7671 covers which circuits?',
     options: [
       'Circuits intended to supply electric vehicles for charging purposes',
       'All fixed electrical installations in dwellings, with EV charging treated as one part',
@@ -36,8 +35,7 @@ const inlineChecks = [
   },
   {
     id: 'm6s1-61851-conformity',
-    question:
-      'Reg 722.511.101 — what does it require of EV charging equipment?',
+    question: 'Reg 722.511.101 — what does it require of EV charging equipment?',
     options: [
       'Compliance with whatever internal specification the manufacturer chooses to apply',
       'Compliance with the appropriate parts of the BS EN 61851 series',
@@ -50,8 +48,7 @@ const inlineChecks = [
   },
   {
     id: 'm6s1-mode-3-vs-mode-2',
-    question:
-      'What is the key difference between Mode 2 and Mode 3 EV charging?',
+    question: 'What is the key difference between Mode 2 and Mode 3 EV charging?',
     options: [
       'Mode 2 is DC charging from the supply, while Mode 3 is the AC method',
       'Mode 2 uses an in-cable control & protection device into a domestic socket; Mode 3 builds the signalling and protection into a dedicated wallbox',
@@ -197,450 +194,431 @@ export default function RenewableEnergyModule6Section1() {
   });
 
   return (
-    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
-      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
-        <PageFrame>
+    <HubPage>
+      <HubMasthead
+        section="Module 6 · Section 1 · BS 7671:2018+A4:2026 · Section 722 + BS EN 61851"
+        title="Section 722 & the Mode 1–4 landscape"
+        backTo="../renewable-energy-module-6"
+      />
+      <HubBody>
+        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
+          What makes EV charging regulatorily distinct in BS 7671 — Section 722 scope, exclusions,
+          and the four IEC 61851 charging modes. Why UK domestic = Mode 3 dominant. The
+          product-conformance gate via Reg 722.511.101 + BS EN 61851 series.
+        </p>
+
+        <TLDR
+          points={[
+            'Section 722 of BS 7671:2018+A4:2026 covers "circuits intended to supply electric vehicles for charging purposes" — domestic Mode 3 wallboxes, workplace and public AC chargers, and (via cross-reference) DC fast charging.',
+            'Two explicit Section 722 exclusions: charging points for mobility scooters and similar vehicles ≤ 10 A; inductive (wireless) charging. Both fall outside Section 722 scope — install per the rest of BS 7671 as standard circuits.',
+            'BS EN 61851 series defines the four charging Modes. Mode 1 = direct socket connection, no signalling (essentially obsolete). Mode 2 = "granny lead" ICCPD into a domestic socket (occasional / emergency use). Mode 3 = dedicated wallbox with CP/PP signalling — UK 2025-26 domestic default. Mode 4 = DC fast charging (commercial / public — M7).',
+            'Reg 722.511.101 — EV charging equipment shall comply with the appropriate parts of the BS EN 61851 series. Manufacturer Declaration of Conformity is the verification route; cert evidence bundle records the DoC.',
+            'Reg 722.413.1.2 — separated-source protective measure is permitted but explicitly limited to ONE EV from ONE unearthed source. Cannot serve multiple EVs or any other loads.',
+            'Definition of "electric vehicle (EV)" lives in Part 2 of BS 7671 — installer references Part 2 for the authoritative term. Annex A722 is Informative — examples not mandatory.',
+            'Section 722 interacts with Chapter 82 (PEI) where the EV is bidirectional (V2H / V2G). For V2G the EV becomes a SOURCE in the PEI; Section 722 + Chapter 82 both apply. Standard UK 2025-26 install = EV as load = Section 722 only.',
+            'Section 722 is the wiring-regulation layer. UK EV install also navigates the Electric Vehicles (Smart Charge Points) Regulations 2021 (M6.7), OZEV / EVCS grant rules (M6.8) and local planning / freeholder consent.',
+          ]}
+        />
+
+        <LearningOutcomes
+          outcomes={[
+            'Apply Reg 722.x scope to identify which circuits fall within Section 722 — and which are explicitly excluded (mobility scooters ≤ 10 A, inductive charging).',
+            'Distinguish the four BS EN 61851 charging Modes (1, 2, 3, 4) — recognise UK 2025-26 domestic = Mode 3 dominant; explain Mode 2 (granny leads) and Mode 4 (DC fast, commercial).',
+            'Apply Reg 722.511.101 to verify BS EN 61851 conformance via the manufacturer Declaration of Conformity at quote stage.',
+            'Apply Reg 722.413.1.2 to specify a separated-source protective measure where chosen — limited to ONE EV from ONE unearthed source.',
+            'Cross-reference Section 722 to Part 2 (definitions) and to Chapter 82 (PEI) where the EV is bidirectional (V2H / V2G).',
+            'Locate Annex A722 (Informative) and use the example arrangements as guidance — not mandatory routes.',
+            'Map Section 722 against the wider UK EV regulatory stack — Smart Charge Points Regulations 2021, OZEV / EVCS, planning, freeholder consent.',
+          ]}
+          initialVisibleCount={3}
+        />
+
+        <Pullquote>
+          Section 722 is the EV chapter. The four Modes are the kit families. Mode 3 is the UK
+          domestic default.
+        </Pullquote>
+
+        <ContentEyebrow>Section 722 scope and exclusions</ContentEyebrow>
+
+        <ConceptBlock
+          title="What Section 722 covers — and what it doesn’t"
+          plainEnglish="Section 722 of BS 7671:2018+A4:2026 sets particular requirements for circuits intended to supply electric vehicles for charging purposes. Domestic wallboxes, workplace AC charge points, public AC and (via cross-reference) DC fast — all in scope. Two explicit exclusions: mobility scooters ≤ 10 A; inductive (wireless) charging."
+          onSite="Scope check is the first quote-stage question: is this a Section 722 circuit? If yes, the entire layered set of 722.x regs (PME-on-EV, Type B RCD, dedicated final circuit, 61851 conformity) applies. If no (mobility scooter ≤ 10 A, inductive pad), install per the rest of BS 7671 as a standard circuit. The term “electric vehicle (EV)” is defined in Part 2 of BS 7671 — consult Part 2 for the authoritative meaning."
+        >
+          <p>The scope decision tree:</p>
+          <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+            <li>
+              <strong className="text-white">In scope</strong> — circuits intended to supply
+              electric vehicles for charging purposes. Includes the domestic 7 kW Mode 3 wallbox
+              install on a dedicated final circuit, commercial AC charging stations, workplace
+              chargers, public AC bays
+            </li>
+            <li>
+              <strong className="text-white">Excluded — mobility scooters ≤ 10 A</strong>— Section
+              722 explicitly excludes "electric vehicle charging points that charge mobility
+              scooters and similar vehicles of 10 A and less". The domestic 3-pin socket-outlet used
+              to charge a disability-mobility scooter is NOT a Section 722 circuit — treat as
+              standard socket per Section 411 + 415
+            </li>
+            <li>
+              <strong className="text-white">Excluded — inductive (wireless) charging</strong> —
+              different electrical principles (magnetic coupling) handled by IEC 61980 series;
+              Section 722 scope is conductive (cable-connected) only
+            </li>
+            <li>
+              <strong className="text-white">Annex A722 (Informative)</strong> — example
+              arrangements illustrating compliant install patterns. Informative means guidance not
+              mandate; other arrangements that satisfy the binding 722.x regs are equally valid
+            </li>
+            <li>
+              <strong className="text-white">Definition "electric vehicle (EV)"</strong>— defined in
+              Part 2 of BS 7671. Section 722 cross-references Part 2 for the authoritative term.
+              Includes passenger cars, commercial vans, light LCVs — anything the Part 2 definition
+              covers
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <RegsCallout
+          source="BS 7671:2018+A4:2026 · Section 722 — Scope + Reg 722.511.101"
+          clause="The particular requirements of Section 722 apply to circuits intended to supply electric vehicles for charging purposes. Reg 722.511.101: EV charging equipment shall comply with the appropriate parts of the BS EN 61851 series. Excluded: charging points that charge mobility scooters and similar vehicles of 10 A and less; charging points that employ inductive charging."
+          meaning="Section 722 is the EV-specific chapter within Part 7 (Special Installations or Locations) of BS 7671. The scope catches all dedicated EV charging circuits; the exclusions catch low-current mobility devices and inductive wireless charging. Reg 722.511.101 is the product-conformance gate — the wallbox / charging station itself must conform to BS EN 61851. Manufacturer Declaration of Conformity is the installer’s verification route. Cert evidence bundle records the scope determination and the BS EN 61851 conformance evidence."
+        />
+
+        <InlineCheck {...inlineChecks[0]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>The four BS EN 61851 charging Modes</ContentEyebrow>
+
+        <Pullquote>
+          UK domestic 2025-26 = Mode 3 dominant. Mode 2 covers the granny-lead edge. Mode 1 is
+          essentially obsolete. Mode 4 belongs in M7.
+        </Pullquote>
+
+        <ConceptBlock
+          title="Mode 1 — direct socket, no signalling"
+          plainEnglish="Mode 1 = the simplest possible arrangement: a cable from a normal mains socket to the vehicle, with no Control Pilot (CP) signalling and no in-cable protection. Predates the modern signalling standards. Essentially obsolete for UK domestic charging — the safety case requires CP signalling to coordinate vehicle-side and supply-side protection."
+          onSite="Don’t quote Mode 1 for UK domestic install. Customer asks: educate that Mode 1 doesn’t use the CP signalling expected by every EV sold in the UK 2020+. Recommend Mode 3 wallbox for daily charging, Mode 2 granny lead as the occasional / emergency fallback."
+        >
+          <p>Where Mode 1 still appears (rare):</p>
+          <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+            <li>
+              <strong className="text-white">Light EVs without CP signalling</strong>— some older /
+              low-spec light electric vehicles (early e-bikes, low-end scooters) — but these often
+              fall under the mobility-scooter Section 722 exception anyway
+            </li>
+            <li>
+              <strong className="text-white">Legacy installations</strong> — rare pre-2014 retrofits
+              encountered at EICR. Recommend upgrade to Mode 3 in remedial work
+            </li>
+            <li>
+              <strong className="text-white">Not Section 722 best practice</strong> — installers do
+              not specify Mode 1 for new UK domestic EV charging in 2025-26. The Mode 1 → Mode 2 /
+              Mode 3 migration is essentially complete
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="Mode 2 — ICCPD granny lead"
+          plainEnglish="Mode 2 = a cable from a normal mains socket (3-pin or commando) to the vehicle, with an In-Cable Control & Protection Device (ICCPD) midway. The ICCPD provides the CP signalling and some in-line protection. Charges at 8-13 A typical. Designed for occasional / emergency use, NOT daily charging."
+          onSite="UK 2025-26 reality: every new EV ships with a Mode 2 lead — typically 8 A from a 3-pin BS 1363 socket, 16-32 A from a Type 2 commando. Customers use them in emergency or at second homes / holidays. For DAILY charging at home, the dedicated Mode 3 wallbox is the right answer — Mode 2 sustained draw on a 13 A socket-outlet creates thermal stress that the BS 1363 socket was never specified for."
+        >
+          <p>Where Mode 2 fits in UK 2025-26 practice:</p>
+          <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+            <li>
+              <strong className="text-white">Emergency / occasional</strong> — customer at a holiday
+              cottage with no dedicated wallbox; occasional home use before the wallbox install is
+              complete
+            </li>
+            <li>
+              <strong className="text-white">Manufacturer-supplied</strong> — most UK 2025-26 EVs
+              include a Mode 2 lead in the boot as emergency fallback. Typical specs: 3-pin BS 1363
+              at 8 A; Type 2 commando at 16 A
+            </li>
+            <li>
+              <strong className="text-white">Customer education</strong> — set expectations: Mode 2
+              from a 13 A socket = ~10 km of range per hour vs Mode 3 7 kW wallbox = ~50 km/hr. Mode
+              2 sustained on a domestic socket is a real thermal stress on the socket and cabling
+            </li>
+            <li>
+              <strong className="text-white">EICR finding</strong> — sustained Mode 2 charging on a
+              13 A socket leaves visible terminal discolouration / signs of thermal stress; periodic
+              inspectors spot it; suggests a Mode 3 wallbox upgrade is overdue
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="Mode 3 — dedicated wallbox (UK 2025-26 default)"
+          plainEnglish="Mode 3 = a dedicated charging station (wallbox) installed on its own dedicated final circuit. The wallbox houses the CP/PP signalling, the contactor, the protective devices and the Type 2 socket or tethered Type 2 connector. The customer’s cable is “dumb” — just conductors and Type 2 plugs at each end. Charges at 7 kW single-phase (32 A) up to 22 kW three-phase (32 A × 3)."
+          onSite="Mode 3 is the entire body of work for §6.4 (cable, RCBO, dedicated final circuit) through §6.7 (smart charging). Every UK domestic wallbox install in 2025-26 is Mode 3. Brand examples (alphabetical, no endorsement): Andersen, Easee, EO Charging, Hypervolt, MyEnergi Zappi, Ohme, PodPoint, Wallbox."
+        >
+          <p>What makes a Mode 3 install distinct:</p>
+          <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+            <li>
+              <strong className="text-white">Dedicated final circuit</strong> — Reg 722.55; the
+              wallbox does not share a circuit with other loads. Cable, RCBO, isolator sized for the
+              wallbox’s rated current (typically 32 A on a 7 kW single-phase install)
+            </li>
+            <li>
+              <strong className="text-white">CP/PP signalling integrated in wallbox</strong> — the
+              wallbox communicates with the vehicle via the Control Pilot pilot wire; signal
+              coordinates contactor closure, current limit announcement, error states. Customer
+              cable just carries L / N / PE / CP / PP
+            </li>
+            <li>
+              <strong className="text-white">Type 2 socket or tethered Type 2</strong> — UK / EU
+              connector standard per BS EN IEC 62196-2:2022. Tethered = cable permanently attached
+              to wallbox; untethered = socket on wallbox, customer brings their own cable
+            </li>
+            <li>
+              <strong className="text-white">RCD architecture</strong> — Type B (BS EN 62423) RCD on
+              the AC side OR Type A + integrated 6 mA RDC-DD per the manufacturer-declared profile.
+              Covered in M6.3
+            </li>
+            <li>
+              <strong className="text-white">PME-on-EV earthing</strong> — Reg 722.411.4 outdoor
+              charging point cannot use PME directly; one of alternatives (b)-(e) applies. Covered
+              in M6.2
+            </li>
+            <li>
+              <strong className="text-white">Smart-charging compliant</strong> — UK Electric
+              Vehicles (Smart Charge Points) Regulations 2021 require default off-peak charging +
+              randomised delay + security requirements for ALL new domestic wallboxes from June 2022
+              onward
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="Mode 4 — DC fast charging (commercial, M7)"
+          plainEnglish="Mode 4 = DC fast charging. The charging station includes the AC-to-DC conversion inside (saving the vehicle’s on-board charger), allowing power delivery far beyond AC limits. Typical Mode 4 = 50 kW (early), 150 kW (mid), 350 kW (current peak). UK 2025-26 connectors: CCS Combo 2 (the standard); CHAdeMO (legacy, now declining); Tesla NACS (USA-origin, expanding into UK)."
+          onSite="Mode 4 belongs in M7 (commercial, workplace, public, DC fast). Not relevant to UK domestic install. Customer ask: educate that domestic DNO supply (100 A single-phase = 23 kW maximum) cannot deliver 50+ kW; three-phase DNO upgrade would be needed, plus £20-50k of Mode 4 kit, for a charging speed that domestic users almost never need."
+        >
+          <p>Where Mode 4 lives (M7 preview):</p>
+          <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+            <li>
+              <strong className="text-white">Public charging</strong> — motorway services,
+              supermarket car parks, urban kerbside hubs. The bulk of UK Mode 4 deployment
+            </li>
+            <li>
+              <strong className="text-white">Workplace fleet</strong> — taxi fleets, delivery vans,
+              commercial-vehicle depots needing mid-shift top-up
+            </li>
+            <li>
+              <strong className="text-white">CCS Combo 2 connector</strong> — BS EN IEC 62196-3
+              (DC). Combines AC pins from Mode 3 with two DC pins below; one connector socket on the
+              vehicle covers both AC Mode 3 and DC Mode 4
+            </li>
+            <li>
+              <strong className="text-white">DNO involvement</strong> — three-phase supply typically
+              required, sometimes upgraded connection. EREC G99 application standard. Section 722 +
+              Section 712 (where battery storage is involved) + Chapter 82
+            </li>
+            <li>
+              <strong className="text-white">Cross-reference</strong> — see M7 for the full Mode 4
+              treatment
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <FourModesComparison caption="EV charging Modes 1–4 compared — connection, signalling and protection. UK fixed installs are almost always Mode 3 (AC) or Mode 4 (DC)." />
+
+        <InlineCheck {...inlineChecks[1]} />
+
+        <InlineCheck {...inlineChecks[2]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>Special protective measure — Reg 722.413.1.2</ContentEyebrow>
+
+        <ConceptBlock
+          title="Separated source (single EV, single unearthed source)"
+          plainEnglish="Reg 722.413.1.2 permits the use of electrical separation (Section 413 protective measure) for an EV charging circuit — but with a hard limitation: the protective measure shall be limited to the supply of ONE electric vehicle supplied from ONE unearthed source. The separated source cannot serve multiple EVs or any other loads on the same circuit."
+          onSite="Rare in UK domestic — the standard Reg 722.411.4 PME-alternative approaches (M6.2) cover most outdoor wallbox installs. Separated-source appears more often in commercial / fleet contexts where each bay has a dedicated isolating transformer, eliminating the PME hazard entirely at the cost of an additional transformer per bay."
+        >
+          <p>What separated-source actually buys:</p>
+          <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+            <li>
+              <strong className="text-white">Eliminates the PME hazard at source</strong> — if the
+              supply to the wallbox comes from an isolating transformer, the PME / "lost PEN" fault
+              hazard cannot propagate to the vehicle. No need for OPDD or dedicated TT electrode at
+              the wallbox
+            </li>
+            <li>
+              <strong className="text-white">Capital cost is the trade-off</strong>— an isolating
+              transformer (typical sizing 10-20 kVA for a 7-22 kW wallbox) adds ~£600-£1,500 to the
+              install cost; rarely justified for single-bay domestic
+            </li>
+            <li>
+              <strong className="text-white">Single-EV limitation</strong> — Reg 722.413.1.2
+              explicitly limits the protective measure to ONE EV from ONE unearthed source. Cannot
+              serve two EVs from a shared transformer; cannot also feed garage lighting from the
+              same circuit. The "limited" word is binding
+            </li>
+            <li>
+              <strong className="text-white">Where it shines</strong> — multi-bay fleet sites where
+              each bay has its own isolating transformer; sensitive earth-electrode sites where
+              dedicated TT isn’t practical; specific commercial deployments where the customer’s
+              safety case prefers the transformer route
+            </li>
+            <li>
+              <strong className="text-white">Cert evidence bundle</strong> — records the
+              separated-source topology choice, the transformer rating + isolation class, and the
+              single-EV limitation documentation. Reg 722.413.1.2 + Section 413 references
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <RegsCallout
+          source="BS 7671:2018+A4:2026 · Reg 722.413.1.2 — Separated-source single-EV limitation"
+          clause="The protective measure shall be limited to the supply of one electric vehicle supplied from one unearthed source."
+          meaning="Reg 722.413.1.2 lets the installer use electrical separation (Section 413) as the protective measure for an EV charging circuit — but the separated source can supply ONLY one EV. Multiple EVs from one unearthed source: prohibited. Other loads on the same isolated circuit: prohibited. The “limited” wording is mandatory (per the regulatory note that ‘shall be limited’ is a binding restriction). Cert evidence bundle records the topology, the transformer rating, and the single-EV documentation. Rare in UK domestic; more common in commercial single-bay fleet deployments."
+        />
+
+        <InlineCheck {...inlineChecks[3]} />
+
+        <SectionRule />
+
+        <ContentEyebrow>Cross-references — Section 722 inside the wider BS 7671</ContentEyebrow>
+
+        <Pullquote>
+          Section 722 is one chapter inside BS 7671. Sections 411, 415, 522, 537 still apply on the
+          EV circuit. Section 722 ADDS to them, doesn’t REPLACE them.
+        </Pullquote>
+
+        <ConceptBlock
+          title="Section 722 and its cross-references to the rest of BS 7671"
+          plainEnglish="Section 722 doesn’t exist in isolation. The dedicated EV circuit also sits within Section 411 (ADS), Section 415 (additional protection — 30 mA RCD on socket-outlets etc.), Section 522 (external influences), Section 537 (isolation), Chapter 64 (initial verification), and Chapter 65 (periodic inspection). Section 722 adds EV-specific requirements ON TOP of those base requirements."
+          onSite="Reading Section 722 alone leaves gaps. The competent designer treats the EV circuit as a Reg 411 + 415 + 522 + 537 circuit FIRST, then layers the Section 722 specifics. Cert evidence bundle reflects this layered compliance: standard Part 4 + Part 5 + Part 6 entries PLUS the Section 722 supplements."
+        >
+          <p>The cross-reference map:</p>
+          <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+            <li>
+              <strong className="text-white">Section 411 (ADS)</strong> — automatic disconnection of
+              supply. Zs ≤ Table 41.3 value; RCD trip-time per Reg 411.3.3 / 411.4.5. The EV
+              circuit’s Type A or Type B RCBO operates per Reg 411
+            </li>
+            <li>
+              <strong className="text-white">Section 415 (additional protection)</strong> — 30 mA
+              RCD on socket-outlets ≤ 32 A (Reg 411.3.3). The EV circuit’s 30 mA threshold satisfies
+              this even though the connector is a Type 2 not a BS 1363 socket
+            </li>
+            <li>
+              <strong className="text-white">Section 522 (external influences)</strong> — outdoor
+              install IP / IK ratings (covered in §6.5). Reg 522.x assessment for water, mechanical
+              impact, solar radiation, corrosion
+            </li>
+            <li>
+              <strong className="text-white">Section 537 (isolation)</strong> — readily accessible,
+              properly identified means of isolation (covered in §6.4). The dedicated RCBO + any
+              external isolator satisfies Reg 537
+            </li>
+            <li>
+              <strong className="text-white">Chapter 64 (initial verification)</strong> — Reg 643
+              testing applies on the EV circuit at commissioning (covered in §6.8). IR test 500 V
+              DC, RCD trip-time, ADS verification
+            </li>
+            <li>
+              <strong className="text-white">Chapter 65 (periodic inspection)</strong> — EICR
+              procedure applies on the EV circuit (covered in §6.8). Standard intervals + Section
+              722-specific items overlaid
+            </li>
+            <li>
+              <strong className="text-white">Chapter 82 (PEI)</strong> — where the EV is
+              bidirectional (V2H / V2G), Chapter 82 applies. Most UK 2025-26 installs are
+              unidirectional and don’t invoke Chapter 82; M10 covers V2G in depth
+            </li>
+            <li>
+              <strong className="text-white">Section 712 (PV)</strong> — where the EV install
+              coexists with PV (PV-tracking via §6.7), Section 712 governs the PV side. Two layered
+              Sections (712 + 722) on one prosumer site
+            </li>
+          </ul>
+        </ConceptBlock>
+
+        <RegsCallout
+          source="BS 7671:2018+A4:2026 · Reg 722.55 — Dedicated final circuit for each EV charging point"
+          clause="Each charging point shall be supplied by an individual final circuit dedicated to its supply, protected by an overcurrent protective device complying with the appropriate Standard."
+          meaning="Reg 722.55 is the structural requirement at the install level — every EV charging point gets its own dedicated final circuit. No sharing with lighting, socket-outlets, garage door openers, or any other load. The OCPD complies with the relevant standard (BS EN 61009 RCBO, BS EN 62423 Type B RCBO, BS EN 60898 MCB) at a rating matched to the wallbox’s rated current. Cert evidence bundle records the dedicated CU way + OCPD selection + the wallbox identification. Section 6.4 covers this in install detail. Multiple wallboxes = multiple dedicated circuits."
+        />
+
+        <Scenario
+          title="UK suburban customer — new wallbox install"
+          situation="Midlands semi-detached, 2024 build, customer just bought an electric vehicle. Wants a wallbox installed on the driveway by the front door. Customer drives ~50 km/day average; works from home some days. Standard DNO single-phase 100 A supply; CU has spare ways. Customer has googled ‘Mode 3’ because they read it on the manufacturer’s charging guide."
+          whatToDo="Section 722 scope check: yes, in scope (dedicated EV charging circuit). Mode 3 dedicated wallbox is the right answer — covers daily commuting easily, meets BS EN 61851 conformity, allows smart-charging integration with the customer’s tariff. Recommend a 7 kW (32 A) single-phase wallbox from a reputable UK brand (the wallbox model decision goes into the quote; example brand families: Ohme, Wallbox, Hypervolt, MyEnergi Zappi). The Mode 3 install lands the customer in §6.2 (earthing), §6.3 (RCD architecture), §6.4 (cable + RCBO + dedicated final circuit), §6.5 (outdoor IP install), §6.6 (connector + signalling) and §6.7 (smart charging). Cert evidence bundle starts here with the BS EN 61851 DoC + UKCA marking + Reg 722.511.101 conformance documentation."
+          whyItMatters="This is the bread-and-butter UK 2025-26 install — Mode 3 wallbox, 7 kW single-phase, dedicated final circuit. Sections 6.2 through 6.8 walk through every regulatory layer that lands on this install. Customer’s correct intuition (Mode 3) is the right answer; the installer’s job is to translate that into the compliant install pack."
+        />
+
+        <Scenario
+          title="Customer asks for a 22 kW three-phase domestic install"
+          situation="Customer in a rural detached property with three-phase 100 A DNO supply already on site (originally for a now-decommissioned commercial workshop). Customer has a high-mileage car (electric vehicle they use for daily long commute, ~150 km/day). Wants the fastest practical home charging."
+          whatToDo="Three-phase Mode 3 22 kW (32 A per phase) wallbox is feasible on this site. Section 722 scope check: yes, in scope. Confirm DNO’s position on the export side (anti-islanding under EREC G98 / G99 if PV/BESS coexist; standard G98 for the EV is below DNO notification thresholds). Three-phase wallbox brands: Easee, EO Charging, MyEnergi Zappi 22 kW variants, Tesla Wall Connector Gen 3. RCD architecture: Type B 4-pole on the three-phase circuit. Cable sizing per Reg 311.1 max demand on the three-phase final circuit; consider Reg 722.311.201 load curtailment if the rest of the household three-phase load is tight. Cert evidence bundle includes the three-phase install pack — same Section 722 layers but with phase-balance considerations. Note: three-phase domestic Mode 3 is rare in UK; most domestic supplies are single-phase. M7 covers commercial three-phase install in depth — this domestic edge case borrows from M7’s treatment."
+          whyItMatters="Three-phase domestic install is a real edge case in UK 2025-26 — rural sites with legacy commercial three-phase, large new-builds opting for three-phase supply, and the occasional fleet-charger-at-home scenario. The Section 722 regs apply identically; the install pattern shifts (4-pole devices, phase-balancing, DNO notification thresholds). Cert evidence bundle records the three-phase rationale."
+        />
+
+        <CommonMistake
+          title="Quoting ‘Mode 1’ for a UK domestic install because the customer asked for the cheapest option"
+          whatHappens="Installer takes a customer at their word that they want the cheapest EV charging — quotes a 3-pin commando socket as a Mode 1 charging point. Customer plugs in their EV via the manufacturer’s Mode 2 lead. The Mode 1 commando lacks the CP signalling expected by every modern EV; the EV refuses to draw at full rate; the customer complains; the installer returns to reconfigure. Mode 1 quote becomes a more expensive Mode 3 install at the second visit, plus reputation damage."
+          doInstead="Quote Mode 3 from the start for ANY UK 2025-26 domestic EV charging install. The cost difference between a commando-socket Mode 1 quote and a Mode 3 wallbox quote is small (~£200-400 wallbox vs ~£50 commando socket) compared to the cost of returning to redo the install. Customer education at quote stage: explain why Mode 3 is the right answer and what the smart-charging-regs benefits are. Cert evidence bundle for Mode 3 install records the rationale."
+        />
+
+        <CommonMistake
+          title="Treating a mobility-scooter 3-pin socket as a full Section 722 install"
+          whatHappens="Installer treats a customer’s ground-floor 3-pin socket for charging their disability-mobility scooter (drawing ~8 A from a BS 1363 socket) as a full Section 722 EV charging circuit — quoting Type B RCD + dedicated final circuit + OPDD + PME-on-EV alternatives. Customer faces a £1,500+ install cost for what should be a £100 socket installation."
+          doInstead="Check the Section 722 exclusion: mobility scooters and similar vehicles ≤ 10 A are explicitly OUT of scope. The 8 A mobility scooter falls under the exclusion. Install as a standard domestic socket-outlet per Section 411 + 415 (30 mA RCD on socket-outlets ≤ 32 A per Reg 411.3.3) — no Section 722 layered obligations. Cert evidence bundle records the exclusion rationale + the cleaner install scope. Common defect on the other direction (treating a real EV as the exception) is more dangerous; this direction is just over-engineering, but still wastes customer money."
+        />
+
+        <SectionRule />
+
+        <KeyTakeaways
+          points={[
+            'Section 722 of BS 7671:2018+A4:2026 covers circuits intended to supply electric vehicles for charging purposes. Domestic Mode 3 wallboxes, workplace AC, public AC, and (via cross-reference) Mode 4 DC fast.',
+            'Two explicit Section 722 exclusions: mobility scooters and similar vehicles ≤ 10 A; inductive (wireless) charging. Install per the rest of BS 7671 in both cases — no Section 722 layered obligations.',
+            'BS EN 61851 series defines the four charging Modes. Mode 1 = direct socket no signalling (obsolete). Mode 2 = ICCPD granny lead (occasional / emergency). Mode 3 = dedicated wallbox with CP/PP (UK 2025-26 default). Mode 4 = DC fast charging (M7 scope).',
+            'Reg 722.511.101 — EV charging equipment shall comply with the appropriate parts of BS EN 61851 series. Verification via manufacturer Declaration of Conformity + UKCA / CE marking + datasheets.',
+            'Reg 722.413.1.2 — separated-source protective measure permitted, but explicitly limited to ONE EV from ONE unearthed source. Cannot serve multiple EVs or other loads.',
+            'Definition of "electric vehicle (EV)" lives in Part 2 of BS 7671. Annex A722 is Informative (examples not mandatory).',
+            'Section 722 interacts with Chapter 82 (PEI) where the EV is bidirectional (V2H / V2G — the EV becomes a SOURCE). V2G is covered in M10; M6 keeps focus on the charging direction.',
+            'Wider UK EV regulatory stack: Section 722 (wiring regs) + UK Electric Vehicles (Smart Charge Points) Regulations 2021 (M6.7) + OZEV / EVCS grant scheme (M6.8) + local planning / freeholder consent.',
+            'UK 2025-26 install reality: Mode 3 wallbox at 7 kW single-phase (32 A) is the standard. 22 kW three-phase domestic is rare edge case (rural / large new-build). Mode 2 granny leads for emergency use only.',
+            'Cert evidence bundle starts at Section 722 scope determination + BS EN 61851 DoC + UKCA / CE marking. Sections 6.2 through 6.8 layer on the install-specific regulatory pieces.',
+          ]}
+        />
+
+        <FAQ items={faqs} />
+
+        <Quiz questions={quizQuestions} title="Section 1 · Knowledge check" />
+
+        <div className="grid grid-cols-2 gap-3 pt-2">
           <button
             type="button"
-            onClick={() => navigate('../renewable-energy-module-6')}
-            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            onClick={() => navigate('/electrician/upskilling/renewable-energy-module-6')}
+            className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
           >
-            <ArrowLeft className="h-4 w-4" /> Module 6
+            <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+              <ChevronLeft className="h-3 w-3" /> Module 6
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-white truncate">
+              Module overview
+            </div>
           </button>
-
-          <PageHero
-            eyebrow="Module 6 · Section 1 · BS 7671:2018+A4:2026 · Section 722 + BS EN 61851"
-            title="Section 722 & the Mode 1–4 landscape"
-            description="What makes EV charging regulatorily distinct in BS 7671 — Section 722 scope, exclusions, and the four IEC 61851 charging modes. Why UK domestic = Mode 3 dominant. The product-conformance gate via Reg 722.511.101 + BS EN 61851 series."
-            tone="yellow"
-          />
-
-          <TLDR
-            points={[
-              'Section 722 of BS 7671:2018+A4:2026 covers "circuits intended to supply electric vehicles for charging purposes" — domestic Mode 3 wallboxes, workplace and public AC chargers, and (via cross-reference) DC fast charging.',
-              'Two explicit Section 722 exclusions: charging points for mobility scooters and similar vehicles ≤ 10 A; inductive (wireless) charging. Both fall outside Section 722 scope — install per the rest of BS 7671 as standard circuits.',
-              'BS EN 61851 series defines the four charging Modes. Mode 1 = direct socket connection, no signalling (essentially obsolete). Mode 2 = "granny lead" ICCPD into a domestic socket (occasional / emergency use). Mode 3 = dedicated wallbox with CP/PP signalling — UK 2025-26 domestic default. Mode 4 = DC fast charging (commercial / public — M7).',
-              'Reg 722.511.101 — EV charging equipment shall comply with the appropriate parts of the BS EN 61851 series. Manufacturer Declaration of Conformity is the verification route; cert evidence bundle records the DoC.',
-              'Reg 722.413.1.2 — separated-source protective measure is permitted but explicitly limited to ONE EV from ONE unearthed source. Cannot serve multiple EVs or any other loads.',
-              'Definition of "electric vehicle (EV)" lives in Part 2 of BS 7671 — installer references Part 2 for the authoritative term. Annex A722 is Informative — examples not mandatory.',
-              'Section 722 interacts with Chapter 82 (PEI) where the EV is bidirectional (V2H / V2G). For V2G the EV becomes a SOURCE in the PEI; Section 722 + Chapter 82 both apply. Standard UK 2025-26 install = EV as load = Section 722 only.',
-              'Section 722 is the wiring-regulation layer. UK EV install also navigates the Electric Vehicles (Smart Charge Points) Regulations 2021 (M6.7), OZEV / EVCS grant rules (M6.8) and local planning / freeholder consent.',
-            ]}
-          />
-
-          <LearningOutcomes
-            outcomes={[
-              'Apply Reg 722.x scope to identify which circuits fall within Section 722 — and which are explicitly excluded (mobility scooters ≤ 10 A, inductive charging).',
-              'Distinguish the four BS EN 61851 charging Modes (1, 2, 3, 4) — recognise UK 2025-26 domestic = Mode 3 dominant; explain Mode 2 (granny leads) and Mode 4 (DC fast, commercial).',
-              'Apply Reg 722.511.101 to verify BS EN 61851 conformance via the manufacturer Declaration of Conformity at quote stage.',
-              'Apply Reg 722.413.1.2 to specify a separated-source protective measure where chosen — limited to ONE EV from ONE unearthed source.',
-              'Cross-reference Section 722 to Part 2 (definitions) and to Chapter 82 (PEI) where the EV is bidirectional (V2H / V2G).',
-              'Locate Annex A722 (Informative) and use the example arrangements as guidance — not mandatory routes.',
-              'Map Section 722 against the wider UK EV regulatory stack — Smart Charge Points Regulations 2021, OZEV / EVCS, planning, freeholder consent.',
-            ]}
-            initialVisibleCount={3}
-          />
-
-          <Pullquote>
-            Section 722 is the EV chapter. The four Modes are the kit families. Mode 3 is the UK domestic default.
-          </Pullquote>
-
-          <ContentEyebrow>Section 722 scope and exclusions</ContentEyebrow>
-
-          <ConceptBlock
-            title="What Section 722 covers — and what it doesn’t"
-            plainEnglish="Section 722 of BS 7671:2018+A4:2026 sets particular requirements for circuits intended to supply electric vehicles for charging purposes. Domestic wallboxes, workplace AC charge points, public AC and (via cross-reference) DC fast — all in scope. Two explicit exclusions: mobility scooters ≤ 10 A; inductive (wireless) charging."
-            onSite="Scope check is the first quote-stage question: is this a Section 722 circuit? If yes, the entire layered set of 722.x regs (PME-on-EV, Type B RCD, dedicated final circuit, 61851 conformity) applies. If no (mobility scooter ≤ 10 A, inductive pad), install per the rest of BS 7671 as a standard circuit. The term “electric vehicle (EV)” is defined in Part 2 of BS 7671 — consult Part 2 for the authoritative meaning."
+          <button
+            type="button"
+            onClick={() => navigate('/electrician/upskilling/renewable-energy-module-6-section-2')}
+            className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
           >
-            <p>The scope decision tree:</p>
-            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
-              <li>
-                <strong className="text-white">In scope</strong> — circuits intended to
-                supply electric vehicles for charging purposes. Includes the domestic 7 kW
-                Mode 3 wallbox install on a dedicated final circuit, commercial AC
-                charging stations, workplace chargers, public AC bays
-              </li>
-              <li>
-                <strong className="text-white">Excluded — mobility scooters ≤ 10 A</strong>
-                — Section 722 explicitly excludes "electric vehicle charging points that
-                charge mobility scooters and similar vehicles of 10 A and less". The
-                domestic 3-pin socket-outlet used to charge a disability-mobility scooter
-                is NOT a Section 722 circuit — treat as standard socket per Section 411
-                + 415
-              </li>
-              <li>
-                <strong className="text-white">Excluded — inductive (wireless)
-                  charging</strong> — different electrical principles (magnetic coupling)
-                handled by IEC 61980 series; Section 722 scope is conductive
-                (cable-connected) only
-              </li>
-              <li>
-                <strong className="text-white">Annex A722 (Informative)</strong> — example
-                arrangements illustrating compliant install patterns. Informative means
-                guidance not mandate; other arrangements that satisfy the binding 722.x
-                regs are equally valid
-              </li>
-              <li>
-                <strong className="text-white">Definition "electric vehicle (EV)"</strong>
-                — defined in Part 2 of BS 7671. Section 722 cross-references Part 2 for
-                the authoritative term. Includes passenger cars, commercial vans, light
-                LCVs — anything the Part 2 definition covers
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <RegsCallout
-            source="BS 7671:2018+A4:2026 · Section 722 — Scope + Reg 722.511.101"
-            clause="The particular requirements of Section 722 apply to circuits intended to supply electric vehicles for charging purposes. Reg 722.511.101: EV charging equipment shall comply with the appropriate parts of the BS EN 61851 series. Excluded: charging points that charge mobility scooters and similar vehicles of 10 A and less; charging points that employ inductive charging."
-            meaning="Section 722 is the EV-specific chapter within Part 7 (Special Installations or Locations) of BS 7671. The scope catches all dedicated EV charging circuits; the exclusions catch low-current mobility devices and inductive wireless charging. Reg 722.511.101 is the product-conformance gate — the wallbox / charging station itself must conform to BS EN 61851. Manufacturer Declaration of Conformity is the installer’s verification route. Cert evidence bundle records the scope determination and the BS EN 61851 conformance evidence."
-          />
-
-          <InlineCheck {...inlineChecks[0]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>The four BS EN 61851 charging Modes</ContentEyebrow>
-
-          <Pullquote>
-            UK domestic 2025-26 = Mode 3 dominant. Mode 2 covers the granny-lead edge. Mode 1 is essentially obsolete. Mode 4 belongs in M7.
-          </Pullquote>
-
-          <ConceptBlock
-            title="Mode 1 — direct socket, no signalling"
-            plainEnglish="Mode 1 = the simplest possible arrangement: a cable from a normal mains socket to the vehicle, with no Control Pilot (CP) signalling and no in-cable protection. Predates the modern signalling standards. Essentially obsolete for UK domestic charging — the safety case requires CP signalling to coordinate vehicle-side and supply-side protection."
-            onSite="Don’t quote Mode 1 for UK domestic install. Customer asks: educate that Mode 1 doesn’t use the CP signalling expected by every EV sold in the UK 2020+. Recommend Mode 3 wallbox for daily charging, Mode 2 granny lead as the occasional / emergency fallback."
-          >
-            <p>Where Mode 1 still appears (rare):</p>
-            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
-              <li>
-                <strong className="text-white">Light EVs without CP signalling</strong>
-                — some older / low-spec light electric vehicles (early e-bikes,
-                low-end scooters) — but these often fall under the mobility-scooter
-                Section 722 exception anyway
-              </li>
-              <li>
-                <strong className="text-white">Legacy installations</strong> — rare
-                pre-2014 retrofits encountered at EICR. Recommend upgrade to Mode 3
-                in remedial work
-              </li>
-              <li>
-                <strong className="text-white">Not Section 722 best
-                  practice</strong> — installers do not specify Mode 1 for new UK
-                domestic EV charging in 2025-26. The Mode 1 → Mode 2 / Mode 3
-                migration is essentially complete
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <ConceptBlock
-            title="Mode 2 — ICCPD granny lead"
-            plainEnglish="Mode 2 = a cable from a normal mains socket (3-pin or commando) to the vehicle, with an In-Cable Control & Protection Device (ICCPD) midway. The ICCPD provides the CP signalling and some in-line protection. Charges at 8-13 A typical. Designed for occasional / emergency use, NOT daily charging."
-            onSite="UK 2025-26 reality: every new EV ships with a Mode 2 lead — typically 8 A from a 3-pin BS 1363 socket, 16-32 A from a Type 2 commando. Customers use them in emergency or at second homes / holidays. For DAILY charging at home, the dedicated Mode 3 wallbox is the right answer — Mode 2 sustained draw on a 13 A socket-outlet creates thermal stress that the BS 1363 socket was never specified for."
-          >
-            <p>Where Mode 2 fits in UK 2025-26 practice:</p>
-            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
-              <li>
-                <strong className="text-white">Emergency / occasional</strong> —
-                customer at a holiday cottage with no dedicated wallbox; occasional
-                home use before the wallbox install is complete
-              </li>
-              <li>
-                <strong className="text-white">Manufacturer-supplied</strong> —
-                most UK 2025-26 EVs include a Mode 2 lead in the boot as
-                emergency fallback. Typical specs: 3-pin BS 1363 at 8 A; Type 2
-                commando at 16 A
-              </li>
-              <li>
-                <strong className="text-white">Customer education</strong> — set
-                expectations: Mode 2 from a 13 A socket = ~10 km of range per
-                hour vs Mode 3 7 kW wallbox = ~50 km/hr. Mode 2 sustained on a
-                domestic socket is a real thermal stress on the socket and
-                cabling
-              </li>
-              <li>
-                <strong className="text-white">EICR finding</strong> — sustained
-                Mode 2 charging on a 13 A socket leaves visible terminal
-                discolouration / signs of thermal stress; periodic inspectors
-                spot it; suggests a Mode 3 wallbox upgrade is overdue
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <ConceptBlock
-            title="Mode 3 — dedicated wallbox (UK 2025-26 default)"
-            plainEnglish="Mode 3 = a dedicated charging station (wallbox) installed on its own dedicated final circuit. The wallbox houses the CP/PP signalling, the contactor, the protective devices and the Type 2 socket or tethered Type 2 connector. The customer’s cable is “dumb” — just conductors and Type 2 plugs at each end. Charges at 7 kW single-phase (32 A) up to 22 kW three-phase (32 A × 3)."
-            onSite="Mode 3 is the entire body of work for §6.4 (cable, RCBO, dedicated final circuit) through §6.7 (smart charging). Every UK domestic wallbox install in 2025-26 is Mode 3. Brand examples (alphabetical, no endorsement): Andersen, Easee, EO Charging, Hypervolt, MyEnergi Zappi, Ohme, PodPoint, Wallbox."
-          >
-            <p>What makes a Mode 3 install distinct:</p>
-            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
-              <li>
-                <strong className="text-white">Dedicated final circuit</strong> —
-                Reg 722.55; the wallbox does not share a circuit with other loads.
-                Cable, RCBO, isolator sized for the wallbox’s rated current
-                (typically 32 A on a 7 kW single-phase install)
-              </li>
-              <li>
-                <strong className="text-white">CP/PP signalling integrated in
-                  wallbox</strong> — the wallbox communicates with the vehicle
-                via the Control Pilot pilot wire; signal coordinates contactor
-                closure, current limit announcement, error states. Customer
-                cable just carries L / N / PE / CP / PP
-              </li>
-              <li>
-                <strong className="text-white">Type 2 socket or tethered Type
-                  2</strong> — UK / EU connector standard per BS EN IEC
-                62196-2:2022. Tethered = cable permanently attached to wallbox;
-                untethered = socket on wallbox, customer brings their own cable
-              </li>
-              <li>
-                <strong className="text-white">RCD architecture</strong> — Type B
-                (BS EN 62423) RCD on the AC side OR Type A + integrated 6 mA
-                RDC-DD per the manufacturer-declared profile. Covered in M6.3
-              </li>
-              <li>
-                <strong className="text-white">PME-on-EV earthing</strong> — Reg
-                722.411.4 outdoor charging point cannot use PME directly; one of
-                alternatives (b)-(e) applies. Covered in M6.2
-              </li>
-              <li>
-                <strong className="text-white">Smart-charging compliant</strong> —
-                UK Electric Vehicles (Smart Charge Points) Regulations 2021
-                require default off-peak charging + randomised delay + security
-                requirements for ALL new domestic wallboxes from June 2022 onward
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <ConceptBlock
-            title="Mode 4 — DC fast charging (commercial, M7)"
-            plainEnglish="Mode 4 = DC fast charging. The charging station includes the AC-to-DC conversion inside (saving the vehicle’s on-board charger), allowing power delivery far beyond AC limits. Typical Mode 4 = 50 kW (early), 150 kW (mid), 350 kW (current peak). UK 2025-26 connectors: CCS Combo 2 (the standard); CHAdeMO (legacy, now declining); Tesla NACS (USA-origin, expanding into UK)."
-            onSite="Mode 4 belongs in M7 (commercial, workplace, public, DC fast). Not relevant to UK domestic install. Customer ask: educate that domestic DNO supply (100 A single-phase = 23 kW maximum) cannot deliver 50+ kW; three-phase DNO upgrade would be needed, plus £20-50k of Mode 4 kit, for a charging speed that domestic users almost never need."
-          >
-            <p>Where Mode 4 lives (M7 preview):</p>
-            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
-              <li>
-                <strong className="text-white">Public charging</strong> — motorway
-                services, supermarket car parks, urban kerbside hubs. The bulk of
-                UK Mode 4 deployment
-              </li>
-              <li>
-                <strong className="text-white">Workplace fleet</strong> — taxi
-                fleets, delivery vans, commercial-vehicle depots needing
-                mid-shift top-up
-              </li>
-              <li>
-                <strong className="text-white">CCS Combo 2 connector</strong> —
-                BS EN IEC 62196-3 (DC). Combines AC pins from Mode 3 with two DC
-                pins below; one connector socket on the vehicle covers both AC
-                Mode 3 and DC Mode 4
-              </li>
-              <li>
-                <strong className="text-white">DNO involvement</strong> —
-                three-phase supply typically required, sometimes upgraded
-                connection. EREC G99 application standard. Section 722
-                + Section 712 (where battery storage is involved) + Chapter 82
-              </li>
-              <li>
-                <strong className="text-white">Cross-reference</strong> — see M7
-                for the full Mode 4 treatment
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <FourModesComparison caption="EV charging Modes 1–4 compared — connection, signalling and protection. UK fixed installs are almost always Mode 3 (AC) or Mode 4 (DC)." />
-
-          <InlineCheck {...inlineChecks[1]} />
-
-          <InlineCheck {...inlineChecks[2]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>Special protective measure — Reg 722.413.1.2</ContentEyebrow>
-
-          <ConceptBlock
-            title="Separated source (single EV, single unearthed source)"
-            plainEnglish="Reg 722.413.1.2 permits the use of electrical separation (Section 413 protective measure) for an EV charging circuit — but with a hard limitation: the protective measure shall be limited to the supply of ONE electric vehicle supplied from ONE unearthed source. The separated source cannot serve multiple EVs or any other loads on the same circuit."
-            onSite="Rare in UK domestic — the standard Reg 722.411.4 PME-alternative approaches (M6.2) cover most outdoor wallbox installs. Separated-source appears more often in commercial / fleet contexts where each bay has a dedicated isolating transformer, eliminating the PME hazard entirely at the cost of an additional transformer per bay."
-          >
-            <p>What separated-source actually buys:</p>
-            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
-              <li>
-                <strong className="text-white">Eliminates the PME hazard at
-                  source</strong> — if the supply to the wallbox comes from an
-                isolating transformer, the PME / "lost PEN" fault hazard cannot
-                propagate to the vehicle. No need for OPDD or dedicated TT
-                electrode at the wallbox
-              </li>
-              <li>
-                <strong className="text-white">Capital cost is the trade-off</strong>
-                — an isolating transformer (typical sizing 10-20 kVA for a 7-22 kW
-                wallbox) adds ~£600-£1,500 to the install cost; rarely justified
-                for single-bay domestic
-              </li>
-              <li>
-                <strong className="text-white">Single-EV limitation</strong> —
-                Reg 722.413.1.2 explicitly limits the protective measure to ONE
-                EV from ONE unearthed source. Cannot serve two EVs from a shared
-                transformer; cannot also feed garage lighting from the same
-                circuit. The "limited" word is binding
-              </li>
-              <li>
-                <strong className="text-white">Where it shines</strong> —
-                multi-bay fleet sites where each bay has its own isolating
-                transformer; sensitive earth-electrode sites where dedicated TT
-                isn’t practical; specific commercial deployments where the
-                customer’s safety case prefers the transformer route
-              </li>
-              <li>
-                <strong className="text-white">Cert evidence bundle</strong> —
-                records the separated-source topology choice, the transformer
-                rating + isolation class, and the single-EV limitation
-                documentation. Reg 722.413.1.2 + Section 413 references
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <RegsCallout
-            source="BS 7671:2018+A4:2026 · Reg 722.413.1.2 — Separated-source single-EV limitation"
-            clause="The protective measure shall be limited to the supply of one electric vehicle supplied from one unearthed source."
-            meaning="Reg 722.413.1.2 lets the installer use electrical separation (Section 413) as the protective measure for an EV charging circuit — but the separated source can supply ONLY one EV. Multiple EVs from one unearthed source: prohibited. Other loads on the same isolated circuit: prohibited. The “limited” wording is mandatory (per the regulatory note that ‘shall be limited’ is a binding restriction). Cert evidence bundle records the topology, the transformer rating, and the single-EV documentation. Rare in UK domestic; more common in commercial single-bay fleet deployments."
-          />
-
-          <InlineCheck {...inlineChecks[3]} />
-
-          <SectionRule />
-
-          <ContentEyebrow>Cross-references — Section 722 inside the wider BS 7671</ContentEyebrow>
-
-          <Pullquote>
-            Section 722 is one chapter inside BS 7671. Sections 411, 415, 522, 537 still apply on the EV circuit. Section 722 ADDS to them, doesn’t REPLACE them.
-          </Pullquote>
-
-          <ConceptBlock
-            title="Section 722 and its cross-references to the rest of BS 7671"
-            plainEnglish="Section 722 doesn’t exist in isolation. The dedicated EV circuit also sits within Section 411 (ADS), Section 415 (additional protection — 30 mA RCD on socket-outlets etc.), Section 522 (external influences), Section 537 (isolation), Chapter 64 (initial verification), and Chapter 65 (periodic inspection). Section 722 adds EV-specific requirements ON TOP of those base requirements."
-            onSite="Reading Section 722 alone leaves gaps. The competent designer treats the EV circuit as a Reg 411 + 415 + 522 + 537 circuit FIRST, then layers the Section 722 specifics. Cert evidence bundle reflects this layered compliance: standard Part 4 + Part 5 + Part 6 entries PLUS the Section 722 supplements."
-          >
-            <p>The cross-reference map:</p>
-            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
-              <li>
-                <strong className="text-white">Section 411 (ADS)</strong> — automatic
-                disconnection of supply. Zs ≤ Table 41.3 value; RCD trip-time per Reg 411.3.3 / 411.4.5. The EV circuit’s Type A or Type B RCBO operates per Reg 411
-              </li>
-              <li>
-                <strong className="text-white">Section 415 (additional
-                  protection)</strong> — 30 mA RCD on socket-outlets ≤ 32 A (Reg 411.3.3). The EV circuit’s 30 mA threshold satisfies this even though the connector is a Type 2 not a BS 1363 socket
-              </li>
-              <li>
-                <strong className="text-white">Section 522 (external
-                  influences)</strong> — outdoor install IP / IK ratings (covered in §6.5). Reg 522.x assessment for water, mechanical impact, solar radiation, corrosion
-              </li>
-              <li>
-                <strong className="text-white">Section 537
-                  (isolation)</strong> — readily accessible, properly identified means of isolation (covered in §6.4). The dedicated RCBO + any external isolator satisfies Reg 537
-              </li>
-              <li>
-                <strong className="text-white">Chapter 64 (initial
-                  verification)</strong> — Reg 643 testing applies on the EV circuit at commissioning (covered in §6.8). IR test 500 V DC, RCD trip-time, ADS verification
-              </li>
-              <li>
-                <strong className="text-white">Chapter 65 (periodic
-                  inspection)</strong> — EICR procedure applies on the EV circuit (covered in §6.8). Standard intervals + Section 722-specific items overlaid
-              </li>
-              <li>
-                <strong className="text-white">Chapter 82 (PEI)</strong> — where the
-                EV is bidirectional (V2H / V2G), Chapter 82 applies. Most UK 2025-26 installs are unidirectional and don’t invoke Chapter 82; M10 covers V2G in depth
-              </li>
-              <li>
-                <strong className="text-white">Section 712 (PV)</strong> — where the
-                EV install coexists with PV (PV-tracking via §6.7), Section 712 governs the PV side. Two layered Sections (712 + 722) on one prosumer site
-              </li>
-            </ul>
-          </ConceptBlock>
-
-          <RegsCallout
-            source="BS 7671:2018+A4:2026 · Reg 722.55 — Dedicated final circuit for each EV charging point"
-            clause="Each charging point shall be supplied by an individual final circuit dedicated to its supply, protected by an overcurrent protective device complying with the appropriate Standard."
-            meaning="Reg 722.55 is the structural requirement at the install level — every EV charging point gets its own dedicated final circuit. No sharing with lighting, socket-outlets, garage door openers, or any other load. The OCPD complies with the relevant standard (BS EN 61009 RCBO, BS EN 62423 Type B RCBO, BS EN 60898 MCB) at a rating matched to the wallbox’s rated current. Cert evidence bundle records the dedicated CU way + OCPD selection + the wallbox identification. Section 6.4 covers this in install detail. Multiple wallboxes = multiple dedicated circuits."
-          />
-
-          <Scenario
-            title="UK suburban customer — new wallbox install"
-            situation="Midlands semi-detached, 2024 build, customer just bought an electric vehicle. Wants a wallbox installed on the driveway by the front door. Customer drives ~50 km/day average; works from home some days. Standard DNO single-phase 100 A supply; CU has spare ways. Customer has googled ‘Mode 3’ because they read it on the manufacturer’s charging guide."
-            whatToDo="Section 722 scope check: yes, in scope (dedicated EV charging circuit). Mode 3 dedicated wallbox is the right answer — covers daily commuting easily, meets BS EN 61851 conformity, allows smart-charging integration with the customer’s tariff. Recommend a 7 kW (32 A) single-phase wallbox from a reputable UK brand (the wallbox model decision goes into the quote; example brand families: Ohme, Wallbox, Hypervolt, MyEnergi Zappi). The Mode 3 install lands the customer in §6.2 (earthing), §6.3 (RCD architecture), §6.4 (cable + RCBO + dedicated final circuit), §6.5 (outdoor IP install), §6.6 (connector + signalling) and §6.7 (smart charging). Cert evidence bundle starts here with the BS EN 61851 DoC + UKCA marking + Reg 722.511.101 conformance documentation."
-            whyItMatters="This is the bread-and-butter UK 2025-26 install — Mode 3 wallbox, 7 kW single-phase, dedicated final circuit. Sections 6.2 through 6.8 walk through every regulatory layer that lands on this install. Customer’s correct intuition (Mode 3) is the right answer; the installer’s job is to translate that into the compliant install pack."
-          />
-
-          <Scenario
-            title="Customer asks for a 22 kW three-phase domestic install"
-            situation="Customer in a rural detached property with three-phase 100 A DNO supply already on site (originally for a now-decommissioned commercial workshop). Customer has a high-mileage car (electric vehicle they use for daily long commute, ~150 km/day). Wants the fastest practical home charging."
-            whatToDo="Three-phase Mode 3 22 kW (32 A per phase) wallbox is feasible on this site. Section 722 scope check: yes, in scope. Confirm DNO’s position on the export side (anti-islanding under EREC G98 / G99 if PV/BESS coexist; standard G98 for the EV is below DNO notification thresholds). Three-phase wallbox brands: Easee, EO Charging, MyEnergi Zappi 22 kW variants, Tesla Wall Connector Gen 3. RCD architecture: Type B 4-pole on the three-phase circuit. Cable sizing per Reg 311.1 max demand on the three-phase final circuit; consider Reg 722.311.201 load curtailment if the rest of the household three-phase load is tight. Cert evidence bundle includes the three-phase install pack — same Section 722 layers but with phase-balance considerations. Note: three-phase domestic Mode 3 is rare in UK; most domestic supplies are single-phase. M7 covers commercial three-phase install in depth — this domestic edge case borrows from M7’s treatment."
-            whyItMatters="Three-phase domestic install is a real edge case in UK 2025-26 — rural sites with legacy commercial three-phase, large new-builds opting for three-phase supply, and the occasional fleet-charger-at-home scenario. The Section 722 regs apply identically; the install pattern shifts (4-pole devices, phase-balancing, DNO notification thresholds). Cert evidence bundle records the three-phase rationale."
-          />
-
-          <CommonMistake
-            title="Quoting ‘Mode 1’ for a UK domestic install because the customer asked for the cheapest option"
-            whatHappens="Installer takes a customer at their word that they want the cheapest EV charging — quotes a 3-pin commando socket as a Mode 1 charging point. Customer plugs in their EV via the manufacturer’s Mode 2 lead. The Mode 1 commando lacks the CP signalling expected by every modern EV; the EV refuses to draw at full rate; the customer complains; the installer returns to reconfigure. Mode 1 quote becomes a more expensive Mode 3 install at the second visit, plus reputation damage."
-            doInstead="Quote Mode 3 from the start for ANY UK 2025-26 domestic EV charging install. The cost difference between a commando-socket Mode 1 quote and a Mode 3 wallbox quote is small (~£200-400 wallbox vs ~£50 commando socket) compared to the cost of returning to redo the install. Customer education at quote stage: explain why Mode 3 is the right answer and what the smart-charging-regs benefits are. Cert evidence bundle for Mode 3 install records the rationale."
-          />
-
-          <CommonMistake
-            title="Treating a mobility-scooter 3-pin socket as a full Section 722 install"
-            whatHappens="Installer treats a customer’s ground-floor 3-pin socket for charging their disability-mobility scooter (drawing ~8 A from a BS 1363 socket) as a full Section 722 EV charging circuit — quoting Type B RCD + dedicated final circuit + OPDD + PME-on-EV alternatives. Customer faces a £1,500+ install cost for what should be a £100 socket installation."
-            doInstead="Check the Section 722 exclusion: mobility scooters and similar vehicles ≤ 10 A are explicitly OUT of scope. The 8 A mobility scooter falls under the exclusion. Install as a standard domestic socket-outlet per Section 411 + 415 (30 mA RCD on socket-outlets ≤ 32 A per Reg 411.3.3) — no Section 722 layered obligations. Cert evidence bundle records the exclusion rationale + the cleaner install scope. Common defect on the other direction (treating a real EV as the exception) is more dangerous; this direction is just over-engineering, but still wastes customer money."
-          />
-
-          <SectionRule />
-
-          <KeyTakeaways
-            points={[
-              'Section 722 of BS 7671:2018+A4:2026 covers circuits intended to supply electric vehicles for charging purposes. Domestic Mode 3 wallboxes, workplace AC, public AC, and (via cross-reference) Mode 4 DC fast.',
-              'Two explicit Section 722 exclusions: mobility scooters and similar vehicles ≤ 10 A; inductive (wireless) charging. Install per the rest of BS 7671 in both cases — no Section 722 layered obligations.',
-              'BS EN 61851 series defines the four charging Modes. Mode 1 = direct socket no signalling (obsolete). Mode 2 = ICCPD granny lead (occasional / emergency). Mode 3 = dedicated wallbox with CP/PP (UK 2025-26 default). Mode 4 = DC fast charging (M7 scope).',
-              'Reg 722.511.101 — EV charging equipment shall comply with the appropriate parts of BS EN 61851 series. Verification via manufacturer Declaration of Conformity + UKCA / CE marking + datasheets.',
-              'Reg 722.413.1.2 — separated-source protective measure permitted, but explicitly limited to ONE EV from ONE unearthed source. Cannot serve multiple EVs or other loads.',
-              'Definition of "electric vehicle (EV)" lives in Part 2 of BS 7671. Annex A722 is Informative (examples not mandatory).',
-              'Section 722 interacts with Chapter 82 (PEI) where the EV is bidirectional (V2H / V2G — the EV becomes a SOURCE). V2G is covered in M10; M6 keeps focus on the charging direction.',
-              'Wider UK EV regulatory stack: Section 722 (wiring regs) + UK Electric Vehicles (Smart Charge Points) Regulations 2021 (M6.7) + OZEV / EVCS grant scheme (M6.8) + local planning / freeholder consent.',
-              'UK 2025-26 install reality: Mode 3 wallbox at 7 kW single-phase (32 A) is the standard. 22 kW three-phase domestic is rare edge case (rural / large new-build). Mode 2 granny leads for emergency use only.',
-              'Cert evidence bundle starts at Section 722 scope determination + BS EN 61851 DoC + UKCA / CE marking. Sections 6.2 through 6.8 layer on the install-specific regulatory pieces.',
-            ]}
-          />
-
-          <FAQ items={faqs} />
-
-          <Quiz questions={quizQuestions} title="Section 1 · Knowledge check" />
-
-          <div className="grid grid-cols-2 gap-3 pt-2">
-            <button
-              type="button"
-              onClick={() => navigate('/electrician/upskilling/renewable-energy-module-6')}
-              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
-                <ChevronLeft className="h-3 w-3" /> Module 6
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-white truncate">
-                Module overview
-              </div>
-            </button>
-            <button
-              type="button"
-              onClick={() =>
-                navigate('/electrician/upskilling/renewable-energy-module-6-section-2')
-              }
-              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
-                Next section <ChevronRight className="h-3 w-3" />
-              </div>
-              <div className="mt-1 text-[14px] font-semibold text-black truncate">
-                6.2 Earthing tree — PME-on-EV, TN-S, TT, OPDD
-              </div>
-            </button>
-          </div>
-        </PageFrame>
-      </div>
-    </div>
+            <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+              Next section <ChevronRight className="h-3 w-3" />
+            </div>
+            <div className="mt-1 text-[14px] font-semibold text-black truncate">
+              6.2 Earthing tree — PME-on-EV, TN-S, TT, OPDD
+            </div>
+          </button>
+        </div>
+      </HubBody>
+    </HubPage>
   );
 }

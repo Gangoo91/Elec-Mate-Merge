@@ -114,6 +114,7 @@ serve(async (req) => {
       price_in_purchased_currency,
       currency,
       transaction_id,
+      cancel_reason,
     } = event;
 
     console.log(
@@ -143,6 +144,12 @@ serve(async (req) => {
           event_type: type,
           store: store ?? '',
           product_id: product_id ?? '',
+          // TRIAL vs NORMAL — without this the churn digest presented trial
+          // auto-renew-offs as paying losses (29 "lost" vs RC's ~4 real).
+          period_type: period_type ?? null,
+          // The stores' only "why": UNSUBSCRIBE = chose to leave,
+          // BILLING_ERROR = card failed (involuntary — different fix entirely).
+          cancel_reason: cancel_reason ?? null,
         });
         if (evtErr) console.warn('billing_events log failed (non-blocking):', evtErr);
       } catch (evtEx) {

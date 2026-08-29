@@ -7,6 +7,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { StatusBadge } from './StatusBadge';
+import SchemeCertificateAttachment from './SchemeCertificateAttachment';
 import { BuildingControlFinder } from './BuildingControlFinder';
 import { ReportPdfViewer } from '@/components/reports/ReportPdfViewer';
 import { Notification } from '@/hooks/useNotifications';
@@ -230,7 +231,8 @@ export const NotificationCard = ({
           </div>
 
           {isSubmitted ? (
-            /* Submitted — done state, one tap to undo if wrong */
+            <>
+            {/* Submitted — done state, one tap to undo if wrong */}
             <div className="flex items-center justify-between gap-3 rounded-xl border border-emerald-500/40 bg-emerald-500/10 px-3.5 py-3">
               <div className="flex items-center gap-2.5 min-w-0">
                 <div className="min-w-0">
@@ -247,6 +249,21 @@ export const NotificationCard = ({
                 Undo
               </button>
             </div>
+            {/*
+              ELE-1616. Directly under "Submitted" because that is the moment
+              the file exists — he has just come back from the portal with it.
+            */}
+            <SchemeCertificateAttachment
+              notificationId={notification.id}
+              reportId={notification.report_id}
+              schemeLabel={isSchemeMember ? schemes.map((s) => s.name).join(' / ') : 'Building Control'}
+              url={notification.scheme_certificate_url}
+              name={notification.scheme_certificate_name}
+              reference={notification.scheme_certificate_ref}
+              uploadedAt={notification.scheme_certificate_uploaded_at}
+              onUpdate={onUpdate}
+            />
+            </>
           ) : (
             <>
               {/* Deadline — one clean line, colour carries the urgency */}

@@ -249,6 +249,25 @@ export default defineConfig(({ mode }) => ({
     chunkSizeWarningLimit: 500,
     rollupOptions: {
       output: {
+        /**
+         * 🔴 Keep cross-chunk export names readable.
+         *
+         * EVERY chunk error in Sentry over 30 days named one module —
+         * `analytics-events` — around 94 events, e.g. "The requested module
+         * './analytics-events-q4lkqSOe.js' does not provide an export named 'x'".
+         * That same filename also appears expecting 'e' and 'v', which is the
+         * tell: one filename, different mangled export names across builds. A
+         * browser holding a cached importer from an earlier build then asks the
+         * newer file for a binding that no longer carries that letter.
+         *
+         * Rollup mangles exported bindings between chunks by default. Turning
+         * that off costs a little bundle size and makes the names stable, so an
+         * importer and its dependency can no longer disagree.
+         *
+         * The error boundary force-reloads to recover from this, which used to
+         * wipe an in-progress mock exam — see the resume logic in SEOMockExam.
+         */
+        minifyInternalExports: false,
         manualChunks: {
           'vendor-react': ['react', 'react-dom', 'react-router-dom'],
           'vendor-radix': [

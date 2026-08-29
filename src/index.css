@@ -157,42 +157,51 @@ input::-webkit-caps-lock-indicator {
     /*
      * BACKGROUND — near-black, no blue hue.
      *
-     * Raised from 4% to 7% (and --elec-dark 3% → 6%). At 3–4% lightness the
-     * page was effectively pure black, which is why every surface on it had to
-     * fight to be seen: cards read as flat rectangles, borders read as grey
-     * outlines, and any translucent fill mixed straight into the void.
+     * Raised 4% → 7% → 11% (and --elec-dark 3% → 6% → 10%).
+     *
+     * 2026-08-29: raised again, this time for READING rather than for depth.
+     * Andrew, on a full-length course page: "im not a fan of the complete
+     * background of black, it hurts my eyes a little". He is right, and it is
+     * a real effect — 98% white text on a 6–7% ground is close to the maximum
+     * contrast a screen can produce, and on a 900-line page that halation is
+     * tiring rather than crisp.
+     *
+     * The fix is to raise the GROUND, not to dim the text: body copy stays
+     * `text-white` because low-opacity white reads as grey and is banned
+     * outright. Lifting the background lowers the contrast ratio from the
+     * other side and costs nothing in legibility.
      *
      * Every layer above it moved by the same amount. The ladder is what
      * matters — page < card < control < border — and brightening only the page
      * would have collapsed the card into it.
      */
-    --background: 0 0% 7%;
+    --background: 0 0% 11%;
     --foreground: 0 0% 98%;
 
     /* CARDS - Slightly lighter than background for depth */
-    --card: 0 0% 11%;
+    --card: 0 0% 15%;
     --card-foreground: 0 0% 98%;
 
-    --popover: 0 0% 9%;
+    --popover: 0 0% 13%;
     --popover-foreground: 0 0% 98%;
 
     --primary: 47 100% 50%;
     --primary-foreground: 0 0% 4%;
 
-    --secondary: 0 0% 16%;
+    --secondary: 0 0% 20%;
     --secondary-foreground: 0 0% 98%;
 
-    --muted: 0 0% 16%;
+    --muted: 0 0% 20%;
     --muted-foreground: 240 5% 65%;
 
-    --accent: 0 0% 18%;
+    --accent: 0 0% 22%;
     --accent-foreground: 0 0% 98%;
 
     --destructive: 0 62.8% 50%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 0 0% 22%;
-    --input: 0 0% 15%;
+    --border: 0 0% 26%;
+    --input: 0 0% 19%;
     --ring: 47 100% 50%;
 
     /* Additional semantic colors */
@@ -204,12 +213,12 @@ input::-webkit-caps-lock-indicator {
     --info-foreground: 0 0% 100%;
 
     /* Electrical theme colors */
-    --elec-dark: 0 0% 6%;
+    --elec-dark: 0 0% 10%;
     --elec-light: 0 0% 98%;
-    --elec-gray: 0 0% 18%;
+    --elec-gray: 0 0% 22%;
     --elec-yellow: 47 100% 50%;
-    --elec-card: 0 0% 13%;
-    --elec-grey: 0 0% 7%;
+    --elec-card: 0 0% 17%;
+    --elec-grey: 0 0% 11%;
 
     /* Muted text colors for comfortable reading */
     --text-muted: 210 30% 85%;

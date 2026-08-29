@@ -2797,7 +2797,7 @@ export const tmoQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 163,
-    question: 'What are James Clear\'s "4 Laws of Behavior Change"?',
+    question: 'What are James Clear\'s "4 Laws of Behaviour Change"?',
     options: [
       'Start small, build gradually, maintain consistency, review progress',
       'Work hard, stay focused, be consistent, never give up',

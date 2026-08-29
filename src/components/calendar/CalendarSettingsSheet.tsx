@@ -64,6 +64,11 @@ async function openExternal(url: string) {
 
 const SUPABASE_URL = 'https://jtwygbeceundfgnkirof.supabase.co';
 
+// Outlook calendar sync is fully built server-side, but the Azure app is
+// still single-tenant so outside users can't connect. Hidden until Andrew
+// flips the app registration (multitenant + calendar redirect URI).
+const OUTLOOK_CALENDAR_ENABLED = false;
+
 /** Realistic for a firm running off one diary; more than this needs a rota. */
 const JOBS_AT_ONCE_OPTIONS = [1, 2, 3, 4, 5, 6, 8, 10];
 
@@ -77,6 +82,12 @@ interface CalendarSettingsSheetProps {
   onConnect: () => void;
   onDisconnect: () => void;
   onSyncNow: () => void;
+  outlookStatus: GoogleCalendarStatus;
+  outlookSyncing: boolean;
+  outlookConnecting: boolean;
+  onOutlookConnect: () => void;
+  onOutlookDisconnect: () => void;
+  onOutlookSyncNow: () => void;
   defaultView: CalendarView;
   onDefaultViewChange: (view: CalendarView) => void;
   workingHoursStart: number;
@@ -106,6 +117,12 @@ const CalendarSettingsSheet = ({
   onConnect,
   onDisconnect,
   onSyncNow,
+  outlookStatus,
+  outlookSyncing,
+  outlookConnecting,
+  onOutlookConnect,
+  onOutlookDisconnect,
+  onOutlookSyncNow,
   defaultView,
   onDefaultViewChange,
   workingHoursStart,
@@ -434,38 +451,126 @@ const CalendarSettingsSheet = ({
             </section>
 
             {/* ──────────────────────────────────────────────────────
+                Outlook Calendar (Two-Way)
+                Hidden until the Azure app registration is switched to
+                multitenant + the calendar redirect URI is added — the
+                backend (oauth + sync-outlook-calendar) is live and waiting.
+                Flip OUTLOOK_CALENDAR_ENABLED when Andrew does the console.
+               ────────────────────────────────────────────────────── */}
+            {OUTLOOK_CALENDAR_ENABLED && (
+            <section className="space-y-3">
+              <div>
+                <h3 className="text-sm font-bold text-white">Outlook Calendar</h3>
+                <p className="text-xs text-white mt-0.5">
+                  Microsoft 365 / Outlook.com — two-way sync
+                </p>
+              </div>
+
+              <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden">
+                {syncLoading ? (
+                  <div className="p-4 flex items-center gap-2">
+                    <Loader2 className="h-4 w-4 animate-spin text-white" />
+                    <span className="text-sm text-white">Checking...</span>
+                  </div>
+                ) : outlookStatus.connected ? (
+                  <div className="divide-y divide-white/[0.06]">
+                    <div className="p-4 flex items-center gap-3">
+                      <CheckCircle2 className="h-5 w-5 text-green-400 flex-shrink-0" />
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-semibold text-white">Connected</p>
+                        {outlookStatus.email && (
+                          <p className="text-xs text-white truncate">{outlookStatus.email}</p>
+                        )}
+                      </div>
+                    </div>
+                    {outlookStatus.lastSyncAt && (
+                      <div className="px-4 py-2">
+                        <p className="text-xs text-white">
+                          Last synced {new Date(outlookStatus.lastSyncAt).toLocaleString('en-GB')}
+                        </p>
+                      </div>
+                    )}
+                    <div className="flex">
+                      <button
+                        type="button"
+                        onClick={onOutlookSyncNow}
+                        disabled={outlookSyncing}
+                        className="flex-1 h-12 flex items-center justify-center gap-2 text-sm font-semibold text-white touch-manipulation active:bg-white/[0.04]"
+                      >
+                        {outlookSyncing ? (
+                          <Loader2 className="h-4 w-4 animate-spin" />
+                        ) : (
+                          <RefreshCw className="h-4 w-4" />
+                        )}
+                        Sync Now
+                      </button>
+                      <div className="w-px bg-white/[0.06]" />
+                      <button
+                        type="button"
+                        onClick={onOutlookDisconnect}
+                        className="flex-1 h-12 flex items-center justify-center gap-2 text-sm font-semibold text-red-400 touch-manipulation active:bg-white/[0.04]"
+                      >
+                        <Unplug className="h-4 w-4" />
+                        Disconnect
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="p-4 space-y-3">
+                    <p className="text-sm text-white">
+                      Connect your Microsoft account to sync events both ways with Outlook or
+                      Microsoft 365.
+                    </p>
+                    <Button
+                      onClick={onOutlookConnect}
+                      disabled={outlookConnecting}
+                      className="h-12 w-full bg-[#0078D4] hover:bg-[#106EBE] text-white font-bold rounded-xl touch-manipulation active:scale-[0.98]"
+                    >
+                      {outlookConnecting && <Loader2 className="h-4 w-4 animate-spin mr-2" />}
+                      Connect Outlook Calendar
+                    </Button>
+                  </div>
+                )}
+              </div>
+            </section>
+            )}
+
+            {/* ──────────────────────────────────────────────────────
                 Preferences
                ────────────────────────────────────────────────────── */}
-            <section className="space-y-3">
+            <section className="space-y-4">
               <h3 className="text-sm font-bold text-white">Preferences</h3>
 
-              <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden divide-y divide-white/[0.06]">
-                {/* Default view */}
-                <div className="flex items-center justify-between h-12 px-4">
-                  <Label className="text-sm text-white">Default view</Label>
-                  <Select
-                    value={defaultView}
-                    onValueChange={(v) => onDefaultViewChange(v as CalendarView)}
-                  >
-                    <SelectTrigger className="h-9 w-28 touch-manipulation bg-transparent border-0 text-sm font-semibold text-elec-yellow text-right justify-end gap-1 focus:ring-0">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
-                      <SelectItem value="day">Day</SelectItem>
-                      <SelectItem value="week">Week</SelectItem>
-                      <SelectItem value="month">Month</SelectItem>
-                    </SelectContent>
-                  </Select>
+              {/* Default view — three options, chips beat a select */}
+              <div>
+                <p className="text-[12px] font-medium text-white mb-2">Default view</p>
+                <div className="grid grid-cols-3 gap-2">
+                  {(['day', 'week', 'month'] as const).map((v) => (
+                    <button
+                      key={v}
+                      type="button"
+                      onClick={() => onDefaultViewChange(v as CalendarView)}
+                      className={
+                        defaultView === v
+                          ? 'h-11 rounded-xl border border-elec-yellow bg-elec-yellow text-[13px] font-semibold text-black touch-manipulation'
+                          : 'h-11 rounded-xl border border-white/[0.12] bg-white/[0.06] text-[13px] font-medium text-white touch-manipulation'
+                      }
+                    >
+                      {v.charAt(0).toUpperCase() + v.slice(1)}
+                    </button>
+                  ))}
                 </div>
+              </div>
 
-                {/* Work starts */}
-                <div className="flex items-center justify-between h-12 px-4">
-                  <Label className="text-sm text-white">Work starts</Label>
+              {/* Working hours — the length of the day, side by side */}
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <p className="text-[12px] font-medium text-white mb-2">Work starts</p>
                   <Select
                     value={String(workingHoursStart)}
                     onValueChange={(v) => onWorkingHoursChange(parseInt(v, 10), workingHoursEnd)}
                   >
-                    <SelectTrigger className="h-9 w-24 touch-manipulation bg-transparent border-0 text-sm font-semibold text-elec-yellow text-right justify-end gap-1 focus:ring-0">
+                    <SelectTrigger className="h-11 w-full touch-manipulation rounded-xl bg-white/[0.06] border border-white/[0.12] text-sm font-semibold text-white focus:ring-0">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
@@ -477,15 +582,13 @@ const CalendarSettingsSheet = ({
                     </SelectContent>
                   </Select>
                 </div>
-
-                {/* Work ends */}
-                <div className="flex items-center justify-between h-12 px-4">
-                  <Label className="text-sm text-white">Work ends</Label>
+                <div>
+                  <p className="text-[12px] font-medium text-white mb-2">Work ends</p>
                   <Select
                     value={String(workingHoursEnd)}
                     onValueChange={(v) => onWorkingHoursChange(workingHoursStart, parseInt(v, 10))}
                   >
-                    <SelectTrigger className="h-9 w-24 touch-manipulation bg-transparent border-0 text-sm font-semibold text-elec-yellow text-right justify-end gap-1 focus:ring-0">
+                    <SelectTrigger className="h-11 w-full touch-manipulation rounded-xl bg-white/[0.06] border border-white/[0.12] text-sm font-semibold text-white focus:ring-0">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
@@ -497,54 +600,61 @@ const CalendarSettingsSheet = ({
                     </SelectContent>
                   </Select>
                 </div>
+              </div>
 
-                {/* Jobs at once.
-                    Directly below the working hours because the three together
-                    are the whole answer to "how much can I take on" — the hours
-                    say how long the day is, this says how wide it is. */}
-                <div className="flex items-center justify-between h-12 px-4">
-                  <Label className="text-sm text-white">Jobs at once</Label>
-                  <Select
-                    value={String(jobsAtOnce)}
-                    onValueChange={(v) => onJobsAtOnceChange(parseInt(v, 10))}
-                  >
-                    <SelectTrigger className="h-9 w-24 touch-manipulation bg-transparent border-0 text-sm font-semibold text-elec-yellow text-right justify-end gap-1 focus:ring-0">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
-                      {JOBS_AT_ONCE_OPTIONS.map((n) => (
-                        <SelectItem key={n} value={String(n)}>
-                          {n === 1 ? 'Just me' : `${n} at once`}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+              {/* Jobs at once — the width of the day. Chips, no truncation. */}
+              <div>
+                <p className="text-[12px] font-medium text-white mb-2">Jobs at once</p>
+                <div className="flex flex-wrap gap-2">
+                  {JOBS_AT_ONCE_OPTIONS.map((n) => (
+                    <button
+                      key={n}
+                      type="button"
+                      onClick={() => onJobsAtOnceChange(n)}
+                      className={
+                        jobsAtOnce === n
+                          ? 'h-11 px-4 rounded-xl border border-elec-yellow bg-elec-yellow text-[13px] font-semibold text-black touch-manipulation'
+                          : 'h-11 px-4 rounded-xl border border-white/[0.12] bg-white/[0.06] text-[13px] font-medium text-white touch-manipulation'
+                      }
+                    >
+                      {n === 1 ? 'Just me' : String(n)}
+                    </button>
+                  ))}
                 </div>
-                <p className="px-4 pb-3 text-[12px] text-white">
-                  How many jobs you can have running at the same time. A day only
-                  counts as full once it hits this — below it, overlapping bookings
-                  are normal rather than a clash.
+                <p className="mt-2 text-[12px] leading-snug text-white">
+                  How many jobs you can have running at the same time. A day only counts as full
+                  once it hits this — below it, overlapping bookings are normal rather than a
+                  clash.
                 </p>
+              </div>
 
-                {/* Default reminder */}
-                <div className="flex items-center justify-between h-12 px-4">
-                  <Label className="text-sm text-white">Default reminder</Label>
-                  <Select
-                    value={String(defaultReminderMinutes)}
-                    onValueChange={(v) => onDefaultReminderChange(parseInt(v, 10))}
-                  >
-                    <SelectTrigger className="h-9 w-28 touch-manipulation bg-transparent border-0 text-sm font-semibold text-elec-yellow text-right justify-end gap-1 focus:ring-0">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
-                      <SelectItem value="0">None</SelectItem>
-                      <SelectItem value="5">5 minutes</SelectItem>
-                      <SelectItem value="15">15 minutes</SelectItem>
-                      <SelectItem value="30">30 minutes</SelectItem>
-                      <SelectItem value="60">1 hour</SelectItem>
-                      <SelectItem value="1440">1 day</SelectItem>
-                    </SelectContent>
-                  </Select>
+              {/* Default reminder — six options, chips again */}
+              <div>
+                <p className="text-[12px] font-medium text-white mb-2">Default reminder</p>
+                <div className="flex flex-wrap gap-2">
+                  {(
+                    [
+                      { v: 0, label: 'None' },
+                      { v: 5, label: '5 min' },
+                      { v: 15, label: '15 min' },
+                      { v: 30, label: '30 min' },
+                      { v: 60, label: '1 hour' },
+                      { v: 1440, label: '1 day' },
+                    ] as const
+                  ).map((opt) => (
+                    <button
+                      key={opt.v}
+                      type="button"
+                      onClick={() => onDefaultReminderChange(opt.v)}
+                      className={
+                        defaultReminderMinutes === opt.v
+                          ? 'h-11 px-4 rounded-xl border border-elec-yellow bg-elec-yellow text-[13px] font-semibold text-black touch-manipulation'
+                          : 'h-11 px-4 rounded-xl border border-white/[0.12] bg-white/[0.06] text-[13px] font-medium text-white touch-manipulation'
+                      }
+                    >
+                      {opt.label}
+                    </button>
+                  ))}
                 </div>
               </div>
             </section>

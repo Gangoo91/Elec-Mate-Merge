@@ -189,7 +189,7 @@ export const dataCablingQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 10,
-    question: 'Which organization publishes the TIA-568 standard?',
+    question: 'Which organisation publishes the TIA-568 standard?',
     options: [
       'IEEE',
       'ISO',
@@ -327,7 +327,7 @@ export const dataCablingQuestionBank: StandardMockQuestion[] = [
     id: 18,
     question: 'Which factor most affects the performance of twisted pair cables?',
     options: [
-      'Cable color',
+      'Cable colour',
       'Jacket material',
       'Pair twist rate',
       'Installation temperature',
@@ -410,16 +410,16 @@ export const dataCablingQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 23,
-    question: 'What is the primary reason for using different colored cables?',
+    question: 'What is the primary reason for using different coloured cables?',
     options: [
       'Performance differences',
       'Cost considerations',
       'Fire rating requirements',
-      'Identification and organization',
+      'Identification and organisation',
     ],
     correctAnswer: 3,
     explanation:
-      'Different colored cables are primarily used for identification and organization of different services or circuit types.',
+      'Different coloured cables are primarily used for identification and organisation of different services or circuit types.',
     section: 'Module 1',
     difficulty: 'basic',
     topic: 'Best Practices',
@@ -1076,7 +1076,7 @@ export const dataCablingQuestionBank: StandardMockQuestion[] = [
     question: 'Which factor is most critical when installing cables in plenum spaces?',
     options: [
       'Cable diameter',
-      'Color coding',
+      'Colour coding',
       'Fire rating',
       'Bend radius',
     ],
@@ -1246,7 +1246,7 @@ export const dataCablingQuestionBank: StandardMockQuestion[] = [
     question: 'Which factor affects the number of cables that can be pulled simultaneously?',
     options: [
       'Conduit size',
-      'Cable color',
+      'Cable colour',
       'Installation time',
       'Cable cost',
     ],
@@ -1654,7 +1654,7 @@ export const dataCablingQuestionBank: StandardMockQuestion[] = [
       'Measurement accuracy',
       'Environmental compensation',
       'Equipment calibration',
-      'Speed optimization',
+      'Speed optimisation',
     ],
     correctAnswer: 0,
     explanation:
@@ -2535,7 +2535,7 @@ export const dataCablingQuestionBank: StandardMockQuestion[] = [
     ],
     correctAnswer: 0,
     explanation:
-      'The maximum campus backbone distance is 2000 metres for optical fiber applications.',
+      'The maximum campus backbone distance is 2000 metres for optical fibre applications.',
     section: 'Module 6',
     difficulty: 'advanced',
     topic: 'Standards',

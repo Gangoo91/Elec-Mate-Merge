@@ -167,7 +167,7 @@ const InstrumentationModule6Section3 = () => {
 
         <InlineCheck
           question="What is the correct order for device isolation before calibration?"
-          answer="1) Switch off and lock out electrical supplies, 2) Close isolation valves, 3) Vent trapped pressure safely, 4) Apply LOTO tags, 5) Verify isolation with test instruments. Never skip any steps."
+          correctAnswer="1) Switch off and lock out electrical supplies, 2) Close isolation valves, 3) Vent trapped pressure safely, 4) Apply LOTO tags, 5) Verify isolation with test instruments. Never skip any steps."
         />
 
         {/* Section 02 - Pressure Device Calibration */}
@@ -408,7 +408,7 @@ const InstrumentationModule6Section3 = () => {
 
         <InlineCheck
           question="What is the stability criterion for temperature calibration readings?"
-          answer="Less than 0.01°C change over 2 minutes. This ensures thermal equilibrium has been reached and readings are reliable. Rushing this step is a common cause of calibration errors."
+          correctAnswer="Less than 0.01°C change over 2 minutes. This ensures thermal equilibrium has been reached and readings are reliable. Rushing this step is a common cause of calibration errors."
         />
 
         {/* Section 04 - Electrical Device Calibration */}
@@ -619,7 +619,7 @@ const InstrumentationModule6Section3 = () => {
 
         <InlineCheck
           question="Why is 4-wire connection recommended for resistance measurements?"
-          answer="4-wire (Kelvin) connection eliminates the effect of test lead resistance by using separate pairs of wires for current injection and voltage sensing. This provides the highest accuracy, especially for low-resistance measurements."
+          correctAnswer="4-wire (Kelvin) connection eliminates the effect of test lead resistance by using separate pairs of wires for current injection and voltage sensing. This provides the highest accuracy, especially for low-resistance measurements."
         />
 
         {/* Real World Scenario */}
