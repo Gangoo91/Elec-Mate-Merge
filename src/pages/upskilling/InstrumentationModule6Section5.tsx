@@ -1,879 +1,817 @@
-import {
-  ArrowLeft,
-  Calendar,
-  CheckCircle,
-  HelpCircle,
-  Clock,
-  FileText,
-  Shield,
-  Target,
-  Settings,
-  AlertTriangle,
-  TrendingUp,
-} from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+/**
+ * Module 6 · Section 5 — Calibration intervals
+ *
+ * Rewritten 2026-08-30 against the Module 1 Section 1 exemplar.
+ *
+ * 🔴 POSITIONING. The outline said "calibration intervals, certificates and
+ * UKAS traceability" — and Module 1 Section 4 already owns UKAS (9 mentions),
+ * ISO/IEC 17025 (10), accreditation (20), certificates (24) and the
+ * traceability chain (43). Two thirds of that title is taken.
+ *
+ * What is NOT covered anywhere: HOW AN INTERVAL IS ACTUALLY SET. M1.4 mentions
+ * "interval" once; M4.5's 24 mentions are LOGGING intervals (sampling), a
+ * different subject entirely. So this page owns intervals, and only intervals.
+ *
+ * 🔴 THE FRAMING. An interval is a RISK DECISION, not a rule handed down. It
+ * balances two things:
+ *   - how fast this instrument drifts        → from the as-found history (M4.5)
+ *   - what it costs to be wrong              → from what the reading is used for
+ *
+ * 🔴 THE PAYOFF, and it is the thing that makes the whole of Module 4 Section 5
+ * pay: the as-found sequence IS the evidence that sets the interval. An
+ * instrument that never moves can go longer; one that is drifting faster than
+ * it used to cannot. An interval that has never changed in ten years is an
+ * interval nobody is using the data for — which means the recording discipline
+ * has been performed and never harvested.
+ *
+ * 🔴 Also: an interval must be RESET by anything that invalidates the history —
+ * repair, replacement, a change of duty, a change of location. The drift record
+ * belongs to an instrument in a situation, not to a tag number.
+ *
+ * ⚠️ ACCURACY: do NOT state specific intervals, regulatory requirements or
+ * industry-standard periods. "Annual" is a convention, not a rule, and naming
+ * regulations would be fabrication. Keep every claim derivable.
+ *
+ * Sources: this section is applied reasoning from the course's own material —
+ * Kuphaldt §18.3.2 (drift as an indicator of impending failure) supplies the
+ * principle that the history predicts, and Module 4 Section 5 develops it.
+ * Nothing here asserts a figure or a requirement that is not derived.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  TLDR,
+  ConceptBlock,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+  Pullquote,
+  AppendixTable,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
-const InstrumentationModule6Section5 = () => {
-  useSEO({
-    title: 'Calibration Intervals, Certificates, and UKAS Traceability | Instrumentation Module 6',
-    description:
-      'Learn about calibration scheduling approaches, certificate interpretation, UKAS traceability requirements, and building effective calibration programmes.',
-    keywords: [
-      'calibration intervals',
-      'UKAS traceability',
-      'calibration certificates',
-      'calibration scheduling',
-      'NPL',
-      'calibration programme',
+const TITLE = 'Calibration intervals | Instrumentation Module 6.5 | Elec-Mate';
+const DESCRIPTION =
+  'How a calibration interval is actually decided — why it is a risk judgement rather than a rule, how the as-found history provides the evidence, when an interval should be extended or shortened, and what resets it entirely.';
+
+const outcomes = [
+  '🔴 Explain what an interval is balancing, and why it is a judgement rather than a rule',
+  'Say what the two inputs to an interval decision are',
+  '🔴 Explain how the as-found history provides the evidence for changing one',
+  'Say why an interval that never changes suggests the data is not being used',
+  'Justify extending an interval, and say what evidence is required',
+  'Justify shortening one, and recognise the signal that demands it',
+  '🔴 List what resets an interval by invalidating the history',
+  'Say what a calibration due date does and does not guarantee',
+];
+
+const quizQuestions = [
+  {
+    id: 1,
+    question: '🔴 What is a calibration interval fundamentally balancing?',
+    options: [
+      'How fast the instrument drifts against what it costs to be wrong',
+      'The manufacturer’s recommendation against site convenience',
+      'The workload of the calibration team',
+      'The cost of calibration against the cost of the instrument',
     ],
-  });
+    correctIndex: 0,
+    explanation:
+      'Both halves are needed. A stable instrument on a critical duty may warrant frequent checking anyway; a drifting instrument whose reading barely matters may not. The interval is where those two considerations meet, which makes it a risk judgement rather than a fixed rule.',
+  },
+  {
+    id: 2,
+    question: '🔴 Where does the evidence for changing an interval come from?',
+    options: [
+      'The manufacturer’s data sheet',
+      'The as-found history — how far the instrument had moved at each successive calibration',
+      'The as-left records',
+      'The age of the instrument',
+    ],
+    correctIndex: 1,
+    explanation:
+      'As-found is the only measurement of what the instrument was doing in service, so a run of them shows how fast it actually drifts under real conditions. As-left records show only where it was set each time, which reveals nothing about how it behaves in between.',
+  },
+  {
+    id: 3,
+    question:
+      'An instrument’s as-found error has been within a quarter of its tolerance at each of the last five annual calibrations. What does that support?',
+    options: [
+      'Replacing the instrument',
+      'Nothing — the interval is fixed',
+      'A case for extending the interval, since the evidence shows it stays well inside tolerance over a year',
+      'Shortening the interval as a precaution',
+    ],
+    correctIndex: 2,
+    explanation:
+      'Five years of evidence that it barely moves is exactly the justification for checking it less often. That is a documented decision based on data rather than a relaxation — and it frees effort for instruments that genuinely need it.',
+  },
+  {
+    id: 4,
+    question:
+      '🔴 As-found errors over four years are 0.1, 0.2, 0.4 and 0.9 per cent, against a 1.5 per cent tolerance. What does this indicate?',
+    options: [
+      'The calibrations were performed inconsistently',
+      'The tolerance is too tight',
+      'The instrument is fine — every result passed',
+      'The drift is accelerating, so it is likely to be out of tolerance before the next annual check',
+    ],
+    correctIndex: 3,
+    explanation:
+      'Every individual result passed, and the sequence is the finding. The steps are growing — 0.1, then 0.2, then 0.5 — which is Module 4 Section 5’s impending-failure signal. Waiting another full year risks the instrument spending months out of tolerance unnoticed.',
+  },
+  {
+    id: 5,
+    question: 'What does an interval that has never changed in ten years suggest?',
+    options: [
+      'That the calibration data is being collected and never used to inform anything',
+      'That the interval was set correctly at the start',
+      'That the instrument is not critical',
+      'The instrument is very stable',
+    ],
+    correctIndex: 0,
+    explanation:
+      'It might be right, and nothing in the record demonstrates that anybody checked. The point of building a drift history is that it should change decisions. A history that never alters an interval has been performed as a ritual rather than used as evidence.',
+  },
+  {
+    id: 6,
+    question: '🔴 Which of these resets an instrument’s calibration history?',
+    options: [
+      'A routine calibration that passed',
+      'Replacing the instrument, repairing it, or moving it to a different duty or location',
+      'A change of technician',
+      'A change to the tolerance',
+    ],
+    correctIndex: 1,
+    explanation:
+      'The drift history describes a particular instrument in a particular situation. Change the instrument and it is a different device; change the duty or location and the conditions driving the drift are different. Either way the accumulated evidence no longer predicts anything and the interval starts again conservatively.',
+  },
+  {
+    id: 7,
+    question: 'What does a calibration due date guarantee about an instrument today?',
+    options: [
+      'That it has not drifted',
+      'That it is reading correctly',
+      'Nothing — it states when the next comparison is scheduled, not the instrument’s present condition',
+      'That it is within tolerance',
+    ],
+    correctIndex: 2,
+    explanation:
+      'An in-date instrument can be substantially out of tolerance, which is precisely what is discovered at the next calibration. The date is a plan for when to look, not a statement about what you would find — and Section 4 covered what happens when the finding is bad.',
+  },
+  {
+    id: 8,
+    question:
+      'A critical instrument has never once been found out of tolerance in eight years. Should its interval be extended?',
+    options: [
+      'No — critical instruments can never have their intervals changed',
+      'Only if the manufacturer agrees',
+      'Yes — the evidence clearly supports it',
+      'Possibly, but the consequence of being wrong is the other half of the decision and may justify keeping it',
+    ],
+    correctIndex: 3,
+    explanation:
+      'The drift evidence is only one input. Where the cost of an undetected error is severe, frequent checking can be justified even on a demonstrably stable instrument — because the interval is buying confidence, not just catching drift. Stability alone does not settle it.',
+  },
+];
+
+const InstrumentationModule6Section5 = () => {
+  const navigate = useNavigate();
+  useSEO({ title: TITLE, description: DESCRIPTION });
 
   return (
-    <div className="bg-background text-foreground">
-      {/* Sticky Header */}
-      <div className="sticky top-0 z-30 bg-background/95 backdrop-blur-sm border-b border-border">
-        <div className="px-4 py-3">
-          <Link
-            to="/electrician/upskilling/instrumentation-module-6"
-            className="inline-flex items-center text-white hover:text-elec-yellow transition-colors"
-          >
-            <ArrowLeft className="h-5 w-5 mr-2" />
-            <span className="font-medium">Back to Module 6</span>
-          </Link>
-        </div>
-      </div>
+    <HubPage>
+      <HubMasthead
+        section="Module 6 · Section 5"
+        title="Calibration intervals"
+        backTo="/electrician/upskilling/instrumentation-module-6"
+      />
 
-      <div className="px-4 py-6 max-w-4xl mx-auto">
-        {/* Title Section */}
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-elec-yellow/20 mb-4">
-            <Calendar className="h-8 w-8 text-elec-yellow" />
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-            Calibration Intervals, Certificates, and UKAS Traceability
-          </h1>
-          <p className="text-white">Module 6 · Section 5 · 18 min read</p>
-        </div>
+      <HubBody>
+        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
+          How often is often enough? It is a judgement, it should be evidence-based, and the
+          evidence is something you have been building all along.
+        </p>
 
-        {/* Quick Summary Box */}
-        <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-4 mb-8">
-          <h2 className="font-semibold text-white mb-2 flex items-center gap-2">
-            <CheckCircle className="h-5 w-5 text-elec-yellow" />
-            What You Will Learn
-          </h2>
-          <ul className="space-y-1 text-white">
-            <li className="flex items-start gap-2">
-              <span className="text-elec-yellow mt-1">•</span>
-              Different approaches to calibration scheduling (time-based, usage-based, risk-based)
+        <TLDR
+          points={[
+            'Module 1 Section 4 owns traceability, UKAS, ISO/IEC 17025 and certificates. This section owns intervals.',
+            '🔴 An interval balances how fast an instrument drifts against what it costs to be wrong.',
+            'Both halves are needed — a stable instrument on a critical duty may still warrant frequent checking.',
+            '🔴 The evidence comes from the as-found history: how far it had moved at each successive calibration.',
+            'As-left records reveal nothing about drift, because they only show where it was set each time.',
+            'Consistently small as-found errors justify extending an interval — a documented decision, not a relaxation.',
+            '🔴 Growing as-found errors justify shortening one, and accelerating growth demands it.',
+            'Every individual result can pass while the sequence is the finding.',
+            'An interval unchanged for a decade suggests the data is collected and never used.',
+            '🔴 Repair, replacement, or a change of duty or location resets the history — it describes an instrument in a situation, not a tag number.',
+            'A due date says when the next comparison is scheduled. It says nothing about the instrument’s condition today.',
+            'Intervals should be reviewed as a population, not one instrument at a time.',
+          ]}
+        />
+
+        <LearningOutcomes outcomes={outcomes} />
+
+        <ContentEyebrow>🔴 What an interval actually is</ContentEyebrow>
+
+        <ConceptBlock
+          title="A risk decision, not a rule handed down"
+          plainEnglish="Nobody can tell you the right number without knowing how much this instrument moves and how much it matters if it is wrong."
+          onSite="An annual interval is a convention. It is a sensible default and it is not a law of nature."
+        >
+          <p>
+            Calibration intervals are usually inherited. An instrument arrives with a period
+            attached to it, the period is respected, and nobody asks where it came from. That is
+            understandable and it wastes the most useful thing the calibration programme produces.
+          </p>
+          <p>
+            An interval is a <strong>judgement balancing two quantities</strong>:
+          </p>
+          <ul>
+            <li>
+              <strong>How fast does this instrument actually drift?</strong> Which is a question
+              about the instrument in this situation, answerable from evidence.
             </li>
-            <li className="flex items-start gap-2">
-              <span className="text-elec-yellow mt-1">•</span>
-              How to interpret calibration certificates and their essential components
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-elec-yellow mt-1">•</span>
-              UKAS traceability requirements and their practical implications
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-elec-yellow mt-1">•</span>
-              Building an effective site-wide calibration programme
+            <li>
+              <strong>What does it cost to be wrong?</strong> Which is a question about what the
+              reading is used for, and belongs to whoever uses it.
             </li>
           </ul>
-        </div>
-
-        {/* Section 01 - Calibration Intervals */}
-        <section className="mb-10">
-          <div className="flex items-center gap-3 mb-4">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">
-              01
-            </span>
-            <h2 className="text-xl font-semibold text-white">Calibration Interval Approaches</h2>
-          </div>
-
-          <div className="space-y-6">
-            <p className="text-white leading-relaxed">
-              Calibration intervals determine how often instruments are recalibrated. There is no
-              single "correct" interval - the right approach depends on the instrument, its
-              application, environmental conditions, and regulatory requirements.
-            </p>
-
-            <div className="grid gap-4 sm:grid-cols-3">
-              <div className="bg-card/50 rounded-lg p-4 border border-border">
-                <h3 className="font-semibold text-white mb-3 flex items-center gap-2">
-                  <Clock className="h-5 w-5 text-blue-400" />
-                  Time-Based
-                </h3>
-                <ul className="space-y-2 text-white text-sm">
-                  <li className="flex items-start gap-2">
-                    <span className="text-blue-400">•</span>
-                    Fixed intervals: 6, 12, or 24 months
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-blue-400">•</span>
-                    Predictable and easy to manage
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-blue-400">•</span>
-                    May be too frequent or infrequent
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-blue-400">•</span>
-                    Best for stable environments
-                  </li>
-                </ul>
-              </div>
-
-              <div className="bg-card/50 rounded-lg p-4 border border-border">
-                <h3 className="font-semibold text-white mb-3 flex items-center gap-2">
-                  <TrendingUp className="h-5 w-5 text-green-400" />
-                  Usage-Based
-                </h3>
-                <ul className="space-y-2 text-white text-sm">
-                  <li className="flex items-start gap-2">
-                    <span className="text-green-400">•</span>
-                    Every 1000 operating hours
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-green-400">•</span>
-                    After 10,000 measurements
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-green-400">•</span>
-                    Matches actual wear and tear
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-green-400">•</span>
-                    Requires usage monitoring
-                  </li>
-                </ul>
-              </div>
-
-              <div className="bg-card/50 rounded-lg p-4 border border-border">
-                <h3 className="font-semibold text-white mb-3 flex items-center gap-2">
-                  <Target className="h-5 w-5 text-purple-400" />
-                  Risk-Based
-                </h3>
-                <ul className="space-y-2 text-white text-sm">
-                  <li className="flex items-start gap-2">
-                    <span className="text-purple-400">•</span>
-                    Critical instruments: more frequent
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-purple-400">•</span>
-                    Based on drift patterns and history
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-purple-400">•</span>
-                    Considers consequence of error
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-purple-400">•</span>
-                    Optimised resource allocation
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            {/* Factors Affecting Frequency */}
-            <div className="bg-card/50 rounded-lg p-4 border border-border">
-              <h3 className="font-semibold text-white mb-3">
-                Factors Affecting Calibration Frequency
-              </h3>
-              <div className="grid gap-4 sm:grid-cols-2">
-                <div>
-                  <h4 className="font-medium text-elec-yellow mb-2 text-sm">
-                    Environmental Factors
-                  </h4>
-                  <ul className="space-y-1 text-white text-sm">
-                    <li className="flex items-start gap-2">
-                      <span className="text-elec-yellow">•</span>
-                      Temperature variations and cycling
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-elec-yellow">•</span>
-                      Humidity and moisture exposure
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-elec-yellow">•</span>
-                      Vibration and mechanical stress
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-elec-yellow">•</span>
-                      Electromagnetic interference
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-elec-yellow">•</span>
-                      Corrosive atmospheres
-                    </li>
-                  </ul>
-                </div>
-                <div>
-                  <h4 className="font-medium text-elec-yellow mb-2 text-sm">Operational Factors</h4>
-                  <ul className="space-y-1 text-white text-sm">
-                    <li className="flex items-start gap-2">
-                      <span className="text-elec-yellow">•</span>
-                      Frequency of use and duty cycle
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-elec-yellow">•</span>
-                      Handling and transportation
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-elec-yellow">•</span>
-                      Process stability requirements
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-elec-yellow">•</span>
-                      Regulatory compliance needs
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-elec-yellow">•</span>
-                      Cost of calibration vs. risk
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <InlineCheck
-          question="What approach should you use for a safety-critical pressure sensor that directly affects product quality?"
-          correctAnswer="Risk-based scheduling with more frequent calibration intervals. Safety-critical instruments require shorter intervals because the consequence of measurement error is high. You would also implement interim verification checks between calibrations."
-        />
-
-        {/* Section 02 - Calibration Certificate Interpretation */}
-        <section className="mb-10 mt-10">
-          <div className="flex items-center gap-3 mb-4">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">
-              02
-            </span>
-            <h2 className="text-xl font-semibold text-white">
-              Calibration Certificate Interpretation
-            </h2>
-          </div>
-
-          <div className="space-y-6">
-            <p className="text-white leading-relaxed">
-              Understanding how to read and interpret calibration certificates is essential for
-              verifying that calibration was performed correctly and meets your requirements. A
-              certificate is only useful if you know what to look for.
-            </p>
-
-            <div className="grid gap-4 sm:grid-cols-2">
-              <div className="bg-card/50 rounded-lg p-4 border border-border">
-                <h3 className="font-semibold text-white mb-3 flex items-center gap-2">
-                  <FileText className="h-5 w-5 text-blue-400" />
-                  Identification Information
-                </h3>
-                <ul className="space-y-2 text-white text-sm">
-                  <li className="flex items-start gap-2">
-                    <span className="text-blue-400">•</span>
-                    <strong>Unique Certificate ID:</strong> Traceable reference number
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-blue-400">•</span>
-                    <strong>Device Information:</strong> Make, model, serial number
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-blue-400">•</span>
-                    <strong>Calibration Date:</strong> When performed
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-blue-400">•</span>
-                    <strong>Issue Date:</strong> When certificate issued
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-blue-400">•</span>
-                    <strong>Recommended Recalibration:</strong> Suggested due date
-                  </li>
-                </ul>
-              </div>
-
-              <div className="bg-card/50 rounded-lg p-4 border border-border">
-                <h3 className="font-semibold text-white mb-3 flex items-center gap-2">
-                  <FileText className="h-5 w-5 text-green-400" />
-                  Technical Data
-                </h3>
-                <ul className="space-y-2 text-white text-sm">
-                  <li className="flex items-start gap-2">
-                    <span className="text-green-400">•</span>
-                    <strong>Measurement Results:</strong> Actual readings obtained
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-green-400">•</span>
-                    <strong>Measurement Uncertainty:</strong> ±values at each point
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-green-400">•</span>
-                    <strong>Environmental Conditions:</strong> Temperature, humidity
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-green-400">•</span>
-                    <strong>Standards Used:</strong> Reference equipment details
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-green-400">•</span>
-                    <strong>Traceability Statement:</strong> Link to national standards
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            {/* Key Things to Check */}
-            <div className="bg-orange-500/10 border border-orange-500/30 rounded-lg p-4">
-              <h3 className="font-semibold text-orange-400 mb-2 flex items-center gap-2">
-                <AlertTriangle className="h-4 w-4" />
-                Key Things to Check on a Certificate
-              </h3>
-              <ul className="text-white text-sm space-y-1">
-                <li className="flex items-start gap-2">
-                  <span className="text-orange-400">1.</span>
-                  Does the serial number match your instrument?
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-orange-400">2.</span>
-                  Is the laboratory UKAS accredited for this type of calibration?
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-orange-400">3.</span>
-                  Is the measurement uncertainty acceptable for your application?
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-orange-400">4.</span>
-                  Do the results show the instrument is within specification?
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-orange-400">5.</span>
-                  Is the certificate properly signed and dated?
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        {/* Section 03 - UKAS Traceability */}
-        <section className="mb-10">
-          <div className="flex items-center gap-3 mb-4">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">
-              03
-            </span>
-            <h2 className="text-xl font-semibold text-white">
-              UKAS Traceability and National Standards
-            </h2>
-          </div>
-
-          <div className="space-y-6">
-            <p className="text-white leading-relaxed">
-              UKAS (United Kingdom Accreditation Service) is the UK's national accreditation body.
-              UKAS accreditation demonstrates that a laboratory is competent to perform specific
-              calibrations and that results are traceable to national standards.
-            </p>
-
-            <div className="bg-card/50 rounded-lg p-4 border border-border">
-              <h3 className="font-semibold text-white mb-3 flex items-center gap-2">
-                <Shield className="h-5 w-5 text-elec-yellow" />
-                The Traceability Chain
-              </h3>
-              <div className="space-y-3">
-                <div className="bg-elec-yellow/20 border border-elec-yellow/40 rounded-lg p-3">
-                  <h4 className="font-semibold text-elec-yellow text-sm">
-                    National Physical Laboratory (NPL)
-                  </h4>
-                  <p className="text-white text-sm mt-1">
-                    UK's national measurement institute. Maintains primary standards directly linked
-                    to SI units (International System of Units).
-                  </p>
-                </div>
-
-                <div className="bg-purple-500/20 border border-purple-500/40 rounded-lg p-3 ml-4">
-                  <h4 className="font-semibold text-purple-400 text-sm">
-                    UKAS-Accredited Laboratories
-                  </h4>
-                  <p className="text-white text-sm mt-1">
-                    Secondary standards calibrated by NPL. Provide accredited calibration services
-                    with documented uncertainty and traceability.
-                  </p>
-                </div>
-
-                <div className="bg-blue-500/20 border border-blue-500/40 rounded-lg p-3 ml-8">
-                  <h4 className="font-semibold text-blue-400 text-sm">Working Standards</h4>
-                  <p className="text-white text-sm mt-1">
-                    Used by industry for day-to-day calibration. Calibrated against secondary
-                    standards from UKAS laboratories.
-                  </p>
-                </div>
-
-                <div className="bg-green-500/20 border border-green-500/40 rounded-lg p-3 ml-12">
-                  <h4 className="font-semibold text-green-400 text-sm">Your Instruments</h4>
-                  <p className="text-white text-sm mt-1">
-                    Field instruments calibrated against working standards. Complete the
-                    traceability chain back to SI units.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Benefits of UKAS */}
-            <div className="grid gap-4 sm:grid-cols-2">
-              <div className="bg-card/50 rounded-lg p-4 border border-border">
-                <h3 className="font-semibold text-white mb-3">Benefits of UKAS Accreditation</h3>
-                <ul className="space-y-2 text-white text-sm">
-                  <li className="flex items-start gap-2">
-                    <span className="text-green-400">•</span>
-                    International recognition through MRA agreements
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-green-400">•</span>
-                    Accepted by UK and international regulators
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-green-400">•</span>
-                    Regular assessment of laboratory competence
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-green-400">•</span>
-                    Demonstrates technical credibility
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-green-400">•</span>
-                    Reduces measurement-related risks
-                  </li>
-                </ul>
-              </div>
-
-              <div className="bg-card/50 rounded-lg p-4 border border-border">
-                <h3 className="font-semibold text-white mb-3">When UKAS is Required</h3>
-                <ul className="space-y-2 text-white text-sm">
-                  <li className="flex items-start gap-2">
-                    <span className="text-blue-400">•</span>
-                    Regulatory compliance requirements
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-blue-400">•</span>
-                    ISO 9001/ISO 17025 audits
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-blue-400">•</span>
-                    Customer contract specifications
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-blue-400">•</span>
-                    Safety-critical applications
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-blue-400">•</span>
-                    Legal or liability considerations
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <InlineCheck
-          question="What does UKAS accreditation guarantee about a calibration certificate?"
-          correctAnswer="UKAS accreditation guarantees that the laboratory has been independently assessed as competent to perform that specific type of calibration, that their results are traceable to national standards (NPL), and that they operate to ISO/IEC 17025 requirements. It does not guarantee the instrument is accurate - only that the calibration was performed competently."
-        />
-
-        {/* Section 04 - When to Recalibrate */}
-        <section className="mb-10 mt-10">
-          <div className="flex items-center gap-3 mb-4">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">
-              04
-            </span>
-            <h2 className="text-xl font-semibold text-white">When Recalibration is Required</h2>
-          </div>
-
-          <div className="space-y-6">
-            <p className="text-white leading-relaxed">
-              Beyond scheduled intervals, certain events should trigger immediate recalibration.
-              Recognising these triggers prevents the use of potentially inaccurate instruments.
-            </p>
-
-            <div className="grid gap-4 sm:grid-cols-2">
-              <div className="bg-card/50 rounded-lg p-4 border border-border">
-                <h3 className="font-semibold text-white mb-3 flex items-center gap-2">
-                  <AlertTriangle className="h-5 w-5 text-red-400" />
-                  Immediate Recalibration Triggers
-                </h3>
-                <ul className="space-y-2 text-white text-sm">
-                  <li className="flex items-start gap-2">
-                    <span className="text-red-400">•</span>
-                    <strong>Physical Damage:</strong> Dropped, impacted, or exposed to extremes
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-red-400">•</span>
-                    <strong>Unusual Readings:</strong> Unexpected or inconsistent results
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-red-400">•</span>
-                    <strong>Failed Verification:</strong> Performance check failures
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-red-400">•</span>
-                    <strong>Overrange Events:</strong> Measurements beyond limits
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-red-400">•</span>
-                    <strong>After Repair:</strong> Any internal modification or repair
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-red-400">•</span>
-                    <strong>Contamination:</strong> Exposure to harmful substances
-                  </li>
-                </ul>
-              </div>
-
-              <div className="bg-card/50 rounded-lg p-4 border border-border">
-                <h3 className="font-semibold text-white mb-3 flex items-center gap-2">
-                  <Settings className="h-5 w-5 text-blue-400" />
-                  Compliance Triggers
-                </h3>
-                <ul className="space-y-2 text-white text-sm">
-                  <li className="flex items-start gap-2">
-                    <span className="text-blue-400">•</span>
-                    <strong>Regulation Updates:</strong> New regulatory requirements
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-blue-400">•</span>
-                    <strong>Audit Findings:</strong> Non-conformances identified
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-blue-400">•</span>
-                    <strong>Standard Changes:</strong> Updated calibration procedures
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-blue-400">•</span>
-                    <strong>Process Changes:</strong> New application requirements
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-blue-400">•</span>
-                    <strong>Quality Issues:</strong> Product failures linked to measurement
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-blue-400">•</span>
-                    <strong>Customer Requirements:</strong> Specific calibration demands
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Section 05 - Building a Calibration Programme */}
-        <section className="mb-10">
-          <div className="flex items-center gap-3 mb-4">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">
-              05
-            </span>
-            <h2 className="text-xl font-semibold text-white">
-              Building a Site-Wide Calibration Programme
-            </h2>
-          </div>
-
-          <div className="space-y-6">
-            <p className="text-white leading-relaxed">
-              An effective calibration programme ensures all measuring equipment is properly
-              managed, calibrated at appropriate intervals, and maintains traceability. Here are the
-              key steps to develop one.
-            </p>
-
-            <div className="grid gap-4 sm:grid-cols-2">
-              <div className="bg-card/50 rounded-lg p-4 border border-border">
-                <h3 className="font-semibold text-elec-yellow mb-2 text-sm">
-                  1. Instrument Inventory
-                </h3>
-                <ul className="space-y-1 text-white text-sm">
-                  <li className="flex items-start gap-2">
-                    <span className="text-elec-yellow">•</span>
-                    Complete survey of all measuring equipment
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-elec-yellow">•</span>
-                    Assign unique identification numbers
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-elec-yellow">•</span>
-                    Document location and application
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-elec-yellow">•</span>
-                    Record manufacturer specifications
-                  </li>
-                </ul>
-              </div>
-
-              <div className="bg-card/50 rounded-lg p-4 border border-border">
-                <h3 className="font-semibold text-elec-yellow mb-2 text-sm">2. Risk Assessment</h3>
-                <ul className="space-y-1 text-white text-sm">
-                  <li className="flex items-start gap-2">
-                    <span className="text-elec-yellow">•</span>
-                    Identify critical measurement points
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-elec-yellow">•</span>
-                    Assess impact of measurement errors
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-elec-yellow">•</span>
-                    Determine required accuracy levels
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-elec-yellow">•</span>
-                    Classify instruments by importance
-                  </li>
-                </ul>
-              </div>
-
-              <div className="bg-card/50 rounded-lg p-4 border border-border">
-                <h3 className="font-semibold text-elec-yellow mb-2 text-sm">
-                  3. Interval Determination
-                </h3>
-                <ul className="space-y-1 text-white text-sm">
-                  <li className="flex items-start gap-2">
-                    <span className="text-elec-yellow">•</span>
-                    Apply manufacturer recommendations
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-elec-yellow">•</span>
-                    Consider operating conditions
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-elec-yellow">•</span>
-                    Review historical performance data
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-elec-yellow">•</span>
-                    Balance risk with cost
-                  </li>
-                </ul>
-              </div>
-
-              <div className="bg-card/50 rounded-lg p-4 border border-border">
-                <h3 className="font-semibold text-elec-yellow mb-2 text-sm">
-                  4. Supplier Selection
-                </h3>
-                <ul className="space-y-1 text-white text-sm">
-                  <li className="flex items-start gap-2">
-                    <span className="text-elec-yellow">•</span>
-                    Verify UKAS accreditation
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-elec-yellow">•</span>
-                    Check scope of accreditation
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-elec-yellow">•</span>
-                    Evaluate technical competence
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-elec-yellow">•</span>
-                    Consider location and turnaround time
-                  </li>
-                </ul>
-              </div>
-
-              <div className="bg-card/50 rounded-lg p-4 border border-border">
-                <h3 className="font-semibold text-elec-yellow mb-2 text-sm">
-                  5. Documentation System
-                </h3>
-                <ul className="space-y-1 text-white text-sm">
-                  <li className="flex items-start gap-2">
-                    <span className="text-elec-yellow">•</span>
-                    Calibration database or software
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-elec-yellow">•</span>
-                    Automated scheduling and reminders
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-elec-yellow">•</span>
-                    Certificate storage and retrieval
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-elec-yellow">•</span>
-                    Audit trail maintenance
-                  </li>
-                </ul>
-              </div>
-
-              <div className="bg-card/50 rounded-lg p-4 border border-border">
-                <h3 className="font-semibold text-elec-yellow mb-2 text-sm">
-                  6. Continuous Improvement
-                </h3>
-                <ul className="space-y-1 text-white text-sm">
-                  <li className="flex items-start gap-2">
-                    <span className="text-elec-yellow">•</span>
-                    Monitor calibration result trends
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-elec-yellow">•</span>
-                    Adjust intervals based on performance
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-elec-yellow">•</span>
-                    Regular programme review
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-elec-yellow">•</span>
-                    Cost-benefit analysis
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <InlineCheck
-          question="Why is a complete instrument inventory the first step in building a calibration programme?"
-          correctAnswer="You cannot manage what you do not know exists. A complete inventory ensures every measuring instrument is identified, tracked, and included in the calibration schedule. Missing instruments from the inventory leads to uncalibrated equipment being used, risking measurement errors and audit failures."
-        />
-
-        {/* Real World Scenario */}
-        <div className="bg-gradient-to-r from-green-500/10 to-blue-500/10 border border-green-500/30 rounded-lg p-4 mb-10 mt-10">
-          <h3 className="font-semibold text-green-400 mb-2 flex items-center gap-2">
-            <CheckCircle className="h-5 w-5" />
-            Real World Scenario: High-Vibration Manufacturing Environment
-          </h3>
-          <p className="text-white text-sm leading-relaxed mb-3">
-            A precision component manufacturer operates CNC machines 24/7 in a high-vibration
-            environment. Quality control instruments were showing significant drift at standard
-            12-month intervals, leading to customer complaints about tolerance variations.
+          <p>
+            The interval is where those two meet.{' '}
+            <strong>
+              Neither on its own settles it, and treating either as the whole answer produces
+              intervals that are wrong in a predictable direction.
+            </strong>
           </p>
-          <div className="bg-card/50 rounded-lg p-3 border border-border mb-3">
-            <h4 className="font-medium text-elec-yellow text-sm mb-2">Solution Implemented:</h4>
-            <ul className="text-white text-sm space-y-1">
-              <li className="flex items-start gap-2">
-                <span className="text-green-400">1.</span>
-                Reduced intervals to 6 months for critical instruments
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400">2.</span>
-                Implemented monthly performance verification checks
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400">3.</span>
-                Added vibration isolation mounts for sensitive equipment
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400">4.</span>
-                Established trend monitoring to track stability
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400">5.</span>
-                Created risk-based calibration matrix by instrument type
-              </li>
-            </ul>
-          </div>
-          <p className="text-green-400 text-sm italic">
-            Result: 90% reduction in quality-related customer complaints and improved process
-            capability indices across all critical dimensions.
+          <p>
+            Judging only on drift means a rock-steady instrument on a critical duty gets checked
+            rarely &mdash; and the whole point of checking it is not that it is expected to be
+            wrong, but that the consequence if it were would be severe. Judging only on criticality
+            means everything important gets checked constantly regardless of whether it ever moves,
+            which consumes effort that other instruments need.
           </p>
-        </div>
+          <p>
+            It follows that the same instrument model, calibrated by the same team, can legitimately
+            carry different intervals in different places on the same site. That is not
+            inconsistency; it is the decision being made properly.
+          </p>
+        </ConceptBlock>
 
-        {/* FAQs Section */}
-        <section className="mb-10">
-          <div className="flex items-center gap-3 mb-4">
-            <HelpCircle className="h-6 w-6 text-elec-yellow" />
-            <h2 className="text-xl font-semibold text-white">Frequently Asked Questions</h2>
-          </div>
+        <SectionRule />
+        <ContentEyebrow>🔴 Where the evidence comes from</ContentEyebrow>
 
-          <div className="space-y-4">
-            <div className="bg-card/50 rounded-lg p-4 border border-border">
-              <h3 className="font-semibold text-white mb-2">
-                Can I extend calibration intervals to save money?
-              </h3>
-              <p className="text-white text-sm">
-                Yes, but only with justification. You need historical data showing the instrument
-                remains stable over the current interval. Track as-found readings over several
-                calibration cycles - if consistently within tolerance, you may justify extending
-                intervals. Document your rationale and get management approval.
-              </p>
-            </div>
-
-            <div className="bg-card/50 rounded-lg p-4 border border-border">
-              <h3 className="font-semibold text-white mb-2">
-                Is UKAS calibration always required?
-              </h3>
-              <p className="text-white text-sm">
-                Not always. UKAS calibration is required when regulations mandate it, customers
-                specify it, or for safety-critical applications. For non-critical measurements,
-                calibration by a competent person using traceable standards may be acceptable. Check
-                your specific regulatory and customer requirements.
-              </p>
-            </div>
-
-            <div className="bg-card/50 rounded-lg p-4 border border-border">
-              <h3 className="font-semibold text-white mb-2">
-                What if my instrument is out of calibration when due?
-              </h3>
-              <p className="text-white text-sm">
-                An overdue instrument should not be used for measurements until recalibrated.
-                Quarantine it with a clear label. Review any measurements made since it was due -
-                you may need to assess the impact on product quality and potentially recall or
-                re-test products measured during the overdue period.
-              </p>
-            </div>
-
-            <div className="bg-card/50 rounded-lg p-4 border border-border">
-              <h3 className="font-semibold text-white mb-2">
-                How do I verify my calibration supplier is competent?
-              </h3>
-              <p className="text-white text-sm">
-                Check their UKAS accreditation schedule online at the UKAS website. Verify the
-                specific measurements you need are within their scope of accreditation. Ask for
-                sample certificates and check they include all required information. Consider
-                performing a supplier audit if calibration is critical to your quality system.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        {/* Quiz Section */}
-        <section className="mb-10">
-          <SingleQuestionQuiz
-            question="Which approach to calibration scheduling is most appropriate for a rarely-used but safety-critical instrument?"
-            options={[
-              'Usage-based - calibrate after every 1000 uses',
-              'Time-based - standard 12-month interval',
-              'Risk-based - more frequent calibration despite low usage due to safety criticality',
-              'No calibration needed if rarely used',
+        <ConceptBlock
+          title="The as-found history is the whole basis"
+          plainEnglish="Every calibration you have ever recorded before touching the instrument is a measurement of how fast it drifts. A run of them is a prediction."
+          onSite="This is what all that recording was for. If the history exists, the interval can be argued from evidence rather than habit."
+        >
+          <p>
+            Module 4 Section 5 argued for recording as-found values on the grounds that drift cannot
+            otherwise be calculated. Section 4 of this module gave the sharper reason &mdash; it is
+            the only evidence about the period just passed. This is the third use, and it is the one
+            that pays forward.
+          </p>
+          <p>
+            <strong>
+              A sequence of as-found errors is a measurement of how quickly this instrument goes
+              wrong under its real conditions.
+            </strong>{' '}
+            Not under laboratory conditions, not according to a data sheet &mdash; in this location,
+            on this duty, with this process doing what it does to it.
+          </p>
+          <p>
+            That is far better information than any general recommendation, and it is the reason
+            as-left records cannot substitute.{' '}
+            <strong>
+              As-left tells you where the instrument was set. As-found tells you where it got to.
+            </strong>{' '}
+            Only the second describes behaviour.
+          </p>
+          <AppendixTable
+            caption="Reading a run of as-found errors against a 1.5 per cent tolerance"
+            headers={[
+              'Pattern over successive checks',
+              'What it says',
+              'What to do about the interval',
             ]}
-            correctAnswer={2}
-            explanation="Risk-based scheduling is most appropriate. Even though usage is low, the safety-critical nature means the consequence of measurement error is high. Risk-based scheduling considers the impact of failure, not just usage, ensuring adequate calibration frequency to maintain safety regardless of how often the instrument is used."
+            rows={[
+              [
+                '0.1, 0.1, 0.2, 0.1, 0.2 %',
+                'Very stable — barely moves in a year',
+                'Evidence for extending it',
+              ],
+              [
+                '0.3, 0.6, 0.9, 1.2 %',
+                'Steady drift, consuming the tolerance predictably',
+                'Predict when it crosses and check before that',
+              ],
+              [
+                '0.1, 0.2, 0.4, 0.9 %',
+                '🔴 Accelerating — something is deteriorating',
+                'Shorten it now; the next year is unlikely to be safe',
+              ],
+              [
+                '0.8, 0.2, 1.1, 0.4 %',
+                'Not drift — unstable, or the installation is affecting it',
+                'Interval is the wrong tool; investigate the cause',
+              ],
+            ]}
+            notes="Every value in every row passed the 1.5 per cent tolerance. The pattern is the finding, and no single calibration could reveal any of it."
           />
-        </section>
+          <p>
+            The bottom row is worth dwelling on, because it is easily misread as bad calibration
+            work. <strong>Drift has a direction; scatter does not.</strong> Results jumping either
+            side of zero are telling you something is unstable rather than ageing, and shortening
+            the interval will not address it &mdash; Module 4 Section 3&rsquo;s error types are the
+            place to look.
+          </p>
+        </ConceptBlock>
 
-        {/* Bottom Navigation */}
-        <div className="flex flex-col sm:flex-row justify-between gap-4 pt-6 border-t border-border">
-          <Link
-            to="/electrician/upskilling/instrumentation-module-6-section-4"
-            className="w-full sm:w-auto"
+        <Pullquote>
+          Every calibration you record properly is an investment in knowing how often the next one
+          is needed. A history that never changes an interval was collected and never harvested.
+        </Pullquote>
+
+        <InlineCheck
+          id="ins-6-5-history"
+          question="An instrument's as-found errors over four checks are 0.2, 0.5, 0.9 and 1.4 per cent against a 2 per cent tolerance. Every check passed. What should happen?"
+          options={[
+            'Shorten the interval, because the drift is growing and the next check would very likely find it outside',
+            'Widen the tolerance to 2.5 per cent',
+            'Replace the instrument immediately',
+            'Nothing — all four results were inside tolerance',
+          ]}
+          correctIndex={0}
+          explanation="Passing every check is exactly what makes this easy to miss. The steps are 0.3, 0.4, 0.5 — growing — and extrapolating puts the next result beyond 2 per cent. Waiting the full period means the instrument spends part of it out of tolerance and nobody knows, which is Section 4's backwards problem arriving predictably."
+        />
+
+        <SectionRule />
+        <ContentEyebrow>Changing an interval</ContentEyebrow>
+
+        <ConceptBlock
+          title="Extending — a decision, not a relaxation"
+          plainEnglish="If the evidence says it does not move, checking it less often is the correct engineering answer, not a corner being cut."
+          onSite="It also frees time for the instruments that genuinely need attention, which is the real benefit."
+        >
+          <p>
+            Extending an interval has an unearned reputation as cost-cutting. Done on evidence it is
+            simply the decision the data supports.
+          </p>
+          <p>What that requires:</p>
+          <ul>
+            <li>
+              <strong>Enough history to be meaningful.</strong> One good result is luck; several
+              successive ones showing the same behaviour are a pattern.
+            </li>
+            <li>
+              <strong>Consistently small as-found errors</strong> relative to the tolerance, with no
+              trend towards growth.
+            </li>
+            <li>
+              <strong>Nothing changed</strong> about the instrument, its duty or its conditions
+              since that history was accumulated.
+            </li>
+            <li>
+              <strong>The consequence side still considered.</strong> Stability is one input; what
+              it costs to be wrong is the other, and it has not changed just because the drift is
+              small.
+            </li>
+          </ul>
+          <p>
+            The genuine benefit is not the money saved on one instrument. It is that{' '}
+            <strong>
+              calibration effort is finite, and time not spent on instruments that do not need it is
+              available for instruments that do.
+            </strong>{' '}
+            A programme that checks everything at the same fixed period regardless of behaviour is
+            over-servicing some instruments and under-servicing others simultaneously.
+          </p>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="🔴 Shortening — when the history demands it"
+          plainEnglish="An instrument whose errors are growing is telling you when it will fail. Believing it is cheaper than finding out afterwards."
+          onSite="Accelerating drift is the signal to act on. Steady drift is predictable; acceleration is not."
+        >
+          <p>
+            The stronger case is the other direction, and it is the one Module 4 Section 5
+            identified:{' '}
+            <strong>
+              drift that suddenly grows is usually a component starting to go, and it announces
+              itself before the instrument actually fails.
+            </strong>
+          </p>
+          <p>Two patterns justify shortening an interval, and they justify it differently:</p>
+          <ul>
+            <li>
+              <strong>Steady drift consuming the tolerance.</strong> Predictable, so it can be
+              managed by arithmetic &mdash; work out when the trend crosses the limit and schedule
+              before it. This is planning rather than alarm.
+            </li>
+            <li>
+              <strong>🔴 Accelerating drift.</strong> Not predictable by extrapolation, because
+              whatever is causing it is getting worse. The next period cannot be assumed safe on the
+              basis of the last one, and the response is to check sooner and investigate the cause.
+            </li>
+          </ul>
+          <p>
+            In both cases the interval is doing the job it exists for &mdash; catching the problem
+            before it becomes Section 4&rsquo;s backwards question.{' '}
+            <strong>
+              An instrument found badly out of tolerance is a failure of the interval as much as of
+              the instrument
+            </strong>
+            , because the interval was supposed to be short enough to catch it first.
+          </p>
+        </ConceptBlock>
+
+        <SectionRule />
+        <ContentEyebrow>🔴 What resets the clock</ContentEyebrow>
+
+        <ConceptBlock
+          title="The history belongs to an instrument in a situation"
+          plainEnglish="Change the instrument or change what is happening to it, and the drift record no longer predicts anything."
+          onSite="A like-for-like replacement inherits the tag number and none of the history."
+        >
+          <p>
+            An interval justified by evidence is only as good as the assumption that the future
+            resembles the past. Several things break that assumption, and each one means the
+            accumulated history stops applying:
+          </p>
+          <ul>
+            <li>
+              <strong>Replacement.</strong> A new instrument is a different device. It may be the
+              same model from the same batch and its drift behaviour is its own. The tag number
+              carries over; the history does not.
+            </li>
+            <li>
+              <strong>Repair.</strong> Something inside has changed, which is generally the point.
+              How the repaired instrument behaves is a new question.
+            </li>
+            <li>
+              <strong>A change of duty.</strong> The same instrument on a different measurement, or
+              at a different point in the range, may drift quite differently &mdash; and the
+              tolerance may need revisiting too, per Section 4.
+            </li>
+            <li>
+              <strong>A change of location or conditions.</strong> Module 4 Section 3 listed ambient
+              conditions among the causes of drift. An instrument moved somewhere hotter, colder,
+              wetter or more vibrating is in a different regime.
+            </li>
+            <li>
+              <strong>A significant out-of-tolerance finding.</strong> The evidence that supported
+              the old interval has just been contradicted.
+            </li>
+          </ul>
+          <p>
+            🔴 The first is the one that catches people, because nothing visible changes.{' '}
+            <strong>
+              A like-for-like replacement looks identical, occupies the same tag, and has no history
+              whatsoever.
+            </strong>{' '}
+            Carrying the old interval across assumes the new instrument behaves like the old one, on
+            no evidence at all &mdash; and Module 5 Section 6 gave a related example, where a
+            replacement drive brought different configuration with it and nobody recorded the
+            change.
+          </p>
+          <p>
+            The safe position after any reset is to return to a conservative interval and rebuild
+            evidence from there.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck
+          id="ins-6-5-reset"
+          question="A transmitter with eight years of excellent drift history is replaced like for like after a physical accident. What interval should the new one carry?"
+          options={[
+            'The extended interval justified by the old instrument’s history',
+            'A conservative interval, because the new instrument has no history of its own',
+            'Half the old interval',
+            'Whatever the manufacturer states, permanently',
+          ]}
+          correctIndex={1}
+          explanation="The history described the old device in that situation. The replacement occupies the same tag and is a different instrument, so nothing is yet known about how it drifts. Carrying the extended interval across assumes behaviour on no evidence — start conservative and rebuild the record."
+        />
+
+        <SectionRule />
+        <ContentEyebrow>Misreading the date</ContentEyebrow>
+
+        <CommonMistake
+          title="Treating the due date as a statement about the instrument"
+          whatHappens={
+            <>
+              <p>
+                An instrument is in date, so its readings are treated as sound. A discrepancy gets
+                blamed elsewhere &mdash; the process, another instrument, the operator &mdash;
+                because this one has a valid calibration.
+              </p>
+              <p>
+                A due date says when the next comparison is scheduled. It says nothing at all about
+                the instrument&rsquo;s present condition, and an in-date instrument can be
+                substantially out of tolerance. That is precisely what gets discovered at the next
+                calibration, and Section 4 explained what that discovery implies about the preceding
+                period.
+              </p>
+              <p>
+                The reasoning is the same error Module 1 Section 4 identified with calibration
+                stickers, arriving through a different door: a record of a past event is being read
+                as an assurance about the present.
+              </p>
+            </>
+          }
+          doInstead={
+            <>
+              <p>
+                Treat an in-date calibration as evidence that the instrument was sound at a known
+                moment and has not yet been re-checked. That is genuinely useful and it is not
+                proof.
+              </p>
+              <p>
+                When a discrepancy appears, compare rather than assume &mdash; against an
+                independent instrument, against another measurement in the same system, against a
+                known physical reference. Module 4 Section 5&rsquo;s plausibility checks apply, and
+                Module 4 Section 1&rsquo;s reverse-conversion habit splits the system quickly.
+              </p>
+              <p>
+                And if an in-date instrument turns out to be wrong, that is a finding about the
+                interval as well as the instrument. It suggests the period was too long for how this
+                one behaves.
+              </p>
+            </>
+          }
+        />
+
+        <ConceptBlock
+          title="Reviewing intervals as a programme"
+          plainEnglish="Looking at one instrument tells you about one instrument. Looking at all of them tells you whether the programme is working."
+          onSite="Worth doing periodically rather than only when something goes wrong."
+        >
+          <p>
+            Intervals are usually revisited one instrument at a time, when something prompts it. A
+            periodic look across the whole population answers questions no single record can:
+          </p>
+          <ul>
+            <li>
+              <strong>Is anything ever found out of tolerance?</strong> If nothing ever fails, the
+              intervals may be shorter than they need to be &mdash; or the tolerances looser than
+              they should be, which is Section 4&rsquo;s question rather than this one.
+            </li>
+            <li>
+              <strong>Is anything failing repeatedly?</strong> Module 4 Section 3&rsquo;s scenario
+              &mdash; four calibrations in nine months, all passing &mdash; is visible only from the
+              history, and repeated failure points at the instrument or the installation rather than
+              the interval.
+            </li>
+            <li>
+              <strong>Do instruments of one type behave alike?</strong> A consistent pattern across
+              a population is stronger evidence than any individual record, and it can inform
+              intervals for units with no history of their own.
+            </li>
+            <li>
+              <strong>Is effort going where it is needed?</strong> A programme checking everything
+              at the same period is simultaneously over-servicing the stable instruments and
+              under-servicing the ones that move.
+            </li>
+          </ul>
+          <p>
+            The caution on the third point is that{' '}
+            <strong>
+              duty and location vary within a population, so a fleet finding is a starting point
+              rather than a substitute for an individual record.
+            </strong>{' '}
+            Two identical instruments in different places are, for this purpose, different
+            instruments.
+          </p>
+        </ConceptBlock>
+
+        <Scenario
+          title="Two identical transmitters, and a case for two different intervals"
+          situation={
+            <>
+              <p>
+                Two pressure transmitters of the same model, calibrated by the same team on the same
+                annual schedule. One is on a filter differential where the reading gives operators a
+                rough indication of loading. The other is on a measurement used to decide whether
+                material meets specification before it is dispatched.
+              </p>
+              <p>
+                Both have five years of as-found records showing consistently small errors, well
+                inside tolerance.
+              </p>
+            </>
+          }
+          whatToDo={
+            <>
+              <p>
+                The drift evidence is identical, and the right answer is very likely different for
+                each &mdash; because drift is only one of the two inputs.
+              </p>
+              <p>
+                For the <strong>filter differential</strong>, both halves point the same way. It
+                barely moves, and if it were wrong the consequence is that operators get a slightly
+                misleading indication of something they can also see other ways. That is a
+                well-evidenced case for extending the interval.
+              </p>
+              <p>
+                For the <strong>dispatch measurement</strong>, the drift evidence is the same and
+                the consequence is not. If that instrument were found significantly out, Section
+                4&rsquo;s backwards question applies to every batch released in the meantime. A
+                shorter interval is not buying protection against expected drift &mdash;{' '}
+                <strong>it is buying a shorter exposure window if the unexpected happens</strong>.
+              </p>
+              <p>
+                So the recommendation is to extend one and leave the other, with the reasoning
+                recorded. The two intervals differing is the decision being made properly rather
+                than an inconsistency to be tidied up.
+              </p>
+            </>
+          }
+          whyItMatters={
+            <>
+              <p>
+                A programme that sets intervals from instrument type alone would treat these two
+                identically and be wrong about at least one of them. The consequence of error is not
+                a property of the hardware.
+              </p>
+              <p>
+                It also shows what an interval is really buying on a critical measurement. Not
+                protection against drift you expect &mdash; the evidence says there is none &mdash;
+                but a bound on how long you could be wrong without knowing.
+              </p>
+            </>
+          }
+        />
+
+        <ConceptBlock
+          title="What an interval is really buying"
+          plainEnglish="Not protection against drift you already know about. A limit on how long you could be wrong without knowing."
+          onSite="That framing settles most interval arguments, because it separates the two reasons for checking."
+        >
+          <p>
+            There are two quite different reasons to calibrate on a schedule, and separating them
+            resolves most disagreements about intervals.
+          </p>
+          <ul>
+            <li>
+              <strong>To catch expected drift.</strong> The instrument moves predictably, and the
+              interval is set so it is corrected before it leaves tolerance. This is the case the
+              as-found history speaks to directly, and it is largely arithmetic.
+            </li>
+            <li>
+              <strong>🔴 To bound the exposure if something unexpected happens.</strong> The
+              instrument may be perfectly stable and still fail suddenly, be knocked, or have its
+              conditions change. The interval sets the maximum period during which that could go
+              unnoticed.
+            </li>
+          </ul>
+          <p>
+            The second is why a demonstrably stable instrument on a critical duty can still warrant
+            frequent checking, and it is the part that drift evidence alone never justifies.{' '}
+            <strong>
+              The question is not only how likely it is to be wrong, but how long you could afford
+              not to know.
+            </strong>
+          </p>
+          <p>
+            Section 4 gave that its concrete form. An instrument found out of tolerance puts every
+            reading since the last check in question &mdash;{' '}
+            <strong>
+              so the interval is literally the size of the problem if the worst happens
+            </strong>
+            . Halving the interval halves the scope of any future impact assessment, whether or not
+            the instrument was ever expected to drift.
+          </p>
+        </ConceptBlock>
+
+        <FAQ
+          items={[
+            {
+              question: 'Is an annual interval a requirement?',
+              answer:
+                'It is a widespread convention rather than a universal rule, and it is a reasonable default in the absence of evidence. Some industries and applications are subject to specific requirements that do set periods, and where those apply they are not a matter for local judgement — that is a question for the site’s own procedures rather than a general answer. Where no such requirement applies, the interval is a decision that should be justifiable.',
+            },
+            {
+              question: 'How much history is enough to justify a change?',
+              answer:
+                'Enough to distinguish a pattern from a coincidence, which in practice means several successive results behaving consistently rather than one or two. There is no universal number, and the useful test is whether you could defend the reasoning to somebody who did not want the answer — one good result cannot, and five consistent ones usually can. Shortening an interval on a single alarming result is more defensible than extending on a single good one, because the costs of being wrong are asymmetric.',
+            },
+            {
+              question: 'What if an instrument has no calibration history at all?',
+              answer:
+                'Then there is no evidence, so the interval has to be set conservatively from the consequence side alone and from whatever the manufacturer suggests. That is the correct position for anything new, replaced or repaired. The first few calibrations then build the evidence that justifies changing it, which is why recording as-found values matters most at exactly the point they feel least useful.',
+            },
+            {
+              question: 'Should intervals be reviewed instrument by instrument?',
+              answer:
+                'Individually where the evidence supports it, and it is also worth looking at populations. If every instrument of one type on a site shows similar drift behaviour, that is stronger evidence than any single instrument’s record and it can inform intervals for units that do not yet have a history of their own. The caution is that duty and location differ even within a population, so a population finding is a starting point rather than a substitute for the individual record.',
+            },
+            {
+              question: 'Does extending an interval need approval?',
+              answer:
+                'It needs the decision recorded with its reasoning, and who is entitled to make it is a matter of site procedure. What matters technically is that the justification exists and is written down — an interval changed without a rationale is indistinguishable later from one changed for convenience, and the person reviewing it years afterwards has only the record to go on.',
+            },
+            {
+              question: 'What happens if a calibration is missed and goes overdue?',
+              answer:
+                'The instrument has not necessarily gone wrong, and the assurance has lapsed — the period since the last known-good state is now longer than the one the interval was set for. Practically that means calibrating it and paying attention to the as-found result, because it is now covering a longer exposure than intended. If it is found out of tolerance, Section 4’s backwards question covers a correspondingly longer period.',
+            },
+          ]}
+        />
+
+        <ConceptBlock
+          title="Where Module 6 has been"
+          plainEnglish="Five sections that between them answer what calibration is, how it is done, what the result means, and how often to repeat it."
+          onSite="The thread is that a calibration is only worth what its record supports."
+        >
+          <ul>
+            <li>
+              <strong>Section 1</strong> &mdash; calibration is a comparison against a known
+              physical input, and it is not ranging or trimming.
+            </li>
+            <li>
+              <strong>Section 2</strong> &mdash; the equipment, and the fact that any substitution
+              tests everything downstream of it and excludes everything upstream.
+            </li>
+            <li>
+              <strong>Section 3</strong> &mdash; the procedure, and why analogue adjustments iterate
+              while digital trims do not.
+            </li>
+            <li>
+              <strong>Section 4</strong> &mdash; the verdict, where the tolerance comes from, and
+              what a failure says about the period just passed.
+            </li>
+            <li>
+              <strong>Section 5</strong> &mdash; how often, argued from the history rather than from
+              habit.
+            </li>
+          </ul>
+          <p>
+            One idea connects all five, and it is worth carrying into Module 7:{' '}
+            <strong>the as-found record is the most valuable thing a calibration produces.</strong>{' '}
+            It is the evidence for what the instrument was doing in service, the basis for assessing
+            what its readings were worth, and the input that sets the next interval &mdash; and it
+            exists for only a few minutes before the first adjustment destroys it.
+          </p>
+        </ConceptBlock>
+
+        <KeyTakeaways
+          points={[
+            'Module 1 Section 4 owns traceability, UKAS, ISO/IEC 17025 and certificates. This section owns intervals only.',
+            '🔴 An interval balances how fast the instrument drifts against what it costs to be wrong. Both halves are required.',
+            'Judging on drift alone under-serves critical instruments; judging on criticality alone wastes effort on stable ones.',
+            'The same model on the same site can legitimately carry different intervals. That is the decision being made properly.',
+            '🔴 The evidence is the as-found history — how far it had moved at each successive calibration, under its real conditions.',
+            'As-left records cannot substitute: they show where it was set, not where it got to.',
+            'Consistently small as-found errors with no growth support extending an interval, on evidence rather than convenience.',
+            '🔴 Growing errors support shortening it; accelerating errors demand it, because the next period cannot be assumed safe.',
+            'Every individual result can pass while the sequence is the finding.',
+            'Scatter either side of zero is not drift — it is instability, and a shorter interval will not address it.',
+            'An interval unchanged for a decade suggests the history is being collected and never harvested.',
+            '🔴 Replacement, repair, a change of duty or location, or a serious out-of-tolerance finding all reset the history.',
+            '🔴 A like-for-like replacement inherits the tag number and none of the drift record. Carrying the old interval across assumes behaviour on no evidence.',
+            'A due date states when the next comparison is scheduled — never that the instrument is right today.',
+            'An instrument found badly out of tolerance is a failure of the interval as much as of the instrument.',
+          ]}
+        />
+
+        <Quiz questions={quizQuestions} title="Check yourself — Module 6.5" />
+
+        <div className="grid grid-cols-2 gap-3 pt-2">
+          <button
+            onClick={() => navigate('/electrician/upskilling/instrumentation-module-6-section-4')}
+            className="flex flex-col rounded-2xl border border-elec-yellow/35 bg-gradient-to-br from-white/[0.19] via-white/[0.105] to-white/[0.065] p-4 text-left touch-manipulation lg:hover:-translate-y-0.5"
           >
-            <Button
-              variant="outline"
-              className="w-full h-11 touch-manipulation border-border hover:bg-card"
-            >
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              Back
-            </Button>
-          </Link>
-          <Link
-            to="/electrician/upskilling/instrumentation-module-6-section-6"
-            className="w-full sm:w-auto"
+            <span className="flex items-center gap-2 text-[10px] font-medium uppercase tracking-[0.14em] text-white">
+              <ChevronLeft className="h-3 w-3" /> Previous section
+            </span>
+            <span className="mt-1 truncate text-[14px] font-semibold text-white">
+              Results and tolerances
+            </span>
+          </button>
+          <button
+            onClick={() => navigate('/electrician/upskilling/instrumentation-module-6-section-6')}
+            className="flex flex-col rounded-2xl border border-elec-yellow/35 bg-gradient-to-br from-white/[0.19] via-white/[0.105] to-white/[0.065] p-4 text-right touch-manipulation lg:hover:-translate-y-0.5"
           >
-            <Button className="w-full h-11 touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/90">
-              Next Section
-            </Button>
-          </Link>
+            <span className="flex items-center justify-end gap-2 text-[10px] font-medium uppercase tracking-[0.14em] text-white">
+              Next section <ChevronRight className="h-3 w-3" />
+            </span>
+            <span className="mt-1 truncate text-[14px] font-semibold text-white">
+              Calibrating the loop
+            </span>
+          </button>
         </div>
-      </div>
-    </div>
+      </HubBody>
+    </HubPage>
   );
 };
 

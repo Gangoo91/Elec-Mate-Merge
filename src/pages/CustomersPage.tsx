@@ -40,6 +40,7 @@ import {
 import { cn } from '@/lib/utils';
 import { CustomerMap } from '@/components/customers/CustomerMap';
 import { useUpcomingReminders } from '@/hooks/useUpcomingReminders';
+import { useCustomerSummaries } from '@/hooks/useCustomerSummaries';
 
 const sortTabs: { value: SortField; label: string }[] = [
   { value: 'name', label: 'Name' },
@@ -96,6 +97,8 @@ export default function CustomersPage() {
   const [activeTagFilter, setActiveTagFilter] = useState<string | null>(null);
   const [riskFilter, setRiskFilter] = useState<RiskFilter>('all');
   const [showCampaignSheet, setShowCampaignSheet] = useState(false);
+  /** Customers ticked in selection mode, handed to the campaign sheet. */
+  const [campaignPreselection, setCampaignPreselection] = useState<string[]>([]);
   const [viewMode, setViewMode] = useState<'grid' | 'map'>('grid');
   const [mapSelectedId, setMapSelectedId] = useState<string | null>(null);
   const debouncedSearch = useDebounce(searchTerm, 300);
@@ -318,6 +321,21 @@ export default function CustomersPage() {
   }, [customers, showFollowUpOnly, activeTagFilter, statusFilter, riskFilter, reliabilityMap]);
 
   // Tag aggregation — collect all tags + counts across loaded customers.
+  /*
+   * Value rollups for the rows currently on screen.
+   *
+   * Keyed on filteredCustomers rather than the whole book: one account holds
+   * nearly 2,000 customers, so fetching every rollup to render a filtered page
+   * would be slowest for the user with the most data. The RPC re-scopes to
+   * auth.uid() server-side, so this id list narrows the result and never
+   * widens it.
+   */
+  const visibleCustomerIds = useMemo(
+    () => filteredCustomers.map((c) => c.id),
+    [filteredCustomers]
+  );
+  const { summaries: customerSummaries } = useCustomerSummaries(visibleCustomerIds);
+
   const tagCounts = useMemo(() => {
     const map = new Map<string, number>();
     for (const c of customers) {
@@ -442,14 +460,21 @@ export default function CustomersPage() {
     exportCustomers(Array.from(selectedIds));
   };
 
+  /**
+   * Bulk "Email" — opens the campaign sheet with these customers ticked.
+   *
+   * This used to be `mailto:?bcc=…`, which handed the job to the phone's mail
+   * app: no merge fields (so no "Hi Dave"), no send record, no daily cap, no
+   * opt-out check and no unsubscribe link — and a long BCC list frequently
+   * failed to open at all. The campaign sender does all of that, and was
+   * reachable only from a "Manage" section inside the filters sheet, which is
+   * itself phone-only. Ten days live, nobody found it, zero emails sent.
+   */
   const handleBulkEmail = () => {
-    const emails = customers
-      .filter((c) => selectedIds.has(c.id) && c.email)
-      .map((c) => c.email)
-      .filter(Boolean) as string[];
-    if (emails.length === 0) return;
-    // Open user's mail client with BCC list (BCC keeps recipients private).
-    window.location.href = `mailto:?bcc=${emails.join(',')}`;
+    const withEmail = customers.filter((c) => selectedIds.has(c.id) && c.email);
+    if (withEmail.length === 0) return;
+    setCampaignPreselection(withEmail.map((c) => c.id));
+    setShowCampaignSheet(true);
   };
 
   const handleBulkTag = async () => {
@@ -791,12 +816,27 @@ export default function CustomersPage() {
                   lives in the filter sheet rather than costing a whole row. */}
               <div className="hidden flex-wrap items-center gap-2 lg:flex">
                 {!selectionMode ? (
-                  <button
-                    onClick={() => enterSelectionMode()}
-                    className="flex h-11 items-center text-[13px] font-semibold text-elec-yellow transition-colors hover:text-elec-yellow/80 touch-manipulation"
-                  >
-                    Select multiple
-                  </button>
+                  <>
+                    <button
+                      onClick={() => enterSelectionMode()}
+                      className="flex h-11 items-center text-[13px] font-semibold text-elec-yellow transition-colors hover:text-elec-yellow/80 touch-manipulation"
+                    >
+                      Select multiple
+                    </button>
+                    <span className="text-white/30">·</span>
+                    {/* The only desktop door to the campaign sender: the other
+                        one lives in the filters sheet, which is lg:hidden. */}
+                    <button
+                      onClick={() => {
+                        setCampaignPreselection([]);
+                        setShowCampaignSheet(true);
+                      }}
+                      disabled={customers.length === 0}
+                      className="flex h-11 items-center text-[13px] font-semibold text-elec-yellow transition-colors hover:text-elec-yellow/80 disabled:opacity-40 touch-manipulation"
+                    >
+                      Send a keep-in-touch email
+                    </button>
+                  </>
                 ) : (
                   <>
                     <button
@@ -979,6 +1019,7 @@ export default function CustomersPage() {
                       >
                         <CustomerListRow
                           customer={customer}
+                          summary={customerSummaries.get(customer.id) ?? null}
                           onEdit={handleEdit}
                           onDelete={(id) => setDeleteConfirmId(id)}
                           onStartCertificate={(c) => setCertificateCustomer(c)}
@@ -1291,7 +1332,13 @@ export default function CustomersPage() {
           at the first page with nothing to say the rest existed. */}
       <CustomerCampaignSheet
         open={showCampaignSheet}
-        onOpenChange={setShowCampaignSheet}
+        onOpenChange={(next) => {
+          setShowCampaignSheet(next);
+          // Drop the seed on close so the next open from the "keep in touch"
+          // entry point starts empty rather than inheriting a stale tick list.
+          if (!next) setCampaignPreselection([]);
+        }}
+        preselectedIds={campaignPreselection}
       />
 
       <MergeDuplicatesSheet
@@ -1370,7 +1417,7 @@ export default function CustomersPage() {
                     selectedIds.size === 0 ||
                     !customers.some((c) => selectedIds.has(c.id) && c.email)
                   }
-                  title="Open email client with selected customers as BCC"
+                  title="Write a keep-in-touch email to the selected customers"
                   className="flex h-10 items-center justify-center rounded-xl border border-white/[0.12] bg-white/[0.05] text-[12px] font-semibold text-white transition-colors hover:bg-white/[0.09] disabled:opacity-40 touch-manipulation active:scale-[0.97]"
                 >
                   Email

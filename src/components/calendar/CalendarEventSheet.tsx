@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { format, isToday, isTomorrow } from 'date-fns';
 import {
   Sheet,
@@ -21,6 +21,7 @@ import { useBookingHistory } from '@/hooks/useBookingHistory';
 import { useSlotSuggestions } from '@/hooks/useSlotSuggestions';
 import { textareaCn } from '@/components/forms/fieldStyles';
 import { chipBase, chipOff, chipOn, eyebrowCn, fieldCn, labelCn } from './calendarStyles';
+import SplitDaysPicker from './SplitDaysPicker';
 import { addWorkingDays, humanMinutes } from './eventUtils';
 import type {
   CalendarEvent,
@@ -47,6 +48,12 @@ interface CalendarEventSheetProps {
    * the form all-day and pre-stretched rather than writing the event blind.
    */
   defaultDays?: number;
+  /**
+   * ELE-1649 — the days the job being edited already runs on, when it is a
+   * split job. Passed in rather than fetched: the page already holds every
+   * event in view, and a child event knows its parent but not its siblings.
+   */
+  existingSplitDays?: Date[];
   onSave: (data: CreateCalendarEventInput | UpdateCalendarEventInput, extras: SaveExtras) => void;
   saving?: boolean;
 }
@@ -59,6 +66,16 @@ export interface SaveExtras {
   createSiteVisit: boolean;
   /** Who it is for, resolved to a real customer row — for the "tell them" step. */
   customer?: { id: string; name: string; phone?: string; email?: string };
+  /**
+   * ELE-1649 — the specific days this job is on site, when they are not one
+   * solid block. Empty for an ordinary booking.
+   *
+   * The sheet decides the DAYS; the page decides how to write them (anchor
+   * plus `parent_event_id` children — see splitJob.ts). `start_at`/`end_at` on
+   * the payload still describe the FIRST day, so a caller that ignores this
+   * field writes a valid single booking rather than nothing.
+   */
+  splitDays?: Date[];
 }
 
 const REMINDER_OPTIONS = [
@@ -165,6 +182,7 @@ const CalendarEventSheet = ({
   defaultHour,
   defaultMinute,
   defaultDays,
+  existingSplitDays,
   onSave,
   saving,
 }: CalendarEventSheetProps) => {
@@ -199,6 +217,25 @@ const CalendarEventSheet = ({
   const [createProject, setCreateProject] = useState(false);
   const [createSiteVisit, setCreateSiteVisit] = useState(false);
 
+  /**
+   * ELE-1649 — the days a split job is on site. Empty means one solid block,
+   * which is still the right answer for most bookings and stays the default.
+   */
+  const [splitDays, setSplitDays] = useState<Date[]>([]);
+  const [pickingDays, setPickingDays] = useState(false);
+  const isSplit = splitDays.length > 0;
+
+  /*
+   * Held in a ref, not read as a dependency.
+   *
+   * The page rebuilds this array on every render, so depending on it would
+   * re-run the reset effect mid-edit and throw away days the user had just
+   * tapped. Hydration is an open-time concern; `open`/`event` already say when
+   * that is.
+   */
+  const existingSplitDaysRef = useRef<Date[] | undefined>(existingSplitDays);
+  existingSplitDaysRef.current = existingSplitDays;
+
   const [openPicker, setOpenPicker] = useState<PickerKey>(null);
   const togglePicker = useCallback((picker: PickerKey) => {
     setOpenPicker((prev) => (prev === picker ? null : picker));
@@ -227,6 +264,12 @@ const CalendarEventSheet = ({
   );
 
   useEffect(() => {
+    // A job already spread across days opens showing those days, so the picker
+    // is an edit of what exists rather than a blank slate that would silently
+    // collapse the job back to one block on save.
+    const already = existingSplitDaysRef.current;
+    setSplitDays(already && already.length > 1 ? already : []);
+    setPickingDays(false);
     if (event) {
       const s = new Date(event.start_at);
       const e = new Date(event.end_at);
@@ -283,6 +326,8 @@ const CalendarEventSheet = ({
     setCreateSiteVisit(false);
     // settings is read only to seed a NEW event; adding it to the deps would
     // reset a form the user is halfway through the moment settings reload.
+    // (`existingSplitDays` is kept out of the deps the same way, via a ref —
+    // see existingSplitDaysRef.)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [event, defaultDate, defaultHour, defaultMinute, defaultDays, open]);
 
@@ -398,6 +443,34 @@ const CalendarEventSheet = ({
     }
     return humanMinutes((endAt.getTime() - startAt.getTime()) / 60_000);
   }, [allDay, startDate, endDate, startAt, endAt, endsBeforeItStarts]);
+
+  /**
+   * Keep the schedule rows honest about a split job.
+   *
+   * The clash list, the capacity warning and `spansDays` all read
+   * `startDate`/`endDate`, so a split job pins them to its first and last day.
+   * Without this they would describe whatever solid block was set before the
+   * days were picked, and the over-capacity warning — the one thing in this
+   * sheet that stops a double-booking — would be answering the wrong question.
+   */
+  useEffect(() => {
+    if (splitDays.length === 0) return;
+    const sorted = [...splitDays].sort((a, b) => a.getTime() - b.getTime());
+    setAllDay(true);
+    setStartDate(sorted[0]);
+    setEndDate(sorted[sorted.length - 1]);
+  }, [splitDays]);
+
+  /** Said in words, because "5 days" and "Mon/Wed/Fri" are different promises. */
+  const splitSummary = useMemo(() => {
+    if (splitDays.length === 0) return null;
+    const sorted = [...splitDays].sort((a, b) => a.getTime() - b.getTime());
+    const shown = sorted.slice(0, 4).map((d) => format(d, 'EEE d MMM'));
+    const rest = sorted.length - shown.length;
+    return `One job across ${sorted.length} days — ${shown.join(', ')}${
+      rest > 0 ? ` and ${rest} more` : ''
+    }. The customer gets one message.`;
+  }, [splitDays]);
 
   /** Which chip, if any, describes the length currently set. */
   const activeDuration = useMemo(() => {
@@ -563,6 +636,11 @@ const CalendarEventSheet = ({
         createSiteVisit,
         customer: chosen
           ? { id: chosen.id, name: chosen.name, phone: chosen.phone, email: chosen.email }
+          : undefined,
+        // Sorted here so the page can treat the first entry as the anchor
+        // without re-deriving what "first" means.
+        splitDays: isSplit
+          ? [...splitDays].sort((a, b) => a.getTime() - b.getTime())
           : undefined,
       }
     );
@@ -969,13 +1047,33 @@ const CalendarEventSheet = ({
                     // as the current length rather than nine identical buttons.
                     className={cn(
                       chipBase,
-                      activeDuration === option.label ? chipOn : chipOff
+                      !isSplit && activeDuration === option.label ? chipOn : chipOff
                     )}
                   >
                     {option.label}
                   </button>
                 ))}
+                {/* ELE-1649 — the power option, last so the simple path reads
+                    first. A spark is rarely on one job till it's done. */}
+                <button
+                  type="button"
+                  onClick={() => setPickingDays((p) => !p)}
+                  className={cn(chipBase, isSplit || pickingDays ? chipOn : chipOff, 'shrink-0')}
+                >
+                  Pick days
+                </button>
               </div>
+
+              {(pickingDays || isSplit) && (
+                <div className="mt-3">
+                  <SplitDaysPicker value={splitDays} onChange={setSplitDays} />
+                  <p className="mt-2 text-[12px] text-white opacity-70">
+                    {isSplit
+                      ? splitSummary
+                      : 'Tap the days you’re on site — they don’t have to run together.'}
+                  </p>
+                </div>
+              )}
             </div>
 
             {/* Schedule */}

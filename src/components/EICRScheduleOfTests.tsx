@@ -61,6 +61,7 @@ import { ThreePhaseScheduleOfTests } from './eicr/ThreePhaseScheduleOfTests';
 
 import { BoardPhotoCapture } from '@/components/testing/BoardPhotoCapture';
 import { BoardScannerOverlay } from '@/components/testing/BoardScannerOverlay';
+import TestSheetScanSheet from '@/components/testing/TestSheetScanSheet';
 import { useOrientation } from '@/hooks/useOrientation';
 import { useInlineVoice } from '@/hooks/useInlineVoice';
 import { useInspectorProfiles } from '@/hooks/useInspectorProfiles';
@@ -333,6 +334,8 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
   const [pendingAddBoardId, setPendingAddBoardId] = useState<string | null>(null);
 
   const [showBoardCapture, setShowBoardCapture] = useState(false);
+  /* ELE-1607 — reads the measured columns the board scan deliberately leaves blank. */
+  const [showSheetScan, setShowSheetScan] = useState(false);
   const [detectedCircuits, setDetectedCircuits] = useState<any>(null);
   const [showAIReview, setShowAIReview] = useState(false);
   // Whole-schedule validate — the board whose circuits are being checked.
@@ -1222,6 +1225,10 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
       onScanBoard: () => {
         setActiveBoardId(boardId);
         setShowBoardCapture(true);
+      },
+      onScanResults: () => {
+        setActiveBoardId(boardId);
+        setShowSheetScan(true);
       },
       onValidate: () => {
         setValidateFocusId(null);
@@ -3258,6 +3265,16 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                       >
                         Add circuit
                       </Button>
+                      {/* ELE-1607 — the other half of the scan: the readings. */}
+                      <Button
+                        className="col-span-2 h-11 rounded-xl border border-white/[0.12] bg-white/[0.06] text-white text-[12px] font-semibold hover:bg-white/[0.10] touch-manipulation active:scale-[0.98]"
+                        onClick={() => {
+                          setActiveBoardId(board.id);
+                          setShowSheetScan(true);
+                        }}
+                      >
+                        Scan test results
+                      </Button>
                       <Button
                         className={cn(
                           'h-11 rounded-xl text-[12px] font-semibold touch-manipulation active:scale-[0.98]',
@@ -3631,6 +3648,25 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
           title="Scan distribution board"
         />
       )}
+
+      {/*
+        ELE-1607 — the readings. Applies into `testResults` through the same
+        `onUpdate('scheduleOfTests', …)` path every other mutation uses, so the
+        autosave and version guard behave identically.
+      */}
+      <TestSheetScanSheet
+        open={showSheetScan}
+        onOpenChange={setShowSheetScan}
+        reportId={formData?.certificateNumber}
+        rows={testResults}
+        boardId={activeBoardId ?? undefined}
+        boardName={distributionBoards.find((b) => b.id === activeBoardId)?.name}
+        earthingArrangement={formData?.earthingArrangement}
+        onApply={(next) => {
+          setTestResults(next);
+          onUpdate('scheduleOfTests', next);
+        }}
+      />
 
       {/* Test Results Photo Capture */}
 

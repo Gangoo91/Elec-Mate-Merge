@@ -240,12 +240,38 @@ const SpecCard = ({
   // Route overrides open an area (log book) rather than starting a cert.
   const primaryLabel = cert.route ? 'Open' : 'New';
 
+  /*
+   * The WHOLE card opens the certificate, not just the "New" text (Andrew).
+   *
+   * It stays a `div` rather than a `button` because the footer holds a second
+   * real action (Resume) and a button cannot nest a button — so it carries the
+   * button role and keyboard handling itself, and the inner actions stop
+   * propagation so Resume never reads as New.
+   */
+  const open = () => {
+    if (disabled) return;
+    haptic.light();
+    onOpen();
+  };
+
   return (
     <div
+      role={disabled ? undefined : 'button'}
+      tabIndex={disabled ? undefined : 0}
+      aria-label={disabled ? undefined : `${primaryLabel} ${cert.title}`}
+      onClick={open}
+      onKeyDown={(e) => {
+        if (disabled) return;
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          open();
+        }
+      }}
       className={cn(
         'group flex h-full flex-col rounded-2xl border p-3.5 text-left sm:p-4',
         'transition-[background-color,border-color] duration-150 ease-out',
-        disabled ? CARD_DISABLED : CARD_NEUTRAL
+        'outline-none focus-visible:border-elec-yellow',
+        disabled ? CARD_DISABLED : `${CARD_NEUTRAL} cursor-pointer touch-manipulation active:scale-[0.995]`
       )}
     >
       <span className="min-w-0 truncate text-[10px] font-semibold uppercase tracking-[0.16em] text-white">
@@ -270,7 +296,8 @@ const SpecCard = ({
         ) : draft ? (
           <button
             type="button"
-            onClick={() => {
+            onClick={(e) => {
+              e.stopPropagation();
               haptic.light();
               onResume();
             }}
@@ -286,7 +313,9 @@ const SpecCard = ({
         {!disabled && (
           <button
             type="button"
-            onClick={() => {
+            onClick={(e) => {
+              /* The card already handles this — stop it running twice. */
+              e.stopPropagation();
               haptic.light();
               onOpen();
             }}

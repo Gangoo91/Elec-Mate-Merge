@@ -106,9 +106,31 @@ const CertificatesSection = ({ onNavigate, onBack }: CertificatesSectionProps) =
               <motion.div
                 key={cert.id}
                 variants={itemVariants}
+                /*
+                 * The WHOLE card starts the certificate, not just the "New"
+                 * text (Andrew). It stays a div rather than a button because
+                 * the footer holds a second real action (Resume) and a button
+                 * cannot nest a button — so it carries the role and keyboard
+                 * handling, and the inner actions stop propagation.
+                 */
+                role="button"
+                tabIndex={0}
+                aria-label={`New ${cert.title}`}
+                onClick={() => {
+                  haptic.light();
+                  onNavigate(cert.id);
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    haptic.light();
+                    onNavigate(cert.id);
+                  }
+                }}
                 className={cn(
                   'group flex h-full flex-col rounded-2xl border p-3.5 text-left sm:p-4',
                   'transition-[background-color,border-color] duration-150 ease-out',
+                  'cursor-pointer touch-manipulation outline-none active:scale-[0.995] focus-visible:border-elec-yellow',
                   CARD_NEUTRAL
                 )}
               >
@@ -135,7 +157,9 @@ const CertificatesSection = ({ onNavigate, onBack }: CertificatesSectionProps) =
                   {draft ? (
                     <button
                       type="button"
-                      onClick={() => {
+                      onClick={(e) => {
+                        /* Resume must never read as New. */
+                        e.stopPropagation();
                         haptic.light();
                         onNavigate(cert.id, draft.latestReportId, cert.id);
                       }}
@@ -154,7 +178,9 @@ const CertificatesSection = ({ onNavigate, onBack }: CertificatesSectionProps) =
                       used bg-elec-yellow/[0.08], which reads muddy brown. */}
                   <button
                     type="button"
-                    onClick={() => {
+                    onClick={(e) => {
+                      /* The card already handles this — stop it running twice. */
+                      e.stopPropagation();
                       haptic.light();
                       onNavigate(cert.id);
                     }}

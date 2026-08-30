@@ -9,6 +9,12 @@ import { encryptToken } from '../_shared/encryption.ts';
 import { withRetry, RetryPresets } from '../_shared/retry.ts';
 import { withTimeout, Timeouts } from '../_shared/timeout.ts';
 import { captureException } from '../_shared/sentry.ts';
+import {
+  calendarRedirectUri,
+  grantedCalendarAccess,
+  CALENDAR_SCOPE_DENIED_MESSAGE,
+  OUTLOOK_CALENDAR_SCOPES,
+} from '../_shared/calendar-oauth.ts';
 
 const GOOGLE_CLIENT_ID = Deno.env.get('GOOGLE_CLIENT_ID');
 const GOOGLE_CLIENT_SECRET = Deno.env.get('GOOGLE_CLIENT_SECRET');
@@ -66,6 +72,28 @@ serve(async (req: Request) => {
         ),
       RetryPresets.STANDARD
     );
+
+    /*
+     * Refuse a connection that cannot actually sync.
+     *
+     * Google's granular consent screen lets people untick the calendar
+     * permission and still returns a valid token for what remains. Storing it
+     * told the user they were connected and then failed every sync with
+     * ACCESS_TOKEN_SCOPE_INSUFFICIENT — a state they can only escape by
+     * disconnecting and guessing at what went wrong. Better to fail the connect
+     * here and say which box to leave ticked.
+     *
+     * Checked BEFORE the upsert so a half-granted retry cannot overwrite a
+     * working connection with a useless one.
+     */
+    if (provider === 'google' && !grantedCalendarAccess(tokenData.scope)) {
+      console.warn('Google connect refused — calendar scope not granted', {
+        user_id: userId,
+        granted: tokenData.scope ?? '(none returned)',
+      });
+      await supabase.from('calendar_oauth_states').delete().eq('state', state);
+      throw new ValidationError(CALENDAR_SCOPE_DENIED_MESSAGE);
+    }
 
     // Encrypt tokens
     const encryptedAccessToken = await encryptToken(tokenData.access_token);
@@ -141,13 +169,8 @@ serve(async (req: Request) => {
 });
 
 async function exchangeGoogleCode(code: string) {
-  // Prefer the public elec-mate.com redirect (set CALENDAR_OAUTH_REDIRECT once
-    // the Vercel rewrite is live — i.e. at THE PUSH); until then fall back to
-    // the Supabase URL so connects made today actually complete. Both URIs are
-    // registered on the Google client. Must match authorize + token exchange.
-    const redirectUri =
-      Deno.env.get('CALENDAR_OAUTH_REDIRECT') ||
-      `${Deno.env.get('SUPABASE_URL')}/functions/v1/calendar-oauth-callback`;
+  // Must match the authorize call byte for byte — see calendarRedirectUri.
+  const redirectUri = calendarRedirectUri();
 
   const response = await fetch('https://oauth2.googleapis.com/token', {
     method: 'POST',
@@ -170,13 +193,8 @@ async function exchangeGoogleCode(code: string) {
 }
 
 async function exchangeMicrosoftCode(code: string) {
-  // Prefer the public elec-mate.com redirect (set CALENDAR_OAUTH_REDIRECT once
-    // the Vercel rewrite is live — i.e. at THE PUSH); until then fall back to
-    // the Supabase URL so connects made today actually complete. Both URIs are
-    // registered on the Google client. Must match authorize + token exchange.
-    const redirectUri =
-      Deno.env.get('CALENDAR_OAUTH_REDIRECT') ||
-      `${Deno.env.get('SUPABASE_URL')}/functions/v1/calendar-oauth-callback`;
+  // Must match the authorize call byte for byte — see calendarRedirectUri.
+  const redirectUri = calendarRedirectUri();
 
   const response = await fetch('https://login.microsoftonline.com/common/oauth2/v2.0/token', {
     method: 'POST',
@@ -187,7 +205,7 @@ async function exchangeMicrosoftCode(code: string) {
       client_secret: Deno.env.get('MICROSOFT_CLIENT_SECRET')!,
       redirect_uri: redirectUri,
       grant_type: 'authorization_code',
-      scope: 'Calendars.ReadWrite User.Read offline_access',
+      scope: OUTLOOK_CALENDAR_SCOPES,
     }),
   });
 

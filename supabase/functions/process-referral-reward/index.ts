@@ -2,11 +2,134 @@ import { serve } from 'https://deno.land/std@0.177.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
 import Stripe from 'https://esm.sh/stripe@14.14.0';
 import { captureException } from '../_shared/sentry.ts';
+import { Resend, htmlToPlainText } from '../_shared/mailer.ts';
 import {
   liveMonthlyPence,
   referralCreditPence,
   tierMonthlyPence,
 } from '../_shared/referral-reward.ts';
+
+/**
+ * Pay a store-billed referrer with a one-time free-month promo code.
+ *
+ * Codes live in referral_store_codes (Apple offer codes / Play promo codes,
+ * imported quarterly — Apple's expire every quarter end). The referrer's
+ * store comes from their latest billing_events row; the code tier matches
+ * their plan. Returns false when no code could be issued — the caller then
+ * falls back to the legacy 'pending' IOU.
+ */
+async function issueStoreCode(
+  // deno-lint-ignore no-explicit-any
+  supabase: any,
+  args: { referrerId: string; referralId: string; referrerTier: string | null }
+): Promise<boolean> {
+  const tierRaw = (args.referrerTier ?? '').trim().toLowerCase();
+  const tier = tierRaw.startsWith('apprentice')
+    ? 'apprentice'
+    : tierRaw.startsWith('electrician')
+      ? 'electrician'
+      : null;
+  if (!tier) return false;
+
+  const { data: lastEvent } = await supabase
+    .from('billing_events')
+    .select('store')
+    .eq('user_id', args.referrerId)
+    .not('store', 'is', null)
+    .order('created_at', { ascending: false })
+    .limit(1)
+    .maybeSingle();
+  const store = lastEvent?.store;
+  if (store !== 'APP_STORE' && store !== 'PLAY_STORE') return false;
+
+  const { data: au } = await supabase.auth.admin.getUserById(args.referrerId);
+  const email = au?.user?.email;
+  if (!email) return false;
+  const { data: suppressed } = await supabase
+    .from('email_suppressions')
+    .select('email')
+    .eq('email', email.toLowerCase())
+    .limit(1);
+  if (suppressed && suppressed.length > 0) return false;
+
+  // Optimistic allocation — two attempts covers the realistic race window.
+  let code: { code: string; expires_at: string } | null = null;
+  for (let attempt = 0; attempt < 2 && !code; attempt++) {
+    const { data: candidate } = await supabase
+      .from('referral_store_codes')
+      .select('code, expires_at')
+      .eq('store', store)
+      .eq('tier', tier)
+      .eq('status', 'available')
+      .gte('expires_at', new Date().toISOString().slice(0, 10))
+      .order('expires_at', { ascending: true })
+      .limit(1)
+      .maybeSingle();
+    if (!candidate) return false;
+    const { data: claimed } = await supabase
+      .from('referral_store_codes')
+      .update({
+        status: 'assigned',
+        assigned_user_id: args.referrerId,
+        referral_id: args.referralId,
+        assigned_at: new Date().toISOString(),
+      })
+      .eq('code', candidate.code)
+      .eq('status', 'available')
+      .select('code, expires_at')
+      .maybeSingle();
+    if (claimed) code = claimed;
+  }
+  if (!code) return false;
+
+  const redeemUrl =
+    store === 'APP_STORE'
+      ? `https://apps.apple.com/redeem?ctx=offercodes&id=6758948665&code=${code.code}`
+      : `https://play.google.com/redeem?code=${code.code}`;
+  const storeName = store === 'APP_STORE' ? 'the App Store' : 'Google Play';
+  const expires = new Date(code.expires_at + 'T00:00:00Z').toLocaleDateString('en-GB', {
+    day: 'numeric',
+    month: 'long',
+  });
+
+  const { data: prof } = await supabase
+    .from('profiles')
+    .select('full_name')
+    .eq('id', args.referrerId)
+    .maybeSingle();
+  const firstName = (prof?.full_name ?? '').trim().split(/\s+/)[0] ?? '';
+
+  const html = `
+    <div style="font-family: -apple-system, 'Segoe UI', Arial, sans-serif; max-width: 560px; margin: 0 auto; padding: 8px 4px; color:#1a1a1a; font-size:15px; line-height:1.65;">
+      <p style="margin:0 0 14px;">Hi${firstName ? ` ${firstName}` : ''},</p>
+      <p style="margin:0 0 14px;">Your mate just subscribed to Elec-Mate — so here&rsquo;s your free month, as promised.</p>
+      <p style="margin:0 0 6px;">Because you subscribe through ${storeName}, it comes as a one-time code:</p>
+      <p style="margin:0 0 14px; font-size:22px; font-weight:700; letter-spacing:0.08em;">${code.code}</p>
+      <p style="margin:0 0 18px;"><a href="${redeemUrl}" style="display:inline-block; padding:12px 22px; background-color:#facc15; color:#111111; text-decoration:none; font-weight:700; border-radius:10px;">Redeem your free month</a></p>
+      <p style="margin:0 0 14px; color:#555555; font-size:13.5px;">One tap on your phone applies it to your subscription. It needs redeeming by ${expires} — after that Apple and Google kill the code, so don&rsquo;t sit on it.</p>
+      <p style="margin:0;">Cheers, and thanks for spreading the word.<br/>Andrew<br/><span style="color:#555555; font-size:13px;">Founder, Elec-Mate</span></p>
+    </div>`;
+
+  const resend = new Resend(Deno.env.get('RESEND_API_KEY'));
+  const { error: mailErr } = await resend.emails.send({
+    from: 'Andrew at Elec-Mate <founder@elec-mate.com>',
+    to: email,
+    subject: firstName ? `${firstName} — your free month is here` : 'Your free month is here',
+    html,
+    text: htmlToPlainText(html),
+  });
+  if (mailErr) {
+    // Release the code so the reward falls back to pending rather than
+    // burning a code nobody received.
+    await supabase
+      .from('referral_store_codes')
+      .update({ status: 'available', assigned_user_id: null, referral_id: null, assigned_at: null })
+      .eq('code', code.code);
+    console.warn('[process-referral-reward] code email failed, released code:', mailErr.message);
+    return false;
+  }
+  return true;
+}
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -128,18 +251,10 @@ serve(async (req) => {
 
     if (!referrerProfile?.stripe_customer_id) {
       // No Stripe customer — the referrer is billed by Apple or Google, so a
-      // Stripe balance credit is impossible. Bank it as pending for manual
-      // payout; the referral still counts towards their race total below.
-      console.log('[process-referral-reward] Referrer has no Stripe customer, storing as pending');
-      await supabase.from('referral_rewards').insert({
-        user_id: profile.referred_by,
-        referral_id: referralRow.id,
-        reward_type: 'credit',
-        amount_pence: creditPence,
-        status: 'pending',
-      });
-
-      // Still update stats
+      // Stripe balance credit is impossible. Pay them with a one-time store
+      // promo code instead (referral_store_codes, imported per quarter). Only
+      // if no code can be issued does the reward fall back to the old
+      // 'pending' IOU for manual payout.
       const successfulReferrals = (referrerProfile?.successful_referrals || 0) + 1;
       await supabase
         .from('profiles')
@@ -149,13 +264,56 @@ serve(async (req) => {
         })
         .eq('id', profile.referred_by);
 
+      const issued = await issueStoreCode(supabase, {
+        referrerId: profile.referred_by,
+        referralId: referralRow.id,
+        referrerTier: referrerProfile?.subscription_tier ?? null,
+      });
+
+      if (!issued) {
+        console.log('[process-referral-reward] No store code available, storing as pending');
+        await supabase.from('referral_rewards').insert({
+          user_id: profile.referred_by,
+          referral_id: referralRow.id,
+          reward_type: 'credit',
+          amount_pence: creditPence,
+          status: 'pending',
+        });
+        return new Response(
+          JSON.stringify({
+            success: true,
+            reward_applied: false,
+            reason: 'referrer_no_stripe',
+            pending: true,
+          }),
+          { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+      }
+
+      await supabase.from('referral_rewards').insert({
+        user_id: profile.referred_by,
+        referral_id: referralRow.id,
+        reward_type: 'store_code',
+        amount_pence: creditPence,
+        status: 'applied',
+        applied_at: new Date().toISOString(),
+      });
+      await supabase
+        .from('referrals')
+        .update({ status: 'rewarded', updated_at: new Date().toISOString() })
+        .eq('id', referralRow.id);
+      await supabase.from('user_notifications').insert({
+        user_id: profile.referred_by,
+        type: 'referral_reward',
+        title: 'Referral reward — free month!',
+        message: `Your mate just subscribed! A free-month code is on its way to your email.`,
+        metadata: { referral_id: referralRow.id, referred_user_id, reward: 'store_code' },
+        is_read: false,
+      });
+
+      console.log('[process-referral-reward] Store code issued for referrer');
       return new Response(
-        JSON.stringify({
-          success: true,
-          reward_applied: false,
-          reason: 'referrer_no_stripe',
-          pending: true,
-        }),
+        JSON.stringify({ success: true, reward_applied: true, reward: 'store_code' }),
         { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }

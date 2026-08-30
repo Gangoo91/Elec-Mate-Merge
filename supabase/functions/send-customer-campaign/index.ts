@@ -27,6 +27,7 @@
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 import { sendEmail, clientFacingSender, htmlToPlainText } from '../_shared/mailer.ts';
+import { renderEmailShell, type BrandedCompany } from '../_shared/email-template.ts';
 import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
@@ -133,30 +134,79 @@ function firstName(full: string): string {
   return (full || '').trim().split(/\s+/)[0] || 'there';
 }
 
-function buildHtml(bodyText: string, companyName: string, unsubUrl: string): string {
+/**
+ * The campaign email, on the same branded shell as every other client-facing
+ * email we send (`_shared/email-template.ts`) — logo lockup, the electrician's
+ * accent rail, the mobile-first white card and the company footer.
+ *
+ * It used to hand-roll a bare grey table with no logo, no colour and no
+ * footer, so a check-in landed looking nothing like the invoice or
+ * certificate the same client had already had from the same electrician. A
+ * marketing email is the LAST one that can afford to look unbranded — it is
+ * the one the recipient is most ready to dismiss.
+ */
+function buildHtml(
+  bodyText: string,
+  company: BrandedCompany,
+  subject: string,
+  unsubUrl: string
+): string {
   // The user writes plain text with blank lines between paragraphs. Convert
-  // to <p> so it renders with real spacing in every client.
+  // to spaced blocks so it renders with real spacing in every client.
+  //
+  // The FIRST paragraph becomes the shell's greeting — it is almost always
+  // "Hi Dave," and the shell styles that line larger and darker than the
+  // body, which is exactly the hierarchy we want. The remainder is the body,
+  // so the greeting is never rendered twice.
   const paragraphs = bodyText
     .split(/\n{2,}/)
     .map((p) => p.trim())
     .filter(Boolean)
-    .map((p) => `<p style="margin:0 0 16px;">${p.replace(/\n/g, '<br>')}</p>`)
+    .map((p) => p.replace(/\n/g, '<br>'));
+
+  const greeting = paragraphs[0] ?? '';
+  const body = paragraphs
+    .slice(1)
+    .map(
+      (p, i) =>
+        `<span style="display:block;margin:${i === 0 ? '0' : '16px'} 0 0;">${p}</span>`
+    )
     .join('');
 
-  return `<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
-<body style="margin:0;padding:0;background:#f4f4f5;">
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f4f4f5;padding:24px 12px;">
-<tr><td align="center">
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:560px;background:#ffffff;border-radius:12px;padding:32px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.6;color:#18181b;">
-<tr><td>
-${paragraphs}
-<div style="margin-top:32px;padding-top:20px;border-top:1px solid #e4e4e7;font-size:12px;color:#71717a;line-height:1.5;">
-<p style="margin:0 0 6px;">You're receiving this because you're a customer of ${escapeHtml(companyName)}.</p>
-<p style="margin:0;"><a href="${unsubUrl}" style="color:#71717a;">Unsubscribe from these emails</a></p>
-</div>
-</td></tr></table>
-</td></tr></table>
-</body></html>`;
+  /*
+   * Unsubscribe rides in the sign-off slot rather than the shell's footer,
+   * which is reserved for company contact details. Keeping it inside the card
+   * (not below it) means it survives clients that crop trailing content, and
+   * it must never be dropped: the send is refused upstream without a working
+   * opt-out link, and PECR soft opt-in depends on it being present and honoured.
+   */
+  const signoff = `
+    <tr>
+      <td style="padding:28px 36px 0;">
+        <div style="height:1px;background:#e2e8f0;line-height:1px;font-size:1px;">&nbsp;</div>
+      </td>
+    </tr>
+    <tr>
+      <td style="padding:18px 36px 32px;">
+        <p style="margin:0 0 6px;font-size:12px;color:#94a3b8;line-height:1.6;">
+          You're receiving this because you're a customer of ${escapeHtml(company.name)}.
+        </p>
+        <p style="margin:0;font-size:12px;line-height:1.6;">
+          <a href="${unsubUrl}" style="color:#64748b;text-decoration:underline;">Unsubscribe from these emails</a>
+        </p>
+      </td>
+    </tr>`;
+
+  return renderEmailShell({
+    subject,
+    // The inbox preview line. Falls back to the opening paragraph so it is
+    // never the empty string, which some clients fill with raw markup.
+    preheader: (paragraphs[1] || paragraphs[0] || subject).replace(/<[^>]+>/g, '').slice(0, 120),
+    company,
+    greeting,
+    body,
+    signoff,
+  });
 }
 
 // ── Handler ──────────────────────────────────────────────────────────
@@ -213,9 +263,15 @@ Deno.serve(async (req) => {
     // company_profiles, keyed on user_id — NOT `profiles`, which has neither
     // company_name nor company_email. Same lookup send-invoice-resend uses, so
     // a client sees the identical From name on a campaign and an invoice.
+    // Selects the full brand set, not just the name: the email renders on the
+    // shared branded shell, so the logo, accent colour and footer details have
+    // to come from the same row that brands their invoices and certificates.
     const { data: companyProfile } = await supabase
       .from('company_profiles')
-      .select('company_name, company_email')
+      // One unbroken literal: supabase-js infers the row type from the select
+      // string, and a concatenated expression degrades every column to
+      // GenericStringError. Long line beats eleven phantom type errors.
+      .select('company_name, company_email, company_phone, company_website, company_address, company_registration, logo_url, logo_data_url, primary_color')
       .eq('user_id', user.id)
       .maybeSingle();
 
@@ -225,6 +281,85 @@ Deno.serve(async (req) => {
       companyEmail: companyProfile?.company_email,
       userEmail: user.email,
     });
+
+    // Same construction as send-invoice-resend, so a client sees one identical
+    // brand across the invoice, the certificate and the check-in.
+    const brandedCompany: BrandedCompany = {
+      name: companyName,
+      logoUrl: companyProfile?.logo_url || companyProfile?.logo_data_url || null,
+      primaryColor: companyProfile?.primary_color || null,
+      email: companyProfile?.company_email || null,
+      phone: companyProfile?.company_phone || null,
+      website: companyProfile?.company_website || null,
+      address: companyProfile?.company_address || null,
+      registrationNumber: companyProfile?.company_registration || null,
+    };
+
+    const hasCompanyName = Boolean(companyProfile?.company_name?.trim());
+    const hasLogo = Boolean(companyProfile?.logo_url || companyProfile?.logo_data_url);
+
+    /*
+     * Preview: render exactly what would be sent, and return it instead of
+     * sending it.
+     *
+     * It runs the real branding lookup and the real buildHtml, so the preview
+     * cannot drift from the email. A hand-mirrored preview in the client was
+     * the alternative and it is a trap — the moment the two diverge the
+     * preview is lying at precisely the moment the user is trusting it.
+     *
+     * Consumes no daily cap, writes no send log, touches no dedupe window.
+     */
+    if (body?.preview === true) {
+      const { data: sample } = await supabase
+        .from('customers')
+        .select('name')
+        .eq('user_id', user.id)
+        .in('id', customerIds.slice(0, 1))
+        .maybeSingle();
+
+      const vars = {
+        customer_name: firstName(sample?.name ?? ''),
+        customer_full_name: sample?.name ?? '',
+        company_name: companyName,
+      };
+      const previewSubject = applyMergeFields(subject, vars, false);
+      const previewHtml = buildHtml(
+        applyMergeFields(messageBody, vars, true),
+        brandedCompany,
+        previewSubject,
+        // Placeholder: a real signed token would be a live opt-out link for
+        // an email that was never sent.
+        '#'
+      );
+
+      return json({
+        preview: true,
+        html: previewHtml,
+        subject: previewSubject,
+        fromName: companyName,
+        previewFor: sample?.name ?? null,
+        branding: { hasCompanyName, hasLogo },
+      });
+    }
+
+    /*
+     * A campaign with no company name goes out as "Your electrician" with no
+     * logo, and the recipient cannot tell who is contacting them. That is
+     * tolerable on an invoice the client is expecting; on an unsolicited
+     * check-in it is worse than not sending — it burns the one contact you
+     * had. Refused here rather than in the UI, because the UI is not a trust
+     * boundary.
+     */
+    if (!hasCompanyName) {
+      return json(
+        {
+          error:
+            'Add your business name before sending a campaign — without it this goes out as "Your electrician" and your customer will not know who it is from.',
+          code: 'COMPANY_NAME_REQUIRED',
+        },
+        400
+      );
+    }
 
     // ── Today's usage, for the cap ─────────────────────────────────
     const startOfDay = new Date();
@@ -363,7 +498,7 @@ Deno.serve(async (req) => {
 
             const mergedSubject = applyMergeFields(subject, vars, false);
             const mergedBody = applyMergeFields(messageBody, vars, true);
-            const html = buildHtml(mergedBody, companyName, unsubUrl);
+            const html = buildHtml(mergedBody, brandedCompany, mergedSubject, unsubUrl);
 
             const result = await sendEmail({
               from,

@@ -29,6 +29,8 @@ const pickerTriggerCn =
 
 export interface BoardToolCallbacks {
   onScanBoard?: () => void;
+  /** ELE-1607 — scan handwritten readings into the measured columns. */
+  onScanResults?: () => void;
   onQuickRcdPresets?: () => void;
   onVoiceToggle?: () => void;
   voiceActive?: boolean;
@@ -915,6 +917,7 @@ const BoardSection: React.FC<BoardSectionProps> = ({
                 circuitCount={circuitCount}
                 onAddCircuit={onAddCircuit}
                 onScanBoard={showTools ? tools?.onScanBoard : undefined}
+                onScanResults={showTools ? tools?.onScanResults : undefined}
                 onVoiceToggle={showTools ? tools?.onVoiceToggle : undefined}
                 voiceActive={tools?.voiceActive}
                 voiceConnecting={tools?.voiceConnecting}

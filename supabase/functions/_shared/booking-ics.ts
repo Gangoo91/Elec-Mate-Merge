@@ -142,17 +142,49 @@ export interface BookingIcsOptions {
    * it a moved job leaves the customer holding both times.
    */
   sequence: number;
+  /**
+   * ELE-1649 — the separate days of a split job.
+   *
+   * When set, ONE VEVENT is written per day instead of a single span. That is
+   * the difference between the customer's diary blocking Mon/Wed/Fri and it
+   * blocking Monday only — or, worse, Monday through Friday including the two
+   * days the electrician is on somebody else's job.
+   *
+   * Each day carries its own UID so a later change to one day updates that
+   * entry rather than the whole set.
+   */
+  days?: Array<{ uid: string; startIso: string; endIso: string }>;
 }
 
 export function buildBookingIcs(opts: BookingIcsOptions): string {
+  const spans =
+    opts.days && opts.days.length > 0
+      ? opts.days
+      : [{ uid: opts.uid, startIso: opts.startIso, endIso: opts.endIso }];
+
   const lines = [
     'BEGIN:VCALENDAR',
     'VERSION:2.0',
     'PRODID:-//Elec-Mate//Booking//EN',
     'CALSCALE:GREGORIAN',
     'METHOD:PUBLISH',
+  ];
+
+  for (const span of spans) {
+    lines.push(...buildVevent(opts, span));
+  }
+
+  lines.push('END:VCALENDAR');
+  return lines.map(fold).join('\r\n');
+}
+
+function buildVevent(
+  opts: BookingIcsOptions,
+  span: { uid: string; startIso: string; endIso: string }
+): string[] {
+  const lines = [
     'BEGIN:VEVENT',
-    `UID:${opts.uid}`,
+    `UID:${span.uid}`,
     `DTSTAMP:${icsStamp(new Date().toISOString())}`,
     `SEQUENCE:${opts.sequence}`,
   ];
@@ -160,15 +192,15 @@ export function buildBookingIcs(opts: BookingIcsOptions): string {
   if (opts.allDay) {
     // DTEND is EXCLUSIVE for a VALUE=DATE event: a job finishing on the 11th
     // ends on the 12th as far as the file is concerned.
-    const endExclusive = allDayEndDay(opts.endIso);
+    const endExclusive = allDayEndDay(span.endIso);
     endExclusive.setUTCDate(endExclusive.getUTCDate() + 1);
-    lines.push(`DTSTART;VALUE=DATE:${icsDate(opts.startIso)}`);
+    lines.push(`DTSTART;VALUE=DATE:${icsDate(span.startIso)}`);
     lines.push(
       `DTEND;VALUE=DATE:${endExclusive.toISOString().slice(0, 10).replace(/-/g, '')}`
     );
   } else {
-    lines.push(`DTSTART:${icsStamp(opts.startIso)}`);
-    lines.push(`DTEND:${icsStamp(opts.endIso)}`);
+    lines.push(`DTSTART:${icsStamp(span.startIso)}`);
+    lines.push(`DTEND:${icsStamp(span.endIso)}`);
   }
 
   lines.push(`SUMMARY:${escapeIcs(opts.title)}`);
@@ -176,7 +208,7 @@ export function buildBookingIcs(opts: BookingIcsOptions): string {
   if (opts.description?.trim()) lines.push(`DESCRIPTION:${escapeIcs(opts.description.trim())}`);
   lines.push(`ORGANIZER;CN=${escapeIcs(opts.organiserName)}:MAILTO:noreply@elec-mate.com`);
   lines.push('STATUS:CONFIRMED');
-  lines.push('END:VEVENT', 'END:VCALENDAR');
+  lines.push('END:VEVENT');
 
-  return lines.map(fold).join('\r\n');
+  return lines;
 }

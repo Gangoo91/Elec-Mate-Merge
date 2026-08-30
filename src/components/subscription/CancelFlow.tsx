@@ -200,6 +200,16 @@ export function CancelFlow({
   // ── Step 1 → 2: save the reason, then route to intervention ──────────
   const handleSubmitReason = async () => {
     if (!reason) return;
+    // 'Other' with nothing written is the one answer we can do nothing with —
+    // it was 36 of the first 163 responses and only 10 said what "other" was.
+    if (reason === 'other' && detail.trim().length < 3) {
+      toast({
+        title: 'A word or two helps',
+        description: 'What happened? One line is plenty — it goes straight to Andrew.',
+      });
+      document.getElementById('cancel-detail')?.focus();
+      return;
+    }
     setIsSubmitting(true);
     try {
       const {

@@ -12,6 +12,7 @@ import ScrollToTop from '@/components/ScrollToTop';
 import { PWAUpdatePrompt } from '@/components/PWAUpdatePrompt';
 // OfflineIndicator removed — sync pill navigated to 404 (ELE-707)
 import { CookieConsent } from '@/components/CookieConsent';
+import GetAppBanner from '@/components/GetAppBanner';
 import { useNativeApp, useNativePushNotifications } from '@/hooks/useNativeApp';
 import { ActivityTracker } from '@/components/ActivityTracker';
 import { InAppBrowserDetector } from '@/components/InAppBrowserDetector';
@@ -101,6 +102,7 @@ function App() {
                   <>
                     <PWAUpdatePrompt />
                     <CookieConsent />
+                    <GetAppBanner />
                   </>
                 )}
                 {/* Vercel analytics — web only (not designed for Capacitor native) */}

@@ -15,6 +15,7 @@
  */
 
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -29,6 +30,7 @@ import {
   MERGE_FIELDS,
   DEFAULT_TEMPLATE,
   type CampaignResult,
+  type CampaignPreview,
 } from '@/hooks/useCustomerCampaign';
 
 /** Mirrors DEDUPE_DAYS and DEFAULT_DAILY_CAP in the edge function. */
@@ -87,13 +89,24 @@ const MAX_PICKER_ROWS = 1000;
 export interface CustomerCampaignSheetProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  /**
+   * Customers already ticked on the page behind this sheet. Opening straight
+   * onto the recipient step with these selected is the whole point of the
+   * bulk-bar route — someone who has just chosen ten people should not be
+   * made to choose them a second time.
+   *
+   * Only seeds the initial selection; the picker still loads the full list so
+   * they can add to it, and the server re-checks ownership and every limit.
+   */
+  preselectedIds?: string[];
 }
 
 export const CustomerCampaignSheet = ({
   open,
   onOpenChange,
+  preselectedIds,
 }: CustomerCampaignSheetProps) => {
-  const { templates, isSending, sentTodayCount, saveTemplate, send } = useCustomerCampaign();
+  const { templates, isSending, sentTodayCount, saveTemplate, preview, send } = useCustomerCampaign();
   const { toast } = useToast();
   const { selection } = useHaptic();
 
@@ -108,6 +121,9 @@ export const CustomerCampaignSheet = ({
   const [loadingRecipients, setLoadingRecipients] = useState(false);
   const [companyName, setCompanyName] = useState('Your electrician');
   const [result, setResult] = useState<CampaignResult | null>(null);
+  const [previewHtml, setPreviewHtml] = useState<string | null>(null);
+  const [previewLoading, setPreviewLoading] = useState(false);
+  const [branding, setBranding] = useState<CampaignPreview['branding'] | null>(null);
 
   // Load the most recent template on open so the last thing they wrote is
   // what they see, rather than the stock copy every time.
@@ -126,6 +142,13 @@ export const CustomerCampaignSheet = ({
     if (seededForOpen.current) return;
     seededForOpen.current = true;
 
+    // Arriving from the bulk bar with people already ticked: keep them and
+    // still open on the message step, because the message is the part that
+    // needs writing. Skipping to recipients would hide the one screen they
+    // actually have to fill in.
+    const seeded = preselectedIds ?? [];
+    setSelected(new Set(seeded));
+
     setStep('message');
     setResult(null);
     setSearch('');
@@ -135,6 +158,10 @@ export const CustomerCampaignSheet = ({
       setBody(latest.body);
       setTemplateId(latest.id);
     }
+    // `preselectedIds` is deliberately not a dependency — this effect is
+    // guarded to run once per open, and a new array identity from the parent
+    // on every render would defeat that guard and stamp over live edits.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open, templates]);
 
   /**
@@ -199,6 +226,39 @@ export const CustomerCampaignSheet = ({
       cancelled = true;
     };
   }, [open]);
+
+  /*
+   * Fetch the real rendered email when the review step opens.
+   *
+   * Deliberately not on every keystroke — it is a network call per render and
+   * the review step is the only place it is shown. Re-entering review after an
+   * edit refetches, which is exactly when the user wants to see the change.
+   */
+  useEffect(() => {
+    if (!open || step !== 'review') return;
+    let cancelled = false;
+
+    const ids = Array.from(selected);
+    if (ids.length === 0) return;
+
+    setPreviewLoading(true);
+    preview({ subject, body, customerIds: ids })
+      .then((res) => {
+        if (cancelled) return;
+        setPreviewHtml(res?.html ?? null);
+        setBranding(res?.branding ?? null);
+      })
+      .finally(() => {
+        if (!cancelled) setPreviewLoading(false);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+    // `selected` is a Set — a new identity each toggle. Keyed on step instead:
+    // arriving at review is the moment that matters, not every tick in the picker.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open, step]);
 
   /** Why this customer can't be included, or null if they can. */
   const blockerFor = useMemo(() => {
@@ -530,6 +590,9 @@ export const CustomerCampaignSheet = ({
                 selectedCount={selectedCount}
                 willSend={willSend}
                 remainingToday={remainingToday}
+                previewHtml={previewHtml}
+                previewLoading={previewLoading}
+                branding={branding}
               />
             )}
           </div>
@@ -597,6 +660,9 @@ const ReviewView = ({
   selectedCount,
   willSend,
   remainingToday,
+  previewHtml,
+  previewLoading,
+  branding,
 }: {
   subject: string;
   body: string;
@@ -605,7 +671,35 @@ const ReviewView = ({
   selectedCount: number;
   willSend: number;
   remainingToday: number;
+  /** The exact email, as rendered server-side. Null while loading or on failure. */
+  previewHtml: string | null;
+  previewLoading: boolean;
+  branding: { hasCompanyName: boolean; hasLogo: boolean } | null;
 }) => {
+  const navigate = useNavigate();
+
+  /*
+   * Branding is not cosmetic on this email. An invoice arrives expecting to be
+   * from you; an unprompted check-in has to say who it is from in the first
+   * half second or it is deleted. No business name is refused outright by the
+   * server — this is the readable version of that, shown before they get there.
+   */
+  const brandingGap = !branding
+    ? null
+    : !branding.hasCompanyName
+      ? {
+          title: 'Add your business name first',
+          detail:
+            'Without it this sends as "Your electrician" with no logo, and your customer will not know who it is from. The send is blocked until it is set.',
+        }
+      : !branding.hasLogo
+        ? {
+            title: 'Add your logo to stand out',
+            detail:
+              'Your name and colour are set, but with no logo the email leads with plain text. Customers recognise the logo they saw on their certificate.',
+          }
+        : null;
+
   // Rendered for a REAL recipient. Showing raw {{customer_name}} at the point
   // of sending is how a broken merge field reaches a customer unnoticed.
   const vars = {
@@ -651,10 +745,29 @@ const ReviewView = ({
         </div>
       )}
 
+      {brandingGap && (
+        <div className="rounded-xl border border-amber-500/30 bg-amber-500/[0.12] px-3.5 py-3">
+          <p className="text-[13px] font-semibold text-white">{brandingGap.title}</p>
+          <p className="mt-1 text-[12px] leading-relaxed text-white">{brandingGap.detail}</p>
+          <button
+            type="button"
+            onClick={() => navigate('/settings')}
+            className="mt-2.5 flex h-11 items-center text-[13px] font-semibold text-elec-yellow touch-manipulation"
+          >
+            Set it up in Settings → Business
+          </button>
+        </div>
+      )}
+
       <div>
         <span className={labelCn}>
           {previewFor ? `How it looks to ${previewFor.name}` : 'Preview'}
         </span>
+
+        {/* The real email, rendered by the function that sends it and returned
+            over the wire — not a re-creation. A mirrored preview drifts, and a
+            preview that drifts lies at the exact moment it is trusted.
+            Sandboxed with no allow-* tokens: inert, no scripts, no navigation. */}
         <div className="overflow-hidden rounded-xl border border-white/[0.12] bg-white/[0.05]">
           <div className="border-b border-white/[0.1] px-3.5 py-2.5">
             <p className="text-[11px] text-white">From</p>
@@ -664,19 +777,35 @@ const ReviewView = ({
             <p className="text-[11px] text-white">Subject</p>
             <p className="text-[13.5px] font-semibold text-white">{mergedSubject}</p>
           </div>
-          <div className="whitespace-pre-wrap px-3.5 py-3 text-[13.5px] leading-relaxed text-white">
-            {mergedBody}
-          </div>
-          <div className="border-t border-white/[0.1] px-3.5 py-2.5">
-            <p className="text-[11px] leading-relaxed text-white">
-              You&rsquo;re receiving this because you&rsquo;re a customer of {companyName}.
-              <br />
-              <span className="underline">Unsubscribe from these emails</span>
-            </p>
-          </div>
+
+          {previewHtml ? (
+            <iframe
+              title="Email preview"
+              sandbox=""
+              srcDoc={previewHtml}
+              className="h-[420px] w-full border-0 bg-white"
+            />
+          ) : (
+            // Falls back to the plain-text rendering rather than blocking the
+            // send: a preview that failed to load must not become a gate.
+            <>
+              <div className="whitespace-pre-wrap px-3.5 py-3 text-[13.5px] leading-relaxed text-white">
+                {mergedBody}
+              </div>
+              <div className="border-t border-white/[0.1] px-3.5 py-2.5">
+                <p className="text-[11px] leading-relaxed text-white">
+                  You&rsquo;re receiving this because you&rsquo;re a customer of {companyName}.
+                  <br />
+                  <span className="underline">Unsubscribe from these emails</span>
+                </p>
+              </div>
+            </>
+          )}
         </div>
         <p className="mt-2 text-[11.5px] text-white">
-          Everyone else gets the same message with their own name in it.
+          {previewLoading
+            ? 'Loading the exact email…'
+            : 'Everyone else gets the same message with their own name in it.'}
         </p>
       </div>
     </div>

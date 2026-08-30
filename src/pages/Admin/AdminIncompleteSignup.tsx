@@ -603,7 +603,17 @@ export default function AdminIncompleteSignup() {
     let totalSent = 0;
 
     try {
-      const ids = selectedCount > 0 ? Array.from(selectedIds) : pendingInView.map((u) => u.id);
+      /*
+        Only send explicit ids when the admin actually ticked people.
+
+        This used to pass `pendingInView.map(u => u.id)` whenever nothing was
+        selected — all 617 UUIDs, ~23KB of query string once the backend put
+        them through a single `.in('id', …)`. PostgREST rejected the request and
+        the campaign 400'd before a single email went out. With no selection the
+        server already knows the eligible set; asking it to filter to a list of
+        everyone was redundant as well as fatal.
+      */
+      const ids = selectedCount > 0 ? Array.from(selectedIds) : [];
 
       for (let run = 0; run < MAX_RUNS; run++) {
         const data = await invoke<{

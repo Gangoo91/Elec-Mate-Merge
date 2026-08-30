@@ -1,654 +1,930 @@
-import { ArrowLeft, Wrench, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * Module 7 · Section 6 — Commissioning a loop
+ *
+ * Rewritten 2026-08-30. REPOSITIONED from the old outline title "Loop testing
+ * tools (loop calibrators, simulators, multimeters)".
+ *
+ * 🔴 WHY REPOSITIONED — audit finding. Module 6 Section 2 ("Equipment and
+ * standards") ALREADY OWNS the tools outright: 47 mentions of simulate, 11 of
+ * loop calibrator, read/source/simulate modes, the 4-8-12-16-20 mA injection,
+ * the list of what that exercises (cable, isolators, input card, ranging,
+ * display, alarms) and the key insight that it "divides the system cleanly in
+ * two". Writing tools here would have duplicated an existing page wholesale.
+ * Verified by grep before writing, not after.
+ *
+ * 🔴 SO THIS PAGE OWNS COMMISSIONING AS AN ACTIVITY, which nothing else covers.
+ * The organising distinction, and the spine of the page:
+ *   CALIBRATION (Module 6) asks — is this device accurate?
+ *   COMMISSIONING asks — is the RIGHT device wired to the RIGHT input, reading
+ *   the RIGHT way round, in the RIGHT units, and does the WHOLE CHAIN agree?
+ * A perfectly calibrated transmitter on the wrong input passes every
+ * calibration check ever devised and fails commissioning. That gap is the page.
+ *
+ * 🔴 THE CENTREPIECE — CROSSED LOOPS. Two transmitters transposed. Each loop is
+ * individually flawless: right calibration, right range, right signal, correct
+ * display. Nothing is faulty. Verified by grep that this is UNCOVERED anywhere
+ * in Modules 1-8 (all "crossed"/"swapped" hits are incidental — threshold
+ * crossed, sensor swapped-for-new). It fits the module's running theme of
+ * faults with no symptom, and it is the fault that justifies the whole
+ * discipline of injecting AT THE FIELD DEVICE rather than at the marshalling
+ * cabinet — which is the single practical rule this page exists to teach.
+ *
+ * 🔴 SOURCE-GROUNDED (Kuphaldt §13.7, the loop calibrator simulate-mode passage
+ * at /tmp/kup.txt:35820-35835). Verbatim facts available:
+ *   - simulate mode tests "the transmitter cable and controller input"
+ *   - performed on newly-installed systems as part of the commissioning
+ *     procedure, PRIOR TO START-UP of the controlled process
+ *   - verifies the controller's PV input, the 24 VDC supply, and transmitter
+ *     wiring are all functioning
+ *   - method: simulate several values while SOMEONE ELSE monitors the
+ *     controller's PV display AND ALARMS
+ * That last detail grounds the two-person working section — it is a real
+ * two-person activity with a communication protocol, not a solo task.
+ *
+ * ⚠️ VERIFIED CROSS-REFERENCES (all grepped before writing):
+ *   M6.2 — calibrator modes + 5-point injection + "divides the system in two"
+ *   M6.6 — error combination, "before commissioning rather than after a dispute"
+ *   M3.4 — double square-root extraction, called a classic commissioning fault
+ *   M7.1 — loop diagram   M7.2 — terminations   M7.3 — devices fill the budget
+ *   M7.5 — the barrier earth that fails silently
+ * Do NOT re-teach any of them. Reference and move on.
+ *
+ * ⚠️ CC BY source — shingle-scanned to ZERO 9-word overlaps. Keep it that way.
+ * ⚠️ Do NOT invent standards, hold-point regimes or documentation requirements.
+ * Commissioning regimes are contractual and site-specific; teach the reasoning.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  TLDR,
+  ConceptBlock,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+  Pullquote,
+  AppendixTable,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
-const TITLE = 'Loop Testing Tools - Instrumentation Course';
+const TITLE = 'Commissioning a loop | Instrumentation Module 7.6 | Elec-Mate';
 const DESCRIPTION =
-  'Learn how to use loop calibrators, signal simulators, and multimeters for testing, commissioning, and troubleshooting 4-20mA current loops.';
+  'Why commissioning asks a different question from calibration, how an end-to-end loop check is run before start-up, and the transposed-loop fault that leaves every individual loop looking perfect.';
 
-const quickCheckQuestions = [
-  {
-    id: 'm7s6-qc1',
-    question: 'What current value represents 50% of a 4-20mA signal?',
-    options: ['8mA', '10mA', '12mA', '14mA'],
-    correctIndex: 2,
-    explanation:
-      '12mA represents 50% of the 4-20mA span. The calculation is: 4mA + (50% x 16mA span) = 4mA + 8mA = 12mA.',
-  },
-  {
-    id: 'm7s6-qc2',
-    question: 'What is the typical voltage for a powered 4-20mA loop?',
-    options: ['12VDC', '24VDC', '48VDC', '5VDC'],
-    correctIndex: 1,
-    explanation:
-      '24VDC is the industry standard for powered 4-20mA loops, providing adequate compliance voltage for transmitter operation and allowing for cable voltage drops.',
-  },
-  {
-    id: 'm7s6-qc3',
-    question: 'When measuring loop current with a multimeter, how must the meter be connected?',
-    options: ['In parallel', 'In series', 'Across the power supply', 'To ground only'],
-    correctIndex: 1,
-    explanation:
-      "A multimeter must be connected in series with the loop to measure current. Breaking the loop and inserting the meter allows current to flow through the meter's internal shunt resistor.",
-  },
+const outcomes = [
+  '🔴 State the question commissioning asks that calibration does not',
+  'Say why a perfectly calibrated transmitter can still fail commissioning',
+  'List what must be complete before a loop check can begin',
+  'Describe how an end-to-end loop check is run and who does what',
+  '🔴 Explain why the injection point must be the field device, not the cabinet',
+  '🔴 Describe the transposed-loop fault and why nothing looks wrong',
+  'Explain why both ends of a loop must be checked for range and direction',
+  'Say why proving a trip means observing the action, not the number',
 ];
 
 const quizQuestions = [
   {
     id: 1,
-    question: 'What current should a loop simulator generate to simulate a 50% signal?',
+    question: '🔴 What question does commissioning ask that calibration does not?',
     options: [
-      '12.000mA (midway between 4mA and 20mA)',
-      '10.000mA (halfway up the numeric scale)',
-      '16.000mA (three-quarters of full scale)',
-      '8.000mA (twice the zero offset)',
+      'Whether the right device is wired to the right input and the whole chain agrees',
+      'Whether the device drifts over time',
+      'Whether the loop budget is sufficient',
+      'Whether the device meets its accuracy specification',
     ],
-    correctAnswer: 0,
+    correctIndex: 0,
     explanation:
-      'For 50% of a 4-20mA signal: 50% of (20-4) = 8mA, plus the 4mA offset = 12mA. This represents the exact midpoint of the measurement range.',
+      'Calibration is a question about one device in isolation — is it accurate? Commissioning is a question about the installation as built — is this the right device, in the right place, connected to the right input, reading the right way round. A device can be perfect and the installation still wrong.',
   },
   {
     id: 2,
-    question: "What's one key benefit of using a loop calibrator?",
+    question:
+      'A transmitter is calibrated to specification on the bench and installed. It is wired to the wrong controller input. What happens at calibration checks?',
     options: [
-      'It automatically reduces installation cable costs',
-      'It boosts the loop signal strength automatically',
-      'It provides a precise current source and measurement for accurate loop testing',
-      'It removes the need for calibration documentation',
+      'They fail, revealing the error',
+      'They pass — calibration examines the device, not what it is connected to',
+      'They pass only if the two loops have the same range',
+      'They cannot be performed until commissioning is complete',
     ],
-    correctAnswer: 2,
+    correctIndex: 1,
     explanation:
-      'Loop calibrators provide precise current sources and measurement capabilities, enabling accurate testing, commissioning, and troubleshooting of 4-20mA loops with traceable accuracy.',
+      'Every calibration check is satisfied because the device genuinely is accurate. The error is in the installation rather than the instrument, which is precisely the class of fault commissioning exists to catch and calibration structurally cannot.',
   },
   {
     id: 3,
-    question: 'How can you test a transmitter with a multimeter?',
+    question: 'Why can a loop check not sensibly begin before the installation is complete?',
     options: [
-      'Measure output current in series while applying a known input to the transmitter',
-      'Check only the loop power supply voltage at the terminals',
-      'Measure the cable resistance between the transmitter cores',
-      'Read the device nameplate and serial number information',
+      'The controller cannot be powered until handover',
+      'The calibrator will be damaged',
+      'A check on an unfinished loop proves something about an arrangement that will not be the one left behind',
+      'Regulations forbid it',
     ],
-    correctAnswer: 0,
+    correctIndex: 2,
     explanation:
-      'To test a transmitter with a multimeter, measure the output current by connecting the meter in series with the loop while applying a known input (pressure, temperature, etc.) to verify proper current output.',
+      'The whole value of an end-to-end check is that it proves the actual, final signal path. If terminations are still to be remade or a device is still to be fitted, the thing proven is not the thing that will be in service — so the proof expires the moment work resumes.',
   },
   {
     id: 4,
-    question: "What's the typical supply voltage for a powered 4-20mA loop?",
+    question:
+      '🔴 Why should the loop check signal be injected at the field device rather than at the marshalling cabinet?',
     options: [
-      '12VDC',
-      '5VDC',
-      '48VDC',
-      '24VDC (plus or minus 10%)',
+      'The calibrator only works in the field',
+      'Cabinet injection damages the input card',
+      'The cabinet terminals are harder to reach',
+      'Injecting at the cabinet leaves the field cable and the field end untested, and cannot reveal a transposition',
     ],
-    correctAnswer: 3,
+    correctIndex: 3,
     explanation:
-      'The industry standard for 4-20mA loops is 24VDC plus or minus 10%, providing a range of 21.6V to 26.4V to ensure adequate compliance voltage for proper transmitter operation across the full current range.',
+      'Injecting at the cabinet proves only the section from the cabinet inwards. Everything upstream — the field cable, its terminations, and crucially which field device is actually on the far end of it — remains unproven, which is exactly where a transposition hides.',
   },
   {
     id: 5,
-    question: 'Why is signal simulation useful during commissioning?',
+    question: '🔴 Two transmitters have been transposed. What does each loop look like on test?',
     options: [
-      'It reduces the cost of the installed equipment',
-      'It tests receivers and control systems with known signals before connecting transmitters',
-      'It removes the need to calibrate any device',
-      'It automatically configures every device on the loop',
+      'Both loops look perfect — correct calibration, correct range, correct display response',
+      'Both alarm continuously',
+      'One reads backwards',
+      'Both read zero',
     ],
-    correctAnswer: 1,
+    correctIndex: 0,
     explanation:
-      'Signal simulation allows systematic testing of receivers and control systems with known, precise current values, enabling verification of accuracy, scaling, and alarm functions before connecting actual transmitters.',
+      'Nothing is faulty. Every device is accurate, every signal path is sound, and every display responds correctly to its input. The only thing wrong is which physical measurement is arriving where — and no test of an individual loop in isolation can detect that.',
   },
   {
     id: 6,
-    question: 'What is the purpose of a span check at 20mA?',
+    question: 'What makes a transposition detectable during an end-to-end check?',
     options: [
-      'To load-test the loop power supply',
-      'To measure the cable loop resistance',
-      'To verify the receiver shows maximum scale and calculate span accuracy',
-      'To exercise the alarm relays only',
+      'Checking the loop resistance',
+      'Injecting a distinct value at one identified field device and confirming it appears on that tag alone',
+      'Comparing the two loops’ calibration certificates',
+      'Measuring the supply voltage at both transmitters',
     ],
-    correctAnswer: 2,
+    correctIndex: 1,
     explanation:
-      'A span check at 20mA verifies the receiver shows the correct maximum scale value and allows calculation of span error percentage to ensure the full range is accurate.',
+      'The check has to tie a specific physical location to a specific tag on the display. Injecting a value that is unique among the loops being worked on, from a device you have positively identified, is what makes the answer unambiguous rather than merely plausible.',
   },
   {
     id: 7,
-    question: "What accuracy is typical for a professional loop calibrator's current output?",
+    question: 'Why is an end-to-end loop check normally a two-person activity?',
     options: [
-      'Plus or minus 1%',
-      'Plus or minus 0.02%',
-      'Plus or minus 0.1%',
-      'Plus or minus 5%',
+      'To satisfy insurance requirements',
+      'For manual handling reasons',
+      'One person injects at the field device while the other observes the controller’s display and alarms',
+      'Because the calibrator requires two operators',
     ],
-    correctAnswer: 1,
+    correctIndex: 2,
     explanation:
-      'Professional loop calibrators typically achieve plus or minus 0.02% accuracy for current output, providing the precision needed for calibrating and testing industrial instrumentation.',
+      'The two ends of the loop are usually nowhere near each other, and the point of the exercise is to compare what was injected with what appeared. That comparison needs somebody at each end and an agreed way of communicating values between them.',
   },
   {
     id: 8,
-    question: 'What should you check before performing resistance measurements on a loop?',
+    question: '🔴 What does it mean to prove a trip during commissioning?',
     options: [
-      'That the calibrator display is working',
-      'That all cables have been labelled',
-      'That the alarms have been disabled',
-      'That power has been removed from the circuit',
+      'Checking the alarm appears on the display',
+      'Verifying the transmitter is calibrated at the trip value',
+      'Confirming the trip value is correctly entered in the configuration',
+      'Driving the signal through the trip point and observing that the intended action actually occurs',
     ],
-    correctAnswer: 3,
+    correctIndex: 3,
     explanation:
-      'Power must be removed from the circuit before performing resistance measurements to avoid damaging the meter and to get accurate readings without interference from loop current.',
+      'A correctly entered set-point and a displayed alarm both demonstrate that the number was received. Neither demonstrates that anything happens as a result. The action is the function, so the action is what has to be observed.',
   },
   {
     id: 9,
     question:
-      'What is the minimum insulation resistance typically required for instrumentation cables?',
-    options: ['1 Megohm', '100 kohms', '500 kohms', '10 Megohms'],
-    correctAnswer: 0,
+      'A loop reads correctly at 4 mA and 20 mA but the host has been configured with a different span from the transmitter. When is this most likely to show?',
+    options: [
+      'In the middle of the range, where the two scalings disagree most',
+      'Only during an alarm condition',
+      'It will not show at all',
+      'At the extremes of the range',
+    ],
+    correctIndex: 0,
     explanation:
-      'A minimum of 1 Megohm insulation resistance is typically required for instrumentation cables, measured at 500V or 1000V DC between cores and between cores and earth/shield.',
+      'Checking only the endpoints is what lets this survive. Two different scalings can agree at the ends and diverge in between, which is why an intermediate point is the one that catches a range mismatch — the same reasoning behind checking several points rather than two.',
   },
   {
     id: 10,
-    question: 'What does HART communication capability in a calibrator allow?',
+    question: 'What should happen to the loop diagram during commissioning?',
     options: [
-      'Current measurement and nothing more',
-      'Faster physical cable installation',
-      'Digital configuration and diagnostics of smart transmitters',
-      'Automatic repair of detected faults',
+      'It should be filed unchanged as the record',
+      'Differences found between the drawing and the installation should be marked up so the record becomes accurate',
+      'It should be replaced by the calibration certificates',
+      'It is not needed once the loop is proven',
     ],
-    correctAnswer: 2,
+    correctIndex: 1,
     explanation:
-      'HART capability allows digital configuration, diagnostics, and advanced testing of smart transmitters superimposed on the 4-20mA signal, enabling comprehensive device management.',
-  },
-];
-
-const faqs = [
-  {
-    question: 'Do I need an expensive calibrator for basic loop testing?',
-    answer:
-      'For basic testing, a quality multimeter with milliamp range can measure loop current. However, for sourcing signals and comprehensive testing, a dedicated loop calibrator provides the accuracy and functionality needed for professional work.',
+      'Commissioning is usually the first time anybody compares the drawing against the installation in detail, so it is when discrepancies surface. Correcting the record at that point is what makes the drawing trustworthy for whoever fault-finds the loop in three years, per Module 7 Section 1.',
   },
   {
-    question: 'How often should loop calibrators be calibrated?',
-    answer:
-      "Typically annually, or more frequently in critical applications. Check the manufacturer's recommendations and your site quality requirements. Keep calibration certificates current.",
+    id: 11,
+    question: 'Why is a loop that has been proven with a simulated signal still not fully proven?',
+    options: [
+      'It only proves the display, not the alarms',
+      'The simulation is not accurate enough',
+      'It establishes nothing about the transmitter or the process connection, which sit outside the tested path',
+      'Simulated signals damage the input card',
+    ],
+    correctIndex: 2,
+    explanation:
+      'Module 6 Section 2 makes this the point of the technique rather than a shortcoming — it divides the system in two. Commissioning needs both halves, so a simulated check has to be followed by a check that the real sensor responds to the real measurement.',
   },
   {
-    question: 'Can I use a clamp meter for 4-20mA measurement?',
-    answer:
-      'Yes, but with limitations. Process clamp meters for low current can measure without breaking the loop, but accuracy is typically plus or minus 0.1mA at best, less precise than series measurement.',
-  },
-  {
-    question: "What's the difference between source and simulate modes?",
-    answer:
-      'Source mode generates a signal regardless of loop conditions. Simulate mode acts like a transmitter, drawing current from an external power supply. Use simulate for testing powered loops.',
-  },
-  {
-    question: 'Why does my calibrator reading differ from the DCS reading?',
-    answer:
-      'Differences can result from calibrator accuracy, input card accuracy, scaling configuration, or cable voltage drops. Test each element separately to identify the source of discrepancy.',
-  },
-  {
-    question: 'Should I test at 4mA or 20mA first?',
-    answer:
-      'Start with 4mA (zero) as this is the baseline. Adjust zero first, then span at 20mA. Finally verify linearity at intermediate points. This sequence ensures systematic calibration.',
+    id: 12,
+    question:
+      'A commissioning check finds a differential-pressure flow loop reading incorrectly at mid-scale but correctly at zero and full scale. What is worth suspecting?',
+    options: [
+      'A failed input card',
+      'A barrier with a missing earth',
+      'A cable fault',
+      'The square root being extracted twice, in the transmitter and again in the host',
+    ],
+    correctIndex: 3,
+    explanation:
+      'Module 3 Section 4 covers this as a classic commissioning fault, and the reason it survives is arithmetic — the square root of zero is zero and the square root of one is one, so the endpoints agree perfectly and only the middle of the range reveals the error.',
   },
 ];
 
 const InstrumentationModule7Section6 = () => {
-  useSEO({
-    title: TITLE,
-    description: DESCRIPTION,
-  });
+  const navigate = useNavigate();
+  useSEO({ title: TITLE, description: DESCRIPTION });
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/electrician/upskilling/instrumentation-module-7">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+    <HubPage>
+      <HubMasthead
+        section="Module 7 · Section 6"
+        title="Commissioning a loop"
+        backTo="/electrician/upskilling/instrumentation-module-7"
+      />
 
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centered Title Header */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Wrench className="h-4 w-4" />
-            <span>Module 7 Section 6</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Loop Testing Tools
-          </h1>
-          <p className="text-white">
-            Loop calibrators, simulators, and multimeters for commissioning and troubleshooting
+      <HubBody>
+        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
+          Every device can be accurate and the installation still wrong. This is the check that
+          finds out.
+        </p>
+
+        <TLDR
+          points={[
+            '🔴 Calibration asks whether a device is accurate. Commissioning asks whether the right device is wired to the right input, reading the right way round.',
+            'Those are different questions, and passing one says nothing about the other.',
+            'A perfectly calibrated transmitter on the wrong input passes every calibration check ever devised.',
+            'Commissioning proves the installation as built, before the process runs on it.',
+            'Module 6 Section 2 owns the tool and the injection technique. This section owns the activity.',
+            'Nothing can be proven on an unfinished loop — the proof expires the moment work resumes.',
+            '🔴 Inject at the FIELD DEVICE, not the marshalling cabinet. Cabinet injection leaves the field end unproven.',
+            'It is a two-person job: one injects, one watches the display and the alarms.',
+            '🔴 The fault that justifies all of it is the transposed loop — two transmitters swapped.',
+            '🔴 Each transposed loop looks flawless in isolation. Nothing is faulty. Only an end-to-end check with a distinct value finds it.',
+            'Check an intermediate point, not just the ends — two different scalings agree at 4 and 20 mA.',
+            'Proving a trip means watching the action happen, not watching the number arrive.',
+            'Mark up what you find. Commissioning is when the drawing and the installation first meet.',
+          ]}
+        />
+
+        <LearningOutcomes outcomes={outcomes} />
+
+        <ContentEyebrow>🔴 A different question</ContentEyebrow>
+
+        <ConceptBlock
+          title="Commissioning is not calibration"
+          plainEnglish="Calibration asks if a device tells the truth. Commissioning asks if the truth it tells is arriving in the right place."
+          onSite="This distinction is the whole reason the activity exists as a separate exercise."
+        >
+          <p>
+            Module 6 covered calibration in depth, and it is worth being exact about what that
+            established, because commissioning is often assumed to be the same thing done on site.
+            It is not.
           </p>
-        </header>
+          <p>
+            <strong>Calibration asks a question about one device: is it accurate?</strong> Apply a
+            known input, compare the output against what it should be, adjust if required. The
+            question is entirely contained within the instrument.
+          </p>
+          <p>
+            🔴{' '}
+            <strong>
+              Commissioning asks a question about the installation: is the right device wired to the
+              right input, reading the right way round, in the right units, with every part of the
+              chain agreeing?
+            </strong>{' '}
+            That question is not contained within any instrument, which is why no amount of
+            instrument testing answers it.
+          </p>
+          <p>
+            The sharp illustration is this. Take a transmitter calibrated to specification, with a
+            certificate to prove it, and wire it to the wrong controller input.{' '}
+            <strong>
+              Every calibration check performed on that device passes, because the device genuinely
+              is accurate.
+            </strong>{' '}
+            The fault is not in the instrument at all. It is in the installation, and calibration
+            has no mechanism for detecting it.
+          </p>
+          <AppendixTable
+            caption="What each activity actually establishes"
+            headers={['Question', 'Calibration answers', 'Commissioning answers']}
+            rows={[
+              ['Is this device accurate?', 'Yes', 'Assumes it, having been done first'],
+              ['Is it the right device for this tag?', 'No', 'Yes'],
+              ['Is it connected to the right input?', 'No', 'Yes'],
+              ['Does the host display the right units and range?', 'No', 'Yes'],
+              ['Does the whole chain agree end to end?', 'No', 'Yes'],
+              ['Does the alarm or trip actually act?', 'No', 'Yes'],
+            ]}
+            notes="Calibration is a prerequisite for commissioning, not a substitute for it. The columns do not overlap."
+          />
+          <p>
+            So the order matters and it is not arbitrary.{' '}
+            <strong>Devices are calibrated, then the loop is commissioned</strong> &mdash; because
+            commissioning a loop full of uncalibrated instruments produces disagreements you cannot
+            attribute, and there is no point proving a signal path carries a number faithfully if
+            the number was wrong when it set off.
+          </p>
+        </ConceptBlock>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1">
-              <li>
-                <strong>Loop Calibrators:</strong> Source and measure precise 4-20mA signals
-              </li>
-              <li>
-                <strong>Multimeters:</strong> Measure current, voltage, resistance in series
-              </li>
-              <li>
-                <strong>Zero Check:</strong> 4mA = 0% scale value
-              </li>
-              <li>
-                <strong>Span Check:</strong> 20mA = 100% scale value
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
-            <ul className="text-sm text-white space-y-1">
-              <li>
-                <strong>Spot:</strong> 12mA = 50% signal (quick mid-scale check)
-              </li>
-              <li>
-                <strong>Use:</strong> Always verify calibrator accuracy before critical tests
-              </li>
-            </ul>
-          </div>
+        <Pullquote>
+          A calibration certificate proves the instrument tells the truth. It says nothing whatever
+          about who is listening.
+        </Pullquote>
+
+        <SectionRule />
+        <ContentEyebrow>Before you can start</ContentEyebrow>
+
+        <ConceptBlock
+          title="You cannot prove an unfinished loop"
+          plainEnglish="An end-to-end check is only worth anything if the thing you tested is the thing that gets left behind."
+          onSite="Commissioning early, to show progress, is how a loop gets signed off twice and proven once."
+        >
+          <p>
+            The value of an end-to-end check rests entirely on one thing:{' '}
+            <strong>that it proves the actual, final signal path</strong>. Everything else follows
+            from that, including when it can sensibly be done.
+          </p>
+          <p>
+            If a termination is still to be remade, a gland still to be fitted, a barrier still to
+            be earthed or a device still to be installed, then the arrangement under test is not the
+            arrangement that will go into service.{' '}
+            <strong>The proof expires the moment somebody resumes work on it</strong>, and a signed
+            record that no longer describes the installation is worse than no record, because it
+            will be believed.
+          </p>
+          <p>The work that earlier sections covered is what has to be complete first:</p>
+          <ul>
+            <li>
+              <strong>Terminations and glanding</strong> made off properly, per Section 2 &mdash;
+              including the screen treated as that section describes.
+            </li>
+            <li>
+              <strong>Cable tests</strong> done and passed, which Section 7 covers. A loop check is
+              not a cable test and does not replace one.
+            </li>
+            <li>
+              <strong>The loop budget</strong> confirmed as workable per Section 3, so the supply
+              can actually drive the loop to 20 mA rather than saturating short of it.
+            </li>
+            <li>
+              <strong>Barrier earths</strong> in place where Section 5 applies &mdash; and worth a
+              deliberate look, since that is a fault which produces no symptom during any check on
+              this page.
+            </li>
+            <li>
+              <strong>Devices calibrated</strong>, per Module 6, so that a disagreement found here
+              can be attributed to the installation.
+            </li>
+          </ul>
+          <p>
+            🔴 That last point about barrier earths deserves emphasis, because it is a real gap. A
+            loop check exercises the signal path, and{' '}
+            <strong>
+              a barrier with a disconnected earth passes an end-to-end check perfectly
+            </strong>
+            . The protective function is not in the signal path, so nothing about injecting current
+            and watching the display will ever reveal it. It has to be verified separately and
+            deliberately.
+          </p>
+        </ConceptBlock>
+
+        <SectionRule />
+        <ContentEyebrow>The loop check</ContentEyebrow>
+
+        <ConceptBlock
+          title="Proving the path before the process runs on it"
+          plainEnglish="Inject known currents at one end and confirm the right numbers appear at the other, before anything real depends on it."
+          onSite="This is the core commissioning activity, and it is done before start-up for a reason."
+        >
+          <p>
+            Module 6 Section 2 covered the tool and the technique in detail &mdash; the
+            calibrator&rsquo;s read, source and simulate modes, and the practice of injecting{' '}
+            <strong>4, 8, 12, 16 and 20 mA</strong> and confirming the receiving instruments agree
+            at each. That section also established what such a check exercises: the field cable and
+            its terminations, any isolator or barrier, the conversion resistor and input card, the
+            host&rsquo;s ranging, and the display, trend and alarms configured along the way.
+          </p>
+          <p>
+            What this section adds is the context in which that becomes commissioning rather than
+            testing.{' '}
+            <strong>
+              This check is performed on newly installed systems before the process is started up
+            </strong>
+            , and its purpose is to establish that the controller&rsquo;s process variable input,
+            the loop supply and the transmitter wiring are all functioning &mdash; so that any
+            signal the transmitter later sends will be correctly received and displayed.
+          </p>
+          <p>
+            The timing carries the point.{' '}
+            <strong>
+              Before start-up, a wrong reading is a finding. After start-up, it is a process
+              decision made on bad information.
+            </strong>{' '}
+            Commissioning exists to move every discoverable error into the first category.
+          </p>
+          <p>
+            🔴 It is also, by its nature, a{' '}
+            <strong>two-person activity with a communication protocol</strong>. One person injects
+            at the field end; the other watches the controller&rsquo;s display and its alarms. The
+            two ends of a loop are rarely within sight of each other, and the entire exercise is a
+            comparison between what was sent and what arrived &mdash; which cannot be done by one
+            person reading their own instrument.
+          </p>
+          <p>That imposes some discipline worth stating plainly:</p>
+          <ul>
+            <li>
+              <strong>Agree the tag before injecting anything.</strong> Both people must be certain
+              they are working on the same loop, which is a stronger claim than both believing it.
+            </li>
+            <li>
+              <strong>Announce the value, then confirm what is seen.</strong> The person at the host
+              reports what the display reads &mdash; they do not confirm the value they were told to
+              expect. Those are different questions and only one of them is a test.
+            </li>
+            <li>
+              <strong>Record as you go</strong>, rather than reconstructing afterwards from memory.
+            </li>
+          </ul>
+          <p>
+            The second of those is the one that quietly decides whether the exercise means anything.
+            If the field end says &ldquo;sending twelve&rdquo; and the host end says &ldquo;yes,
+            twelve&rdquo;, a great deal has been assumed and very little has been proven.
+          </p>
+        </ConceptBlock>
+
+        <InlineCheck
+          id="ins-7-6-confirm"
+          question="During a loop check the technician at the field device announces “injecting 12 mA”. What is the most useful thing the person at the controller can say back?"
+          options={[
+            'The value the display is actually showing, before hearing what it should be',
+            'That the loop appears healthy',
+            'That the alarm has not activated',
+            'Confirmation that 12 mA was expected',
+          ]}
+          correctIndex={0}
+          explanation="Reporting the observed value is a test; agreeing with an expected value is not. Once somebody knows what the answer should be, a display reading close to it stops being scrutinised — which is exactly how a loop with a range mismatch gets signed off as correct."
+        />
+
+        <SectionRule />
+        <ContentEyebrow>🔴 The fault that justifies all of it</ContentEyebrow>
+
+        <ConceptBlock
+          title="Transposed loops"
+          plainEnglish="Two transmitters swapped over. Both loops work perfectly. Nothing is broken. Everything is wrong."
+          onSite="This is the commissioning fault, and it is the reason the injection point matters."
+        >
+          <p>
+            Consider two similar transmitters installed on the same plant on the same day &mdash;
+            two pressure transmitters, or two temperature loops on adjacent vessels. During
+            installation the field cables are transposed, so each transmitter is connected to the
+            other&rsquo;s loop.
+          </p>
+          <p>Now examine what any individual test would find:</p>
+          <ul>
+            <li>
+              <strong>Both transmitters are correctly calibrated.</strong> Their certificates are
+              valid and their accuracy is exactly as specified.
+            </li>
+            <li>
+              <strong>Both signal paths are electrically sound.</strong> Cable tests pass, loop
+              resistance is within budget, terminations are good.
+            </li>
+            <li>
+              <strong>Both displays respond correctly.</strong> Inject a current into either loop at
+              the cabinet and the right tag moves by the right amount, in the right direction, in
+              the right units.
+            </li>
+            <li>
+              <strong>No alarm is raised, and nothing reads out of range</strong>, provided the two
+              vessels happen to be at broadly similar conditions.
+            </li>
+          </ul>
+          <p>
+            🔴{' '}
+            <strong>
+              Nothing is faulty. Every component is working exactly as designed. The only thing
+              wrong is which physical measurement is arriving where
+            </strong>{' '}
+            &mdash; and that is not a property of any device, so no test of any device can detect
+            it.
+          </p>
+          <p>
+            This is the sharpest example in the module of a theme that has run through it
+            repeatedly: Section 5 had the barrier earth that fails silently, and this is its
+            measurement equivalent. The system reports confidently and it reports the wrong vessel.
+          </p>
+          <p>
+            The consequence is worth stating without softening it.{' '}
+            <strong>
+              Control action is taken on the wrong vessel, and the loop compensating for it makes
+              the real condition worse rather than better
+            </strong>
+            . An operator responding to a rising reading adjusts the vessel that is not rising.
+            Every display agrees with every other display, so the instruments are the last thing
+            anybody suspects.
+          </p>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="🔴 Why the injection point decides whether you find it"
+          plainEnglish="Injecting at the cabinet only proves the bit from the cabinet inwards. What is on the far end of the cable stays a guess."
+          onSite="This single rule is what this page most wants you to take away."
+        >
+          <p>
+            Everything about the transposition survives a check performed at the marshalling
+            cabinet, and the reason is precise.{' '}
+            <strong>
+              Injecting at the cabinet proves the path from the cabinet to the host. It proves
+              nothing at all about what is connected on the other side of those terminals.
+            </strong>
+          </p>
+          <p>
+            The cable, its terminations, and above all{' '}
+            <strong>which physical device is at the far end of it</strong>, are all outside the
+            tested path. So a cabinet check on a transposed pair returns two perfect results and
+            confirms an incorrect installation.
+          </p>
+          <p>
+            🔴 Injecting <strong>at the field device</strong> closes that gap, because the test now
+            begins at a physical location you have gone to and positively identified. Three things
+            make the result unambiguous:
+          </p>
+          <ul>
+            <li>
+              <strong>Identify the device physically, not by expectation.</strong> Read the tag on
+              the instrument you are actually standing at, and check it against the loop diagram
+              from Section 1 rather than against what you assume you are working on.
+            </li>
+            <li>
+              <strong>Inject a value distinct from the other loops in progress.</strong> If two
+              loops are both sitting at 12 mA, a display showing 50 per cent proves nothing about
+              which one you moved. A value unique among the loops being worked on removes that
+              ambiguity.
+            </li>
+            <li>
+              <strong>Confirm it appears on that tag and, ideally, that nothing else moved.</strong>{' '}
+              The second half is what actually catches a transposition, because it is the other tag
+              moving that reveals it.
+            </li>
+          </ul>
+          <p>
+            That is the whole method, and it is not laborious. It is the difference between proving
+            a loop and proving a length of cable.
+          </p>
+        </ConceptBlock>
+
+        <CommonMistake
+          title="🔴 Signing off a loop that was checked from the cabinet"
+          whatHappens={
+            <>
+              <p>
+                Cabinet injection is quicker, warmer and drier than walking out to the field device,
+                and it exercises most of the signal path. The results look identical: inject five
+                values, watch five correct numbers appear, tick the loop off.
+              </p>
+              <p>
+                The record then states that the loop was checked and found correct, and that record
+                is true as far as it goes. What it does not say is which portion of the loop was
+                checked.
+              </p>
+              <p>
+                🔴 Three faults pass this check untouched. <strong>A transposition</strong> is
+                invisible, as above. <strong>A field cable fault</strong> beyond the cabinet is
+                outside the tested path entirely. And{' '}
+                <strong>a device connected to the wrong point in the process</strong> &mdash; the
+                right tag on the wrong vessel &mdash; is not even in principle detectable
+                electrically.
+              </p>
+              <p>
+                Because a signed record exists, all three are then extremely difficult to find
+                later. The loop has documentation saying it was proven, so when the readings look
+                strange in service, the investigation starts somewhere else and stays there.
+              </p>
+            </>
+          }
+          doInstead={
+            <>
+              <p>
+                Treat the field device as the starting point of the check, and treat cabinet
+                injection as what it is: a useful{' '}
+                <strong>fault-finding step that divides the loop in two</strong>, which is how
+                Module 6 Section 2 presents it.
+              </p>
+              <p>Practically:</p>
+              <ul>
+                <li>
+                  <strong>Start at the instrument.</strong> Identify it physically, then inject
+                  there.
+                </li>
+                <li>
+                  <strong>Where a genuine constraint prevents it</strong> &mdash; a device that
+                  cannot be reached while the plant is in its current state &mdash; record what was
+                  actually checked and from where, so the limitation travels with the record instead
+                  of being lost.
+                </li>
+                <li>
+                  <strong>Finish with the real sensor.</strong> An injected signal proves the path;
+                  it establishes nothing about the transmitter or the process connection, which is
+                  the half of the system Module 6 Section 2 deliberately excludes. Confirming the
+                  instrument responds to a real change closes it.
+                </li>
+              </ul>
+              <p>
+                The general principle behind all three:{' '}
+                <strong>
+                  a record should describe what was proven, not what was intended to be proven
+                </strong>
+                . A note saying a loop was checked from the cabinet is far more valuable to the next
+                person than a tick that implies more than was done.
+              </p>
+            </>
+          }
+        />
+
+        <InlineCheck
+          id="ins-7-6-transposed"
+          question="Two adjacent temperature loops have been transposed during installation. Both are checked by injecting current at the marshalling cabinet. What is the result?"
+          options={[
+            'One loop fails the check',
+            'Both loops pass — the fault is entirely outside the section of path being tested',
+            'Both loops read backwards',
+            'The alarms activate on both loops',
+          ]}
+          correctIndex={1}
+          explanation="Cabinet injection tests from the cabinet to the host, and the transposition is on the field side of that. Both checks therefore return correct results, and the exercise ends by certifying an installation that is wired to the wrong vessels."
+        />
+
+        <SectionRule />
+        <ContentEyebrow>Both ends must agree</ContentEyebrow>
+
+        <ConceptBlock
+          title="Range, direction and units are configured twice"
+          plainEnglish="The transmitter was told what its 4 and 20 mA mean. So was the host. Nothing guarantees they were told the same thing."
+          onSite="Endpoint-only checks are what let a mismatch through."
+        >
+          <p>
+            A 4&ndash;20 mA loop carries a proportion, not a measurement. Module 3 covered the
+            arithmetic of turning that proportion back into engineering units, and the practical
+            consequence for commissioning is that{' '}
+            <strong>the same range has been configured in two separate places</strong> &mdash; once
+            in the transmitter and once in the host &mdash; usually by different people at different
+            times.
+          </p>
+          <p>
+            🔴 If those two configurations disagree, the loop is wrong at every point except the
+            ones most people check.{' '}
+            <strong>
+              Two different scalings still agree at 4 mA and at 20 mA, because both ends map those
+              to their own bottom and top of range.
+            </strong>{' '}
+            The divergence is greatest in the middle, which is exactly why the five-point check
+            exists rather than a two-point one.
+          </p>
+          <p>Three things are worth confirming explicitly rather than assuming:</p>
+          <ul>
+            <li>
+              <strong>The range values match at both ends</strong>, read from each rather than from
+              the specification both are supposed to follow.
+            </li>
+            <li>
+              <strong>The units match.</strong> A host displaying different pressure units from
+              those the transmitter was ranged in produces a believable number that is wrong by a
+              fixed factor &mdash; and believable is the dangerous part.
+            </li>
+            <li>
+              <strong>The direction is right.</strong> A reverse-acting arrangement, where the
+              signal falls as the measurement rises, is legitimate but must be intended. A loop
+              reading backwards passes a range check at both endpoints if nobody watches which way
+              it moved.
+            </li>
+          </ul>
+          <p>
+            Where a square-root characterisation is involved, Module 3 Section 4 covers the fault
+            worth knowing about: the root extracted in both the transmitter and the host. It
+            survives for the same arithmetic reason as a range mismatch &mdash; the endpoints agree
+            exactly and only the middle of the range is wrong.
+          </p>
+        </ConceptBlock>
+
+        <ConceptBlock
+          title="Proving a trip means watching something happen"
+          plainEnglish="A number arriving on a screen is not the same as a valve closing."
+          onSite="The action is the function. The display is just how you found out."
+        >
+          <p>
+            Alarms and trips get commissioned alongside the measurement, and there is a distinction
+            here that matters more than it first appears.
+          </p>
+          <p>
+            Driving the signal through the trip point and seeing the alarm appear proves that{' '}
+            <strong>the number was received and compared correctly</strong>. That is genuinely worth
+            proving. But the purpose of a trip is not to display anything &mdash; it is to make
+            something happen.
+          </p>
+          <p>
+            🔴{' '}
+            <strong>
+              Proving a trip means driving the signal through the set-point and observing the
+              intended action actually occur
+            </strong>{' '}
+            &mdash; the valve moving, the pump stopping, the interlock operating. A correctly
+            configured set-point with no working output is a fault that every display-based check
+            reports as healthy.
+          </p>
+          <p>
+            The same applies at the other end of the scale. Section 3 established that a loop can
+            work perfectly at 4 mA and fail at 20 mA when the budget is short, so{' '}
+            <strong>a trip near full scale needs proving at its own value</strong> rather than
+            inferred from a loop that behaved at mid-range.
+          </p>
+          <p>
+            Which of these actions can safely be proven, and when, is a question for the plant
+            rather than the technician &mdash; some can only be demonstrated during a shutdown, and
+            forcing an output on a live plant is not a decision to make on the spot. What is not
+            negotiable is being clear afterwards about{' '}
+            <strong>which trips were proven by action and which only by indication</strong>, because
+            those are very different assurances.
+          </p>
+        </ConceptBlock>
+
+        <Scenario
+          title="A loop that reads perfectly and is connected to the wrong vessel"
+          situation={
+            <>
+              <p>
+                Two identical pressure transmitters are commissioned on adjacent vessels. Both loops
+                are checked by injection at the marshalling cabinet, both respond correctly at all
+                five points, and both are signed off. The plant starts up.
+              </p>
+              <p>
+                Three weeks later, operators report that one vessel&rsquo;s pressure control is
+                sluggish and occasionally moves the wrong way. Both transmitters are checked and
+                found to be within calibration. Both loops are re-checked from the cabinet and pass
+                again.
+              </p>
+            </>
+          }
+          whatToDo={
+            <>
+              <p>
+                Notice what the evidence is actually saying. Every test performed so far has
+                examined the part of the system from the cabinet inwards, and every one has passed
+                &mdash; twice. Repeating a test that has already passed twice is unlikely to produce
+                a different answer, and the symptom is not one that a healthy loop produces.
+              </p>
+              <p>
+                <strong>
+                  Control that occasionally acts in the wrong direction is a strong hint that the
+                  measurement and the process are not the pair the controller believes they are
+                </strong>
+                . That points at the field side, which is precisely the region no test has yet
+                covered.
+              </p>
+              <p>
+                The check that resolves it is the one that should have been done at commissioning:
+                go to one transmitter, identify it physically from its tag against the loop diagram,
+                and inject a distinct value there &mdash; then observe which tag on the display
+                moves. Watching the other loop at the same time is what turns a suspicion into a
+                finding.
+              </p>
+              <p>
+                If the transposition is confirmed, the correction itself is small. The important
+                part is the surrounding work: establishing how long the plant has been operated on
+                transposed measurements, whether any decisions were taken on them, and{' '}
+                <strong>
+                  whether any other pair of similar loops was commissioned the same way
+                </strong>
+                . A method that produced this fault once will have been applied to every loop
+                commissioned that week.
+              </p>
+            </>
+          }
+          whyItMatters={
+            <>
+              <p>
+                This is the failure mode the whole section exists for. Nothing was broken at any
+                point &mdash; not the transmitters, not the cable, not the controller. Every
+                instrument was accurate and every test was performed competently against the method
+                being used.
+              </p>
+              <p>
+                The defect was in the method: a check that began at the wrong end of the loop, and a
+                record that said &ldquo;loop checked&rdquo; without saying from where. Both of those
+                are decisions rather than accidents, which is what makes them preventable.
+              </p>
+            </>
+          }
+        />
+
+        <FAQ
+          items={[
+            {
+              question: 'Is a loop check the same as a cable test?',
+              answer:
+                'No, and one does not substitute for the other. A cable test — the subject of Section 7 — examines the cable as a cable: continuity, insulation resistance, screen integrity, and whether conductors are where the drawing says. A loop check examines whether a signal injected at one end arrives correctly at the other. A loop can pass an end-to-end check while sitting on cable with degraded insulation that has not yet failed, because at 24 V and a few milliamps a great deal of degradation causes no immediate symptom. Both are done, and the cable test comes first.',
+            },
+            {
+              question: 'How many points should be checked?',
+              answer:
+                'Module 6 Section 2 sets out the familiar five — 4, 8, 12, 16 and 20 mA — and the reasoning behind more than two is worth understanding rather than following by rote. Two points establish a straight line through whatever they are, so any error that happens to agree at both ends survives them: a range mismatch, a double square root, a scaling error. Intermediate points are what catch those. The specific number and values for a given project are usually set by its commissioning documentation.',
+            },
+            {
+              question: 'Does the loop need re-commissioning after a device is replaced?',
+              answer:
+                'The signal path has been broken and remade, so the assurance the original check provided no longer covers it — and the sensible response is proportionate rather than absolute. Re-proving the section that was disturbed is usually what is called for: that the replacement is the right device for the tag, that it is ranged the same way as the one it replaced, and that it reads correctly at the host. The failure worth guarding against is the assumption that a like-for-like swap needs no proving, because a replacement device configured with default settings rather than the loop’s settings is a very common way to introduce a range mismatch into a loop that was previously correct.',
+            },
+            {
+              question: 'What should the commissioning record contain?',
+              answer:
+                'The specifics are set by the project rather than by any general rule, but the principle that makes a record useful is straightforward: it should describe what was actually proven, by whom, and when. That means recording the values injected and the values observed rather than a bare pass, noting where the signal was injected from, and stating explicitly what was not proven — a trip verified only by indication, a device that could not be reached. A record that captures its own limitations is far more use to whoever fault-finds the loop later than one that implies complete coverage.',
+            },
+            {
+              question: 'Why mark up the loop diagram during commissioning?',
+              answer:
+                'Because commissioning is usually the first occasion on which anybody systematically compares the drawing with the installation, so it is when discrepancies surface — a terminal number that differs, a device relocated during installation, a spare pair used that the drawing does not show. Section 1 covered why an accurate loop diagram matters when fault-finding, and the corollary is that the diagram is only accurate if somebody corrects it at the point the differences are discovered. Nobody will ever have a better opportunity.',
+            },
+            {
+              question: 'Can commissioning find a barrier with a missing earth?',
+              answer:
+                'No, and this is worth knowing as a genuine gap rather than a reassurance. Section 5 established that a zener barrier’s earth carries protective fault current, not signal current, so its absence has no effect whatever on how the loop behaves. Every check on this page will pass. The protective function has to be verified deliberately and separately, which is exactly why it gets missed — it is not on the path anybody is exercising.',
+            },
+          ]}
+        />
+
+        <KeyTakeaways
+          points={[
+            '🔴 Calibration asks whether a device is accurate. Commissioning asks whether the right device is wired to the right input and the whole chain agrees.',
+            'A perfectly calibrated transmitter on the wrong input passes every calibration check — the fault is in the installation, not the instrument.',
+            'Calibration is a prerequisite for commissioning, never a substitute: devices first, then the loop.',
+            'Nothing useful can be proven on an unfinished loop — the proof expires when work resumes.',
+            'Terminations (7.2), cable tests (7.7), loop budget (7.3) and device calibration (M6) all come first.',
+            'Module 6 Section 2 owns the calibrator and the five-point injection. This section owns the activity around it.',
+            'The check is done before start-up: before, a wrong reading is a finding; after, it is a decision made on bad information.',
+            'It is a two-person job — one injects at the field end, one watches the display and the alarms.',
+            '🔴 The person at the host reports what they see, rather than agreeing with the value they were told to expect.',
+            '🔴 A transposed pair of loops looks flawless in isolation — correct calibration, correct paths, correct displays. Nothing is faulty.',
+            '🔴 Inject at the FIELD DEVICE. Cabinet injection proves the path from the cabinet inwards and leaves the transposition invisible.',
+            'Identify the instrument physically, inject a value distinct from other loops in progress, and watch that nothing else moves.',
+            'Range, units and direction are configured twice — in the transmitter and in the host — and nothing guarantees they agree.',
+            'Two different scalings still agree at 4 and 20 mA, so an intermediate point is what catches a mismatch.',
+            'Proving a trip means observing the action occur, not the number arrive. Note which trips were proven by action and which only by indication.',
+            '🔴 A loop check cannot detect a barrier with a missing earth — that is not on the signal path and must be verified separately.',
+            'Record what was actually proven and from where, and mark up the drawing while the differences are in front of you.',
+          ]}
+        />
+
+        <Quiz questions={quizQuestions} title="Check yourself — Module 7.6" />
+
+        <div className="grid grid-cols-2 gap-3 pt-2">
+          <button
+            onClick={() => navigate('/electrician/upskilling/instrumentation-module-7-section-5')}
+            className="flex flex-col rounded-2xl border border-elec-yellow/35 bg-gradient-to-br from-white/[0.19] via-white/[0.105] to-white/[0.065] p-4 text-left touch-manipulation lg:hover:-translate-y-0.5"
+          >
+            <span className="flex items-center gap-2 text-[10px] font-medium uppercase tracking-[0.14em] text-white">
+              <ChevronLeft className="h-3 w-3" /> Previous section
+            </span>
+            <span className="mt-1 truncate text-[14px] font-semibold text-white">
+              Barriers and IS loops
+            </span>
+          </button>
+          <button
+            onClick={() => navigate('/electrician/upskilling/instrumentation-module-7-section-7')}
+            className="flex flex-col rounded-2xl border border-elec-yellow/35 bg-gradient-to-br from-white/[0.19] via-white/[0.105] to-white/[0.065] p-4 text-right touch-manipulation lg:hover:-translate-y-0.5"
+          >
+            <span className="flex items-center justify-end gap-2 text-[10px] font-medium uppercase tracking-[0.14em] text-white">
+              Next section <ChevronRight className="h-3 w-3" />
+            </span>
+            <span className="mt-1 truncate text-[14px] font-semibold text-white">
+              Testing instrument cable
+            </span>
+          </button>
         </div>
-
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Use loop calibrators for sourcing and measuring',
-              'Apply multimeter techniques for current measurement',
-              'Perform zero, span, and linearity checks',
-              'Test receivers with signal simulation',
-              'Verify wiring integrity and insulation',
-              'Understand advanced calibrator features',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <hr className="border-white/5 mb-12" />
-
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Loop Calibrators and Process Signal Testing
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
-            <p>
-              Loop calibrators are essential tools for commissioning, maintaining, and
-              troubleshooting 4-20mA current loops. They combine signal source and measurement
-              functions in a portable, battery-powered instrument designed for field use.
-            </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">
-                Source Functions (Simulate Transmitter):
-              </p>
-              <ul className="text-sm text-white space-y-1 ml-4">
-                <li>
-                  <strong>Current Output:</strong> Generate precise 4-20mA signals (typical accuracy
-                  plus or minus 0.02%)
-                </li>
-                <li>
-                  <strong>Voltage Output:</strong> 1-5V, 0-10V, and custom voltage ranges
-                </li>
-                <li>
-                  <strong>Resistance Simulation:</strong> RTD and potentiometer values
-                </li>
-                <li>
-                  <strong>Process Units:</strong> Display in engineering units (degrees C, bar,
-                  etc.)
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">
-                Measure Functions (Test Receivers):
-              </p>
-              <ul className="text-sm text-white space-y-1 ml-4">
-                <li>
-                  <strong>Current Measurement:</strong> 4-20mA with high accuracy
-                </li>
-                <li>
-                  <strong>Voltage Measurement:</strong> Loop supply and signal voltages
-                </li>
-                <li>
-                  <strong>24V Loop Supply:</strong> Power externally powered devices
-                </li>
-                <li>
-                  <strong>HART Communication:</strong> Digital configuration and diagnostics
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[0]} />
-
-        {/* Section 02 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Multimeter Techniques for Loop Testing
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
-            <p>
-              A quality digital multimeter is fundamental for loop testing, providing current,
-              voltage, and resistance measurements. Understanding proper connection techniques
-              ensures accurate readings and prevents equipment damage.
-            </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Series Current Measurement:</p>
-              <ul className="text-sm text-white space-y-1 ml-4">
-                <li>
-                  <strong>Break Loop:</strong> Insert meter in series with signal path
-                </li>
-                <li>
-                  <strong>Burden Voltage:</strong> Consider meter voltage drop (typically 0.1-1V)
-                </li>
-                <li>
-                  <strong>Range Selection:</strong> Use 20mA or 200mA range for best resolution
-                </li>
-                <li>
-                  <strong>Auto-ranging:</strong> Be aware of range switching delays
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Voltage Measurements:</p>
-              <ul className="text-sm text-white space-y-1 ml-4">
-                <li>
-                  <strong>Supply Voltage:</strong> Measure across power supply terminals under load
-                </li>
-                <li>
-                  <strong>Transmitter Terminal Voltage:</strong> Verify adequate compliance voltage
-                </li>
-                <li>
-                  <strong>Voltage Drop:</strong> Calculate cable and load voltage drops
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Resistance Testing:</p>
-              <ul className="text-sm text-white space-y-1 ml-4">
-                <li>
-                  <strong>Power Down:</strong> Always remove power before resistance tests
-                </li>
-                <li>
-                  <strong>Loop Resistance:</strong> Measure total cable resistance
-                </li>
-                <li>
-                  <strong>Insulation Testing:</strong> Use 500V or 1000V insulation tester, minimum
-                  1 Megohm required
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[1]} />
-
-        {/* Section 03 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Signal Simulation and Loop Validation
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
-            <p>
-              Signal simulators allow testing of receivers and control systems with known, precise
-              current values. This enables verification of scaling, alarms, and control functions
-              before connecting actual transmitters.
-            </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Standard Test Sequence:</p>
-              <ul className="text-sm text-white space-y-1 ml-4">
-                <li>
-                  <strong>Zero Check (4mA):</strong> Verify receiver shows minimum scale value (0%)
-                </li>
-                <li>
-                  <strong>Mid-Scale (12mA):</strong> Verify 50% reading, check linearity
-                </li>
-                <li>
-                  <strong>Span Check (20mA):</strong> Verify receiver shows maximum scale value
-                  (100%)
-                </li>
-                <li>
-                  <strong>Alarm Testing:</strong> Verify high/low alarm setpoints trigger correctly
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Tolerance Checking:</p>
-              <ul className="text-sm text-white space-y-1 ml-4">
-                <li>
-                  <strong>Typical Tolerance:</strong> Plus or minus 0.25% of span for process loops
-                </li>
-                <li>
-                  <strong>As-Found Recording:</strong> Document readings before adjustment
-                </li>
-                <li>
-                  <strong>As-Left Recording:</strong> Document readings after calibration
-                </li>
-                <li>
-                  <strong>Pass/Fail Criteria:</strong> Compare against specification limits
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[2]} />
-
-        {/* Section 04 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Wiring Integrity and Pre-Test Verification
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
-            <p>
-              Before functional testing, verify wiring integrity to ensure safe and accurate
-              results. Systematic pre-test checks prevent damage to equipment and identify
-              installation issues.
-            </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Pre-Testing Checklist:</p>
-              <ul className="text-sm text-white space-y-1 ml-4">
-                <li>
-                  <strong>Documentation Review:</strong> Check loop drawings and specifications
-                </li>
-                <li>
-                  <strong>Visual Inspection:</strong> Check connections, cable condition,
-                  terminations
-                </li>
-                <li>
-                  <strong>Continuity Test:</strong> Confirm complete circuit before applying power
-                </li>
-                <li>
-                  <strong>Insulation Test:</strong> Verify minimum 1 Megohm between cores and earth
-                </li>
-                <li>
-                  <strong>Power Supply Check:</strong> Verify correct voltage and polarity
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Common Test Points:</p>
-              <ul className="text-sm text-white space-y-1 ml-4">
-                <li>
-                  <strong>Transmitter Terminals:</strong> Current output and supply voltage
-                </li>
-                <li>
-                  <strong>Junction Boxes:</strong> Intermediate connection verification
-                </li>
-                <li>
-                  <strong>Control Room Terminals:</strong> Input card readings
-                </li>
-                <li>
-                  <strong>Shield Connections:</strong> Single-point earth verification
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        {/* Real World Example */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4">Real World Example</h2>
-          <div className="p-4 rounded-lg bg-card/50 border border-white/10">
-            <h3 className="text-sm font-medium text-elec-yellow mb-2">
-              Commissioning a Reactor Temperature Loop
-            </h3>
-            <p className="text-sm text-white mb-3">
-              A site engineer uses a loop calibrator to validate a new reactor temperature control
-              loop before startup, ensuring accurate measurement and proper alarm function.
-            </p>
-            <div className="text-sm text-white space-y-2">
-              <p>
-                <strong>Setup:</strong> RTD temperature transmitter (0-200 degrees C, 4-20mA), DCS
-                analog input with 250 ohm load, 150m cable run.
-              </p>
-              <p>
-                <strong>Test Procedure:</strong> Disconnect transmitter, connect calibrator in
-                simulate mode. Inject 4mA (expect 0 degrees C), 12mA (expect 100 degrees C), 20mA
-                (expect 200 degrees C). Verify DCS reads within plus or minus 0.5 degrees C.
-              </p>
-              <p>
-                <strong>Result:</strong> All readings within specification. Alarms tested and
-                verified at HH=180 degrees C and LL=10 degrees C. Documentation completed with
-                calibration certificate. Loop released for service.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">When Commissioning</h3>
-              <ul className="text-sm text-white space-y-1 ml-4">
-                <li>Always verify calibrator calibration status before starting</li>
-                <li>Document as-found and as-left readings for every loop</li>
-                <li>Test full range including alarm setpoints</li>
-                <li>Verify control response if connected to control system</li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                During Troubleshooting
-              </h3>
-              <ul className="text-sm text-white space-y-1 ml-4">
-                <li>Start with visual inspection of connections</li>
-                <li>Measure current at multiple points to isolate faults</li>
-                <li>Compare readings to previous calibration data</li>
-                <li>Check power supply voltage under load conditions</li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1 ml-4">
-                <li>
-                  <strong>Wrong meter mode</strong> - connecting ammeter in parallel blows fuse
-                </li>
-                <li>
-                  <strong>Testing energised circuits</strong> - measure resistance with power
-                  removed
-                </li>
-                <li>
-                  <strong>Ignoring burden voltage</strong> - meter drop affects loop operation
-                </li>
-                <li>
-                  <strong>Missing documentation</strong> - always record test results
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        {/* Bottom Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../instrumentation-module-7-section-5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous Section
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../instrumentation-module-7-section-7">
-              Next Section
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+      </HubBody>
+    </HubPage>
   );
 };
 

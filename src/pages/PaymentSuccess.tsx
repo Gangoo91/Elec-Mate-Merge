@@ -328,13 +328,21 @@ const PaymentSuccess = () => {
     [fetchProfile, roleFromPlan, user?.id]
   );
 
-  const isBusinessAIPlan = planId.startsWith('business-ai') || planId.startsWith('employer');
   const isMatePlan = planId.startsWith('business-ai');
+  const isEmployerPlan = planId.startsWith('employer');
+  // Employer used to be lumped in with Business AI here, which sent every new
+  // employer subscriber to /electrician/business-ai — the Mate page — instead
+  // of their own hub. They get /employer.
+  const postPaymentRoute = isMatePlan
+    ? '/electrician/business-ai'
+    : isEmployerPlan
+      ? '/employer'
+      : '/dashboard';
 
   const handleGoToDashboard = useCallback(() => {
     if (autoNavRef.current) clearTimeout(autoNavRef.current);
-    navigate(isBusinessAIPlan ? '/electrician/business-ai' : '/dashboard');
-  }, [isBusinessAIPlan, navigate]);
+    navigate(postPaymentRoute);
+  }, [postPaymentRoute, navigate]);
 
   const handleOpenWhatsApp = useCallback(() => {
     window.open(MATE_WHATSAPP_LINK, '_blank', 'noopener,noreferrer');
@@ -356,7 +364,7 @@ const PaymentSuccess = () => {
         setActivationSlow(false);
         setIsReady(true);
         autoNavRef.current = setTimeout(() => {
-          navigate(isBusinessAIPlan ? '/electrician/business-ai' : '/dashboard');
+          navigate(postPaymentRoute);
         }, 8000);
         return;
       }
@@ -383,7 +391,7 @@ const PaymentSuccess = () => {
       if (pollRef.current) clearInterval(pollRef.current);
       if (autoNavRef.current) clearTimeout(autoNavRef.current);
     };
-  }, [ensureRole, fetchProfile, isBusinessAIPlan, navigate, user?.id]);
+  }, [ensureRole, fetchProfile, postPaymentRoute, navigate, user?.id]);
 
   useEffect(() => {
     if (profile?.subscribed && !isReady) {
@@ -395,8 +403,8 @@ const PaymentSuccess = () => {
   const nextSteps = plan.nextSteps({ downloadVCard: downloadMateVCard });
   const ctaLabel = isMatePlan
     ? 'Activate Mate on WhatsApp'
-    : isBusinessAIPlan
-      ? 'Open Business AI'
+    : isEmployerPlan
+      ? 'Open Employer Hub'
       : 'Go to Dashboard';
   const ctaAction = isMatePlan ? handleGoToDashboard : handleGoToDashboard;
   // Note: Mate plan still routes to /electrician/business-ai which contains the

@@ -200,6 +200,40 @@ export const videos = {
   ),
   // AM2 / AM2E booking — Module 1 context
   am2BookingRequirements: lookup('iTYYdLGZ-WA', 'AM2 and AM2E — when can you book it?', ['M1S1']),
+
+  /* ── Instrumentation course (Module 2 — sensors and transducers) ────── */
+
+  // Overview of temperature sensing technologies — Instrumentation M2.2
+  temperatureSensors: lookup(
+    'w3Hfj2kMrGo',
+    'Temperature sensors compared — thermocouples, RTDs and thermistors',
+    ['I-M2S2']
+  ),
+  // Thermocouple principle — Seebeck effect and the reference junction
+  thermocouplesHow: lookup(
+    'v7NUi88Lxi8',
+    'How a thermocouple generates a voltage from a temperature difference',
+    ['I-M2S2']
+  ),
+  // RTD principle — resistance against temperature
+  rtdBasics: lookup('blnnAEmVXp0', 'RTDs — measuring temperature by resistance', ['I-M2S2']),
+  // Pressure switches — discrete measurement, set-point and deadband
+  pressureSwitches: lookup(
+    'YG81w0HFXNc',
+    'Electronic pressure switches — set-point, deadband and switching',
+    ['I-M2S3', 'I-M6S3']
+  ),
+
+  /* ── Instrumentation course (Module 7 — loops and wiring) ───────────── */
+
+  // Glanding armoured cable — the practical half of Instrumentation M7.2
+  swaGlandTechnique: lookup('sfrMhHpjJMM', 'Terminating armoured cable with a gland', ['I-M7S2']),
+  // Insulation resistance readings and where they mislead — Instrumentation M7.7
+  insulationResistanceReadings: lookup(
+    'vmILYt3bjF4',
+    'Insulation resistance readings — what they mean and where they mislead',
+    ['I-M7S7']
+  ),
 } as const satisfies Record<string, VideoLibraryEntry>;
 
 export type VideoKey = keyof typeof videos;

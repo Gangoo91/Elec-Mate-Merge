@@ -28,6 +28,15 @@ export interface CampaignSkip {
   reason: string;
 }
 
+/** The rendered email, returned by the send function's preview mode. */
+export interface CampaignPreview {
+  html: string;
+  subject: string;
+  fromName: string;
+  previewFor: string | null;
+  branding: { hasCompanyName: boolean; hasLogo: boolean };
+}
+
 export interface CampaignResult {
   sent: number;
   skipped: CampaignSkip[];
@@ -150,6 +159,49 @@ export function useCustomerCampaign() {
     [loadTemplates, toast]
   );
 
+  /**
+   * The real email, rendered by the thing that sends it.
+   *
+   * `supabase.functions.invoke` reports a non-2xx as a generic "Edge Function
+   * returned a non-2xx status code" and leaves `data` null, so the readable
+   * refusal the function wrote — "Add your business name…" — is only in the
+   * response body hanging off the error. Dig it out or the user is told
+   * nothing useful at the one moment they need telling.
+   */
+  const readFunctionError = async (err: unknown): Promise<string | null> => {
+    const ctx = (err as { context?: unknown })?.context;
+    if (!(ctx instanceof Response)) return null;
+    try {
+      const parsed = await ctx.clone().json();
+      return typeof parsed?.error === 'string' ? parsed.error : null;
+    } catch {
+      return null;
+    }
+  };
+
+  const preview = useCallback(
+    async (input: {
+      subject: string;
+      body: string;
+      customerIds: string[];
+    }): Promise<CampaignPreview | null> => {
+      try {
+        const { data, error } = await supabase.functions.invoke('send-customer-campaign', {
+          body: { ...input, preview: true },
+        });
+        if (error) throw error;
+        if (data?.error) throw new Error(data.error);
+        return data as CampaignPreview;
+      } catch (err) {
+        // Silent: the review step falls back to showing nothing rather than
+        // blocking the send behind a preview that failed to load.
+        console.error('Campaign preview failed:', err);
+        return null;
+      }
+    },
+    []
+  );
+
   const send = useCallback(
     async (input: {
       subject: string;
@@ -163,7 +215,10 @@ export function useCustomerCampaign() {
         const { data, error } = await supabase.functions.invoke('send-customer-campaign', {
           body: input,
         });
-        if (error) throw error;
+        if (error) {
+          const readable = await readFunctionError(error);
+          throw new Error(readable ?? (error as Error).message);
+        }
         if (data?.error) throw new Error(data.error);
 
         await loadSentToday();
@@ -185,6 +240,7 @@ export function useCustomerCampaign() {
     isSending,
     sentTodayCount,
     saveTemplate,
+    preview,
     send,
     refresh: loadTemplates,
   };

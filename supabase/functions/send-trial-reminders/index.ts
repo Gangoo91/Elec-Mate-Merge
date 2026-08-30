@@ -190,11 +190,27 @@ interface ReceiptStats {
   questions: number;
 }
 
+/**
+ * "tomorrow" vs "in two days".
+ *
+ * The receipt job selects anyone whose trial ends 24-48h out, because the cron
+ * runs once a day and a narrower window would drop people. But the copy said
+ * "your trial ends tomorrow" to all of them, so roughly half were told the
+ * wrong day — and this is an email about when money leaves their account. Say
+ * what's actually true.
+ */
+function endsWhen(trialEnd: string | null, now: Date = new Date()): string {
+  if (!trialEnd) return 'tomorrow';
+  const hours = (new Date(trialEnd).getTime() - now.getTime()) / 3_600_000;
+  return hours <= 36 ? 'tomorrow' : 'in two days';
+}
+
 function getReceiptEmail(
   firstName: string,
   stats: ReceiptStats,
   role: string,
-  price: string
+  price: string,
+  when: string
 ): EmailTemplate {
   const safeName = firstName?.trim() || 'mate';
   const isApprentice = role === 'apprentice';
@@ -220,9 +236,9 @@ function getReceiptEmail(
     .map(
       (line) => `
         <tr>
-          <td style="padding: 10px 16px; border-bottom: 1px solid #262626;">
-            <span style="color: #facc15; font-weight: 700;">✓</span>
-            <span style="margin-left: 10px; font-size: 15px; color: #ffffff;">${line}</span>
+          <td style="padding: 11px 18px; border-bottom: 1px solid #EFD489;">
+            <span style="color: #B5840A; font-weight: 700;">&#10003;</span>
+            <span style="margin-left: 10px; font-size: 15px; color: #0C1B2A;">${line}</span>
           </td>
         </tr>`
     )
@@ -237,19 +253,19 @@ function getReceiptEmail(
 
   const subject = hasActivity
     ? `Your first week on Elec-Mate, ${safeName} — the numbers`
-    : `Your trial ends tomorrow, ${safeName}`;
+    : `Your trial ends ${when}, ${safeName}`;
 
   const intro = hasActivity
     ? isApprentice
-      ? 'Your trial ends tomorrow, so here’s what your first week looked like:'
-      : 'Your trial ends tomorrow, so I pulled your numbers from the week:'
+      ? `Your trial ends ${when}, so here’s what your first week looked like:`
+      : `Your trial ends ${when}, so I pulled your numbers from the week:`
     : isApprentice
-      ? 'Your trial ends tomorrow — there’s still time to sit one mock exam and see where you stand before it does.'
-      : 'Your trial ends tomorrow — there’s still time to put one real job through it and see what it saves you.';
+      ? `Your trial ends ${when} — there’s still time to sit one mock exam and see where you stand before it does.`
+      : `Your trial ends ${when} — there’s still time to put one real job through it and see what it saves you.`;
 
   const keepLine = hasActivity
-    ? `All of it stays with you for ${price}/month. Do nothing and your plan continues — or cancel before tomorrow and you pay nothing at all.`
-    : `If it’s not for you, cancel before tomorrow and you pay nothing. If you keep it, it’s ${price}/month and everything stays unlocked.`;
+    ? `All of it stays with you for ${price}/month. Do nothing and your plan continues — or cancel before ${when === 'tomorrow' ? 'then' : 'it ends'} and you pay nothing at all.`
+    : `If it’s not for you, cancel before it ends and you pay nothing. If you keep it, it’s ${price}/month and everything stays unlocked.`;
 
   return {
     subject,
@@ -271,64 +287,97 @@ function getReceiptEmail(
       'Andrew',
       'Founder, Elec-Mate',
     ].join('\n'),
+    // Light, branded — the same palette as send-welcome-email and the
+    // lead-list campaign (ink #0C1B2A, gold #F3B70A, cream #FFFAEC on a
+    // #F4F6F9 page). This was black-on-black, which meant a trialist got a
+    // bright branded welcome, then a black email on day six, from what read
+    // as a different company. Buttons carry the Outlook VML fallback.
     html: `
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns:v="urn:schemas-microsoft-com:vml">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light">
+  <meta name="supported-color-schemes" content="light">
   <title>${subject}</title>
+  <!--[if mso]>
+  <style>table {border-collapse: collapse;} td,th,div,p,a,h1,h2,h3 {font-family: Arial, sans-serif;}</style>
+  <![endif]-->
+  <style>
+    body { margin: 0; padding: 0; width: 100%; background-color: #F4F6F9; }
+    a { text-decoration: none; }
+    @media screen and (max-width: 480px) { .pad { padding-left: 24px !important; padding-right: 24px !important; } }
+  </style>
 </head>
-<body style="margin: 0; padding: 0; background-color: #0a0a0a; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #e4e4e7;">
-  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background-color: #0a0a0a;">
+<body style="margin: 0; padding: 0; background-color: #F4F6F9; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased;">
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background-color: #F4F6F9;">
     <tr>
-      <td align="center" style="padding: 32px 16px;">
-        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width: 560px; background-color: #111111; border-radius: 16px; overflow: hidden; border: 1px solid #262626;">
+      <td align="center" style="padding: 40px 16px;">
+        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width: 520px; background-color: #FFFFFF; border-radius: 18px; overflow: hidden; border: 1px solid #E6E9EE;">
+
           <tr>
-            <td style="padding: 32px 28px 12px; text-align: center;">
-              <img src="https://www.elec-mate.com/logo.jpg" alt="Elec-Mate" width="120" style="display: block; margin: 0 auto; max-width: 120px; height: auto; border: 0;" />
+            <td align="left" style="padding: 36px 36px 8px;" class="pad">
+              <img src="https://jtwygbeceundfgnkirof.supabase.co/storage/v1/object/public/lead-magnets/onboarding/elec-mate-logo.png" alt="Elec-Mate" width="56" height="56" style="display: block; border-radius: 13px; border: 1px solid #E6E9EE;" />
             </td>
           </tr>
+
           <tr>
-            <td style="padding: 16px 28px 8px;">
-              <h1 style="margin: 0 0 20px; font-size: 26px; font-weight: 700; line-height: 1.2; color: #ffffff; letter-spacing: -0.01em;">
-                ${hasActivity ? `Your first week, ${safeName}.` : `Your trial ends tomorrow, ${safeName}.`}
+            <td align="left" style="padding: 18px 36px 0;" class="pad">
+              <p style="margin: 0 0 6px; font-size: 11px; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase; color: #B5840A;">${hasActivity ? 'Your first week' : `Ends ${when}`}</p>
+              <h1 style="margin: 0 0 18px; font-size: 27px; font-weight: 800; line-height: 1.12; color: #0C1B2A; letter-spacing: -0.5px;">
+                ${hasActivity ? `Your first week, ${safeName}.` : `Your trial ends ${when}, ${safeName}.`}
               </h1>
-              <p style="margin: 0 0 22px; font-size: 16px; line-height: 1.65; color: #ffffff;">
+              <p style="margin: 0 0 22px; font-size: 15px; line-height: 1.62; color: #51606F;">
                 ${intro}
               </p>
               ${
                 hasActivity
                   ? `
-              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin: 0 0 24px; background-color: rgba(250, 204, 21, 0.05); border: 1px solid rgba(250, 204, 21, 0.2); border-radius: 12px; overflow: hidden;">
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin: 0 0 24px; background-color: #FFFAEC; border: 1px solid #EFD489; border-radius: 14px; overflow: hidden;">
                 ${statRows}
               </table>`
                   : ''
               }
-              <p style="margin: 0 0 26px; font-size: 16px; line-height: 1.65; color: #ffffff;">
+              <p style="margin: 0 0 26px; font-size: 15px; line-height: 1.62; color: #51606F;">
                 ${keepLine}
               </p>
-              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin-bottom: 28px;">
-                <tr>
-                  <td align="center">
-                    <a href="${ctaHref}" style="display: inline-block; padding: 16px 32px; background-color: #facc15; color: #0a0a0a; text-decoration: none; font-weight: 700; font-size: 16px; border-radius: 12px; letter-spacing: -0.01em;">
-                      ${hasActivity ? 'Open my dashboard →' : isApprentice ? 'Start a mock exam →' : 'Start my first cert →'}
-                    </a>
-                  </td>
-                </tr>
-              </table>
-              <p style="margin: 0 0 4px; font-size: 16px; line-height: 1.65; color: #ffffff;">Andrew</p>
-              <p style="margin: 0 0 24px; font-size: 14px; line-height: 1.5; color: #ffffff;">Founder, Elec-Mate</p>
             </td>
           </tr>
+
           <tr>
-            <td style="padding: 24px 28px 28px;">
-              <p style="margin: 0; font-size: 12px; line-height: 1.5; color: #ffffff; text-align: center;">
+            <td align="left" style="padding: 0 36px 8px;" class="pad">
+              <!--[if mso]>
+              <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="${ctaHref}" style="height:52px;v-text-anchor:middle;width:240px;" arcsize="22%" fillcolor="#F3B70A">
+                <w:anchorlock/><center style="color:#0C1B2A;font-family:Arial,sans-serif;font-size:15px;font-weight:bold;">${hasActivity ? 'Open my dashboard' : isApprentice ? 'Start a mock exam' : 'Start my first cert'}</center>
+              </v:roundrect>
+              <![endif]-->
+              <!--[if !mso]><!-->
+              <a href="${ctaHref}" style="display: inline-block; padding: 15px 30px; background-color: #F3B70A; color: #0C1B2A; text-decoration: none; font-weight: 700; font-size: 15px; border-radius: 11px;">
+                ${hasActivity ? 'Open my dashboard &rarr;' : isApprentice ? 'Start a mock exam &rarr;' : 'Start my first cert &rarr;'}
+              </a>
+              <!--<![endif]-->
+            </td>
+          </tr>
+
+          <tr>
+            <td align="left" style="padding: 22px 36px 30px;" class="pad">
+              <p style="margin: 0 0 2px; font-size: 15px; color: #0C1B2A;">Cheers,</p>
+              <p style="margin: 0 0 14px; font-size: 15px; font-weight: 700; color: #0C1B2A;">Andrew <span style="font-weight: 400; color: #51606F;">&middot; Founder, Elec-Mate</span></p>
+              <p style="margin: 0; font-size: 13px; color: #51606F; line-height: 1.62;">Hit reply and it comes straight to me &mdash; not a support desk.</p>
+            </td>
+          </tr>
+
+          <tr>
+            <td align="center" style="padding: 20px 36px 26px; background-color: #F8FAFC; border-top: 1px solid #E6E9EE;">
+              <p style="margin: 0 0 3px; font-size: 12px; font-weight: 600; color: #0C1B2A;">Your trade. Your app.</p>
+              <p style="margin: 0; font-size: 11px; color: #8B95A3; line-height: 1.5;">
                 You're getting this because your 7-day free trial of Elec-Mate is ending.<br>
-                <a href="https://www.elec-mate.com" style="color: #ffffff; text-decoration: underline;">elec-mate.com</a>
+                <a href="https://www.elec-mate.com" style="color: #8B95A3; text-decoration: underline;">elec-mate.com</a>
               </p>
             </td>
           </tr>
+
         </table>
       </td>
     </tr>
@@ -480,9 +529,21 @@ serve(async (req) => {
           );
         } else {
           const [certsRes, quotesRes, invoicesRes] = await Promise.all([
-            supabase.from('reports').select('id', { count: 'exact', head: true }).eq('user_id', user.id),
-            supabase.from('quotes').select('total').eq('user_id', user.id),
-            supabase.from('invoices').select('id', { count: 'exact', head: true }).eq('user_id', user.id),
+            // `deleted_at is null` is NOT optional on any cert count. Without it
+            // this email tells someone they made five certificates in the week
+            // when they binned two of them — the one number in here they can
+            // check against their own screen, and the one we'd have got wrong.
+            supabase
+              .from('reports')
+              .select('id', { count: 'exact', head: true })
+              .eq('user_id', user.id)
+              .is('deleted_at', null),
+            supabase.from('quotes').select('total').eq('user_id', user.id).is('deleted_at', null),
+            supabase
+              .from('invoices')
+              .select('id', { count: 'exact', head: true })
+              .eq('user_id', user.id)
+              .is('deleted_at', null),
           ]);
           receipt.certs = certsRes.count ?? 0;
           receipt.quotes = quotesRes.data?.length ?? 0;
@@ -498,7 +559,13 @@ serve(async (req) => {
 
       const firstName = user.full_name?.split(' ')[0] || 'there';
       const price = isApprentice ? '£6.99' : '£19.99';
-      if (await sendEmail(user.email, getReceiptEmail(firstName, receipt, u.role ?? 'electrician', price))) {
+      const when = endsWhen((u as { trial_end: string | null }).trial_end, now);
+      if (
+        await sendEmail(
+          user.email,
+          getReceiptEmail(firstName, receipt, u.role ?? 'electrician', price, when)
+        )
+      ) {
         await supabase.from('trial_emails_sent').insert({
           user_id: user.id,
           email_type: 'receipt_48h',

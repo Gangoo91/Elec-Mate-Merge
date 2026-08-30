@@ -4,19 +4,62 @@ import { ModuleShell } from '@/components/study-centre/shells';
 import useSEO from '@/hooks/useSEO';
 
 const sections = [
-  { id: 1, title: 'What is a 4-20 mA loop and why it is used', icon: Cable, description: 'The 4-20 mA current loop standard and its advantages.' },
-  { id: 2, title: 'Loop-powered vs externally powered devices', icon: Power, description: 'Different power supply configurations for instrumentation loops.' },
-  { id: 3, title: 'Loop design and load calculations', icon: Calculator, description: 'Designing current loops and calculating power requirements.' },
-  { id: 4, title: 'Wiring standards and colour coding', icon: Palette, description: 'Industry standards for instrumentation wiring and identification.' },
-  { id: 5, title: 'Barriers, isolators and intrinsically safe loops', icon: Shield, description: 'Safety devices and intrinsically safe system design.' },
-  { id: 6, title: 'Loop testing tools (loop calibrators, simulators, multimeters)', icon: Wrench, description: 'Equipment and techniques for testing current loops.' },
-  { id: 7, title: 'Common wiring faults and loop integrity checks', icon: AlertTriangle, description: 'Troubleshooting wiring problems and verifying loop integrity.' },
+  {
+    id: 1,
+    title: 'Reading a loop diagram',
+    icon: Cable,
+    description:
+      'How a loop sheet differs from a P&ID, and reading one to find every device and terminal in a loop.',
+  },
+  {
+    id: 2,
+    title: 'Terminations and glanding',
+    icon: Power,
+    description:
+      'Making off screened instrument cable, where the screen is earthed, and why glanding is a sealing job.',
+  },
+  {
+    id: 3,
+    title: 'Loop design and load calculations',
+    icon: Calculator,
+    description:
+      'Working out whether the supply can drive the loop to 20 mA — and why devices, not cable, fill the budget.',
+  },
+  {
+    id: 4,
+    title: 'Instrument cable and identification',
+    icon: Palette,
+    description:
+      'Choosing and identifying instrument cable, and why segregation from power cabling matters.',
+  },
+  {
+    id: 5,
+    title: 'Barriers and intrinsically safe loops',
+    icon: Shield,
+    description:
+      'The four ways to be safe in a classified area, how a barrier limits fault current and voltage, and why its earth is the mechanism.',
+  },
+  {
+    id: 6,
+    title: 'Commissioning a loop',
+    icon: Wrench,
+    description:
+      'Proving the installation before start-up — why commissioning asks a different question from calibration, and the transposed loop that looks perfect.',
+  },
+  {
+    id: 7,
+    title: 'Testing instrument cable',
+    icon: AlertTriangle,
+    description:
+      'Testing the cable as a cable — why every device comes off first, which row of Table 64 applies, and why passing the minimum is not the same as being accurate.',
+  },
 ];
 
 export default function InstrumentationModule7() {
   useSEO({
     title: 'Module 7: 4-20 mA Loops and Wiring | Instrumentation | Elec-Mate',
-    description: 'The 4-20 mA standard, loop design, wiring colour codes, intrinsic safety and loop testing tools.',
+    description:
+      'Loop diagrams, terminations and glanding, loop budget calculations, instrument cable and segregation, and intrinsically safe loops.',
   });
 
   return (

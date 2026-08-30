@@ -48,7 +48,9 @@ import {
   ContentEyebrow,
   SectionRule,
   Pullquote,
+  VideoCard,
 } from '@/components/study-centre/learning';
+import { videos } from '@/data/study-centre/video-library';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE =
@@ -228,6 +230,15 @@ const InstrumentationModule2Section2 = () => {
           ]}
           correctIndex={2}
           explanation="Metal oxide construction and a falling resistance with rising temperature makes it an NTC thermistor. An RTD is pure metal wire and always rises with temperature; a thermocouple produces a voltage rather than a resistance change."
+        />
+
+        <VideoCard
+          url={videos.temperatureSensors.url}
+          title={videos.temperatureSensors.title}
+          channel={videos.temperatureSensors.channel}
+          duration={videos.temperatureSensors.duration}
+          topic="Watch · The three technologies side by side"
+          caption="The Engineering Mindset compares thermocouples, RTDs and thermistors in one place. Watch it with the trade-off from this section in mind: the thermocouple makes its own voltage and needs a reference junction, the RTD needs excitation and gives you resistance that cannot travel, and the thermistor is sensitive over a narrow range. None of them is the best sensor — each is the right answer to a different question."
         />
 
         <SectionRule />
@@ -443,6 +454,15 @@ const InstrumentationModule2Section2 = () => {
           situation="A Pt100 on a jacketed vessel is replaced after a failure. Bench-checked in an ice bath before fitting, the new element reads 100 Ω exactly. Installed and running, it reads about 4 °C low at an operating temperature near 150 °C, and the discrepancy grows with temperature."
           whatToDo="Note the shape of the error before touching the wiring: correct at 0 °C, increasingly wrong as temperature rises. That is not lead resistance, which would offset the reading everywhere including the ice bath. It is the signature of a coefficient mismatch. Check the alpha value of the replacement against what the transmitter is configured for — a 0.00392 element read by a transmitter set for 0.00385 behaves exactly like this. Either reconfigure the transmitter or fit the matching element."
           whyItMatters="Both sensors are genuine Pt100s and both are within specification. Nothing has failed. The fault is a mismatch between two legitimate industry conventions, and it is invisible at the one temperature most people bench-check at. Learn the shape of the error and you will diagnose it in a minute rather than an afternoon."
+        />
+
+        <VideoCard
+          url={videos.rtdBasics.url}
+          title={videos.rtdBasics.title}
+          channel={videos.rtdBasics.channel}
+          duration={videos.rtdBasics.duration}
+          topic="Watch · Why an RTD measures temperature as resistance"
+          caption="A short refresher on the principle behind everything above. Keep the lead-resistance problem in view while you watch: the instrument measures total resistance and cannot separate the element from the wiring, which is why three- and four-wire connections exist and why Module 3 Section 1 argues for converting at the sensor."
         />
 
         <SectionRule />
@@ -680,6 +700,15 @@ const InstrumentationModule2Section2 = () => {
             asking before commissioning rather than afterwards.
           </p>
         </ConceptBlock>
+
+        <VideoCard
+          url={videos.thermocouplesHow.url}
+          title={videos.thermocouplesHow.title}
+          channel={videos.thermocouplesHow.channel}
+          duration={videos.thermocouplesHow.duration}
+          topic="Watch · Where the voltage actually comes from"
+          caption="The point to carry away is that a thermocouple responds to a temperature DIFFERENCE, not to a temperature. That is why the reference junction exists, why a transmitter contains a second temperature sensor that has nothing to do with your process, and why reversing the pair still produces a plausible-looking reading rather than an obvious fault."
+        />
 
         <SectionRule />
         <ContentEyebrow>Getting the sensor into the process</ContentEyebrow>

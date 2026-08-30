@@ -34,14 +34,9 @@
 export const WINBACK_FROM = 'Andrew at Elec-Mate <founder@elec-mate.com>';
 export const WINBACK_REPLY_TO = 'founder@elec-mate.com';
 
-// Free ChatGPT GPT — useful goodwill hook for ex-users. Even users who
-// never resubscribe become distribution if they share it with a mate.
-const GPT_URL = 'https://chatgpt.com/g/g-6a106f9478f88191a5a3baf2740fff85-elec-mate';
-const GPT_SHARE_TEXT = encodeURIComponent(
-  'Free electrician AI on ChatGPT — built by Elec-Mate. Regs, calcs, fault-finding. Worth a look: ' +
-    GPT_URL
-);
-const GPT_WHATSAPP_SHARE = `https://wa.me/?text=${GPT_SHARE_TEXT}`;
+// The free-GPT giveaway was removed 2026-08-30 (Andrew's call): it diluted
+// touch 1's single ask (the reply) and handed leavers a free substitute for
+// a paid pillar.
 
 export interface WinbackContext {
   firstName: string;
@@ -262,34 +257,9 @@ ${p('No hard feelings — but I&rsquo;d genuinely love to know why. Two reasons:
   <li>If something&rsquo;s broken, I want to fix it.</li>
   <li>If something&rsquo;s missing, I want to build it.</li>
 </ul>
-${p('Just hit reply on this email. One line is plenty. It comes straight to my inbox — I&rsquo;m a working spark too, so I&rsquo;ll know what you mean.')}
-
-<!-- Free GPT — goodwill + share angle -->
-<div style="margin: 26px 0 18px; padding: 22px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 14px;">
-  <p style="margin: 0 0 6px; font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: #b45309;">Even if you don&rsquo;t come back</p>
-  <p style="margin: 0 0 10px; font-size: 17px; font-weight: 700; line-height: 1.3; color: ${INK};">
-    Use the free Elec-Mate AI on ChatGPT.
-  </p>
-  <p style="margin: 0 0 14px; font-size: 14px; line-height: 1.6; color: ${BODY};">
-    Custom GPT I built for the trade — BS 7671 lookups, cable calcs, fault-finding, regs questions. Forever free, no Elec-Mate login needed.
-  </p>
-  <table role="presentation" cellspacing="0" cellpadding="0">
-    <tr>
-      <td style="padding-right: 8px;">
-        <a href="${attr(GPT_URL)}" style="display: inline-block; padding: 12px 20px; background-color: ${BRAND}; color: #111827; text-decoration: none; font-weight: 700; font-size: 14px; border-radius: 10px;">
-          Open the GPT →
-        </a>
-      </td>
-      <td>
-        <a href="${attr(GPT_WHATSAPP_SHARE)}" style="display: inline-block; padding: 12px 18px; background-color: #ffffff; color: #b45309; text-decoration: none; font-weight: 600; font-size: 14px; border: 1px solid #e2e8f0; border-radius: 10px;">
-          Share with a mate
-        </a>
-      </td>
-    </tr>
-  </table>
-</div>
-
-${pSmall('Your account and all your data are safe for 90 days. If you change your mind, everything&rsquo;s still there waiting.')}
+${p('Just hit reply on this email. One line is plenty. It comes straight to my inbox — I&rsquo;m in the trade myself, so I&rsquo;ll know exactly what you mean.')}
+${p('Most weeks something ships in Elec-Mate because somebody told me what was wrong or missing. Your one line genuinely changes the app.')}
+${pSmall('Your account and all your data — certs, quotes, customers, the lot — are safe for 90 days. If you change your mind, everything&rsquo;s still there waiting.')}
 ${sig()}`;
 
   const text = [
@@ -302,16 +272,11 @@ ${sig()}`;
     "- If something's broken, I want to fix it",
     "- If something's missing, I want to build it",
     '',
-    "Just hit reply on this email. One line is plenty. It comes straight to my inbox — I'm a working spark too, so I'll know what you mean.",
+    "Just hit reply on this email. One line is plenty. It comes straight to my inbox — I'm in the trade myself, so I'll know exactly what you mean.",
     '',
-    "Even if you don't come back, here's something I built for the trade — free, no Elec-Mate login needed:",
+    'Most weeks something ships in Elec-Mate because somebody told me what was wrong or missing. Your one line genuinely changes the app.',
     '',
-    'The Elec-Mate GPT on ChatGPT — regs lookups, cable calcs, fault-finding.',
-    GPT_URL,
-    '',
-    `If you find it useful, share it with a mate: ${GPT_URL}`,
-    '',
-    "Your account and all your data are safe for 90 days. If you change your mind, everything's still there waiting.",
+    "Your account and all your data — certs, quotes, customers, the lot — are safe for 90 days. If you change your mind, everything's still there waiting.",
     '',
     'Andrew',
     'Founder, Elec-Mate',

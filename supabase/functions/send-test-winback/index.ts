@@ -21,10 +21,10 @@ import {
   winbackTouch3,
   WINBACK_FROM,
   WINBACK_REPLY_TO,
-} from '../_shared/winback-v12.ts';
-// Points at v12 deliberately: `winback-send` (the only sender that reaches real
-// churned customers) uses v12, so a preview harness pointing at v13 was showing
-// an email nobody receives. Keep this import matching winback-send's.
+} from '../_shared/winback-v13.ts';
+// Keep this import matching winback-send's (verified against the deployed
+// bundle 2026-08-30: winback-send imports v13 — the deeper-offer variant).
+// A harness pointing at the other file previews an email nobody receives.
 import { sendEmail } from '../_shared/mailer.ts';
 import { captureException } from '../_shared/sentry.ts';
 
@@ -61,7 +61,14 @@ serve(async (req) => {
       throw new Error(`recipient ${email} not in allow-list`);
     }
 
-    const ctx = { firstName, tier, wasTrial: !!wasTrial };
+    const ctx = {
+      firstName,
+      tier,
+      wasTrial: !!wasTrial,
+      // Test identity — the pay links stamp client_reference_id with this.
+      userId: 'test-preview',
+      accountEmail: email,
+    };
     const tmpl =
       touch === 3 ? winbackTouch3(ctx) : touch === 2 ? winbackTouch2(ctx) : winbackTouch1(ctx);
 

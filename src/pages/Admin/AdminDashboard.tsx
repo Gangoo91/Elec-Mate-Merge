@@ -263,6 +263,9 @@ export default function AdminDashboard() {
       id: string;
       full_name: string;
       subscription_tier: string;
+      /** 'app_store' | 'play_store' | 'stripe'. Sent by the edge function; the
+       *  type omitted it, which is how the double-count below went unnoticed. */
+      subscription_source: string | null;
       trial_end: string | null;
       is_cancelled: boolean;
       engagement: EngagementData | null;
@@ -557,7 +560,19 @@ export default function AdminDashboard() {
   const playStoreSubs = rcStats?.subscribersBySource?.play_store || 0;
   const appStoreSubs =
     rcLivePaid > 0 ? Math.max(rcLivePaid - playStoreSubs, appStoreSubsDb) : appStoreSubsDb;
-  const rcActiveTrials = (rcStats?.trialUsers || []).filter((t) => !t.is_cancelled).length;
+  /*
+    App-store trials only.
+
+    `trialUsers` is built from `profiles` across EVERY source, so counting all of
+    it and then adding the Stripe API's own trial count double-counts every web
+    trialist. It read plausibly for a long time only because the Stripe webhook
+    never wrote `is_trial`/`trial_end` — the Stripe rows fell out of this filter
+    by accident. The moment those columns were populated correctly the tile
+    jumped to 91 against a true 76 (RevenueCat 44 + Stripe 32).
+  */
+  const rcActiveTrials = (rcStats?.trialUsers || []).filter(
+    (t) => !t.is_cancelled && t.subscription_source !== 'stripe'
+  ).length;
   const rcDbPaid = appStoreSubsDb + playStoreSubs;
   const rcDbTrials = rcActiveTrials;
   const rcPaidDelta = rcLivePaid - rcDbPaid;
@@ -566,7 +581,14 @@ export default function AdminDashboard() {
   const rcTrialDivergence = (rcLiveTrials > 0 || rcDbTrials > 0) && rcTrialDelta !== 0;
   const rcHasDivergence = rcPaidDivergence || rcTrialDivergence;
   const stripeTrials = stripeStats?.stripe.trialingSubscriptions || 0;
-  const totalTrials = rcActiveTrials + stripeTrials;
+  /*
+    Prefer RevenueCat's own `active_trials` for the app side — it is the
+    authority, and profiles lags it (44 live vs 42 synced on 2026-08-30).
+    Fall back to the source-filtered profiles count if the RC call returns
+    nothing, so a provider blip shows a stale number rather than zero.
+  */
+  const appTrials = rcLiveTrials > 0 ? rcLiveTrials : rcActiveTrials;
+  const totalTrials = appTrials + stripeTrials;
 
   /*
    * People who started a checkout and never finished.

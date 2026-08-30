@@ -65,7 +65,7 @@ serve(async (req) => {
     const { data: event, error: eventError } = await supabase
       .from('calendar_events')
       .select(
-        'id, user_id, title, description, start_at, end_at, all_day, location, client_id, updated_at'
+        'id, user_id, title, description, start_at, end_at, all_day, location, client_id, updated_at, parent_event_id'
       )
       .eq('id', body.eventId)
       .eq('user_id', user.id)
@@ -74,6 +74,36 @@ serve(async (req) => {
     if (eventError) throw eventError;
     if (!event) return json({ error: 'Booking not found' }, 404);
     if (!event.client_id) return json({ error: 'That booking has no customer on it' }, 400);
+
+    /*
+     * ELE-1648 — every day of the job, not just the one that was clicked.
+     *
+     * A job split across non-contiguous days is stored as one row per day, the
+     * earliest anchoring the rest via `parent_event_id` (see splitJob.ts).
+     * Loading only the row we were handed would email the customer about
+     * Monday and say nothing about Wednesday and Friday — and attach an .ics
+     * that blocks Monday alone.
+     *
+     * Resolved from the ANCHOR so this is correct whichever day-entry the send
+     * was triggered from. Still filtered by user_id: an id from the client is
+     * never trusted to belong to whoever sent it.
+     */
+    const anchorId = (event as { parent_event_id?: string | null }).parent_event_id ?? event.id;
+    const { data: siblingRows } = await supabase
+      .from('calendar_events')
+      .select('id, start_at, end_at, all_day')
+      .eq('user_id', user.id)
+      .or(`id.eq.${anchorId},parent_event_id.eq.${anchorId}`)
+      .neq('sync_status', 'pending_delete')
+      .order('start_at', { ascending: true });
+
+    const jobDays = (siblingRows ?? []) as Array<{
+      id: string;
+      start_at: string;
+      end_at: string;
+      all_day: boolean;
+    }>;
+    const isSplitJob = jobDays.length > 1;
 
     const { data: customer } = await supabase
       .from('customers')
@@ -158,6 +188,8 @@ serve(async (req) => {
       note: event.description,
       movedFrom: body.movedFrom ?? null,
       icsFilename,
+      // ELE-1648 — one message naming every day, never one email per day.
+      jobDayIsos: isSplitJob ? jobDays.map((d) => d.start_at) : undefined,
     });
 
     const ics = buildBookingIcs({
@@ -168,6 +200,15 @@ serve(async (req) => {
       startIso: event.start_at,
       endIso: event.end_at,
       allDay: !!event.all_day,
+      // One VEVENT per day, so the customer's diary blocks Mon/Wed/Fri rather
+      // than Monday only — or the whole week including days we are elsewhere.
+      days: isSplitJob
+        ? jobDays.map((d) => ({
+            uid: `booking-${d.id}@elec-mate.com`,
+            startIso: d.start_at,
+            endIso: d.end_at,
+          }))
+        : undefined,
       location: event.location,
       description: event.description,
       organiserName: companyName,

@@ -309,6 +309,12 @@ Deno.serve(async (req: Request) => {
       subtotal: parseFloat(String(invoice.subtotal)),
       overhead: parseFloat(String(invoice.overhead || 0)),
       profit: parseFloat(String(invoice.profit || 0)),
+      // Part of the customer-facing price — see `lineBaseNet`.
+      categoryAdjustments:
+        ((invoice.settings as Record<string, unknown> | null)?.categoryAdjustments as Record<
+          string,
+          number
+        > | null) ?? null,
       vatAmount: parseFloat(String(invoice.vat_amount)),
       total: parseFloat(String(invoice.total)),
       notes: invoice.notes,
@@ -759,16 +765,30 @@ interface InvoiceData {
     unitPrice: number;
     total?: number;
     /**
-     * ELE-1575 — the line's own net, and the ONLY figure that agrees with
-     * `subtotal`. Per-category markup is absorbed into `totalPrice` and is NOT
-     * reflected in `unitPrice`, so the two disagree on any marked-up line.
-     * Present on every stored quote row; the interface simply never declared it.
+     * ⚠️ STALE ON LIVE ROWS — do not price from this. See `lineBaseNet`.
+     *
+     * ELE-1575 read this as the line's authoritative net. It is not:
+     * `computeQuoteTotals` never looks at it, and `generate-pdf-monkey`
+     * recomputes it as `qty × effectiveUnit`. On rows written before ELE-1473
+     * it still carries the old overhead/profit markup, so it disagrees with the
+     * stored `subtotal` — measured at £1,270.45 against £1,200.55 on one live
+     * invoice. Declared here only so the field is documented as unusable.
      */
     totalPrice?: number;
+    /** Transparent per-line uplift (evening rate etc.), shown to the customer. */
+    itemAdjustmentPercent?: number;
+    /** Drives which `categoryAdjustments` percentage applies to the line. */
+    category?: string;
   }>;
   subtotal: number;
   overhead: number;
   profit: number;
+  /**
+   * Per-category markup, straight off the invoice settings. Part of the
+   * customer-facing price (`computeQuoteTotals` adds it into `subtotal`), so
+   * the lines pushed to a provider have to carry it too.
+   */
+  categoryAdjustments?: Record<string, number> | null;
   /** Invoice-level discount as a cash amount, with the user's own wording. */
   discount?: { amount: number; label: string } | null;
   /**
@@ -802,31 +822,94 @@ interface SyncResult {
   invoiceUrl?: string;
 }
 
+const round2 = (n: number) => Math.round(n * 100) / 100;
+
 /**
- * ELE-1575 — the net a line is actually worth.
- *
- * The bug: every provider mapped `Quantity × unitPrice` and the accounting
- * package recomputed the invoice from that. But `computeQuoteTotals` builds
- * `subtotal` from the line's **totalPrice**, which has per-category markup
- * absorbed into it while `unitPrice` stays raw. On any marked-up line the two
- * disagree, and the invoice pushed to the customer's accounts is short.
- *
- * Real case (invoice/001, £1,221.82):
- *   materials  qty 1   unitPrice 716.00  totalPrice 880.68   ← £164.68 of markup
- *   labour     qty 2.5 unitPrice  55.00  totalPrice 137.50
- *   Elec-Mate net  880.68 + 137.50 = 1018.18  → £1,221.82 inc VAT ✓
- *   Pushed net     716.00 + 137.50 =  853.50  → £1,024.20 inc VAT ✗
- * £1,024.20 is exactly what the customer saw in Xero.
- *
- * `totalPrice` wins whenever it is present and sane; quantity × unitPrice is
- * only the fallback for lines that predate it.
+ * Xero accepts unit prices to 4dp, but only when the request carries
+ * `unitdp=4` — see XERO_UNITDP below. Without it Xero rounds UnitAmount to 2dp
+ * and then rejects any LineAmount that 2dp cannot reproduce.
  */
-function lineBaseNet(item: InvoiceData['items'][number]): number {
+const UNIT_DP = 4;
+const UNIT_STEP = 10 ** -UNIT_DP;
+const roundUnit = (n: number) => Math.round(n * 10 ** UNIT_DP) / 10 ** UNIT_DP;
+
+/**
+ * Opt in to 4dp unit prices on every Xero call that reads or writes line
+ * items. Xero defaults to 2dp and silently rounds UnitAmount before running
+ * its Quantity × UnitAmount check, so omitting this puts back the exact
+ * rejection this is here to prevent.
+ */
+const XERO_UNITDP = `unitdp=${UNIT_DP}`;
+
+/**
+ * The per-category markup that applies to a line, mirroring
+ * `getCategoryAdjustmentPercent` in src/utils/quote-calculations.ts. Anything
+ * that is not labour/materials/equipment is 'manual' and never adjusted.
+ */
+function categoryAdjustmentPercent(
+  category: string | undefined,
+  adjustments: InvoiceData['categoryAdjustments']
+): number {
+  if (!adjustments) return 0;
+  if (category === 'labour' || category === 'materials' || category === 'equipment') {
+    return Number(adjustments[category]) || 0;
+  }
+  return 0;
+}
+
+/**
+ * ELE-1575 (revised) — the net a line is actually worth.
+ *
+ * The ORIGINAL fix priced from `item.totalPrice`, on the belief that
+ * `computeQuoteTotals` built `subtotal` from it. It does not, and ELE-1473
+ * moved the goalposts underneath: overhead and profit were removed, and price
+ * is now `quantity × unitPrice`, upthrottled by the per-item and per-category
+ * adjustments. `totalPrice` was left behind as a stale field — the PDF
+ * function recomputes it, and nothing customer-facing reads the stored value.
+ *
+ * On a live invoice (E_M Inv002) the stored `totalPrice` values summed to
+ * £1,270.45 against a stored subtotal of £1,200.55, so every line was scaled
+ * by 0.617 to force the total back into line. That is what produced unit
+ * prices Xero could not reproduce, e.g. qty 1.35 at £39.98 → £29.61 a unit →
+ * £39.97, and Xero rejected the whole invoice.
+ *
+ * This is now the same arithmetic as `getItemAdjustedTotal` × the category
+ * adjustment, so the lines sum to the stored subtotal by construction and no
+ * scaling is needed at all on a well-formed invoice.
+ */
+function lineBaseNet(
+  item: InvoiceData['items'][number],
+  adjustments: InvoiceData['categoryAdjustments']
+): number {
   const qty = Number(item.quantity) || 0;
   const unit = Number(item.unitPrice) || 0;
-  const stored = Number(item.totalPrice ?? item.total);
-  if (Number.isFinite(stored) && stored !== 0) return stored;
-  return qty * unit;
+  const itemAdj = Number(item.itemAdjustmentPercent);
+  const base = Number.isFinite(itemAdj) && itemAdj !== 0 ? qty * unit * (1 + itemAdj / 100) : qty * unit;
+  const catPct = categoryAdjustmentPercent(item.category, adjustments);
+  return catPct !== 0 ? base * (1 + catPct / 100) : base;
+}
+
+/**
+ * A unit price that provably reproduces `lineAmount` from `quantity × unit`.
+ *
+ * Xero validates every line with `round(Quantity × UnitAmount, 2) ===
+ * LineAmount` and rejects the entire invoice when it fails — the error reads
+ * "The line total 39.98 does not match the expected line total 39.97". Sending
+ * LineAmount explicitly does NOT exempt a line from that check.
+ *
+ * Dividing and rounding to 4dp lands the product within `qty × 0.00005` of the
+ * target, which is inside half a penny for any quantity under 100. The nudge
+ * loop covers the boundary cases; null means no 4dp unit price exists, which
+ * needs a quantity in the hundreds.
+ */
+function solveUnitAmount(lineAmount: number, qty: number): number | null {
+  if (!qty) return null;
+  const start = roundUnit(lineAmount / qty);
+  for (const step of [0, 1, -1, 2, -2, 3, -3]) {
+    const unit = roundUnit(start + step * UNIT_STEP);
+    if (round2(qty * unit) === lineAmount) return unit;
+  }
+  return null;
 }
 
 interface NetLine {
@@ -848,39 +931,93 @@ interface NetLine {
  * figure in someone's accounts is worse than a failed push, because it
  * reconciles against nothing and can misstate VAT.
  */
-function buildNetLines(items: InvoiceData['items'], netTarget: number): NetLine[] {
-  const bases = items.map(lineBaseNet);
+function buildNetLines(
+  items: InvoiceData['items'],
+  netTarget: number,
+  adjustments?: InvoiceData['categoryAdjustments']
+): NetLine[] {
+  const bases = items.map((item) => lineBaseNet(item, adjustments));
   const baseSum = bases.reduce((a, b) => a + b, 0);
   const factor = baseSum > 0 && netTarget > 0 ? netTarget / baseSum : 1;
 
+  /*
+   * Pick the UNIT PRICE first and let the line total follow from it, rather
+   * than the other way round. The old order — round the line total, then
+   * divide for a unit price — produced pairs that could not be reconciled at
+   * all, because not every line total is reachable as quantity × a rounded
+   * unit price. This way every line satisfies the providers' arithmetic by
+   * construction, and the only thing left to place is the residual.
+   */
   const lines: NetLine[] = items.map((item, i) => {
     const qty = Number(item.quantity) || 0;
-    const lineAmount = Math.round(bases[i] * factor * 100) / 100;
+    if (!qty) {
+      return { description: item.description, quantity: 0, unitAmount: 0, lineAmount: 0 };
+    }
+    const unitAmount = roundUnit((bases[i] * factor) / qty);
     return {
       description: item.description,
       quantity: qty,
-      unitAmount: qty !== 0 ? Math.round((lineAmount / qty) * 100) / 100 : lineAmount,
-      lineAmount,
+      unitAmount,
+      lineAmount: round2(qty * unitAmount),
     };
   });
 
+  /*
+   * The residual — pennies lost to rounding — goes onto a line that can carry
+   * it EXACTLY, i.e. one where a 4dp unit price still reproduces the adjusted
+   * total. Preferring the largest such line keeps the distortion proportionally
+   * smallest. Quantities above ~100 can rarely absorb anything (a single
+   * 0.0001 step on the unit price moves the total by more than a penny), which
+   * is exactly why the search skips them rather than forcing one.
+   */
   if (netTarget > 0 && lines.length > 0) {
-    const sum = Math.round(lines.reduce((a, l) => a + l.lineAmount, 0) * 100) / 100;
-    const residual = Math.round((netTarget - sum) * 100) / 100;
+    const sum = round2(lines.reduce((a, l) => a + l.lineAmount, 0));
+    const residual = round2(netTarget - sum);
     if (residual !== 0) {
-      let biggest = 0;
-      for (let i = 1; i < lines.length; i++) {
-        if (Math.abs(lines[i].lineAmount) > Math.abs(lines[biggest].lineAmount)) biggest = i;
+      let target = -1;
+      let targetUnit = 0;
+      for (let i = 0; i < lines.length; i++) {
+        if (!lines[i].quantity) continue;
+        const unit = solveUnitAmount(round2(lines[i].lineAmount + residual), lines[i].quantity);
+        if (unit === null) continue;
+        if (target < 0 || Math.abs(lines[i].lineAmount) > Math.abs(lines[target].lineAmount)) {
+          target = i;
+          targetUnit = unit;
+        }
       }
-      const l = lines[biggest];
-      l.lineAmount = Math.round((l.lineAmount + residual) * 100) / 100;
-      if (l.quantity !== 0) {
-        l.unitAmount = Math.round((l.lineAmount / l.quantity) * 100) / 100;
+      if (target >= 0) {
+        lines[target].lineAmount = round2(lines[target].lineAmount + residual);
+        lines[target].unitAmount = targetUnit;
+      } else {
+        // Nothing can take it exactly. Rather than break a line's arithmetic,
+        // leave it: assertLinesReconcile tolerates a penny and refuses beyond.
+        console.warn(`Could not place a residual of £${residual.toFixed(2)} on any line`);
       }
     }
   }
 
   return lines;
+}
+
+/**
+ * Every line must survive the provider's OWN arithmetic before we post it.
+ *
+ * Xero checks `round(Quantity × UnitAmount, 2) === LineAmount` on every line
+ * and rejects the whole invoice if any fails, with an error naming two figures
+ * and no line ("The line total 39.98 does not match the expected line total
+ * 39.97"). Catching it here names the line and the quantity instead.
+ */
+function assertLinesAreSelfConsistent(lines: NetLine[], provider: string): void {
+  for (const l of lines) {
+    const derived = round2(l.quantity * l.unitAmount);
+    if (derived !== l.lineAmount) {
+      throw new Error(
+        `Refusing to sync to ${provider}: the line "${l.description}" works out at ` +
+          `${l.quantity} × £${l.unitAmount} = £${derived.toFixed(2)}, but its total is ` +
+          `£${l.lineAmount.toFixed(2)}. ${provider} rejects lines whose totals do not match.`
+      );
+    }
+  }
 }
 
 /** Throws rather than pushing a figure that won't reconcile. */
@@ -904,17 +1041,29 @@ async function syncToXero(
   // First, find or create the contact
   const contactId = await findOrCreateXeroContact(accessToken, tenantId, invoice.client);
 
-  // Distribute overhead, profit AND any invoice-level discount proportionally
-  // into the line prices. Providers recompute their invoice total from the
-  // lines, so the lines must sum to the actual net — before ELE-1343 a fixed
-  // discount never reached the provider and re-syncs pushed the undiscounted
-  // total back.
-  const netTarget = (invoice.total || 0) - (invoice.vatAmount || 0);
+  /*
+   * ELE-1521 parity — the discount is a LINE, not a smear.
+   *
+   * QuickBooks has worked this way since ELE-1521; Xero was never brought into
+   * line and kept dividing the discount across every unit price. On E_M Inv002
+   * that scaled 21 lines by 0.617 and produced three unit prices Xero could not
+   * reproduce from Quantity × UnitAmount, so it rejected the invoice outright.
+   *
+   * The sales lines therefore add up to the PRE-discount net and the discount
+   * line takes it off again — leaving every unit price exactly as the customer
+   * saw it on their invoice.
+   */
+  const netAfterDiscount = (invoice.total || 0) - (invoice.vatAmount || 0);
+  const xeroDiscount = invoice.discount?.amount ?? 0;
+  const salesNetTarget = round2(netAfterDiscount + xeroDiscount);
 
   // ELE-1575 — built from each line's true net (see lineBaseNet) and
-  // reconciled to netTarget, instead of Quantity × unitPrice.
-  const netLines = buildNetLines(invoice.items, netTarget);
-  assertLinesReconcile(netLines, netTarget, 'Xero');
+  // reconciled to the pre-discount net, instead of the stale totalPrice.
+  const netLines = buildNetLines(invoice.items, salesNetTarget, invoice.categoryAdjustments);
+  assertLinesReconcile(netLines, salesNetTarget, 'Xero');
+  assertLinesAreSelfConsistent(netLines, 'Xero');
+
+  const salesTaxType = invoice.vatAmount > 0 ? 'OUTPUT2' : 'NONE'; // 20% VAT or no VAT
 
   // LineAmount is sent explicitly. Xero derives it from Quantity × UnitAmount
   // when it is absent, which reintroduces 2dp rounding drift across lines and
@@ -925,8 +1074,31 @@ async function syncToXero(
     UnitAmount: line.unitAmount,
     LineAmount: line.lineAmount,
     AccountCode: '200', // Sales account - user may need to configure this
-    TaxType: invoice.vatAmount > 0 ? 'OUTPUT2' : 'NONE', // 20% VAT or no VAT
+    TaxType: salesTaxType,
   }));
+
+  /*
+   * The discount, carrying the SAME TaxType as the sales lines — the opposite
+   * of the grant below, and deliberately so. A discount reduces the price, so
+   * VAT is due on the reduced figure; coding it NONE would leave Xero charging
+   * VAT on the full amount and over-declare the tax.
+   *
+   * On E_M Inv002 this lands Xero on net 1,200.55 − 416.67 = 783.88, VAT
+   * 156.78, total £940.66 — the figure on the customer's invoice.
+   *
+   * Pushed BEFORE the isUpdate block for the same reason as the grant: that
+   * block compares line COUNTS against the live Xero invoice.
+   */
+  if (xeroDiscount > 0) {
+    lineItems.push({
+      Description: invoice.discount?.label ?? 'Discount',
+      Quantity: 1,
+      UnitAmount: -xeroDiscount,
+      LineAmount: -xeroDiscount,
+      AccountCode: '200',
+      TaxType: salesTaxType,
+    });
+  }
 
   /*
    * ELE-1571 — the grant, as its own negative line carrying NO VAT.
@@ -978,7 +1150,7 @@ async function syncToXero(
   // with an actionable message when the shapes can't be reconciled.
   if (isUpdate) {
     const existingRes = await fetch(
-      `https://api.xero.com/api.xro/2.0/Invoices/${invoice.externalInvoiceId}`,
+      `https://api.xero.com/api.xro/2.0/Invoices/${invoice.externalInvoiceId}?${XERO_UNITDP}`,
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -1033,7 +1205,7 @@ async function syncToXero(
     CurrencyCode: invoice.currency,
   };
 
-  const response = await fetch('https://api.xero.com/api.xro/2.0/Invoices', {
+  const response = await fetch(`https://api.xero.com/api.xro/2.0/Invoices?${XERO_UNITDP}`, {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${accessToken}`,
@@ -1336,8 +1508,11 @@ async function syncToQuickBooks(
   // ELE-1575 — reconciled to `grossTarget`, not netTarget: the discount is a
   // line of its own below (ELE-1521), so the sales lines must still add up to
   // the PRE-discount net for the discount line to take it off again.
-  const netLines = buildNetLines(invoice.items, grossTarget);
+  const netLines = buildNetLines(invoice.items, grossTarget, invoice.categoryAdjustments);
   assertLinesReconcile(netLines, grossTarget, 'QuickBooks');
+  // QuickBooks recomputes Amount from Qty × UnitPrice on some line shapes, so
+  // it carries the same exposure as Xero even though it fails more quietly.
+  assertLinesAreSelfConsistent(netLines, 'QuickBooks');
 
   const lineItems: any[] = netLines.map((line, index) => ({
     Id: String(index + 1),
@@ -2172,24 +2347,38 @@ async function syncToSage(
   const contactId = await findOrCreateSageContact(accessToken, resourceOwnerId, invoice.client);
   console.log('Contact ID:', contactId);
 
-  // Distribute overhead, profit AND any invoice-level discount proportionally
-  // into the line prices. Providers recompute their invoice total from the
-  // lines, so the lines must sum to the actual net — before ELE-1343 a fixed
-  // discount never reached the provider and re-syncs pushed the undiscounted
-  // total back.
+  // Discount as its own line, matching Xero and QuickBooks — the sales lines
+  // add up to the PRE-discount net and the discount line takes it off again.
+  const sageDiscount = invoice.discount?.amount ?? 0;
   const netTarget = (invoice.total || 0) - (invoice.vatAmount || 0);
+  const salesNetTarget = round2(netTarget + sageDiscount);
 
-  // ELE-1575 — same correction as Xero. Sage has no line-amount override, so
-  // the reconciled per-unit net is what has to be right here.
-  const netLines = buildNetLines(invoice.items, netTarget);
-  assertLinesReconcile(netLines, netTarget, 'Sage');
+  // ELE-1575 — same correction as Xero. Sage has NO line-amount override: it
+  // derives every line total from quantity × unit_price and books whatever
+  // that comes to, without complaint. So unlike Xero, a unit price that does
+  // not reproduce the line total here fails silently, into someone's books.
+  const netLines = buildNetLines(invoice.items, salesNetTarget, invoice.categoryAdjustments);
+  assertLinesReconcile(netLines, salesNetTarget, 'Sage');
+  assertLinesAreSelfConsistent(netLines, 'Sage');
 
+  const sageTaxRate = invoice.vatAmount > 0 ? 'GB_STANDARD' : 'GB_EXEMPT';
   const lineItems: any[] = netLines.map((line) => ({
     description: line.description,
     quantity: String(line.quantity),
     unit_price: String(line.unitAmount),
-    tax_rate_id: invoice.vatAmount > 0 ? 'GB_STANDARD' : 'GB_EXEMPT',
+    tax_rate_id: sageTaxRate,
   }));
+
+  if (sageDiscount > 0) {
+    lineItems.push({
+      description: invoice.discount?.label ?? 'Discount',
+      quantity: '1',
+      unit_price: String(-sageDiscount),
+      // Same rate as the sales lines: a discount lowers the price, so VAT is
+      // due on the reduced figure.
+      tax_rate_id: sageTaxRate,
+    });
+  }
 
   // Create the invoice
   const sageInvoice = {

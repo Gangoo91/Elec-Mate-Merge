@@ -38,6 +38,8 @@ export interface ScheduleToolbarProps {
 
   /* Capture */
   onScanBoard?: () => void;
+  /** ELE-1607 — read handwritten readings into the measured columns. */
+  onScanResults?: () => void;
   onVoiceToggle?: () => void;
   voiceActive?: boolean;
   voiceConnecting?: boolean;
@@ -83,6 +85,7 @@ export const ScheduleToolbar: React.FC<ScheduleToolbarProps> = ({
   circuitCount,
   onAddCircuit,
   onScanBoard,
+  onScanResults,
   onVoiceToggle,
   voiceActive,
   voiceConnecting,
@@ -113,6 +116,15 @@ export const ScheduleToolbar: React.FC<ScheduleToolbarProps> = ({
         {onScanBoard && (
           <Button onClick={onScanBoard} className={toolBtn}>
             AI scan
+          </Button>
+        )}
+        {/*
+          ELE-1607 — beside AI scan because they are two halves of one job:
+          that one reads the board, this one reads the readings.
+        */}
+        {onScanResults && (
+          <Button onClick={onScanResults} className={toolBtn}>
+            Scan results
           </Button>
         )}
         {onVoiceToggle && (

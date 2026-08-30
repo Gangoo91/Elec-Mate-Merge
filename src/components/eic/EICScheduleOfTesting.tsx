@@ -55,6 +55,7 @@ import TestAnalytics from '../TestAnalytics';
 import SmartAutoFillPromptDialog from '../SmartAutoFillPromptDialog';
 
 import { BoardScannerOverlay } from '@/components/testing/BoardScannerOverlay';
+import TestSheetScanSheet from '@/components/testing/TestSheetScanSheet';
 import { useOrientation } from '@/hooks/useOrientation';
 import { useInlineVoice } from '@/hooks/useInlineVoice';
 import { toast } from 'sonner';
@@ -276,6 +277,8 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
   const [newCircuitNumber, setNewCircuitNumber] = useState('');
 
   const [showPhotoCapture, setShowPhotoCapture] = useState(false);
+  /* ELE-1607 — same tool as the EICR schedule, not a second copy of it. */
+  const [showSheetScan, setShowSheetScan] = useState(false);
   const [showRcdPresetsDialog, setShowRcdPresetsDialog] = useState(false);
   const [showClearAllConfirm, setShowClearAllConfirm] = useState(false);
   const [selectedCircuitIndex, setSelectedCircuitIndex] = useState(0);
@@ -1132,6 +1135,10 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
       onScanBoard: () => {
         setActiveBoardId(boardId);
         setShowPhotoCapture(true);
+      },
+      onScanResults: () => {
+        setActiveBoardId(boardId);
+        setShowSheetScan(true);
       },
       onQuickRcdPresets: () => {
         setActiveBoardId(boardId);
@@ -2578,6 +2585,16 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
                         >
                           Add circuit
                         </Button>
+                        {/* ELE-1607 — the readings the board scan leaves blank. */}
+                        <Button
+                          className="col-span-2 h-11 rounded-xl bg-white/[0.06] border border-white/[0.12] text-white font-semibold hover:bg-white/[0.10] touch-manipulation active:scale-[0.98] text-[12px]"
+                          onClick={() => {
+                            setActiveBoardId(board.id);
+                            setShowSheetScan(true);
+                          }}
+                        >
+                          Scan test results
+                        </Button>
                         <Button
                           className={cn(
                             'h-11 rounded-xl font-semibold touch-manipulation active:scale-[0.98] text-[12px]',
@@ -2889,6 +2906,24 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
           title="Scan distribution board"
         />
       )}
+
+      {/*
+        ELE-1607 — the readings. Same component as the EICR schedule, applied
+        through the same `onUpdate('scheduleOfTests', …)` path.
+      */}
+      <TestSheetScanSheet
+        open={showSheetScan}
+        onOpenChange={setShowSheetScan}
+        reportId={formData?.certificateNumber}
+        rows={testResults}
+        boardId={activeBoardId ?? undefined}
+        boardName={distributionBoards.find((b) => b.id === activeBoardId)?.name}
+        earthingArrangement={formData?.earthingArrangement}
+        onApply={(next) => {
+          setTestResults(next);
+          onUpdate('scheduleOfTests', next);
+        }}
+      />
 
       {/* Test Results Photo Capture - Tool Sheet Pattern.
           Closing abandons the flow — clear activeBoardId so a later toolbar

@@ -13,6 +13,7 @@ export type ActivityType =
   | 'portfolio_evidence'
   | 'mock_exam'
   | 'video_watched'
+  | 'path_completed'
   | 'study_module';
 
 // ─── XP Values ───────────────────────────────────────────────────
@@ -70,6 +71,14 @@ export const XP_RULES: Record<ActivityType, XPRule> = {
     baseXP: 10,
     defaultDurationMinutes: 0, // uses actual time
     usesActualDuration: true,
+    complianceCategory: 'Self-study',
+  },
+  path_completed: {
+    // Finishing a whole learning path — pure bonus XP. Zero minutes on
+    // purpose: every video already logged its own watch time, and a bonus
+    // must never double-count towards off-the-job hours.
+    baseXP: 50,
+    defaultDurationMinutes: 0,
     complianceCategory: 'Self-study',
   },
   study_module: {

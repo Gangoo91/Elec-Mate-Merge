@@ -103,6 +103,12 @@ export default function PrePurchaseSurvey() {
   reportIdRef.current = savedReportId;
 
   /*
+   * Where photos go before the report row exists. Stable for the session, so a
+   * burst of photos taken before the first autosave still land together.
+   */
+  const draftFolderRef = useRef(`draft-${crypto.randomUUID()}`);
+
+  /*
    * 🔴 Hydrate from the cloud AT MOST ONCE, ever.
    *
    * This bit me on the first real run. `onReportCreated` rewrites the URL from
@@ -310,18 +316,25 @@ export default function PrePurchaseSurvey() {
            * it here would give null and put the upload at `null/<uuid>.jpg`,
            * outside the RLS policy and invisible for ever after.
            */
+          /*
+           * 🔴 A photo must NEVER be blocked on the report row existing.
+           *
+           * This used to hard-fail with "Could not start the survey" whenever
+           * `saveNow()` came back without an id — which is what Andrew hit on
+           * device (ELE-1642), on the very first tap of a brand-new survey.
+           * The id only names a FOLDER inside the user's own storage prefix;
+           * RLS keys on the user id, so a placeholder is perfectly safe and the
+           * photo is never lost. The row lands on the next autosave.
+           */
           let targetId = reportIdRef.current;
           if (!targetId) {
-            const result = await saveNow();
+            const result = await saveNow().catch(() => null);
             targetId = result?.reportId ?? null;
-            reportIdRef.current = targetId; // claim it for the rest of the batch
+            if (targetId) reportIdRef.current = targetId;
           }
-          if (!targetId) {
-            toast.error('Could not start the survey — try again');
-            break;
-          }
+          const folderId = targetId ?? draftFolderRef.current;
 
-          const url = await uploadSurveyPhoto(targetId, file);
+          const url = await uploadSurveyPhoto(folderId, file);
           if (!url) {
             toast.error('One photo could not be saved');
             continue;

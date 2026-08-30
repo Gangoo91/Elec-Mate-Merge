@@ -31,6 +31,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data android:scheme="https" android:host="elec-mate.com" />
+                <data android:scheme="https" android:host="www.elec-mate.com" />
             </intent-filter>
 
         </activity>

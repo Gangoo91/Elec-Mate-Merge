@@ -32,6 +32,46 @@ export interface ConfirmationParts {
    * which is the single most expensive thing a diary can cause.
    */
   movedFrom?: { start: Date; end: Date; allDay: boolean } | null;
+  /**
+   * ELE-1648 — every day of a job booked across non-contiguous days.
+   *
+   * Set only for a split job. `start`/`end` still describe the FIRST day, so
+   * anything that ignores this reads as a normal single booking rather than
+   * breaking; `whenLine` is the one place that spends it.
+   *
+   * The point of this field is that the customer gets ONE message. Alex
+   * Gibbons, 30 Aug 2026: "Wouldnt i then need to make like 2 entries and then
+   * send 2 texts/enails ext?" — five day-entries must not mean five texts.
+   */
+  jobDates?: Date[] | null;
+}
+
+/**
+ * "Monday 1, Wednesday 3 and Friday 5 September".
+ *
+ * The month is stated once at the end when every day shares it, and on each
+ * date when they don't — a job running into the next month has to say so, and
+ * "Monday 29, Wednesday 1 September" would be read as all-September.
+ */
+function listDays(dates: readonly Date[]): string {
+  const sorted = [...dates].sort((a, b) => a.getTime() - b.getTime());
+  const oneMonth = sorted.every((d) => d.getMonth() === sorted[0].getMonth() && d.getFullYear() === sorted[0].getFullYear());
+  const parts = sorted.map((d, i) =>
+    oneMonth && i < sorted.length - 1 ? format(d, 'EEEE d') : format(d, 'EEEE d MMMM')
+  );
+  if (parts.length === 1) return parts[0];
+  return `${parts.slice(0, -1).join(', ')} and ${parts[parts.length - 1]}`;
+}
+
+/** True when these days run one after another, so a range reads better. */
+function areConsecutive(dates: readonly Date[]): boolean {
+  const sorted = [...dates].sort((a, b) => a.getTime() - b.getTime());
+  for (let i = 1; i < sorted.length; i++) {
+    const prev = new Date(sorted[i - 1].getFullYear(), sorted[i - 1].getMonth(), sorted[i - 1].getDate());
+    const cur = new Date(sorted[i].getFullYear(), sorted[i].getMonth(), sorted[i].getDate());
+    if (Math.round((cur.getTime() - prev.getTime()) / 86_400_000) !== 1) return false;
+  }
+  return true;
 }
 
 /** First name only — "Hi Mrs Patricia Hargreaves," reads like a letter from a bank. */
@@ -51,6 +91,25 @@ function firstName(name: string | null | undefined): string | null {
  */
 export function whenLine(parts: ConfirmationParts): string {
   const { start, end, allDay } = parts;
+
+  /*
+   * A split job names its days (ELE-1648).
+   *
+   * Consecutive days read as a range, because "Monday 1 to Wednesday 3
+   * September" is how someone would actually say a three-day job; the list is
+   * for days that genuinely skip. Both branches must be handled here — a split
+   * job's day-rows each cover ONE day, so `start`/`end` describe day one only,
+   * and falling through would promise the customer a single day of a job that
+   * runs three.
+   */
+  const days = parts.jobDates ?? [];
+  if (days.length > 1) {
+    const sorted = [...days].sort((a, b) => a.getTime() - b.getTime());
+    return areConsecutive(sorted)
+      ? `${format(sorted[0], 'EEEE d MMMM')} to ${format(sorted[sorted.length - 1], 'EEEE d MMMM')}`
+      : listDays(sorted);
+  }
+
   const sameDay = start.toDateString() === end.toDateString();
 
   if (allDay) {

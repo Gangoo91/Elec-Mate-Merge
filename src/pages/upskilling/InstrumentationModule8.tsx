@@ -4,18 +4,55 @@ import { ModuleShell } from '@/components/study-centre/shells';
 import useSEO from '@/hooks/useSEO';
 
 const sections = [
-  { id: 1, title: 'Systematic approach to fault diagnosis', icon: Search, description: 'Methodical troubleshooting techniques for instrumentation systems.' },
-  { id: 2, title: 'Symptoms of sensor, loop or signal failure', icon: AlertTriangle, description: 'Identifying common failure modes and their symptoms.' },
-  { id: 3, title: 'Using loop calibrators and simulators for diagnostics', icon: Wrench, description: 'Practical use of test equipment for fault finding.' },
-  { id: 4, title: 'Preventive maintenance routines', icon: Clipboard, description: 'Scheduled maintenance to prevent system failures.' },
-  { id: 5, title: 'Documenting faults and generating service reports', icon: FileText, description: 'Documentation and reporting procedures.' },
-  { id: 6, title: 'Safety considerations during troubleshooting', icon: Shield, description: 'Safe working practices when diagnosing faults.' },
+  {
+    id: 1,
+    title: 'Systematic fault diagnosis',
+    icon: Search,
+    description:
+      'Why every instrument is a box with an input and an output, and how to design a test that could prove you wrong.',
+  },
+  {
+    id: 2,
+    title: 'Reading the symptom',
+    icon: AlertTriangle,
+    description:
+      'What a wrong signal tells you before you touch anything — low, high, frozen, noisy or dead.',
+  },
+  {
+    id: 3,
+    title: 'Intermittent faults',
+    icon: Wrench,
+    description:
+      'The hardest class of fault: catching evidence of something that is not happening while you watch.',
+  },
+  {
+    id: 4,
+    title: 'Preventive maintenance',
+    icon: Clipboard,
+    description:
+      'What is worth doing before anything fails, and how to tell useful maintenance from ritual.',
+  },
+  {
+    id: 5,
+    title: 'When the instrument is right',
+    icon: FileText,
+    description:
+      'No fault found — the reading is correct and the process really is doing that. Knowing when to stop.',
+  },
+  {
+    id: 6,
+    title: 'Fault finding on running plant',
+    icon: Shield,
+    description:
+      'The hazards created by the act of diagnosis itself — breaking loops, forcing outputs and working live.',
+  },
 ];
 
 export default function InstrumentationModule8() {
   useSEO({
     title: 'Module 8: Fault Finding and Maintenance | Instrumentation | Elec-Mate',
-    description: 'Systematic fault diagnosis, failure symptoms, loop calibrators, preventive maintenance and safe troubleshooting.',
+    description:
+      'Systematic diagnosis and designing tests that can disprove, reading symptoms, intermittent faults, preventive maintenance, no-fault-found, and working safely on running plant.',
   });
 
   return (

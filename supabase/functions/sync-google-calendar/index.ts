@@ -244,7 +244,29 @@ async function syncUser(
   if (!pullResponse.ok) {
     const errText = await pullResponse.text();
     console.error('Google Calendar pull failed:', errText);
-    throw new Error('Failed to pull events from Google Calendar');
+
+    /*
+     * A 403 with insufficient scope is not a transient failure — the stored
+     * token will NEVER work, because the user left the calendar permission
+     * unticked on Google's granular consent screen. Retrying it every run just
+     * fills Sentry with an error nobody can act on, so switch the connection
+     * off and say what to do. calendar-oauth-callback now refuses these at
+     * connect time; this catches the ones granted before that landed.
+     */
+    if (pullResponse.status === 403 && errText.includes('ACCESS_TOKEN_SCOPE_INSUFFICIENT')) {
+      await supabase
+        .from('google_calendar_tokens')
+        .update({ sync_enabled: false })
+        .eq('user_id', userId);
+      throw new Error(
+        'Google Calendar access was not granted. Sync has been turned off — reconnect ' +
+          'your calendar and leave the Google Calendar permission ticked.'
+      );
+    }
+
+    throw new Error(
+      `Failed to pull events from Google Calendar (HTTP ${pullResponse.status}): ${errText.slice(0, 300)}`
+    );
   }
 
   const pullData = await pullResponse.json();

@@ -34,6 +34,7 @@ const ACTIVITY_ICONS: Record<string, typeof Activity> = {
   portfolio_evidence: FileText,
   mock_exam: GraduationCap,
   video_watched: Video,
+  path_completed: GraduationCap,
   study_module: BookOpen,
 };
 
@@ -44,6 +45,7 @@ const ACTIVITY_LABELS: Record<string, string> = {
   portfolio_evidence: 'Portfolio',
   mock_exam: 'Mock Exam',
   video_watched: 'Video',
+  path_completed: 'Learning Path Complete',
   study_module: 'Study Module',
 };
 

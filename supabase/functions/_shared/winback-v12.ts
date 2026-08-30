@@ -22,14 +22,9 @@
 export const WINBACK_FROM = 'Andrew at Elec-Mate <founder@elec-mate.com>';
 export const WINBACK_REPLY_TO = 'founder@elec-mate.com';
 
-// Free ChatGPT GPT — useful goodwill hook for ex-users. Even users who
-// never resubscribe become distribution if they share it with a mate.
-const GPT_URL = 'https://chatgpt.com/g/g-6a106f9478f88191a5a3baf2740fff85-elec-mate';
-const GPT_SHARE_TEXT = encodeURIComponent(
-  "Free electrician AI on ChatGPT — built by Elec-Mate. Regs, calcs, fault-finding. Worth a look: " +
-    GPT_URL
-);
-const GPT_WHATSAPP_SHARE = `https://wa.me/?text=${GPT_SHARE_TEXT}`;
+// The free-GPT giveaway was removed 2026-08-30 (Andrew's call): it diluted
+// touch 1's single ask (the reply) and handed leavers a free substitute for
+// a paid pillar.
 
 export interface WinbackContext {
   firstName: string;
@@ -248,34 +243,9 @@ ${p('No hard feelings — but I&rsquo;d genuinely love to know why. Two reasons:
   <li>If something&rsquo;s broken, I want to fix it.</li>
   <li>If something&rsquo;s missing, I want to build it.</li>
 </ul>
-${p('Just hit reply on this email. One line is plenty. It comes straight to my inbox — I&rsquo;m a working spark too, so I&rsquo;ll know what you mean.')}
-
-<!-- Free GPT — goodwill + share angle -->
-<div style="margin: 26px 0 18px; padding: 22px; background-color: #FFFAEC; border: 1px solid #EFD489; border-radius: 14px;">
-  <p style="margin: 0 0 6px; font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: #B5840A;">Even if you don&rsquo;t come back</p>
-  <p style="margin: 0 0 10px; font-size: 17px; font-weight: 700; line-height: 1.3; color: #0C1B2A;">
-    Use the free Elec-Mate AI on ChatGPT.
-  </p>
-  <p style="margin: 0 0 14px; font-size: 14px; line-height: 1.6; color: #0C1B2A;">
-    Custom GPT I built for the trade — BS 7671 lookups, cable calcs, fault-finding, regs questions. Forever free, no Elec-Mate login needed.
-  </p>
-  <table role="presentation" cellspacing="0" cellpadding="0">
-    <tr>
-      <td style="padding-right: 8px;">
-        <a href="${attr(GPT_URL)}" style="display: inline-block; padding: 12px 20px; background-color: #B5840A; color: #0a0a0a; text-decoration: none; font-weight: 700; font-size: 14px; border-radius: 10px;">
-          Open the GPT →
-        </a>
-      </td>
-      <td>
-        <a href="${attr(GPT_WHATSAPP_SHARE)}" style="display: inline-block; padding: 12px 18px; background-color: transparent; color: #B5840A; text-decoration: none; font-weight: 600; font-size: 14px; border: 1px solid rgba(250,204,21,0.35); border-radius: 10px;">
-          Share with a mate
-        </a>
-      </td>
-    </tr>
-  </table>
-</div>
-
-${pSmall('Your account and all your data are safe for 90 days. If you change your mind, everything&rsquo;s still there waiting.')}
+${p('Just hit reply on this email. One line is plenty. It comes straight to my inbox — I&rsquo;m in the trade myself, so I&rsquo;ll know exactly what you mean.')}
+${p('Most weeks something ships in Elec-Mate because somebody told me what was wrong or missing. Your one line genuinely changes the app.')}
+${pSmall('Your account and all your data — certs, quotes, customers, the lot — are safe for 90 days. If you change your mind, everything&rsquo;s still there waiting.')}
 ${sig()}`;
 
   const text = [
@@ -288,16 +258,11 @@ ${sig()}`;
     "- If something's broken, I want to fix it",
     "- If something's missing, I want to build it",
     '',
-    "Just hit reply on this email. One line is plenty. It comes straight to my inbox — I'm a working spark too, so I'll know what you mean.",
+    "Just hit reply on this email. One line is plenty. It comes straight to my inbox — I'm in the trade myself, so I'll know exactly what you mean.",
     '',
-    "Even if you don't come back, here's something I built for the trade — free, no Elec-Mate login needed:",
+    'Most weeks something ships in Elec-Mate because somebody told me what was wrong or missing. Your one line genuinely changes the app.',
     '',
-    "The Elec-Mate GPT on ChatGPT — regs lookups, cable calcs, fault-finding.",
-    GPT_URL,
-    '',
-    `If you find it useful, share it with a mate: ${GPT_URL}`,
-    '',
-    "Your account and all your data are safe for 90 days. If you change your mind, everything's still there waiting.",
+    "Your account and all your data — certs, quotes, customers, the lot — are safe for 90 days. If you change your mind, everything's still there waiting.",
     '',
     'Andrew',
     'Founder, Elec-Mate',
@@ -458,11 +423,10 @@ ${h1(offer.hasOffer ? `Last one, ${escapeHtml(name)}.` : `Last one, ${escapeHtml
 ${p("This is the last email I&rsquo;ll send about coming back. Promise.")}
 ${p('In the month since you cancelled, the team has shipped:')}
 <ul style="margin: 0 0 18px; padding-left: 22px; font-size: 15px; line-height: 1.75; color: #0C1B2A;">
-  <li>A <a href="${attr(GPT_URL)}" style="color: #B5840A;">free Elec-Mate GPT on ChatGPT</a> for the whole trade — regs, calcs, fault-finding, no login needed</li>
-  <li>Faster cert generation with smart pre-fill from previous jobs</li>
-  <li>More public calculators (cable sizing, busbar, voltage drop…) now SEO-indexable</li>
-  <li>Tighter onboarding — apprentices skip the business setup entirely</li>
-  <li>A proper retention flow so we never quietly lose someone again</li>
+  <li>Board schedules built straight from your certs — a full A4 for the client and a CU door label, nothing retyped</li>
+  <li>Certificates print properly everywhere — test notes, supply tails, three-phase boards, page numbers</li>
+  <li>Quotes autosave as you build them, line items reorder, and you can see when a client opens your invoice</li>
+  <li>Hundreds of new Study Centre questions — AM2, Level 3, emergency lighting updated to BS EN 1838:2024</li>
 </ul>
 ${offerBlock}
 ${ctaButton(primaryCtaUrl, offer.hasOffer ? `Reactivate at ${offer.newPrice}/mo →` : 'Take another look →')}
@@ -479,11 +443,10 @@ ${sig()}`;
     "This is the last email I'll send about coming back. Promise.",
     '',
     "In the month since you cancelled, we've shipped:",
-    `- A free Elec-Mate GPT on ChatGPT for the whole trade — regs, calcs, fault-finding, no login: ${GPT_URL}`,
-    '- Faster cert generation with smart pre-fill from previous jobs',
-    '- More public calculators (cable sizing, busbar, voltage drop) — now SEO-indexable',
-    '- Tighter onboarding — apprentices skip business setup entirely',
-    '- A proper retention flow so we never quietly lose someone again',
+    '- Board schedules built straight from your certs — a full A4 for the client and a CU door label, nothing retyped',
+    '- Certificates print properly everywhere — test notes, supply tails, three-phase boards, page numbers',
+    '- Quotes autosave as you build them, line items reorder, and you can see when a client opens your invoice',
+    '- Hundreds of new Study Centre questions — AM2, Level 3, emergency lighting updated to BS EN 1838:2024',
     '',
     offer.hasOffer
       ? `Your ${offer.newPrice}/month forever price is still good — but only for the next 7 days.`

@@ -9,6 +9,11 @@
 import { serve, corsHeaders, createClient } from '../_shared/deps.ts';
 import { handleError, ValidationError } from '../_shared/errors.ts';
 import { captureException } from '../_shared/sentry.ts';
+import {
+  calendarRedirectUri,
+  GOOGLE_CALENDAR_SCOPES,
+  OUTLOOK_CALENDAR_SCOPES,
+} from '../_shared/calendar-oauth.ts';
 
 const GOOGLE_CLIENT_ID = Deno.env.get('GOOGLE_CLIENT_ID');
 const MICROSOFT_CLIENT_ID = Deno.env.get('MICROSOFT_CLIENT_ID');
@@ -25,16 +30,9 @@ serve(async (req: Request) => {
 
     // Generate random state for CSRF protection
     const state = crypto.randomUUID();
-    // Public-facing redirect — a Vercel rewrite proxies this to the Supabase fn.
-    // Google shows this domain on the consent screen; the project ref stays
-    // out of sight. MUST match the token-exchange redirect_uri byte for byte.
-    // Prefer the public elec-mate.com redirect (set CALENDAR_OAUTH_REDIRECT once
-    // the Vercel rewrite is live — i.e. at THE PUSH); until then fall back to
-    // the Supabase URL so connects made today actually complete. Both URIs are
-    // registered on the Google client. Must match authorize + token exchange.
-    const redirectUri =
-      Deno.env.get('CALENDAR_OAUTH_REDIRECT') ||
-      `${Deno.env.get('SUPABASE_URL')}/functions/v1/calendar-oauth-callback`;
+    // Public-facing redirect — a Vercel rewrite proxies this to the Supabase fn,
+    // so the consent screen shows elec-mate.com rather than the project ref.
+    const redirectUri = calendarRedirectUri();
 
     let authUrl: string;
     if (provider === 'outlook') {
@@ -46,7 +44,7 @@ serve(async (req: Request) => {
         redirect_uri: redirectUri,
         response_type: 'code',
         // User.Read gives /me for the connected address; offline_access = refresh token.
-        scope: 'Calendars.ReadWrite User.Read offline_access',
+        scope: OUTLOOK_CALENDAR_SCOPES,
         state,
         prompt: 'consent',
       });
@@ -59,8 +57,7 @@ serve(async (req: Request) => {
         client_id: GOOGLE_CLIENT_ID,
         redirect_uri: redirectUri,
         response_type: 'code',
-        scope:
-          'https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/userinfo.email openid',
+        scope: GOOGLE_CALENDAR_SCOPES,
         state,
         access_type: 'offline',
         prompt: 'consent',

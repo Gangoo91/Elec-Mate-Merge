@@ -236,6 +236,35 @@ const ConfirmRow = ({
   </button>
 );
 
+/**
+ * 🔴 Merge stored data over defaults WITHOUT letting a null clobber an array.
+ *
+ * `{ ...defaults, ...stored }` looks safe and is not: a stored `photos: null`
+ * overwrites the `[]` default, and the next `data.photos.length` throws — which
+ * is a hard crash into the error boundary, taking the whole certificate type
+ * with it (ELE-1643). Anything not an object is ignored entirely, and any key
+ * whose stored value is null/undefined keeps the default.
+ *
+ * ⚠️ Same trap as ELE-1110, where a stored null reached `.trim()` and
+ * white-screened the thermal step. Worth reaching for wherever stored JSON is
+ * spread over defaults.
+ */
+function mergeDisconnection(
+  base: DisconnectionData,
+  stored: Partial<DisconnectionData> | null | undefined
+): DisconnectionData {
+  if (!stored || typeof stored !== 'object' || Array.isArray(stored)) return base;
+  const out = { ...base };
+  for (const [key, value] of Object.entries(stored)) {
+    if (value === null || value === undefined) continue;
+    const current = (base as unknown as Record<string, unknown>)[key];
+    /* An array default only ever accepts an array. */
+    if (Array.isArray(current) && !Array.isArray(value)) continue;
+    (out as unknown as Record<string, unknown>)[key] = value;
+  }
+  return out;
+}
+
 export default function DisconnectionCertificate() {
   const navigate = useNavigate();
   const { id: editId } = useParams<{ id: string }>();
@@ -269,8 +298,15 @@ export default function DisconnectionCertificate() {
   const cameraInputRef = useRef<HTMLInputElement>(null);
 
   const [data, setData] = useState<DisconnectionData>(() => {
-    const saved = storageGetJSONSync<Partial<DisconnectionData>>(DRAFT_KEY, null);
-    return saved ? { ...defaultData(), ...saved } : defaultData();
+    try {
+      const saved = storageGetJSONSync<Partial<DisconnectionData>>(DRAFT_KEY, null);
+      return mergeDisconnection(defaultData(), saved);
+    } catch (err) {
+      /* A bad draft must never cost the user the whole certificate type. */
+      console.warn('[Disconnection] ignoring unreadable draft:', err);
+      storageRemoveSync(DRAFT_KEY);
+      return defaultData();
+    }
   });
 
   // Track direction so the step slide matches travel (forward vs back).
@@ -285,7 +321,7 @@ export default function DisconnectionCertificate() {
       if (!user) return;
       const result = await reportCloud.getReportData(editId, user.id);
       if (result) {
-        setData((prev) => ({ ...prev, ...(result as Partial<DisconnectionData>) }));
+        setData((prev) => mergeDisconnection(prev, result as Partial<DisconnectionData>));
         setExistingReportId(editId);
       }
     });
@@ -1114,10 +1150,19 @@ export default function DisconnectionCertificate() {
         </div>
       </main>
 
-      {/* Shell footer — Back + Continue, Generate on the last step */}
+      {/*
+        Shell footer — Back + Continue, Generate on the last step.
+
+        🔴 `previewReportId` WAS THE ELE-1643 CRASH. It read `savedReportId`,
+        which is a `const` declared inside the save handler — so every render
+        threw `ReferenceError: savedReportId is not defined` and took the whole
+        certificate into the error boundary. Not a bad draft; the page could
+        never render at all. TypeScript had been flagging it as TS2304 the whole
+        time, sitting in the file's pre-existing error noise where nobody looked.
+      */}
       <CertShellFooter
         previewReportType="disconnection"
-        previewReportId={savedReportId}
+        previewReportId={existingReportId ?? editId ?? null}
         previewData={data as unknown as Record<string, unknown>}
         currentIndex={currentIndex}
         totalSteps={STEPS.length}

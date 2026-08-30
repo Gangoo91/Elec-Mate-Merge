@@ -7,9 +7,23 @@ import { navigateToAddress, canNavigateTo } from '@/utils/navigate-to-address';
 import { cn } from '@/lib/utils';
 import { ReliabilityLevel } from '@/hooks/useCustomerPaymentStats';
 import { resolveCustomerRisk } from '@/lib/customerRisk';
+import type { CustomerSummary } from '@/hooks/useCustomerSummaries';
+
+/**
+ * Same rule as CustomerDetailPage: compact above £10k so a five-figure sum
+ * cannot push the row's action buttons off a phone screen. Kept identical to
+ * the detail page so the same customer does not read "£12,400" in one place
+ * and "£12k" in the other.
+ */
+const formatGBP = (value: number) =>
+  value >= 10_000
+    ? `£${Math.round(value / 1000)}k`
+    : `£${value.toLocaleString('en-GB', { maximumFractionDigits: 0 })}`;
 
 interface CustomerListRowProps {
   customer: Customer;
+  /** Rollup for this customer, when loaded. Absent = show the row as before. */
+  summary?: CustomerSummary | null;
   onEdit: (customer: Customer) => void;
   onDelete: (id: string) => void;
   onStartCertificate: (customer: Customer) => void;
@@ -72,6 +86,7 @@ const getActivityTone = (lastActivityAt?: string): ActivityTone => {
 
 export const CustomerListRow = ({
   customer,
+  summary,
   paymentReliability,
   hasOverdue = false,
   selectionMode = false,
@@ -310,8 +325,26 @@ export const CustomerListRow = ({
 
       {/* Footer row: last activity + quick actions — pinned to the card base */}
       <div className="mt-auto flex items-center justify-between gap-3 border-t border-white/[0.06] pt-3">
-        <span className="text-[12px] text-white">
-          {formatLastActivity(customer.lastActivityAt)}
+        <span className="flex min-w-0 items-center gap-2 text-[12px] text-white">
+          <span className="truncate">{formatLastActivity(customer.lastActivityAt)}</span>
+          {/* Money, when there is any. Outstanding wins over won work: an unpaid
+              invoice is the one number that should change what you do next.
+              Silent when both are zero, so a customer with no financial history
+              does not carry a meaningless "£0". */}
+          {summary && (summary.outstanding > 0 || summary.approvedValue > 0) && (
+            <>
+              <span aria-hidden className="text-white/30">·</span>
+              {summary.outstanding > 0 ? (
+                <span className="whitespace-nowrap font-semibold text-amber-300">
+                  {formatGBP(summary.outstanding)} due
+                </span>
+              ) : (
+                <span className="whitespace-nowrap font-semibold text-emerald-300">
+                  {formatGBP(summary.approvedValue)} won
+                </span>
+              )}
+            </>
+          )}
         </span>
         <div className="flex items-center gap-1.5">
           {customer.phone && (

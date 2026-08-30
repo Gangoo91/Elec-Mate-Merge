@@ -1,19 +1,22 @@
 import { useRef } from 'react';
 import { Camera, ImagePlus } from 'lucide-react';
+import { isNativeApp, nativePickPhoto } from '@/utils/pickPhotos';
 
 /**
- * The shutter (ELE-1634).
+ * The shutter (ELE-1634, fixed in ELE-1642).
  *
- * ── 🔴 NO `capture="environment"` ─────────────────────────────────────────
- * It bit us on ELE-1110, and it would bite harder here. On iOS that attribute
- * forces the system camera and REMOVES the option to pick an existing image
- * altogether — so an electrician who photographed the board an hour ago, or who
- * is writing the survey up at the office, could not attach their own photos to
- * their own report.
+ * ── 🔴 THE TWO BUTTONS DO DIFFERENT THINGS ───────────────────────────────
+ * They did not at first: both opened the picker, because I kept `capture` off
+ * BOTH inputs (it removes library access — the ELE-1110 trap) and argued
+ * camera-first could be carried by which button was bigger. On a phone that is
+ * two identical buttons, and Andrew hit it immediately.
  *
- * The brief asks for camera-first, and camera-first is achieved by which button
- * is bigger, not by taking the other one away. Both inputs below are plain
- * `accept="image/*"`; on a phone that already offers Camera first in the picker.
+ * Routing them separately gets both properties:
+ *  • Camera → Capacitor `getPhoto` on native, `capture="environment"` on web.
+ *  • Library → Capacitor `Photos` on native, a bare `accept="image/*"` on web.
+ *
+ * 🔴 `capture` lives ONLY on the camera input. The library input must never
+ * carry it, or picking an existing photo becomes impossible on iOS.
  */
 
 interface Props {
@@ -40,13 +43,26 @@ export default function SurveyCapture({ onPick, disabled, variant }: Props) {
     if (files.length) onPick(files);
   };
 
+  /* Native goes through the plugin; web falls through to the right input. */
+  const take = async (source: 'camera' | 'library') => {
+    if (isNativeApp()) {
+      const file = await nativePickPhoto(source);
+      if (file) onPick([file]);
+      return;
+    }
+    (source === 'camera' ? cameraRef : libraryRef).current?.click();
+  };
+
   const inputs = (
     <>
+      {/* 🔴 `capture` here and ONLY here — on the library input it would
+          remove access to photos already on the device (iOS). Single file:
+          the camera returns one shot at a time. */}
       <input
         ref={cameraRef}
         type="file"
         accept="image/*"
-        multiple
+        capture="environment"
         onChange={handle}
         className="hidden"
       />
@@ -86,7 +102,7 @@ export default function SurveyCapture({ onPick, disabled, variant }: Props) {
             <button
               type="button"
               disabled={disabled}
-              onClick={() => cameraRef.current?.click()}
+              onClick={() => take('camera')}
               className="flex h-12 flex-1 items-center justify-center gap-2 rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-colors hover:bg-elec-yellow/90 touch-manipulation active:scale-[0.98] disabled:opacity-50"
             >
               <Camera className="h-[18px] w-[18px]" />
@@ -95,7 +111,7 @@ export default function SurveyCapture({ onPick, disabled, variant }: Props) {
             <button
               type="button"
               disabled={disabled}
-              onClick={() => libraryRef.current?.click()}
+              onClick={() => take('library')}
               className="flex h-12 flex-1 items-center justify-center gap-2 rounded-xl border border-white/[0.16] bg-white/[0.06] text-[15px] font-semibold text-white transition-colors hover:bg-white/[0.1] touch-manipulation active:scale-[0.98] disabled:opacity-50"
             >
               <ImagePlus className="h-[18px] w-[18px]" />
@@ -130,7 +146,7 @@ export default function SurveyCapture({ onPick, disabled, variant }: Props) {
       <button
         type="button"
         disabled={disabled}
-        onClick={() => cameraRef.current?.click()}
+        onClick={() => take('camera')}
         className="flex h-12 flex-1 items-center justify-center gap-2 rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-colors hover:bg-elec-yellow/90 touch-manipulation active:scale-[0.98] disabled:opacity-50"
       >
         <Camera className="h-[18px] w-[18px]" />
@@ -139,7 +155,7 @@ export default function SurveyCapture({ onPick, disabled, variant }: Props) {
       <button
         type="button"
         disabled={disabled}
-        onClick={() => libraryRef.current?.click()}
+        onClick={() => take('library')}
         aria-label="Choose from photos"
         className="flex h-12 w-14 shrink-0 items-center justify-center rounded-xl border border-white/[0.16] bg-white/[0.06] text-white transition-colors hover:bg-white/[0.1] touch-manipulation active:scale-[0.98] disabled:opacity-50"
       >

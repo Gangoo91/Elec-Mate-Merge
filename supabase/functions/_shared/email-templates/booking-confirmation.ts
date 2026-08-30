@@ -38,6 +38,15 @@ export interface BookingConfirmationData {
   /** Set when the booking MOVED. Renders the "was / now" pair. */
   movedFrom?: { startIso: string; endIso: string; allDay: boolean } | null;
   /**
+   * ELE-1648 — the start of every day of a job split across non-contiguous
+   * days. Set only for a split job; `startIso`/`endIso` still describe the
+   * first day, so anything ignoring this renders a valid single booking.
+   *
+   * Exists so the customer gets ONE email naming all the days rather than one
+   * per day-entry.
+   */
+  jobDayIsos?: string[];
+  /**
    * The attachment's actual filename.
    *
    * Passed in rather than hard-coded so the sentence telling the customer what
@@ -122,6 +131,60 @@ const lastCoveredDay = (endIso: string): string => {
 };
 
 /** "Thursday 3 September, 09:00–11:00", or a run of days when it is longer. */
+/**
+ * "Monday 1, Wednesday 3 and Friday 5 September" (ELE-1648).
+ *
+ * The month is said once when every day shares it, and on each date when they
+ * don't — "Monday 29, Wednesday 1 September" would read as all-September.
+ * Consecutive days are NOT sent here: a run reads better as a range.
+ */
+export function jobDaysLine(dayIsos: readonly string[]): string {
+  const sorted = [...dayIsos].sort();
+  /*
+   * The month is compared as RENDERED, not as stored.
+   *
+   * Reading it off the ISO string (`iso.slice(0, 5, 7)`) is wrong in British
+   * Summer Time: local midnight on 1 September is stored as 31 August 23:00Z,
+   * so a Mon/Wed/Fri job inside one month looked like it spanned August and
+   * September and every date got its month spelled out. Same class of bug as
+   * the 09:00-renders-as-08:00 one `dayLong` exists to prevent.
+   */
+  const monthOf = (iso: string) =>
+    new Date(iso).toLocaleDateString('en-GB', { month: 'long', year: 'numeric', timeZone: UK });
+  const oneMonth = new Set(sorted.map(monthOf)).size === 1;
+  const parts = sorted.map((iso, i) =>
+    oneMonth && i < sorted.length - 1 ? dayLong(iso).replace(/\s+\S+$/, '') : dayLong(iso)
+  );
+  if (parts.length === 1) return parts[0];
+  return `${parts.slice(0, -1).join(', ')} and ${parts[parts.length - 1]}`;
+}
+
+/**
+ * True when these day-starts run one after another.
+ *
+ * Compared on the UK CALENDAR DAY, not on the raw instant. The server runs in
+ * UTC, so `getDate()` on a BST timestamp is the wrong day half the year — and
+ * across the October clock change one day is stored at 23:00Z and the next at
+ * 00:00Z, which reads as a two-day gap and would list a solid week as if it
+ * skipped days.
+ */
+function ukDayNumber(iso: string): number {
+  // en-CA gives yyyy-mm-dd, which parses back as a clean UTC midnight.
+  const [y, m, d] = new Date(iso)
+    .toLocaleDateString('en-CA', { timeZone: UK })
+    .split('-')
+    .map(Number);
+  return Date.UTC(y, m - 1, d) / 86_400_000;
+}
+
+function consecutiveDays(dayIsos: readonly string[]): boolean {
+  const sorted = [...dayIsos].sort().map(ukDayNumber);
+  for (let i = 1; i < sorted.length; i++) {
+    if (sorted[i] - sorted[i - 1] !== 1) return false;
+  }
+  return true;
+}
+
 export function whenLine(startIso: string, endIso: string, allDay: boolean): string {
   if (allDay) {
     const end = lastCoveredDay(endIso);
@@ -152,10 +215,29 @@ export function buildBookingConfirmationEmail(
   const moved = !!data.movedFrom;
   const year = new Date().getFullYear();
 
-  const when = whenLine(data.startIso, data.endIso, data.allDay);
-  const oneDay = data.allDay
-    ? sameDay(data.startIso, lastCoveredDay(data.endIso))
-    : sameDay(data.startIso, data.endIso);
+  /*
+   * ELE-1648 — one message, every day of the job.
+   *
+   * A split job's day-rows each cover ONE day, so the anchor's own
+   * `startIso`/`endIso` describe day one and nothing else. Falling through to
+   * `whenLine` for a consecutive split job therefore told the customer
+   * "Tuesday 1 September" about a job that also runs the 2nd and 3rd — so a
+   * run of days is rendered as a range across the whole set, and only
+   * genuinely skipping days get listed out.
+   */
+  const jobDays = data.jobDayIsos ?? [];
+  const isSplit = jobDays.length > 1;
+  const sortedDays = isSplit ? [...jobDays].sort() : [];
+  const when = !isSplit
+    ? whenLine(data.startIso, data.endIso, data.allDay)
+    : consecutiveDays(sortedDays)
+      ? `${dayLong(sortedDays[0])} to ${dayLong(sortedDays[sortedDays.length - 1])}`
+      : jobDaysLine(sortedDays);
+  const oneDay = isSplit
+    ? false
+    : data.allDay
+      ? sameDay(data.startIso, lastCoveredDay(data.endIso))
+      : sameDay(data.startIso, data.endIso);
   // The hero splits the date from the time so the two biggest facts each get
   // their own line — a customer glancing at this on a lock screen sees the day.
   const heroDate = data.allDay && !oneDay ? when : dayLong(data.startIso);

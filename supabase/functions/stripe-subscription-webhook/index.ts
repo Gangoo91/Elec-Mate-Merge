@@ -817,7 +817,18 @@ serve(async (req) => {
         subscriptionMeta?: Record<string, string> | null;
         checkoutMeta?: Record<string, string> | null;
         subscriptionDiscounts?: Array<{ coupon?: { id?: string } | null }>;
-      }
+      },
+      /**
+       * Trial state, when the caller knows it.
+       *
+       * 🔴 These two columns were never written on the Stripe path, only by the
+       * RevenueCat webhook. `send-trial-reminders` selects on
+       * `is_trial = true AND trial_end` — so web trialists were invisible to it
+       * and got charged on day 8 with no warning email. Sampled 2026-08-30:
+       * of 16 live Stripe trialists, 1 had is_trial set. Omit the argument to
+       * leave both columns untouched.
+       */
+      trial?: { isTrial: boolean; trialEnd: Date | null }
     ) {
       const updateData: Record<string, unknown> = {
         subscribed,
@@ -825,6 +836,11 @@ serve(async (req) => {
         subscription_tier: tier,
         subscription_source: 'stripe',
       };
+
+      if (trial) {
+        updateData.is_trial = trial.isTrial;
+        updateData.trial_end = trial.trialEnd ? trial.trialEnd.toISOString() : null;
+      }
 
       if (subscribed && periodEnd) {
         updateData.subscription_end = periodEnd.toISOString();
@@ -1079,6 +1095,12 @@ serve(async (req) => {
           subscriptionDiscounts,
         };
 
+        // Trial state straight off the subscription — this is the event that
+        // fires when a web trial starts, so it is the one that has to record it.
+        const subIsTrialing =
+          subscription.status === 'trialing' ||
+          !!(subscription.trial_end && subscription.trial_end * 1000 > Date.now());
+
         await updateSubscriptionStatus(
           userId,
           isActive,
@@ -1086,7 +1108,11 @@ serve(async (req) => {
           tier,
           periodEnd,
           isNewSubscription && isActive,
-          founderHints
+          founderHints,
+          {
+            isTrial: subIsTrialing,
+            trialEnd: subscription.trial_end ? new Date(subscription.trial_end * 1000) : null,
+          }
         );
 
         // Cancel any previous subscriptions for this customer (upgrade scenario)
@@ -1648,7 +1674,12 @@ serve(async (req) => {
           const cancelledTier = preProfile?.subscription_tier ?? null;
           const cancelledFullName = preProfile?.full_name ?? null;
 
-          await updateSubscriptionStatus(userId, false, customerId, null, null);
+          // Subscription gone — clear the trial flags too, or an abandoned trial
+          // leaves is_trial=true forever and keeps them in the reminder cohort.
+          await updateSubscriptionStatus(userId, false, customerId, null, null, false, undefined, {
+            isTrial: false,
+            trialEnd: null,
+          });
 
           // ── Win-back queue enqueue ─────────────────────────────────────
           // Fire-and-forget: 3 touches (day +1, +7, +30). Failure here must
@@ -1867,7 +1898,22 @@ serve(async (req) => {
           );
         }
 
-        await updateSubscriptionStatus(userId, true, customerId, tier, periodEnd);
+        // A PAID invoice means the trial converted, so clear the trial flags.
+        // Guarded on amount_paid > 0 because Stripe also raises a £0 invoice at
+        // trial start — treating that as payment would clear the flags on day
+        // one and undo the very fix that puts them there.
+        const invoicePaidReal = (invoice.amount_paid ?? 0) > 0;
+
+        await updateSubscriptionStatus(
+          userId,
+          true,
+          customerId,
+          tier,
+          periodEnd,
+          false,
+          undefined,
+          invoicePaidReal ? { isTrial: false, trialEnd: null } : undefined
+        );
 
         // Fire Meta CAPI Subscribe event for RENEWAL invoices only
         // (initial subscription is tracked by customer.subscription.created — avoid double-count)
@@ -2194,6 +2240,10 @@ serve(async (req) => {
               : []) as Array<{ coupon?: { id?: string } | null }>,
           };
 
+          const checkoutIsTrialing =
+            sub.status === 'trialing' ||
+            !!(sub.trial_end && sub.trial_end * 1000 > Date.now());
+
           await updateSubscriptionStatus(
             linkedUserId,
             true,
@@ -2201,7 +2251,11 @@ serve(async (req) => {
             tier,
             periodEnd,
             true,
-            checkoutFounderHints
+            checkoutFounderHints,
+            {
+              isTrial: checkoutIsTrialing,
+              trialEnd: sub.trial_end ? new Date(sub.trial_end * 1000) : null,
+            }
           );
 
           logger.info('Subscription activated via checkout.session.completed', {

@@ -77,16 +77,45 @@ function unsubscribeFooter(unsubscribeUrl: string): string {
   return `<p style="margin:8px 0 0;font-size:11px;color:#64748b">You're receiving this because you created an account at elec-mate.com. <a href="${href}" style="color:#64748b">Unsubscribe</a></p>`;
 }
 
-// Suppressed addresses (unsubscribed/bounced) must never receive marketing.
-// Same query pattern as send-lifetime-offer.
+/**
+ * Suppressed addresses (unsubscribed/bounced) that must never receive marketing.
+ *
+ * 🔴 This used to be a bare `.select('email')`, which PostgREST silently caps at
+ * 1,000 rows. There are 6,246 suppressions, so the set came back roughly 16%
+ * complete and ~5,200 people who had unsubscribed or hard-bounced were invisible
+ * to every caller — V9, V10 and V11 alike. Nothing failed loudly; the campaign
+ * would simply have emailed people who asked us not to.
+ *
+ * Paginated with .range() until a short page arrives. Verified against the live
+ * table: a bare select returns 1000, this returns all 6,246.
+ */
 async function getSuppressedEmails(
   // deno-lint-ignore no-explicit-any
   supabase: any
 ): Promise<Set<string>> {
-  const { data: suppressed } = await supabase.from('email_suppressions').select('email');
-  return new Set(
-    ((suppressed ?? []) as { email: string }[]).map((s) => s.email.toLowerCase())
-  );
+  const PAGE = 1000;
+  const out = new Set<string>();
+
+  for (let from = 0; ; from += PAGE) {
+    const { data, error } = await supabase
+      .from('email_suppressions')
+      .select('email')
+      .range(from, from + PAGE - 1);
+
+    if (error) {
+      // Fail CLOSED on a partial list: sending to a half-built suppression set
+      // is a PECR breach, and a failed campaign run is recoverable where an
+      // email to someone who unsubscribed is not.
+      throw new Error(`Suppression list fetch failed at offset ${from}: ${error.message}`);
+    }
+
+    const rows = (data ?? []) as { email: string }[];
+    for (const r of rows) if (r.email) out.add(r.email.trim().toLowerCase());
+    if (rows.length < PAGE) break;
+  }
+
+  console.log(`Suppression list loaded: ${out.size} addresses`);
+  return out;
 }
 
 interface EligibleUser {
@@ -2911,21 +2940,39 @@ Deno.serve(async (req) => {
         // left; the admin page re-invokes until `complete`.
         const deadline = bodyDeadline || v11DeadlineLabel();
 
-        let query = supabaseAdmin
-          .from('profiles')
-          .select('id, full_name, username, role, created_at, subscribed, free_access_granted')
-          .or('role.eq.electrician,role.eq.apprentice')
-          .not('stripe_customer_id', 'is', null)
-          .is('incomplete_signup_v11_sent_at', null);
+        // Base predicate, rebuilt per chunk because a PostgrestFilterBuilder is
+        // single-use once awaited.
+        const baseQuery = () =>
+          supabaseAdmin
+            .from('profiles')
+            .select('id, full_name, username, role, created_at, subscribed, free_access_granted')
+            .or('role.eq.electrician,role.eq.apprentice')
+            .not('stripe_customer_id', 'is', null)
+            .is('incomplete_signup_v11_sent_at', null);
+
+        // `.in('id', …)` goes into the query STRING, so a large selection makes
+        // an oversized URL that PostgREST rejects outright — 617 ids is ~23KB
+        // and 400'd the whole campaign. Chunk it. No ids means no filter at
+        // all, which is both cheaper and the common case.
+        const ID_CHUNK = 100;
+        // deno-lint-ignore no-explicit-any
+        let v11CampProfiles: any[] = [];
 
         if (Array.isArray(userIds) && userIds.length > 0) {
-          query = query.in('id', userIds);
+          for (let i = 0; i < userIds.length; i += ID_CHUNK) {
+            const { data, error } = await baseQuery().in('id', userIds.slice(i, i + ID_CHUNK));
+            if (error) throw error;
+            v11CampProfiles = v11CampProfiles.concat(data || []);
+          }
+        } else {
+          // PostgREST caps an unbounded select at 1,000 rows. That is fine here
+          // and self-correcting: each run stamps the people it sends to, so the
+          // next run's query returns the next slice until the list is drained.
+          // Only `remaining` under-reports while the cohort exceeds 1,000.
+          const { data, error } = await baseQuery().order('created_at', { ascending: false });
+          if (error) throw error;
+          v11CampProfiles = data || [];
         }
-
-        const { data: v11CampProfiles, error: v11CampErr } = await query.order('created_at', {
-          ascending: false,
-        });
-        if (v11CampErr) throw v11CampErr;
 
         const { queue, suppressed, missingEmail } = await buildV11Queue(
           supabaseAdmin,
@@ -3001,20 +3048,34 @@ Deno.serve(async (req) => {
         let toNudge = queue;
         if (queue.length > 0) {
           const fortnightAgo = new Date(now - 14 * 86400000).toISOString();
-          const { data: recentLogs } = await supabaseAdmin
-            .from('email_logs')
-            .select('to_email, template')
-            .in(
-              'to_email',
-              queue.map((r) => r.email)
-            )
-            .gte('created_at', fortnightAgo);
+          // Chunked for the same reason the campaign query is: `.in()` lands in
+          // the query string, and 200 addresses is enough to risk an oversized
+          // URL. Paged with .range() too, since a fortnight of email_logs for
+          // 200 people can exceed PostgREST's 1,000-row cap on its own.
+          const busy = new Set<string>();
+          const EMAIL_CHUNK = 50;
 
-          const busy = new Set<string>(
-            ((recentLogs || []) as { to_email: string; template: string }[])
-              .filter((l) => l.template !== 'incomplete_signup_v11')
-              .map((l) => l.to_email.trim().toLowerCase())
-          );
+          for (let i = 0; i < queue.length; i += EMAIL_CHUNK) {
+            const emails = queue.slice(i, i + EMAIL_CHUNK).map((r) => r.email);
+            for (let from = 0; ; from += 1000) {
+              const { data: recentLogs, error: logErr } = await supabaseAdmin
+                .from('email_logs')
+                .select('to_email, template')
+                .in('to_email', emails)
+                .gte('created_at', fortnightAgo)
+                .range(from, from + 999);
+              if (logErr) throw logErr;
+
+              const rows = (recentLogs || []) as { to_email: string; template: string }[];
+              for (const l of rows) {
+                if (l.template !== 'incomplete_signup_v11') {
+                  busy.add(l.to_email.trim().toLowerCase());
+                }
+              }
+              if (rows.length < 1000) break;
+            }
+          }
+
           toNudge = queue.filter((r) => !busy.has(r.email));
           fatigued = queue.length - toNudge.length;
         }
@@ -3081,7 +3142,18 @@ Deno.serve(async (req) => {
     });
   } catch (error: unknown) {
     await captureException(error, { functionName: 'send-incomplete-signup', requestUrl: req.url, requestMethod: req.method });
-    const errMsg = error instanceof Error ? error.message : String(error);
+    /*
+      PostgREST rejections arrive as PLAIN OBJECTS, not Error instances, so
+      `String(error)` rendered them as the literal "[object Object]" with an
+      undefined stack — which is exactly what the 617-id campaign failure
+      logged, costing a debugging round-trip. Serialise anything non-Error.
+    */
+    const errMsg =
+      error instanceof Error
+        ? error.message
+        : typeof error === 'object' && error !== null
+          ? JSON.stringify(error)
+          : String(error);
     const errStack = error instanceof Error ? error.stack : undefined;
     console.error('Error in send-incomplete-signup:', errMsg, errStack);
     return new Response(

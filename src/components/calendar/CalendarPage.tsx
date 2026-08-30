@@ -35,7 +35,10 @@ import {
   useCreateCalendarEvent,
   useUpdateCalendarEvent,
   useDeleteCalendarEvent,
+  useSaveSplitJob,
 } from '@/hooks/useCalendarEvents';
+import { datesOf, jobDays, reanchor } from './splitJob';
+import { supabase } from '@/integrations/supabase/client';
 import { useDiaryEvents } from '@/hooks/useDiaryEvents';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 import { useCustomers } from '@/hooks/useCustomers';
@@ -94,6 +97,11 @@ const CalendarPageContent = () => {
     allDay: boolean;
     location?: string | null;
     movedFrom?: { start: Date; end: Date; allDay: boolean } | null;
+    /**
+     * ELE-1648 — every day of a split job, so the customer gets ONE message
+     * naming all of them instead of one text per day-entry.
+     */
+    jobDates?: Date[];
   } | null>(null);
 
   // Realtime — invalidate queries on INSERT/UPDATE/DELETE
@@ -192,6 +200,21 @@ const CalendarPageContent = () => {
   const createMutation = useCreateCalendarEvent();
   const updateMutation = useUpdateCalendarEvent();
   const deleteMutation = useDeleteCalendarEvent();
+  const splitJobMutation = useSaveSplitJob();
+
+  /**
+   * The day-rows of the job currently being edited (ELE-1649).
+   *
+   * A child event knows its parent but not its siblings, so this is resolved
+   * from everything in view and handed to the sheet — opening a split job
+   * shows the days it actually runs on, rather than a blank picker that would
+   * silently collapse it back to one block on save.
+   */
+  const editingJobRows = useMemo(
+    () => (editingEvent ? jobDays(editingEvent, allEvents) : []),
+    [editingEvent, allEvents]
+  );
+  const editingSplitDays = useMemo(() => datesOf(editingJobRows), [editingJobRows]);
 
   // Navigation
   const goNext = useCallback(() => {
@@ -481,14 +504,106 @@ const CalendarPageContent = () => {
 
   const handleDelete = useCallback(
     (eventId: string) => {
-      deleteMutation.mutate(eventId);
+      /*
+       * ELE-1649 — dropping one day of a split job must not orphan the rest.
+       *
+       * Every other day points at the anchor via `parent_event_id`. Delete the
+       * anchor and those rows are left referencing a row that no longer
+       * exists — they would read as several unrelated bookings, and the
+       * "one message per job" grouping would break with them. So the earliest
+       * survivor is promoted and the others re-point at it.
+       *
+       * Deleting a NON-anchor day needs none of this: it is the ordinary case,
+       * and it is exactly what Alex asked for — "you try to remove say
+       * thursday" is now a one-row delete.
+       */
+      const target = allEvents.find((e) => e.id === eventId);
+      const siblings = target ? jobDays(target, allEvents) : [];
+      const survivors = siblings.filter((e) => e.id !== eventId);
+
+      const detachThenDelete = async () => {
+        // 🔴 ORDER MATTERS — see the CASCADE note in splitJob.ts.
+        const next = reanchor(survivors);
+        if (next) {
+          await supabase
+            .from('calendar_events')
+            .update({ parent_event_id: null } as never)
+            .eq('id', next.anchorId);
+          await Promise.all(
+            next.childIds.map((id) =>
+              supabase
+                .from('calendar_events')
+                .update({ parent_event_id: next.anchorId } as never)
+                .eq('id', id)
+            )
+          );
+        }
+        deleteMutation.mutate(eventId, {
+          onSuccess: () => queryClient.invalidateQueries({ queryKey: ['calendar-events'] }),
+        });
+      };
+
+      void detachThenDelete();
       setDetailSheetOpen(false);
     },
-    [deleteMutation]
+    [deleteMutation, allEvents, queryClient]
   );
 
   const handleSave = useCallback(
     (data: CreateCalendarEventInput | UpdateCalendarEventInput, extras: SaveExtras) => {
+      /*
+       * ELE-1649 — a job across several days is written as one event per day.
+       *
+       * Handled before the create/edit split because the mutation covers both:
+       * an edit is a diff of the days, which keeps each surviving day's Google
+       * id and so avoids churning the electrician's own calendar every time
+       * they move one day.
+       */
+      if (extras.splitDays && extras.splitDays.length > 0) {
+        splitJobMutation.mutate(
+          {
+            base: data as CreateCalendarEventInput,
+            days: extras.splitDays,
+            existing: editingEvent ? editingJobRows : undefined,
+          },
+          {
+            onSuccess: (anchor) => {
+              setEventSheetOpen(false);
+              if (!extras.customer) return;
+              /*
+               * Only offer to tell them when the DAYS actually changed.
+               *
+               * Same rule the single-event edit path already follows: fixing a
+               * typo in a title should not fire off a reschedule text. Without
+               * this, every edit of a split job nags the electrician to message
+               * a customer about nothing.
+               */
+              if (editingEvent) {
+                const before = datesOf(editingJobRows)
+                  .map((d) => d.toDateString())
+                  .join('|');
+                const after = extras.splitDays.map((d) => d.toDateString()).join('|');
+                if (before === after) return;
+              }
+              // ELE-1648 — ONE message for the whole job, listing every date,
+              // rather than one per day-entry.
+              setTellTarget(extras.customer);
+              setTellEventId(anchor.id);
+              setTellBooking({
+                title: anchor.title,
+                start: new Date(anchor.start_at),
+                end: new Date(anchor.end_at),
+                allDay: anchor.all_day,
+                location: anchor.location,
+                jobDates: extras.splitDays,
+              });
+              setTellSheetOpen(true);
+            },
+          }
+        );
+        return;
+      }
+
       if (editingEvent) {
         /*
          * Moving a booking is when the customer MOST needs telling.
@@ -587,7 +702,7 @@ const CalendarPageContent = () => {
         },
       });
     },
-    [editingEvent, createMutation, updateMutation, queryClient]
+    [editingEvent, editingJobRows, createMutation, updateMutation, splitJobMutation, queryClient]
   );
 
   // Agenda target — the selected day in month view, the shown day otherwise.
@@ -724,6 +839,7 @@ const CalendarPageContent = () => {
         open={eventSheetOpen}
         onOpenChange={setEventSheetOpen}
         event={editingEvent}
+        existingSplitDays={editingSplitDays}
         defaultDate={newEventDate}
         defaultHour={newEventHour}
         defaultMinute={newEventMinute}

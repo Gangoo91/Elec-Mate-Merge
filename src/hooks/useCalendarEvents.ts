@@ -447,3 +447,192 @@ export function useDeleteCalendarEvent() {
     },
   });
 }
+
+/**
+ * Save a job that runs across several, possibly non-contiguous, days (ELE-1649).
+ *
+ * Writes the model described in `splitJob.ts`: one ordinary event per day, the
+ * earliest acting as the anchor and the rest carrying `parent_event_id`. There
+ * is no separate parent row, so nothing else in the calendar has to know this
+ * shape exists.
+ *
+ * Handles create and edit through one path, because an edit is a diff: days
+ * still wanted are updated in place (keeping their Google ids, so the
+ * electrician's own calendar does not churn), new days are inserted, and
+ * dropped days are removed.
+ *
+ * ⚠️ Dropped days are TOMBSTONED, not deleted, when they exist at a provider —
+ * the same rule as `useDeleteCalendarEvent`. Hard-deleting a row that Google
+ * still holds means the next pull re-imports it, and the day the user just
+ * removed reappears.
+ */
+export interface SaveSplitJobInput {
+  /** Fields common to every day. `start_at`/`end_at` are ignored — days win. */
+  base: CreateCalendarEventInput;
+  /** The days on site, any order. */
+  days: Date[];
+  /** The job's current day-rows, when editing. Omit when creating. */
+  existing?: CalendarEvent[];
+}
+
+const dayBounds = (day: Date) => {
+  const start = new Date(day.getFullYear(), day.getMonth(), day.getDate(), 0, 0, 0);
+  const end = new Date(day.getFullYear(), day.getMonth(), day.getDate(), 23, 59, 59);
+  return { start_at: start.toISOString(), end_at: end.toISOString() };
+};
+
+const localDayKey = (d: Date) =>
+  `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+
+export function useSaveSplitJob() {
+  const queryClient = useQueryClient();
+  const { toast } = useToast();
+
+  return useMutation({
+    mutationFn: async ({ base, days, existing = [] }: SaveSplitJobInput): Promise<CalendarEvent> => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) throw new Error('Not authenticated');
+      if (days.length === 0) throw new Error('A split job needs at least one day');
+
+      const { data: tokenData } = await supabase
+        .from('google_calendar_tokens')
+        .select('sync_enabled')
+        .eq('user_id', user.id)
+        .maybeSingle();
+      const syncStatus = tokenData?.sync_enabled ? 'pending_push' : 'local_only';
+
+      const wanted = [...days].sort((a, b) => a.getTime() - b.getTime());
+      const wantedKeys = new Set(wanted.map(localDayKey));
+      const existingByKey = new Map(
+        existing.map((e) => [localDayKey(new Date(e.start_at)), e] as const)
+      );
+
+      // ── 1. Who anchors the job now ─────────────────────────────────────
+      // The earliest SURVIVING day, or a fresh id when nothing survives.
+      const dropped = existing.filter((e) => !wantedKeys.has(localDayKey(new Date(e.start_at))));
+      const survivors = wanted
+        .map((d) => existingByKey.get(localDayKey(d)))
+        .filter((e): e is CalendarEvent => !!e);
+      const anchorRow = survivors[0];
+      const anchorId = anchorRow?.id ?? crypto.randomUUID();
+      if (!anchorRow) noteLocalEvent(anchorId);
+
+      /*
+       * ── 2. Detach survivors BEFORE deleting anything ───────────────────
+       *
+       * 🔴 `parent_event_id` is ON DELETE CASCADE (verified against the live
+       * schema). Dropping the anchor day first would take every other day of
+       * the job with it — a three-day job measured down to zero rows from one
+       * delete. So the survivors are re-pointed at the new anchor while the
+       * old one still exists, and only then is it removed.
+       */
+      const oldAnchorDropped = dropped.some((d) => !d.parent_event_id);
+      if (oldAnchorDropped && anchorRow) {
+        await supabase
+          .from('calendar_events')
+          .update({ parent_event_id: null } as never)
+          .eq('id', anchorRow.id)
+          .eq('user_id', user.id);
+        await Promise.all(
+          survivors
+            .filter((s) => s.id !== anchorRow.id)
+            .map((s) =>
+              supabase
+                .from('calendar_events')
+                .update({ parent_event_id: anchorRow.id } as never)
+                .eq('id', s.id)
+                .eq('user_id', user.id)
+            )
+        );
+      }
+
+      // ── 3. Days no longer wanted ───────────────────────────────────────
+      await Promise.all(
+        dropped.map((row) => {
+          const linked = !!(
+            row.google_event_id || (row as { outlook_event_id?: string }).outlook_event_id
+          );
+          return linked
+            ? supabase
+                .from('calendar_events')
+                .update({ sync_status: 'pending_delete' } as never)
+                .eq('id', row.id)
+                .eq('user_id', user.id)
+            : supabase.from('calendar_events').delete().eq('id', row.id).eq('user_id', user.id);
+        })
+      );
+
+      // ── 4. Update the days we are keeping ──────────────────────────────
+      // Updated in place rather than deleted and recreated, so each surviving
+      // day keeps its google_event_id — otherwise moving one day of a job
+      // would churn every entry in the electrician's own Google Calendar.
+      await Promise.all(
+        wanted
+          .map((day) => ({ day, row: existingByKey.get(localDayKey(day)) }))
+          .filter((x): x is { day: Date; row: CalendarEvent } => !!x.row)
+          .map(({ day, row }) =>
+            supabase
+              .from('calendar_events')
+              .update({
+                ...base,
+                ...dayBounds(day),
+                all_day: true,
+                // Re-anchoring: if the old anchor was dropped, the earliest
+                // survivor is promoted and everything else re-points at it.
+                parent_event_id: row.id === anchorId ? null : anchorId,
+                sync_status: syncStatus,
+              } as never)
+              .eq('id', row.id)
+              .eq('user_id', user.id)
+          )
+      );
+
+      // ── 5. Insert the new days ─────────────────────────────────────────
+      const newDays = wanted.filter((d) => !existingByKey.has(localDayKey(d)));
+      if (newDays.length > 0) {
+        const rows = newDays.map((day) => {
+          const isAnchor = !anchorRow && localDayKey(day) === localDayKey(wanted[0]);
+          const id = isAnchor ? anchorId : crypto.randomUUID();
+          noteLocalEvent(id);
+          return {
+            ...base,
+            ...dayBounds(day),
+            all_day: true,
+            id,
+            user_id: user.id,
+            parent_event_id: isAnchor ? null : anchorId,
+            sync_status: syncStatus,
+          };
+        });
+        const { error } = await supabase.from('calendar_events').insert(rows as never);
+        if (error) throw error;
+      }
+
+      // The anchor is what the caller shows and tells the customer about.
+      const { data, error } = await supabase
+        .from('calendar_events')
+        .select('*')
+        .eq('id', anchorId)
+        .eq('user_id', user.id)
+        .single();
+      if (error) throw error;
+      return data as CalendarEvent;
+    },
+    onSuccess: (anchor) => {
+      queryClient.invalidateQueries({ queryKey: ['calendar-events'] });
+      window.dispatchEvent(new CustomEvent('elecmate:gcal-sync'));
+      toast({ title: 'Job booked in' });
+      if (anchor?.user_id) {
+        void trackUserEvent(anchor.user_id, 'feature_use', {
+          eventName: 'calendar_split_job_saved',
+        });
+      }
+    },
+    onError: (error: Error) => {
+      console.error('Failed to save split job:', error);
+      toast({ title: 'Could not save those days', variant: 'destructive' });
+    },
+  });
+}

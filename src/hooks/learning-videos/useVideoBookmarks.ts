@@ -8,7 +8,12 @@
 import { useState, useCallback, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
-import { storageGetSync, storageSetSync, storageGetJSONSync, storageSetJSONSync } from '@/utils/storage';
+import {
+  storageGetSync,
+  storageSetSync,
+  storageGetJSONSync,
+  storageSetJSONSync,
+} from '@/utils/storage';
 
 const BASE_BOOKMARK_KEY = 'elec-mate-video-bookmarks';
 const BASE_WATCHED_KEY = 'elec-mate-videos-watched';
@@ -160,31 +165,41 @@ export function useVideoBookmarks() {
   const trackVideoWatched = useCallback(
     async (videoId: string): Promise<boolean> => {
       // Returns true only on the FIRST watch of this video, so callers can
-      // award XP / credit exactly once.
+      // award XP / OTJ credit exactly once.
+      //
+      // 🔴 The local watchedIds list CANNOT be the authority here. It starts
+      // empty and fills in asynchronously from Supabase, so anything that
+      // fires on mount — a ?play= deep link especially — sees an empty list
+      // and re-credits a video the learner watched weeks ago. Those minutes
+      // land on the off-the-job record, so the check has to hit the database.
+      // The unique (user_id, video_id) index does the deciding: a 23505 means
+      // we have seen this video before.
       if (watchedIds.includes(videoId)) return false;
 
-      // Optimistic local update
-      const updated = [...watchedIds, videoId];
-      setWatchedIds(updated);
-      storageSetJSONSync(keys.watchedKey, updated);
-
-      // Persist to Supabase
+      let isFirstWatch = true;
       if (user) {
-        try {
-          await supabase.from('user_video_watches').upsert(
-            {
-              user_id: user.id,
-              video_id: videoId,
-              watched_at: new Date().toISOString(),
-            },
-            { onConflict: 'user_id,video_id' }
-          );
-        } catch (err) {
-          console.error('Error syncing video watch:', err);
+        const { error } = await supabase.from('user_video_watches').insert({
+          user_id: user.id,
+          video_id: videoId,
+          watched_at: new Date().toISOString(),
+        });
+        if (error) {
+          if (error.code === '23505') {
+            isFirstWatch = false;
+          } else {
+            console.error('Error syncing video watch:', error);
+          }
         }
       }
 
-      return true;
+      // Local cache still updates either way so the tick shows immediately.
+      if (!watchedIds.includes(videoId)) {
+        const updated = [...watchedIds, videoId];
+        setWatchedIds(updated);
+        storageSetJSONSync(keys.watchedKey, updated);
+      }
+
+      return isFirstWatch;
     },
     [watchedIds, keys.watchedKey, user]
   );
