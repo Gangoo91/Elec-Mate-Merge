@@ -2,6 +2,16 @@ import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 import { createClient } from 'jsr:@supabase/supabase-js@2';
 import { Resend } from '../_shared/mailer.ts';
 import { captureException } from '../_shared/sentry.ts';
+import {
+  deadlineLabel as v11DeadlineLabel,
+  generateV11HTML,
+  generateV11NudgeHTML,
+  generateV11NudgePlainText,
+  generateV11PlainText,
+  v11NudgeSubject,
+  v11Subject,
+  type SignupRole,
+} from '../_shared/incomplete-signup-v11.ts';
 
 const resend = new Resend(Deno.env.get('RESEND_API_KEY'));
 
@@ -12,7 +22,7 @@ const SEND_DELAY_MS = 500;
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers':
-    'authorization, x-client-info, apikey, content-type, x-request-id',
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 // ── PECR: unsubscribe + suppression plumbing ─────────────────────
@@ -103,6 +113,188 @@ function getLaunchPaymentUrl(role: 'electrician' | 'apprentice'): string {
     );
   }
   return url;
+}
+
+// ── V11 send infrastructure ──────────────────────────────────────
+//
+// The V10 campaign path sent strictly one-at-a-time with a 500ms sleep between
+// each and a 2s pause every ten. At 617 recipients that is ~430s of wall clock
+// in a single invocation, comfortably past the edge runtime's ceiling — the
+// send would have died part-way through with no record of where it stopped.
+//
+// V11 instead sends CONCURRENCY at a time and stops after V11_MAX_PER_RUN,
+// returning `remaining` so the caller can invoke again. Each recipient's
+// profile row is stamped the moment their own send succeeds, so a run that
+// dies mid-flight loses nothing: the next run picks up exactly where it left
+// off, and nobody is emailed twice.
+const V11_CONCURRENCY = 5;
+const V11_MAX_PER_RUN = 200;
+const V11_FROM = 'Andrew at Elec-Mate <founder@elec-mate.com>';
+const V11_REPLY_TO = 'founder@elec-mate.com';
+
+interface V11Recipient {
+  userId: string;
+  email: string;
+  firstName: string;
+  role: SignupRole;
+}
+
+/** Narrow whatever `profiles.role` holds to the two tiers V11 has copy for. */
+function toSignupRole(role: unknown): SignupRole {
+  return role === 'apprentice' ? 'apprentice' : 'electrician';
+}
+
+function firstNameOf(fullName: unknown): string {
+  const n = typeof fullName === 'string' ? fullName.trim().split(' ')[0] : '';
+  return n || 'mate';
+}
+
+/**
+ * Send one V11 email (main or nudge) and, on success, stamp the profile and
+ * write the email_logs row.
+ *
+ * Returns null on success or an error string on failure. The profile is only
+ * stamped after the provider confirms, so a failed send stays eligible for the
+ * next run rather than being silently marked as delivered.
+ */
+async function sendOneV11(
+  // deno-lint-ignore no-explicit-any
+  supabaseAdmin: any,
+  r: V11Recipient,
+  deadline: string,
+  variant: 'main' | 'nudge'
+): Promise<string | null> {
+  try {
+    const paymentUrl = getLaunchPaymentUrl(r.role);
+    const unsubscribeUrl = await buildUnsubscribeUrl(r.email);
+    const isNudge = variant === 'nudge';
+
+    const subject = isNudge ? v11NudgeSubject(r.firstName, deadline) : v11Subject(r.firstName, r.role);
+    const html = isNudge
+      ? generateV11NudgeHTML(r.firstName, r.role, paymentUrl, deadline, unsubscribeUrl)
+      : generateV11HTML(r.firstName, r.role, paymentUrl, deadline, unsubscribeUrl);
+    const text = isNudge
+      ? generateV11NudgePlainText(r.firstName, r.role, paymentUrl, deadline, unsubscribeUrl)
+      : generateV11PlainText(r.firstName, r.role, paymentUrl, deadline, unsubscribeUrl);
+    const template = isNudge ? 'incomplete_signup_v11_nudge' : 'incomplete_signup_v11';
+
+    const { data, error } = await resend.emails.send({
+      from: V11_FROM,
+      replyTo: V11_REPLY_TO,
+      to: [r.email],
+      subject,
+      html,
+      text,
+      headers: buildUnsubscribeHeaders(unsubscribeUrl),
+      tags: [
+        { name: 'campaign', value: 'incomplete_signup' },
+        { name: 'version', value: isNudge ? 'v11_nudge' : 'v11' },
+        { name: 'role', value: r.role },
+        { name: 'user_id', value: r.userId },
+      ],
+    });
+
+    if (error) return `${r.email}: ${error.message}`;
+
+    const stampedAt = new Date().toISOString();
+    await supabaseAdmin
+      .from('profiles')
+      .update(
+        isNudge
+          ? { incomplete_signup_v11_nudge_sent_at: stampedAt }
+          : { incomplete_signup_v11_sent_at: stampedAt }
+      )
+      .eq('id', r.userId);
+
+    await supabaseAdmin.from('email_logs').insert({
+      to_email: r.email,
+      subject,
+      template,
+      status: 'sent',
+      metadata: {
+        resend_id: data?.id,
+        user_id: r.userId,
+        role: r.role,
+        email_version: isNudge ? 'v11_nudge' : 'v11',
+        deadline,
+      },
+    });
+
+    return null;
+  } catch (err: unknown) {
+    return `${r.email}: ${err instanceof Error ? err.message : String(err)}`;
+  }
+}
+
+/** Run `sendOneV11` across the queue, V11_CONCURRENCY in flight at a time. */
+async function sendV11Queue(
+  // deno-lint-ignore no-explicit-any
+  supabaseAdmin: any,
+  queue: V11Recipient[],
+  deadline: string,
+  variant: 'main' | 'nudge'
+): Promise<{ sent: number; errors: string[] }> {
+  let sent = 0;
+  const errors: string[] = [];
+
+  for (let i = 0; i < queue.length; i += V11_CONCURRENCY) {
+    const slice = queue.slice(i, i + V11_CONCURRENCY);
+    const results = await Promise.all(
+      slice.map((r) => sendOneV11(supabaseAdmin, r, deadline, variant))
+    );
+    for (const err of results) {
+      if (err) errors.push(err);
+      else sent++;
+    }
+    if (i + V11_CONCURRENCY < queue.length) await sleep(SEND_DELAY_MS);
+  }
+
+  return { sent, errors };
+}
+
+/**
+ * Resolve profile rows into send-ready recipients: attach the auth email, drop
+ * anyone suppressed, anyone who slipped into a subscription since the query,
+ * and anyone with no address on file.
+ */
+async function buildV11Queue(
+  // deno-lint-ignore no-explicit-any
+  supabaseAdmin: any,
+  // deno-lint-ignore no-explicit-any
+  profiles: any[]
+): Promise<{ queue: V11Recipient[]; suppressed: number; missingEmail: number }> {
+  const { data: authEmails } = await supabaseAdmin.rpc('get_auth_user_emails');
+  const emailMap = new Map<string, string>();
+  (authEmails || []).forEach((u: { id: string; email: string | null }) => {
+    if (u.email) emailMap.set(u.id, u.email.trim().toLowerCase());
+  });
+
+  const suppressedSet = await getSuppressedEmails(supabaseAdmin);
+
+  const queue: V11Recipient[] = [];
+  let suppressed = 0;
+  let missingEmail = 0;
+
+  for (const p of profiles) {
+    if (p.subscribed === true || p.free_access_granted === true) continue;
+    const email = emailMap.get(p.id as string);
+    if (!email) {
+      missingEmail++;
+      continue;
+    }
+    if (suppressedSet.has(email)) {
+      suppressed++;
+      continue;
+    }
+    queue.push({
+      userId: p.id as string,
+      email,
+      firstName: firstNameOf(p.full_name),
+      role: toSignupRole(p.role),
+    });
+  }
+
+  return { queue, suppressed, missingEmail };
 }
 
 // Generate electrician email HTML
@@ -1094,45 +1286,9 @@ Deno.serve(async (req) => {
       throw new Error('No authorization header');
     }
 
-    // Create Supabase client with user's token
-    const supabaseClient = createClient(
-      Deno.env.get('SUPABASE_URL') ?? '',
-      Deno.env.get('SUPABASE_ANON_KEY') ?? '',
-      { global: { headers: { Authorization: authHeader } } }
-    );
-
-    // Verify the caller is an admin
-    const {
-      data: { user },
-      error: userError,
-    } = await supabaseClient.auth.getUser();
-    if (userError) {
-      console.error('Auth getUser error:', userError);
-      throw new Error(`Unauthorized: ${userError.message}`);
-    }
-    if (!user) {
-      console.error('No user returned from auth');
-      throw new Error('Unauthorized: Could not get user');
-    }
-
-    console.log(`User ${user.id} attempting incomplete-signup action`);
-
-    const { data: callerProfile, error: profileError } = await supabaseClient
-      .from('profiles')
-      .select('admin_role, full_name')
-      .eq('id', user.id)
-      .single();
-
-    if (profileError) {
-      console.error('Profile fetch error:', profileError);
-      throw new Error(`Profile error: ${profileError.message}`);
-    }
-
-    if (!callerProfile?.admin_role) {
-      console.error(`User ${user.id} does not have admin_role. Profile:`, callerProfile);
-      throw new Error('Unauthorized: Admin access required');
-    }
-
+    // Body is parsed before auth because the auth path depends on the action:
+    // `send_v11_nudge` is driven by pg_cron with the service-role key and has
+    // no admin user behind it. req.json() can only be consumed once.
     const {
       action,
       userId,
@@ -1144,9 +1300,67 @@ Deno.serve(async (req) => {
       deadlineLabel: bodyDeadline,
     } = await req.json();
 
-    console.log(
-      `Admin ${user.id} (${callerProfile.full_name}) authorized for incomplete-signup, action: ${action}`
-    );
+    // ── Cron door ─────────────────────────────────────────────────
+    // Service-role bearer token, and ONLY for the unattended nudge action.
+    // Deliberately narrow: the service-role key must never be a skeleton key
+    // that can fire a 617-person campaign send from outside the admin panel.
+    const serviceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '';
+    const isCronCaller =
+      !!serviceKey && authHeader === `Bearer ${serviceKey}` && action === 'send_v11_nudge';
+
+    let callerId = 'cron';
+
+    if (!isCronCaller) {
+      // Create Supabase client with user's token
+      const supabaseClient = createClient(
+        Deno.env.get('SUPABASE_URL') ?? '',
+        Deno.env.get('SUPABASE_ANON_KEY') ?? '',
+        { global: { headers: { Authorization: authHeader } } }
+      );
+
+      // Verify the caller is an admin
+      const {
+        data: { user },
+        error: userError,
+      } = await supabaseClient.auth.getUser();
+      if (userError) {
+        console.error('Auth getUser error:', userError);
+        throw new Error(`Unauthorized: ${userError.message}`);
+      }
+      if (!user) {
+        console.error('No user returned from auth');
+        throw new Error('Unauthorized: Could not get user');
+      }
+
+      console.log(`User ${user.id} attempting incomplete-signup action`);
+
+      const { data: callerProfile, error: profileError } = await supabaseClient
+        .from('profiles')
+        .select('admin_role, full_name')
+        .eq('id', user.id)
+        .single();
+
+      if (profileError) {
+        console.error('Profile fetch error:', profileError);
+        throw new Error(`Profile error: ${profileError.message}`);
+      }
+
+      if (!callerProfile?.admin_role) {
+        console.error(`User ${user.id} does not have admin_role. Profile:`, callerProfile);
+        throw new Error('Unauthorized: Admin access required');
+      }
+
+      callerId = user.id;
+      console.log(
+        `Admin ${user.id} (${callerProfile.full_name}) authorized for incomplete-signup, action: ${action}`
+      );
+    } else {
+      console.log('Cron-authorized incomplete-signup action: send_v11_nudge');
+    }
+
+    // Retained so the existing `user.id` log lines below keep compiling and
+    // keep meaning the same thing for admin-driven sends.
+    const user = { id: callerId };
 
     // Create admin client for operations
     const supabaseAdmin = createClient(
@@ -2455,6 +2669,405 @@ Deno.serve(async (req) => {
         if (v10ResetErr) throw v10ResetErr;
 
         result = { reset: v10ResetCount || 0 };
+        break;
+      }
+
+      // ── V11 ────────────────────────────────────────────────────
+      // The abandoned-checkout cohort: role is electrician or apprentice, a
+      // Stripe customer record exists (they reached the card step), and they
+      // never subscribed. Identical predicate to V10 so the headline count on
+      // the admin page doesn't move when you switch campaign.
+
+      case 'get_v11_stats': {
+        const { count: v11Total, error: v11TotalErr } = await supabaseAdmin
+          .from('profiles')
+          .select('id', { count: 'exact', head: true })
+          .or('role.eq.electrician,role.eq.apprentice')
+          .not('stripe_customer_id', 'is', null)
+          .eq('subscribed', false)
+          .eq('free_access_granted', false);
+        if (v11TotalErr) throw v11TotalErr;
+
+        const { count: v11Sent } = await supabaseAdmin
+          .from('profiles')
+          .select('id', { count: 'exact', head: true })
+          .not('incomplete_signup_v11_sent_at', 'is', null);
+
+        const { count: v11Nudged } = await supabaseAdmin
+          .from('profiles')
+          .select('id', { count: 'exact', head: true })
+          .not('incomplete_signup_v11_nudge_sent_at', 'is', null);
+
+        const { count: v11Converted } = await supabaseAdmin
+          .from('profiles')
+          .select('id', { count: 'exact', head: true })
+          .not('incomplete_signup_v11_sent_at', 'is', null)
+          .eq('subscribed', true);
+
+        result = {
+          totalAbandoned: v11Total ?? 0,
+          sent: v11Sent ?? 0,
+          nudged: v11Nudged ?? 0,
+          conversions: v11Converted ?? 0,
+          totalEligible: (v11Total ?? 0) - (v11Sent ?? 0),
+          // Formatted string, matching get_v10_stats — the admin page prints
+          // whatever it gets straight into the Conversion cell, so the two
+          // campaigns must agree on units.
+          conversionRate:
+            v11Sent && v11Sent > 0 ? `${(((v11Converted ?? 0) / v11Sent) * 100).toFixed(1)}%` : '0%',
+        };
+        break;
+      }
+
+      case 'get_v11_eligible': {
+        const { data: v11Profiles, error: v11Err } = await supabaseAdmin
+          .from('profiles')
+          .select('id, full_name, username, role, created_at')
+          .or('role.eq.electrician,role.eq.apprentice')
+          .not('stripe_customer_id', 'is', null)
+          .is('incomplete_signup_v11_sent_at', null)
+          .eq('subscribed', false)
+          .eq('free_access_granted', false)
+          .order('created_at', { ascending: false })
+          .limit(1000);
+        if (v11Err) throw v11Err;
+
+        const { data: v11AuthEmails } = await supabaseAdmin.rpc('get_auth_user_emails');
+        const v11EmailMap = new Map<string, string>();
+        (v11AuthEmails || []).forEach((u: { id: string; email: string | null }) => {
+          if (u.email) v11EmailMap.set(u.id, u.email);
+        });
+
+        result = {
+          users: (v11Profiles || [])
+            .map((p: Record<string, unknown>) => ({
+              ...p,
+              email: v11EmailMap.get(p.id as string) || null,
+            }))
+            .filter((p: { email: string | null }) => p.email),
+        };
+        break;
+      }
+
+      case 'get_v11_sent': {
+        const { data: v11SentProfiles, error: v11SentErr } = await supabaseAdmin
+          .from('profiles')
+          .select(
+            'id, full_name, username, role, created_at, subscribed, incomplete_signup_v11_sent_at, incomplete_signup_v11_nudge_sent_at'
+          )
+          .not('incomplete_signup_v11_sent_at', 'is', null)
+          .order('incomplete_signup_v11_sent_at', { ascending: false })
+          .limit(1000);
+        if (v11SentErr) throw v11SentErr;
+
+        result = { users: v11SentProfiles || [] };
+        break;
+      }
+
+      case 'get_v11_preview': {
+        // Returns the REAL template HTML, not a hand-built approximation.
+        //
+        // The V10 preview sheet was a separate block of inline HTML written to
+        // look like the email. It drifted: the panel still shows "£14.99" and
+        // "Ends Sunday 26 April" because nothing ever forced the two to agree.
+        // Rendering the actual generator here means the preview cannot lie.
+        const previewRole = toSignupRole(bodyRole);
+        const deadline = bodyDeadline || v11DeadlineLabel();
+        const previewName = recipientName?.split(' ')[0] || 'Dave';
+        const isNudge = testEmail === 'nudge';
+
+        // Resolve the live CTA target so the panel can show where the button
+        // actually points. The email quotes a price; the Stripe link decides
+        // what gets charged. Nothing else in the system makes the two visible
+        // side by side, and a mismatch is the worst possible bug here.
+        const ctaUrls: Record<string, string> = {};
+        let ctaError: string | null = null;
+        for (const r of ['electrician', 'apprentice'] as const) {
+          try {
+            ctaUrls[r] = getLaunchPaymentUrl(r);
+          } catch (e: unknown) {
+            ctaError = e instanceof Error ? e.message : String(e);
+          }
+        }
+
+        result = {
+          subject: isNudge ? v11NudgeSubject(previewName, deadline) : v11Subject(previewName, previewRole),
+          deadline,
+          ctaUrls,
+          ctaError,
+          html: isNudge
+            ? generateV11NudgeHTML(previewName, previewRole, ctaUrls[previewRole] ?? '#', deadline, '#')
+            : generateV11HTML(previewName, previewRole, ctaUrls[previewRole] ?? '#', deadline, '#'),
+        };
+        break;
+      }
+
+      case 'send_v11_test': {
+        if (!testEmail) throw new Error('testEmail is required');
+        const testRole = toSignupRole(bodyRole);
+        const deadline = bodyDeadline || v11DeadlineLabel();
+        const firstName = recipientName?.split(' ')[0] || 'Test';
+        const isNudge = bodyRole === 'nudge' || recipientName === 'nudge';
+        const to = testEmail.trim().toLowerCase();
+
+        const paymentUrl = getLaunchPaymentUrl(testRole);
+        const unsubUrl = await buildUnsubscribeUrl(to);
+        const html = isNudge
+          ? generateV11NudgeHTML(firstName, testRole, paymentUrl, deadline, unsubUrl)
+          : generateV11HTML(firstName, testRole, paymentUrl, deadline, unsubUrl);
+        const text = isNudge
+          ? generateV11NudgePlainText(firstName, testRole, paymentUrl, deadline, unsubUrl)
+          : generateV11PlainText(firstName, testRole, paymentUrl, deadline, unsubUrl);
+        const subject = `[TEST] ${
+          isNudge ? v11NudgeSubject(firstName, deadline) : v11Subject(firstName, testRole)
+        }`;
+
+        const { data: testData, error: testErr } = await resend.emails.send({
+          from: V11_FROM,
+          replyTo: V11_REPLY_TO,
+          to: [to],
+          subject,
+          html,
+          text,
+          headers: buildUnsubscribeHeaders(unsubUrl),
+          tags: [
+            { name: 'campaign', value: 'incomplete_signup' },
+            { name: 'version', value: isNudge ? 'v11_nudge' : 'v11' },
+            { name: 'type', value: 'test' },
+            { name: 'role', value: testRole },
+          ],
+        });
+        if (testErr) throw new Error(`Failed to send: ${testErr.message}`);
+
+        console.log(`V11 test (${testRole}${isNudge ? ', nudge' : ''}) to ${to} by ${user.id}`);
+        result = {
+          success: true,
+          email: to,
+          role: testRole,
+          deadline,
+          paymentUrl,
+          resendId: testData?.id,
+        };
+        break;
+      }
+
+      case 'send_v11_manual': {
+        if (!manualEmail) throw new Error('manualEmail is required');
+        const to = manualEmail.trim().toLowerCase();
+
+        const v11ManualSuppressed = await getSuppressedEmails(supabaseAdmin);
+        if (v11ManualSuppressed.has(to)) {
+          throw new Error('Recipient has unsubscribed from Elec-Mate marketing emails');
+        }
+
+        const { data: matchedAuth } = await supabaseAdmin.rpc('get_auth_user_emails');
+        const match = (matchedAuth || []).find(
+          (u: { email?: string | null }) => u.email?.toLowerCase() === to
+        );
+
+        let resolvedRole = toSignupRole(bodyRole);
+        let resolvedName = recipientName?.split(' ')[0] || 'mate';
+        let resolvedProfileId: string | null = null;
+
+        if (match?.id) {
+          const { data: profile } = await supabaseAdmin
+            .from('profiles')
+            .select('id, full_name, role')
+            .eq('id', match.id)
+            .single();
+          if (profile) {
+            resolvedProfileId = profile.id;
+            resolvedName = firstNameOf(profile.full_name) || resolvedName;
+            resolvedRole = toSignupRole(profile.role);
+          }
+        }
+        // Explicit role in the request wins over whatever the DB says.
+        if (bodyRole === 'apprentice' || bodyRole === 'electrician') {
+          resolvedRole = bodyRole;
+        }
+
+        if (!resolvedProfileId) {
+          throw new Error(
+            'No profile found for that address — V11 stamps the profile on send, so a manual send needs a real account.'
+          );
+        }
+
+        const deadline = bodyDeadline || v11DeadlineLabel();
+        const err = await sendOneV11(
+          supabaseAdmin,
+          { userId: resolvedProfileId, email: to, firstName: resolvedName, role: resolvedRole },
+          deadline,
+          'main'
+        );
+        if (err) throw new Error(`Failed to send: ${err}`);
+
+        console.log(`V11 manual (${resolvedRole}) sent to ${to} by admin ${user.id}`);
+        result = { success: true, email: to, role: resolvedRole, deadline };
+        break;
+      }
+
+      case 'send_v11_campaign': {
+        // Bounded, resumable. Sends at most V11_MAX_PER_RUN and reports what's
+        // left; the admin page re-invokes until `complete`.
+        const deadline = bodyDeadline || v11DeadlineLabel();
+
+        let query = supabaseAdmin
+          .from('profiles')
+          .select('id, full_name, username, role, created_at, subscribed, free_access_granted')
+          .or('role.eq.electrician,role.eq.apprentice')
+          .not('stripe_customer_id', 'is', null)
+          .is('incomplete_signup_v11_sent_at', null);
+
+        if (Array.isArray(userIds) && userIds.length > 0) {
+          query = query.in('id', userIds);
+        }
+
+        const { data: v11CampProfiles, error: v11CampErr } = await query.order('created_at', {
+          ascending: false,
+        });
+        if (v11CampErr) throw v11CampErr;
+
+        const { queue, suppressed, missingEmail } = await buildV11Queue(
+          supabaseAdmin,
+          v11CampProfiles || []
+        );
+
+        if (queue.length === 0) {
+          result = {
+            sent: 0,
+            remaining: 0,
+            suppressed,
+            complete: true,
+            message:
+              Array.isArray(userIds) && userIds.length > 0
+                ? 'No eligible users in the selected list (already sent, subscribed, unsubscribed, or no email on file).'
+                : 'All V11 emails already sent.',
+          };
+          break;
+        }
+
+        const thisRun = queue.slice(0, V11_MAX_PER_RUN);
+        const { sent, errors } = await sendV11Queue(supabaseAdmin, thisRun, deadline, 'main');
+        const remaining = queue.length - sent;
+
+        console.log(
+          `V11 campaign: sent ${sent}/${thisRun.length} this run, ${remaining} remaining, ` +
+            `${suppressed} suppressed, ${missingEmail} without email. Admin ${user.id}.`
+        );
+
+        result = {
+          sent,
+          remaining,
+          suppressed,
+          missingEmail,
+          complete: remaining === 0,
+          errors: errors.length > 0 ? errors.slice(0, 20) : undefined,
+          message: `Sent ${sent}${remaining > 0 ? `, ${remaining} still to go` : ' — campaign complete'}.`,
+        };
+        break;
+      }
+
+      case 'send_v11_nudge': {
+        // Day-3 follow-up. Driven by cron; also callable from the admin panel.
+        //
+        // Window is 3-7 days after the main send rather than "exactly 3": if
+        // the cron misses a day the nudge still goes, and anyone who has been
+        // sitting longer than a week has gone cold enough that a "closes
+        // Sunday" line would be referring to a deadline that already passed.
+        const now = Date.now();
+        const windowOpen = new Date(now - 7 * 86400000).toISOString();
+        const windowClose = new Date(now - 3 * 86400000).toISOString();
+
+        const { data: nudgeProfiles, error: nudgeErr } = await supabaseAdmin
+          .from('profiles')
+          .select(
+            'id, full_name, role, subscribed, free_access_granted, incomplete_signup_v11_sent_at'
+          )
+          .not('incomplete_signup_v11_sent_at', 'is', null)
+          .is('incomplete_signup_v11_nudge_sent_at', null)
+          .gte('incomplete_signup_v11_sent_at', windowOpen)
+          .lte('incomplete_signup_v11_sent_at', windowClose)
+          .eq('subscribed', false)
+          .eq('free_access_granted', false)
+          .order('incomplete_signup_v11_sent_at', { ascending: true })
+          .limit(V11_MAX_PER_RUN);
+        if (nudgeErr) throw nudgeErr;
+
+        const { queue, suppressed } = await buildV11Queue(supabaseAdmin, nudgeProfiles || []);
+
+        // Frequency guard: never let the nudge be someone's third marketing
+        // email in a fortnight. Anything other than their own V11 send counts.
+        let fatigued = 0;
+        let toNudge = queue;
+        if (queue.length > 0) {
+          const fortnightAgo = new Date(now - 14 * 86400000).toISOString();
+          const { data: recentLogs } = await supabaseAdmin
+            .from('email_logs')
+            .select('to_email, template')
+            .in(
+              'to_email',
+              queue.map((r) => r.email)
+            )
+            .gte('created_at', fortnightAgo);
+
+          const busy = new Set<string>(
+            ((recentLogs || []) as { to_email: string; template: string }[])
+              .filter((l) => l.template !== 'incomplete_signup_v11')
+              .map((l) => l.to_email.trim().toLowerCase())
+          );
+          toNudge = queue.filter((r) => !busy.has(r.email));
+          fatigued = queue.length - toNudge.length;
+        }
+
+        if (toNudge.length === 0) {
+          result = { sent: 0, suppressed, fatigued, complete: true, message: 'No nudges due.' };
+          break;
+        }
+
+        // Deadline is computed at NUDGE time, not from the recipient's original
+        // send date. While the campaign is running both resolve to the same
+        // fixed close date, so the two emails agree. Past it they diverge on
+        // purpose: someone emailed on 29 September would otherwise be nudged in
+        // early October quoting a deadline that had already gone — which is the
+        // exact V10 failure this rewrite exists to kill.
+        const deadline = v11DeadlineLabel();
+
+        let sent = 0;
+        const errors: string[] = [];
+
+        for (const r of toNudge) {
+          const err = await sendOneV11(supabaseAdmin, r, deadline, 'nudge');
+          if (err) errors.push(err);
+          else sent++;
+          await sleep(SEND_DELAY_MS);
+        }
+
+        console.log(
+          `V11 nudge: sent ${sent}/${toNudge.length}, ${suppressed} suppressed, ${fatigued} skipped for email fatigue. Caller ${user.id}.`
+        );
+
+        result = {
+          sent,
+          suppressed,
+          fatigued,
+          failed: errors.length,
+          errors: errors.length > 0 ? errors.slice(0, 20) : undefined,
+          message: `Nudged ${sent}.`,
+        };
+        break;
+      }
+
+      case 'reset_v11_sent': {
+        const { error: v11ResetErr, count: v11ResetCount } = await supabaseAdmin
+          .from('profiles')
+          .update(
+            { incomplete_signup_v11_sent_at: null, incomplete_signup_v11_nudge_sent_at: null },
+            { count: 'exact' }
+          )
+          .not('incomplete_signup_v11_sent_at', 'is', null);
+        if (v11ResetErr) throw v11ResetErr;
+
+        result = { reset: v11ResetCount || 0 };
         break;
       }
 

@@ -35,7 +35,7 @@ import {
   type Tone,
 } from '@/components/admin/editorial';
 
-type CampaignId = 'v9' | 'v10';
+type CampaignId = 'v9' | 'v10' | 'v11';
 type RoleFilter = 'all' | 'electrician' | 'apprentice';
 type StatusFilter = 'all' | 'pending' | 'emailed';
 type SortKey = 'action' | 'newest' | 'oldest';
@@ -132,6 +132,8 @@ const CAMPAIGNS: Record<
     subject: string;
     tagline: string;
     tone: Tone;
+    /** Strikethrough list price shown on the price grid, per role. */
+    pricing?: { electrician: [was: string, now: string]; apprentice: [was: string, now: string] };
     actions: {
       stats: string;
       eligible: string;
@@ -140,6 +142,10 @@ const CAMPAIGNS: Record<
       manual: string;
       campaign: string;
       reset: string;
+      /** Day-3 follow-up. Only V11 has one; normally fired by cron. */
+      nudge?: string;
+      /** Renders the real template server-side so the preview can't drift. */
+      preview?: string;
     };
   }
 > = {
@@ -162,11 +168,13 @@ const CAMPAIGNS: Record<
   },
   v10: {
     id: 'v10',
-    label: 'V10 — Launch Price',
+    label: 'V10 — Launch Price (retired)',
     short: 'V10',
     subject: 'Your launch price, just for you.',
-    tagline: 'Sales pitch — one-time rate locked in, deadline Sunday 26 April.',
+    tagline:
+      'RETIRED — its deadline is the hardcoded string “Sunday 26 April”, so every send since then has carried a dead date. Use V11.',
     tone: 'emerald',
+    pricing: { electrician: ['£14.99', '£9.99'], apprentice: ['£6.99', '£4.99'] },
     actions: {
       stats: 'get_v10_stats',
       eligible: 'get_v10_eligible',
@@ -175,6 +183,27 @@ const CAMPAIGNS: Record<
       manual: 'send_v10_manual',
       campaign: 'send_v10_campaign',
       reset: 'reset_v10_sent',
+    },
+  },
+  v11: {
+    id: 'v11',
+    label: 'V11 — Come on then',
+    short: 'V11',
+    subject: 'Come on then. Let’s get you in.',
+    tagline:
+      'Half price against the true £19.99, closes 30 September, plus an automatic day-3 nudge.',
+    tone: 'amber',
+    pricing: { electrician: ['£19.99', '£9.99'], apprentice: ['£6.99', '£4.99'] },
+    actions: {
+      stats: 'get_v11_stats',
+      eligible: 'get_v11_eligible',
+      sent: 'get_v11_sent',
+      test: 'send_v11_test',
+      manual: 'send_v11_manual',
+      campaign: 'send_v11_campaign',
+      reset: 'reset_v11_sent',
+      nudge: 'send_v11_nudge',
+      preview: 'get_v11_preview',
     },
   },
 };
@@ -195,7 +224,7 @@ export default function AdminIncompleteSignup() {
   const queryClient = useQueryClient();
   const haptic = useHaptic();
 
-  const [campaign, setCampaign] = useState<CampaignId>('v10');
+  const [campaign, setCampaign] = useState<CampaignId>('v11');
   const [roleFilter, setRoleFilter] = useState<RoleFilter>('all');
   const [statusFilter, setStatusFilter] = useState<StatusFilter>('all');
   const [sortBy, setSortBy] = useState<SortKey>('action');
@@ -211,6 +240,10 @@ export default function AdminIncompleteSignup() {
   const [showPreview, setShowPreview] = useState(false);
 
   const [batchSending, setBatchSending] = useState(false);
+  /** Live tally while a multi-run campaign send is in flight. */
+  const [batchProgress, setBatchProgress] = useState<{ sent: number; remaining: number } | null>(
+    null
+  );
 
   const C = CAMPAIGNS[campaign];
 
@@ -288,6 +321,8 @@ export default function AdminIncompleteSignup() {
       id: string;
       incomplete_signup_v3_sent_at?: string;
       incomplete_signup_v10_sent_at?: string;
+      incomplete_signup_v11_sent_at?: string;
+      incomplete_signup_v11_nudge_sent_at?: string;
     }[]
   >({
     queryKey: ['admin-incomplete-sent', campaign],
@@ -296,6 +331,26 @@ export default function AdminIncompleteSignup() {
       return data?.users || [];
     },
     staleTime: 30 * 1000,
+  });
+
+  /*
+    The preview, rendered by the same code that sends.
+
+    Only fetched while the sheet is open, and only for campaigns that expose a
+    preview action — V9 and V10 keep their hand-written placeholders.
+  */
+  const { data: previewData, isLoading: previewLoading } = useQuery<{
+    subject: string;
+    deadline: string;
+    html: string;
+  }>({
+    queryKey: ['admin-incomplete-preview', campaign, testRole],
+    queryFn: async () =>
+      invoke<{ subject: string; deadline: string; html: string }>(C.actions.preview as string, {
+        role: testRole,
+      }),
+    enabled: showPreview && !!C.actions.preview,
+    staleTime: 5 * 60 * 1000,
   });
 
   const refreshAll = () => {
@@ -315,16 +370,32 @@ export default function AdminIncompleteSignup() {
     the newest 200 rows, so a list built from this endpoint would have shown 10
     and quietly called it all of them. The exact 27 comes from `stats`, which
     counts server-side without a limit.
+
+    `get_v11_sent` raises its own cap to 1000 — enough to cover the whole 617
+    cohort — so the V11 map is complete rather than a most-recent slice.
   */
   const sentAtById = useMemo(() => {
     const m = new Map<string, string>();
     (sentUsers ?? []).forEach((u) => {
       const at =
-        (campaign === 'v10' ? u.incomplete_signup_v10_sent_at : u.incomplete_signup_v3_sent_at) ??
-        null;
+        (campaign === 'v11'
+          ? u.incomplete_signup_v11_sent_at
+          : campaign === 'v10'
+            ? u.incomplete_signup_v10_sent_at
+            : u.incomplete_signup_v3_sent_at) ?? null;
       if (at) m.set(u.id, at);
     });
     return m;
+  }, [sentUsers, campaign]);
+
+  /** Who has already had the day-3 nudge — V11 only. */
+  const nudgedIds = useMemo(() => {
+    const s = new Set<string>();
+    if (campaign !== 'v11') return s;
+    (sentUsers ?? []).forEach((u) => {
+      if (u.incomplete_signup_v11_nudge_sent_at) s.add(u.id);
+    });
+    return s;
   }, [sentUsers, campaign]);
 
   /*
@@ -465,7 +536,9 @@ export default function AdminIncompleteSignup() {
     mutationFn: async () =>
       invoke(C.actions.test, {
         testEmail,
-        ...(campaign === 'v10' ? { role: testRole, recipientName: 'Test User' } : {}),
+        ...(campaign === 'v10' || campaign === 'v11'
+          ? { role: testRole, recipientName: 'Test User' }
+          : {}),
       }),
     onSuccess: () => {
       haptic.success();
@@ -509,30 +582,86 @@ export default function AdminIncompleteSignup() {
   const selectedCount = selectedIds.size;
   const sendTargetCount = selectedCount > 0 ? selectedCount : pendingInView.length;
 
+  /*
+    Drive the campaign to completion across however many invocations it takes.
+
+    V11 caps each edge-function run at 200 sends and reports `remaining`, because
+    a single invocation cannot sit through 617 provider round-trips inside the
+    runtime's wall clock — the V10 path tried to and would have been killed
+    part-way with no record of where it stopped. Every recipient is stamped the
+    instant their own send succeeds, so re-invoking resumes cleanly and nobody
+    is emailed twice.
+
+    The loop is bounded by MAX_RUNS rather than `while (!complete)` so a backend
+    that stops making progress can't spin the browser forever.
+  */
   const sendCampaign = async () => {
     setConfirmSend(false);
     setBatchSending(true);
 
+    const MAX_RUNS = 12;
+    let totalSent = 0;
+
     try {
       const ids = selectedCount > 0 ? Array.from(selectedIds) : pendingInView.map((u) => u.id);
-      const data = await invoke<{ sent: number; remaining: number; message?: string }>(
-        C.actions.campaign,
-        ids.length > 0 ? { userIds: ids } : {}
-      );
+
+      for (let run = 0; run < MAX_RUNS; run++) {
+        const data = await invoke<{
+          sent: number;
+          remaining: number;
+          complete?: boolean;
+          message?: string;
+        }>(C.actions.campaign, ids.length > 0 ? { userIds: ids } : {});
+
+        totalSent += data?.sent ?? 0;
+        setBatchProgress({ sent: totalSent, remaining: data?.remaining ?? 0 });
+
+        // Done, or the backend stopped making progress — either way, stop.
+        if (data?.complete || !data?.remaining || (data?.sent ?? 0) === 0) break;
+      }
+
       haptic.success();
-      toast({ title: data?.message || `Sent ${data?.sent ?? 0} emails`, variant: 'success' });
+      toast({ title: `Sent ${totalSent} ${C.short} emails`, variant: 'success' });
       clearSelection();
     } catch (err: unknown) {
       haptic.error();
       toast({
-        title: `Failed: ${err instanceof Error ? err.message : 'Unknown error'}`,
+        title:
+          totalSent > 0
+            ? `Stopped after ${totalSent} sent: ${err instanceof Error ? err.message : 'Unknown error'}`
+            : `Failed: ${err instanceof Error ? err.message : 'Unknown error'}`,
         variant: 'destructive',
       });
     } finally {
       setBatchSending(false);
+      setBatchProgress(null);
       refreshAll();
     }
   };
+
+  /** Fire the day-3 nudge by hand. Normally cron does this at 08:20 daily. */
+  const sendNudgeMutation = useMutation({
+    mutationFn: async () => {
+      if (!C.actions.nudge) throw new Error('This campaign has no follow-up nudge.');
+      return invoke<{ sent: number; fatigued: number; suppressed: number }>(C.actions.nudge);
+    },
+    onSuccess: (data) => {
+      haptic.success();
+      toast({
+        title: data?.sent ? `Nudged ${data.sent}` : 'No nudges due',
+        description:
+          data?.fatigued || data?.suppressed
+            ? `${data.fatigued ?? 0} skipped for email fatigue, ${data.suppressed ?? 0} unsubscribed.`
+            : undefined,
+        variant: 'success',
+      });
+      refreshAll();
+    },
+    onError: (error: Error) => {
+      haptic.error();
+      toast({ title: `Nudge failed: ${error.message}`, variant: 'destructive' });
+    },
+  });
 
   const loading = baseLoading || eligibleLoading;
 
@@ -765,7 +894,8 @@ export default function AdminIncompleteSignup() {
                 aria-label="Campaign"
                 className={selectCn}
               >
-                <option value="v10">V10 — Launch Price</option>
+                <option value="v11">V11 — Come on then</option>
+                <option value="v10">V10 — Launch Price (retired)</option>
                 <option value="v9">V9 — Quick Question</option>
               </select>
 
@@ -835,22 +965,22 @@ export default function AdminIncompleteSignup() {
               </button>
             </div>
 
-            {campaign === 'v10' && (
+            {C.pricing && (
               <div className="grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-white/[0.06] bg-white/[0.06]">
-                <div className="bg-[hsl(0_0%_10%)] px-4 py-3">
-                  <Eyebrow>Electrician</Eyebrow>
-                  <div className="mt-1 flex items-baseline gap-2">
-                    <span className="text-[20px] font-semibold tabular-nums text-white">£9.99</span>
-                    <span className="text-[11px] text-white line-through">£14.99</span>
-                  </div>
-                </div>
-                <div className="bg-[hsl(0_0%_10%)] px-4 py-3">
-                  <Eyebrow>Apprentice</Eyebrow>
-                  <div className="mt-1 flex items-baseline gap-2">
-                    <span className="text-[20px] font-semibold tabular-nums text-white">£4.99</span>
-                    <span className="text-[11px] text-white line-through">£6.99</span>
-                  </div>
-                </div>
+                {(['electrician', 'apprentice'] as const).map((r) => {
+                  const [was, now] = C.pricing![r];
+                  return (
+                    <div key={r} className="bg-[hsl(0_0%_10%)] px-4 py-3">
+                      <Eyebrow>{r === 'electrician' ? 'Electrician' : 'Apprentice'}</Eyebrow>
+                      <div className="mt-1 flex items-baseline gap-2">
+                        <span className="text-[20px] font-semibold tabular-nums text-white">
+                          {now}
+                        </span>
+                        <span className="text-[11px] text-white line-through">{was}</span>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             )}
 
@@ -935,7 +1065,36 @@ export default function AdminIncompleteSignup() {
             {batchSending && (
               <div className="flex items-center gap-2 rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] px-4 py-3">
                 <Loader2 className="h-4 w-4 animate-spin text-elec-yellow" />
-                <span className="text-[13px] font-medium text-white">Sending campaign…</span>
+                <span className="text-[13px] font-medium text-white">
+                  {batchProgress
+                    ? `Sent ${batchProgress.sent}${batchProgress.remaining > 0 ? ` · ${batchProgress.remaining} to go` : ''}…`
+                    : 'Sending campaign…'}
+                </span>
+              </div>
+            )}
+
+            {C.actions.nudge && (
+              <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4">
+                <div className="flex items-start justify-between gap-3">
+                  <div className="min-w-0">
+                    <Eyebrow>Day-3 nudge</Eyebrow>
+                    <p className="mt-1 text-[12px] leading-relaxed text-white">
+                      Runs automatically each morning for anyone emailed 3–7 days ago who still
+                      hasn&rsquo;t subscribed. {nudgedIds.size} nudged so far.
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => sendNudgeMutation.mutate()}
+                    disabled={sendNudgeMutation.isPending}
+                    className="h-11 shrink-0 touch-manipulation whitespace-nowrap rounded-full border border-white/[0.08] bg-white/[0.04] px-4 text-[13px] font-medium text-white hover:bg-white/[0.08] disabled:opacity-50"
+                  >
+                    {sendNudgeMutation.isPending ? (
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                    ) : (
+                      'Run now'
+                    )}
+                  </button>
+                </div>
               </div>
             )}
 
@@ -1191,8 +1350,9 @@ export default function AdminIncompleteSignup() {
                     failure rather than PECR compliance working.
                   */}
                   <p className="text-xs text-white">
-                    Batched 10 at a time, 2s between batches. Unsubscribed and bounced addresses are
-                    skipped, so the number actually sent may be lower.
+                    {campaign === 'v11'
+                      ? 'Sent 5 at a time, up to 200 per run, resuming automatically until the list is clear. Unsubscribed and bounced addresses are skipped, so the number actually sent may be lower.'
+                      : 'Batched 10 at a time, 2s between batches. Unsubscribed and bounced addresses are skipped, so the number actually sent may be lower.'}
                   </p>
                 </div>
               </AlertDialogDescription>
@@ -1224,19 +1384,37 @@ export default function AdminIncompleteSignup() {
               <SheetHeader className="border-b border-white/[0.06] px-5 pb-3">
                 <SheetTitle className="flex items-center gap-2 text-[13px] text-white">
                   <Eye className="h-4 w-4 text-white" />
-                  Preview: {C.subject}
+                  Preview: {previewData?.subject ?? C.subject}
                   <Pill tone={C.tone}>{C.label}</Pill>
                 </SheetTitle>
               </SheetHeader>
+              {/*
+                V11 previews the REAL email: `get_v11_preview` runs the same
+                generator the send path runs and returns its HTML. The V9/V10
+                blocks below are hand-written lookalikes, which is exactly how
+                V10's preview ended up still advertising £14.99 and a deadline
+                in April — nothing forced it to track the template.
+              */}
               <div className="flex-1 overflow-hidden bg-black">
+                {C.actions.preview && previewLoading && (
+                  <div className="flex h-full items-center justify-center">
+                    <Loader2 className="h-5 w-5 animate-spin text-elec-yellow" />
+                  </div>
+                )}
                 <iframe
                   title="Email Preview"
                   sandbox="allow-same-origin"
-                  className="h-full w-full border-0"
+                  className={cn(
+                    'h-full w-full border-0',
+                    C.actions.preview && previewLoading && 'hidden'
+                  )}
                   srcDoc={
-                    campaign === 'v10'
-                      ? `<!DOCTYPE html><html><head><meta name="color-scheme" content="dark"><style>body{margin:0;padding:48px 24px;font-family:-apple-system,system-ui,sans-serif;background:#000;color:#fff;text-align:center;display:flex;flex-direction:column;align-items:center;gap:16px;min-height:90vh}.pill{padding:6px 14px;background:rgba(16,185,129,0.14);border:1px solid rgba(16,185,129,0.4);border-radius:999px;color:#34d399;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.4px}h1{margin:8px 0 4px;font-size:28px;font-weight:800;line-height:1.1}h1 span{color:#34d399}.card{width:100%;max-width:340px;padding:20px;background:linear-gradient(180deg,rgba(16,185,129,0.08),rgba(16,185,129,0.02));border:1px solid rgba(16,185,129,0.28);border-radius:18px;margin-top:12px}.old{font-size:13px;opacity:0.55;text-decoration:line-through;text-decoration-color:#f87171}.new{font-size:44px;font-weight:800;color:#34d399;letter-spacing:-1px;margin:4px 0 2px}.mo{font-size:16px;color:#fff;opacity:0.7;font-weight:600}.cta{display:inline-block;margin-top:20px;padding:14px 28px;background:#34d399;border-radius:12px;font-weight:800;color:#000;text-decoration:none;font-size:14px}p.note{margin-top:12px;font-size:11px;color:#fff;opacity:0.5}</style></head><body><div class="pill">Ends Sunday 26 April</div><h1>Your launch price,<br><span>just for you.</span></h1><p style="opacity:0.7;font-size:13px;max-width:320px;margin:0">Send a test email to see the real template rendered in your inbox.</p><div class="card"><div style="font-size:11px;color:#34d399;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px">Elec-Mate Electrician</div><span class="old">£14.99/mo normally</span><div class="new">£9.99<span class="mo">/mo</span></div><div style="font-size:10px;opacity:0.5;letter-spacing:0.4px;text-transform:uppercase;margin-top:10px">Locked in &middot; Cancel anytime</div></div><a class="cta" href="#">Claim £9.99/month &rarr;</a><p class="note">Secure checkout via Stripe &middot; No code to enter</p></body></html>`
-                      : `<!DOCTYPE html><html><head><meta name="color-scheme" content="dark"><style>body{margin:0;padding:40px 20px;font-family:-apple-system,system-ui,sans-serif;background:#000;color:#e2e8f0;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:90vh}h2{color:#fbbf24;margin-bottom:8px;font-size:24px}p{color:#fff;font-size:14px;line-height:1.6;max-width:300px}.badge{display:inline-block;margin-bottom:16px;padding:6px 16px;background:linear-gradient(135deg,#fbbf24,#f59e0b);border-radius:20px;font-size:11px;font-weight:800;color:#0f172a;text-transform:uppercase;letter-spacing:0.5px}</style></head><body><div class="badge">V9 &mdash; Quick Question</div><h2>We&rsquo;re on the App Store.</h2><p>Send a test email to preview the full rendered template in your inbox.</p></body></html>`
+                    C.actions.preview
+                      ? (previewData?.html ??
+                        '<!DOCTYPE html><html><head><meta name="color-scheme" content="dark"></head><body style="margin:0;padding:40px;background:#000;color:#fff;font-family:-apple-system,system-ui,sans-serif;font-size:14px">Could not load the preview. Send a test email instead.</body></html>')
+                      : campaign === 'v10'
+                        ? `<!DOCTYPE html><html><head><meta name="color-scheme" content="dark"><style>body{margin:0;padding:48px 24px;font-family:-apple-system,system-ui,sans-serif;background:#000;color:#fff;text-align:center;display:flex;flex-direction:column;align-items:center;gap:16px;min-height:90vh}.pill{padding:6px 14px;background:rgba(16,185,129,0.14);border:1px solid rgba(16,185,129,0.4);border-radius:999px;color:#34d399;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.4px}h1{margin:8px 0 4px;font-size:28px;font-weight:800;line-height:1.1}h1 span{color:#34d399}.card{width:100%;max-width:340px;padding:20px;background:linear-gradient(180deg,rgba(16,185,129,0.08),rgba(16,185,129,0.02));border:1px solid rgba(16,185,129,0.28);border-radius:18px;margin-top:12px}.old{font-size:13px;opacity:0.55;text-decoration:line-through;text-decoration-color:#f87171}.new{font-size:44px;font-weight:800;color:#34d399;letter-spacing:-1px;margin:4px 0 2px}.mo{font-size:16px;color:#fff;opacity:0.7;font-weight:600}.cta{display:inline-block;margin-top:20px;padding:14px 28px;background:#34d399;border-radius:12px;font-weight:800;color:#000;text-decoration:none;font-size:14px}p.note{margin-top:12px;font-size:11px;color:#fff;opacity:0.5}</style></head><body><div class="pill">Ends Sunday 26 April</div><h1>Your launch price,<br><span>just for you.</span></h1><p style="opacity:0.7;font-size:13px;max-width:320px;margin:0">Send a test email to see the real template rendered in your inbox.</p><div class="card"><div style="font-size:11px;color:#34d399;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px">Elec-Mate Electrician</div><span class="old">£14.99/mo normally</span><div class="new">£9.99<span class="mo">/mo</span></div><div style="font-size:10px;opacity:0.5;letter-spacing:0.4px;text-transform:uppercase;margin-top:10px">Locked in &middot; Cancel anytime</div></div><a class="cta" href="#">Claim £9.99/month &rarr;</a><p class="note">Secure checkout via Stripe &middot; No code to enter</p></body></html>`
+                        : `<!DOCTYPE html><html><head><meta name="color-scheme" content="dark"><style>body{margin:0;padding:40px 20px;font-family:-apple-system,system-ui,sans-serif;background:#000;color:#e2e8f0;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:90vh}h2{color:#fbbf24;margin-bottom:8px;font-size:24px}p{color:#fff;font-size:14px;line-height:1.6;max-width:300px}.badge{display:inline-block;margin-bottom:16px;padding:6px 16px;background:linear-gradient(135deg,#fbbf24,#f59e0b);border-radius:20px;font-size:11px;font-weight:800;color:#0f172a;text-transform:uppercase;letter-spacing:0.5px}</style></head><body><div class="badge">V9 &mdash; Quick Question</div><h2>We&rsquo;re on the App Store.</h2><p>Send a test email to preview the full rendered template in your inbox.</p></body></html>`
                   }
                 />
               </div>
