@@ -19,7 +19,7 @@ import { SEOInlineLeadMagnet } from '@/components/seo/SEOInlineLeadMagnet';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import type { RelatedPage } from '@/components/seo/SEORelatedPages';
 import { PLUG_IN_SOLAR_FACTS as F } from '@/lib/plugInSolarAssessment';
-import { Sun, ShieldCheck, Plug, Building2, FileCheck2, Zap } from 'lucide-react';
+import { Sun, ShieldCheck, Zap, FileCheck2, ClipboardCheck } from 'lucide-react';
 
 const breadcrumbs = [
   { label: 'Guides', href: '/guides/electrical-testing-guide' },
@@ -97,21 +97,29 @@ const relatedPages: RelatedPage[] = [
     description:
       'Type AC, A, B and F — and why bidirectional capability is a separate question from the type marking.',
     href: '/plug-in-solar-rcd-requirements',
+    icon: ShieldCheck,
+    category: 'Plug-in Solar',
   },
   {
     title: 'Solar PV Certificate',
     description: 'For a designed installation under BS 7671 Section 712, not a plug-in device.',
     href: '/solar-pv-certificate',
+    icon: Sun,
+    category: 'Certificates',
   },
   {
     title: 'EICR Certificate',
     description: 'Condition reporting on the existing installation before anything is added to it.',
     href: '/tools/eicr-certificate',
+    icon: FileCheck2,
+    category: 'Certificates',
   },
   {
     title: 'BS 7671 A4:2026 — What Changed',
     description: 'The amendment that redrafted 551.7 and governs generation on a final circuit.',
     href: '/guides/bs-7671-amendment-4-2026',
+    icon: Zap,
+    category: 'Regulations',
   },
 ];
 
@@ -122,18 +130,19 @@ const sections = [
     content: (
       <>
         <p>
-          Until August 2026 there was no lawful route to sell a solar generator in Great Britain that
-          plugs into an ordinary socket. <strong>{F.statutoryInstrument}</strong> — the Plugs and
-          Sockets etc. (Safety) Regulations 1994 and ESQCR 2002 (Amendment) Regulations 2026, made
-          16 July and in force <strong>27 August 2026</strong> — created one, by allowing a standard
-          plug to be used with a plug-in microgenerator provided the product meets a specification
-          the regulations point at.
+          Until August 2026 there was no lawful route to sell a solar generator in Great Britain
+          that plugs into an ordinary socket. <strong>{F.statutoryInstrument}</strong> — the Plugs
+          and Sockets etc. (Safety) Regulations 1994 and ESQCR 2002 (Amendment) Regulations 2026,
+          made 16 July and in force <strong>27 August 2026</strong> — created one, by allowing a
+          standard plug to be used with a plug-in microgenerator provided the product meets a
+          specification the regulations point at.
         </p>
         <p>
-          That specification is the <strong>Plug-in Solar Device Interim Product Specification
-          v2.0</strong> (DESNZ, July 2026), cited throughout this guide as “the specification”. It
-          is interim on purpose: several of its limits have stated review routes, so check a figure
-          before you rely on it commercially.
+          That specification is the{' '}
+          <strong>Plug-in Solar Device Interim Product Specification v2.0</strong> (DESNZ, July
+          2026), cited throughout this guide as “the specification”. It is interim on purpose:
+          several of its limits have stated review routes, so check a figure before you rely on it
+          commercially.
         </p>
         <p>
           Two documents sit alongside it and say different things with different force. BS
@@ -157,8 +166,8 @@ const sections = [
         </p>
         <p>
           There is no consumer unit work, no new circuit and no fixed wiring — that is the whole
-          point of it, and it is why the rules that follow are mostly about the existing installation
-          rather than anything being added to it.
+          point of it, and it is why the rules that follow are mostly about the existing
+          installation rather than anything being added to it.
         </p>
         <p>
           Because the inverter follows the grid, it cannot work without one. It does not generate a
@@ -219,8 +228,10 @@ const sections = [
             prominent warning that the device is not intended to be used with battery storage.
           </li>
           <li>
-            <strong>No extension cables, cable reels, multi-way adaptors, RCD adaptors, travel
-            adaptors or plug convertors.</strong>
+            <strong>
+              No extension cables, cable reels, multi-way adaptors, RCD adaptors, travel adaptors or
+              plug convertors.
+            </strong>
           </li>
           <li>
             <strong>Socket circuits only.</strong> Not a lighting circuit, and not a spur feeding
@@ -231,9 +242,11 @@ const sections = [
             same product family, supplied by the manufacturer.
           </li>
           <li>
-            <strong>Not on ACM or MCM cladding, HPL cladding, timber cladding or timber
-            balconies</strong>, and not on a building subject to external wall remediation works.
-            Not fixed to a wall forming a property boundary between dwellings.
+            <strong>
+              Not on ACM or MCM cladding, HPL cladding, timber cladding or timber balconies
+            </strong>
+            , and not on a building subject to external wall remediation works. Not fixed to a wall
+            forming a property boundary between dwellings.
           </li>
         </ul>
         <p>
@@ -269,8 +282,8 @@ const sections = [
         <p>
           Ring final circuits are fine. A small number of consultation respondents argued otherwise,
           and the government’s published safety study tested plug-in solar in representative UK
-          installations including ring circuits, finding nothing that would prevent safe operation at
-          800 W on appropriately protected rings.
+          installations including ring circuits, finding nothing that would prevent safe operation
+          at 800 W on appropriately protected rings.
         </p>
       </>
     ),
@@ -283,9 +296,9 @@ const sections = [
         <p>
           This is the part being argued about most, and it is easy to get wrong in both directions.
           <strong> Electrical Safety First recommend</strong> that circuits intended for use with
-          plug-in solar have at least a Type A, bidirectionally capable RCD, and that homes with Type
-          AC devices should not use plug-in solar without upgrading first. That is genuine, published
-          safety guidance from a credible body.
+          plug-in solar have at least a Type A, bidirectionally capable RCD, and that homes with
+          Type AC devices should not use plug-in solar without upgrading first. That is genuine,
+          published safety guidance from a credible body.
         </p>
         <p>
           <strong>It is not a legal requirement.</strong> Mandating bi-directional residual current
@@ -297,7 +310,7 @@ const sections = [
           Both of those are true at once, and there is a second distinction underneath: the RCD{' '}
           <em>type</em> and whether the device is <em>bidirectionally capable</em> are two separate
           questions that the phrase “Type A bidirectional” runs together.{' '}
-          <SEOInternalLink to="/plug-in-solar-rcd-requirements">
+          <SEOInternalLink href="/plug-in-solar-rcd-requirements">
             The full answer is on the RCD page
           </SEOInternalLink>
           .
@@ -337,10 +350,10 @@ const sections = [
         <p>
           Loose panels and a micro-inverter bought separately are <strong>not</strong> a plug-in
           solar device, however the listing describes them. The specification requires a complete
-          product including “a factory assembled connection line fitted <strong>by the
-          manufacturer</strong> with a plug designed to BS 1363”. A self-assembled build cannot meet
-          that, cannot be registered on the ENA Type Test Register as a device, and so gets none of
-          the route the regulations created.
+          product including “a factory assembled connection line fitted{' '}
+          <strong>by the manufacturer</strong> with a plug designed to BS 1363”. A self-assembled
+          build cannot meet that, cannot be registered on the ENA Type Test Register as a device,
+          and so gets none of the route the regulations created.
         </p>
         <p>
           It is worth checking what the panel’s own manual says before anyone argues the point.
@@ -365,10 +378,10 @@ const sections = [
     content: (
       <>
         <p>
-          To be straight about it: <strong>nothing legally obliges a householder to involve an
-          electrician.</strong> Anyone telling you the law now requires an assessment is wrong. But
-          the documents themselves keep pointing people at one, and these are the situations where
-          that is worth acting on.
+          To be straight about it:{' '}
+          <strong>nothing legally obliges a householder to involve an electrician.</strong> Anyone
+          telling you the law now requires an assessment is wrong. But the documents themselves keep
+          pointing people at one, and these are the situations where that is worth acting on.
         </p>
         <ul>
           <li>
@@ -380,12 +393,14 @@ const sections = [
             to seek inspection and assessment by a qualified electrician first.
           </li>
           <li>
-            <strong>A Type AC RCD, or a device you cannot confirm is bidirectionally capable</strong>{' '}
+            <strong>
+              A Type AC RCD, or a device you cannot confirm is bidirectionally capable
+            </strong>{' '}
             — see the RCD page.
           </li>
           <li>
-            <strong>No suitable outdoor socket</strong> — fitting one is electrical work on the fixed
-            installation and carries its own certification.
+            <strong>No suitable outdoor socket</strong> — fitting one is electrical work on the
+            fixed installation and carries its own certification.
           </li>
           <li>
             <strong>A flat, a block, or rented property</strong> — the surface restrictions are

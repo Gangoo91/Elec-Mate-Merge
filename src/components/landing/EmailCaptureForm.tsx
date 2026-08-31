@@ -9,12 +9,13 @@ import { getStoredAttribution, fireServerCapi } from '@/lib/attribution';
 import { trackEmailCaptured } from '@/lib/analytics-events';
 import { storageSetSync } from '@/utils/storage';
 
-type Source =
+export type Source =
   | 'landing_form'
   | 'exit_intent'
   | 'lead_magnet_cheatsheet'
   | 'lead_magnet_symbols_chart'
   | 'lead_magnet_zs_ze_reference'
+  | 'lead_magnet_plug_in_solar'
   | 'mock_exam_result'
   | 'footer'
   | 'other';

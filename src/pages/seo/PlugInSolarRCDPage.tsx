@@ -22,7 +22,7 @@ import { SEOInlineLeadMagnet } from '@/components/seo/SEOInlineLeadMagnet';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import type { RelatedPage } from '@/components/seo/SEORelatedPages';
 import { PLUG_IN_SOLAR_FACTS as F } from '@/lib/plugInSolarAssessment';
-import { ShieldCheck } from 'lucide-react';
+import { ShieldCheck, Sun, Zap, FileCheck2 } from 'lucide-react';
 
 const breadcrumbs = [
   { label: 'Plug-in Solar UK', href: '/plug-in-solar-uk' },
@@ -94,21 +94,29 @@ const relatedPages: RelatedPage[] = [
     title: 'Plug-in Solar UK: The Rules From 27 August 2026',
     description: 'The limits, the prohibitions, notification and where an electrician is needed.',
     href: '/plug-in-solar-uk',
+    icon: Sun,
+    category: 'Plug-in Solar',
   },
   {
     title: 'RCD Types Explained',
     description: 'AC, A, F and B — what each tolerates and where BS 7671 permits it.',
     href: '/guides/rcd-types-explained',
+    icon: ShieldCheck,
+    category: 'Protection',
   },
   {
     title: 'Consumer Unit Replacement',
     description: 'When a board change is proportionate and what certification it needs.',
     href: '/consumer-unit-replacement',
+    icon: Zap,
+    category: 'Installation',
   },
   {
     title: 'EICR Certificate',
     description: 'Condition reporting on the existing installation.',
     href: '/tools/eicr-certificate',
+    icon: FileCheck2,
+    category: 'Certificates',
   },
 ];
 
@@ -124,17 +132,18 @@ const sections = [
           the other is settled.
         </p>
         <p>
-          <strong>Electrical Safety First</strong> — the UK charity whose consumer guidance retailers
-          are pointing buyers at — recommend that households have “at least a Type A bidirectional
-          RCD protecting circuits intended for use with plug-in solar panels”, and that homes with
-          “Type AC RCDs should not use plug-in solar systems without first upgrading”. That is real,
-          published, credible safety advice, and dismissing it as a myth is wrong.
+          <strong>Electrical Safety First</strong> — the UK charity whose consumer guidance
+          retailers are pointing buyers at — recommend that households have “at least a Type A
+          bidirectional RCD protecting circuits intended for use with plug-in solar panels”, and
+          that homes with “Type AC RCDs should not use plug-in solar systems without first
+          upgrading”. That is real, published, credible safety advice, and dismissing it as a myth
+          is wrong.
         </p>
         <p>
           It is also <strong>not a legal requirement</strong>. A respondent to the government’s
           consultation suggested the plug should incorporate bi-directional residual current
-          protection. The response was that the government “has not identified sufficient evidence to
-          justify mandating a specific plug design incorporating bi-directional residual current
+          protection. The response was that the government “has not identified sufficient evidence
+          to justify mandating a specific plug design incorporating bi-directional residual current
           protection”. No circuit RCD type is mandated in law for plug-in solar.
         </p>
       </>
@@ -151,8 +160,8 @@ const sections = [
         </p>
         <ul>
           <li>
-            <strong>The type marking</strong> — AC, A, F or B — which describes what kind of residual
-            current the device can detect.
+            <strong>The type marking</strong> — AC, A, F or B — which describes what kind of
+            residual current the device can detect.
           </li>
           <li>
             <strong>Bidirectional capability</strong> — whether the device is built to work with
@@ -160,8 +169,8 @@ const sections = [
           </li>
         </ul>
         <p>
-          A device can be Type A and still be unidirectional. Because the two get run together in one
-          phrase, the second check is the one that gets skipped — and it is the one ESF say most
+          A device can be Type A and still be unidirectional. Because the two get run together in
+          one phrase, the second check is the one that gets skipped — and it is the one ESF say most
           devices fail.
         </p>
       </>
@@ -199,8 +208,8 @@ const sections = [
         <p>
           So the recommendation is properly read as <strong>Type A or better</strong>, not Type A
           specifically. A common confusion worth heading off: the RCD or RCBO “type” is not the same
-          as the B, C or D marking on a circuit breaker, which describes its tripping
-          characteristic — a Type B MCB tells you nothing about residual current.
+          as the B, C or D marking on a circuit breaker, which describes its tripping characteristic
+          — a Type B MCB tells you nothing about residual current.
         </p>
         <p>
           BS 7671 arrives at the same place independently. <strong>Regulation 531.3.3</strong>
@@ -210,10 +219,10 @@ const sections = [
           upgrade, and it does not depend on anybody’s guidance.
         </p>
         <p>
-          The direction of travel goes further still. The government’s response notes that DC leakage
-          reducing the effectiveness of older, mostly AC-type RCDs “is a problem not unique to
-          plug-in solar devices”, and says that “in the longer term, we welcome the industry moving
-          to type B or F RCD devices that don’t have this issue”.
+          The direction of travel goes further still. The government’s response notes that DC
+          leakage reducing the effectiveness of older, mostly AC-type RCDs “is a problem not unique
+          to plug-in solar devices”, and says that “in the longer term, we welcome the industry
+          moving to type B or F RCD devices that don’t have this issue”.
         </p>
       </>
     ),
@@ -223,24 +232,22 @@ const sections = [
     heading: 'Check Two — Is It Bidirectional?',
     content: (
       <>
-        <p>
-          This is the check that gets missed, and it is not the same question as the type.
-        </p>
+        <p>This is the check that gets missed, and it is not the same question as the type.</p>
         <p>
           Most UK homes were wired on the assumption that electricity flows one way: from the
-          socket-outlet to an appliance. A plug-in solar device introduces a source into the circuit,
-          so energy flows in both directions. ESF are blunt about what that means for protective
-          devices: most are designed for unidirectional flow, and those “are <strong>NOT</strong>{' '}
-          suitable for plug-in solar panels as they may fail to operate or ‘trip’ (in the event of a
-          fault)”.
+          socket-outlet to an appliance. A plug-in solar device introduces a source into the
+          circuit, so energy flows in both directions. ESF are blunt about what that means for
+          protective devices: most are designed for unidirectional flow, and those “are{' '}
+          <strong>NOT</strong> suitable for plug-in solar panels as they may fail to operate or
+          ‘trip’ (in the event of a fault)”.
         </p>
         <p>
           The practical difficulty is identification. ESF note that “few RCD/RCBOs can be easily
           identified as being bidirectionally capable by the consumer”. Some manufacturers use a
-          suffix such as <strong>BD</strong> or <strong>Bi-dir</strong> on the model number, but many
-          give no marking at all. Where there is nothing visible on the front of the device, the
-          answer is to note the manufacturer and model number and ask the manufacturer, or have an
-          electrician assess it. <strong>Never remove the consumer unit cover to look.</strong>
+          suffix such as <strong>BD</strong> or <strong>Bi-dir</strong> on the model number, but
+          many give no marking at all. Where there is nothing visible on the front of the device,
+          the answer is to note the manufacturer and model number and ask the manufacturer, or have
+          an electrician assess it. <strong>Never remove the consumer unit cover to look.</strong>
         </p>
         <p>
           BS 7671 backs this up: <strong>Regulation 551.7.1(c)</strong> requires a protective device
@@ -264,16 +271,21 @@ const sections = [
         </p>
         <ul>
           <li>
-            <strong>The device must not exceed {F.maxResidualDcMa} mA of smooth DC residual
-            current</strong> (specification §5.7). This is a limit on the <em>product</em>, so it
-            does not impair an upstream RCD. It says nothing about what is in your consumer unit.
+            <strong>
+              The device must not exceed {F.maxResidualDcMa} mA of smooth DC residual current
+            </strong>{' '}
+            (specification §5.7). This is a limit on the <em>product</em>, so it does not impair an
+            upstream RCD. It says nothing about what is in your consumer unit.
           </li>
           <li>
-            <strong>Consumers should be advised to check for modern residual current protection in
-            good condition</strong> (specification §8.3.2). This names RCBOs, and is footnoted:
-            installations using MCBs with residual current protection provided upstream “may also be
-            acceptable, subject to verification through further testing now being undertaken by
-            DESNZ”. Genuinely unresolved.
+            <strong>
+              Consumers should be advised to check for modern residual current protection in good
+              condition
+            </strong>{' '}
+            (specification §8.3.2). This names RCBOs, and is footnoted: installations using MCBs
+            with residual current protection provided upstream “may also be acceptable, subject to
+            verification through further testing now being undertaken by DESNZ”. Genuinely
+            unresolved.
           </li>
           <li>
             <strong>Type AC is not appropriate here</strong> (BS 7671 531.3.3). A standard, not
@@ -286,8 +298,9 @@ const sections = [
         </ul>
         <p>
           What none of them do is mandate a circuit RCD type for plug-in solar. If you are quoting
-          for this work, recommend it as good practice with the reasoning above — that position holds
-          up. Asserting a legal duty that a customer can look up and find does not exist does not.
+          for this work, recommend it as good practice with the reasoning above — that position
+          holds up. Asserting a legal duty that a customer can look up and find does not exist does
+          not.
         </p>
       </>
     ),
@@ -335,9 +348,9 @@ const sections = [
           <strong>while the plug-in solar unit is producing power</strong>.
         </p>
         <p>
-          And if it does not trip immediately, consumers “should be instructed to contact a competent
-          professional electrician to discuss replacing the RCBO with a more modern unit”. ESF
-          publish the same advice.
+          And if it does not trip immediately, consumers “should be instructed to contact a
+          competent professional electrician to discuss replacing the RCBO with a more modern unit”.
+          ESF publish the same advice.
         </p>
         <p>
           This came out of the consultation directly: because DC injection desensitising RCDs is not
@@ -355,21 +368,21 @@ const sections = [
         <p>
           For a householder, in order: identify what is protecting the circuit you intend to use;
           check the type marking on the front of the device without removing any covers; establish
-          whether it is bidirectionally capable, which usually means asking the manufacturer with the
-          model number to hand; and if either answer is wrong or unknown, get it assessed before you
-          buy rather than after.
+          whether it is bidirectionally capable, which usually means asking the manufacturer with
+          the model number to hand; and if either answer is wrong or unknown, get it assessed before
+          you buy rather than after.
         </p>
         <p>
           For an electrician, the proportionate remedy is usually a single RCBO change on the target
-          circuit rather than a full board replacement — and it carries its own certification exactly
-          as it always did. Replacing the overcurrent protective device of the circuit concerned is
-          named in the specification as work that only a qualified electrician does, pointing at BS
-          7671 551.7.2.
+          circuit rather than a full board replacement — and it carries its own certification
+          exactly as it always did. Replacing the overcurrent protective device of the circuit
+          concerned is named in the specification as work that only a qualified electrician does,
+          pointing at BS 7671 551.7.2.
         </p>
         <p>
           A word on how to sell it. Nothing legally obliges a householder to involve you, and saying
           otherwise will be found out.{' '}
-          <SEOInternalLink to="/plug-in-solar-uk">
+          <SEOInternalLink href="/plug-in-solar-uk">
             The wider rules are on the plug-in solar hub page
           </SEOInternalLink>
           , and they point people at an electrician often enough without anyone needing to overstate

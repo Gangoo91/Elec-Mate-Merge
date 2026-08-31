@@ -1,4 +1,4 @@
-import { EmailCaptureForm } from '@/components/landing/EmailCaptureForm';
+import { EmailCaptureForm, type Source } from '@/components/landing/EmailCaptureForm';
 import { CARD, LABEL, DIVIDE } from '@/components/seo/seoSurface';
 import { trackLeadMagnetDownloaded } from '@/lib/analytics-events';
 
@@ -13,7 +13,7 @@ interface SEOInlineLeadMagnetProps {
    * Which magnet to send. Must be a key in the edge function's OTHER_MAGNETS
    * registry, or the subscriber gets no file. Defaults to the cheatsheet.
    */
-  source?: string;
+  source?: Source;
   /** Analytics label, kept separable per magnet. */
   analyticsLabel?: string;
 }
