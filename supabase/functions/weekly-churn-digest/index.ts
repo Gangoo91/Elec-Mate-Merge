@@ -78,9 +78,14 @@ async function stripeWeekSplit(since: number): Promise<{
   const candidates: any[] = [];
   let after: string | null = null;
   for (let page = 0; page < 20; page++) {
-    const url = `https://api.stripe.com/v1/subscriptions?status=canceled&limit=100${after ? `&starting_after=${after}` : ''}`;
-    const res = await fetch(url, { headers });
-    const d = await res.json();
+    // Annotated because `after` is reassigned from `d` below: without these the
+    // inference goes circular (url → res → d → after → url) and TS7022s.
+    const url: string = `https://api.stripe.com/v1/subscriptions?status=canceled&limit=100${after ? `&starting_after=${after}` : ''}`;
+    const res: Response = await fetch(url, { headers });
+    const d: {
+      data?: Array<{ id: string; canceled_at?: number; trial_end?: number }>;
+      has_more?: boolean;
+    } = await res.json();
     if (!d.data) break;
     for (const s of d.data) {
       const ca = s.canceled_at;
@@ -178,6 +183,12 @@ interface StorePaidLeaver {
   productId: string;
   lifetimeGrossUsd: number;
   cameBack: boolean;
+  // Google's own cancel survey, collected by play-rtdn-cancel-survey. Absent
+  // when the user skipped it, or on Apple until the Retention Messaging API
+  // request (JVQ493AW2D) is approved.
+  reason?: string | null;
+  reasonDetail?: string | null;
+  reasonMatch?: string | null;
 }
 
 /**
@@ -247,6 +258,42 @@ async function storePaidLeavers(
       /* skip on error */
     }
   }
+  // Attach the store's own cancel-survey answer. Store leavers used to read
+  // "no reason given" by definition; Google asks them, we just never collected
+  // it. Matched on user, most recent answer wins.
+  if (out.length) {
+    try {
+      const { data: reasons } = await db
+        .from('store_cancel_reasons')
+        .select('user_id, reason, reason_detail, match_method, created_at')
+        .in(
+          'user_id',
+          out.map((s) => s.userId)
+        )
+        .order('created_at', { ascending: false });
+      const latest = new Map<string, { reason: string; detail: string | null; match: string }>();
+      for (const r of reasons ?? []) {
+        if (r.user_id && !latest.has(r.user_id)) {
+          latest.set(r.user_id, {
+            reason: r.reason,
+            detail: r.reason_detail ?? null,
+            match: r.match_method ?? 'exact',
+          });
+        }
+      }
+      for (const s of out) {
+        const hit = latest.get(s.userId);
+        if (hit) {
+          s.reason = hit.reason;
+          s.reasonDetail = hit.detail;
+          s.reasonMatch = hit.match;
+        }
+      }
+    } catch {
+      /* reasons are a bonus — never fail the digest over them */
+    }
+  }
+
   out.sort((a, b) => b.lifetimeGrossUsd - a.lifetimeGrossUsd);
   return out;
 }
@@ -510,6 +557,22 @@ Deno.serve(async (req: Request): Promise<Response> => {
       .eq('event_type', 'EXPIRATION')
       .gte('created_at', weekAgo.toISOString());
 
+    // Every store answer this week, not just the ones belonging to paid
+    // leavers — trial cancellers tell us why too, and that is exactly the
+    // population the in-app survey never reaches.
+    const storeReasonCounts = new Map<string, number>();
+    try {
+      const { data: storeReasonRows } = await db
+        .from('store_cancel_reasons')
+        .select('reason')
+        .gte('created_at', weekAgo.toISOString());
+      for (const r of storeReasonRows ?? []) {
+        storeReasonCounts.set(r.reason, (storeReasonCounts.get(r.reason) ?? 0) + 1);
+      }
+    } catch {
+      /* additive section — never fail the digest over it */
+    }
+
     const reasonLabel = (k: string) =>
       ({
         not_using: 'Not using it',
@@ -529,7 +592,15 @@ Deno.serve(async (req: Request): Promise<Response> => {
     const churnerLine = (c: PayingChurner) =>
       `${c.name || c.email || c.customerId} <${c.email ?? '?'}> — £${c.monthlyGbp.toFixed(2)}/mo · paid £${c.totalPaidGbp.toFixed(2)} over ${c.tenureMonths} months · ${c.reason ? `${reasonLabel(c.reason)}${c.reasonDetail ? ` (“${c.reasonDetail}”)` : ''}` : 'no reason given'}`;
     const storeLine = (s: StorePaidLeaver) =>
-      `${s.name || s.email || s.userId} <${s.email ?? '?'}> — ${s.store} · $${s.lifetimeGrossUsd.toFixed(2)} lifetime · no reason (store users never see the survey)`;
+      `${s.name || s.email || s.userId} <${s.email ?? '?'}> — ${s.store} · $${s.lifetimeGrossUsd.toFixed(2)} lifetime · ${
+        s.reason
+          ? `${reasonLabel(s.reason)}${s.reasonDetail ? ` (“${s.reasonDetail}”)` : ''}${
+              s.reasonMatch && s.reasonMatch !== 'order_id' ? ' [likely match]' : ''
+            }`
+          : s.store === 'Apple'
+            ? 'no reason (Apple gives none until the Retention Messaging API is approved)'
+            : 'no reason (survey skipped)'
+      }`;
     const returnedLine = (c: PayingChurner) =>
       `${c.name || c.email || c.customerId} — ${c.cameBack === 'lifetime' ? 'bought LIFETIME (sub cancel was the fulfilment)' : 'resubscribed'}`;
 
@@ -552,8 +623,18 @@ Deno.serve(async (req: Request): Promise<Response> => {
         ? [...returned.map(returnedLine), ...storeReturned.map((s) => `${s.name || s.email} — resubscribed (store)`)].map((l) => `- ${l}`)
         : ['- none']),
       ``,
-      `### Reasons (this week vs last)`,
+      `### Reasons — web cancel flow (this week vs last)`,
       ...reasons.map((k) => `- ${k}: **${rcThis.get(k) ?? 0}** (was ${rcLast.get(k) ?? 0})`),
+      ``,
+      // Kept separate from the web counts on purpose: the two surveys ask
+      // different questions of different populations, and merging them would
+      // break the week-on-week comparison above.
+      `### Reasons — store cancel flow (Google's own survey)`,
+      ...(storeReasonCounts.size
+        ? [...storeReasonCounts.entries()]
+            .sort((a, b) => b[1] - a[1])
+            .map(([k, n]) => `- ${reasonLabel(k)}: **${n}**`)
+        : ['- none captured this week']),
       ``,
       `### Savable — contact these first`,
       ...(savable.length ? savable.map((r) => `- [ ] ${personLine(r)}`) : ['- none']),
@@ -675,7 +756,17 @@ Deno.serve(async (req: Request): Promise<Response> => {
                       <td style="padding:9px 0; border-bottom:1px solid #e8e8e8;">
                         <strong style="color:#111111;">${esc(sp.name || sp.email || 'Unknown')}</strong>
                         <span style="color:#555555;"> · ${esc(sp.store)} store</span><br/>
-                        <span style="color:#333333;">$${sp.lifetimeGrossUsd.toFixed(2)} lifetime — <em>no reason (store cancel flow)</em></span>
+                        <span style="color:#333333;">$${sp.lifetimeGrossUsd.toFixed(2)} lifetime — ${
+                          sp.reason
+                            ? `${esc(reasonLabel(sp.reason))}${sp.reasonDetail ? ` <em>“${esc(sp.reasonDetail)}”</em>` : ''}${
+                                sp.reasonMatch && sp.reasonMatch !== 'order_id'
+                                  ? ' <span style="color:#888888;">(likely match)</span>'
+                                  : ''
+                              }`
+                            : sp.store === 'Apple'
+                              ? '<em>no reason — Apple gives none yet</em>'
+                              : '<em>no reason — survey skipped</em>'
+                        }</span>
                       </td>
                       <td align="right" style="padding:9px 0; border-bottom:1px solid #e8e8e8; white-space:nowrap;">
                         <a href="mailto:${esc(sp.email ?? '')}?subject=${encodeURIComponent(`Elec-Mate — quick one`)}" style="color:#b8860b; font-weight:bold; text-decoration:none;">Email →</a>

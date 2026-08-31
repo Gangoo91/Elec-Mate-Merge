@@ -397,3 +397,10 @@ verify_jwt = false
 
 [functions.google-calendar-webhook]
 verify_jwt = false
+
+# play-rtdn-cancel-survey — Google Pub/Sub push target. Pub/Sub cannot send a
+# Supabase JWT, so the caller proves itself with a Google-signed OIDC token
+# (PLAY_RTDN_SA_EMAIL) or a shared secret (PLAY_RTDN_SECRET); the function
+# refuses every request if neither is configured.
+[functions.play-rtdn-cancel-survey]
+verify_jwt = false
