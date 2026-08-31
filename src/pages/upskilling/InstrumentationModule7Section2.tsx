@@ -215,13 +215,8 @@ const InstrumentationModule7Section2 = () => {
             '🔴 Stranded wire belongs in a crimp terminal. Solid wire must not — the crimp loses tension, especially under vibration.',
             'Both errors are the same mistake in opposite directions, and both feel secure when made.',
             'A ferrule turns loose strands into a rugged tip the screw can grip. That is why field wiring crimps AND clamps.',
-            'Fork terminals are quicker to fit and remove; ring terminals cannot fall off if a screw loosens.',
-            'A terminal block joins its two sides with an internal metal bar, which is what makes them common.',
             '🔴 Two wires in one terminal is the wrong answer. A multi-level block with an internal jumper is the right one.',
-            'Screwless spring clamps are faster, and the wrist motion of repeated screw work is a real occupational hazard.',
-            'A gland retains the cable, seals the entry, and where designed to, carries the screen through.',
             '🔴 A gland does nothing for the conductors beyond it — they still need slack and their own support.',
-            'Terminal strips are also where a loop can be divided for testing, which Module 6 Section 2 depends on.',
           ]}
         />
 
@@ -296,12 +291,12 @@ const InstrumentationModule7Section2 = () => {
           id="ins-7-2-pairing"
           question="A stranded conductor needs to land on an instrument's screw terminal. What do you do?"
           options={[
-            'Crimp a ferrule or a compression terminal on first, then clamp that under the screw',
             'Tin the end with solder, then clamp it',
             'Use the screw clamp — stranded wire is fine under a screw',
             'Twist the strands tightly and clamp them under the screw',
+            'Crimp a ferrule or a compression terminal on first, then clamp that under the screw',
           ]}
-          correctIndex={0}
+          correctIndex={3}
           explanation="The crimped tip converts the strands into something a screw can bear on without shearing. Twisting is not enough — the screw still turns against loose strands. Soldering is worse still on a clamped joint, because solder creeps under sustained pressure and the connection slackens."
         />
 
@@ -569,12 +564,12 @@ const InstrumentationModule7Section2 = () => {
           id="ins-7-2-gland"
           question="A screened instrument cable is glanded into a field junction box. The screen is already earthed at the panel end. What should happen to the screen here?"
           options={[
-            'Earth it at the gland as well, for a better connection',
             'Carry it through unbroken, cut back and insulated — it must be earthed at one end only',
+            'Earth it at the gland as well, for a better connection',
             'Connect it to the enclosure body',
             'Leave it loose inside the box',
           ]}
-          correctIndex={1}
+          correctIndex={0}
           explanation="Module 3 Section 5 established that earthing a screen at both ends creates a ground loop — current flows through the screen and can inject noise into the conductors it was fitted to protect, and in severe cases overheat the cable. Leaving it loose is equally wrong, because it may find an earth by accident, which is the same fault nobody made deliberately."
         />
 

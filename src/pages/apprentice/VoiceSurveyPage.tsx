@@ -117,7 +117,7 @@ export default function VoiceSurveyPage() {
               <button
                 type="submit"
                 disabled={submitting}
-                className="inline-flex items-center justify-center h-11 px-6 rounded-full bg-elec-yellow text-black font-semibold disabled:opacity-40 touch-manipulation"
+                className="inline-flex items-center justify-center h-11 px-6 rounded-full bg-elec-yellow text-black font-semibold disabled:bg-white/[0.08] disabled:text-white/70 touch-manipulation"
               >
                 {submitting ? 'Submitting…' : 'Submit anonymously'}
               </button>

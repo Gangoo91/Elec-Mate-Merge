@@ -228,7 +228,7 @@ export const SmartHomeModule2Section2Quiz = () => {
             <Button
               onClick={() => setShowResults(true)}
               disabled={Object.keys(selectedAnswers).length !== questions.length}
-              className="bg-elec-yellow text-elec-dark hover:bg-yellow-600 disabled:opacity-50"
+              className="bg-elec-yellow text-elec-dark hover:bg-yellow-600 disabled:bg-white/[0.08] disabled:text-white/70"
             >
               Submit Quiz
             </Button>
@@ -236,7 +236,7 @@ export const SmartHomeModule2Section2Quiz = () => {
             <Button
               onClick={() => setCurrentQuestion(currentQuestion + 1)}
               disabled={selectedAnswers[currentQuestion] === undefined}
-              className="bg-elec-yellow text-elec-dark hover:bg-yellow-600 disabled:opacity-50"
+              className="bg-elec-yellow text-elec-dark hover:bg-yellow-600 disabled:bg-white/[0.08] disabled:text-white/70"
             >
               Next
               <ArrowRight className="ml-2 h-4 w-4" />

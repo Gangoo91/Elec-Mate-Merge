@@ -198,14 +198,8 @@ const InstrumentationModule5Section4 = () => {
         <TLDR
           points={[
             'A loop is a closed cycle, so everything affects everything else — the same symptom can come from any of its four elements.',
-            'Those four are: something that senses, something that decides, something that influences, and the process that reacts.',
             'Over-tuning shows up as oscillation: damped after a change at best, never decaying at worst.',
             '🔴 The phase between the output trend and the PV trend names the over-tuned term.',
-            'Proportional adds no phase shift — output moves in step with the PV.',
-            'Integral adds −90° — output lags the PV by about a quarter cycle.',
-            'Derivative adds +90° — output leads the PV by about a quarter cycle.',
-            'Overshoot has three common causes: windup, too much integral, or integral on an already-integrating process.',
-            'Overshoot on startup with good control afterwards is windup, not tuning.',
             'Output moving smoothly while the PV sits and then jumps is valve stiction — a mechanical fault no tuning will reach.',
             '🔴 Faults that ignore tuning entirely: wrong direction of action, dead time, stiction, a range mismatch, and noise.',
             'So the first question is never “what should I adjust?” — it is “is this a tuning problem at all?”',
@@ -375,12 +369,12 @@ const InstrumentationModule5Section4 = () => {
           id="ins-5-4-phase"
           question="A temperature loop cycles slowly, roughly once every eight minutes. The output trend is clearly trailing the PV round each cycle. What is the most likely cause?"
           options={[
-            'Excessive integral action — it lags by a quarter cycle and dominates at low frequencies',
             'Excessive derivative action',
+            'Excessive integral action — it lags by a quarter cycle and dominates at low frequencies',
             'A sticking valve',
             'Excessive proportional gain',
           ]}
-          correctIndex={0}
+          correctIndex={1}
           explanation="Two clues agree. The output lagging the PV is the −90° signature of integral action, and a slow cycle is where integral is strongest, since its effect weakens as frequency rises. Reducing the integral action — fewer repeats per minute, or a longer integral time — is the change to make."
         />
 
@@ -578,11 +572,11 @@ const InstrumentationModule5Section4 = () => {
           question="A flow loop has been retuned three times in a month and is no better. The output trend is smooth and the PV moves in visible steps. What should happen next?"
           options={[
             'Reduce the gain further',
-            'Stop tuning — the smooth-output-stepped-PV pattern is stiction, and the fault is in the valve',
             'Increase the integral action',
+            'Stop tuning — the smooth-output-stepped-PV pattern is stiction, and the fault is in the valve',
             'Replace the transmitter',
           ]}
-          correctIndex={1}
+          correctIndex={2}
           explanation="Repeated tuning with no improvement is itself evidence that tuning is not the answer. The trend pattern names the fault: the controller is producing a smooth demand and the valve is delivering it in jumps. That is mechanical, and the loop should be handed to maintenance rather than adjusted further."
         />
 

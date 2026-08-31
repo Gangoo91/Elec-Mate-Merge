@@ -315,7 +315,7 @@ export const PostJobTab = ({ visit, onVisitUpdate }: PostJobTabProps) => {
           <Button
             onClick={handleSaveAfterPhotos}
             disabled={isSavingPhotos || photosSaved}
-            className="mt-4 h-11 w-full rounded-xl bg-elec-yellow text-[13px] font-semibold text-black hover:bg-elec-yellow/90 disabled:opacity-50 touch-manipulation"
+            className="mt-4 h-11 w-full rounded-xl bg-elec-yellow text-[13px] font-semibold text-black hover:bg-elec-yellow/90 disabled:bg-white/[0.08] disabled:text-white/70 touch-manipulation"
           >
             {isSavingPhotos ? (
               <>
@@ -453,7 +453,7 @@ export const PostJobTab = ({ visit, onVisitUpdate }: PostJobTabProps) => {
               disabled={
                 !completionSignatureData || !completionClientName.trim() || isSigningCompletion
               }
-              className="h-12 w-full rounded-xl bg-elec-yellow text-[14px] font-semibold text-black hover:bg-elec-yellow/90 disabled:opacity-50 touch-manipulation"
+              className="h-12 w-full rounded-xl bg-elec-yellow text-[14px] font-semibold text-black hover:bg-elec-yellow/90 disabled:bg-white/[0.08] disabled:text-white/70 touch-manipulation"
             >
               {isSigningCompletion ? (
                 <>
@@ -555,7 +555,7 @@ export const PostJobTab = ({ visit, onVisitUpdate }: PostJobTabProps) => {
             <Button
               onClick={handleRaiseInvoice}
               disabled={isRaisingInvoice}
-              className="h-11 shrink-0 rounded-full bg-elec-yellow px-5 text-[13px] font-semibold text-black hover:bg-elec-yellow/90 disabled:opacity-50 touch-manipulation"
+              className="h-11 shrink-0 rounded-full bg-elec-yellow px-5 text-[13px] font-semibold text-black hover:bg-elec-yellow/90 disabled:bg-white/[0.08] disabled:text-white/70 touch-manipulation"
             >
               {isRaisingInvoice ? (
                 <>

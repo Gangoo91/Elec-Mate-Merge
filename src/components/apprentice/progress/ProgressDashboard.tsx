@@ -17,6 +17,8 @@
  * numbers. Wide on desktop.
  */
 
+import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { useEffect, useMemo } from 'react';
 import { XPHeroCard } from './XPHeroCard';
 import { AchievementGallery } from './AchievementGallery';
@@ -95,8 +97,13 @@ export function ProgressDashboard() {
           totalMastered += progress.masteredCards;
           totalCards += meta.count;
           if (!setIdForCta) setIdForCta = setId;
-          if (progress.lastStudiedAt) {
-            const candidate = progress.lastStudiedAt;
+          // ⚠️ This read `progress.lastStudiedAt`. The field on SetProgress
+          // is `lastStudied` — so the expression was always undefined and
+          // the "Last studied …" hint on every topic card had never once
+          // rendered. Invisible to esbuild, which strips types without
+          // checking them.
+          if (progress.lastStudied) {
+            const candidate = progress.lastStudied;
             if (!lastStudiedAt || candidate > lastStudiedAt) lastStudiedAt = candidate;
           }
         }
@@ -144,6 +151,7 @@ export function ProgressDashboard() {
       {/* Predicted EPA grade — full-width hero: the headline "will I pass?" signal */}
       <EPAGradePredictor
         quizAverage={quizStats.averageScore}
+        quizCount={quizStats.totalQuizzes}
         flashcardMasteryPct={flashcardMasteryPct}
         recentQuizScore={recentQuizScore}
         trend={trend}
@@ -151,7 +159,7 @@ export function ProgressDashboard() {
       />
 
       {/* XP hero + KPI strip — one row on desktop */}
-      <div className="grid gap-5 lg:grid-cols-[360px_minmax(0,1fr)] lg:gap-8 lg:items-start">
+      <div className="grid gap-5 lg:grid-cols-[380px_minmax(0,1fr)] lg:gap-8 lg:items-start">
         <XPHeroCard />
         <KpiStrip
           quizCount={quizStats.totalQuizzes}
@@ -164,23 +172,13 @@ export function ProgressDashboard() {
         />
       </div>
 
-      {/* Achievements gallery — rarity tiers finally on display.
-          The Today page's next-badge row deep-links here. */}
-      <AchievementGallery
-        achievements={getAllAchievements()}
-        unlockedCount={getUnlockedCount()}
-        totalCount={getTotalCount()}
-        nextUp={nextUp}
-      />
-
-      {/* AM2 readiness — compact link row into the simulator */}
-      <Am2ReadinessRow />
-
-      {/* Topic mastery — full width */}
+      {/* Topic mastery — full width. Promoted above the badge gallery: it
+          is the section that answers "what should I revise?", and it was
+          sitting below thirty-odd locked badges that answer nothing. */}
       <TopicMasteryList topics={topics} />
 
-      {/* Charts side-by-side on lg+ */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 lg:gap-7">
+      {/* Charts side-by-side on lg+ — both collapse to a line when empty */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 lg:gap-7 items-start">
         <SkillRadarChart data={skillRadar} />
         <FlashcardMasteryWheel
           sets={flashcardInsights}
@@ -189,8 +187,21 @@ export function ProgressDashboard() {
         />
       </div>
 
-      {/* Recent activity */}
+      {/* Recent activity — real, dated, populated from day one. It was last,
+          about three thousand pixels down, under every empty section. */}
       <RecentActivityFeed />
+
+      {/* AM2 readiness — compact link row into the simulator */}
+      <Am2ReadinessRow />
+
+      {/* Achievements gallery — rarity tiers on display.
+          The Today page's next-badge row deep-links here. */}
+      <AchievementGallery
+        achievements={getAllAchievements()}
+        unlockedCount={getUnlockedCount()}
+        totalCount={getTotalCount()}
+        nextUp={nextUp}
+      />
     </div>
   );
 }
@@ -253,14 +264,14 @@ function Cell({
   highlight?: boolean;
 }) {
   return (
-    <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-3 sm:p-4 space-y-1.5">
+    <div className={cn('rounded-2xl border border-white/[0.06] p-3 sm:p-4 space-y-1.5', CARD_SURFACE)}>
       <Eyebrow>{label}</Eyebrow>
       <div
         className={`text-[22px] sm:text-[26px] font-mono font-semibold tabular-nums leading-none ${highlight ? 'text-elec-yellow' : 'text-white'}`}
       >
         {value}
       </div>
-      {sub && <span className="text-[11px] text-white/55 block">{sub}</span>}
+      {sub && <span className="text-[11px] text-white block">{sub}</span>}
     </div>
   );
 }

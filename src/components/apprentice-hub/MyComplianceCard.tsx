@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { supabase } from '@/integrations/supabase/client';
 import { realtimeChannelName } from '@/lib/realtimeChannel';
 
@@ -31,10 +32,10 @@ const STATUS_LABEL: Record<Status, string> = {
 };
 
 const STATUS_TONE: Record<Status, string> = {
-  green: 'text-white/85',
-  amber: 'text-white/85',
-  red: 'text-white/85',
-  unknown: 'text-white/85',
+  green: 'text-white',
+  amber: 'text-white',
+  red: 'text-white',
+  unknown: 'text-white',
 };
 
 const STATUS_BG: Record<Status, string> = {
@@ -193,12 +194,12 @@ export function MyComplianceCard() {
   if (!calc) {
     if (!hasAnyData) return null;
     return (
-      <section className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_10%)] overflow-hidden">
+      <section className={cn('rounded-2xl border border-white/[0.06] overflow-hidden', CARD_SURFACE)}>
         <div className="px-4 sm:px-5 py-4 sm:py-5">
-          <div className="text-[11px] sm:text-[11.5px] font-medium uppercase tracking-[0.18em] text-white/85">
+          <div className="text-[11px] sm:text-[11.5px] font-medium uppercase tracking-[0.18em] text-white">
             ESFA compliance
           </div>
-          <p className="mt-3 text-[12.5px] text-white/90 leading-snug">
+          <p className="mt-3 text-[12.5px] text-white leading-snug">
             We can't calculate compliance yet — your programme start and end dates aren't set. Ask
             your tutor to confirm them so we can show you whether you're on track.
           </p>
@@ -221,18 +222,18 @@ export function MyComplianceCard() {
           >
             ESFA compliance · {STATUS_LABEL[status]}
           </div>
-          <span className="text-[10.5px] tabular-nums text-white/85">
+          <span className="text-[10.5px] tabular-nums text-white">
             week {calc.elapsedWeeks} of {calc.totalWeeks}
           </span>
         </div>
 
         <div className="mt-3 grid grid-cols-3 gap-3 sm:gap-5">
           <Stat value={fmtHours(calc.verifiedHours)} label="Verified" tone="text-white" />
-          <Stat value={fmtHours(calc.expectedHours)} label="Expected by now" tone="text-white/95" />
+          <Stat value={fmtHours(calc.expectedHours)} label="Expected by now" tone="text-white" />
           <Stat
             value={fmtHours(calc.programmeTargetHours)}
             label="Programme target"
-            tone="text-white/85"
+            tone="text-white"
           />
         </div>
 
@@ -257,12 +258,12 @@ export function MyComplianceCard() {
         <p
           className={cn('mt-3 text-[12px] leading-snug',
             status === 'green'
-              ? 'text-emerald-200/85'
+              ? 'text-white'
               : status === 'amber'
-                ? 'text-amber-200/85'
+                ? 'text-elec-yellow'
                 : status === 'red'
-                  ? 'text-rose-200/85'
-                  : 'text-white/90'
+                  ? 'text-red-300'
+                  : 'text-white'
           )}
         >
           {status === 'green' &&
@@ -276,7 +277,7 @@ export function MyComplianceCard() {
           {calc.pendingHours > 0 && (
             <>
               {' '}
-              <span className="text-white/85">
+              <span className="text-white">
                 ({fmtHours(calc.pendingHours)} pending tutor verification.)
               </span>
             </>
@@ -295,14 +296,14 @@ function Stat({ value, label, tone }: { value: string; label: string; tone: stri
       >
         {value}
       </div>
-      <div className="mt-1 text-[10.5px] uppercase tracking-[0.14em] text-white/95">{label}</div>
+      <div className="mt-1 text-[10.5px] uppercase tracking-[0.14em] text-white">{label}</div>
     </div>
   );
 }
 
 function Skeleton() {
   return (
-    <section className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_10%)] overflow-hidden">
+    <section className={cn('rounded-2xl border border-white/[0.06] overflow-hidden', CARD_SURFACE)}>
       <div className="px-4 sm:px-5 py-4 sm:py-5 space-y-4">
         <div className="h-3 w-32 rounded-full bg-white/[0.05]" />
         <div className="grid grid-cols-3 gap-3">

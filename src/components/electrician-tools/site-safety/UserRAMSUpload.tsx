@@ -330,7 +330,7 @@ export const UserRAMSUpload = ({ open, onOpenChange, onUploadComplete }: UserRAM
               <Button
                 onClick={handleUpload}
                 disabled={!selectedFile || isUploading}
-                className="flex-1 h-12 text-base bg-elec-yellow text-black hover:brightness-110 disabled:opacity-50"
+                className="flex-1 h-12 text-base bg-elec-yellow text-black hover:brightness-110 disabled:bg-white/[0.08] disabled:text-white/70"
               >
                 {isUploading ? (
                   <>

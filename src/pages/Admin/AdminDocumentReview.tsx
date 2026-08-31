@@ -812,7 +812,7 @@ export default function AdminDocumentReview() {
                       <button
                         onClick={() => setShowBulkApproveDialog(true)}
                         disabled={bulkApproveMutation.isPending}
-                        className="h-10 px-4 inline-flex items-center gap-2 rounded-full bg-elec-yellow text-black text-[12.5px] font-medium hover:bg-elec-yellow/90 transition-colors touch-manipulation disabled:opacity-50"
+                        className="h-10 px-4 inline-flex items-center gap-2 rounded-full bg-elec-yellow text-black text-[12.5px] font-medium hover:bg-elec-yellow/90 transition-colors touch-manipulation disabled:bg-white/[0.08] disabled:text-white/70"
                       >
                         <Check className="h-4 w-4" />
                         Approve ({selectedIds.size})
@@ -1342,7 +1342,7 @@ export default function AdminDocumentReview() {
                         reviewMutation.isPending ||
                         (reviewAction !== 'approved' && !reviewNotes.trim())
                       }
-                      className="flex-1 h-12 touch-manipulation font-semibold bg-elec-yellow hover:bg-elec-yellow/90 text-black disabled:opacity-50"
+                      className="flex-1 h-12 touch-manipulation font-semibold bg-elec-yellow hover:bg-elec-yellow/90 text-black disabled:bg-white/[0.08] disabled:text-white/70"
                     >
                       {reviewMutation.isPending ? (
                         <>

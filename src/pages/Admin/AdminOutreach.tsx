@@ -1031,7 +1031,7 @@ export default function AdminOutreach() {
                 <button
                   onClick={sendTest}
                   disabled={!testEmail || !selectedCampaign}
-                  className="inline-flex h-11 shrink-0 touch-manipulation items-center justify-center gap-1.5 rounded-full bg-elec-yellow px-4 text-[13px] font-semibold text-black transition-colors hover:bg-elec-yellow/90 disabled:cursor-not-allowed disabled:opacity-40"
+                  className="inline-flex h-11 shrink-0 touch-manipulation items-center justify-center gap-1.5 rounded-full bg-elec-yellow px-4 text-[13px] font-semibold text-black transition-colors hover:bg-elec-yellow/90 disabled:cursor-not-allowed disabled:bg-white/[0.08] disabled:text-white/70"
                 >
                   <Send className="h-4 w-4" />
                   Test
@@ -1516,7 +1516,7 @@ apprenticeships@leeds.ac.uk,Jane Smith,Leeds City College,Apprenticeship Coordin
                 <button
                   onClick={() => importMutation.mutate()}
                   disabled={!csvText.trim() || importMutation.isPending}
-                  className="inline-flex h-12 w-full touch-manipulation items-center justify-center gap-2 rounded-full bg-elec-yellow text-[14px] font-semibold text-black transition-colors hover:bg-elec-yellow/90 disabled:cursor-not-allowed disabled:opacity-40"
+                  className="inline-flex h-12 w-full touch-manipulation items-center justify-center gap-2 rounded-full bg-elec-yellow text-[14px] font-semibold text-black transition-colors hover:bg-elec-yellow/90 disabled:cursor-not-allowed disabled:bg-white/[0.08] disabled:text-white/70"
                 >
                   {importMutation.isPending ? (
                     <Loader2 className="h-4 w-4 animate-spin" />

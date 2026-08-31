@@ -205,17 +205,10 @@ const InstrumentationModule4Section4 = () => {
         <TLDR
           points={[
             'Every instrument’s strength is also its failure mode. That is the useful way to compare them.',
-            'A multimeter’s very high input impedance is the cure for the loading problem in Section 1 — and the cause of phantom voltage.',
             '🔴 Phantom voltage: capacitive coupling from neighbouring energised conductors registers on an isolated one, because a high-impedance meter draws too little current to collapse it.',
-            'At 230 V and 50 Hz, about 23 pF of stray capacitance and a 10 MΩ meter gives roughly 16 V on a dead conductor.',
-            'More coupling makes it worse: about 100 pF over a longer shared run gives nearly 70 V.',
-            'An older, lower-impedance meter would never have shown it. Phantom voltage is a product of modern test equipment.',
             '🔴 It gives the impression of a connection where none exists — and isolation is proved by the procedure in Module 1 Section 5, never inferred from a voltmeter reading.',
             'Lower the impedance and the phantom collapses: 1 MΩ gives about a tenth of the reading, and a real load gives essentially nothing.',
-            'Set a meter to AC volts across a DC signal and it becomes a noise detector — near zero is healthy, anything appreciable is AC riding on the DC.',
-            'The frequency function on that AC reading often identifies the noise source outright.',
             'A clamp meter adds no burden and needs no break in the circuit. It pays in resolution — a general-purpose clamp cannot read a 4–20 mA loop.',
-            'A clamp reads the NET enclosed current, so both conductors together read near zero. A trap when measuring load, a diagnostic when hunting leakage.',
             'Only an oscilloscope shows the signal in time — shape, timing, and brief events the other two average away.',
           ]}
         />
@@ -827,7 +820,7 @@ const InstrumentationModule4Section4 = () => {
               <ChevronLeft className="h-3 w-3" /> Previous section
             </span>
             <span className="mt-1 truncate text-[14px] font-semibold text-white">
-              Accuracy and error
+              Accuracy, resolution and error
             </span>
           </button>
           <button

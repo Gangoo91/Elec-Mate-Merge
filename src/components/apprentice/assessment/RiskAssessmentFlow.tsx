@@ -115,7 +115,7 @@ const RiskAssessmentFlow = ({ progress }: RiskAssessmentFlowProps) => {
     if (stepNum < currentStep) return 'bg-white/[0.04] text-white border-white/10';
     if (stepNum === currentStep)
       return 'bg-elec-yellow text-black font-semibold border-elec-yellow';
-    return 'bg-transparent text-white/55 border-white/10';
+    return 'bg-transparent text-white/70 border-white/10';
   };
 
   return (
@@ -129,7 +129,7 @@ const RiskAssessmentFlow = ({ progress }: RiskAssessmentFlowProps) => {
               >
                 {step.number < currentStep ? <CheckCircle className="h-4 w-4" /> : step.number}
               </div>
-              <span className="text-[10px] uppercase tracking-[0.18em] text-white/55 mt-1 hidden sm:block">
+              <span className="text-[10px] uppercase tracking-[0.18em] text-white/70 mt-1 hidden sm:block">
                 {step.label}
               </span>
             </div>
@@ -143,8 +143,8 @@ const RiskAssessmentFlow = ({ progress }: RiskAssessmentFlowProps) => {
       </div>
 
       {progress.riskAssessments.length > 0 && (
-        <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3 sm:p-4 flex items-baseline justify-between">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-3 sm:p-4 flex items-baseline justify-between">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
             Saved
           </span>
           <span className="text-[12px] text-white/85 font-mono">
@@ -159,7 +159,7 @@ const RiskAssessmentFlow = ({ progress }: RiskAssessmentFlowProps) => {
           <>
             <HazardIdentificationMatrix onHazardSelected={handleHazardSelected} />
             {selectedHazard && (
-              <div className="rounded-xl border border-elec-yellow/20 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-2">
+              <div className="rounded-xl border border-elec-yellow/20 bg-white/[0.06] p-4 sm:p-5 space-y-2">
                 <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
                   Selected hazard
                 </span>

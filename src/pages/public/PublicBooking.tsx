@@ -1039,7 +1039,7 @@ const PublicBooking = () => {
             <Button
               onClick={isQuoteFlow ? handleRequestStartDate : handleBook}
               disabled={!name.trim() || !phone.trim() || submitting}
-              className="w-full h-12 bg-elec-yellow text-black font-bold text-base rounded-xl touch-manipulation hover:bg-elec-yellow/90 disabled:opacity-50"
+              className="w-full h-12 bg-elec-yellow text-black font-bold text-base rounded-xl touch-manipulation hover:bg-elec-yellow/90 disabled:bg-white/[0.08] disabled:text-white/70"
             >
               {submitting ? (
                 <Loader2 className="h-5 w-5 animate-spin" />

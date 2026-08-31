@@ -763,7 +763,7 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
                 type="submit"
                 disabled={!messageInput.trim() || sendMessage.isPending}
                 aria-label="Send message"
-                className="h-12 w-12 rounded-full bg-elec-yellow text-black flex items-center justify-center hover:bg-elec-yellow/90 active:scale-[0.98] disabled:opacity-40 transition-all touch-manipulation"
+                className="h-12 w-12 rounded-full bg-elec-yellow text-black flex items-center justify-center hover:bg-elec-yellow/90 active:scale-[0.98] disabled:bg-white/[0.08] disabled:text-white/70 transition-all touch-manipulation"
               >
                 {sendMessage.isPending ? (
                   <Loader2 className="h-5 w-5 animate-spin" />

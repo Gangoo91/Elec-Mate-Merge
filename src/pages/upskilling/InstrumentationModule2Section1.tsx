@@ -408,11 +408,11 @@ const InstrumentationModule2Section1 = () => {
           question="A pressure transmitter is ranged 2 bar to 10 bar. What is its span, and what does it output at 6 bar?"
           options={[
             'Span 10 bar, 12 mA',
-            'Span 8 bar, 12 mA',
             'Span 8 bar, 10 mA',
             'Span 12 bar, 14 mA',
+            'Span 8 bar, 12 mA',
           ]}
-          correctIndex={1}
+          correctIndex={3}
           explanation="Span = URV − LRV = 10 − 2 = 8 bar. 6 bar sits exactly halfway between 2 and 10, so the output is halfway between 4 and 20 mA — 12 mA."
         />
 
@@ -476,8 +476,8 @@ const InstrumentationModule2Section1 = () => {
         <InlineCheck
           id="ins-2-1-turndown"
           question="A transmitter has a maximum range of 0–300 psi and a turndown of 10:1. What is the narrowest span you may set it to?"
-          options={['3 psi', '30 psi', '10 psi', '300 psi']}
-          correctIndex={1}
+          options={['30 psi', '3 psi', '10 psi', '300 psi']}
+          correctIndex={0}
           explanation="Turndown is maximum allowable span divided by minimum allowable span. 300 psi ÷ 10 = 30 psi, so the narrowest supported range is 0–30 psi. Ranging it tighter than that puts you outside what the manufacturer supports — and, because accuracy is usually a percentage of span, makes the reading proportionally worse anyway."
         />
 
@@ -791,7 +791,7 @@ const InstrumentationModule2Section1 = () => {
               Next section <ChevronRight className="h-3 w-3" />
             </span>
             <span className="mt-1 truncate text-[14px] font-semibold text-white">
-              Temperature sensing elements
+              Temperature sensors
             </span>
           </button>
         </div>

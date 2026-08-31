@@ -376,7 +376,7 @@ const QuoteCardView: React.FC<QuoteCardViewProps> = ({
                       <button
                         onClick={() => onInvoiceAction(quote)}
                         disabled={loadingAction === `invoice-${quote.id}`}
-                        className="w-full h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark rounded-lg flex items-center justify-center gap-2 text-sm font-bold disabled:opacity-50"
+                        className="w-full h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark rounded-lg flex items-center justify-center gap-2 text-sm font-bold disabled:bg-white/[0.08] disabled:text-white/70"
                       >
                         <Receipt className="h-4 w-4" />
                         {loadingAction === `invoice-${quote.id}` ? 'Creating...' : 'Raise Invoice'}

@@ -330,7 +330,7 @@ export function CorrectiveActionsPanel({ sourceType, sourceId }: CorrectiveActio
                       <button
                         onClick={handleSubmit}
                         disabled={!description.trim() || createAction.isPending}
-                        className="flex-1 h-11 rounded-xl bg-elec-yellow text-black text-sm font-bold touch-manipulation active:scale-[0.97] disabled:opacity-40"
+                        className="flex-1 h-11 rounded-xl bg-elec-yellow text-black text-sm font-bold touch-manipulation active:scale-[0.97] disabled:bg-white/[0.08] disabled:text-white/70"
                       >
                         {createAction.isPending ? (
                           <Loader2 className="h-4 w-4 animate-spin mx-auto" />

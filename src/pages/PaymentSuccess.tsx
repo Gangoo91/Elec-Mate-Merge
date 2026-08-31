@@ -87,7 +87,7 @@ const planInfo: Record<string, PlanConfig> = {
     name: 'Apprentice',
     features: [
       'Study Centre — 24 in-depth courses',
-      'Mock exams · 500+ practice questions · 75 videos',
+      'Mock exams · 15,000+ practice questions · 400+ videos',
       'AM2 and EPA simulators with gateway readiness',
       'Site diary, OJT logbook, portfolio builder',
       'Ask Dave — AI mentor with chat and image upload',
@@ -111,7 +111,7 @@ const planInfo: Record<string, PlanConfig> = {
     name: 'Apprentice',
     features: [
       'Study Centre — 24 in-depth courses',
-      'Mock exams · 500+ practice questions · 75 videos',
+      'Mock exams · 15,000+ practice questions · 400+ videos',
       'AM2 and EPA simulators with gateway readiness',
       'Site diary, OJT logbook, portfolio builder',
       'Ask Dave — AI mentor with chat and image upload',

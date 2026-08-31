@@ -9,6 +9,13 @@ interface SEOInlineLeadMagnetProps {
   description?: string;
   /** Brief bullet list of what they get. */
   bullets?: string[];
+  /**
+   * Which magnet to send. Must be a key in the edge function's OTHER_MAGNETS
+   * registry, or the subscriber gets no file. Defaults to the cheatsheet.
+   */
+  source?: string;
+  /** Analytics label, kept separable per magnet. */
+  analyticsLabel?: string;
 }
 
 /**
@@ -30,12 +37,14 @@ export function SEOInlineLeadMagnet({
     'New model forms (EIC + MEIWC)',
     'Free PDF — no subscription',
   ],
+  source = 'lead_magnet_cheatsheet',
+  analyticsLabel = 'cheatsheet_seo',
 }: SEOInlineLeadMagnetProps) {
   const handleSuccess = ({ downloadUrl }: { downloadUrl: string | null }) => {
     if (!downloadUrl) return;
     // Distinct magnet label so SEO-page downloads are separable from the
     // landing page's — the two audiences convert very differently.
-    trackLeadMagnetDownloaded({ magnet: 'cheatsheet_seo' });
+    trackLeadMagnetDownloaded({ magnet: analyticsLabel });
     window.open(downloadUrl, '_blank', 'noopener,noreferrer');
   };
 
@@ -61,7 +70,7 @@ export function SEOInlineLeadMagnet({
 
       <div className="mt-5">
         <EmailCaptureForm
-          source="lead_magnet_cheatsheet"
+          source={source}
           placeholder="you@email.com"
           buttonLabel="Send me the PDF"
           successMessage="Check your email — the PDF is on its way."

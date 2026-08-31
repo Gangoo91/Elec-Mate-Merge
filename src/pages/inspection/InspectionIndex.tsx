@@ -168,7 +168,7 @@ const InspectionIndex = () => {
       return;
     }
     // Types that go straight to /new (no hub page)
-    const directToNewTypes = ['testing-only', 'bess', 'lightning-protection', 'g98-commissioning', 'g99-commissioning', 'smoke-co-alarm', 'disconnection', 'visual-condition', 'routine-inspection'];
+    const directToNewTypes = ['testing-only', 'bess', 'plug-in-solar', 'lightning-protection', 'g98-commissioning', 'g99-commissioning', 'smoke-co-alarm', 'disconnection', 'visual-condition', 'routine-inspection'];
     if (dedicatedRouteTypes.includes(effectiveType) && !reportId) {
       if (directToNewTypes.includes(effectiveType)) {
         navigate(`/electrician/inspection-testing/${effectiveType}/new`);

@@ -5,17 +5,45 @@
  * Pure SVG — no charting library needed.
  */
 
+import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { type SkillAxis } from '@/hooks/useUnifiedProgress';
+import { Eyebrow } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
 
 interface SkillRadarChartProps {
   data: SkillAxis[];
 }
 
 export function SkillRadarChart({ data }: SkillRadarChartProps) {
-  const size = 240;
+  /*
+   * ⚠️ The viewBox used to be 240 with labels pushed to 120% of a 90px
+   * radius — that put the bottom label's score line at y≈252 in a 240-tall
+   * box, so "Design 0%" was sliced in half. Box widened and the radius
+   * pulled in; the longest label ("Regulations") now clears the edge.
+   */
+  const size = 260;
   const centre = size / 2;
-  const maxRadius = 90;
+  const maxRadius = 88;
   const levels = 4; // concentric rings
+
+  /*
+   * An apprentice who has not sat anything scores 0 on all six axes, and a
+   * radar of six zeroes is a single dot in an empty hexagon — 500px of
+   * chrome saying nothing. Say what fills it instead.
+   */
+  const hasSignal = data.some((d) => d.score > 0);
+  if (!hasSignal) {
+    return (
+      <div className={cn('rounded-2xl border border-white/[0.06] p-5 space-y-2.5', CARD_SURFACE)}>
+        <Eyebrow>Skill radar</Eyebrow>
+        <p className="text-[13px] text-white leading-relaxed">
+          Nothing to plot yet. Quizzes and flashcards score you across{' '}
+          {data.map((d) => d.subject).join(', ')} — the shape appears once any one of them has a
+          result, and shows where you are strong at a glance.
+        </p>
+      </div>
+    );
+  }
 
   // Calculate point positions for a regular polygon
   const getPoint = (index: number, value: number) => {
@@ -54,10 +82,8 @@ export function SkillRadarChart({ data }: SkillRadarChartProps) {
   });
 
   return (
-    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-3">
-      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-        Skill radar
-      </span>
+    <div className={cn('rounded-2xl border border-white/[0.06] p-4 space-y-3', CARD_SURFACE)}>
+      <Eyebrow>Skill radar</Eyebrow>
 
       <div className="flex justify-center">
         <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
@@ -114,7 +140,7 @@ export function SkillRadarChart({ data }: SkillRadarChartProps) {
                   y={p.y}
                   textAnchor="middle"
                   dominantBaseline="middle"
-                  className="fill-white/85 text-[10px] font-medium"
+                  className="fill-white text-[10px] font-medium"
                 >
                   {p.label}
                 </text>

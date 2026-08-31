@@ -196,7 +196,7 @@ const EventTriggersQuiz = () => {
           <Button
             onClick={handleNext}
             disabled={!hasAnswered}
-            className="bg-elec-yellow text-elec-dark hover:bg-yellow-600 disabled:opacity-50"
+            className="bg-elec-yellow text-elec-dark hover:bg-yellow-600 disabled:bg-white/[0.08] disabled:text-white/70"
           >
             {currentQuestion === eventTriggersQuizData.length - 1 ? 'Finish Quiz' : 'Next'}
           </Button>

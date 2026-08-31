@@ -1,3 +1,15 @@
+/**
+ * The four numbers that say how study is going (ELE-1655).
+ *
+ * Rebuilt on the shared card surface as a divided stat strip — the same
+ * treatment the rest of the app gives a row of figures — instead of a grey
+ * panel with `text-white/55` labels. Labels are the standard eyebrow, values
+ * are `statValueCn`, and the whole thing reaches the edges of a phone.
+ */
+import { cn } from '@/lib/utils';
+import { eyebrowCn, statValueCn } from '@/components/shared/surfaceStyles';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
+
 interface WeeklyProgressCardProps {
   totalCardsReviewed: number;
   currentStreak: number;
@@ -14,37 +26,30 @@ const WeeklyProgressCard = ({
   overallProgress,
 }: WeeklyProgressCardProps) => {
   const metrics = [
-    { label: 'Cards reviewed', value: totalCardsReviewed.toLocaleString() },
-    { label: 'Day streak', value: String(currentStreak) },
-    { label: 'Sets mastered', value: `${masteredSetsCount}/${totalSets}` },
+    { label: 'Reviewed', value: totalCardsReviewed.toLocaleString() },
+    { label: 'Streak', value: String(currentStreak) },
+    { label: 'Mastered', value: `${masteredSetsCount}/${totalSets}` },
     { label: 'Overall', value: `${overallProgress}%` },
   ];
 
   return (
-    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-3">
-      <div className="flex items-baseline justify-between">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-          Your progress
-        </span>
-        <span className="text-[12px] text-white/85 font-mono">{overallProgress}%</span>
-      </div>
-
-      <div className="grid grid-cols-4 gap-2">
+    <div className={cn('overflow-hidden rounded-2xl border border-elec-yellow/35', CARD_SURFACE)}>
+      <div className="grid grid-cols-4 divide-x divide-white/[0.14]">
         {metrics.map((m) => (
-          <div key={m.label} className="space-y-1">
-            <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55 leading-tight">
-              {m.label}
-            </p>
-            <p className="text-[16px] font-semibold text-white font-mono leading-tight">{m.value}</p>
+          <div key={m.label} className="px-3 py-3.5 sm:px-4">
+            <span className={cn(eyebrowCn, 'block leading-tight')}>{m.label}</span>
+            <p className={cn(statValueCn, 'text-white')}>{m.value}</p>
           </div>
         ))}
       </div>
 
-      <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
-        <div
-          className="h-full bg-elec-yellow transition-all duration-500"
-          style={{ width: `${overallProgress}%` }}
-        />
+      <div className="px-4 pb-4">
+        <div className="h-1.5 w-full overflow-hidden rounded-full bg-white/[0.10]">
+          <div
+            className="h-full rounded-full bg-elec-yellow transition-[width] duration-500"
+            style={{ width: `${overallProgress}%` }}
+          />
+        </div>
       </div>
     </div>
   );

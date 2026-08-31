@@ -160,7 +160,7 @@ export function ExpenseMileageForm({
         type="button"
         onClick={handleSubmit}
         disabled={!isValid || isSubmitting}
-        className="h-12 w-full rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-colors touch-manipulation active:scale-[0.98] disabled:opacity-50"
+        className="h-12 w-full rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-colors touch-manipulation active:scale-[0.98] disabled:bg-white/[0.08] disabled:text-white/70"
       >
         {isSubmitting ? 'Saving…' : `Log £${claim.amount.toFixed(2)} mileage`}
       </button>

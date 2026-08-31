@@ -370,7 +370,7 @@ export function SafetyTemplateEditor({
                   type="button"
                   onClick={handleV2Save}
                   disabled={updateDocument.isPending}
-                  className="h-9 px-3 rounded-lg text-[12.5px] font-semibold bg-elec-yellow text-black hover:brightness-110 transition-colors disabled:opacity-50"
+                  className="h-9 px-3 rounded-lg text-[12.5px] font-semibold bg-elec-yellow text-black hover:brightness-110 transition-colors disabled:bg-white/[0.08] disabled:text-white/70"
                 >
                   {updateDocument.isPending ? (
                     <>
@@ -761,7 +761,7 @@ export function SafetyTemplateEditor({
             <button
               onClick={handleSave}
               disabled={updateDocument.isPending || !hasChanges}
-              className="flex-1 h-11 rounded-xl bg-elec-yellow text-black text-sm font-semibold touch-manipulation active:scale-[0.97] active:opacity-90 transition-all disabled:opacity-50 flex items-center justify-center gap-2"
+              className="flex-1 h-11 rounded-xl bg-elec-yellow text-black text-sm font-semibold touch-manipulation active:scale-[0.97] active:opacity-90 transition-all disabled:bg-white/[0.08] disabled:text-white/70 flex items-center justify-center gap-2"
             >
               {updateDocument.isPending ? (
                 <Loader2 className="h-4 w-4 animate-spin" />

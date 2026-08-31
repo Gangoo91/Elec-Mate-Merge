@@ -546,7 +546,7 @@ function QuestionReview({
                   type="button"
                   onClick={handleSaveOverride}
                   disabled={saving}
-                  className="h-9 px-3 rounded-full bg-elec-yellow text-black text-[11.5px] font-semibold hover:bg-elec-yellow/90 disabled:opacity-50 touch-manipulation"
+                  className="h-9 px-3 rounded-full bg-elec-yellow text-black text-[11.5px] font-semibold hover:bg-elec-yellow/90 disabled:bg-white/[0.08] disabled:text-white/70 touch-manipulation"
                 >
                   {saving ? 'Saving…' : 'Save override'}
                 </button>

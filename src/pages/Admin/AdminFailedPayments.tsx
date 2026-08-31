@@ -578,7 +578,7 @@ export default function AdminFailedPayments() {
                   paydayCronMutation.mutate();
                 }}
                 disabled={paydayCronMutation.isPending}
-                className="h-10 px-4 rounded-full bg-elec-yellow text-black text-[13px] font-semibold disabled:opacity-50 touch-manipulation whitespace-nowrap inline-flex items-center gap-2"
+                className="h-10 px-4 rounded-full bg-elec-yellow text-black text-[13px] font-semibold disabled:bg-white/[0.08] disabled:text-white/70 touch-manipulation whitespace-nowrap inline-flex items-center gap-2"
               >
                 {paydayCronMutation.isPending ? (
                   <>
@@ -802,7 +802,7 @@ export default function AdminFailedPayments() {
                                   haptic.medium();
                                   sendNextMutation.mutate(selectedRecord!.id);
                                 }}
-                                className="h-9 px-3 rounded-full bg-elec-yellow text-black text-[12px] font-semibold flex items-center gap-1.5 disabled:opacity-50 touch-manipulation"
+                                className="h-9 px-3 rounded-full bg-elec-yellow text-black text-[12px] font-semibold flex items-center gap-1.5 disabled:bg-white/[0.08] disabled:text-white/70 touch-manipulation"
                               >
                                 {sendNextMutation.isPending ? (
                                   <Loader2 className="h-3.5 w-3.5 animate-spin" />
@@ -953,7 +953,7 @@ export default function AdminFailedPayments() {
                           haptic.medium();
                           sendNextMutation.mutate(selectedRecord.id);
                         }}
-                        className="w-full h-12 rounded-full bg-elec-yellow text-black text-[13px] font-semibold flex items-center justify-center gap-2 disabled:opacity-50 touch-manipulation"
+                        className="w-full h-12 rounded-full bg-elec-yellow text-black text-[13px] font-semibold flex items-center justify-center gap-2 disabled:bg-white/[0.08] disabled:text-white/70 touch-manipulation"
                       >
                         {sendNextMutation.isPending ? (
                           <Loader2 className="h-4 w-4 animate-spin" />
@@ -1063,7 +1063,7 @@ export default function AdminFailedPayments() {
                       body: messageBody.trim(),
                     });
                   }}
-                  className="w-full h-12 rounded-full bg-elec-yellow text-black text-[13px] font-semibold flex items-center justify-center gap-2 disabled:opacity-50 touch-manipulation"
+                  className="w-full h-12 rounded-full bg-elec-yellow text-black text-[13px] font-semibold flex items-center justify-center gap-2 disabled:bg-white/[0.08] disabled:text-white/70 touch-manipulation"
                 >
                   {sendPersonalMessageMutation.isPending ? (
                     <Loader2 className="h-4 w-4 animate-spin" />
@@ -1108,7 +1108,7 @@ export default function AdminFailedPayments() {
                       if (!selectedRecord) return;
                       cancelSubMutation.mutate(selectedRecord.id);
                     }}
-                    className="w-full h-12 rounded-full bg-elec-yellow text-black text-[13px] font-semibold flex items-center justify-center gap-2 disabled:opacity-50 touch-manipulation"
+                    className="w-full h-12 rounded-full bg-elec-yellow text-black text-[13px] font-semibold flex items-center justify-center gap-2 disabled:bg-white/[0.08] disabled:text-white/70 touch-manipulation"
                   >
                     {cancelSubMutation.isPending ? (
                       <Loader2 className="h-4 w-4 animate-spin" />

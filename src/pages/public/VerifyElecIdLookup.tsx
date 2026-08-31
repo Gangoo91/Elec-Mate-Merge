@@ -68,7 +68,7 @@ const VerifyElecIdLookup = () => {
             <Button
               onClick={go}
               disabled={number.trim().length < 4}
-              className="h-13 min-h-[52px] px-6 rounded-xl bg-elec-yellow text-black font-semibold hover:bg-yellow-400 touch-manipulation disabled:opacity-40"
+              className="h-13 min-h-[52px] px-6 rounded-xl bg-elec-yellow text-black font-semibold hover:bg-yellow-400 touch-manipulation disabled:bg-white/[0.08] disabled:text-white/70"
             >
               Verify
             </Button>

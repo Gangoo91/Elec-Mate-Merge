@@ -213,7 +213,7 @@ export function LatePaymentHelpSheet({
                   <button
                     onClick={() => sendLetter('reminder')}
                     disabled={sending !== null}
-                    className="flex-1 h-11 rounded-xl bg-elec-yellow text-black text-[13px] font-semibold touch-manipulation disabled:opacity-60"
+                    className="flex-1 h-11 rounded-xl bg-elec-yellow text-black text-[13px] font-semibold touch-manipulation disabled:bg-white/[0.08] disabled:text-white/70"
                   >
                     {sending === 'reminder' ? 'Sending…' : 'Email to client'}
                   </button>
@@ -256,7 +256,7 @@ export function LatePaymentHelpSheet({
                   <button
                     onClick={() => sendLetter('lba')}
                     disabled={sending !== null}
-                    className="flex-1 h-11 rounded-xl bg-elec-yellow text-black text-[13px] font-semibold touch-manipulation disabled:opacity-60"
+                    className="flex-1 h-11 rounded-xl bg-elec-yellow text-black text-[13px] font-semibold touch-manipulation disabled:bg-white/[0.08] disabled:text-white/70"
                   >
                     {sending === 'lba' ? 'Sending…' : 'Email to client'}
                   </button>

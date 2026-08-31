@@ -165,6 +165,8 @@ const reportTypeFromId = (reportId: string): string => {
   const lc = reportId.toLowerCase();
   return lc.startsWith('pre-purchase-survey')
     ? 'pre-purchase-survey'
+    : lc.startsWith('plug-in-solar')
+    ? 'plug-in-solar'
     : lc.startsWith('visual-condition')
     ? 'visual-condition'
     : lc.startsWith('routine-inspection')
@@ -291,6 +293,16 @@ const calculateReportStatus = ({
     return 'completed';
   if (reportType === 'smoke-co-alarm' && data.installerSignature) return 'completed';
   if (reportType === 'heat-pump' && data.engineerSignature && data.commissioningDate)
+    return 'completed';
+  /*
+   * Plug-in solar (ELE-1660). Completes on the ASSESSOR's signature, not the
+   * commissioning one: an assessment-only visit is a finished job in its own
+   * right, and most of them will be — the electrician is often not the person
+   * who plugs the device in. Paired with an installation address so that
+   * signature autofill alone cannot flip a blank certificate to completed, per
+   * the testing-only lesson below.
+   */
+  if (reportType === 'plug-in-solar' && data.assessorSignature && data.installationAddress)
     return 'completed';
   // Needs someone to have identified WHO the results belong to, not just a
   // signature. `testerSignature` alone flipped a cert to 'completed' as soon as

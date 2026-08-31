@@ -40,6 +40,7 @@ type Source =
   | 'landing_form'
   | 'exit_intent'
   | 'lead_magnet_cheatsheet'
+  | 'lead_magnet_plug_in_solar'
   | 'mock_exam_result'
   | 'calculator_result'
   | 'footer'
@@ -380,6 +381,22 @@ serve(withSentry('newsletter-subscribe', async (req) => {
           'All 114 symbols, grouped by category',
           'A4 and print-ready — pin it up in the van',
           'IEC 60617, per BS 7671 Regulation 514.9.1',
+        ],
+      },
+      lead_magnet_plug_in_solar: {
+        // Short on purpose — `name` drives BOTH the subject line and the H1.
+        name: 'plug-in solar guide',
+        url: `${Deno.env.get('SUPABASE_URL') || 'https://jtwygbeceundfgnkirof.supabase.co'}/storage/v1/object/public/lead-magnets/elec-mate-plug-in-solar-guide.pdf`,
+        previewImage: `${Deno.env.get('SUPABASE_URL') || 'https://jtwygbeceundfgnkirof.supabase.co'}/storage/v1/object/public/lead-magnets/elec-mate-plug-in-solar-guide-preview.jpg`,
+        previewAlt: 'The plug-in solar guide cover',
+        filename: 'Elec-Mate-Plug-in-Solar-Guide.pdf',
+        blurb:
+          'What changed on 27 August 2026 under SI 2026/848 — what a plug-in solar device actually is, the limits, what is not permitted, where the work is for electricians, and what the manufacturer is required to tell your customer.',
+        utmMedium: 'plug_in_solar_guide',
+        facts: [
+          '800 VA, 2,000 W DC — and what is prohibited',
+          'The RCD question: recommended vs required',
+          'Eight A4 pages — free to print and share',
         ],
       },
       lead_magnet_zs_ze_reference: {

@@ -197,35 +197,35 @@ const ResourcesTab = () => {
     switch (category) {
       case 'BS7671':
         return {
-          bg: 'bg-blue-500/10',
+          bg: 'bg-white/[0.06]',
           text: 'text-blue-400',
           border: 'border-blue-500/30',
           icon: <BookOpen className="h-4 w-4" />,
         };
       case 'Testing':
         return {
-          bg: 'bg-green-500/10',
+          bg: 'bg-white/[0.06]',
           text: 'text-green-400',
           border: 'border-green-500/30',
           icon: <Wrench className="h-4 w-4" />,
         };
       case 'Safety':
         return {
-          bg: 'bg-red-500/10',
+          bg: 'bg-white/[0.06]',
           text: 'text-red-400',
           border: 'border-red-500/30',
           icon: <Shield className="h-4 w-4" />,
         };
       case 'Equipment':
         return {
-          bg: 'bg-purple-500/10',
+          bg: 'bg-white/[0.06]',
           text: 'text-purple-400',
           border: 'border-purple-500/30',
           icon: <Calculator className="h-4 w-4" />,
         };
       case 'Wago':
         return {
-          bg: 'bg-orange-500/10',
+          bg: 'bg-white/[0.06]',
           text: 'text-orange-400',
           border: 'border-orange-500/30',
           icon: <Cable className="h-4 w-4" />,
@@ -243,16 +243,16 @@ const ResourcesTab = () => {
   const getTypeConfig = (type: string) => {
     switch (type) {
       case 'document':
-        return { bg: 'bg-blue-500/10', text: 'text-blue-400', border: 'border-blue-500/30' };
+        return { bg: 'bg-white/[0.06]', text: 'text-blue-400', border: 'border-blue-500/30' };
       case 'video':
-        return { bg: 'bg-purple-500/10', text: 'text-purple-400', border: 'border-purple-500/30' };
+        return { bg: 'bg-white/[0.06]', text: 'text-purple-400', border: 'border-purple-500/30' };
       case 'calculator':
-        return { bg: 'bg-green-500/10', text: 'text-green-400', border: 'border-green-500/30' };
+        return { bg: 'bg-white/[0.06]', text: 'text-green-400', border: 'border-green-500/30' };
       case 'guide':
-        return { bg: 'bg-cyan-500/10', text: 'text-cyan-400', border: 'border-cyan-500/30' };
+        return { bg: 'bg-white/[0.06]', text: 'text-cyan-400', border: 'border-cyan-500/30' };
       case 'standard':
         return {
-          bg: 'bg-elec-yellow/10',
+          bg: 'bg-white/[0.06]',
           text: 'text-elec-yellow',
           border: 'border-elec-yellow/30',
         };
@@ -284,7 +284,7 @@ const ResourcesTab = () => {
     <div className="space-y-6 animate-fade-in">
       {/* Hero Header Card */}
       <Card className="bg-gradient-to-br from-white/5 to-elec-card border-cyan-500/20 overflow-hidden relative">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-cyan-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+        <div className="absolute top-0 right-0 w-64 h-64 bg-white/[0.06] rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
         <CardHeader className="relative">
           <CardTitle className="text-white flex items-center gap-3">
             <div className="p-2.5 rounded-xl bg-gradient-to-br from-cyan-500/20 to-cyan-500/5 border border-cyan-500/30">
@@ -352,7 +352,7 @@ const ResourcesTab = () => {
                     className="bg-gradient-to-br from-white/5 to-elec-card border-white/10 hover:border-elec-yellow/30 transition-all duration-300 cursor-pointer group overflow-hidden relative"
                     onClick={() => handleResourceClick(resource)}
                   >
-                    <div className="absolute top-0 right-0 w-24 h-24 bg-elec-yellow/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <div className="absolute top-0 right-0 w-24 h-24 bg-white/[0.06] rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity" />
                     <CardHeader className="pb-3 relative">
                       <div className="flex items-start gap-3">
                         <div
@@ -386,7 +386,7 @@ const ResourcesTab = () => {
 
                         <Button
                           size="sm"
-                          className="h-9 bg-elec-yellow/10 hover:bg-elec-yellow/20 text-elec-yellow border border-elec-yellow/30 touch-manipulation"
+                          className="h-9 bg-white/[0.06] hover:bg-elec-yellow/20 text-elec-yellow border border-elec-yellow/30 touch-manipulation"
                         >
                           {resource.downloadUrl ? (
                             <>
@@ -412,7 +412,7 @@ const ResourcesTab = () => {
 
       {/* Featured Wago Resources Section */}
       <Card className="bg-gradient-to-br from-white/5 to-elec-card border-orange-500/20 overflow-hidden relative">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-orange-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+        <div className="absolute top-0 right-0 w-64 h-64 bg-white/[0.06] rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
         <CardHeader className="relative">
           <CardTitle className="text-white flex items-center gap-3">
             <div className="p-2.5 rounded-xl bg-gradient-to-br from-orange-500/20 to-orange-500/5 border border-orange-500/30">
@@ -431,7 +431,7 @@ const ResourcesTab = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="p-4 rounded-xl bg-white/10 border border-orange-500/20">
               <div className="flex items-center gap-3 mb-3">
-                <div className="p-2 rounded-lg bg-orange-500/20">
+                <div className="p-2 rounded-lg bg-white/[0.06]">
                   <BookOpen className="h-4 w-4 text-orange-400" />
                 </div>
                 <h4 className="font-semibold text-white">Quick Reference</h4>
@@ -453,7 +453,7 @@ const ResourcesTab = () => {
 
             <div className="p-4 rounded-xl bg-white/10 border border-green-500/20">
               <div className="flex items-center gap-3 mb-3">
-                <div className="p-2 rounded-lg bg-green-500/20">
+                <div className="p-2 rounded-lg bg-white/[0.06]">
                   <Shield className="h-4 w-4 text-green-400" />
                 </div>
                 <h4 className="font-semibold text-white">Safety Benefits</h4>
@@ -478,11 +478,11 @@ const ResourcesTab = () => {
 
       {/* Disclaimer */}
       <Card className="bg-gradient-to-br from-white/5 to-elec-card border-elec-yellow/20 overflow-hidden relative">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-elec-yellow/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+        <div className="absolute top-0 right-0 w-64 h-64 bg-white/[0.06] rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
         <CardContent className="pt-6 relative">
-          <div className="p-4 rounded-xl bg-elec-yellow/10 border border-elec-yellow/30">
+          <div className="p-4 rounded-xl bg-white/[0.06] border border-elec-yellow/30">
             <div className="flex items-start gap-3">
-              <div className="p-2 rounded-lg bg-elec-yellow/20 flex-shrink-0">
+              <div className="p-2 rounded-lg bg-white/[0.06] flex-shrink-0">
                 <AlertTriangle className="h-4 w-4 text-elec-yellow" />
               </div>
               <div>

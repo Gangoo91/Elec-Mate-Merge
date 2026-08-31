@@ -489,18 +489,31 @@ export const ACHIEVEMENT_CATEGORY_META: Record<
 };
 
 /** Rarity display colours */
+/*
+ * Rarity reads as INTENSITY, not hue.
+ *
+ * This was grey / green / blue / purple / volt — four colours the app does
+ * not otherwise use, so a wall of badges looked like it belonged to a
+ * different product, and nothing about "blue" told you rare beat green.
+ * Rarity now climbs a single axis the eye can order without a key: quiet
+ * white at common, full volt at legendary.
+ *
+ * Backgrounds stay white-based below legendary on purpose — translucent
+ * volt over the near-black ground goes muddy brown, so only the top tier
+ * earns a volt wash, and it is kept faint enough to stay clean.
+ */
 export const RARITY_COLOURS: Record<AchievementRarity, string> = {
-  common: 'text-gray-400',
-  uncommon: 'text-green-400',
-  rare: 'text-blue-400',
-  epic: 'text-purple-400',
+  common: 'text-white',
+  uncommon: 'text-white',
+  rare: 'text-white',
+  epic: 'text-elec-yellow',
   legendary: 'text-elec-yellow',
 };
 
 export const RARITY_BG_COLOURS: Record<AchievementRarity, string> = {
-  common: 'bg-gray-400/10',
-  uncommon: 'bg-green-400/10',
-  rare: 'bg-blue-400/10',
-  epic: 'bg-purple-400/10',
-  legendary: 'bg-elec-yellow/10',
+  common: 'bg-white/[0.04]',
+  uncommon: 'bg-white/[0.06]',
+  rare: 'bg-white/[0.09]',
+  epic: 'bg-white/[0.12]',
+  legendary: 'bg-elec-yellow/[0.06]',
 };

@@ -15,6 +15,7 @@ const StudyCentreIndex = lazyWithRetry(() => import('@/pages/study-centre/StudyC
 const LeaderboardPage = lazyWithRetry(() => import('@/pages/study-centre/LeaderboardPage'));
 const BrowseCoursesPage = lazyWithRetry(() => import('@/pages/study-centre/BrowseCoursesPage'));
 const LearningVideos = lazyWithRetry(() => import('@/pages/apprentice/LearningVideos'));
+const OnJobFlashcards = lazyWithRetry(() => import('@/pages/apprentice/OnJobFlashcards'));
 const NotFound = lazyWithRetry(() => import('@/pages/apprentice-courses/NotFound'));
 const MockExamsPage = lazyWithRetry(() => import('@/pages/study-centre/MockExamsPage'));
 
@@ -354,6 +355,10 @@ export default function StudyCentreRoutes() {
             before the page existed — that link used to render blank. */}
         <Route path="mock-exams" element={<MockExamsPage />} />
         <Route path="videos" element={<LearningVideos backTo="/study-centre" />} />
+        {/* Same reason as videos above: the Study Centre tile used to link
+            straight to /apprentice/on-job-tools/flashcards, which leaves this
+            route tree — the outlet then matched nothing and rendered blank. */}
+        <Route path="flashcards" element={<OnJobFlashcards backTo="/study-centre" />} />
         <Route path="apprentice/*" element={<ApprenticeCourseRoutes />} />
         <Route path="upskilling/*" element={<UpskillingRoutes />} />
         <Route path="business-fundamentals/*" element={<BusinessFundamentalsRoutes />} />

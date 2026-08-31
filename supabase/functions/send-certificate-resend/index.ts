@@ -555,6 +555,9 @@ const handler = async (req: Request): Promise<Response> => {
       // for the inside of a consumer unit, not something you email a client.
       'board-schedule': 'generate-board-schedule-pdf',
       'visual-condition': 'generate-visual-condition-pdf',
+      // ELE-1660. Without this the send throws "Unsupported certificate type"
+      // and the email fails with a bare non-2xx — the map is the gate.
+      'plug-in-solar': 'generate-plug-in-solar-pdf',
       'routine-inspection': 'generate-routine-inspection-pdf',
       // Same generator as the VCR — one template renders both (ELE-1634).
       'pre-purchase-survey': 'generate-visual-condition-pdf',
@@ -721,6 +724,7 @@ const handler = async (req: Request): Promise<Response> => {
       'testing-only': 'Testing Only',
       'board-schedule': 'Board Schedule',
       'visual-condition': 'Visual Condition Report',
+      'plug-in-solar': 'Plug-in Solar Assessment',
       'routine-inspection': 'Routine Inspection Report',
       'pre-purchase-survey': 'Pre-Purchase Electrical Survey',
     };

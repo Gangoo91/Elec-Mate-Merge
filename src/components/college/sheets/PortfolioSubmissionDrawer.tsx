@@ -572,8 +572,7 @@ function SignOffChainBlock({ submissionId }: { submissionId: string }) {
   const hasAnything =
     chain.signatures.length > 0 ||
     chain.signedOff.at ||
-    chain.iqaVerified.at ||
-    chain.itemsSupervisorVerified > 0;
+    chain.iqaVerified.at;
 
   if (!hasAnything) {
     return (
@@ -600,11 +599,6 @@ function SignOffChainBlock({ submissionId }: { submissionId: string }) {
             Sign-off chain
           </div>
         </div>
-        {chain.itemsTotal > 0 && (
-          <div className="text-[10.5px] text-white/55 tabular-nums">
-            {chain.itemsSupervisorVerified}/{chain.itemsTotal} items supervisor-verified
-          </div>
-        )}
       </div>
 
       {/* Role pills — quick scan */}

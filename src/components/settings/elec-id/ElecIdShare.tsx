@@ -398,7 +398,7 @@ const ElecIdShare = () => {
         Cancel
       </button>
       <button
-        className="flex-1 h-11 rounded-xl bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation disabled:opacity-60"
+        className="flex-1 h-11 rounded-xl bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation disabled:bg-white/[0.08] disabled:text-white/70"
         onClick={handleCreateLink}
         disabled={selectedSections.length === 0 || isCreatingLink}
       >

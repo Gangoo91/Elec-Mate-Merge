@@ -207,7 +207,7 @@ export const DangerNoticeSignoffCard = ({
               <button
                 onClick={handleSend}
                 disabled={sending}
-                className="flex-1 h-11 rounded-xl bg-elec-yellow text-black text-[13px] font-semibold touch-manipulation disabled:opacity-50 flex items-center justify-center gap-2"
+                className="flex-1 h-11 rounded-xl bg-elec-yellow text-black text-[13px] font-semibold touch-manipulation disabled:bg-white/[0.08] disabled:text-white/70 flex items-center justify-center gap-2"
               >
                 {sending ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Email signing link'}
               </button>

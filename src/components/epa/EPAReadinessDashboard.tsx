@@ -3,8 +3,15 @@
  *
  * Editorial readiness view: monospace headline score + 4 component bars
  * + prioritised gaps + Weak ACs panel pulling from qualification ACs and
- * portfolio coverage. Single yellow accent. Red kept only for the genuine
- * "not gateway ready" warning.
+ * portfolio coverage. Single yellow accent; red kept for the "more preparation
+ * needed" state only.
+ *
+ * 🔴 The score is Elec-Mate's own estimate of how prepared someone is — it is
+ * NOT a gateway verdict, and the copy must never imply otherwise. The gateway
+ * is the employer's and training provider's decision, and none of the four
+ * components weighed here (portfolio coverage, evidence quality, mock
+ * discussion, mock knowledge) is a published gateway criterion. The 70 % is
+ * this model's target, not a rule from any assessment plan.
  */
 
 import { useEffect, useMemo, useState, useCallback } from 'react';
@@ -45,7 +52,7 @@ function Eyebrow({ children, className }: { children: React.ReactNode; className
   return (
     <span
       className={cn(
-        'text-[10px] font-medium uppercase tracking-[0.18em] text-white/55',
+        'text-[10px] font-medium uppercase tracking-[0.18em] text-white/70',
         className
       )}
     >
@@ -59,10 +66,10 @@ function ComponentBar({ component }: { component: ReadinessComponent }) {
   const fillClass = score >= 70 ? 'bg-elec-yellow' : score >= 40 ? 'bg-white/55' : 'bg-white/30';
 
   return (
-    <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-2">
+    <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-2">
       <div className="flex items-baseline justify-between gap-3">
         <Eyebrow>{component.label}</Eyebrow>
-        <span className="text-[10px] uppercase tracking-[0.18em] text-white/40 font-mono">
+        <span className="text-[10px] uppercase tracking-[0.18em] text-white/70 font-mono">
           {Math.round(component.weight * 100)}%
         </span>
       </div>
@@ -148,10 +155,24 @@ function useWeakACs(qualificationCode: string | undefined) {
           const hasFiles =
             (it.evidence_count ?? 0) > 0 ||
             (Array.isArray(it.storage_urls) && it.storage_urls.length > 0);
-          const isVerified = it.is_supervisor_verified === true;
+          /*
+           * 🔴 This was `hasFiles || isVerified`, so `is_supervisor_verified`
+           * on its own promoted a criterion from "claimed" to "evidenced" —
+           * with no file attached to it at all.
+           *
+           * That flag is self-declared: nothing in the app writes it, and RLS
+           * gives the learner a blanket own-row UPDATE while assessors get
+           * SELECT only. Letting it stand in for evidence means a learner can
+           * clear their own EPA-readiness gaps by ticking a box, which is the
+           * one thing this screen exists to prevent.
+           *
+           * Evidence means a file. Assessor confirmation lives in
+           * `ac_signoffs`, which is what the portfolio's "Signed off" figure
+           * already reads.
+           */
           acs.forEach((ac) => {
             claimed.add(ac);
-            if (hasFiles || isVerified) evidenced.add(ac);
+            if (hasFiles) evidenced.add(ac);
           });
         });
 
@@ -198,8 +219,8 @@ function WeakACsPanel({
 
   if (loading) {
     return (
-      <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 flex items-center gap-3">
-        <Loader2 className="h-4 w-4 animate-spin text-white/55" />
+      <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 flex items-center gap-3">
+        <Loader2 className="h-4 w-4 animate-spin text-white/70" />
         <Eyebrow>Loading weak ACs…</Eyebrow>
       </div>
     );
@@ -207,7 +228,7 @@ function WeakACsPanel({
 
   if (!weak.length) {
     return (
-      <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-2">
+      <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-2">
         <Eyebrow>Where to focus</Eyebrow>
         <p className="text-[14px] text-white/85 leading-relaxed">
           Every assessment criterion in your course has at least one piece of evidence — strong
@@ -221,7 +242,7 @@ function WeakACsPanel({
     <div className="space-y-3">
       <div className="flex items-baseline justify-between gap-3">
         <Eyebrow>Where to focus · top {weak.length}</Eyebrow>
-        <span className="text-[11px] text-white/40 font-mono">
+        <span className="text-[11px] text-white/70 font-mono">
           weakest ACs · uncovered or claimed-only
         </span>
       </div>
@@ -229,7 +250,7 @@ function WeakACsPanel({
         {weak.map((w, i) => (
           <li
             key={w.acRef}
-            className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] px-4 py-3 sm:px-5 sm:py-4 space-y-2"
+            className="rounded-xl border border-white/[0.10] bg-white/[0.06] px-4 py-3 sm:px-5 sm:py-4 space-y-2"
           >
             <div className="flex items-baseline gap-3">
               <span className="text-[11px] font-mono text-elec-yellow/85 flex-shrink-0">
@@ -239,7 +260,7 @@ function WeakACsPanel({
                 <div className="flex items-baseline gap-2 flex-wrap">
                   <span className="text-[11px] font-mono text-white/85">{w.acRef}</span>
                   {w.unitCode && (
-                    <span className="text-[10px] uppercase tracking-[0.14em] text-white/45">
+                    <span className="text-[10px] uppercase tracking-[0.14em] text-white/70">
                       Unit {w.unitCode}
                     </span>
                   )}
@@ -247,7 +268,7 @@ function WeakACsPanel({
                     className={cn(
                       'text-[10px] font-medium uppercase tracking-[0.14em] px-1.5 py-0 rounded-md border',
                       w.status === 'no-evidence'
-                        ? 'border-white/[0.08] text-white/55'
+                        ? 'border-white/[0.08] text-white/70'
                         : 'border-elec-yellow/30 text-elec-yellow'
                     )}
                   >
@@ -262,7 +283,7 @@ function WeakACsPanel({
                 <button
                   type="button"
                   onClick={() => onTargetAC(w.acRef, w.acText, w.unitCode)}
-                  className="inline-flex items-center h-8 px-3 rounded-md bg-elec-yellow text-black text-[11.5px] font-semibold hover:bg-elec-yellow/90 transition-colors touch-manipulation"
+                  className="inline-flex items-center h-11 px-3 rounded-md bg-elec-yellow text-black text-[11.5px] font-semibold hover:bg-elec-yellow/90 transition-colors touch-manipulation"
                 >
                   Drill this AC →
                 </button>
@@ -304,7 +325,7 @@ export function EPAReadinessDashboard({
   if (isLoading && !data) {
     return (
       <div className="px-4 sm:px-6 py-12 flex items-center gap-3">
-        <Loader2 className="h-4 w-4 animate-spin text-white/55" />
+        <Loader2 className="h-4 w-4 animate-spin text-white/70" />
         <Eyebrow>Calculating readiness — analysing portfolio &amp; mocks</Eyebrow>
       </div>
     );
@@ -336,7 +357,7 @@ export function EPAReadinessDashboard({
           <button
             onClick={handleRecalc}
             disabled={recalcing}
-            className="inline-flex items-center gap-1.5 h-7 px-2 rounded-md text-[11px] text-white/55 hover:text-white/85 hover:bg-white/[0.04] transition-colors touch-manipulation disabled:opacity-50"
+            className="inline-flex items-center gap-1.5 h-7 px-2 rounded-md text-[11px] text-white/70 hover:text-white/85 hover:bg-white/[0.04] transition-colors touch-manipulation disabled:opacity-50"
           >
             <RefreshCw className={cn('h-3 w-3', recalcing && 'animate-spin')} />
             Recalculate
@@ -346,33 +367,55 @@ export function EPAReadinessDashboard({
           <span className="text-[64px] sm:text-[80px] font-mono font-semibold text-white leading-none tabular-nums">
             {data.overallScore}
           </span>
-          <span className="text-[20px] text-white/40 font-mono">/ 100</span>
+          <span className="text-[20px] text-white/70 font-mono">/ 100</span>
         </div>
-        <p className="text-[14px] text-white/70 leading-relaxed max-w-xl">
+        {/*
+         * This score is Elec-Mate's own estimate, not a verdict on the gateway.
+         *
+         * It previously announced "Gateway ready" / "Not gateway ready yet" and
+         * told apprentices they "meet the gateway threshold" — a decision that
+         * belongs to their employer and training provider, not to an app. None
+         * of the four things it weighs (portfolio coverage, evidence quality
+         * and two mock scores) is an official gateway criterion, and the 70 %
+         * is this model's own target rather than a published rule.
+         */}
+        <p className="text-[14px] text-white/85 leading-relaxed max-w-xl">
           {data.overallScore >= 70
-            ? 'You meet the gateway threshold across the weighted components. Keep momentum on the areas below 70 to push toward distinction.'
-            : 'Some components are below the 70 % gateway threshold. Use the focus list and drill the weakest areas before requesting your gateway review.'}
+            ? 'You are tracking well across everything this simulator can measure. Take it to your tutor as evidence you are ready to have the gateway conversation.'
+            : 'Some areas are still light. The focus list below is sorted by how much each one would move this score.'}
         </p>
 
-        {/* Gateway state — only red when genuinely not ready */}
         {!allGood && (
-          <div className="rounded-xl border border-red-500/30 bg-red-500/[0.04] p-4 sm:p-5 space-y-1.5">
-            <Eyebrow className="text-red-300">Not gateway ready yet</Eyebrow>
+          <div className="rounded-xl border border-white/[0.12] border-l-[3px] border-l-red-500 bg-white/[0.06] p-4 sm:p-5 space-y-1.5">
+            <Eyebrow className="text-red-400">More preparation needed</Eyebrow>
             <p className="text-[14px] text-white/85 leading-relaxed">
-              At least one component is below 70 %. The component bars below show where you stand
-              and the focus list is sorted by impact.
+              At least one area is below 70 %. The bars below show where you stand and the focus
+              list is ordered by impact.
             </p>
           </div>
         )}
         {allGood && (
-          <div className="rounded-xl border border-elec-yellow/30 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-1.5">
-            <Eyebrow className="text-elec-yellow">Gateway ready</Eyebrow>
+          <div className="rounded-xl border border-white/[0.12] border-l-[3px] border-l-elec-yellow bg-white/[0.06] p-4 sm:p-5 space-y-1.5">
+            <Eyebrow className="text-elec-yellow">Ready to have the conversation</Eyebrow>
             <p className="text-[14px] text-white/85 leading-relaxed">
-              Every component sits at 70 % or above. You meet the gateway threshold — talk to your
-              tutor about booking your EPA.
+              Every area sits at 70 % or above. Speak to your tutor or employer about the gateway —
+              they decide when you go through it.
             </p>
           </div>
         )}
+
+        {/* What the gateway actually turns on, as opposed to what this page
+            measures. Sourced from the electrotechnical assessment plan. */}
+        <div className="rounded-xl border border-white/[0.12] bg-white/[0.06] p-4 sm:p-5 space-y-1.5">
+          <Eyebrow>What the gateway actually needs</Eyebrow>
+          <p className="text-[14px] text-white/85 leading-relaxed">
+            Your employer and training provider put you through the gateway, not this score. For the
+            electrotechnical standard you apply for the AM2 once the training making up your
+            qualification is complete, and the apprenticeship certificate also needs Level 2 English
+            and maths. Your portfolio evidences the performance outcomes inside the qualification and
+            is assessed by your centre.
+          </p>
+        </div>
       </section>
 
       {/* Component bars */}
@@ -393,7 +436,7 @@ export function EPAReadinessDashboard({
             {data.gaps.map((gap, i) => (
               <li
                 key={i}
-                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] px-4 py-3 sm:px-5 sm:py-4"
+                className="rounded-xl border border-white/[0.10] bg-white/[0.06] px-4 py-3 sm:px-5 sm:py-4"
               >
                 <div className="flex items-baseline gap-3">
                   <span className="text-[11px] font-mono text-elec-yellow/85 flex-shrink-0">
@@ -406,10 +449,10 @@ export function EPAReadinessDashboard({
                         className={cn(
                           'text-[10px] font-medium uppercase tracking-[0.14em] px-1.5 py-0 rounded-md border',
                           gap.priority === 'high'
-                            ? 'border-red-500/30 text-red-300 bg-red-500/[0.05]'
+                            ? 'border-red-500/30 text-red-400 bg-white/[0.06]'
                             : gap.priority === 'medium'
-                              ? 'border-elec-yellow/30 text-elec-yellow bg-elec-yellow/[0.05]'
-                              : 'border-white/[0.08] text-white/55'
+                              ? 'border-elec-yellow/30 text-elec-yellow bg-white/[0.06]'
+                              : 'border-white/[0.08] text-white/70'
                         )}
                       >
                         {PRIORITY_LABELS[gap.priority]}
@@ -440,13 +483,13 @@ export function EPAReadinessDashboard({
         </button>
         <button
           onClick={onStartKnowledgeTest}
-          className="h-12 rounded-xl border border-white/[0.08] bg-white/[0.02] text-white text-[14px] font-semibold hover:bg-white/[0.04] transition-colors touch-manipulation"
+          className="h-12 rounded-xl border border-white/[0.08] bg-white/[0.06] text-white text-[14px] font-semibold hover:bg-white/[0.04] transition-colors touch-manipulation"
         >
           Take knowledge test
         </button>
       </section>
 
-      <p className="text-[10px] text-white/40 font-mono">
+      <p className="text-[10px] text-white/70 font-mono">
         Last calculated{' '}
         {data.calculatedAt.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}
       </p>

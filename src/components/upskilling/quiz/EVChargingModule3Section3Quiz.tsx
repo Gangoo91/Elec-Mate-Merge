@@ -256,7 +256,7 @@ export const EVChargingModule3Section3Quiz = () => {
           <Button
             onClick={handleNextQuestion}
             disabled={!isAnswered}
-            className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 disabled:bg-white/[0.08] disabled:text-white/70 disabled:cursor-not-allowed"
           >
             {currentQuestion === quizQuestions.length - 1 ? 'Show Results' : 'Next Question'}
           </Button>

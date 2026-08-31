@@ -609,7 +609,7 @@ export default function PhotoViewer({
               <button
                 onClick={handleAddTag}
                 disabled={!newTag.trim()}
-                className="flex-1 h-11 rounded-xl bg-elec-yellow text-sm font-semibold text-black touch-manipulation active:bg-yellow-400 disabled:opacity-50"
+                className="flex-1 h-11 rounded-xl bg-elec-yellow text-sm font-semibold text-black touch-manipulation active:bg-yellow-400 disabled:bg-white/[0.08] disabled:text-white/70"
               >
                 Add Tag
               </button>

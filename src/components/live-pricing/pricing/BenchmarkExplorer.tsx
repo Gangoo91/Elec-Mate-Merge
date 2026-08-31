@@ -175,7 +175,7 @@ const BenchmarkExplorer = ({ onSubmitPrice }: BenchmarkExplorerProps) => {
           <Button
             onClick={handlePostcodeSearch}
             disabled={!postcodeInput.trim()}
-            className="h-12 px-4 rounded-xl flex-shrink-0 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-bold touch-manipulation active:scale-95 disabled:opacity-40"
+            className="h-12 px-4 rounded-xl flex-shrink-0 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-bold touch-manipulation active:scale-95 disabled:bg-white/[0.08] disabled:text-white/70"
           >
             Go
           </Button>

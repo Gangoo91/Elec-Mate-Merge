@@ -257,7 +257,7 @@ export const ReadinessQuiz = () => {
           <Button
             onClick={nextQuestion}
             disabled={selectedAnswers[currentQuestion] === null}
-            className="bg-elec-yellow text-elec-dark hover:bg-yellow-400 disabled:opacity-50"
+            className="bg-elec-yellow text-elec-dark hover:bg-yellow-400 disabled:bg-white/[0.08] disabled:text-white/70"
           >
             {currentQuestion < questions.length - 1 ? 'Next Question' : 'Finish Quiz'}
           </Button>

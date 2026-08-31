@@ -1,13 +1,17 @@
+import { PANEL } from '@/components/ui/panel-recipe';
+import { cn } from '@/lib/utils';
 import StepNavigation from '../../StepNavigation';
 import CommonIssuesCard from '../../CommonIssuesCard';
+import { r1r2Issues } from '../../commonIssues';
 import { useState } from 'react';
 import R1R2Step1 from './Step1';
 import R1R2Step2 from './Step2';
 import R1R2Step3 from './Step3';
+import R1R2Step4 from './Step4';
 
 const R1R2TestingTab = () => {
   const [currentStep, setCurrentStep] = useState(1);
-  const totalSteps = 3;
+  const totalSteps = 4;
 
   const handleNext = () => {
     if (currentStep < totalSteps) {
@@ -23,14 +27,14 @@ const R1R2TestingTab = () => {
 
   return (
     <div className="space-y-6">
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
+      <div className={cn(PANEL, "space-y-4")}>
         <div className="space-y-1">
           <h2 className="text-[20px] sm:text-[22px] font-semibold text-white leading-tight">
-            R1+R2 Testing
+            R₁+R₂ continuity testing
           </h2>
           <p className="text-[14px] text-white/70 leading-relaxed">
-            Continuity of protective conductors. Tests the continuity of the circuit protective
-            conductors, main and supplementary bonding conductors.
+            Verifies that the circuit protective conductor is continuous and correctly sized, and
+            gives you the R₁ + R₂ value the circuit's Zs is built from.
           </p>
         </div>
 
@@ -38,6 +42,7 @@ const R1R2TestingTab = () => {
           {currentStep === 1 && <R1R2Step1 />}
           {currentStep === 2 && <R1R2Step2 />}
           {currentStep === 3 && <R1R2Step3 />}
+          {currentStep === 4 && <R1R2Step4 />}
 
           <StepNavigation
             currentStep={currentStep}
@@ -48,7 +53,7 @@ const R1R2TestingTab = () => {
         </div>
       </div>
 
-      <CommonIssuesCard />
+      <CommonIssuesCard issues={r1r2Issues} />
     </div>
   );
 };

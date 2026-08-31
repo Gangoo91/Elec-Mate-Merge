@@ -1,5 +1,5 @@
 import { useState, useMemo, useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -62,12 +62,6 @@ const ICON_MAP: Record<string, LucideIcon> = {
   CheckCircle,
 };
 
-const LEVEL_TABS: { id: string; label: string }[] = [
-  { id: 'all', label: 'All' },
-  { id: 'Level 2', label: 'Level 2' },
-  { id: 'Level 3', label: 'Level 3' },
-];
-
 const CATEGORIES = [
   { id: 'all', label: 'All' },
   { id: 'Regulations', label: 'Regs' },
@@ -78,16 +72,43 @@ const CATEGORIES = [
   { id: 'Green Technology', label: 'Green' },
 ] as const;
 
-const OnJobFlashcards = () => {
+/**
+ * `backTo` — where the Back button goes when this page is mounted inside
+ * another hub's route tree.
+ *
+ * Mirrors `LearningVideos`, which the Study Centre already mounts with
+ * `backTo="/study-centre"`. Without it, linking here from the Study Centre
+ * jumps OUT of the Study Centre route tree, which both renders a blank page
+ * and strands the user in the Apprentice hub.
+ */
+const OnJobFlashcards = ({ backTo }: { backTo?: string } = {}) => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { profile } = useAuth();
 
-  // Auto-default level tab from profile
-  const defaultLevel = (() => {
-    const lvl = profile?.apprentice_level;
-    if (lvl === 'Level 2' || lvl === 'Level 3') return lvl;
-    return 'all';
-  })();
+  /**
+   * ELE-1656 — go back where they came FROM, not where we assume.
+   *
+   * Back was hardcoded to `/apprentice/on-job-tools`, so anyone arriving from
+   * the Study Centre got dumped into the Apprentice hub. There are far more
+   * than two ways in — Dashboard, On-Job Tools, Inspection & Testing, a BS 7671
+   * step, topic mastery, smart recommendations and search all link here — so
+   * history is the only thing that actually knows.
+   *
+   * `location.key === 'default'` means this is the first entry in the session
+   * (deep link, refresh, or opened from outside), where there is nothing to go
+   * back to and `navigate(-1)` would leave the app. Only then do we guess.
+   */
+  const goBack = useCallback(() => {
+    // An explicit destination from the mounting route always wins — it knows
+    // which hub the user is actually inside.
+    if (backTo) {
+      navigate(backTo);
+      return;
+    }
+    if (location.key !== 'default') navigate(-1);
+    else navigate('/apprentice/on-job-tools');
+  }, [backTo, location.key, navigate]);
 
   const [selectedSet, setSelectedSet] = useState<string | null>(null);
   const [showModeSelector, setShowModeSelector] = useState(false);
@@ -96,7 +117,6 @@ const OnJobFlashcards = () => {
     mode: string;
     dueCardIds?: string[];
   } | null>(null);
-  const [activeLevel, setActiveLevel] = useState(defaultLevel);
   const [activeCategory, setActiveCategory] = useState('all');
 
   const {
@@ -142,12 +162,6 @@ const OnJobFlashcards = () => {
     icon: ICON_MAP[def.iconName] || Target,
   }));
 
-  /** Check if a set matches the selected level filter */
-  const matchesLevel = (setLevel: FlashcardLevel, filter: string) => {
-    if (filter === 'all') return true;
-    return setLevel === filter || setLevel === 'Both';
-  };
-
   const handleStartFlashcards = (setId: string) => {
     setSelectedSet(setId);
     setShowModeSelector(true);
@@ -168,7 +182,7 @@ const OnJobFlashcards = () => {
   /** Start a "Due Today" review session across all level-filtered sets */
   const handleStartDueToday = () => {
     // Gather all due cards across visible sets, start with the first set that has due cards
-    const levelSets = flashcardSetsUI.filter((s) => matchesLevel(s.level, activeLevel));
+    const levelSets = flashcardSetsUI;
     for (const set of levelSets) {
       const due = getDueCards(set.id);
       if (due.length > 0) {
@@ -182,8 +196,15 @@ const OnJobFlashcards = () => {
     }
   };
 
-  // Level-filtered sets
-  const levelFilteredSets = flashcardSetsUI.filter((s) => matchesLevel(s.level, activeLevel));
+  /*
+   * Every set, for everyone.
+   *
+   * The hub is reached from the Study Centre as well as the Apprentice area,
+   * so it serves qualified electricians too. Filtering by apprentice level hid
+   * Part 7, EV charging and the A4:2026 changes from anyone on a Level 2 tab —
+   * and made no sense at all for a working spark with no apprentice level set.
+   */
+  const levelFilteredSets = flashcardSetsUI;
 
   // Calculate stats for filtered level
   const totalSets = levelFilteredSets.length;
@@ -267,32 +288,32 @@ const OnJobFlashcards = () => {
       label: 'Mastered',
       value: `${masteredCards}`,
       icon: Brain,
-      colour: 'text-green-400',
+      colour: 'text-elec-yellow',
     },
     {
       label: 'Progress',
       value: `${overallProgress}%`,
       icon: TrendingUp,
-      colour: 'text-blue-400',
+      colour: 'text-elec-yellow',
     },
     {
       label: 'Streak',
       value: streakLoading ? '-' : `${streakInfo.currentStreak}`,
       icon: Flame,
-      colour: streakInfo.currentStreak > 0 ? 'text-orange-400' : 'text-white',
+      colour: streakInfo.currentStreak > 0 ? 'text-elec-yellow' : 'text-white',
     },
   ];
 
   return (
     <PullToRefresh onRefresh={handleRefresh} isRefreshing={isRefreshing}>
-      <PageFrame className="px-4 sm:px-6 lg:px-8">
+      <PageFrame className="space-y-5 px-4 sm:space-y-6 sm:px-6 lg:space-y-6 lg:px-8">
         {/* Achievement unlock toast */}
         <AchievementUnlockToast achievements={recentlyUnlocked} />
 
         <motion.div variants={itemVariants}>
           <Button
             variant="ghost"
-            onClick={() => navigate('/apprentice/on-job-tools')}
+            onClick={goBack}
             className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
           >
             <ArrowLeft className="mr-2 h-5 w-5" />
@@ -301,8 +322,11 @@ const OnJobFlashcards = () => {
         </motion.div>
 
         <motion.div variants={itemVariants}>
+          {/* Eyebrow is not "Apprentice" — the level gating came out and the
+              page is now reached from the Study Centre by qualified
+              electricians and course learners as well. */}
           <PageHero
-            eyebrow="Apprentice · Microlearning"
+            eyebrow="Revision · Microlearning"
             title="Flashcards"
             description="Quick recall for cable colours, BS 7671 regs, EICR codes, safe isolation, fault finding — the kind of facts you need on your tongue, not in a book."
             tone="yellow"
@@ -327,26 +351,6 @@ const OnJobFlashcards = () => {
             </div>
           </div>
         )}
-
-        {/* Level tabs */}
-        <div className="flex gap-2">
-          {LEVEL_TABS.map((tab) => (
-            <button
-              key={tab.id}
-              type="button"
-              onClick={() => setActiveLevel(tab.id)}
-              className={cn(
-                'min-h-[44px] flex-1 rounded-xl border py-2 text-sm font-semibold',
-                'touch-manipulation transition-all active:scale-[0.96]',
-                activeLevel === tab.id
-                  ? 'border-elec-yellow bg-elec-yellow text-black'
-                  : cn('border-elec-yellow/35 text-white', CARD_SURFACE)
-              )}
-            >
-              {tab.label}
-            </button>
-          ))}
-        </div>
 
         {/* Stats row */}
         <div className="grid grid-cols-4 gap-2">
@@ -411,7 +415,7 @@ const OnJobFlashcards = () => {
         </div>
 
         {/* Flashcard set list */}
-        <div className="space-y-2">
+        <div className="grid grid-cols-2 gap-2.5 sm:gap-3">
           {filteredSets.map((set) => (
             <FlashcardSetCard key={set.id} set={set} onStart={handleStartFlashcards} />
           ))}

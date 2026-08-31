@@ -1523,7 +1523,7 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                 type="button"
                 onClick={handleGenerateCombinedRAMS}
                 disabled={isGenerating}
-                className="inline-flex items-center justify-center gap-2 h-12 rounded-xl text-[13.5px] font-semibold bg-elec-yellow text-black hover:bg-elec-yellow/90 transition-colors touch-manipulation active:scale-[0.99] disabled:opacity-50"
+                className="inline-flex items-center justify-center gap-2 h-12 rounded-xl text-[13.5px] font-semibold bg-elec-yellow text-black hover:bg-elec-yellow/90 transition-colors touch-manipulation active:scale-[0.99] disabled:bg-white/[0.08] disabled:text-white/70"
               >
                 {isGenerating ? (
                   <>

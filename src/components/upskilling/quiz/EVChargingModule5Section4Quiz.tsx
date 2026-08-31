@@ -313,7 +313,7 @@ export function EVChargingModule5Section4Quiz() {
           <Button
             onClick={handleNext}
             disabled={!isAnswered}
-            className="bg-elec-yellow text-black hover:bg-yellow-400 disabled:opacity-50"
+            className="bg-elec-yellow text-black hover:bg-yellow-400 disabled:bg-white/[0.08] disabled:text-white/70"
           >
             {currentQuestion === quizQuestions.length - 1 ? 'Finish Quiz' : 'Next'}
           </Button>

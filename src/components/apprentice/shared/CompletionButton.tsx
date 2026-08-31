@@ -13,7 +13,7 @@ const CompletionButton = ({ isCompleted, markAsComplete }: CompletionButtonProps
       <Button
         onClick={markAsComplete}
         disabled={isCompleted}
-        className="h-11 px-6 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation active:scale-[0.98] disabled:opacity-40"
+        className="h-11 px-6 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation active:scale-[0.98] disabled:bg-white/[0.08] disabled:text-white/70"
       >
         {isCompleted ? 'Section completed' : 'Mark as complete'}
         {isCompleted && <CheckCircle className="ml-2 h-4 w-4" />}

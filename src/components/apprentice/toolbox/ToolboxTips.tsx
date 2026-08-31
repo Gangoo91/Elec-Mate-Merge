@@ -8,8 +8,8 @@ const ToolboxTips = () => {
   }
 
   return (
-    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 mt-6 space-y-3">
-      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+    <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 mt-6 space-y-3">
+      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
         Essential guidance for apprentices
       </span>
       <ul className="space-y-1.5">

@@ -509,7 +509,7 @@ export const NearMissReportDetail: React.FC<NearMissReportDetailProps> = ({
             type="button"
             onClick={() => handleStatusChange(nextStatus.to)}
             disabled={isUpdating}
-            className="flex h-12 w-full touch-manipulation items-center justify-center gap-2 rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-all duration-150 active:scale-[0.99] active:brightness-125 disabled:opacity-50"
+            className="flex h-12 w-full touch-manipulation items-center justify-center gap-2 rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-all duration-150 active:scale-[0.99] active:brightness-125 disabled:bg-white/[0.08] disabled:text-white/70"
           >
             {isUpdating && <Loader2 className="h-4 w-4 animate-spin" aria-hidden />}
             {nextStatus.label}

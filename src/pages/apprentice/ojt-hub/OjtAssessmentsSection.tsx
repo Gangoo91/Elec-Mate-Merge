@@ -10,14 +10,16 @@ import { Plus, Loader2, ClipboardCheck, Trash2, Check } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useOJTAssessments, type OJTAssessment } from '@/hooks/time-tracking/useOJTAssessments';
 import AddAssessmentDialog from '@/components/apprentice/ojt/AddAssessmentDialog';
-import { Eyebrow, SectionHeader } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
+import { Eyebrow } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
+import { OjtSectionHeader as SectionHeader } from './ojtSection';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 
 const STATUS_TONE: Record<OJTAssessment['status'], string> = {
   completed: 'border-elec-yellow/30 bg-elec-yellow/[0.06] text-elec-yellow',
-  scheduled: 'border-white/[0.10] bg-white/[0.04] text-white/85',
-  pending: 'border-white/[0.10] bg-white/[0.04] text-white/70',
+  scheduled: 'border-white/[0.10] bg-white/[0.04] text-white',
+  pending: 'border-white/[0.10] bg-white/[0.04] text-white',
   failed: 'border-red-500/30 bg-red-500/[0.04] text-red-300',
-  deferred: 'border-white/[0.08] bg-white/[0.02] text-white/45',
+  deferred: 'border-white/[0.08] bg-white/[0.02] text-white',
 };
 
 const STATUS_LABEL: Record<OJTAssessment['status'], string> = {
@@ -104,19 +106,19 @@ export function OjtAssessmentsSection() {
 
       {isLoading ? (
         <div className="flex items-center gap-3 py-6">
-          <Loader2 className="h-4 w-4 animate-spin text-white/55" />
+          <Loader2 className="h-4 w-4 animate-spin text-white" />
           <Eyebrow>Loading…</Eyebrow>
         </div>
       ) : assessments.length === 0 ? (
-        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-6 text-center space-y-2">
-          <ClipboardCheck className="h-7 w-7 text-white/25 mx-auto" />
-          <p className="text-[13px] text-white/85 leading-relaxed">
+        <div className={cn('rounded-2xl border border-elec-yellow/35 p-6 text-center space-y-2', CARD_SURFACE)}>
+          <ClipboardCheck className="h-7 w-7 text-white mx-auto" />
+          <p className="text-[13px] text-white leading-relaxed">
             No assessments tracked yet. Add upcoming practical, written or portfolio assessments so
             nothing sneaks up on you.
           </p>
         </div>
       ) : (
-        <ul className="space-y-2">
+        <ul className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
           {assessments.map((a) => {
             const overdue =
               (a.status === 'pending' || a.status === 'scheduled') &&
@@ -125,7 +127,7 @@ export function OjtAssessmentsSection() {
             return (
               <li
                 key={a.id}
-                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] px-3.5 py-3 sm:px-5 sm:py-4"
+                className={cn('rounded-2xl border border-elec-yellow/35 px-3.5 py-3 sm:px-5 sm:py-4', CARD_SURFACE)}
               >
                 <div className="flex items-start justify-between gap-3">
                   <div className="flex-1 min-w-0 space-y-1.5">
@@ -138,13 +140,13 @@ export function OjtAssessmentsSection() {
                       >
                         {STATUS_LABEL[a.status]}
                       </span>
-                      <span className="text-[9.5px] uppercase tracking-[0.14em] text-white/55 capitalize">
+                      <span className="text-[9.5px] uppercase tracking-[0.14em] text-white capitalize">
                         {a.type}
                       </span>
                       <span
                         className={cn(
                           'text-[10px] whitespace-nowrap',
-                          overdue ? 'text-red-300' : 'text-white/45'
+                          overdue ? 'text-red-300' : 'text-white'
                         )}
                       >
                         {dueLabel(a.due_date, a.status)}
@@ -157,7 +159,7 @@ export function OjtAssessmentsSection() {
                       <p className="text-[11.5px] text-elec-yellow/85">Grade: {a.grade}</p>
                     )}
                     {a.feedback && (
-                      <p className="text-[11.5px] text-white/55 italic leading-snug">
+                      <p className="text-[11.5px] text-white italic leading-snug">
                         {a.feedback}
                       </p>
                     )}
@@ -178,7 +180,7 @@ export function OjtAssessmentsSection() {
                       type="button"
                       onClick={() => void deleteAssessment(a.id)}
                       aria-label="Delete assessment"
-                      className="h-8 w-8 inline-flex items-center justify-center rounded-md text-white/30 hover:text-red-300 hover:bg-red-500/[0.06] transition-colors touch-manipulation"
+                      className="h-8 w-8 inline-flex items-center justify-center rounded-md text-white hover:text-red-300 hover:bg-red-500/[0.06] transition-colors touch-manipulation"
                     >
                       <Trash2 className="h-3.5 w-3.5" />
                     </button>

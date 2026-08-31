@@ -753,7 +753,7 @@ export default function ShareProjectSheet({
                 <button
                   onClick={handleSendEmail}
                   disabled={isSendingEmail || filteredPhotos.length === 0 || !recipientEmail.trim()}
-                  className="flex-[2] h-12 rounded-xl bg-elec-yellow text-sm font-semibold text-black flex items-center justify-center gap-2 touch-manipulation active:bg-yellow-400 disabled:opacity-50"
+                  className="flex-[2] h-12 rounded-xl bg-elec-yellow text-sm font-semibold text-black flex items-center justify-center gap-2 touch-manipulation active:bg-yellow-400 disabled:bg-white/[0.08] disabled:text-white/70"
                 >
                   {isSendingEmail ? (
                     <>
@@ -813,7 +813,7 @@ export default function ShareProjectSheet({
                 <button
                   onClick={handleCreateLink}
                   disabled={isCreating || filteredPhotos.length === 0}
-                  className="flex-[2] h-12 rounded-xl bg-elec-yellow text-sm font-semibold text-black flex items-center justify-center gap-2 touch-manipulation active:bg-yellow-400 disabled:opacity-50"
+                  className="flex-[2] h-12 rounded-xl bg-elec-yellow text-sm font-semibold text-black flex items-center justify-center gap-2 touch-manipulation active:bg-yellow-400 disabled:bg-white/[0.08] disabled:text-white/70"
                 >
                   {isCreating ? (
                     <>

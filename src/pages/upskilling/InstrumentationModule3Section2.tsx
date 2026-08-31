@@ -186,10 +186,8 @@ const InstrumentationModule3Section2 = () => {
 
         <TLDR
           points={[
-            'A signal standard is an agreement about what a number means — 4 mA is 0 per cent, 20 mA is 100 per cent, and every device in the chain has to be told the same thing.',
             'Learn 4, 8, 12, 16, 20 mA = 0, 25, 50, 75, 100 per cent. You will use it every working day.',
             '250 Ω turns 4–20 mA into 1–5 V exactly, which is why 1–5 V is the standard voltage range rather than an arbitrary choice.',
-            '0–10 V has a dead zero — 0 V is a valid reading, so a cut wire and a legitimate minimum look identical. That is why it lives in building services, not on a process plant.',
             'Three topologies: 4-wire active (the transmitter drives the current), 4-wire passive (the transmitter regulates someone else’s current), and 2-wire loop-powered (the transmitter lives on the loop it regulates).',
             'Exactly one device in a loop supplies the power. Wire two sources together and neither is in control.',
             'A loop-powered transmitter must run on under 4 mA, which rules out anything with a heater, solenoids or a real computer inside it.',
@@ -579,12 +577,12 @@ const InstrumentationModule3Section2 = () => {
           id="ins-3-2-budget"
           question="A loop-powered transmitter needs a minimum of 12 V at its terminals. The supply is 24 V, the controller has a 250 Ω input resistor, and a signal isolator in the loop drops a further 4 V. Will it work at full scale?"
           options={[
-            'Yes, with about 3 V to spare',
             'No — it will be about 1 V short',
             'Yes, because the transmitter only needs 4 mA',
             'No — a loop-powered transmitter cannot work through an isolator',
+            'Yes, with about 3 V to spare',
           ]}
-          correctIndex={0}
+          correctIndex={3}
           explanation="At 20 mA the resistor drops 5 V and the isolator 4 V, so 24 − 5 − 4 = 15 V is available at the transmitter against a 12 V requirement. It works, with roughly 3 V of headroom. That margin still has to cover the cable resistance, which is why 3 V is comfortable on a short run and worth checking on a long one."
         />
 

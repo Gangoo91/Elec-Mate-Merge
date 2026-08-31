@@ -15,7 +15,7 @@ const TestingInstructions = ({ stepData }: TestingInstructionsProps) => {
       {/* MFT Settings */}
       {stepData.mftSettings && (
         <Card className="bg-gradient-to-br from-white/5 to-elec-card border-blue-500/20 overflow-hidden relative">
-          <div className="absolute top-0 right-0 w-48 h-48 bg-blue-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+          <div className="absolute top-0 right-0 w-48 h-48 bg-white/[0.06] rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
           <CardHeader className="pb-3 relative">
             <CardTitle className="text-white flex items-center gap-3">
               <div className="p-2 rounded-xl bg-gradient-to-br from-blue-500/20 to-blue-500/5 border border-blue-500/30">
@@ -50,7 +50,7 @@ const TestingInstructions = ({ stepData }: TestingInstructionsProps) => {
                 {stepData.mftSettings.leads.map((lead, index) => (
                   <Badge
                     key={index}
-                    className="bg-blue-500/10 text-blue-300 border border-blue-500/30"
+                    className="bg-white/[0.06] text-blue-300 border border-blue-500/30"
                   >
                     {lead}
                   </Badge>
@@ -64,7 +64,7 @@ const TestingInstructions = ({ stepData }: TestingInstructionsProps) => {
       {/* Connection Instructions */}
       {stepData.connections && (
         <Card className="bg-gradient-to-br from-white/5 to-elec-card border-green-500/20 overflow-hidden relative">
-          <div className="absolute top-0 right-0 w-48 h-48 bg-green-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+          <div className="absolute top-0 right-0 w-48 h-48 bg-white/[0.06] rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
           <CardHeader className="pb-3 relative">
             <CardTitle className="text-white flex items-center gap-3">
               <div className="p-2 rounded-xl bg-gradient-to-br from-green-500/20 to-green-500/5 border border-green-500/30">
@@ -94,7 +94,7 @@ const TestingInstructions = ({ stepData }: TestingInstructionsProps) => {
       {/* Expected Results */}
       {stepData.expectedResults && (
         <Card className="bg-gradient-to-br from-white/5 to-elec-card border-elec-yellow/20 overflow-hidden relative">
-          <div className="absolute top-0 right-0 w-48 h-48 bg-elec-yellow/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+          <div className="absolute top-0 right-0 w-48 h-48 bg-white/[0.06] rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
           <CardHeader className="pb-3 relative">
             <CardTitle className="text-white flex items-center gap-3">
               <div className="p-2 rounded-xl bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 border border-elec-yellow/30">
@@ -104,7 +104,7 @@ const TestingInstructions = ({ stepData }: TestingInstructionsProps) => {
             </CardTitle>
           </CardHeader>
           <CardContent className="relative space-y-3">
-            <div className="p-3 rounded-xl bg-green-500/10 border border-green-500/20">
+            <div className="p-3 rounded-xl bg-white/[0.06] border border-green-500/20">
               <div className="flex items-center gap-2 mb-1">
                 <span className="text-green-400">~</span>
                 <span className="text-xs font-medium text-green-400">Typical Values</span>
@@ -112,7 +112,7 @@ const TestingInstructions = ({ stepData }: TestingInstructionsProps) => {
               <p className="text-sm text-white ml-5">{stepData.expectedResults.typical}</p>
             </div>
             {stepData.expectedResults.minimum && (
-              <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/20">
+              <div className="p-3 rounded-xl bg-white/[0.06] border border-blue-500/20">
                 <div className="flex items-center gap-2 mb-1">
                   <span className="text-blue-400">↓</span>
                   <span className="text-xs font-medium text-blue-400">Minimum Acceptable</span>
@@ -121,7 +121,7 @@ const TestingInstructions = ({ stepData }: TestingInstructionsProps) => {
               </div>
             )}
             {stepData.expectedResults.maximum && (
-              <div className="p-3 rounded-xl bg-red-500/10 border border-red-500/20">
+              <div className="p-3 rounded-xl bg-white/[0.06] border border-red-500/20">
                 <div className="flex items-center gap-2 mb-1">
                   <span className="text-red-400">↑</span>
                   <span className="text-xs font-medium text-red-400">Maximum Acceptable</span>
@@ -136,7 +136,7 @@ const TestingInstructions = ({ stepData }: TestingInstructionsProps) => {
       {/* System Type Specific Information */}
       {stepData.systemTypes && (
         <Card className="bg-gradient-to-br from-white/5 to-elec-card border-purple-500/20 overflow-hidden relative">
-          <div className="absolute top-0 right-0 w-48 h-48 bg-purple-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+          <div className="absolute top-0 right-0 w-48 h-48 bg-white/[0.06] rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
           <CardHeader className="pb-3 relative">
             <CardTitle className="text-white flex items-center gap-3">
               <div className="p-2 rounded-xl bg-gradient-to-br from-purple-500/20 to-purple-500/5 border border-purple-500/30">
@@ -149,7 +149,7 @@ const TestingInstructions = ({ stepData }: TestingInstructionsProps) => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="p-4 rounded-xl bg-white/10 border border-blue-500/20">
                 <div className="flex items-center gap-3 mb-3">
-                  <div className="p-2 rounded-lg bg-blue-500/20">
+                  <div className="p-2 rounded-lg bg-white/[0.06]">
                     <Home className="h-4 w-4 text-blue-400" />
                   </div>
                   <h4 className="font-medium text-white">Single Phase Systems</h4>
@@ -165,7 +165,7 @@ const TestingInstructions = ({ stepData }: TestingInstructionsProps) => {
               </div>
               <div className="p-4 rounded-xl bg-white/10 border border-purple-500/20">
                 <div className="flex items-center gap-3 mb-3">
-                  <div className="p-2 rounded-lg bg-purple-500/20">
+                  <div className="p-2 rounded-lg bg-white/[0.06]">
                     <Building className="h-4 w-4 text-purple-400" />
                   </div>
                   <h4 className="font-medium text-white">Three Phase Systems</h4>

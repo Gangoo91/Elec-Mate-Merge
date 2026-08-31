@@ -823,7 +823,7 @@ const CalendarEventSheet = ({
                         type="button"
                         onClick={saveDraftCustomer}
                         disabled={!draft.name.trim() || savingCustomer}
-                        className="flex h-11 flex-1 items-center justify-center rounded-xl bg-elec-yellow text-[14px] font-semibold text-black touch-manipulation active:scale-[0.98] disabled:opacity-50"
+                        className="flex h-11 flex-1 items-center justify-center rounded-xl bg-elec-yellow text-[14px] font-semibold text-black touch-manipulation active:scale-[0.98] disabled:bg-white/[0.08] disabled:text-white/70"
                       >
                         {savingCustomer && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                         Add customer
@@ -1457,7 +1457,7 @@ const CalendarEventSheet = ({
                 type="button"
                 onClick={handleSubmit}
                 disabled={(!title.trim() && !selectedCustomer) || endsBeforeItStarts || saving}
-                className="flex h-12 w-full items-center justify-center rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-colors touch-manipulation active:scale-[0.98] disabled:opacity-50"
+                className="flex h-12 w-full items-center justify-center rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-colors touch-manipulation active:scale-[0.98] disabled:bg-white/[0.08] disabled:text-white/70"
               >
                 {saving && <Loader2 className="mr-2 h-5 w-5 animate-spin" />}
                 {isEditing ? 'Save changes' : selectedCustomer ? 'Book it in' : 'Create event'}

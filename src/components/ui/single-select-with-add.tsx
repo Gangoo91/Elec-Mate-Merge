@@ -116,7 +116,7 @@ export const SingleSelectWithAdd: React.FC<SingleSelectWithAddProps> = ({
           type="button"
           onClick={handleAdd}
           disabled={!selectedOption || disabled}
-          className="h-12 px-4 bg-elec-yellow text-black hover:bg-elec-yellow/80 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
+          className="h-12 px-4 bg-elec-yellow text-black hover:bg-elec-yellow/80 disabled:bg-white/[0.08] disabled:text-white/70 disabled:cursor-not-allowed transition-all duration-200"
         >
           <Plus className="h-4 w-4" />
         </Button>

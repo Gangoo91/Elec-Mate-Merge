@@ -15,19 +15,15 @@ const SubscriptionFAQ = () => {
   const faqItems = [
     {
       q: 'What is included in the Apprentice plan?',
-      a: 'Level 2, Level 3, AM2, HNC, MOET and Functional Skills courses · 500+ practice questions · 8 mock exams · 29 flashcard sets · 75 curated training videos · 75 electrical calculators · full BS 7671 A4:2026 study guide with interactive diagrams · OJT logbook with evidence upload and assessor sign-off · portfolio builder · EPA simulator · full study centre access (24 courses including CSCS, IPAF, PASMA, soft skills) · Ask Dave AI mentor · mental health hub.',
+      a: 'Level 2, Level 3, AM2, HNC, MOET and Functional Skills courses · 15,000+ practice questions · 8 mock exams · 30 flashcard sets · 400+ curated training videos · 75 electrical calculators · full BS 7671 A4:2026 study guide with interactive diagrams · OJT logbook with evidence upload and assessor sign-off · portfolio builder · EPA simulator · full study centre access (45 courses including CSCS, IPAF, PASMA, soft skills) · Ask Dave AI mentor · mental health hub.',
     },
     {
       q: 'What do I get with the Electrician plan?',
-      a: 'Everything in Apprentice, plus 9 AI specialists (Circuit Designer, Cost Engineer, Installation, Commissioning, Maintenance, Health & Safety, Project Manager, Tutor and Voice AI) · 19 certificate types end-to-end (EICR, EIC, Minor Works, Solar PV, EV, BESS, Fire Alarm and more) · AI board scanner · full CRM and projects dashboard · Quote and Invoice builder with Stripe · time tracker → auto-invoice · expenses with OCR · live material pricing · RAMS generator · 13 upskilling courses · Xero / QuickBooks sync · Apple and Google Wallet cert passes.',
-    },
-    {
-      q: 'What is Mate? (Early access)',
-      a: 'Mate is your AI business partner on WhatsApp. You can chat, voice-note or send photos — and Mate talks back to you in voice too, hands-free. Send a photo of a consumer unit and Mate drafts the quote. Forward a customer email and Mate drafts your reply. Say "plan my day" and Mate returns a TSP-optimised route with weather. Morning brief at 7am. Quote follow-ups, invoice chasing, expenses synced to Xero, BS 7671 answers with regulation citations, and a full business-intelligence dashboard on demand.',
+      a: 'Everything in Apprentice, plus 9 AI specialists (Circuit Designer, Cost Engineer, Installation, Commissioning, Maintenance, Health & Safety, Project Manager, Tutor and Voice AI) · 24 certificate types end-to-end (EICR, EIC, Minor Works, Visual Condition, Routine Inspection, Pre-Purchase Survey, Solar PV, EV, BESS, Fire Alarm and more) · AI board scanner · certificate import from paper or PDF · full CRM and projects dashboard · Quote and Invoice builder with Stripe · time tracker · expenses with OCR · live material pricing · RAMS generator · 14 upskilling courses · Xero / QuickBooks sync · Apple and Google Wallet cert passes.',
     },
     {
       q: 'What extra features do Employers get? (Early access)',
-      a: 'Everything in Mate, plus team management with Elec-ID digital credentials · GPS worker tracking · timesheets · team chat · talent pool and job vacancies · Kanban board and Gantt timeline · job packs, progress logs, quality and snags · client portal · fleet and photo gallery · multi-user quotes, invoices and tenders · digital signatures · AI Smart Docs (Design Spec, Method Statement, Briefing Pack) · automations rule engine.',
+      a: 'Everything in the Electrician plan, plus team management with Elec-ID digital credentials · GPS worker tracking · timesheets · team chat · talent pool and job vacancies · Kanban board and Gantt timeline · job packs, progress logs, quality and snags · client portal · fleet and photo gallery · multi-user quotes, invoices and tenders · digital signatures · AI Smart Docs (Design Spec, Method Statement, Briefing Pack) · automations rule engine.',
     },
     {
       q: 'What is the College plan? (Early access)',
@@ -39,7 +35,7 @@ const SubscriptionFAQ = () => {
     },
     {
       q: 'How does annual billing save me money?',
-      a: 'Annual subscriptions save up to 17% compared to monthly. Apprentice £69.99/yr (vs £83.88 monthly) · Electrician £199.99/yr (vs £239.88 monthly) · Mate £299.99/yr (vs £359.88 monthly) · Employer £499.99/yr (vs £599.88 monthly).',
+      a: 'Annual subscriptions save up to 17% compared to monthly. Apprentice £69.99/yr (vs £83.88 monthly) · Electrician £199.99/yr (vs £239.88 monthly) · Employer £499.99/yr (vs £599.88 monthly).',
     },
     {
       q: 'What payment methods do you accept?',

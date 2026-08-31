@@ -1,8 +1,14 @@
 /**
  * useDiaryStreak
  *
- * Calculates the current diary streak (consecutive days with entries),
- * milestone detection, and total unique days logged.
+ * Calculates the current diary streak, milestone detection, and total unique
+ * days logged.
+ *
+ * 🔴 The streak counts WORKING days, not consecutive calendar days. A weekend
+ * with no entry is stepped over rather than breaking it — otherwise anyone on
+ * a normal Mon-Fri could never pass 5, which made every milestone above that
+ * (7, 14, 30, 60, 100) unreachable. A weekend entry still counts if you
+ * worked it.
  */
 
 import { useMemo } from 'react';
@@ -34,7 +40,7 @@ export function useDiaryStreak(entries: SiteDiaryEntry[]) {
         })),
         nextMilestone: MILESTONES[0],
         daysToNextMilestone: MILESTONES[0],
-        streakMessage: 'Start your streak today!',
+        streakMessage: 'Log today to start a streak — weekends off will not break it.',
       };
     }
 
@@ -59,7 +65,7 @@ export function useDiaryStreak(entries: SiteDiaryEntry[]) {
         })),
         nextMilestone: MILESTONES[0],
         daysToNextMilestone: MILESTONES[0],
-        streakMessage: 'Start your streak today!',
+        streakMessage: 'Log today to start a streak — weekends off will not break it.',
       };
     }
 
@@ -71,32 +77,61 @@ export function useDiaryStreak(entries: SiteDiaryEntry[]) {
     yesterday.setDate(yesterday.getDate() - 1);
     const yesterdayStr = toLocalISODate(yesterday);
 
-    // Current streak: count consecutive days from today or yesterday backwards
+    /*
+     * Current streak, counted in WORKING days.
+     *
+     * This used to require consecutive calendar days, which made the whole
+     * feature unreachable: an apprentice on site Monday to Friday has their
+     * streak broken every Saturday, so it could never exceed 5 — while the
+     * milestones ask for 7, 14, 30, 60 and 100. A work diary should not punish
+     * someone for not working the weekend.
+     *
+     * Walking back a day at a time: an entry continues the streak; a missing
+     * weekend day is stepped over; a missing weekday ends it. Anyone who does
+     * work weekends still gets credit, because the entry itself is what counts
+     * — the skip only applies to a weekend with no entry.
+     */
     let currentStreak = 0;
     const latestDate = uniqueDates[0];
+    const entryDates = new Set(uniqueDates);
 
     if (latestDate === todayStr || latestDate === yesterdayStr) {
+      const cursor = parseLocalISODate(latestDate);
       currentStreak = 1;
-      const checkDate = parseLocalISODate(latestDate);
 
-      for (let i = 1; i < uniqueDates.length; i++) {
-        checkDate.setDate(checkDate.getDate() - 1);
-        const checkStr = toLocalISODate(checkDate);
-        if (uniqueDates[i] === checkStr) {
+      // Bounded by the entries we have; each step moves back exactly one day.
+      for (let guard = 0; guard < 400; guard++) {
+        cursor.setDate(cursor.getDate() - 1);
+        const key = toLocalISODate(cursor);
+        if (entryDates.has(key)) {
           currentStreak++;
-        } else {
-          break;
+          continue;
         }
+        const day = cursor.getDay(); // 0 Sun, 6 Sat
+        if (day === 0 || day === 6) continue; // weekend off — streak survives
+        break; // a working day with nothing logged ends it
       }
     }
 
-    // Longest streak
+    /* Longest streak — same working-day rule, or it would contradict the
+       current one (a live 8-day streak against an all-time best of 5). */
     let longestStreak = 1;
     let streak = 1;
     for (let i = 1; i < uniqueDates.length; i++) {
-      const prev = parseLocalISODate(uniqueDates[i - 1]);
-      prev.setDate(prev.getDate() - 1);
-      if (toLocalISODate(prev) === uniqueDates[i]) {
+      const cursor = parseLocalISODate(uniqueDates[i - 1]);
+      let linked = false;
+      for (let guard = 0; guard < 7; guard++) {
+        cursor.setDate(cursor.getDate() - 1);
+        const key = toLocalISODate(cursor);
+        if (key === uniqueDates[i]) {
+          linked = true;
+          break;
+        }
+        const day = cursor.getDay();
+        if (day === 0 || day === 6) continue; // stepped over a weekend
+        break;
+      }
+      if (linked) {
         streak++;
         longestStreak = Math.max(longestStreak, streak);
       } else {
@@ -144,7 +179,7 @@ function milestoneIcon(days: number): string {
 }
 
 function getStreakMessage(streak: number): string {
-  if (streak === 0) return 'Start your streak today!';
+  if (streak === 0) return 'Log today to start a streak — weekends off will not break it.';
   if (streak <= 2) return 'Great start \u2014 keep it going!';
   if (streak <= 6) return 'Building momentum!';
   if (streak <= 13) return "You're on fire!";

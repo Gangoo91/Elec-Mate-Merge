@@ -49,7 +49,7 @@ const EnhancedCableSizingForm: React.FC<EnhancedCableSizingFormProps> = ({
       <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
         <Button
           onClick={calculateCableSize}
-          className="w-full sm:flex-1 h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation active:scale-[0.98] disabled:opacity-40"
+          className="w-full sm:flex-1 h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation active:scale-[0.98] disabled:bg-white/[0.08] disabled:text-white/70"
           disabled={hasErrors}
         >
           <Calculator className="h-4 w-4 mr-2" />

@@ -68,7 +68,7 @@ const SystemTypeSelector = ({ onSelectionChange }: SystemTypeSelectorProps) => {
 
   return (
     <Card className="bg-gradient-to-br from-white/5 to-elec-card border-elec-yellow/20 overflow-hidden relative animate-fade-in">
-      <div className="absolute top-0 right-0 w-64 h-64 bg-elec-yellow/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+      <div className="absolute top-0 right-0 w-64 h-64 bg-white/[0.06] rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
       <CardHeader className="relative">
         <CardTitle className="text-white flex items-center gap-3">
           <div className="p-2.5 rounded-xl bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 border border-elec-yellow/30">
@@ -90,7 +90,7 @@ const SystemTypeSelector = ({ onSelectionChange }: SystemTypeSelectorProps) => {
                   onClick={() => handleSystemSelect(system.id)}
                   className={`relative p-4 rounded-xl border transition-all duration-300 text-left touch-manipulation active:scale-98 ${
                     isSelected
-                      ? 'bg-elec-yellow/10 border-elec-yellow/50'
+                      ? 'bg-white/[0.06] border-elec-yellow/50'
                       : 'bg-white/10 border-white/10 hover:border-white/20'
                   }`}
                 >
@@ -101,7 +101,7 @@ const SystemTypeSelector = ({ onSelectionChange }: SystemTypeSelectorProps) => {
                   )}
                   <div className="flex items-center gap-3 mb-2">
                     <div
-                      className={`p-2 rounded-lg ${isSelected ? 'bg-elec-yellow/20' : 'bg-white/5'}`}
+                      className={`p-2 rounded-lg ${isSelected ? 'bg-white/[0.06]' : 'bg-white/5'}`}
                     >
                       <Icon
                         className={`h-4 w-4 ${isSelected ? 'text-elec-yellow' : 'text-white'}`}
@@ -132,7 +132,7 @@ const SystemTypeSelector = ({ onSelectionChange }: SystemTypeSelectorProps) => {
                   onClick={() => handleInstallationSelect(installation.id)}
                   className={`relative p-4 rounded-xl border transition-all duration-300 text-left touch-manipulation active:scale-98 ${
                     isSelected
-                      ? 'bg-elec-yellow/10 border-elec-yellow/50'
+                      ? 'bg-white/[0.06] border-elec-yellow/50'
                       : 'bg-white/10 border-white/10 hover:border-white/20'
                   }`}
                 >
@@ -143,7 +143,7 @@ const SystemTypeSelector = ({ onSelectionChange }: SystemTypeSelectorProps) => {
                   )}
                   <div className="flex items-center gap-3 mb-2">
                     <div
-                      className={`p-2 rounded-lg ${isSelected ? 'bg-elec-yellow/20' : 'bg-white/5'}`}
+                      className={`p-2 rounded-lg ${isSelected ? 'bg-white/[0.06]' : 'bg-white/5'}`}
                     >
                       <Icon
                         className={`h-4 w-4 ${isSelected ? 'text-elec-yellow' : 'text-white'}`}
@@ -165,10 +165,10 @@ const SystemTypeSelector = ({ onSelectionChange }: SystemTypeSelectorProps) => {
         {selectedSystem && selectedInstallation && (
           <div className="flex flex-wrap items-center gap-3 pt-4 border-t border-white/10">
             <span className="text-sm text-white">Selected:</span>
-            <Badge className="bg-elec-yellow/10 text-elec-yellow border border-elec-yellow/30">
+            <Badge className="bg-white/[0.06] text-elec-yellow border border-elec-yellow/30">
               {systemTypes.find((s) => s.id === selectedSystem)?.name}
             </Badge>
-            <Badge className="bg-green-500/10 text-green-400 border border-green-500/30">
+            <Badge className="bg-white/[0.06] text-green-400 border border-green-500/30">
               {installationTypes.find((i) => i.id === selectedInstallation)?.name}
             </Badge>
           </div>

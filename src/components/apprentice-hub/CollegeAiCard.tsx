@@ -23,15 +23,15 @@ export function CollegeAiCard() {
     >
       <div className="px-4 sm:px-5 py-4 sm:py-5">
         <div className="flex items-baseline justify-between gap-3 flex-wrap">
-          <div className="text-[11px] sm:text-[11.5px] font-medium uppercase tracking-[0.18em] text-cyan-300/85">
+          <div className="text-[11px] sm:text-[11.5px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
             College AI
           </div>
-          <span className="text-[10.5px] tabular-nums text-white/85">grounded in your data</span>
+          <span className="text-[10.5px] tabular-nums text-white">grounded in your data</span>
         </div>
         <h3 className="mt-2 text-[18px] sm:text-[20px] font-semibold text-white leading-tight tracking-tight">
           Ask your AI study mentor anything
         </h3>
-        <p className="mt-1 text-[12.5px] sm:text-[13px] text-white/95 leading-snug max-w-xl">
+        <p className="mt-1 text-[12.5px] sm:text-[13px] text-white leading-snug max-w-xl">
           Knows your ACs, quiz history, OTJ hours, and EPA verdicts. Cites real evidence. Never
           makes things up.
         </p>
@@ -39,13 +39,13 @@ export function CollegeAiCard() {
           {STARTERS.map((s) => (
             <li
               key={s}
-              className="inline-flex items-center h-6 px-2 rounded-full border border-white/[0.10] bg-white/[0.03] text-[10.5px] font-medium text-white/95"
+              className="inline-flex items-center h-6 px-2 rounded-full border border-white/[0.10] bg-white/[0.03] text-[10.5px] font-medium text-white"
             >
               "{s}"
             </li>
           ))}
         </ul>
-        <div className="mt-4 inline-flex items-center h-10 px-4 rounded-lg bg-elec-yellow text-black text-[13px] font-semibold group-hover:bg-elec-yellow/90 transition-colors">
+        <div className="mt-4 inline-flex items-center h-11 px-4 rounded-lg bg-elec-yellow text-black text-[13px] font-semibold group-hover:bg-elec-yellow/90 transition-colors">
           Open College AI →
         </div>
       </div>

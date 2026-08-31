@@ -1313,7 +1313,7 @@ function NewEditionForm({
             });
             setOpen(false);
           }}
-          className="h-10 flex-1 touch-manipulation rounded-full bg-elec-yellow text-black text-[12.5px] font-semibold disabled:opacity-50"
+          className="h-10 flex-1 touch-manipulation rounded-full bg-elec-yellow text-black text-[12.5px] font-semibold disabled:bg-white/[0.08] disabled:text-white/70"
         >
           Create
         </button>
@@ -1696,7 +1696,7 @@ function FacetGenerationCard({
           <button
             onClick={start}
             disabled={!editionId}
-            className="w-full h-11 touch-manipulation rounded-full bg-elec-yellow text-black font-semibold text-[13px] inline-flex items-center justify-center gap-2 disabled:opacity-50"
+            className="w-full h-11 touch-manipulation rounded-full bg-elec-yellow text-black font-semibold text-[13px] inline-flex items-center justify-center gap-2 disabled:bg-white/[0.08] disabled:text-white/70"
           >
             <Zap className="h-4 w-4" />
             {displayFacetCount > 0 ? 'Resume facet generation' : 'Generate facets'}
@@ -2067,7 +2067,7 @@ function TableFacetGenerationCard({
           <button
             onClick={start}
             disabled={!editionId || !progress || progress.tables_remaining === 0}
-            className="w-full h-11 touch-manipulation rounded-full bg-elec-yellow text-black font-semibold text-[13px] inline-flex items-center justify-center gap-2 disabled:opacity-50"
+            className="w-full h-11 touch-manipulation rounded-full bg-elec-yellow text-black font-semibold text-[13px] inline-flex items-center justify-center gap-2 disabled:bg-white/[0.08] disabled:text-white/70"
           >
             <Zap className="h-4 w-4" />
             {progress && progress.tables_with_facets > 0

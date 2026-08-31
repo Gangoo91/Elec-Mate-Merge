@@ -206,18 +206,12 @@ const InstrumentationModule6Section3 = () => {
 
         <TLDR
           points={[
-            'A calibration needs two standards: one to apply a known input, one to measure the output honestly.',
             '🔴 On an analogue instrument, zero and span INTERACT — setting span disturbs the zero point.',
             '🔴 So the analogue procedure iterates: zero, span, back to zero, until both ends are right together.',
             '🔴 On a digital instrument the low and high trims are NON-INTERACTIVE, so each stimulus is applied once.',
-            'A technician trained on analogue kit will over-work a digital one out of habit, and it achieves nothing.',
             'Five points — 0, 25, 50, 75, 100 per cent — because a two-point check passes exactly the errors that hide in the middle.',
-            'Some procedures adjust at 0 and 100 and check at 10, 25, 50, 75 and 90, so the check points are where nothing was forced to agree.',
             '🔴 The output trim runs backwards from expectation: the instrument drives a nominal value, you measure the truth, and you tell it what you measured.',
             '🔴 The linearity adjustment should almost never be touched — it is very sensitive and easily over-adjusted.',
-            'Better to split the error between the ends with zero and span and leave linearity alone.',
-            'Once a digital transmitter is trimmed, it can be ranged and re-ranged freely without re-trimming.',
-            'Discrete instruments have a set-point and often a deadband — where it trips, and how far back it must come to reset.',
           ]}
         />
 
@@ -360,12 +354,12 @@ const InstrumentationModule6Section3 = () => {
           id="ins-6-3-iterate"
           question="A technician sets zero on an analogue transmitter, then span, and finds the zero is now out. What has happened?"
           options={[
-            'The span adjustment changed the slope, which moved where the line crosses at the bottom — this is expected and the procedure continues',
             'The standard has drifted',
             'The zero adjustment was set incorrectly',
+            'The span adjustment changed the slope, which moved where the line crosses at the bottom — this is expected and the procedure continues',
             'The instrument is faulty',
           ]}
-          correctIndex={0}
+          correctIndex={2}
           explanation="Nothing is wrong. Zero and span interact on an analogue instrument, so setting one disturbs the other. That is precisely why the procedure says repeat as necessary — two or three passes converge on both ends being right together."
         />
 
@@ -478,8 +472,8 @@ const InstrumentationModule6Section3 = () => {
         <InlineCheck
           id="ins-6-3-outputtrim"
           question="During a high output trim the instrument commands 20 mA and your meter reads 20.06 mA. What do you enter?"
-          options={['20.00', '20.06', '−0.06', '19.94']}
-          correctIndex={1}
+          options={['20.00', '−0.06', '19.94', '20.06']}
+          correctIndex={3}
           explanation="Enter what you measured — 20.06. The instrument knows what it intended; what it cannot know is what actually left its terminals. Telling it the truth is how it calculates its own correction. Entering 20.00 would assert that it was already right and leave the error in place."
         />
 

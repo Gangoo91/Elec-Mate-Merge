@@ -240,7 +240,7 @@ export function InvoiceScanResults({
                 Cancel
               </Button>
               <Button
-                className="flex-1 h-12 bg-elec-yellow text-black font-semibold hover:bg-white/[0.08] rounded-xl disabled:opacity-50"
+                className="flex-1 h-12 bg-elec-yellow text-black font-semibold hover:bg-white/[0.08] rounded-xl disabled:bg-white/[0.08] disabled:text-white/70"
                 onClick={onConfirm}
                 disabled={selectedCount === 0 || hasPriceWarning}
               >

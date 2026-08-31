@@ -171,7 +171,7 @@ export default function SolarDesigner() {
             <Button
               onClick={createCert}
               disabled={!planOk}
-              className="flex-1 h-12 rounded-xl bg-elec-yellow text-black font-bold text-[15px] hover:bg-elec-yellow/90 active:scale-[0.99] touch-manipulation gap-2 disabled:opacity-40"
+              className="flex-1 h-12 rounded-xl bg-elec-yellow text-black font-bold text-[15px] hover:bg-elec-yellow/90 active:scale-[0.99] touch-manipulation gap-2 disabled:bg-white/[0.08] disabled:text-white/70"
             >
               <FileCheck2 className="h-4 w-4" />
               Create Solar PV certificate

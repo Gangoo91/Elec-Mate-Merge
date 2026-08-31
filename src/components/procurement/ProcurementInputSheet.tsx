@@ -87,7 +87,7 @@ export function ProcurementInputSheet({
             type="button"
             onClick={handleTextSubmit}
             disabled={!pasteText.trim() || isProcessing}
-            className="h-12 w-full rounded-xl bg-elec-yellow text-[14px] font-semibold text-black transition-colors hover:bg-elec-yellow/90 touch-manipulation disabled:opacity-50"
+            className="h-12 w-full rounded-xl bg-elec-yellow text-[14px] font-semibold text-black transition-colors hover:bg-elec-yellow/90 touch-manipulation disabled:bg-white/[0.08] disabled:text-white/70"
           >
             {isProcessing ? 'Checking every supplier…' : 'Compare prices'}
           </button>

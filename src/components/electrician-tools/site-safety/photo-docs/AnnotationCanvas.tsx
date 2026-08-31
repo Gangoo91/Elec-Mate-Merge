@@ -554,7 +554,7 @@ export default function AnnotationCanvas({ photo, onSave, onClose }: AnnotationC
                 <button
                   onClick={handleTextSubmit}
                   disabled={!textValue.trim()}
-                  className="flex-1 h-10 rounded-lg bg-elec-yellow text-sm text-black font-semibold touch-manipulation active:bg-yellow-400 disabled:opacity-50"
+                  className="flex-1 h-10 rounded-lg bg-elec-yellow text-sm text-black font-semibold touch-manipulation active:bg-yellow-400 disabled:bg-white/[0.08] disabled:text-white/70"
                 >
                   Add
                 </button>

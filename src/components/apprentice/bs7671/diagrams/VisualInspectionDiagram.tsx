@@ -163,19 +163,19 @@ const VisualInspectionDiagram = ({ stepType, installationType }: VisualInspectio
         10 main sections with 80+ inspection items.
       </p>
 
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+      <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
           EICR outcome classifications
         </span>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
           {outcomeClassifications.map((outcome, index) => (
             <div
               key={index}
-              className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 text-center space-y-1"
+              className="rounded-lg border border-white/[0.10] bg-white/[0.06] p-3 text-center space-y-1"
             >
               <div className="text-[18px] font-bold text-white">{outcome.code}</div>
               <div className="text-[12px] font-medium text-white/85">{outcome.label}</div>
-              <div className="text-[11px] text-white/55 leading-snug">{outcome.description}</div>
+              <div className="text-[11px] text-white/70 leading-snug">{outcome.description}</div>
             </div>
           ))}
         </div>
@@ -185,17 +185,17 @@ const VisualInspectionDiagram = ({ stepType, installationType }: VisualInspectio
         {inspectionAreas.map((area, index) => (
           <div
             key={index}
-            className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3"
+            className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3"
           >
             <div className="flex items-start justify-between gap-3">
               <div className="space-y-0.5">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
                   {area.area}
                 </span>
-                <p className="text-[11px] text-white/55 font-mono">{area.regulation}</p>
+                <p className="text-[11px] text-white/70 font-mono">{area.regulation}</p>
               </div>
               {area.critical && (
-                <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+                <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.07]">
                   Critical
                 </span>
               )}
@@ -215,13 +215,13 @@ const VisualInspectionDiagram = ({ stepType, installationType }: VisualInspectio
         ))}
       </div>
 
-      <div className="rounded-xl border border-red-500/30 bg-red-500/[0.04] p-4 sm:p-5 space-y-3">
+      <div className="rounded-xl border border-white/[0.12] border-l-[3px] border-l-red-500 bg-white/[0.06] p-4 sm:p-5 space-y-3">
         <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">
           Critical safety requirements
         </span>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-1.5">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
               Before starting
             </span>
             <ul className="space-y-1.5">
@@ -242,7 +242,7 @@ const VisualInspectionDiagram = ({ stepType, installationType }: VisualInspectio
             </ul>
           </div>
           <div className="space-y-1.5">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
               During inspection
             </span>
             <ul className="space-y-1.5">
@@ -265,13 +265,13 @@ const VisualInspectionDiagram = ({ stepType, installationType }: VisualInspectio
         </div>
       </div>
 
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+      <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
           Professional documentation standards
         </span>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="space-y-1.5">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
               Recording
             </span>
             <ul className="space-y-1.5">
@@ -291,7 +291,7 @@ const VisualInspectionDiagram = ({ stepType, installationType }: VisualInspectio
             </ul>
           </div>
           <div className="space-y-1.5">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
               Classification
             </span>
             <ul className="space-y-1.5">
@@ -311,7 +311,7 @@ const VisualInspectionDiagram = ({ stepType, installationType }: VisualInspectio
             </ul>
           </div>
           <div className="space-y-1.5">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
               Follow-up
             </span>
             <ul className="space-y-1.5">

@@ -457,6 +457,8 @@ const WomenInElectricalTradePage = lazyWithRetry(() => import('@/pages/seo/Women
 const Year1ApprenticeGuidePage = lazyWithRetry(() => import('@/pages/seo/Year1ApprenticeGuidePage'));
 const Year2ApprenticeGuidePage = lazyWithRetry(() => import('@/pages/seo/Year2ApprenticeGuidePage'));
 const ZeValuesUKPage = lazyWithRetry(() => import('@/pages/seo/ZeValuesUKPage'));
+const PlugInSolarUKPage = lazyWithRetry(() => import('@/pages/seo/PlugInSolarUKPage'));
+const PlugInSolarRCDPage = lazyWithRetry(() => import('@/pages/seo/PlugInSolarRCDPage'));
 const AIClientExplainerPage = lazyWithRetry(() => import('@/pages/seo/AIClientExplainerPage'));
 const AICommissioningSpecialistPage = lazyWithRetry(
   () => import('@/pages/seo/AICommissioningSpecialistPage')
@@ -4768,6 +4770,22 @@ export function getSEORoutes() {
         element={
           <LazyRoute>
             <ZeValuesUKPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/plug-in-solar-uk"
+        element={
+          <LazyRoute>
+            <PlugInSolarUKPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/plug-in-solar-rcd-requirements"
+        element={
+          <LazyRoute>
+            <PlugInSolarRCDPage />
           </LazyRoute>
         }
       />

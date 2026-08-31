@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Sparkles } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { supabase } from '@/integrations/supabase/client';
 import { realtimeChannelName } from '@/lib/realtimeChannel';
 
@@ -28,7 +29,6 @@ interface SubmissionRow {
 
 interface ItemRow {
   id: string;
-  is_supervisor_verified: boolean;
 }
 
 const ACTION_STATUSES = new Set([
@@ -57,7 +57,7 @@ export function MyPortfolioSummaryCard() {
     }
 
     const [itemsRes, subsRes, commentsRes] = await Promise.all([
-      supabase.from('portfolio_items').select('id, is_supervisor_verified').eq('user_id', uid),
+      supabase.from('portfolio_items').select('id').eq('user_id', uid),
       supabase
         .from('portfolio_submissions')
         .select('id, status, iqa_outcome, action_required, last_feedback_at, updated_at')
@@ -133,8 +133,16 @@ export function MyPortfolioSummaryCard() {
       else if (APPROVED_STATUSES.has(s.status)) approved += 1;
     }
     const totalItems = items.length;
-    const verifiedItems = items.filter((i) => i.is_supervisor_verified).length;
-    return { actioning, approved, drafts, totalItems, verifiedItems };
+    /*
+     * `verifiedItems` used to be counted here off
+     * `portfolio_items.is_supervisor_verified` — and never rendered. Dead,
+     * and a trap: that flag is self-declared (nothing writes it, RLS gives
+     * the learner own-row UPDATE and assessors SELECT only), so whoever
+     * wired it up next would have shipped a verification count the learner
+     * controls. The real record is `supervisor_verifications.verified_at`,
+     * which is what the portfolio hub reads.
+     */
+    return { actioning, approved, drafts, totalItems };
   }, [items, submissions]);
 
   if (loading) return <Skeleton />;
@@ -142,14 +150,14 @@ export function MyPortfolioSummaryCard() {
   const empty = stats.totalItems === 0 && submissions.length === 0;
 
   return (
-    <section className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_10%)] overflow-hidden">
+    <section className={cn('rounded-2xl border border-white/[0.06] overflow-hidden', CARD_SURFACE)}>
       <div className="px-4 sm:px-5 py-4 sm:py-5">
         <div className="flex items-baseline justify-between gap-3 flex-wrap">
-          <div className="text-[11px] sm:text-[11.5px] font-medium uppercase tracking-[0.18em] text-blue-300/85">
+          <div className="text-[11px] sm:text-[11.5px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
             Portfolio
           </div>
           {unreadComments > 0 && (
-            <span className="text-[10.5px] tabular-nums text-white/85">
+            <span className="text-[10.5px] tabular-nums text-white">
               {unreadComments} new tutor {unreadComments === 1 ? 'comment' : 'comments'}
             </span>
           )}
@@ -157,7 +165,7 @@ export function MyPortfolioSummaryCard() {
 
         {empty ? (
           <>
-            <p className="mt-3 text-[12.5px] text-white/90 leading-snug">
+            <p className="mt-3 text-[12.5px] text-white leading-snug">
               Your portfolio is empty. Start adding evidence — photos, reflections, OTJ — and your
               tutor sees it instantly.
             </p>
@@ -176,16 +184,16 @@ export function MyPortfolioSummaryCard() {
               <Stat
                 value={stats.actioning.toString()}
                 label="Action needed"
-                tone={stats.actioning > 0 ? 'text-white/85' : 'text-white/85'}
+                tone={stats.actioning > 0 ? 'text-white' : 'text-white'}
               />
               <Stat
                 value={stats.approved.toString()}
                 label="Approved"
-                tone={stats.approved > 0 ? 'text-white/85' : 'text-white/85'}
+                tone={stats.approved > 0 ? 'text-white' : 'text-white'}
               />
             </div>
 
-            <p className="mt-3 text-[11.5px] sm:text-[12px] text-white/85 leading-snug">
+            <p className="mt-3 text-[11.5px] sm:text-[12px] text-white leading-snug">
               {stats.actioning > 0 || unreadComments > 0
                 ? `Your tutor's left feedback. Respond to keep your portfolio moving toward sign-off.`
                 : 'Add evidence as you go — photos and reflections strengthen your IQA verification rate.'}
@@ -204,7 +212,7 @@ export function MyPortfolioSummaryCard() {
                   <button
                     type="button"
                     onClick={() => navigate('/apprentice/hub?section=evidence')}
-                    className="h-11 rounded-lg border border-white/[0.10] bg-white/[0.02] text-[12.5px] font-medium text-white/85 hover:text-white hover:border-white/[0.22] transition-colors touch-manipulation"
+                    className="h-11 rounded-lg border border-white/[0.10] bg-white/[0.02] text-[12.5px] font-medium text-white hover:text-white hover:border-white/[0.22] transition-colors touch-manipulation"
                   >
                     Add evidence
                   </button>
@@ -215,7 +223,7 @@ export function MyPortfolioSummaryCard() {
                         `/apprentice/college-ai?prompt=${encodeURIComponent(PORTFOLIO_AI_PROMPT)}`
                       )
                     }
-                    className="inline-flex items-center justify-center gap-1.5 h-11 rounded-lg border border-white/[0.06] bg-white/[0.02] text-white/85 text-[12.5px] font-semibold hover:bg-white/[0.02] transition-colors touch-manipulation"
+                    className="inline-flex items-center justify-center gap-1.5 h-11 rounded-lg border border-white/[0.06] bg-white/[0.02] text-white text-[12.5px] font-semibold hover:bg-white/[0.02] transition-colors touch-manipulation"
                   >
                     <Sparkles className="h-3.5 w-3.5" />
                     Draft with AI
@@ -238,7 +246,7 @@ export function MyPortfolioSummaryCard() {
                       `/apprentice/college-ai?prompt=${encodeURIComponent(PORTFOLIO_AI_PROMPT)}`
                     )
                   }
-                  className="inline-flex items-center justify-center gap-1.5 h-11 px-4 rounded-lg border border-white/[0.06] bg-white/[0.02] text-white/85 text-[13px] font-semibold hover:bg-white/[0.02] transition-colors touch-manipulation"
+                  className="inline-flex items-center justify-center gap-1.5 h-11 px-4 rounded-lg border border-white/[0.06] bg-white/[0.02] text-white text-[13px] font-semibold hover:bg-white/[0.02] transition-colors touch-manipulation"
                 >
                   <Sparkles className="h-3.5 w-3.5" />
                   Draft with AI
@@ -260,14 +268,14 @@ function Stat({ value, label, tone }: { value: string; label: string; tone: stri
       >
         {value}
       </div>
-      <div className="mt-1 text-[10.5px] uppercase tracking-[0.14em] text-white/95">{label}</div>
+      <div className="mt-1 text-[10.5px] uppercase tracking-[0.14em] text-white">{label}</div>
     </div>
   );
 }
 
 function Skeleton() {
   return (
-    <section className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_10%)] overflow-hidden">
+    <section className={cn('rounded-2xl border border-white/[0.06] overflow-hidden', CARD_SURFACE)}>
       <div className="px-4 sm:px-5 py-4 sm:py-5 space-y-4">
         <div className="h-3 w-24 rounded-full bg-white/[0.05]" />
         <div className="grid grid-cols-3 gap-3">

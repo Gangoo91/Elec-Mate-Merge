@@ -94,7 +94,7 @@ const TimeEntryForm = ({ onAddEntry, onCancel }: TimeEntryFormProps) => {
           <Button
             type="submit"
             disabled={!activity.trim()}
-            className="w-full sm:w-auto h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation disabled:opacity-40"
+            className="w-full sm:w-auto h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation disabled:bg-white/[0.08] disabled:text-white/70"
           >
             <Plus className="h-4 w-4 mr-2" />
             Log training hours

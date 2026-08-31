@@ -246,7 +246,7 @@ export default function SafeIsolationPage() {
           {/* Actions */}
           <div className="flex flex-col gap-2 pt-2 lg:col-span-2 lg:flex-row-reverse lg:items-center lg:justify-start">
             <button onClick={handleSave} disabled={!allStepsComplete || isSaving}
-              className="h-12 w-full rounded-xl bg-elec-yellow text-[15px] font-semibold text-black hover:bg-elec-yellow/90 active:scale-[0.99] touch-manipulation disabled:opacity-50 lg:w-auto lg:px-10">
+              className="h-12 w-full rounded-xl bg-elec-yellow text-[15px] font-semibold text-black hover:bg-elec-yellow/90 active:scale-[0.99] touch-manipulation disabled:bg-white/[0.08] disabled:text-white/70 lg:w-auto lg:px-10">
               {isSaving ? (
                 <span className="inline-flex items-center justify-center gap-2"><Loader2 className="h-4 w-4 animate-spin" />Saving…</span>
               ) : existingReportId ? 'Update Record' : 'Save Record'}

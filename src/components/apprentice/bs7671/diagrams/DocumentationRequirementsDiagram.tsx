@@ -90,8 +90,8 @@ const DocumentationRequirementsDiagram = ({
         BS 7671 documentation requirements for initial verification.
       </p>
 
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+      <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-2">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
           Regulation 641.7 — documentation requirements
         </span>
         <p className="text-[14px] text-white/85 leading-relaxed">
@@ -102,24 +102,24 @@ const DocumentationRequirementsDiagram = ({
       </div>
 
       <div className="space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
           Mandatory documentation
         </span>
 
         {requiredDocuments.map((doc, index) => (
           <div
             key={index}
-            className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3"
+            className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3"
           >
             <div className="flex items-start justify-between gap-3">
               <div className="space-y-0.5">
                 <h5 className="text-[16px] font-semibold text-white leading-tight">
                   {doc.document}
                 </h5>
-                <p className="text-[11px] text-white/55 font-mono">{doc.regulation}</p>
+                <p className="text-[11px] text-white/70 font-mono">{doc.regulation}</p>
               </div>
               {doc.critical && (
-                <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+                <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.07]">
                   Critical
                 </span>
               )}
@@ -127,13 +127,13 @@ const DocumentationRequirementsDiagram = ({
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               <div className="space-y-0.5">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
                   Purpose
                 </span>
                 <p className="text-[14px] text-white/85 leading-relaxed">{doc.purpose}</p>
               </div>
               <div className="space-y-0.5">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
                   Completed by
                 </span>
                 <p className="text-[14px] text-white/85 leading-relaxed">{doc.completedBy}</p>
@@ -141,7 +141,7 @@ const DocumentationRequirementsDiagram = ({
             </div>
 
             <div className="space-y-0.5">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
                 Timing
               </span>
               <p className="text-[14px] text-white/85 leading-relaxed">{doc.timing}</p>
@@ -151,8 +151,8 @@ const DocumentationRequirementsDiagram = ({
       </div>
 
       {additionalDocuments.length > 0 && (
-        <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
             {installationType?.charAt(0).toUpperCase()}
             {installationType?.slice(1)} installation — additional requirements
           </span>
@@ -170,14 +170,14 @@ const DocumentationRequirementsDiagram = ({
         </div>
       )}
 
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+      <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
           Documentation timeline
         </span>
         <ol className="space-y-2">
           {timeline.map((item, index) => (
             <li key={index} className="flex items-start gap-3">
-              <span className="text-[12px] font-mono text-white/55 flex-shrink-0 w-5 mt-0.5">
+              <span className="text-[12px] font-mono text-white/70 flex-shrink-0 w-5 mt-0.5">
                 {index + 1}.
               </span>
               <div className="space-y-0.5">
@@ -189,13 +189,13 @@ const DocumentationRequirementsDiagram = ({
         </ol>
       </div>
 
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+      <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
           Document retention & distribution
         </span>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-1.5">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
               Original copies
             </span>
             <ul className="space-y-1.5">
@@ -215,7 +215,7 @@ const DocumentationRequirementsDiagram = ({
             </ul>
           </div>
           <div className="space-y-1.5">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
               Retention period
             </span>
             <ul className="space-y-1.5">

@@ -256,7 +256,7 @@ export function PolicyAcknowledgeSheet({ open, onOpenChange, policyId, onSigned 
                     checked={confirmed}
                     disabled={!scrolledToEnd}
                     onChange={(e) => setConfirmed(e.target.checked)}
-                    className="mt-1 h-4 w-4 rounded border-white/20 bg-[hsl(0_0%_9%)] checked:bg-elec-yellow disabled:opacity-40"
+                    className="mt-1 h-4 w-4 rounded border-white/20 bg-[hsl(0_0%_9%)] checked:bg-elec-yellow disabled:bg-white/[0.08] disabled:text-white/70"
                   />
                   <span className="text-[13px] text-white leading-snug">
                     I have read{' '}

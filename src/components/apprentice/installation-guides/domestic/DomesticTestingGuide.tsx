@@ -454,22 +454,21 @@ const DomesticTestingGuide = () => {
   return (
     <div className="space-y-6">
       {/* Test Sequence Order */}
-      <Card className="border-white/[0.06] bg-white/[0.02]">
-        <CardHeader>
+      <Card variant="plain">
+        <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <ListOrdered className="h-6 w-6 text-white/55" />
-            <CardTitle className="text-white">{testSequenceOrder.title}</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">{testSequenceOrder.title}</CardTitle>
           </div>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <Alert className="border-white/[0.06] bg-white/[0.02]">
-            <Info className="h-4 w-4 text-white/55" />
+        <CardContent className="space-y-4 p-0">
+          <Alert className="border-white/[0.10] bg-white/[0.06]">
+            <Info className="h-4 w-4 text-white/70" />
             <AlertDescription className="text-white/85 text-sm">
               <strong>Important:</strong> {testSequenceOrder.note}
             </AlertDescription>
           </Alert>
 
-          <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+          <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
             <p className="text-sm text-white mb-4">{testSequenceOrder.description}</p>
             <div className="space-y-2">
               {testSequenceOrder.sequence.map((item) => (
@@ -489,16 +488,15 @@ const DomesticTestingGuide = () => {
       </Card>
 
       {/* Detailed Test Procedures */}
-      <Card className="border-white/[0.06] bg-white/[0.02]">
-        <CardHeader>
+      <Card variant="plain">
+        <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <TestTube className="h-6 w-6 text-white/55" />
-            <CardTitle className="text-white">Detailed Test Procedures & Expected Values</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">Detailed Test Procedures & Expected Values</CardTitle>
           </div>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 p-0">
           {detailedTests.map((test, index) => (
-            <div key={index} className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+            <div key={index} className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
               <div className="flex items-center gap-2 mb-3">
                 <Badge variant="outline" className="border-white/10 text-white text-xs">
                   Test {test.testNumber}
@@ -514,7 +512,7 @@ const DomesticTestingGuide = () => {
                   <ul className="space-y-1">
                     {test.method.map((step, idx) => (
                       <li key={idx} className="text-xs text-white flex items-start gap-2">
-                        <span className="text-white/55 font-medium">{idx + 1}.</span>
+                        <span className="text-white/70 font-medium">{idx + 1}.</span>
                         {step}
                       </li>
                     ))}
@@ -572,7 +570,7 @@ const DomesticTestingGuide = () => {
                     <ul className="space-y-1">
                       {test.checkpoints.map((checkpoint, idx) => (
                         <li key={idx} className="text-xs text-white flex items-start gap-2">
-                          <CheckCircle className="h-3 w-3 text-white/55 mt-0.5 flex-shrink-0" />
+                          <CheckCircle className="h-3 w-3 text-white/70 mt-0.5 flex-shrink-0" />
                           {checkpoint}
                         </li>
                       ))}
@@ -581,7 +579,7 @@ const DomesticTestingGuide = () => {
                 </div>
               </div>
 
-              <div className="mt-3 pt-3 border-t border-white/[0.06]">
+              <div className="mt-3 pt-3 border-t border-white/[0.10]">
                 <div className="flex items-start gap-2">
                   <span className="text-xs text-white font-medium">Equipment:</span>
                   <span className="text-xs text-white">{test.equipment}</span>
@@ -619,16 +617,15 @@ const DomesticTestingGuide = () => {
       </Card>
 
       {/* Common Faults and Solutions */}
-      <Card className="border-red-500/30 bg-white/5">
-        <CardHeader>
+      <Card variant="plain">
+        <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <AlertCircle className="h-6 w-6 text-red-400" />
-            <CardTitle className="text-red-300">Common Faults and Solutions</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">Common Faults and Solutions</CardTitle>
           </div>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 p-0">
           {commonFaultsAndSolutions.map((item, index) => (
-            <div key={index} className="bg-red-500/10 p-4 rounded-lg border border-red-500/20">
+            <div key={index} className="p-4 rounded-lg border border-white/[0.12] border-l-[3px] border-l-red-500 bg-white/[0.06]">
               <h4 className="font-medium text-white mb-3">{item.fault}</h4>
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
@@ -661,7 +658,7 @@ const DomesticTestingGuide = () => {
                   <ul className="space-y-1">
                     {item.solutions.map((solution, idx) => (
                       <li key={idx} className="text-xs text-white/85 flex items-start gap-2">
-                        <CheckCircle className="h-3 w-3 text-white/55 mt-0.5 flex-shrink-0" />
+                        <CheckCircle className="h-3 w-3 text-white/70 mt-0.5 flex-shrink-0" />
                         {solution}
                       </li>
                     ))}
@@ -680,23 +677,22 @@ const DomesticTestingGuide = () => {
       </Card>
 
       {/* Documentation Requirements */}
-      <Card className="border-white/[0.06] bg-white/[0.02]">
-        <CardHeader>
+      <Card variant="plain">
+        <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <FileCheck className="h-6 w-6 text-white/55" />
-            <CardTitle className="text-white">{documentationRequirements.title}</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">{documentationRequirements.title}</CardTitle>
           </div>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <Alert className="border-white/[0.06] bg-white/[0.02]">
-            <Info className="h-4 w-4 text-white/55" />
+        <CardContent className="space-y-4 p-0">
+          <Alert className="border-white/[0.10] bg-white/[0.06]">
+            <Info className="h-4 w-4 text-white/70" />
             <AlertDescription className="text-white/85 text-sm">
               <strong>Retention:</strong> {documentationRequirements.retention}
             </AlertDescription>
           </Alert>
 
           {documentationRequirements.certificates.map((cert, index) => (
-            <div key={index} className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+            <div key={index} className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
               <h4 className="font-medium text-white mb-2">{cert.name}</h4>
               <p className="text-sm text-white/85 mb-3">
                 <strong>When:</strong> {cert.when}
@@ -732,7 +728,7 @@ const DomesticTestingGuide = () => {
                                   : classification.code === 'C2'
                                     ? 'border-white/10 text-white'
                                     : classification.code === 'C3'
-                                      ? 'border-yellow-400 text-yellow-300'
+                                      ? 'border-elec-yellow text-elec-yellow'
                                       : 'border-white/10 text-white'
                               }`}
                             >
@@ -754,12 +750,12 @@ const DomesticTestingGuide = () => {
             </div>
           ))}
 
-          <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+          <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
             <h4 className="font-medium text-white mb-3">Record Keeping</h4>
             <ul className="space-y-1">
               {documentationRequirements.recordKeeping.map((item, idx) => (
                 <li key={idx} className="text-sm text-white/85 flex items-start gap-2">
-                  <ClipboardList className="h-4 w-4 text-white/55 mt-0.5 flex-shrink-0" />
+                  <ClipboardList className="h-4 w-4 text-white/70 mt-0.5 flex-shrink-0" />
                   {item}
                 </li>
               ))}
@@ -769,19 +765,18 @@ const DomesticTestingGuide = () => {
       </Card>
 
       {/* Test Equipment */}
-      <Card className="border-white/[0.06] bg-white/[0.02]">
-        <CardHeader>
+      <Card variant="plain">
+        <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <Wrench className="h-6 w-6 text-white/55" />
-            <CardTitle className="text-white">{testEquipmentCalibration.title}</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">{testEquipmentCalibration.title}</CardTitle>
           </div>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 p-0">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {testEquipmentCalibration.equipment.map((equip, index) => (
               <div
                 key={index}
-                className="bg-white/[0.02] p-3 rounded-lg border border-white/[0.06]"
+                className="bg-white/[0.06] p-3 rounded-lg border border-white/[0.10]"
               >
                 <h4 className="font-medium text-white/85 text-sm mb-2">{equip.instrument}</h4>
                 <p className="text-xs text-white mb-1">
@@ -811,12 +806,12 @@ const DomesticTestingGuide = () => {
             ))}
           </div>
 
-          <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+          <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
             <h4 className="font-medium text-white mb-3">General Requirements</h4>
             <ul className="space-y-1">
               {testEquipmentCalibration.generalRequirements.map((req, idx) => (
                 <li key={idx} className="text-sm text-white/85 flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-white/55 mt-0.5 flex-shrink-0" />
+                  <CheckCircle className="h-4 w-4 text-white/70 mt-0.5 flex-shrink-0" />
                   {req}
                 </li>
               ))}

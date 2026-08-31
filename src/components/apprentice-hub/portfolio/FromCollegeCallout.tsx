@@ -212,7 +212,7 @@ export function FromCollegeCallout({
                 ? 'border-elec-yellow/25 bg-elec-yellow/[0.03]'
                 : s.kind === 'confirm'
                   ? 'border-elec-yellow/30 bg-elec-yellow/[0.05]'
-                  : 'border-white/[0.06] bg-[hsl(0_0%_10%)]';
+                  : 'border-elec-yellow/35 bg-gradient-to-br from-white/[0.19] via-white/[0.105] to-white/[0.065] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.16),0_2px_10px_-4px_rgba(0,0,0,0.65)]';
           const Icon =
             s.kind === 'referral'
               ? AlertTriangle
@@ -228,7 +228,7 @@ export function FromCollegeCallout({
                 ? 'text-elec-yellow'
                 : s.kind === 'comment'
                   ? 'text-elec-yellow/85'
-                  : 'text-white/55';
+                  : 'text-white';
           const Tag = s.onClick ? 'button' : 'div';
           return (
             <li key={s.key}>
@@ -248,19 +248,19 @@ export function FromCollegeCallout({
                         {s.title}
                       </p>
                       {s.meta && (
-                        <span className="text-[11px] text-white/55 font-mono flex-shrink-0">
+                        <span className="text-[11px] text-white font-mono flex-shrink-0">
                           {s.meta}
                         </span>
                       )}
                     </div>
                     {s.detail && (
-                      <p className="text-[12px] text-white/70 leading-relaxed italic">
+                      <p className="text-[12px] text-white leading-relaxed italic">
                         {s.detail}
                       </p>
                     )}
                   </div>
                   {s.onClick && (
-                    <ChevronRight className="h-4 w-4 text-white/40 flex-shrink-0 self-center" />
+                    <ChevronRight className="h-4 w-4 text-white flex-shrink-0 self-center" />
                   )}
                 </div>
               </Tag>

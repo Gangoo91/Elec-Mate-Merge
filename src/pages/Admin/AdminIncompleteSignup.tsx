@@ -1035,7 +1035,7 @@ export default function AdminIncompleteSignup() {
                     onClick={() => testEmail && sendTestMutation.mutate()}
                     disabled={!testEmail || sendTestMutation.isPending}
                     aria-label="Send test email"
-                    className="h-11 touch-manipulation rounded-full bg-elec-yellow px-4 text-[13px] font-semibold text-black disabled:opacity-40"
+                    className="h-11 touch-manipulation rounded-full bg-elec-yellow px-4 text-[13px] font-semibold text-black disabled:bg-white/[0.08] disabled:text-white/70"
                   >
                     {sendTestMutation.isPending ? (
                       <Loader2 className="h-4 w-4 animate-spin" />
@@ -1061,7 +1061,7 @@ export default function AdminIncompleteSignup() {
                   onClick={() => manualEmail && sendManualMutation.mutate(manualEmail)}
                   disabled={!manualEmail || sendManualMutation.isPending}
                   aria-label="Send email manually"
-                  className="h-11 touch-manipulation rounded-full bg-elec-yellow px-4 text-[13px] font-semibold text-black disabled:opacity-40"
+                  className="h-11 touch-manipulation rounded-full bg-elec-yellow px-4 text-[13px] font-semibold text-black disabled:bg-white/[0.08] disabled:text-white/70"
                 >
                   {sendManualMutation.isPending ? (
                     <Loader2 className="h-4 w-4 animate-spin" />
@@ -1134,7 +1134,7 @@ export default function AdminIncompleteSignup() {
               <button
                 onClick={() => setConfirmSend(true)}
                 disabled={batchSending || sendTargetCount === 0}
-                className="inline-flex h-11 touch-manipulation items-center justify-center gap-2 rounded-full bg-elec-yellow text-[13px] font-semibold text-black disabled:cursor-not-allowed disabled:opacity-40"
+                className="inline-flex h-11 touch-manipulation items-center justify-center gap-2 rounded-full bg-elec-yellow text-[13px] font-semibold text-black disabled:cursor-not-allowed disabled:bg-white/[0.08] disabled:text-white/70"
               >
                 <Send className="h-4 w-4" />
                 {selectedCount > 0 ? `Send (${selectedCount})` : `Send all (${sendTargetCount})`}

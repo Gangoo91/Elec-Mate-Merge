@@ -230,12 +230,12 @@ export default function SiteDiary() {
   return (
     <div className="flex flex-col bg-background min-h-0">
       {/* ═══ FIXED TOP BAR ═══ */}
-      <div className="flex-shrink-0 bg-[hsl(0_0%_8%)]/92 backdrop-blur-md border-b border-white/[0.06] z-20">
+      <div className="flex-shrink-0 bg-[hsl(0_0%_8%)]/92 backdrop-blur-md border-b border-white/[0.10] z-20">
         {/* Title row */}
         <div className="flex items-center gap-2 sm:gap-3 px-3 sm:px-4 h-14">
           <button
             onClick={() => navigate('/apprentice')}
-            className="inline-flex items-center justify-center gap-2 h-11 px-2 -ml-1 rounded-md text-[11px] sm:text-[12px] uppercase tracking-[0.18em] text-white/55 hover:text-white/85 transition-colors touch-manipulation flex-shrink-0"
+            className="inline-flex items-center justify-center gap-2 h-11 px-2 -ml-1 rounded-md text-[11px] sm:text-[12px] uppercase tracking-[0.18em] text-white/70 hover:text-white/85 transition-colors touch-manipulation flex-shrink-0"
             aria-label="Back to apprentice hub"
           >
             <ArrowLeft className="h-4 w-4" />
@@ -244,7 +244,7 @@ export default function SiteDiary() {
           <div className="hidden md:block h-5 w-px bg-white/10 flex-shrink-0" />
 
           <div className="flex-1 min-w-0">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55 block truncate">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70 block truncate">
               <span className="hidden sm:inline">Site diary · Daily logbook</span>
               <span className="sm:hidden">Site diary</span>
             </span>
@@ -256,7 +256,7 @@ export default function SiteDiary() {
               onClick={() => setSearchOpen(!searchOpen)}
               className={`h-10 w-10 flex items-center justify-center rounded-md touch-manipulation transition-colors ${
                 searchOpen
-                  ? 'bg-elec-yellow/[0.10] text-elec-yellow'
+                  ? 'bg-white/[0.06] text-elec-yellow'
                   : 'active:bg-white/[0.06] text-white/70'
               }`}
               aria-label="Search entries"
@@ -279,10 +279,13 @@ export default function SiteDiary() {
         {/* Stats ribbon */}
         <div className="flex items-center gap-2.5 px-3 sm:px-4 pb-2.5 overflow-x-auto scrollbar-hide sm:flex-wrap">
           {currentStreak > 0 ? (
-            <div className="flex items-center gap-1.5 flex-shrink-0 px-2 h-7 rounded-md border border-elec-yellow/25 bg-elec-yellow/[0.06]">
+            <div
+              className="flex items-center gap-1.5 flex-shrink-0 px-2 h-7 rounded-md border border-elec-yellow/25 bg-white/[0.06]"
+              title="Working days in a row with an entry. Weekends off do not break it."
+            >
               <Flame className="h-3 w-3 text-elec-yellow" />
               <span className="text-[11px] font-mono tabular-nums text-elec-yellow">
-                {currentStreak}d streak
+                {currentStreak} day{currentStreak === 1 ? '' : 's'} in a row
               </span>
               {nextMilestone && daysToNextMilestone > 0 && (
                 <span className="text-[10px] font-mono tabular-nums text-elec-yellow/70">
@@ -291,20 +294,20 @@ export default function SiteDiary() {
               )}
             </div>
           ) : (
-            <div className="flex items-center gap-1.5 flex-shrink-0 px-2 h-7 rounded-md border border-white/[0.08] bg-white/[0.02]">
-              <Flame className="h-3 w-3 text-white/55" />
+            <div className="flex items-center gap-1.5 flex-shrink-0 px-2 h-7 rounded-md border border-white/[0.12] bg-white/[0.06]">
+              <Flame className="h-3 w-3 text-white/70" />
               <span className="text-[11px] text-white/70">{streakMessage}</span>
             </div>
           )}
           <div className="flex items-center gap-1.5 flex-shrink-0">
-            <BookOpen className="h-3 w-3 text-white/40" />
+            <BookOpen className="h-3 w-3 text-white/70" />
             <span className="text-[11px] font-mono tabular-nums text-white/85">
               {totalEntries} entries
             </span>
           </div>
           {longestStreak > 1 && (
             <div className="flex items-center gap-1.5 flex-shrink-0">
-              <TrendingUp className="h-3 w-3 text-white/40" />
+              <TrendingUp className="h-3 w-3 text-white/70" />
               <span className="text-[11px] font-mono tabular-nums text-white/85">
                 Best {longestStreak}d
               </span>
@@ -313,7 +316,7 @@ export default function SiteDiary() {
           {avgMood && (
             <div className="flex items-center gap-1 flex-shrink-0">
               <span className="text-[13px] leading-none">{moodEmojis[avgMood]}</span>
-              <span className="text-[11px] text-white/55 uppercase tracking-[0.14em]">
+              <span className="text-[11px] text-white/70 uppercase tracking-[0.14em]">
                 avg mood
               </span>
             </div>
@@ -330,12 +333,12 @@ export default function SiteDiary() {
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search entries..."
                 autoFocus
-                className="w-full h-11 pl-10 pr-10 rounded-xl bg-white/[0.06] border border-white/[0.08] text-white text-sm placeholder:text-white focus:outline-none focus:border-elec-yellow/40 focus:ring-1 focus:ring-elec-yellow/20 touch-manipulation"
+                className="w-full h-11 pl-10 pr-10 rounded-xl bg-white/[0.06] border border-white/[0.12] text-white text-sm placeholder:text-white focus:outline-none focus:border-elec-yellow/40 focus:ring-1 focus:ring-elec-yellow/20 touch-manipulation"
               />
               {searchQuery && (
                 <button
                   onClick={() => setSearchQuery('')}
-                  className="absolute right-1 top-1/2 -translate-y-1/2 h-9 w-9 flex items-center justify-center rounded-full active:bg-white/10 touch-manipulation"
+                  className="absolute right-1 top-1/2 -translate-y-1/2 h-11 w-11 flex items-center justify-center rounded-full active:bg-white/10 touch-manipulation"
                 >
                   <X className="h-4 w-4 text-white" />
                 </button>
@@ -353,7 +356,7 @@ export default function SiteDiary() {
                 setViewMode('feed');
                 setDateFilter(null);
               }}
-              className={`flex items-center gap-1.5 px-4 h-9 rounded-full text-[13px] font-medium touch-manipulation transition-all ${
+              className={`flex items-center gap-1.5 px-4 h-11 rounded-full text-[13px] font-medium touch-manipulation transition-all ${
                 viewMode === 'feed'
                   ? 'bg-elec-yellow text-black'
                   : 'bg-white/[0.06] text-white active:bg-white/10'
@@ -364,7 +367,7 @@ export default function SiteDiary() {
             </button>
             <button
               onClick={() => setViewMode('calendar')}
-              className={`flex items-center gap-1.5 px-4 h-9 rounded-full text-[13px] font-medium touch-manipulation transition-all ${
+              className={`flex items-center gap-1.5 px-4 h-11 rounded-full text-[13px] font-medium touch-manipulation transition-all ${
                 viewMode === 'calendar'
                   ? 'bg-elec-yellow text-black'
                   : 'bg-white/[0.06] text-white active:bg-white/10'
@@ -378,7 +381,7 @@ export default function SiteDiary() {
             {dateFilter && (
               <button
                 onClick={() => setDateFilter(null)}
-                className="flex items-center gap-1 px-3 h-9 rounded-full bg-elec-yellow/15 text-elec-yellow text-[13px] font-medium touch-manipulation"
+                className="flex items-center gap-1 px-3 h-11 rounded-full bg-white/[0.06] text-elec-yellow text-[13px] font-medium touch-manipulation"
               >
                 {new Date(dateFilter + 'T00:00:00').toLocaleDateString('en-GB', {
                   day: 'numeric',
@@ -395,10 +398,10 @@ export default function SiteDiary() {
               <button
                 key={skill}
                 onClick={() => setActiveSkillFilter(activeSkillFilter === skill ? null : skill)}
-                className={`flex-shrink-0 px-3 h-8 text-[11px] rounded-full font-medium touch-manipulation transition-all whitespace-nowrap ${
+                className={`flex-shrink-0 px-4 h-11 text-[12px] rounded-full font-medium touch-manipulation transition-colors whitespace-nowrap ${
                   activeSkillFilter === skill
-                    ? 'bg-elec-yellow text-black'
-                    : 'bg-white/[0.06] text-white active:bg-white/10'
+                    ? 'bg-elec-yellow text-black font-semibold'
+                    : 'border border-white/[0.16] text-white hover:border-white/[0.32]'
                 }`}
               >
                 {skill}
@@ -427,10 +430,10 @@ export default function SiteDiary() {
                     setDetailOpen(true);
                   }
                 }}
-                className="w-full rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.04] overflow-hidden text-left touch-manipulation active:bg-elec-yellow/[0.08] transition-colors"
+                className="w-full rounded-xl border border-elec-yellow/25 bg-white/[0.06] overflow-hidden text-left touch-manipulation active:bg-elec-yellow/[0.08] transition-colors"
               >
                 <div className="px-4 py-3 flex items-center gap-3">
-                  <div className="h-9 w-9 rounded-md border border-elec-yellow/30 bg-elec-yellow/[0.06] flex items-center justify-center flex-shrink-0">
+                  <div className="h-9 w-9 rounded-md border border-elec-yellow/30 bg-white/[0.06] flex items-center justify-center flex-shrink-0">
                     <Briefcase className="h-4 w-4 text-elec-yellow" />
                   </div>
                   <div className="flex-1 min-w-0 space-y-0.5">
@@ -445,21 +448,21 @@ export default function SiteDiary() {
                       portfolio
                     </p>
                   </div>
-                  <ChevronRight className="h-4 w-4 text-white/40 flex-shrink-0" />
+                  <ChevronRight className="h-4 w-4 text-white/70 flex-shrink-0" />
                 </div>
               </button>
             )}
 
             {/* AI Coach card — only when 3+ entries */}
             {entries.length >= 3 && (
-              <div className="rounded-xl overflow-hidden border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+              <div className="rounded-xl overflow-hidden border border-white/[0.10] bg-[hsl(0_0%_10%)]">
                 <button
                   onClick={() => setCoachExpanded(!coachExpanded)}
                   className="w-full flex items-center justify-between px-4 py-3 touch-manipulation"
                 >
                   <div className="flex items-center gap-2">
                     <Sparkles className="h-4 w-4 text-elec-yellow" />
-                    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
                       AI coach
                     </span>
                   </div>
@@ -478,16 +481,16 @@ export default function SiteDiary() {
                             refreshCoach();
                           }
                         }}
-                        className="h-8 px-2.5 flex items-center gap-1.5 rounded-md border border-white/[0.08] bg-white/[0.02] touch-manipulation cursor-pointer active:bg-white/[0.04] transition-colors"
+                        className="h-11 px-3 flex items-center gap-1.5 rounded-md border border-white/[0.12] bg-white/[0.06] touch-manipulation cursor-pointer active:bg-white/[0.04] transition-colors"
                       >
                         <RefreshCw className="h-3 w-3 text-white/70" />
                         <span className="text-[10.5px] font-medium text-white/85">Refresh</span>
                       </div>
                     )}
                     {coachExpanded ? (
-                      <ChevronUp className="h-4 w-4 text-white/40 ml-1" />
+                      <ChevronUp className="h-4 w-4 text-white/70 ml-1" />
                     ) : (
-                      <ChevronDown className="h-4 w-4 text-white/40 ml-1" />
+                      <ChevronDown className="h-4 w-4 text-white/70 ml-1" />
                     )}
                   </div>
                 </button>
@@ -496,12 +499,12 @@ export default function SiteDiary() {
                   <div className="px-4 pb-4">
                     <button
                       onClick={refreshCoach}
-                      className="w-full inline-flex items-center justify-center gap-2 h-11 rounded-xl bg-elec-yellow text-black text-[13px] font-semibold hover:bg-elec-yellow/90 active:scale-[0.98] transition-all touch-manipulation"
+                      className="inline-flex w-full sm:w-auto items-center justify-center gap-2 h-11 px-5 rounded-xl bg-elec-yellow text-black text-[13px] font-semibold hover:bg-elec-yellow/90 active:scale-[0.98] transition-all touch-manipulation"
                     >
                       <Sparkles className="h-4 w-4" />
                       Get AI insights
                     </button>
-                    <p className="text-[11px] text-white/55 text-center mt-2">
+                    <p className="text-[12px] text-white/70 mt-2 sm:text-left text-center">
                       Analyses your recent entries for patterns and guidance
                     </p>
                   </div>
@@ -510,7 +513,7 @@ export default function SiteDiary() {
                 {coachExpanded && coachLoading && !coachInsight && (
                   <div className="flex items-center justify-center py-6 px-4">
                     <div className="animate-spin h-4 w-4 border-2 border-elec-yellow border-t-transparent rounded-full" />
-                    <span className="text-[11px] text-white/55 uppercase tracking-[0.14em] ml-2">
+                    <span className="text-[11px] text-white/70 uppercase tracking-[0.14em] ml-2">
                       Analysing…
                     </span>
                   </div>
@@ -518,13 +521,13 @@ export default function SiteDiary() {
 
                 {coachExpanded && coachError && !coachLoading && !coachInsight && (
                   <div className="px-4 pb-4 space-y-2">
-                    <div className="flex items-start gap-2 px-3 py-2.5 rounded-md border border-red-500/30 bg-red-500/[0.04]">
+                    <div className="flex items-start gap-2 px-3 py-2.5 rounded-md border border-white/[0.12] border-l-[3px] border-l-red-500 bg-white/[0.06]">
                       <AlertTriangle className="h-3.5 w-3.5 text-red-300 mt-0.5 flex-shrink-0" />
                       <p className="text-[12px] text-red-300 leading-relaxed">{coachError}</p>
                     </div>
                     <button
                       onClick={refreshCoach}
-                      className="w-full inline-flex items-center justify-center gap-2 h-10 rounded-md border border-white/[0.08] bg-white/[0.02] text-[12px] font-medium text-white/85 hover:bg-white/[0.04] active:scale-[0.98] transition-all touch-manipulation"
+                      className="w-full inline-flex items-center justify-center gap-2 h-10 rounded-md border border-white/[0.12] bg-white/[0.06] text-[12px] font-medium text-white/85 hover:bg-white/[0.04] active:scale-[0.98] transition-all touch-manipulation"
                     >
                       Try again
                     </button>
@@ -533,12 +536,12 @@ export default function SiteDiary() {
 
                 {coachExpanded && coachInsight && (
                   <div className="px-4 pb-4 space-y-4 border-t border-white/[0.04]">
-                    <p className="text-[10px] uppercase tracking-[0.18em] text-white/40 text-center pt-3">
+                    <p className="text-[10px] uppercase tracking-[0.18em] text-white/70 text-center pt-3">
                       Based on {entries.length} entr{entries.length !== 1 ? 'ies' : 'y'}
                     </p>
 
                     {/* Encouragement */}
-                    <div className="px-4 py-3 rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04]">
+                    <div className="px-4 py-3 rounded-md border border-elec-yellow/20 bg-white/[0.06]">
                       <p className="text-[13px] text-white/85 leading-relaxed">
                         {coachInsight.encouragement}
                       </p>
@@ -547,10 +550,10 @@ export default function SiteDiary() {
                     {/* 2-col grid on desktop for key insights */}
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-2.5">
                       {/* Recommendation */}
-                      <div className="px-4 py-3 rounded-md border border-white/[0.06] bg-white/[0.02] space-y-1.5">
+                      <div className="px-4 py-3 rounded-md border border-white/[0.10] bg-white/[0.06] space-y-1.5">
                         <div className="flex items-center gap-1.5">
                           <Lightbulb className="h-3.5 w-3.5 text-elec-yellow/85" />
-                          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
                             Next steps
                           </span>
                         </div>
@@ -561,10 +564,10 @@ export default function SiteDiary() {
 
                       {/* Mood */}
                       {coachInsight.moodInsight && (
-                        <div className="px-4 py-3 rounded-md border border-white/[0.06] bg-white/[0.02] space-y-1.5">
+                        <div className="px-4 py-3 rounded-md border border-white/[0.10] bg-white/[0.06] space-y-1.5">
                           <div className="flex items-center gap-1.5">
-                            <Brain className="h-3.5 w-3.5 text-white/55" />
-                            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                            <Brain className="h-3.5 w-3.5 text-white/70" />
+                            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
                               Wellbeing
                             </span>
                           </div>
@@ -576,7 +579,7 @@ export default function SiteDiary() {
 
                       {/* Regulation tip */}
                       {coachInsight.regulationTip && (
-                        <div className="px-4 py-3 rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] space-y-1.5">
+                        <div className="px-4 py-3 rounded-md border border-elec-yellow/20 bg-white/[0.06] space-y-1.5">
                           <div className="flex items-center gap-1.5">
                             <AlertTriangle className="h-3.5 w-3.5 text-elec-yellow/85" />
                             <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
@@ -591,10 +594,10 @@ export default function SiteDiary() {
 
                       {/* KSB + Qualification */}
                       {(coachInsight.ksbSuggestion || coachInsight.qualificationProgress) && (
-                        <div className="px-4 py-3 rounded-md border border-white/[0.06] bg-white/[0.02] space-y-1.5">
+                        <div className="px-4 py-3 rounded-md border border-white/[0.10] bg-white/[0.06] space-y-1.5">
                           <div className="flex items-center gap-1.5">
-                            <BookOpen className="h-3.5 w-3.5 text-white/55" />
-                            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                            <BookOpen className="h-3.5 w-3.5 text-white/70" />
+                            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
                               Evidence & progress
                             </span>
                           </div>
@@ -615,14 +618,14 @@ export default function SiteDiary() {
                     {/* Skill gaps */}
                     {coachInsight.skillGaps && coachInsight.skillGaps.length > 0 && (
                       <div className="space-y-2">
-                        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
                           Skills to practise
                         </span>
                         <div className="flex flex-wrap gap-1.5">
                           {coachInsight.skillGaps.map((skill) => (
                             <span
                               key={skill}
-                              className="inline-flex items-center h-7 px-2 rounded-md border border-white/[0.08] bg-white/[0.02] text-[11px] text-white/85"
+                              className="inline-flex items-center h-7 px-2 rounded-md border border-white/[0.12] bg-white/[0.06] text-[11px] text-white/85"
                             >
                               {skill}
                             </span>
@@ -644,7 +647,7 @@ export default function SiteDiary() {
                             }
                           }
                         }}
-                        className="w-full flex items-start gap-3 px-4 py-3 min-h-[44px] rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] text-left touch-manipulation active:bg-elec-yellow/[0.08] transition-colors"
+                        className="w-full flex items-start gap-3 px-4 py-3 min-h-[44px] rounded-md border border-elec-yellow/20 bg-white/[0.06] text-left touch-manipulation active:bg-elec-yellow/[0.08] transition-colors"
                       >
                         <Briefcase className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                         <div className="flex-1 min-w-0 space-y-1">

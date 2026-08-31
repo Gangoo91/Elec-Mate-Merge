@@ -704,7 +704,7 @@ export default function DangerNoticePage() {
             type="button"
             onClick={handleSave}
             disabled={isSaving}
-            className="h-12 w-full rounded-xl bg-elec-yellow text-[15px] font-semibold text-black hover:bg-elec-yellow/90 active:scale-[0.99] touch-manipulation transition-all disabled:opacity-50 flex items-center justify-center gap-2 lg:w-auto lg:px-10"
+            className="h-12 w-full rounded-xl bg-elec-yellow text-[15px] font-semibold text-black hover:bg-elec-yellow/90 active:scale-[0.99] touch-manipulation transition-all disabled:bg-white/[0.08] disabled:text-white/70 flex items-center justify-center gap-2 lg:w-auto lg:px-10"
           >
             {isSaving ? <><Loader2 className="h-4 w-4 animate-spin" />Saving...</> : existingReportId ? 'Update & Generate' : 'Generate & Save'}
           </button>

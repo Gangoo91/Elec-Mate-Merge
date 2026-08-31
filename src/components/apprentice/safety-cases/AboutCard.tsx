@@ -2,8 +2,8 @@ import React from 'react';
 
 const AboutCard = () => {
   return (
-    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4 animate-fade-in">
-      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+    <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-4 animate-fade-in">
+      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
         About these safety scenarios
       </span>
 

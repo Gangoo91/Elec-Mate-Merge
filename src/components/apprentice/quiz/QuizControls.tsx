@@ -18,7 +18,7 @@ const QuizControls = ({
         <Button
           onClick={onNext}
           disabled={!isAnswered}
-          className="h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation active:scale-[0.98] disabled:opacity-40"
+          className="h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation active:scale-[0.98] disabled:bg-white/[0.08] disabled:text-white/70"
         >
           {isLastQuestion ? 'See Results' : 'Next Question'}
         </Button>

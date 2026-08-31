@@ -239,7 +239,7 @@ export default function AgreementSignPage() {
             <button
               onClick={handleSign}
               disabled={!name.trim() || !signature || step === 'submitting'}
-              className="flex h-12 w-full items-center justify-center rounded-xl bg-elec-yellow text-[15px] font-bold text-black touch-manipulation disabled:opacity-50"
+              className="flex h-12 w-full items-center justify-center rounded-xl bg-elec-yellow text-[15px] font-bold text-black touch-manipulation disabled:bg-white/[0.08] disabled:text-white/70"
             >
               {step === 'submitting' ? (
                 <Loader2 className="h-5 w-5 animate-spin" />

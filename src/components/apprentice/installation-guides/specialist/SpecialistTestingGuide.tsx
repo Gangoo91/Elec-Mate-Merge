@@ -591,56 +591,56 @@ const SpecialistTestingGuide = () => {
   const getColorClasses = (color: string) => {
     const colors: Record<string, { border: string; bg: string; text: string; badge: string }> = {
       cyan: {
-        border: 'border-white/[0.06]',
-        bg: 'bg-white/[0.02]',
+        border: 'border-white/[0.10]',
+        bg: 'bg-white/[0.06]',
         text: 'text-white',
         badge: 'border-white/10 text-white',
       },
       blue: {
-        border: 'border-white/[0.06]',
-        bg: 'bg-white/[0.02]',
+        border: 'border-white/[0.10]',
+        bg: 'bg-white/[0.06]',
         text: 'text-white',
         badge: 'border-white/10 text-white',
       },
       orange: {
-        border: 'border-white/[0.06]',
-        bg: 'bg-white/[0.02]',
+        border: 'border-white/[0.10]',
+        bg: 'bg-white/[0.06]',
         text: 'text-white',
         badge: 'border-white/10 text-white',
       },
       yellow: {
-        border: 'border-yellow-500/30',
-        bg: 'bg-yellow-500/10',
-        text: 'text-yellow-300',
-        badge: 'border-yellow-400 text-yellow-300',
+        border: 'border-elec-yellow/30',
+        bg: 'bg-white/[0.06]',
+        text: 'text-elec-yellow',
+        badge: 'border-elec-yellow text-elec-yellow',
       },
       green: {
-        border: 'border-white/[0.06]',
-        bg: 'bg-white/[0.02]',
+        border: 'border-white/[0.10]',
+        bg: 'bg-white/[0.06]',
         text: 'text-white',
         badge: 'border-white/10 text-white',
       },
       red: {
         border: 'border-red-500/30',
-        bg: 'bg-red-500/10',
+        bg: 'bg-white/[0.06]',
         text: 'text-red-300',
         badge: 'border-red-400 text-red-300',
       },
       teal: {
-        border: 'border-white/[0.06]',
-        bg: 'bg-white/[0.02]',
+        border: 'border-white/[0.10]',
+        bg: 'bg-white/[0.06]',
         text: 'text-white',
         badge: 'border-white/10 text-white',
       },
       amber: {
-        border: 'border-white/[0.06]',
-        bg: 'bg-white/[0.02]',
+        border: 'border-white/[0.10]',
+        bg: 'bg-white/[0.06]',
         text: 'text-white',
         badge: 'border-white/10 text-white',
       },
       lime: {
-        border: 'border-white/[0.06]',
-        bg: 'bg-white/[0.02]',
+        border: 'border-white/[0.10]',
+        bg: 'bg-white/[0.06]',
         text: 'text-white',
         badge: 'border-white/10 text-white',
       },
@@ -651,17 +651,16 @@ const SpecialistTestingGuide = () => {
   return (
     <div className="space-y-6">
       {/* Introduction */}
-      <Card className="border-elec-yellow/30 bg-white/5">
-        <CardHeader>
+      <Card variant="plain">
+        <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <TestTube className="h-6 w-6 text-elec-yellow" />
-            <CardTitle className="text-elec-yellow">
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">
               Special Location Testing Requirements
             </CardTitle>
           </div>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <Alert className="border-elec-yellow/50 bg-elec-yellow/10">
+        <CardContent className="space-y-4 p-0">
+          <Alert className="border-elec-yellow/60 bg-white/[0.06]">
             <Info className="h-4 w-4 text-elec-yellow" />
             <AlertDescription className="text-elec-yellow/90">
               Special locations require additional tests beyond the standard BS 7671 sequence. These
@@ -674,19 +673,19 @@ const SpecialistTestingGuide = () => {
               Standard Test Sequence (All Installations)
             </h4>
             <div className="grid grid-cols-2 md:grid-cols-5 gap-2 text-sm">
-              <div className="bg-elec-yellow/10 p-2 rounded text-center">
+              <div className="p-2 rounded border border-elec-yellow/40 text-center">
                 <span className="text-elec-yellow font-medium">1. Continuity</span>
               </div>
-              <div className="bg-elec-yellow/10 p-2 rounded text-center">
+              <div className="p-2 rounded border border-elec-yellow/40 text-center">
                 <span className="text-elec-yellow font-medium">2. Insulation</span>
               </div>
-              <div className="bg-elec-yellow/10 p-2 rounded text-center">
+              <div className="p-2 rounded border border-elec-yellow/40 text-center">
                 <span className="text-elec-yellow font-medium">3. Polarity</span>
               </div>
-              <div className="bg-elec-yellow/10 p-2 rounded text-center">
+              <div className="p-2 rounded border border-elec-yellow/40 text-center">
                 <span className="text-elec-yellow font-medium">4. EFLI (Zs)</span>
               </div>
-              <div className="bg-elec-yellow/10 p-2 rounded text-center">
+              <div className="p-2 rounded border border-elec-yellow/40 text-center">
                 <span className="text-elec-yellow font-medium">5. RCD</span>
               </div>
             </div>
@@ -705,13 +704,13 @@ const SpecialistTestingGuide = () => {
 
         return (
           <Card key={locIndex} className={`${colors.border} bg-white/5`}>
-            <CardHeader>
+            <CardHeader className="p-0 pb-3">
               <div className="flex items-center gap-2">
                 <Icon className={`h-6 w-6 ${colors.text}`} />
                 <CardTitle className={colors.text}>{location.location}</CardTitle>
               </div>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-4 p-0">
               {/* Standard Tests */}
               <div className={`${colors.bg} p-3 rounded-lg border ${colors.border}`}>
                 <h4 className="font-medium text-white text-sm mb-2">Standard Tests Apply:</h4>
@@ -782,21 +781,20 @@ const SpecialistTestingGuide = () => {
       })}
 
       {/* Documentation Requirements */}
-      <Card className="border-white/[0.06] bg-white/5">
-        <CardHeader>
+      <Card variant="plain">
+        <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <FileCheck className="h-6 w-6 text-white/55" />
-            <CardTitle className="text-white">Documentation Requirements</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">Documentation Requirements</CardTitle>
           </div>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 p-0">
           {documentationRequirements.map((doc, idx) => (
-            <div key={idx} className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+            <div key={idx} className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
               <h4 className="font-medium text-white/85 mb-3">{doc.location}</h4>
               <ul className="grid grid-cols-1 md:grid-cols-2 gap-2">
                 {doc.requiredDocs.map((item, docIdx) => (
                   <li key={docIdx} className="flex items-start gap-2 text-sm">
-                    <ClipboardCheck className="h-4 w-4 text-white/55 mt-0.5 flex-shrink-0" />
+                    <ClipboardCheck className="h-4 w-4 text-white/70 mt-0.5 flex-shrink-0" />
                     <span className="text-white">{item}</span>
                   </li>
                 ))}
@@ -807,16 +805,15 @@ const SpecialistTestingGuide = () => {
       </Card>
 
       {/* Periodic Inspection Frequencies */}
-      <Card className="border-white/[0.06] bg-white/5">
-        <CardHeader>
+      <Card variant="plain">
+        <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <Clock className="h-6 w-6 text-white/55" />
-            <CardTitle className="text-white">Periodic Inspection Frequencies</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">Periodic Inspection Frequencies</CardTitle>
           </div>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <Alert className="border-white/[0.06] bg-white/[0.02]">
-            <Info className="h-4 w-4 text-white/55" />
+        <CardContent className="space-y-4 p-0">
+          <Alert className="border-white/[0.10] bg-white/[0.06]">
+            <Info className="h-4 w-4 text-white/70" />
             <AlertDescription className="text-white/85 text-sm">
               These are MAXIMUM recommended intervals from IET Guidance Note 3. More frequent
               inspection may be required based on use, environmental conditions, or previous
@@ -827,7 +824,7 @@ const SpecialistTestingGuide = () => {
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-white/[0.06]">
+                <tr className="border-b border-white/[0.10]">
                   <th className="text-left py-2 text-white/85">Location Type</th>
                   <th className="text-left py-2 text-white/85">Max Interval</th>
                   <th className="text-left py-2 text-white/85">Notes</th>
@@ -836,7 +833,7 @@ const SpecialistTestingGuide = () => {
               </thead>
               <tbody>
                 {periodicFrequencies.map((freq, idx) => (
-                  <tr key={idx} className="border-b border-white/[0.06]">
+                  <tr key={idx} className="border-b border-white/[0.10]">
                     <td className="py-3 text-white font-medium">{freq.location}</td>
                     <td className="py-3">
                       <Badge variant="outline" className="border-white/10 text-white">
@@ -849,7 +846,7 @@ const SpecialistTestingGuide = () => {
                         {freq.focus.map((f, fIdx) => (
                           <span
                             key={fIdx}
-                            className="text-xs bg-white/[0.02] text-white/85 px-2 py-0.5 rounded"
+                            className="text-xs bg-white/[0.06] text-white/85 px-2 py-0.5 rounded"
                           >
                             {f}
                           </span>
@@ -865,22 +862,21 @@ const SpecialistTestingGuide = () => {
       </Card>
 
       {/* Common Test Failures */}
-      <Card className="border-red-500/30 bg-white/5">
-        <CardHeader>
+      <Card variant="plain">
+        <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <XCircle className="h-6 w-6 text-red-400" />
-            <CardTitle className="text-red-300">
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">
               Common Test Failures in Special Locations
             </CardTitle>
           </div>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 p-0">
           {commonFailures.map((loc, idx) => (
-            <div key={idx} className="bg-red-500/10 p-4 rounded-lg border border-red-500/20">
+            <div key={idx} className="p-4 rounded-lg border border-white/[0.12] border-l-[3px] border-l-red-500 bg-white/[0.06]">
               <h4 className="font-medium text-red-200 mb-3">{loc.location}</h4>
               <div className="space-y-3">
                 {loc.failures.map((failure, fIdx) => (
-                  <div key={fIdx} className="bg-red-600/10 p-3 rounded border border-red-500/30">
+                  <div key={fIdx} className="bg-white/[0.06] p-3 rounded border border-red-500/30">
                     <div className="flex items-center gap-2 mb-2">
                       <AlertTriangle className="h-4 w-4 text-red-400" />
                       <span className="font-medium text-red-200">{failure.issue}</span>
@@ -904,64 +900,63 @@ const SpecialistTestingGuide = () => {
       </Card>
 
       {/* Test Equipment Requirements */}
-      <Card className="border-white/[0.06] bg-white/5">
-        <CardHeader>
+      <Card variant="plain">
+        <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <ListChecks className="h-6 w-6 text-white/55" />
-            <CardTitle className="text-white">Specialist Test Equipment</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">Specialist Test Equipment</CardTitle>
           </div>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 p-0">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+            <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
               <h4 className="font-medium text-white mb-3">Standard MFT Plus:</h4>
               <ul className="space-y-2 text-sm">
                 <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-white/55 mt-0.5" />
+                  <CheckCircle className="h-4 w-4 text-white/70 mt-0.5" />
                   <span className="text-white">
                     Low resistance ohmmeter (less than 0.01 ohm resolution)
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-white/55 mt-0.5" />
+                  <CheckCircle className="h-4 w-4 text-white/70 mt-0.5" />
                   <span className="text-white">Earth electrode tester</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-white/55 mt-0.5" />
+                  <CheckCircle className="h-4 w-4 text-white/70 mt-0.5" />
                   <span className="text-white">High current bonding tester</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-white/55 mt-0.5" />
+                  <CheckCircle className="h-4 w-4 text-white/70 mt-0.5" />
                   <span className="text-white">RCD tester with Type A/B capability</span>
                 </li>
               </ul>
             </div>
 
-            <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+            <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
               <h4 className="font-medium text-white mb-3">Specialist Equipment:</h4>
               <ul className="space-y-2 text-sm">
                 <li className="flex items-start gap-2">
-                  <Sun className="h-4 w-4 text-white/55 mt-0.5" />
+                  <Sun className="h-4 w-4 text-white/70 mt-0.5" />
                   <span className="text-white">DC insulation tester (1000V+) for PV</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <Car className="h-4 w-4 text-white/55 mt-0.5" />
+                  <Car className="h-4 w-4 text-white/70 mt-0.5" />
                   <span className="text-white">EV charging point tester</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <Heart className="h-4 w-4 text-white/55 mt-0.5" />
+                  <Heart className="h-4 w-4 text-white/70 mt-0.5" />
                   <span className="text-white">IMD tester for medical IT systems</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <Waves className="h-4 w-4 text-white/55 mt-0.5" />
+                  <Waves className="h-4 w-4 text-white/70 mt-0.5" />
                   <span className="text-white">SELV transformer output tester</span>
                 </li>
               </ul>
             </div>
           </div>
 
-          <Alert className="border-white/[0.06] bg-white/[0.02]">
-            <Shield className="h-4 w-4 text-white/55" />
+          <Alert className="border-white/[0.10] bg-white/[0.06]">
+            <Shield className="h-4 w-4 text-white/70" />
             <AlertDescription className="text-white/85 text-sm">
               All test equipment must comply with GS38 and be calibrated within manufacturer's
               recommended intervals. Calibration certificates should be available on request.
@@ -971,17 +966,17 @@ const SpecialistTestingGuide = () => {
       </Card>
 
       {/* Critical Safety Notice */}
-      <Card className="border-red-500/50 bg-red-500/10">
-        <CardHeader>
-          <CardTitle className="text-red-300 flex items-center gap-2">
+      <Card className="border-white/[0.12] border-l-[3px] border-l-red-500 bg-white/[0.06]">
+        <CardHeader className="p-0 pb-3">
+          <CardTitle className="text-[15px] font-semibold tracking-tight text-white flex items-center gap-2">
             <Shield className="h-6 w-6" />
             Testing Safety Critical Points
           </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 p-0">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
             <div className="space-y-3">
-              <div className="bg-red-500/10 p-3 rounded-lg border border-red-500/30">
+              <div className="p-3 rounded-lg border border-white/[0.12] border-l-[3px] border-l-red-500 bg-white/[0.06]">
                 <h4 className="font-medium text-red-200 mb-2">Solar PV Systems</h4>
                 <ul className="space-y-1 text-white">
                   <li>DC systems are live whenever illuminated</li>
@@ -991,7 +986,7 @@ const SpecialistTestingGuide = () => {
                 </ul>
               </div>
 
-              <div className="bg-red-500/10 p-3 rounded-lg border border-red-500/30">
+              <div className="p-3 rounded-lg border border-white/[0.12] border-l-[3px] border-l-red-500 bg-white/[0.06]">
                 <h4 className="font-medium text-red-200 mb-2">Swimming Pools</h4>
                 <ul className="space-y-1 text-white">
                   <li>Water creates additional shock hazard</li>
@@ -1003,7 +998,7 @@ const SpecialistTestingGuide = () => {
             </div>
 
             <div className="space-y-3">
-              <div className="bg-white/[0.02] p-3 rounded-lg border border-white/[0.06]">
+              <div className="bg-white/[0.06] p-3 rounded-lg border border-white/[0.10]">
                 <h4 className="font-medium text-white/85 mb-2">Medical Locations</h4>
                 <ul className="space-y-1 text-white">
                   <li>Coordinate with clinical staff</li>
@@ -1013,7 +1008,7 @@ const SpecialistTestingGuide = () => {
                 </ul>
               </div>
 
-              <div className="bg-white/[0.02] p-3 rounded-lg border border-white/[0.06]">
+              <div className="bg-white/[0.06] p-3 rounded-lg border border-white/[0.10]">
                 <h4 className="font-medium text-white/85 mb-2">Construction Sites</h4>
                 <ul className="space-y-1 text-white">
                   <li>Multiple supplies may be present</li>

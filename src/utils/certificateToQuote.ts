@@ -65,7 +65,10 @@ export interface CertificateClientData {
     | 'BESS'
     // ELE-1634. Not a certificate, but it reaches the quote builder by exactly
     // the same route and for the same reason: findings that need putting right.
-    | 'Pre-Purchase Survey';
+    | 'Pre-Purchase Survey'
+    // ELE-1660. Same again — the remedial items come from the suitability
+    // assessment, and outstanding ones are carried across pre-loaded but unpriced.
+    | 'Plug-in Solar Assessment';
   certificateReference?: string;
   // Certificate attachment info
   reportId?: string;

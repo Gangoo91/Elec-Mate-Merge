@@ -1146,7 +1146,7 @@ const ComposeSheet = ({
         <button
           onClick={handleSendMessage}
           disabled={sendPending}
-          className="h-10 px-4 rounded-full bg-elec-yellow text-black text-[13px] font-semibold touch-manipulation disabled:opacity-50 flex items-center gap-1.5"
+          className="h-10 px-4 rounded-full bg-elec-yellow text-black text-[13px] font-semibold touch-manipulation disabled:bg-white/[0.08] disabled:text-white/70 flex items-center gap-1.5"
         >
           {sendPending ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
           Send
@@ -1379,7 +1379,7 @@ const ReplySheet = ({
         <button
           onClick={handleReply}
           disabled={!replyContent.trim() || sendPending}
-          className="h-10 px-4 rounded-full bg-elec-yellow text-black text-[13px] font-semibold touch-manipulation disabled:opacity-50 flex items-center gap-1.5"
+          className="h-10 px-4 rounded-full bg-elec-yellow text-black text-[13px] font-semibold touch-manipulation disabled:bg-white/[0.08] disabled:text-white/70 flex items-center gap-1.5"
         >
           {sendPending ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
           Send

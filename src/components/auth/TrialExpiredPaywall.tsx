@@ -288,7 +288,7 @@ const TrialExpiredPaywall = () => {
                 <Button
                   onClick={startCheckout}
                   disabled={isStarting}
-                  className="h-14 w-full touch-manipulation rounded-2xl bg-elec-yellow text-[15px] font-bold text-black transition-all hover:bg-elec-yellow/90 active:scale-[0.98] disabled:opacity-60"
+                  className="h-14 w-full touch-manipulation rounded-2xl bg-elec-yellow text-[15px] font-bold text-black transition-all hover:bg-elec-yellow/90 active:scale-[0.98] disabled:bg-white/[0.08] disabled:text-white/70"
                 >
                   {isStarting ? (
                     <Loader2 className="h-5 w-5 animate-spin" />

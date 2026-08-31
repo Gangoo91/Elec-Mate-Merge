@@ -54,10 +54,20 @@ export interface PortfolioEntry {
 export interface PortfolioFile {
   id: string;
   name: string;
+  /** MIME type — "application/pdf". */
   type: string;
   size: number;
   url?: string; // For actual files, we'll mock this
   uploadDate: string;
+  /**
+   * The evidence CLASS — `evidence_types.code`.
+   *
+   * Distinct from `type`: MIME says "application/pdf", this says whether that
+   * PDF is a certificate, a witness statement or a work log. It is the
+   * distinction an assessor reads, and the one `requires_witness` depends on.
+   * Optional because entries captured before typing existed do not have it.
+   */
+  evidenceType?: string;
 }
 
 export interface PortfolioCategory {

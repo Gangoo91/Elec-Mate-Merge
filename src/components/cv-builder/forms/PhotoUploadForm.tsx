@@ -127,7 +127,7 @@ export const PhotoUploadForm: React.FC<PhotoUploadFormProps> = ({ cvData, onChan
             <button
               onClick={() => cameraInputRef.current?.click()}
               disabled={isUploading}
-              className="flex items-center justify-center gap-2 px-4 py-3 min-h-[48px] rounded-lg bg-elec-yellow text-black font-medium touch-manipulation active:scale-95 disabled:opacity-50"
+              className="flex items-center justify-center gap-2 px-4 py-3 min-h-[48px] rounded-lg bg-elec-yellow text-black font-medium touch-manipulation active:scale-95 disabled:bg-white/[0.08] disabled:text-white/70"
             >
               <Camera className="h-5 w-5" />
               {isUploading ? 'Uploading...' : 'Take Photo'}

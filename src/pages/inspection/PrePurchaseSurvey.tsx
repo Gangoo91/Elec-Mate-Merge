@@ -741,7 +741,7 @@ export default function PrePurchaseSurvey() {
                 type="button"
                 onClick={handleGenerate}
                 disabled={!canGenerate || isGenerating}
-                className="mt-4 flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-colors hover:bg-elec-yellow/90 touch-manipulation active:scale-[0.98] disabled:opacity-40"
+                className="mt-4 flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-colors hover:bg-elec-yellow/90 touch-manipulation active:scale-[0.98] disabled:bg-white/[0.08] disabled:text-white/70"
               >
                 <FileText className="h-[18px] w-[18px]" />
                 Generate survey

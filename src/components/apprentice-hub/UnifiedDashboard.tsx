@@ -16,6 +16,7 @@
  */
 
 import { useState, useMemo, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Plus, FileCheck, ChevronRight, Share2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -29,7 +30,10 @@ import {
 import type { PortfolioEntry } from '@/types/portfolio';
 import { EvidenceImage } from '@/components/shared/EvidenceImage';
 import { parseEvidencedACs } from '@/utils/parseEvidencedACs';
+import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { useHaptic } from '@/hooks/useHaptic';
+import { HubAlertLine, HubKpi, HubKpiRow } from '@/components/hub/HubPrimitives';
 import { useAuth } from '@/contexts/AuthContext';
 import { usePortfolioData } from '@/hooks/portfolio/usePortfolioData';
 import { usePortfolioComments } from '@/hooks/portfolio/usePortfolioComments';
@@ -40,20 +44,17 @@ import { usePortfolioFocus } from '@/hooks/portfolio/usePortfolioFocus';
 import { useACSignoffs } from '@/hooks/portfolio/useACSignoffs';
 import { SubmissionReadiness } from './portfolio/SubmissionReadiness';
 import { FromCollegeCallout } from './portfolio/FromCollegeCallout';
-import { PortfolioAttentionPanel } from './portfolio/PortfolioAttentionPanel';
 import { PortfolioStatementCard } from './portfolio/PortfolioStatementCard';
 import { ApprenticeHubTab } from './ApprenticeHubNav';
-import { MyProgressCheckCard } from '@/components/apprentice/MyProgressCheckCard';
+import { PortfolioNeedsYou } from './portfolio/PortfolioNeedsYou';
 import QualificationSelector from '@/components/apprentice/qualification/QualificationSelector';
 import { SharePortfolioSheet } from './SharePortfolioSheet';
 import {
   Eyebrow,
-  KpiCell,
   PrimaryAction,
   SecondaryAction,
   SectionHeader,
 } from './portfolio/PortfolioPrimitives';
-import { TodaysFocusPanel } from './portfolio/TodaysFocusPanel';
 import { ACHeatmap } from './portfolio/ACHeatmap';
 import { EPAGatewayPulse } from './portfolio/EPAGatewayPulse';
 import { CourseRequirementsList } from './portfolio/CourseRequirementsList';
@@ -82,7 +83,7 @@ function EvidenceThumbnail({ entry }: { entry: PortfolioEntry }) {
   }
   return (
     <div className="p-2 rounded-lg bg-white/[0.06] flex-shrink-0">
-      <FileCheck className="h-4 w-4 text-white/85" />
+      <FileCheck className="h-4 w-4 text-white" />
     </div>
   );
 }
@@ -99,6 +100,7 @@ function formatRelativeDate(date: Date): string {
 
 export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProps) {
   const { user, profile } = useAuth();
+  const navigate = useNavigate();
   const haptic = useHaptic();
   const { entries: portfolioEntries } = usePortfolioData();
   const { actionRequiredCount, comments } = usePortfolioComments();
@@ -168,7 +170,7 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
   }, [portfolioEntries, acEvidenceMap]);
 
   /* ─── Aggregates ──────────────────────────────────────────────────── */
-  const { evidencedCount, overallPercent } = useMemo(() => {
+  const { evidencedCount, overallPercent, strandedRefCount } = useMemo(() => {
     const allACs = tree.units.flatMap((u) =>
       u.learningOutcomes.flatMap((lo) => lo.assessmentCriteria)
     );
@@ -176,8 +178,62 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
       (ac) => acEvidenceMap.has(ac.acRef) || acEvidenceMap.has(ac.acFullRef)
     ).length;
     const pct = tree.totalACs > 0 ? Math.round((count / tree.totalACs) * 100) : 0;
-    return { evidencedCount: count, overallPercent: pct };
-  }, [tree, acEvidenceMap]);
+
+    /*
+     * 🔴 STRANDED EVIDENCE.
+     *
+     * College enrolment is authoritative (see useStudentQualification), so a
+     * learner whose college put them on 5357 is scored against 5357's 340
+     * criteria — even though every criterion they have ever tagged was picked
+     * from 2357's catalogue. Nothing matches, so the page reads
+     * "0% · Nothing evidenced yet · 0 of 340" while the My work tab
+     * simultaneously reports "23 criteria covered" off the same rows.
+     *
+     * That is not a rounding disagreement, it is the learner's whole record
+     * silently not counting, and the old divergence banner only mentioned that
+     * two course CODES differed — never the consequence. From the outside it
+     * looks like the app lost their work.
+     *
+     * Count the refs that resolve to nothing in the active tree so the UI can
+     * say so plainly.
+     */
+    const inTree = new Set<string>();
+    for (const ac of allACs) {
+      inTree.add(ac.acRef);
+      inTree.add(ac.acFullRef);
+    }
+
+    /*
+     * Count CRITERIA, not normalised refs. parseEvidencedACs deliberately
+     * emits two refs for the parenthetical format — "ELTP06 (Unit 317) AC 2.2"
+     * yields both ELTP06.2.2 and 317.2.2 so either catalogue shape matches —
+     * so counting refs double-counts a single tagged criterion. A criterion is
+     * stranded only when NONE of the refs it produces exist in the tree.
+     */
+    const strandedCriteria = new Set<string>();
+    for (const entry of portfolioEntries ?? []) {
+      for (const raw of entry.assessmentCriteria ?? []) {
+        const refs = parseEvidencedACs([{ assessmentCriteria: [raw] }]);
+        // Free text with no parseable AC code yields nothing — that is a
+        // tagging problem of a different kind, not a wrong-course problem.
+        if (refs.size === 0) continue;
+        let matched = false;
+        for (const r of refs) {
+          if (inTree.has(r)) {
+            matched = true;
+            break;
+          }
+        }
+        if (!matched) strandedCriteria.add(raw);
+      }
+    }
+
+    return {
+      evidencedCount: count,
+      overallPercent: pct,
+      strandedRefCount: strandedCriteria.size,
+    };
+  }, [tree, acEvidenceMap, portfolioEntries]);
 
   const portfolioTotal = portfolioEntries?.length || 0;
 
@@ -204,10 +260,10 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
   if (!userSelection && !qualLoading) {
     return (
       <div className="py-6 space-y-5">
-        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-5 space-y-2">
+        <div className={cn('rounded-2xl border border-elec-yellow/35 p-5 space-y-2', CARD_SURFACE)}>
           <Eyebrow>{greeting}</Eyebrow>
           <h2 className="text-[24px] font-semibold tracking-tight text-white">{firstName}</h2>
-          <p className="text-[13px] text-white/85 leading-relaxed">
+          <p className="text-[13px] text-white leading-relaxed">
             Pick your qualification to start your portfolio.
           </p>
         </div>
@@ -217,13 +273,18 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
   }
 
   /* ─── Header / Hero (used in both layouts) ────────────────────────── */
+  /*
+   * The course, not a greeting.
+   *
+   * This was an eyebrow reading "Apprentice · Portfolio · Good afternoon" over
+   * the learner's first name at 32px. The tab bar directly above already says
+   * Portfolio, they know their own name, and the greeting changes nothing they
+   * do — so roughly 120px of the first screen said nothing. What is actually
+   * load-bearing is which course they are on and how far through it they are.
+   */
   const Hero = (
     <div className="space-y-3">
       <div className="space-y-2">
-        <Eyebrow>Apprentice · Portfolio · {greeting}</Eyebrow>
-        <h2 className="text-[28px] sm:text-[32px] font-semibold tracking-tight text-white leading-none">
-          {firstName}
-        </h2>
         {userSelection && (
           <button
             onClick={() => setShowCourseSelector(true)}
@@ -239,7 +300,7 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
       {tree.totalACs > 0 && (
         <div className="space-y-1.5">
           <div className="flex items-baseline justify-between gap-3">
-            <span className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
+            <span className="text-[10px] font-medium uppercase tracking-[0.16em] text-elec-yellow">
               Course progress
             </span>
             <span className="text-[12px] font-mono font-semibold text-white tabular-nums">
@@ -264,39 +325,82 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
   );
 
   /* ─── KPI strip — pure portfolio metrics ──────────────────────────── */
+  /*
+   * The shared HubKpi row, not this file's own `KpiCell`.
+   *
+   * Portfolio had grown its own KPI component with its own label/value/sub
+   * shape — a third dialect alongside the hub primitives and the one OJT used
+   * to have. HubKpi carries a verdict and a context line, which is what turns
+   * "12/340" from a fact into something you can act on, and it makes the whole
+   * row tappable.
+   */
   const KpiStrip = (
-    <div className="grid grid-cols-2 lg:grid-cols-2 gap-2">
-      <KpiCell
-        label="ACs signed off"
-        value={tree.totalACs > 0 ? `${signedOffCount}/${tree.totalACs}` : '—'}
-        sub={
-          tree.totalACs > 0
-            ? referredCount > 0
-              ? `${referredCount} sent back · ${evidencedCount} evidenced`
-              : `${evidencedCount} evidenced · ${overallPercent}% of course`
-            : 'No course data'
+    <HubKpiRow>
+      <HubKpi
+        accent
+        label="Course progress"
+        value={tree.totalACs > 0 ? `${overallPercent}%` : '—'}
+        verdict={
+          tree.totalACs === 0
+            ? 'No course data'
+            : overallPercent >= 70
+              ? 'Well on the way'
+              : overallPercent > 0
+                ? 'Building'
+                : // "Nothing evidenced yet" is a lie when they HAVE tagged
+                  // criteria and those criteria simply belong to a different
+                  // course. Name the real reason.
+                  strandedRefCount > 0
+                  ? 'Tagged to another course'
+                  : 'Nothing evidenced yet'
         }
-        highlight={tree.totalACs > 0 && signedOffCount >= tree.totalACs * 0.7}
+        context={
+          tree.totalACs === 0
+            ? 'Pick your course to start tracking'
+            : strandedRefCount > 0 && evidencedCount === 0
+              ? `${strandedRefCount} tagged criteria don't count toward this course`
+              : `${evidencedCount} of ${tree.totalACs} criteria evidenced`
+        }
         onClick={() => onNavigate('work')}
       />
-      <KpiCell
-        label="Evidence items"
-        value={portfolioTotal}
-        sub={actionRequiredCount > 0 ? `${actionRequiredCount} need attention` : 'All up to date'}
+      <HubKpi
+        label="Signed off"
+        value={tree.totalACs > 0 ? `${signedOffCount}` : '—'}
+        verdict={
+          referredCount > 0 ? `${referredCount} sent back` : signedOffCount > 0 ? 'Confirmed by your tutor' : 'None yet'
+        }
+        sentiment={referredCount > 0 ? 'bad' : 'neutral'}
+        direction={referredCount > 0 ? 'down' : 'flat'}
+        context={
+          tree.totalACs > 0 ? `Of ${tree.totalACs} criteria on your course` : undefined
+        }
         onClick={() => onNavigate('work')}
       />
-      <KpiCell
-        label="Course units"
-        value={tree.units.length || '—'}
-        sub={tree.units.length > 0 ? `${tree.totalACs} ACs total` : ''}
+      <HubKpi
+        label="Evidence"
+        value={String(portfolioTotal)}
+        verdict={portfolioTotal > 0 ? 'Items in your portfolio' : 'Nothing captured yet'}
+        context={
+          actionRequiredCount > 0
+            ? `${actionRequiredCount} need something from you`
+            : 'All up to date'
+        }
+        onClick={() => onNavigate('work')}
       />
-      <KpiCell
-        label="Tutor inbox"
-        value={actionRequiredCount}
-        sub={actionRequiredCount > 0 ? 'Awaiting your reply' : 'Nothing pending'}
-        highlight={actionRequiredCount > 0}
+      <HubKpi
+        label="Needs you"
+        value={String(actionRequiredCount)}
+        verdict={actionRequiredCount > 0 ? 'Waiting on your reply' : 'Nothing pending'}
+        sentiment={actionRequiredCount > 0 ? 'bad' : 'good'}
+        direction={actionRequiredCount > 0 ? 'down' : 'flat'}
+        context={
+          actionRequiredCount > 0
+            ? 'Your tutor has commented or referred work back'
+            : 'Your tutor has nothing outstanding with you'
+        }
+        onClick={() => onNavigate('work')}
       />
-    </div>
+    </HubKpiRow>
   );
 
   /* ─── Primary actions ─────────────────────────────────────────────── */
@@ -353,7 +457,10 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
               <li key={entry.id}>
                 <button
                   onClick={() => onNavigate('work')}
-                  className="w-full flex items-start gap-3 p-3.5 rounded-xl bg-[hsl(0_0%_10%)] border border-white/[0.06] text-left touch-manipulation hover:bg-white/[0.04] transition-colors"
+                  className={cn(
+                    'flex w-full items-start gap-3 rounded-2xl border border-elec-yellow/35 p-3.5 text-left transition-colors touch-manipulation hover:border-elec-yellow/60 active:scale-[0.99]',
+                    CARD_SURFACE
+                  )}
                 >
                   <EvidenceThumbnail entry={entry} />
                   <div className="flex-1 min-w-0 space-y-1.5">
@@ -363,23 +470,23 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
                         {entryACs.slice(0, 3).map((ac, i) => (
                           <span
                             key={i}
-                            className="inline-flex items-center px-1.5 py-0.5 rounded-md border border-white/10 bg-white/[0.03] text-white/85 text-[10px] font-mono"
+                            className="inline-flex items-center px-1.5 py-0.5 rounded-md border border-white/10 bg-white/[0.03] text-white text-[10px] font-mono"
                           >
                             {ac.length > 18 ? ac.slice(0, 16) + '…' : ac}
                           </span>
                         ))}
                         {entryACs.length > 3 && (
-                          <span className="inline-flex items-center px-1.5 py-0.5 rounded-md border border-white/10 bg-white/[0.03] text-white/55 text-[10px]">
+                          <span className="inline-flex items-center px-1.5 py-0.5 rounded-md border border-white/10 bg-white/[0.03] text-white text-[10px]">
                             +{entryACs.length - 3}
                           </span>
                         )}
                       </div>
                     )}
                     <div className="flex items-baseline gap-2">
-                      <span className="text-[10px] uppercase tracking-[0.14em] text-white/55">
+                      <span className="text-[10px] uppercase tracking-[0.14em] text-white">
                         {String(entry.status || 'draft')}
                       </span>
-                      <span className="text-[10px] text-white/40 font-mono">
+                      <span className="text-[10px] text-white font-mono">
                         {formatRelativeDate(new Date(entry.dateCreated))}
                       </span>
                     </div>
@@ -408,9 +515,9 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
     <div className="py-5 sm:py-6 lg:py-8 space-y-7 lg:space-y-10">
       {/* No-data guard */}
       {userSelection && !acLoading && !qualLoading && tree.totalACs === 0 && (
-        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-1.5">
+        <div className={cn('rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-1.5', CARD_SURFACE)}>
           <Eyebrow>Course data missing</Eyebrow>
-          <p className="text-[13px] text-white/85 leading-relaxed">
+          <p className="text-[13px] text-white leading-relaxed">
             We don't have curriculum data for this course yet.
           </p>
           <button
@@ -431,39 +538,66 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
 
       {/* Selection ≠ enrolment: we now track the college's course (authoritative);
           nudge the learner to align their own selection. */}
+      {/*
+        One row, not a card.
+        This was ~200px of the first screen — an eyebrow, a paragraph and a
+        full-width button — to say the college enrolled you on a different
+        course code. Real, but not worth the top of the page every visit.
+        HubAlertLine is the shared shape for exactly this.
+      */}
       {divergesFromCollege && (
-        <div className="relative rounded-2xl border border-white/[0.08] bg-[hsl(0_0%_10%)] overflow-hidden">
-          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/60 to-elec-yellow/0 pointer-events-none" />
-          <div className="p-4 sm:p-5 space-y-2.5">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80">
-              Course updated by your college
-            </span>
-            <p className="text-[13px] text-white/70 leading-snug">
-              Your college enrolled you on{' '}
-              <span className="font-mono text-white">{collegeCourseCode}</span> — we're tracking
-              that. Your own selection still says{' '}
-              <span className="font-mono text-white/70">{selectionCode}</span>.
-            </p>
-            <button
-              onClick={() => setShowCourseSelector(true)}
-              className="w-full h-11 rounded-xl border border-elec-yellow/25 bg-elec-yellow/10 hover:bg-elec-yellow/20 text-elec-yellow text-[13px] font-medium inline-flex items-center justify-center touch-manipulation transition-colors"
-            >
-              Switch my selection to {collegeCourseCode}
-            </button>
-          </div>
-        </div>
+        <HubAlertLine
+          text={
+            strandedRefCount > 0
+              ? // The consequence, not the codes. "Your selection says X, your
+                // college says Y" is true and useless — it never told the
+                // learner that their evidence had stopped counting, which is
+                // the only part of this they can feel.
+                `You're being marked against ${collegeCourseCode}, the course your college enrolled you on. ${strandedRefCount} criteria you've tagged come from ${selectionCode} and don't count toward it — retag those entries to get the credit.`
+              : `Your college enrolled you on ${collegeCourseCode} — your own selection still says ${selectionCode}`
+          }
+          action={strandedRefCount > 0 ? 'Review' : 'Switch'}
+          onClick={() => (strandedRefCount > 0 ? onNavigate('work') : setShowCourseSelector(true))}
+        />
       )}
 
       {/* College → apprentice loop: supportive "focus areas" derived from the
           tutor-side risk signals (pastoral/safeguarding stripped server-side). */}
-      <MyProgressCheckCard />
+      {/*
+        Where you are, before what is wrong with it.
+        The two banners above used to fill the entire first screen, so the
+        course, the progress bar and every figure sat below the fold — you had
+        to scroll past two nags to find out how you were doing. The KPI row is
+        the answer to "how am I doing", so it goes first, full width, where a
+        dashboard's numbers belong.
+      */}
+      {KpiStrip}
 
-      {/* Top fold — 2-column on lg: hero/KPIs/EPA pulse on the left,
-          activity panels on the right. Stays narrow for readability. */}
+      {/*
+        ONE ranked list — see PortfolioNeedsYou.
+        This page used to ask "what do I do next?" three times: tutor risk
+        signals here, stuck signatures and expiring evidence in the right
+        column, and criteria-to-capture below them. Three lists, three visual
+        treatments, two columns, one question.
+      */}
+      <PortfolioNeedsYou
+        entries={portfolioEntries || []}
+        acFocus={focus}
+        referredCount={referredCount}
+        onNavigate={onNavigate}
+        onCapture={handleFocusCapture}
+        onGoTo={(route) =>
+          route === 'capture'
+            ? window.dispatchEvent(new CustomEvent('elecmate:open-capture'))
+            : navigate(route)
+        }
+      />
+
+      {/* 2-column on lg: course + EPA pulse on the left, activity panels on
+          the right. Stays narrow for readability. */}
       <div className="lg:grid lg:grid-cols-[380px_minmax(0,1fr)] lg:gap-8 space-y-5 lg:space-y-0">
         <div className="space-y-5 lg:sticky lg:top-4 lg:self-start">
           {Hero}
-          {KpiStrip}
           {courseCode && (
             <EPAGatewayPulse qualificationCode={courseCode} qualificationId={courseId} />
           )}
@@ -471,19 +605,11 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
         </div>
 
         <div className="space-y-6 lg:space-y-7 mt-5 lg:mt-0">
-          <PortfolioAttentionPanel entries={portfolioEntries || []} onNavigate={onNavigate} />
           {tree.totalACs > 0 && (
             <FromCollegeCallout
               signoffRecords={signoffRecords}
               comments={comments}
               onACClick={handleACClick}
-            />
-          )}
-          {tree.totalACs > 0 && (
-            <TodaysFocusPanel
-              focus={focus}
-              recentActivityCount={recentActivityCount}
-              onCapture={handleFocusCapture}
             />
           )}
         </div>
@@ -543,12 +669,12 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
                   {selectedAC?.code}
                 </span>
                 {selectedAC?.unitCode && (
-                  <span className="text-[10px] uppercase tracking-[0.14em] text-white/55">
+                  <span className="text-[10px] uppercase tracking-[0.14em] text-white">
                     Unit {selectedAC.unitCode}
                   </span>
                 )}
               </SheetTitle>
-              <SheetDescription className="text-left text-white/85 text-[13px] leading-snug">
+              <SheetDescription className="text-left text-white text-[13px] leading-snug">
                 {selectedAC?.text}
               </SheetDescription>
             </SheetHeader>
@@ -586,7 +712,7 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
                           {/* Evidence list */}
                           {entries.length === 0 ? (
                             <div className="rounded-xl border border-dashed border-white/[0.12] bg-white/[0.02] px-5 py-8 flex flex-col items-center justify-center text-center space-y-3">
-                              <p className="text-[13px] text-white/85 leading-relaxed max-w-[260px]">
+                              <p className="text-[13px] text-white leading-relaxed max-w-[260px]">
                                 Nothing linked yet — start with a quick capture on site.
                               </p>
                               <Button
@@ -616,18 +742,18 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
                                       {entry.title}
                                     </p>
                                     <div className="flex items-center gap-2 mt-0.5">
-                                      <span className="text-[10px] text-white/40 font-mono">
+                                      <span className="text-[10px] text-white font-mono">
                                         {formatRelativeDate(new Date(entry.dateCreated))}
                                       </span>
                                       {entry.evidenceFiles && entry.evidenceFiles.length > 0 && (
-                                        <span className="text-[10px] text-white/55">
+                                        <span className="text-[10px] text-white">
                                           {entry.evidenceFiles.length} file
                                           {entry.evidenceFiles.length !== 1 ? 's' : ''}
                                         </span>
                                       )}
                                     </div>
                                   </div>
-                                  <span className="text-[10px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] uppercase tracking-[0.14em]">
+                                  <span className="text-[10px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] uppercase tracking-[0.14em]">
                                     {String(entry.status || 'draft')}
                                   </span>
                                 </div>

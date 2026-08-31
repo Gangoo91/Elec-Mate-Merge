@@ -94,7 +94,7 @@ export function RecentActivityFeed() {
 
   return (
     <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-3">
-      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
         Recent activity
       </span>
 
@@ -105,7 +105,7 @@ export function RecentActivityFeed() {
           ))}
         </div>
       ) : activities.length === 0 ? (
-        <p className="text-[14px] text-white/55 leading-relaxed text-center py-4">
+        <p className="text-[14px] text-white leading-relaxed text-center py-4">
           No activity yet. Complete a quiz or study flashcards to get started.
         </p>
       ) : (
@@ -119,12 +119,12 @@ export function RecentActivityFeed() {
                 key={activity.id}
                 className="flex items-center gap-3 px-2.5 py-3 min-h-[44px] rounded-lg hover:bg-white/[0.04] transition-colors touch-manipulation"
               >
-                <Icon className="h-4 w-4 text-white/55 flex-shrink-0" />
+                <Icon className="h-4 w-4 text-white flex-shrink-0" />
                 <div className="flex-1 min-w-0">
                   <p className="text-[14px] text-white truncate">
                     {activity.source_title ?? label}
                   </p>
-                  <p className="text-[11px] text-white/55 font-mono">
+                  <p className="text-[11px] text-white font-mono">
                     {timeAgo(activity.created_at)}
                   </p>
                 </div>

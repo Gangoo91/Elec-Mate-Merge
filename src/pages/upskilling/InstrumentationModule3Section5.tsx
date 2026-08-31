@@ -200,12 +200,8 @@ const InstrumentationModule3Section5 = () => {
             'Capacitive coupling scales with the VOLTAGE on the offending conductor. Inductive coupling scales with its CURRENT. Both scale with frequency.',
             '🔴 Capacitive noise is common-mode — it lands equally on both conductors. Inductive noise is differential — it is induced in the loop the pair encloses.',
             'That is why the cures differ: a screen defeats electric fields, and twisting defeats magnetic ones.',
-            'A screen works because no electric field can exist inside a solid conductor at one potential. Magnetic flux cannot be stopped the same way — it loops.',
             'Twisting turns one big loop into many small alternating ones, so the induced currents oppose and cancel.',
-            'A twisted, screened pair is not belt and braces. It is two separate cures for two separate mechanisms.',
             '🔴 Earth the screen at one end only. Earth both and the difference between the earth points drives current through the screen — a ground loop that can inject noise and, in severe cases, overheat the cable.',
-            'Separation is the cheapest cure of all, and crossing at a right angle is far better than running parallel.',
-            'Analogue signals are corrupted by any noise; digital signals tolerate it until a threshold is crossed and then fail suddenly.',
           ]}
         />
 

@@ -35,9 +35,33 @@ import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { useHaptic } from '@/hooks/useHaptic';
 import type { NewDiaryEntry, SiteDiaryEntry } from '@/hooks/site-diary/useSiteDiaryEntries';
-import { storageGetJSONSync, storageSetJSONSync } from '@/utils/storage';
+import { storageGetJSONSync, storageSetJSONSync, storageRemoveSync } from '@/utils/storage';
 
 const TASK_CACHE_KEY = 'elec-mate-diary-recent-tasks';
+
+/*
+ * Draft key for a NEW entry.
+ *
+ * A diary is filled in at the end of a shift, often one-handed on a phone that
+ * is about to be put away. Nothing was persisted, so closing the sheet — or the
+ * browser reclaiming the tab — threw away everything typed. Only new entries
+ * are drafted; editing an existing one already has a saved source of truth.
+ */
+const DRAFT_KEY = 'elec-mate-diary-draft';
+
+interface DiaryDraft {
+  /** When the draft was last written, so a stale one can be discarded. */
+  savedAt?: number;
+  date: string;
+  siteName: string;
+  supervisor: string;
+  tasks: string[];
+  selectedSkills: string[];
+  whatILearned: string;
+  issuesOrQuestions: string;
+  moodRating: number | null;
+  hoursSpent: string;
+}
 
 const moodOptions = [
   { value: 1, emoji: '😢', label: 'Struggling' },
@@ -99,6 +123,49 @@ export function DiaryEntrySheet({
   const fileInputRef = useRef<HTMLInputElement>(null);
   const MAX_PHOTOS = 5;
 
+  /* Persist the draft as you type. New entries only — an edit already has a
+     saved record behind it, so drafting one would fight the source of truth. */
+  useEffect(() => {
+    if (!open || existingEntry) return;
+    const hasContent =
+      siteName.trim() ||
+      supervisor.trim() ||
+      tasks.length ||
+      selectedSkills.length ||
+      whatILearned.trim() ||
+      issuesOrQuestions.trim() ||
+      moodRating !== null ||
+      hoursSpent.trim();
+    if (!hasContent) return;
+    const t = setTimeout(() => {
+      storageSetJSONSync<DiaryDraft>(DRAFT_KEY, {
+        savedAt: Date.now(),
+        date,
+        siteName,
+        supervisor,
+        tasks,
+        selectedSkills,
+        whatILearned,
+        issuesOrQuestions,
+        moodRating,
+        hoursSpent,
+      });
+    }, 400);
+    return () => clearTimeout(t);
+  }, [
+    open,
+    existingEntry,
+    date,
+    siteName,
+    supervisor,
+    tasks,
+    selectedSkills,
+    whatILearned,
+    issuesOrQuestions,
+    moodRating,
+    hoursSpent,
+  ]);
+
   // Load recent tasks from cache for suggestions
   const recentTasks = useMemo(() => {
     return storageGetJSONSync<string[]>(TASK_CACHE_KEY, []);
@@ -122,7 +189,31 @@ export function DiaryEntrySheet({
       setMoodRating(existingEntry.mood_rating);
       setPhotos(existingEntry.photos || []);
     } else if (!existingEntry && open) {
-      // Reset for new entry — use initialDate if provided (from calendar tap)
+      // New entry: restore a draft if one survived a closed sheet, else reset.
+      /*
+       * A draft is for finishing the entry you just started, not for reviving
+       * one from last week — restoring a Monday draft on Friday would silently
+       * re-date someone's day. Anything older than a day is dropped.
+       */
+      const stored = storageGetJSONSync<DiaryDraft | null>(DRAFT_KEY, null);
+      const DAY_MS = 24 * 60 * 60 * 1000;
+      const draft =
+        stored && stored.savedAt && Date.now() - stored.savedAt < DAY_MS ? stored : null;
+      if (!draft && stored) storageRemoveSync(DRAFT_KEY);
+      if (draft) {
+        setDate(initialDate || draft.date || todayLocalISO());
+        setSiteName(draft.siteName || '');
+        setSupervisor(draft.supervisor || '');
+        setTaskInput('');
+        setTasks(draft.tasks || []);
+        setSelectedSkills(draft.selectedSkills || []);
+        setWhatILearned(draft.whatILearned || '');
+        setIssuesOrQuestions(draft.issuesOrQuestions || '');
+        setMoodRating(draft.moodRating ?? null);
+        setHoursSpent(draft.hoursSpent || '');
+        setPhotos([]);
+        return;
+      }
       setDate(initialDate || todayLocalISO());
       setSiteName('');
       setSupervisor('');
@@ -244,7 +335,10 @@ export function DiaryEntrySheet({
     // with everything the apprentice typed still here.
     const saved = await onSave(entry);
     setIsSaving(false);
-    if (saved) onOpenChange(false);
+    if (saved) {
+      if (!existingEntry) storageRemoveSync(DRAFT_KEY);
+      onOpenChange(false);
+    }
   };
 
   return (
@@ -259,7 +353,7 @@ export function DiaryEntrySheet({
             <div className="flex items-center justify-between">
               <div>
                 <SheetTitle className="text-lg font-bold text-white">
-                  {isEditing ? 'Edit Entry' : date === todayLocalISO() ? 'Log Today' : 'Log Entry'}
+                  {isEditing ? 'Edit entry' : date === todayLocalISO() ? 'Log today' : 'Log entry'}
                 </SheetTitle>
                 <p className="text-xs text-white mt-0.5">
                   {new Date(date + 'T00:00:00').toLocaleDateString('en-GB', {
@@ -282,10 +376,10 @@ export function DiaryEntrySheet({
           {/* Scrollable form */}
           <div className="flex-1 overflow-y-auto px-4 py-4 space-y-4">
             {/* === SECTION 1: When & Where === */}
-            <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden">
-              <div className="px-4 pt-3.5 pb-2.5 flex items-center gap-2.5 border-l-2 border-l-elec-yellow/40 ml-0.5">
+            <div className="rounded-2xl bg-white/[0.07] border border-white/[0.10] overflow-hidden">
+              <div className="px-4 pt-4 pb-2 flex items-center gap-2.5">
                 <span className="text-[13px] font-bold text-white tracking-wide">
-                  When &amp; Where
+                  When and where
                 </span>
               </div>
 
@@ -298,7 +392,7 @@ export function DiaryEntrySheet({
                   type="date"
                   value={date}
                   onChange={(e) => setDate(e.target.value)}
-                  className="h-11 text-base touch-manipulation bg-white/[0.03] border-white/[0.08] focus:border-elec-yellow focus:ring-elec-yellow/20"
+                  className="input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none [color-scheme:dark] touch-manipulation"
                 />
               </div>
 
@@ -311,7 +405,7 @@ export function DiaryEntrySheet({
                   value={siteName}
                   onChange={(e) => setSiteName(e.target.value)}
                   placeholder="Where did you work today?"
-                  className="h-11 text-base touch-manipulation bg-white/[0.03] border-white/[0.08] focus:border-elec-yellow focus:ring-elec-yellow/20"
+                  className="input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none [color-scheme:dark] touch-manipulation"
                 />
                 {recentSites.length > 0 && !siteName && (
                   <div className="flex flex-wrap gap-1.5 mt-2">
@@ -338,7 +432,7 @@ export function DiaryEntrySheet({
                   value={supervisor}
                   onChange={(e) => setSupervisor(e.target.value)}
                   placeholder="Who supervised you?"
-                  className="h-11 text-base touch-manipulation bg-white/[0.03] border-white/[0.08] focus:border-elec-yellow focus:ring-elec-yellow/20"
+                  className="input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none [color-scheme:dark] touch-manipulation"
                 />
               </div>
 
@@ -357,17 +451,17 @@ export function DiaryEntrySheet({
                     value={hoursSpent}
                     onChange={(e) => setHoursSpent(e.target.value)}
                     placeholder="e.g. 7.5"
-                    className="h-11 text-base touch-manipulation bg-white/[0.03] border-white/[0.08] focus:border-elec-yellow focus:ring-elec-yellow/20"
+                    className="input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none [color-scheme:dark] touch-manipulation"
                   />
                 </div>
               )}
             </div>
 
-            {/* === SECTION 2: What You Did (tasks only) === */}
-            <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden">
-              <div className="px-4 pt-3.5 pb-2.5 flex items-center gap-2.5 border-l-2 border-l-blue-400/40 ml-0.5">
+            {/* === SECTION 2: What you did (tasks only) === */}
+            <div className="rounded-2xl bg-white/[0.07] border border-white/[0.10] overflow-hidden">
+              <div className="px-4 pt-4 pb-2 flex items-center gap-2.5">
                 <span className="text-[13px] font-bold text-white tracking-wide">
-                  What You Did
+                  What you did
                 </span>
               </div>
 
@@ -386,11 +480,11 @@ export function DiaryEntrySheet({
                       }
                     }}
                     placeholder="What did you do?"
-                    className="h-11 text-base touch-manipulation bg-white/[0.03] border-white/[0.08] focus:border-elec-yellow focus:ring-elec-yellow/20"
+                    className="input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none [color-scheme:dark] touch-manipulation"
                   />
                   <button
                     onClick={addTask}
-                    className="h-11 w-11 flex-shrink-0 flex items-center justify-center rounded-xl bg-elec-yellow/15 border border-elec-yellow/30 text-elec-yellow touch-manipulation active:bg-elec-yellow/25"
+                    className="h-11 w-11 flex-shrink-0 flex items-center justify-center rounded-xl bg-white/[0.06] border border-elec-yellow/30 text-elec-yellow touch-manipulation active:bg-elec-yellow/25"
                   >
                     <Plus className="h-5 w-5" />
                   </button>
@@ -417,12 +511,13 @@ export function DiaryEntrySheet({
                     {tasks.map((task) => (
                       <span
                         key={task}
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-elec-yellow/10 border border-elec-yellow/25 text-elec-yellow text-xs font-medium"
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/[0.06] border border-elec-yellow/25 text-elec-yellow text-xs font-medium"
                       >
                         {task}
                         <button
                           onClick={() => removeTask(task)}
-                          className="h-5 w-5 flex items-center justify-center rounded-full bg-elec-yellow/20 active:bg-elec-yellow/40 touch-manipulation"
+                          aria-label="Remove task"
+                          className="h-5 w-5 -m-3 p-3 box-content flex items-center justify-center rounded-full bg-white/[0.06] bg-clip-content active:bg-elec-yellow/40 touch-manipulation"
                         >
                           <X className="h-3 w-3" />
                         </button>
@@ -433,13 +528,13 @@ export function DiaryEntrySheet({
               </div>
             </div>
 
-            {/* === SECTION 3: Qualification Units (PROMOTED) === */}
+            {/* === SECTION 3: Qualification units (PROMOTED) === */}
             {qualificationUnits && qualificationUnits.length > 0 && (
-              <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden">
-                <div className="px-4 pt-3.5 pb-2.5 flex items-center gap-2.5 border-l-2 border-l-purple-400/40 ml-0.5">
+              <div className="rounded-2xl bg-white/[0.07] border border-white/[0.10] overflow-hidden">
+                <div className="px-4 pt-4 pb-2 flex items-center gap-2.5">
                   <GraduationCap className="h-4 w-4 text-purple-400/70" />
                   <span className="text-[13px] font-bold text-white tracking-wide">
-                    Qualification Units
+                    Qualification units
                   </span>
                 </div>
 
@@ -456,8 +551,8 @@ export function DiaryEntrySheet({
                           onClick={() => toggleSkill(label)}
                           className={`inline-flex items-center gap-1.5 px-3.5 min-h-[44px] text-xs font-medium rounded-xl border touch-manipulation transition-all active:scale-[0.97] ${
                             selectedSkills.includes(label)
-                              ? 'bg-purple-500/15 border-purple-500/40 text-purple-400 shadow-[0_0_12px_-3px] shadow-purple-500/20'
-                              : 'bg-white/[0.03] border-purple-500/20 text-purple-300/80 active:bg-purple-500/[0.08]'
+                              ? 'bg-white/[0.06] border-purple-500/40 text-purple-400 shadow-[0_0_12px_-3px] shadow-purple-500/20'
+                              : 'bg-white/[0.07] border-purple-500/20 text-purple-300/80 active:bg-white/[0.10]'
                           }`}
                         >
                           {selectedSkills.includes(label) && <Check className="h-3.5 w-3.5" />}
@@ -471,12 +566,12 @@ export function DiaryEntrySheet({
               </div>
             )}
 
-            {/* === SECTION 4: Quick Tags (DEMOTED general skills) === */}
-            <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden">
-              <div className="px-4 pt-3.5 pb-2.5 flex items-center gap-2.5 border-l-2 border-l-white/15 ml-0.5">
+            {/* === SECTION 4: Quick tags (DEMOTED general skills) === */}
+            <div className="rounded-2xl bg-white/[0.07] border border-white/[0.10] overflow-hidden">
+              <div className="px-4 pt-4 pb-2 flex items-center gap-2.5">
                 <Tag className="h-3.5 w-3.5 text-white" />
                 <span className="text-[13px] font-bold text-white tracking-wide">
-                  Quick Tags
+                  Quick tags
                 </span>
                 <span className="text-[10px] text-white ml-1">Optional</span>
               </div>
@@ -489,8 +584,8 @@ export function DiaryEntrySheet({
                       onClick={() => toggleSkill(skill)}
                       className={`inline-flex items-center gap-1.5 px-3 min-h-[44px] text-[11px] font-medium rounded-xl border touch-manipulation transition-all active:scale-[0.97] ${
                         selectedSkills.includes(skill)
-                          ? 'bg-elec-yellow/15 border-elec-yellow/40 text-elec-yellow shadow-[0_0_12px_-3px] shadow-elec-yellow/20'
-                          : 'bg-white/[0.02] border-white/[0.06] text-white active:bg-white/[0.06]'
+                          ? 'bg-white/[0.06] border-elec-yellow/40 text-elec-yellow shadow-[0_0_12px_-3px] shadow-elec-yellow/20'
+                          : 'bg-white/[0.06] border-white/[0.10] text-white active:bg-white/[0.06]'
                       }`}
                     >
                       {selectedSkills.includes(skill) && <Check className="h-3 w-3" />}
@@ -502,8 +597,8 @@ export function DiaryEntrySheet({
             </div>
 
             {/* === SECTION 5: Reflections === */}
-            <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden">
-              <div className="px-4 pt-3.5 pb-2.5 flex items-center gap-2.5 border-l-2 border-l-green-400/40 ml-0.5">
+            <div className="rounded-2xl bg-white/[0.07] border border-white/[0.10] overflow-hidden">
+              <div className="px-4 pt-4 pb-2 flex items-center gap-2.5">
                 <span className="text-[13px] font-bold text-white tracking-wide">
                   Reflections
                 </span>
@@ -517,7 +612,7 @@ export function DiaryEntrySheet({
                   value={whatILearned}
                   onChange={(e) => setWhatILearned(e.target.value)}
                   placeholder="Any key takeaways from today?"
-                  className="touch-manipulation text-base min-h-[80px] bg-white/[0.03] border-white/[0.08] focus:border-elec-yellow focus:ring-elec-yellow/20"
+                  className="input-underline min-h-[80px] w-full resize-y rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 py-2 text-base text-white placeholder:text-white/25 caret-elec-yellow transition-colors hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none [color-scheme:dark] touch-manipulation"
                 />
               </div>
 
@@ -529,14 +624,14 @@ export function DiaryEntrySheet({
                   value={issuesOrQuestions}
                   onChange={(e) => setIssuesOrQuestions(e.target.value)}
                   placeholder="Any problems to follow up?"
-                  className="touch-manipulation text-base min-h-[60px] bg-white/[0.03] border-white/[0.08] focus:border-elec-yellow focus:ring-elec-yellow/20"
+                  className="input-underline min-h-[60px] w-full resize-y rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 py-2 text-base text-white placeholder:text-white/25 caret-elec-yellow transition-colors hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none [color-scheme:dark] touch-manipulation"
                 />
               </div>
             </div>
 
             {/* === SECTION 6: Evidence === */}
-            <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden">
-              <div className="px-4 pt-3.5 pb-2.5 flex items-center gap-2.5 border-l-2 border-l-purple-400/40 ml-0.5">
+            <div className="rounded-2xl bg-white/[0.07] border border-white/[0.10] overflow-hidden">
+              <div className="px-4 pt-4 pb-2 flex items-center gap-2.5">
                 <span className="text-[13px] font-bold text-white tracking-wide">Evidence</span>
                 <span className="text-[10px] text-white ml-auto">
                   {photos.length}/{MAX_PHOTOS}
@@ -550,7 +645,7 @@ export function DiaryEntrySheet({
                     {photos.map((url, i) => (
                       <div
                         key={i}
-                        className="relative aspect-square rounded-xl overflow-hidden border border-white/10 bg-white/[0.03]"
+                        className="relative aspect-square rounded-xl overflow-hidden border border-white/10 bg-white/[0.07]"
                       >
                         <EvidenceImage
                           src={url}
@@ -561,7 +656,7 @@ export function DiaryEntrySheet({
                         <button
                           type="button"
                           onClick={() => removePhoto(i)}
-                          className="absolute top-1.5 right-1.5 h-7 w-7 flex items-center justify-center bg-black/70 backdrop-blur-sm rounded-full active:bg-red-500/90 transition-colors touch-manipulation"
+                          className="absolute top-1.5 right-1.5 h-7 w-7 flex items-center justify-center bg-black/70 backdrop-blur-sm rounded-full active:bg-white/[0.06] transition-colors touch-manipulation"
                         >
                           <X className="h-3.5 w-3.5 text-white" />
                         </button>
@@ -600,7 +695,7 @@ export function DiaryEntrySheet({
                       type="button"
                       onClick={() => cameraInputRef.current?.click()}
                       disabled={isUploading}
-                      className="flex-1 h-11 flex items-center justify-center gap-2 rounded-xl bg-white/[0.04] border border-white/[0.08] text-white text-sm font-medium touch-manipulation active:bg-white/[0.08] disabled:opacity-50"
+                      className="flex-1 h-11 flex items-center justify-center gap-2 rounded-xl bg-white/[0.04] border border-white/[0.12] text-white text-sm font-medium touch-manipulation active:bg-white/[0.08] disabled:opacity-50"
                     >
                       <Camera className="h-4 w-4" />
                       {isUploading ? 'Uploading...' : 'Camera'}
@@ -609,7 +704,7 @@ export function DiaryEntrySheet({
                       type="button"
                       onClick={() => fileInputRef.current?.click()}
                       disabled={isUploading}
-                      className="flex-1 h-11 flex items-center justify-center gap-2 rounded-xl bg-white/[0.04] border border-white/[0.08] text-white text-sm font-medium touch-manipulation active:bg-white/[0.08] disabled:opacity-50"
+                      className="flex-1 h-11 flex items-center justify-center gap-2 rounded-xl bg-white/[0.04] border border-white/[0.12] text-white text-sm font-medium touch-manipulation active:bg-white/[0.08] disabled:opacity-50"
                     >
                       <Upload className="h-4 w-4" />
                       Gallery
@@ -620,8 +715,8 @@ export function DiaryEntrySheet({
             </div>
 
             {/* === SECTION 7: How Was Your Day? === */}
-            <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden">
-              <div className="px-4 pt-3.5 pb-2.5 flex items-center gap-2.5 border-l-2 border-l-amber-400/40 ml-0.5">
+            <div className="rounded-2xl bg-white/[0.07] border border-white/[0.10] overflow-hidden">
+              <div className="px-4 pt-4 pb-2 flex items-center gap-2.5">
                 <span className="text-[13px] font-bold text-white tracking-wide">
                   How Was Your Day?
                 </span>
@@ -635,8 +730,8 @@ export function DiaryEntrySheet({
                       onClick={() => setMoodRating(moodRating === mood.value ? null : mood.value)}
                       className={`flex-1 flex flex-col items-center gap-1 py-2.5 rounded-xl border-2 touch-manipulation transition-all active:scale-[0.95] ${
                         moodRating === mood.value
-                          ? 'bg-elec-yellow/10 border-elec-yellow/50 scale-105'
-                          : 'bg-white/[0.02] border-transparent active:bg-white/[0.06]'
+                          ? 'bg-white/[0.06] border-elec-yellow/50 scale-105'
+                          : 'bg-white/[0.06] border-transparent active:bg-white/[0.06]'
                       }`}
                     >
                       <span
@@ -660,7 +755,7 @@ export function DiaryEntrySheet({
           </div>
 
           {/* Save button */}
-          <div className="px-4 py-4 border-t border-white/[0.06] bg-background/95 backdrop-blur-sm">
+          <div className="px-4 py-4 border-t border-white/[0.10] bg-background/95 backdrop-blur-sm">
             <Button
               onClick={handleSave}
               disabled={!siteName.trim() || isSaving}

@@ -406,11 +406,11 @@ const InstrumentationModule1Section2 = () => {
           question="A high-level trip on a storage vessel uses the same transmitter as the level control loop. Why is that a poor arrangement?"
           options={[
             'The transmitter will wear out twice as fast',
-            'A single transmitter fault can both cause the hazard and prevent it being detected',
             'Two systems cannot electrically share one 4–20 mA signal',
+            'A single transmitter fault can both cause the hazard and prevent it being detected',
             'The trip would respond more slowly than the control loop',
           ]}
-          correctIndex={1}
+          correctIndex={2}
           explanation="It is a common-cause failure. One stuck transmitter tells the controller everything is fine, so it keeps filling, and tells the trip the same thing, so it never operates. Independent sensing is what stops one fault doing both jobs."
         />
 
@@ -516,11 +516,11 @@ const InstrumentationModule1Section2 = () => {
           question="A BMS graphic shows a supply air temperature that has not changed in four days, while the plant has been cycling normally. What is the most useful first question?"
           options={[
             'Is the controller setpoint correct?',
-            'Is that value a live sensor reading, or a fixed value someone entered?',
             'Should the fan speed be increased?',
             'Has the filter been changed recently?',
+            'Is that value a live sensor reading, or a fixed value someone entered?',
           ]}
-          correctIndex={1}
+          correctIndex={3}
           explanation="A value frozen while everything around it moves is the signature of a point that is no longer live — a manual override left in place, a network value that has stopped updating, or a sensor input that has failed to a last-known figure. Establish what the number is before deciding whether it is right."
         />
 
@@ -784,7 +784,7 @@ const InstrumentationModule1Section2 = () => {
               <ChevronLeft className="h-3 w-3" /> Previous section
             </span>
             <span className="mt-1 truncate text-[14px] font-semibold text-white">
-              What instrumentation is
+              What instrumentation is, and what it is for
             </span>
           </button>
           <button

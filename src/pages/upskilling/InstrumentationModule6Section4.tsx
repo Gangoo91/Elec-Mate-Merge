@@ -202,17 +202,11 @@ const InstrumentationModule6Section4 = () => {
 
         <TLDR
           points={[
-            'Module 4 Section 5 owns as-found, as-left and drift. Module 1 Section 4 owns reading a certificate. This section owns the verdict.',
             'A record needs a decision as well as numbers: pass or fail, against a stated tolerance.',
             '🔴 The tolerance comes from what the PROCESS needs, not from the manufacturer’s accuracy figure.',
-            'Capability and requirement are different questions. An instrument can be far better than its duty needs.',
-            'A tolerance can also be too tight — if it approaches the standard’s own uncertainty, the result stops being attributable to the instrument.',
             '🔴 An instrument FOUND out of tolerance makes every reading it gave since its last calibration suspect.',
-            'A calibration establishes a state at one moment, and says nothing about when the drift happened.',
             '🔴 The as-found value is the only evidence of how far out it was — and it exists for minutes before the first adjustment.',
             'Adjusting before recording does not lose a number. It makes the question about the previous period unanswerable.',
-            'An impact assessment asks what was decided using those readings, and whether any of it needs revisiting.',
-            'A calibration can end several ways: left alone, adjusted, repaired, replaced, restricted, or referred.',
             'Found within tolerance and left alone is a complete and successful job.',
           ]}
         />
@@ -484,12 +478,12 @@ const InstrumentationModule6Section4 = () => {
           id="ins-6-4-backwards"
           question="A level transmitter feeding a control loop is found 5 per cent out. Which statement is correct about the period since its last calibration?"
           options={[
-            'The loop corrected for the error automatically, so nothing was affected',
             'The controller held the process at a level 5 per cent away from where everybody believed it was, with the trend looking entirely normal',
+            'The loop corrected for the error automatically, so nothing was affected',
             'Only the displayed value was wrong; the control was unaffected',
             'The error would have shown up as an alarm',
           ]}
-          correctIndex={1}
+          correctIndex={0}
           explanation="A control loop acts on the measurement it is given. It held the false reading precisely at setpoint, which means the real level sat 5 per cent away — and the trend showed a perfectly controlled process throughout. Module 5 made the point that a measurement which merely misleads a person becomes, in a loop, a measurement that makes a plant do the wrong thing."
         />
 
@@ -640,11 +634,11 @@ const InstrumentationModule6Section4 = () => {
           question="An instrument cannot meet the tolerance it has been given, but comfortably meets a looser one and the duty may not need the tighter figure. What is the right outcome?"
           options={[
             'Adjust it as close as possible and pass it',
-            'Fail it and replace the instrument',
             'Record the limitation explicitly and refer the tolerance question, so a decision is made rather than assumed',
+            'Fail it and replace the instrument',
             'Pass it against the looser tolerance without comment',
           ]}
-          correctIndex={2}
+          correctIndex={1}
           explanation="Two of the wrong answers quietly decide something that is not the technician's to decide. Whether the duty needs the tighter figure is a question for whoever set the tolerance, and the honest outcome is to state what the instrument can and cannot do and let that decision be made properly."
         />
 

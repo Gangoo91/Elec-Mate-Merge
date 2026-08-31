@@ -198,17 +198,12 @@ const InstrumentationModule5Section1 = () => {
 
         <TLDR
           points={[
-            'Module 1 Section 3 covered what open and closed loop mean. This section starts where that finished.',
             '🔴 Feedback is always late. A controller works from the error, so it cannot act until the process has already deviated. That is not a flaw — it is the definition.',
             'Two things delay a process, and they are not the same. Lag: the response starts at once and takes time to finish. Dead time: nothing happens at all, then a response begins.',
             '🔴 Dead time is the hard one, because during it the controller gets no information about whether its correction is working — so it keeps pushing.',
             'Feedforward measures the disturbance and acts before an error appears. That is the one thing feedback structurally cannot do.',
-            'Feedforward never replaces feedback: it works from a model, it is blind to anything it does not measure, and it cannot detect its own errors.',
-            'Open loop is often the right answer — sequences, batch steps, and anywhere the controlled variable genuinely cannot be measured.',
-            'A measurement does not make a loop closed. Compensating from a related variable is open loop with respect to the thing you care about.',
             '🔴 What happens when a loop is left in manual depends entirely on the process type.',
             'Self-regulating: settles at a new value. Integrating: ramps steadily away. Runaway: accelerates away.',
-            'Those three also decide what control action a loop needs — a preview of Section 3.',
           ]}
         />
 
@@ -357,12 +352,12 @@ const InstrumentationModule5Section1 = () => {
           id="ins-5-1-deadtime"
           question="A temperature loop measures 40 metres downstream of the steam valve it controls. It oscillates steadily whatever the tuning. What is the most likely cause?"
           options={[
-            'Dead time from the transport delay — the controller keeps correcting before its previous action can possibly show up',
             'The valve is oversized',
             'The setpoint is set too high',
+            'Dead time from the transport delay — the controller keeps correcting before its previous action can possibly show up',
             'The transmitter needs recalibrating',
           ]}
-          correctIndex={0}
+          correctIndex={2}
           explanation="Forty metres of pipe means the effect of a valve change cannot be measured until the fluid has travelled that far. The controller pushes harder throughout that blind period, then overshoots when the delayed response arrives. Tuning can make the loop calmer by making it less aggressive; it cannot remove the delay. Moving the measurement closer would."
         />
 
@@ -588,11 +583,11 @@ const InstrumentationModule5Section1 = () => {
           question="A level loop on a tank with a fixed outlet is put into manual at a steady output. What should you expect?"
           options={[
             'The level will settle at a new steady value',
-            'The level will ramp steadily up or down until the tank overflows or empties',
             'Nothing — the level will hold where it is',
             'The level will oscillate around its current value',
+            'The level will ramp steadily up or down until the tank overflows or empties',
           ]}
-          correctIndex={1}
+          correctIndex={3}
           explanation="Level is the classic integrating process: it responds to the imbalance between what comes in and what goes out. Unless inflow exactly equals outflow — which it will not, except by coincidence — the level ramps and keeps ramping. Manual is not a resting state here."
         />
 

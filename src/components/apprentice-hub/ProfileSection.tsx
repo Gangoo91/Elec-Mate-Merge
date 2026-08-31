@@ -36,6 +36,7 @@ import {
   Loader2,
   Eye,
 } from 'lucide-react';
+import { Eyebrow } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -55,6 +56,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { useAuth } from '@/contexts/AuthContext';
 import { usePortfolioComments } from '@/hooks/portfolio/usePortfolioComments';
 import { usePortfolioSharing } from '@/hooks/portfolio/usePortfolioSharing';
@@ -63,7 +65,6 @@ import { useQualifications } from '@/hooks/qualification/useQualifications';
 import { useTimeEntries } from '@/hooks/time-tracking/useTimeEntries';
 import { toast } from 'sonner';
 import { formatDistanceToNow } from 'date-fns';
-import { useQualificationACs } from '@/hooks/qualification/useQualificationACs';
 import { parseEvidencedACs } from '@/utils/parseEvidencedACs';
 import { KSBCoverageMap } from './KSBCoverageMap';
 import { EPAGatewayStatus } from './EPAGatewayStatus';
@@ -76,7 +77,6 @@ export function ProfileSection() {
   const { comments, threads, actionRequiredCount, unreadCount } = usePortfolioComments();
   const { unreadCount: messageUnreadCount, connections } = useDirectMessages();
   const { userSelection } = useQualifications();
-  const { tree: acTree } = useQualificationACs();
   const { entries: portfolioEntries } = usePortfolioData();
   const { entries: timeEntries, totalTime } = useTimeEntries();
   const {
@@ -201,7 +201,12 @@ export function ProfileSection() {
         summary += `Title: ${entry.title || 'Untitled'}\n`;
         summary += `Category: ${(typeof entry.category === 'object' ? entry.category?.name : entry.category) || 'N/A'}\n`;
         summary += `Status: ${entry.status || 'draft'}\n`;
-        summary += `Date: ${new Date(entry.dateCreated || entry.created_at).toLocaleDateString('en-GB')}\n`;
+        // `created_at` is not a field on PortfolioEntry — the fallback never
+        // fired, so a row with no dateCreated wrote "Invalid Date" straight
+        // into the summary the assessor reads.
+        const entryDate = entry.dateCreated;
+        const parsed = entryDate ? new Date(entryDate) : null;
+        summary += `Date: ${parsed && !isNaN(parsed.getTime()) ? parsed.toLocaleDateString('en-GB') : 'Not recorded'}\n`;
         summary += `Description: ${entry.description || 'No description'}\n`;
         summary += `KSBs: ${entry.skills?.join(', ') || 'None'}\n`;
         summary += '-'.repeat(50) + '\n\n';
@@ -265,7 +270,7 @@ export function ProfileSection() {
   return (
     <div className="py-5 sm:py-6 lg:py-8 space-y-7 lg:space-y-10">
       {/* ─── Editorial profile hero ─── */}
-      <header className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-5 sm:p-6">
+      <header className={cn('rounded-2xl border border-white/[0.06] p-5 sm:p-6', CARD_SURFACE)}>
         <div className="flex items-start gap-4 sm:gap-5">
           <Avatar className="h-14 w-14 sm:h-16 sm:w-16 border border-white/[0.06] flex-shrink-0">
             <AvatarImage src={profile?.avatar_url} />
@@ -274,14 +279,12 @@ export function ProfileSection() {
             </AvatarFallback>
           </Avatar>
           <div className="flex-1 min-w-0 space-y-1">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-              Apprentice · Electrical
-            </span>
+            <Eyebrow>Apprentice · Electrical</Eyebrow>
             <h2 className="text-[24px] sm:text-[28px] font-semibold tracking-tight text-white leading-none">
               {fullName}
             </h2>
             {user?.email && (
-              <p className="text-[12px] text-white/55 font-mono truncate">{user.email}</p>
+              <p className="text-[12px] text-white font-mono truncate">{user.email}</p>
             )}
             <div className="pt-1.5">
               <span className="inline-flex items-center gap-1.5 text-[11px] font-medium text-elec-yellow border border-elec-yellow/30 bg-elec-yellow/[0.04] px-2.5 py-1 rounded-md">
@@ -297,26 +300,24 @@ export function ProfileSection() {
         {/* ─── Tutor communication ─── */}
         <section className="space-y-3">
           <div className="space-y-1">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-              Tutor communication
-            </span>
+            <Eyebrow>Tutor communication</Eyebrow>
             <h3 className="text-[16px] sm:text-[18px] font-medium text-white">From your college</h3>
           </div>
           <ul className="space-y-2">
             <li>
               <button
                 onClick={() => setShowMessages(true)}
-                className="w-full flex items-center gap-3 px-4 py-3 rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] hover:bg-white/[0.04] transition-colors touch-manipulation text-left"
+                className={cn('w-full flex items-center gap-3 px-4 py-3 rounded-2xl border border-white/[0.06] hover:bg-white/[0.04] transition-colors touch-manipulation text-left', CARD_SURFACE)}
               >
                 <AlertCircle
                   className={cn(
                     'h-4 w-4 flex-shrink-0',
-                    actionRequiredCount > 0 ? 'text-red-300' : 'text-white/40'
+                    actionRequiredCount > 0 ? 'text-red-300' : 'text-white'
                   )}
                 />
                 <div className="flex-1 min-w-0 space-y-0.5">
                   <p className="text-[13px] font-medium text-white">Actions required</p>
-                  <p className="text-[11.5px] text-white/55">
+                  <p className="text-[11.5px] text-white">
                     {actionRequiredCount > 0
                       ? `${actionRequiredCount} item${actionRequiredCount !== 1 ? 's' : ''} need a reply`
                       : 'All caught up'}
@@ -327,23 +328,23 @@ export function ProfileSection() {
                     {actionRequiredCount}
                   </span>
                 )}
-                <ChevronRight className="h-4 w-4 text-white/40 flex-shrink-0" />
+                <ChevronRight className="h-4 w-4 text-white flex-shrink-0" />
               </button>
             </li>
             <li>
               <button
                 onClick={() => setShowMessages(true)}
-                className="w-full flex items-center gap-3 px-4 py-3 rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] hover:bg-white/[0.04] transition-colors touch-manipulation text-left"
+                className={cn('w-full flex items-center gap-3 px-4 py-3 rounded-2xl border border-white/[0.06] hover:bg-white/[0.04] transition-colors touch-manipulation text-left', CARD_SURFACE)}
               >
                 <Bell
                   className={cn(
                     'h-4 w-4 flex-shrink-0',
-                    unreadCount > 0 ? 'text-elec-yellow' : 'text-white/40'
+                    unreadCount > 0 ? 'text-elec-yellow' : 'text-white'
                   )}
                 />
                 <div className="flex-1 min-w-0 space-y-0.5">
                   <p className="text-[13px] font-medium text-white">Unread comments</p>
-                  <p className="text-[11.5px] text-white/55">
+                  <p className="text-[11.5px] text-white">
                     {unreadCount > 0
                       ? `${unreadCount} new comment${unreadCount !== 1 ? 's' : ''}`
                       : 'No new messages'}
@@ -354,18 +355,18 @@ export function ProfileSection() {
                     {unreadCount}
                   </span>
                 )}
-                <ChevronRight className="h-4 w-4 text-white/40 flex-shrink-0" />
+                <ChevronRight className="h-4 w-4 text-white flex-shrink-0" />
               </button>
             </li>
             <li>
               <button
                 onClick={() => setShowDirectMessages(true)}
-                className="w-full flex items-center gap-3 px-4 py-3 rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] hover:bg-white/[0.04] transition-colors touch-manipulation text-left"
+                className={cn('w-full flex items-center gap-3 px-4 py-3 rounded-2xl border border-white/[0.06] hover:bg-white/[0.04] transition-colors touch-manipulation text-left', CARD_SURFACE)}
               >
-                <MessageSquare className="h-4 w-4 text-white/40 flex-shrink-0" />
+                <MessageSquare className="h-4 w-4 text-white flex-shrink-0" />
                 <div className="flex-1 min-w-0 space-y-0.5">
                   <p className="text-[13px] font-medium text-white">Message tutor</p>
-                  <p className="text-[11.5px] text-white/55">
+                  <p className="text-[11.5px] text-white">
                     {connections.length > 0
                       ? `${connections.length} conversation${connections.length !== 1 ? 's' : ''}`
                       : 'Send a message to your tutor'}
@@ -376,7 +377,7 @@ export function ProfileSection() {
                     {messageUnreadCount}
                   </span>
                 )}
-                <ChevronRight className="h-4 w-4 text-white/40 flex-shrink-0" />
+                <ChevronRight className="h-4 w-4 text-white flex-shrink-0" />
               </button>
             </li>
           </ul>
@@ -385,55 +386,53 @@ export function ProfileSection() {
         {/* ─── Progress shortcuts ─── */}
         <section className="space-y-3">
           <div className="space-y-1">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-              Progress
-            </span>
+            <Eyebrow>Progress</Eyebrow>
             <h3 className="text-[16px] sm:text-[18px] font-medium text-white">Where you stand</h3>
           </div>
           <ul className="space-y-2">
             <li>
               <button
                 onClick={() => setShowKSBMap(true)}
-                className="w-full flex items-center gap-3 px-4 py-3 rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] hover:bg-white/[0.04] transition-colors touch-manipulation text-left"
+                className={cn('w-full flex items-center gap-3 px-4 py-3 rounded-2xl border border-white/[0.06] hover:bg-white/[0.04] transition-colors touch-manipulation text-left', CARD_SURFACE)}
               >
                 <Shield className="h-4 w-4 text-elec-yellow flex-shrink-0" />
                 <div className="flex-1 min-w-0 space-y-0.5">
                   <p className="text-[13px] font-medium text-white">KSB coverage map</p>
-                  <p className="text-[11.5px] text-white/55">
+                  <p className="text-[11.5px] text-white">
                     Knowledge, skills &amp; behaviours covered through your ACs
                   </p>
                 </div>
-                <ChevronRight className="h-4 w-4 text-white/40 flex-shrink-0" />
+                <ChevronRight className="h-4 w-4 text-white flex-shrink-0" />
               </button>
             </li>
             <li>
               <button
                 onClick={() => setShowEPAStatus(true)}
-                className="w-full flex items-center gap-3 px-4 py-3 rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] hover:bg-white/[0.04] transition-colors touch-manipulation text-left"
+                className={cn('w-full flex items-center gap-3 px-4 py-3 rounded-2xl border border-white/[0.06] hover:bg-white/[0.04] transition-colors touch-manipulation text-left', CARD_SURFACE)}
               >
-                <GraduationCap className="h-4 w-4 text-white/40 flex-shrink-0" />
+                <GraduationCap className="h-4 w-4 text-white flex-shrink-0" />
                 <div className="flex-1 min-w-0 space-y-0.5">
                   <p className="text-[13px] font-medium text-white">EPA gateway status</p>
-                  <p className="text-[11.5px] text-white/55">
+                  <p className="text-[11.5px] text-white">
                     End-point assessment readiness across the 5 gates
                   </p>
                 </div>
-                <ChevronRight className="h-4 w-4 text-white/40 flex-shrink-0" />
+                <ChevronRight className="h-4 w-4 text-white flex-shrink-0" />
               </button>
             </li>
             <li>
               <button
                 onClick={() => navigate('/apprentice/hub?tab=progress')}
-                className="w-full flex items-center gap-3 px-4 py-3 rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] hover:bg-white/[0.04] transition-colors touch-manipulation text-left"
+                className={cn('w-full flex items-center gap-3 px-4 py-3 rounded-2xl border border-white/[0.06] hover:bg-white/[0.04] transition-colors touch-manipulation text-left', CARD_SURFACE)}
               >
-                <Trophy className="h-4 w-4 text-white/40 flex-shrink-0" />
+                <Trophy className="h-4 w-4 text-white flex-shrink-0" />
                 <div className="flex-1 min-w-0 space-y-0.5">
                   <p className="text-[13px] font-medium text-white">Learning tracker</p>
-                  <p className="text-[11.5px] text-white/55">
+                  <p className="text-[11.5px] text-white">
                     Quizzes, flashcards, predicted grade, achievements
                   </p>
                 </div>
-                <ChevronRight className="h-4 w-4 text-white/40 flex-shrink-0" />
+                <ChevronRight className="h-4 w-4 text-white flex-shrink-0" />
               </button>
             </li>
           </ul>
@@ -443,13 +442,11 @@ export function ProfileSection() {
       {/* ─── Share & export ─── */}
       <section className="space-y-3">
         <div className="space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-            Share &amp; export
-          </span>
+          <Eyebrow>Share &amp; export</Eyebrow>
           <h3 className="text-[16px] sm:text-[18px] font-medium text-white">
             Send your portfolio out
           </h3>
-          <p className="text-[12px] text-white/55 leading-relaxed">
+          <p className="text-[12px] text-white leading-relaxed">
             Generate a tutor-shareable link, export a PDF, or download every file as a zip.
           </p>
         </div>
@@ -457,58 +454,58 @@ export function ProfileSection() {
           <li>
             <button
               onClick={() => setShowShare(true)}
-              className="w-full h-full flex items-center gap-3 px-4 py-4 rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] hover:bg-white/[0.04] transition-colors touch-manipulation text-left"
+              className={cn('w-full h-full flex items-center gap-3 px-4 py-4 rounded-2xl border border-white/[0.06] hover:bg-white/[0.04] transition-colors touch-manipulation text-left', CARD_SURFACE)}
             >
               <Link2 className="h-4 w-4 text-elec-yellow flex-shrink-0" />
               <div className="flex-1 min-w-0 space-y-0.5">
                 <p className="text-[13px] font-medium text-white">Share link</p>
-                <p className="text-[11.5px] text-white/55">
+                <p className="text-[11.5px] text-white">
                   {shares.length > 0
                     ? `${shares.length} active`
                     : 'Generate a private link'}
                 </p>
               </div>
-              <ChevronRight className="h-4 w-4 text-white/40 flex-shrink-0" />
+              <ChevronRight className="h-4 w-4 text-white flex-shrink-0" />
             </button>
           </li>
           <li>
             <button
               onClick={handleExportPDF}
               disabled={isExportingPDF}
-              className="w-full h-full flex items-center gap-3 px-4 py-4 rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] hover:bg-white/[0.04] transition-colors touch-manipulation text-left disabled:opacity-50"
+              className={cn('w-full h-full flex items-center gap-3 px-4 py-4 rounded-2xl border border-white/[0.06] hover:bg-white/[0.04] transition-colors touch-manipulation text-left disabled:opacity-50', CARD_SURFACE)}
             >
               {isExportingPDF ? (
                 <Loader2 className="h-4 w-4 text-elec-yellow animate-spin flex-shrink-0" />
               ) : (
-                <FileText className="h-4 w-4 text-white/55 flex-shrink-0" />
+                <FileText className="h-4 w-4 text-white flex-shrink-0" />
               )}
               <div className="flex-1 min-w-0 space-y-0.5">
                 <p className="text-[13px] font-medium text-white">Export PDF</p>
-                <p className="text-[11.5px] text-white/55">
+                <p className="text-[11.5px] text-white">
                   {isExportingPDF ? 'Generating…' : 'Single document for review'}
                 </p>
               </div>
-              <ChevronRight className="h-4 w-4 text-white/40 flex-shrink-0" />
+              <ChevronRight className="h-4 w-4 text-white flex-shrink-0" />
             </button>
           </li>
           <li>
             <button
               onClick={handleDownloadAll}
               disabled={isDownloadingAll}
-              className="w-full h-full flex items-center gap-3 px-4 py-4 rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] hover:bg-white/[0.04] transition-colors touch-manipulation text-left disabled:opacity-50"
+              className={cn('w-full h-full flex items-center gap-3 px-4 py-4 rounded-2xl border border-white/[0.06] hover:bg-white/[0.04] transition-colors touch-manipulation text-left disabled:opacity-50', CARD_SURFACE)}
             >
               {isDownloadingAll ? (
                 <Loader2 className="h-4 w-4 text-elec-yellow animate-spin flex-shrink-0" />
               ) : (
-                <Download className="h-4 w-4 text-white/55 flex-shrink-0" />
+                <Download className="h-4 w-4 text-white flex-shrink-0" />
               )}
               <div className="flex-1 min-w-0 space-y-0.5">
                 <p className="text-[13px] font-medium text-white">Download all</p>
-                <p className="text-[11.5px] text-white/55">
+                <p className="text-[11.5px] text-white">
                   {isDownloadingAll ? 'Creating zip…' : 'Every evidence file as a zip'}
                 </p>
               </div>
-              <ChevronRight className="h-4 w-4 text-white/40 flex-shrink-0" />
+              <ChevronRight className="h-4 w-4 text-white flex-shrink-0" />
             </button>
           </li>
         </ul>
@@ -516,18 +513,16 @@ export function ProfileSection() {
 
       {/* ─── Account ─── */}
       <section className="space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-          Account
-        </span>
-        <ul className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] divide-y divide-white/[0.04] overflow-hidden">
+        <Eyebrow>Account</Eyebrow>
+        <ul className={cn('rounded-2xl border border-white/[0.06] divide-y divide-white/[0.04] overflow-hidden', CARD_SURFACE)}>
           <li>
             <button
               onClick={() => navigate('/settings')}
               className="w-full flex items-center gap-3 px-4 py-3.5 hover:bg-white/[0.04] transition-colors touch-manipulation text-left"
             >
-              <Settings className="h-4 w-4 text-white/55 flex-shrink-0" />
+              <Settings className="h-4 w-4 text-white flex-shrink-0" />
               <span className="text-[13px] font-medium text-white flex-1">Settings</span>
-              <ChevronRight className="h-4 w-4 text-white/40 flex-shrink-0" />
+              <ChevronRight className="h-4 w-4 text-white flex-shrink-0" />
             </button>
           </li>
           <li>
@@ -651,7 +646,7 @@ export function ProfileSection() {
                         className="shrink-0"
                       >
                         {copiedToken === share.token ? (
-                          <Check className="h-4 w-4 text-white/85" />
+                          <Check className="h-4 w-4 text-white" />
                         ) : (
                           <Copy className="h-4 w-4" />
                         )}
@@ -704,12 +699,13 @@ export function ProfileSection() {
                       <div className="flex items-center gap-2">
                         <Badge
                           variant="outline"
-                          className={cn('text-[10px]',
-                            comment.authorRole === 'tutor'
-                              ? 'border-white/[0.06] text-white/85'
-                              : comment.authorRole === 'assessor'
-                                ? 'border-white/[0.06] text-white/85'
-                                : 'border-border'
+                          className={cn(
+                            'text-[10px]',
+                            // tutor and assessor branched to identical classes,
+                            // so the ternary decided nothing.
+                            comment.authorRole === 'tutor' || comment.authorRole === 'assessor'
+                              ? 'border-white/[0.06] text-white'
+                              : 'border-border'
                           )}
                         >
                           {comment.authorRole === 'tutor'
@@ -722,9 +718,9 @@ export function ProfileSection() {
                       </div>
                       <div className="flex items-center gap-2">
                         {comment.requiresAction && !comment.isResolved && (
-                          <div className="w-2 h-2 rounded-full bg-white/[0.02]" />
+                          <div className="w-2 h-2 rounded-full bg-red-400" aria-label="Needs a reply" />
                         )}
-                        {comment.isResolved && <Check className="h-3.5 w-3.5 text-white/85" />}
+                        {comment.isResolved && <Check className="h-3.5 w-3.5 text-white" />}
                         <span className="text-xs text-white">
                           {formatDistanceToNow(new Date(comment.createdAt), { addSuffix: true })}
                         </span>

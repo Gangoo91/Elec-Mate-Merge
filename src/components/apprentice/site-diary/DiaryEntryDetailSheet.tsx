@@ -37,6 +37,8 @@ import { supabase } from '@/integrations/supabase/client';
 import { useStudentQualification } from '@/hooks/useStudentQualification';
 import { useDiaryEntryAnalysis } from '@/hooks/site-diary/useDiaryEntryAnalysis';
 import { toast } from 'sonner';
+import { useNavigate } from 'react-router-dom';
+import { moodChip, MOOD_EMOJI } from '@/lib/site-diary/mood';
 
 const moodEmojis: Record<number, string> = {
   1: '😢',
@@ -54,22 +56,12 @@ const moodLabels: Record<number, string> = {
   5: 'Great',
 };
 
-function moodColour(mood: number): string {
-  if (mood >= 4) return 'text-green-400 bg-green-400/10 border-green-400/20';
-  if (mood === 3) return 'text-amber-400 bg-amber-400/10 border-amber-400/20';
-  return 'text-red-400 bg-red-400/10 border-red-400/20';
-}
+/** Edge + text only — see `@/lib/site-diary/mood`. */
+const moodColour = moodChip;
 
-const skillColours: Record<string, string> = {
-  'Practical Skills': 'bg-blue-500/15 text-blue-400 border-blue-500/25',
-  'Health & Safety': 'bg-red-500/15 text-red-400 border-red-500/25',
-  'Testing & Inspection': 'bg-purple-500/15 text-purple-400 border-purple-500/25',
-  'Wiring & Containment': 'bg-amber-500/15 text-amber-400 border-amber-500/25',
-  Regulations: 'bg-cyan-500/15 text-cyan-400 border-cyan-500/25',
-  'Tools & Equipment': 'bg-orange-500/15 text-orange-400 border-orange-500/25',
-  Communication: 'bg-pink-500/15 text-pink-400 border-pink-500/25',
-  'Problem Solving': 'bg-green-500/15 text-green-400 border-green-500/25',
-};
+/** Skill badges are neutral — the label is the information. The old map
+ *  assigned eight hues "for variety" with no legend anywhere. */
+const SKILL_CHIP = 'border-white/[0.14] text-white/85';
 
 interface SuggestedAC {
   unitCode: string;
@@ -99,6 +91,7 @@ export function DiaryEntryDetailSheet({
   relatedEntries,
   evidencedACs,
 }: DiaryEntryDetailSheetProps) {
+  const navigate = useNavigate();
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [lightboxPhoto, setLightboxPhoto] = useState<string | null>(null);
 
@@ -393,7 +386,7 @@ export function DiaryEntryDetailSheet({
               >
                 <Clock className="h-4 w-4 text-blue-400 flex-shrink-0" />
                 <span className="text-sm text-white">OJT hours linked</span>
-                <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-bold bg-blue-500/15 text-blue-400 border border-blue-500/25">
+                <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-bold bg-white/[0.06] text-blue-400 border border-blue-500/25">
                   Tracked
                 </span>
               </motion.div>
@@ -416,7 +409,7 @@ export function DiaryEntryDetailSheet({
                   {entry.tasks_completed.map((task) => (
                     <span
                       key={task}
-                      className="px-3 py-1.5 rounded-lg bg-white/[0.08] border border-white/[0.08] text-sm text-white"
+                      className="px-3 py-1.5 rounded-lg bg-white/[0.08] border border-white/[0.12] text-sm text-white"
                     >
                       {task}
                     </span>
@@ -443,7 +436,7 @@ export function DiaryEntryDetailSheet({
                     <span
                       key={skill}
                       className={`px-2.5 py-1 rounded-lg text-xs font-medium border ${
-                        skillColours[skill] || 'bg-white/[0.06] text-white border-white/10'
+                        SKILL_CHIP
                       }`}
                     >
                       {skill}
@@ -509,7 +502,7 @@ export function DiaryEntryDetailSheet({
                     <button
                       key={i}
                       onClick={() => setLightboxPhoto(url)}
-                      className="aspect-square rounded-lg overflow-hidden border border-white/10 bg-white/[0.03] touch-manipulation active:opacity-80 transition-opacity"
+                      className="aspect-square rounded-lg overflow-hidden border border-white/10 bg-white/[0.07] touch-manipulation active:opacity-80 transition-opacity"
                     >
                       <EvidenceImage
                         src={url}
@@ -551,10 +544,10 @@ export function DiaryEntryDetailSheet({
                           <span
                             className={`inline-flex items-center px-2 py-0.5 rounded-md text-[11px] font-bold uppercase tracking-wider ${
                               entryAnalysis.evidenceStrength === 'strong'
-                                ? 'bg-green-500/15 text-green-400 border border-green-500/25'
+                                ? 'bg-white/[0.06] text-green-400 border border-green-500/25'
                                 : entryAnalysis.evidenceStrength === 'moderate'
-                                  ? 'bg-amber-500/15 text-amber-400 border border-amber-500/25'
-                                  : 'bg-red-500/15 text-red-400 border border-red-500/25'
+                                  ? 'bg-white/[0.06] text-amber-400 border border-amber-500/25'
+                                  : 'bg-white/[0.06] text-red-400 border border-red-500/25'
                             }`}
                           >
                             {entryAnalysis.evidenceStrength}
@@ -582,7 +575,7 @@ export function DiaryEntryDetailSheet({
                           {entryAnalysis.matchedCriteria.slice(0, 5).map((mc, idx) => (
                             <div
                               key={idx}
-                              className="px-3 py-2 rounded-lg bg-white/[0.03] border border-white/[0.06]"
+                              className="px-3 py-2 rounded-lg bg-white/[0.07] border border-white/[0.10]"
                             >
                               <div className="flex items-center justify-between gap-2 mb-1">
                                 <span className="text-[11px] font-bold text-purple-400 truncate min-w-0">
@@ -594,12 +587,12 @@ export function DiaryEntryDetailSheet({
                                   </span>
                                   {evidencedACs &&
                                     (evidencedACs.has(`${mc.unitCode}.${mc.acCode}`) ? (
-                                      <span className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded text-[9px] font-bold uppercase tracking-wider bg-green-500/15 text-green-400 border border-green-500/25">
+                                      <span className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded text-[9px] font-bold uppercase tracking-wider bg-white/[0.06] text-green-400 border border-green-500/25">
                                         <CheckCircle2 className="h-2.5 w-2.5" />
                                         Evidenced
                                       </span>
                                     ) : (
-                                      <span className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded text-[9px] font-bold uppercase tracking-wider bg-amber-500/15 text-amber-400 border border-amber-500/25">
+                                      <span className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded text-[9px] font-bold uppercase tracking-wider bg-white/[0.06] text-amber-400 border border-amber-500/25">
                                         <Circle className="h-2.5 w-2.5" />
                                         Needed
                                       </span>
@@ -641,7 +634,7 @@ export function DiaryEntryDetailSheet({
                 ) : (
                   <button
                     onClick={refreshAnalysis}
-                    className="w-full flex items-center justify-center gap-2 h-11 rounded-xl bg-purple-500/10 border border-purple-500/20 text-purple-400 text-sm font-medium touch-manipulation active:scale-[0.98] transition-all"
+                    className="w-full flex items-center justify-center gap-2 h-11 rounded-xl bg-white/[0.06] border border-purple-500/20 text-purple-400 text-sm font-medium touch-manipulation active:scale-[0.98] transition-all"
                   >
                     <Sparkles className="h-4 w-4" />
                     Analyse as Evidence
@@ -659,7 +652,7 @@ export function DiaryEntryDetailSheet({
             >
               <button
                 onClick={() => onEdit(entry)}
-                className="flex-1 flex items-center justify-center gap-2 h-12 rounded-xl bg-elec-yellow/15 border border-elec-yellow/30 text-elec-yellow font-medium text-sm touch-manipulation active:scale-[0.98] transition-all"
+                className="flex-1 flex items-center justify-center gap-2 h-12 rounded-xl bg-white/[0.06] border border-elec-yellow/30 text-elec-yellow font-medium text-sm touch-manipulation active:scale-[0.98] transition-all"
               >
                 <Pencil className="h-4 w-4" />
                 Edit
@@ -669,11 +662,11 @@ export function DiaryEntryDetailSheet({
                 className={`flex-1 flex items-center justify-center gap-2 h-12 rounded-xl border font-medium text-sm touch-manipulation active:scale-[0.98] transition-all ${
                   confirmDelete
                     ? 'bg-red-500 border-red-500 text-white'
-                    : 'bg-red-500/10 border-red-500/20 text-red-400'
+                    : 'bg-white/[0.06] border-red-500/20 text-red-400'
                 }`}
               >
                 <Trash2 className="h-4 w-4" />
-                {confirmDelete ? 'Confirm Delete' : 'Delete'}
+                {confirmDelete ? 'Confirm delete' : 'Delete'}
               </button>
             </motion.div>
 
@@ -681,27 +674,33 @@ export function DiaryEntryDetailSheet({
             {entry.linked_portfolio_id && (
               <button
                 onClick={() => {
+                  /* This used to close the sheet and toast "open it in your
+                     Portfolio" — a button that looked like it requested
+                     verification but only told you to go and do it elsewhere,
+                     leaving you on the page you started on. There is no
+                     per-item portfolio route, so it now at least takes you to
+                     the portfolio. */
                   onOpenChange(false);
-                  // Navigate to portfolio detail to trigger verification from there
-                  toast.info('Open this evidence in your Portfolio to request verification');
+                  navigate('/apprentice/hub');
+                  toast.info('Find this evidence in your portfolio to request verification');
                 }}
-                className="w-full flex items-center justify-center gap-2 h-11 rounded-xl bg-purple-500/10 border border-purple-500/25 text-purple-400 text-sm font-medium touch-manipulation active:scale-[0.98] transition-all"
+                className="w-full flex items-center justify-center gap-2 h-11 rounded-xl border border-elec-yellow/50 text-elec-yellow text-sm font-medium touch-manipulation active:scale-[0.98] transition-colors hover:border-elec-yellow"
               >
                 <ShieldCheck className="h-4 w-4" />
-                Request Supervisor Verification
+                Open in portfolio to verify
               </button>
             )}
 
             {/* Add to Portfolio */}
             {entry.linked_portfolio_id ? (
-              <div className="w-full flex items-center justify-center gap-2 h-11 rounded-xl bg-green-500/10 border border-green-500/20 text-green-400 text-sm">
+              <div className="w-full flex items-center justify-center gap-2 h-11 rounded-xl border border-elec-yellow/40 text-elec-yellow text-sm">
                 <CheckCircle2 className="h-4 w-4" />
                 Added to Portfolio
               </div>
             ) : (
               <button
                 onClick={handleAddToPortfolio}
-                className="w-full flex items-center justify-center gap-2 h-11 rounded-xl bg-elec-yellow/10 border border-elec-yellow/25 text-elec-yellow text-sm font-medium touch-manipulation active:scale-[0.98] transition-all"
+                className="w-full flex items-center justify-center gap-2 h-11 rounded-xl bg-white/[0.06] border border-elec-yellow/25 text-elec-yellow text-sm font-medium touch-manipulation active:scale-[0.98] transition-all"
               >
                 <Briefcase className="h-4 w-4" />
                 Add to Portfolio
@@ -715,7 +714,7 @@ export function DiaryEntryDetailSheet({
                 animate={{ opacity: 1, y: 0 }}
                 className="rounded-xl border border-elec-yellow/20 bg-gradient-to-br from-elec-yellow/[0.04] to-transparent overflow-hidden"
               >
-                <div className="px-4 py-3 border-b border-white/[0.06]">
+                <div className="px-4 py-3 border-b border-white/[0.10]">
                   <div className="flex items-center gap-2">
                     <Sparkles className="h-4 w-4 text-elec-yellow" />
                     <h4 className="text-sm font-semibold text-white">Link Assessment Criteria</h4>
@@ -741,8 +740,8 @@ export function DiaryEntryDetailSheet({
                         onClick={() => toggleAC(idx)}
                         className={`w-full flex items-start gap-2 px-3 py-2 rounded-lg text-left touch-manipulation transition-colors ${
                           ac.selected
-                            ? 'bg-elec-yellow/10 border border-elec-yellow/25'
-                            : 'bg-white/[0.02] border border-white/[0.06] active:bg-white/[0.05]'
+                            ? 'bg-white/[0.06] border border-elec-yellow/25'
+                            : 'bg-white/[0.06] border border-white/[0.10] active:bg-white/[0.05]'
                         }`}
                       >
                         {ac.selected ? (
@@ -757,12 +756,12 @@ export function DiaryEntryDetailSheet({
                             </span>
                             {evidencedACs &&
                               (evidencedACs.has(`${ac.unitCode}.${ac.acText.split(' ')[0]}`) ? (
-                                <span className="inline-flex items-center gap-0.5 px-1 py-px rounded text-[8px] font-bold uppercase bg-green-500/15 text-green-400 border border-green-500/25">
+                                <span className="inline-flex items-center gap-0.5 px-1 py-px rounded text-[8px] font-bold uppercase bg-white/[0.06] text-green-400 border border-green-500/25">
                                   <CheckCircle2 className="h-2 w-2" />
                                   Evidenced
                                 </span>
                               ) : (
-                                <span className="inline-flex items-center gap-0.5 px-1 py-px rounded text-[8px] font-bold uppercase bg-amber-500/15 text-amber-400 border border-amber-500/25">
+                                <span className="inline-flex items-center gap-0.5 px-1 py-px rounded text-[8px] font-bold uppercase bg-white/[0.06] text-amber-400 border border-amber-500/25">
                                   Needed
                                 </span>
                               ))}
@@ -774,7 +773,7 @@ export function DiaryEntryDetailSheet({
                   )}
                 </div>
 
-                <div className="px-4 py-3 border-t border-white/[0.06] flex gap-2">
+                <div className="px-4 py-3 border-t border-white/[0.10] flex gap-2">
                   <button
                     onClick={() => {
                       setShowPortfolioPicker(false);
@@ -801,7 +800,7 @@ export function DiaryEntryDetailSheet({
 
             {/* Related entries from same site */}
             {relatedEntries.length > 0 && (
-              <div className="pt-2 border-t border-white/[0.06]">
+              <div className="pt-2 border-t border-white/[0.10]">
                 <h4 className="text-xs font-medium text-white uppercase tracking-wider mb-3">
                   More from {entry.site_name}
                 </h4>
@@ -814,7 +813,7 @@ export function DiaryEntryDetailSheet({
                     return (
                       <div
                         key={re.id}
-                        className="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-white/[0.03] border border-white/[0.04]"
+                        className="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-white/[0.07] border border-white/[0.04]"
                       >
                         <span className="text-xs text-white flex-shrink-0">{reDate}</span>
                         <span className="text-xs text-white truncate">

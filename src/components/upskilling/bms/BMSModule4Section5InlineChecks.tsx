@@ -123,7 +123,7 @@ export const EnergyInlineCheck2 = () => {
               <Button
                 onClick={handleSubmit}
                 disabled={!selectedStrategy}
-                className="mt-3 bg-elec-yellow text-elec-dark hover:bg-yellow-600 disabled:opacity-50"
+                className="mt-3 bg-elec-yellow text-elec-dark hover:bg-yellow-600 disabled:bg-white/[0.08] disabled:text-white/70"
               >
                 Submit Answer
               </Button>
@@ -204,7 +204,7 @@ export const EnergyInlineCheck3 = () => {
               <Button
                 onClick={handleSubmit}
                 disabled={selectedIssues.length === 0}
-                className="mt-3 bg-elec-yellow text-elec-dark hover:bg-yellow-600 disabled:opacity-50"
+                className="mt-3 bg-elec-yellow text-elec-dark hover:bg-yellow-600 disabled:bg-white/[0.08] disabled:text-white/70"
               >
                 Check Solutions
               </Button>

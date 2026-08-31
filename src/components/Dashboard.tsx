@@ -304,6 +304,7 @@ const TYPE_LABELS: Record<string, string> = {
   'emergency-lighting': 'Emergency lighting',
   'pat-testing': 'PAT testing',
   'solar-pv': 'Solar PV',
+  'plug-in-solar': 'Plug-in solar',
   bess: 'BESS',
   'lightning-protection': 'Lightning protection',
   'g98-commissioning': 'G98',

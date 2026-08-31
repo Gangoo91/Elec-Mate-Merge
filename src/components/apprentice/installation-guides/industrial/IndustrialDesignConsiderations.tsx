@@ -33,9 +33,9 @@ const IndustrialDesignConsiderations = () => {
   ];
 
   return (
-    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
+    <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-4">
       <div className="space-y-1">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
           Design
         </span>
         <h3 className="text-[18px] font-semibold text-white leading-tight">
@@ -49,7 +49,7 @@ const IndustrialDesignConsiderations = () => {
         {designConsiderations.map((item, index) => (
           <div
             key={index}
-            className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 sm:p-4 space-y-2"
+            className="rounded-lg border border-white/[0.10] bg-white/[0.06] p-3 sm:p-4 space-y-2"
           >
             <h4 className="text-[14px] font-medium text-white">{item.category}</h4>
             <ul className="space-y-1">

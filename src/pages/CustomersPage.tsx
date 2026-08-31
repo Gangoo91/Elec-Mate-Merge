@@ -17,7 +17,7 @@ import { CustomerListRow } from '@/components/customers/CustomerListRow';
 import { CustomerForm } from '@/components/customers/CustomerForm';
 import { MergeDuplicatesSheet } from '@/components/customers/MergeDuplicatesSheet';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
-import { SlidersHorizontal } from 'lucide-react';
+import { SlidersHorizontal, Mail } from 'lucide-react';
 import { useHaptic } from '@/hooks/useHaptic';
 import { CustomerImportDialog } from '@/components/customers/customers/CustomerImportDialog';
 import DeviceContactsImportSheet from '@/components/customers/DeviceContactsImportSheet';
@@ -470,6 +470,16 @@ export default function CustomersPage() {
    * reachable only from a "Manage" section inside the filters sheet, which is
    * itself phone-only. Ten days live, nobody found it, zero emails sent.
    */
+  /*
+   * How many of the selected can actually be emailed. The Email action used to
+   * just go disabled with no reason given — on a list where "No email address"
+   * is common, a dead button reads as a bug. The bar now says the number out
+   * loud, so the disabled state explains itself.
+   */
+  const selectedEmailableCount = customers.filter(
+    (c) => selectedIds.has(c.id) && c.email
+  ).length;
+
   const handleBulkEmail = () => {
     const withEmail = customers.filter((c) => selectedIds.has(c.id) && c.email);
     if (withEmail.length === 0) return;
@@ -511,7 +521,7 @@ export default function CustomersPage() {
               {searchTerm && (
                 <button
                   onClick={() => setSearchTerm('')}
-                  className="h-11 shrink-0 px-2 text-[13px] font-medium text-white/70 transition-colors hover:text-white touch-manipulation"
+                  className="h-11 shrink-0 px-2 text-[13px] font-medium text-white transition-colors hover:text-white touch-manipulation"
                 >
                   Clear
                 </button>
@@ -530,14 +540,14 @@ export default function CustomersPage() {
             <div className="flex h-11 items-center gap-2">
               <button
                 onClick={() => navigate(-1)}
-                className="h-11 pr-2 text-[13px] font-semibold text-white/70 transition-colors hover:text-white touch-manipulation"
+                className="h-11 pr-2 text-[13px] font-semibold text-white transition-colors hover:text-white touch-manipulation"
               >
                 Back
               </button>
               <div className="ml-auto flex items-center gap-2">
                 <button
                   onClick={() => setShowSearch(true)}
-                  className="h-11 px-2 text-[13px] font-semibold text-white/70 transition-colors hover:text-white touch-manipulation"
+                  className="h-11 px-2 text-[13px] font-semibold text-white transition-colors hover:text-white touch-manipulation"
                 >
                   Search
                 </button>
@@ -603,7 +613,9 @@ export default function CustomersPage() {
             'mx-auto space-y-5 px-4 py-4 sm:space-y-6 sm:py-5 lg:max-w-[1600px] lg:px-8',
             // Clear the fixed bulk bar — without this it sat on top of the
             // last card and you couldn't reach the row you'd just selected.
-            selectionMode && 'pb-40'
+            // The bar is one row on sm+ and two stacked on mobile, so mobile
+            // needs the deeper clearance.
+            selectionMode && 'pb-40 sm:pb-28'
           )}
         >
           {/* Title */}
@@ -720,7 +732,7 @@ export default function CustomersPage() {
                     <span
                       className={cn(
                         'ml-1 tabular-nums',
-                        showFollowUpOnly ? 'text-black/70' : 'text-white/55'
+                        showFollowUpOnly ? 'text-black/70' : 'text-white'
                       )}
                     >
                       {followUpCount}
@@ -736,7 +748,7 @@ export default function CustomersPage() {
                         'h-9 rounded-full px-3.5 text-[13px] font-medium transition-colors touch-manipulation',
                         viewMode === 'grid'
                           ? 'bg-elec-yellow font-semibold text-black'
-                          : 'text-white/65 hover:text-white'
+                          : 'text-white hover:text-white'
                       )}
                     >
                       List
@@ -747,7 +759,7 @@ export default function CustomersPage() {
                         'h-9 rounded-full px-3.5 text-[13px] font-medium transition-colors touch-manipulation',
                         viewMode === 'map'
                           ? 'bg-elec-yellow font-semibold text-black'
-                          : 'text-white/65 hover:text-white'
+                          : 'text-white hover:text-white'
                       )}
                     >
                       Map
@@ -756,14 +768,22 @@ export default function CustomersPage() {
                   <div className="flex items-center gap-1">
                     <button
                       onClick={openContactsImport}
-                      className="h-11 px-2.5 text-[13px] font-semibold text-white/70 transition-colors hover:text-white touch-manipulation"
+                      className="h-11 px-2.5 text-[13px] font-semibold text-white transition-colors hover:text-white touch-manipulation"
                     >
                       Import
                     </button>
                     <button
-                      onClick={exportCustomers}
+                      /*
+                       * Wrapped, not passed by reference. `exportCustomers`
+                       * takes an optional `selectedIds: string[]`, so passing
+                       * it straight to onClick handed it React's MouseEvent as
+                       * that argument. It survived only because a MouseEvent
+                       * has no `.length`, so the `length > 0` guard fell
+                       * through and it exported everything by accident.
+                       */
+                      onClick={() => exportCustomers()}
                       disabled={customers.length === 0}
-                      className="h-11 px-2.5 text-[13px] font-semibold text-white/70 transition-colors hover:text-white disabled:opacity-40 touch-manipulation"
+                      className="h-11 px-2.5 text-[13px] font-semibold text-white transition-colors hover:text-white disabled:opacity-40 touch-manipulation"
                     >
                       Export
                     </button>
@@ -784,12 +804,12 @@ export default function CustomersPage() {
                           'inline-flex h-9 items-center gap-1.5 rounded-full border px-3 text-[12.5px] font-medium transition-colors touch-manipulation',
                           active
                             ? 'border-elec-yellow bg-elec-yellow font-semibold text-black'
-                            : 'border-white/[0.08] bg-white/[0.04] text-white/75 hover:border-white/[0.2] hover:text-white'
+                            : 'border-white/[0.08] bg-white/[0.04] text-white hover:border-white/[0.2] hover:text-white'
                         )}
                       >
                         {tag}
                         <span
-                          className={cn('tabular-nums', active ? 'text-black/70' : 'text-white/45')}
+                          className={cn('tabular-nums', active ? 'text-black/70' : 'text-white')}
                         >
                           {count}
                         </span>
@@ -799,7 +819,7 @@ export default function CustomersPage() {
                   {activeTagFilter && (
                     <button
                       onClick={() => setActiveTagFilter(null)}
-                      className="h-9 px-2 text-[12.5px] font-medium text-white/55 transition-colors hover:text-white touch-manipulation"
+                      className="h-9 px-2 text-[12.5px] font-medium text-white transition-colors hover:text-white touch-manipulation"
                     >
                       Clear
                     </button>
@@ -807,52 +827,83 @@ export default function CustomersPage() {
                 </div>
               )}
               {showFollowUpOnly && filteredCustomers.length < customers.length && (
-                <p className="text-[12px] text-white/55">
+                <p className="text-[12px] text-white">
                   Showing {filteredCustomers.length} of {customers.length} — no activity in 90+
                   days.
                 </p>
               )}
-              {/* Secondary action row — desktop only; on a phone bulk select
-                  lives in the filter sheet rather than costing a whole row. */}
-              <div className="hidden flex-wrap items-center gap-2 lg:flex">
+              {/*
+                This was two bare yellow text links — "Select multiple · Send a
+                keep-in-touch email" — floating above the cards. Nothing said
+                what a keep-in-touch email IS, or why you would send one, so the
+                feature read as a mystery link and went unused.
+
+                Now it introduces itself: what it does, who it would go to right
+                now, and one obvious button.
+
+                🔴 Shown at EVERY width. It used to be lg-only, with the phone's
+                only door being three identical grey buttons buried in the
+                filters sheet — on an app whose users are mostly on a phone at a
+                consumer unit, that is the audience that most needed telling.
+              */}
+              <div>
                 {!selectionMode ? (
-                  <>
-                    <button
-                      onClick={() => enterSelectionMode()}
-                      className="flex h-11 items-center text-[13px] font-semibold text-elec-yellow transition-colors hover:text-elec-yellow/80 touch-manipulation"
-                    >
-                      Select multiple
-                    </button>
-                    <span className="text-white/30">·</span>
-                    {/* The only desktop door to the campaign sender: the other
-                        one lives in the filters sheet, which is lg:hidden. */}
-                    <button
-                      onClick={() => {
-                        setCampaignPreselection([]);
-                        setShowCampaignSheet(true);
-                      }}
-                      disabled={customers.length === 0}
-                      className="flex h-11 items-center text-[13px] font-semibold text-elec-yellow transition-colors hover:text-elec-yellow/80 disabled:opacity-40 touch-manipulation"
-                    >
-                      Send a keep-in-touch email
-                    </button>
-                  </>
+                  <div className="flex flex-col gap-3 rounded-2xl border border-white/[0.1] bg-gradient-to-b from-white/[0.06] to-white/[0.03] p-4 lg:flex-row lg:items-center lg:gap-4">
+                    <div className="flex min-w-0 flex-1 items-start gap-3 lg:items-center lg:gap-4">
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.12]">
+                      <Mail className="h-[18px] w-[18px] text-elec-yellow" />
+                    </div>
+
+                    <div className="min-w-0 flex-1">
+                      <h2 className="text-[14px] font-semibold tracking-tight text-white">
+                        Keep in touch
+                      </h2>
+                      <p className="mt-0.5 text-[12.5px] leading-snug text-white">
+                        A short, friendly check-in to customers you have not spoken to in a
+                        while — repeat work usually comes from people who already trust you.
+                        {followUpCount > 0 && (
+                          <>
+                            {' '}
+                            <span className="font-semibold text-elec-yellow">
+                              {followUpCount}
+                            </span>{' '}
+                            {followUpCount === 1 ? 'has' : 'have'} gone quiet for 90+ days.
+                          </>
+                        )}
+                      </p>
+                    </div>
+                    </div>
+
+                    <div className="flex shrink-0 items-center gap-2">
+                      <button
+                        onClick={() => enterSelectionMode()}
+                        className="h-11 flex-1 rounded-xl border border-white/[0.12] bg-white/[0.05] px-4 text-[13px] font-semibold text-white transition-colors hover:bg-white/[0.09] touch-manipulation lg:flex-none"
+                      >
+                        Pick from the list
+                      </button>
+                      {/* The only desktop door to the campaign sender: the other
+                          one lives in the filters sheet, which is lg:hidden. */}
+                      <button
+                        onClick={() => {
+                          setCampaignPreselection([]);
+                          setShowCampaignSheet(true);
+                        }}
+                        disabled={customers.length === 0}
+                        className="h-11 flex-1 rounded-xl bg-elec-yellow px-4 text-[13px] font-bold text-black transition-colors hover:bg-elec-yellow/90 disabled:opacity-40 touch-manipulation lg:flex-none"
+                      >
+                        Write to customers
+                      </button>
+                    </div>
+                  </div>
                 ) : (
-                  <>
+                  <div className="hidden flex-wrap items-center gap-2 lg:flex">
                     <button
                       onClick={selectAllVisible}
                       className="flex h-11 items-center text-[13px] font-semibold text-elec-yellow transition-colors hover:text-elec-yellow/80 touch-manipulation"
                     >
                       Select all ({filteredCustomers.length})
                     </button>
-                    <span className="text-white/30">·</span>
-                    <button
-                      onClick={exitSelectionMode}
-                      className="flex h-11 items-center text-[13px] font-medium text-white/65 transition-colors hover:text-white touch-manipulation"
-                    >
-                      Cancel
-                    </button>
-                  </>
+                  </div>
                 )}
               </div>
             </motion.div>
@@ -880,7 +931,7 @@ export default function CustomersPage() {
                         </>
                       )}
                     </div>
-                    <div className="mt-0.5 truncate text-[12.5px] text-white/65">
+                    <div className="mt-0.5 truncate text-[12.5px] text-white">
                       {upcomingReminders.slice(0, 2).map((r, i) => (
                         <span key={r.id}>
                           {i > 0 && ' · '}
@@ -923,7 +974,7 @@ export default function CustomersPage() {
                     <div className="mt-1 text-[14px] font-semibold text-white">
                       {duplicateIds.size} customers share a phone or email
                     </div>
-                    <div className="mt-0.5 text-[12.5px] text-white/65">
+                    <div className="mt-0.5 text-[12.5px] text-white">
                       Review each pair and merge them — certs, quotes and properties move across.
                     </div>
                   </div>
@@ -957,13 +1008,13 @@ export default function CustomersPage() {
                 {searchTerm ? (
                   <div className="rounded-2xl border border-white/[0.08] bg-[hsl(0_0%_12%)] p-6 text-center">
                     <p className="mb-1 text-base font-semibold text-white">No customers found</p>
-                    <p className="text-sm text-white/65">Try a different name or postcode</p>
+                    <p className="text-sm text-white">Try a different name or postcode</p>
                   </div>
                 ) : (
                   <>
                     <div className="space-y-3 text-center">
                       <p className="text-lg font-bold text-white">Build your customer base</p>
-                      <p className="text-sm text-white/65">
+                      <p className="text-sm text-white">
                         Store clients, track jobs, send quotes — all in one place.
                       </p>
                     </div>
@@ -1002,7 +1053,7 @@ export default function CustomersPage() {
               ) : filteredCustomers.length === 0 ? (
                 <div className="rounded-2xl border border-white/[0.08] bg-[hsl(0_0%_12%)] px-6 py-10 text-center">
                   <p className="text-[15px] font-medium text-white">Nobody to follow up with.</p>
-                  <p className="mt-1 text-[12.5px] text-white/55">
+                  <p className="mt-1 text-[12.5px] text-white">
                     Every customer has activity in the last 90 days.
                   </p>
                 </div>
@@ -1042,7 +1093,7 @@ export default function CustomersPage() {
               {/* Pagination */}
               {totalPages > 1 && !searchTerm && (
                 <div className="flex items-center justify-between pb-2 pt-4">
-                  <p className="text-xs text-white/55">
+                  <p className="text-xs text-white">
                     Showing {(currentPage - 1) * 50 + 1}–{Math.min(currentPage * 50, totalCount)} of{' '}
                     {totalCount}
                   </p>
@@ -1381,60 +1432,89 @@ export default function CustomersPage() {
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 80, opacity: 0 }}
             transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-            className="fixed inset-x-0 bottom-0 z-40 px-4 pb-[max(1rem,env(safe-area-inset-bottom))] pt-3"
+            /*
+             * Page furniture, not a floating card. This used to be a rounded,
+             * max-w-3xl, heavily shadowed island hovering over the cards, which
+             * read as a dialog that had lost its way. It is now flush to the
+             * bottom edge, full-bleed, carrying the app background and a single
+             * hairline top border — the same shape as every other bottom bar in
+             * the app (see SolarPVTabNavigation, BoardScannerStream).
+             */
+            className="fixed inset-x-0 bottom-0 z-40 border-t border-white/[0.08] bg-background/95 backdrop-blur-xl"
           >
-            {/*
-              Two deliberate rows instead of one flex-wrap row. Wrapping put
-              Tag/Email/Export/Delete on the first line and left "Done" orphaned
-              on a second, which read as a broken layout rather than a bar.
-              Row one is the count and the way out; row two is an even 4-up grid
-              of the actions, so nothing reflows as the count changes.
-            */}
-            <div className="mx-auto max-w-3xl space-y-2 rounded-2xl border border-white/[0.14] bg-[hsl(0_0%_10%)]/95 px-3 py-2.5 shadow-2xl backdrop-blur-xl sm:px-4 sm:py-3">
-              <div className="flex items-center justify-between gap-3">
-                <span className="text-[13px] font-semibold tabular-nums text-white">
-                  {selectedIds.size} selected
-                </span>
+            <div className="mx-auto flex max-w-[1600px] flex-col gap-3 px-4 py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] sm:flex-row sm:items-center sm:justify-between sm:gap-4 lg:px-8">
+              {/* Left: what is selected, and what can actually be done with it.
+                  Cancel rides on this row on mobile — putting it in the action
+                  group below would make six controls share a phone width and
+                  squeeze "Export"/"Delete" to about 60px each. */}
+              <div className="flex items-baseline justify-between gap-3 sm:justify-start">
+                <div className="flex min-w-0 items-baseline gap-2">
+                  <span className="shrink-0 text-[15px] font-semibold tabular-nums text-white">
+                    {selectedIds.size} selected
+                  </span>
+                  {selectedIds.size > 0 && (
+                    <span className="truncate text-[12.5px] font-medium text-white">
+                      {selectedEmailableCount === 0
+                        ? 'none have an email address'
+                        : selectedEmailableCount === selectedIds.size
+                          ? 'all have an email address'
+                          : `${selectedEmailableCount} with an email address`}
+                    </span>
+                  )}
+                </div>
                 <button
                   onClick={exitSelectionMode}
-                  className="flex h-9 shrink-0 items-center rounded-full bg-elec-yellow px-5 text-[12.5px] font-bold text-black transition-colors hover:bg-elec-yellow/90 touch-manipulation active:scale-[0.97]"
+                  className="shrink-0 text-[13px] font-semibold text-white transition-colors hover:text-white touch-manipulation sm:hidden"
                 >
-                  Done
+                  Cancel
                 </button>
               </div>
 
-              <div className="grid grid-cols-4 gap-1.5">
+              {/* Right: one primary action, the rest quiet. Email is the reason
+                  selection mode exists, so it is the only filled button. */}
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={exitSelectionMode}
+                  className="hidden h-11 shrink-0 rounded-xl px-3 text-[13px] font-semibold text-white transition-colors hover:bg-white/[0.06] touch-manipulation sm:block"
+                >
+                  Cancel
+                </button>
+
+                <div className="hidden h-6 w-px shrink-0 bg-white/[0.1] sm:block" aria-hidden />
+
                 <button
                   onClick={() => setShowBulkTagDialog(true)}
                   disabled={selectedIds.size === 0}
-                  className="flex h-10 items-center justify-center rounded-xl border border-white/[0.12] bg-white/[0.05] text-[12px] font-semibold text-white transition-colors hover:bg-white/[0.09] disabled:opacity-40 touch-manipulation active:scale-[0.97]"
+                  className="h-11 flex-1 rounded-xl border border-white/[0.12] bg-white/[0.05] px-3 text-[13px] font-semibold text-white transition-colors hover:bg-white/[0.09] disabled:opacity-40 touch-manipulation active:scale-[0.97] sm:flex-none"
                 >
                   Tag
                 </button>
                 <button
-                  onClick={handleBulkEmail}
-                  disabled={
-                    selectedIds.size === 0 ||
-                    !customers.some((c) => selectedIds.has(c.id) && c.email)
-                  }
-                  title="Write a keep-in-touch email to the selected customers"
-                  className="flex h-10 items-center justify-center rounded-xl border border-white/[0.12] bg-white/[0.05] text-[12px] font-semibold text-white transition-colors hover:bg-white/[0.09] disabled:opacity-40 touch-manipulation active:scale-[0.97]"
-                >
-                  Email
-                </button>
-                <button
                   onClick={handleBulkExport}
                   disabled={selectedIds.size === 0}
-                  className="flex h-10 items-center justify-center rounded-xl border border-white/[0.12] bg-white/[0.05] text-[12px] font-semibold text-white transition-colors hover:bg-white/[0.09] disabled:opacity-40 touch-manipulation active:scale-[0.97]"
+                  className="h-11 flex-1 rounded-xl border border-white/[0.12] bg-white/[0.05] px-3 text-[13px] font-semibold text-white transition-colors hover:bg-white/[0.09] disabled:opacity-40 touch-manipulation active:scale-[0.97] sm:flex-none"
                 >
                   Export
                 </button>
                 <button
                   onClick={() => setShowBulkDeleteConfirm(true)}
                   disabled={selectedIds.size === 0}
-                  className="flex h-10 items-center justify-center rounded-xl border border-red-500/30 bg-red-500/[0.12] text-[12px] font-semibold text-red-300 transition-colors hover:bg-red-500/20 disabled:opacity-40 touch-manipulation active:scale-[0.97]"
+                  className="h-11 flex-1 rounded-xl border border-red-500/25 px-3 text-[13px] font-semibold text-red-300 transition-colors hover:bg-red-500/[0.14] disabled:opacity-40 touch-manipulation active:scale-[0.97] sm:flex-none"
                 >
                   Delete
+                </button>
+
+                <button
+                  onClick={handleBulkEmail}
+                  disabled={selectedEmailableCount === 0}
+                  title={
+                    selectedEmailableCount === 0
+                      ? 'None of the selected customers have an email address'
+                      : 'Send a keep-in-touch email to the selected customers'
+                  }
+                  className="h-11 flex-[1.4] rounded-xl bg-elec-yellow px-4 text-[13px] font-bold text-black transition-colors hover:bg-elec-yellow/90 disabled:opacity-40 touch-manipulation active:scale-[0.97] sm:flex-none"
+                >
+                  Email{selectedEmailableCount > 0 ? ` ${selectedEmailableCount}` : ''}
                 </button>
               </div>
             </div>
@@ -1449,7 +1529,7 @@ export default function CustomersPage() {
             <AlertDialogTitle className="text-base font-bold text-white">
               Tag {selectedIds.size} customer{selectedIds.size === 1 ? '' : 's'}
             </AlertDialogTitle>
-            <AlertDialogDescription className="text-sm text-white/65">
+            <AlertDialogDescription className="text-sm text-white">
               Add a tag to every selected customer. Existing tags are kept.
             </AlertDialogDescription>
           </AlertDialogHeader>
@@ -1465,12 +1545,12 @@ export default function CustomersPage() {
               className="h-11 w-full rounded-xl border border-white/[0.08] bg-[hsl(0_0%_9%)] px-4 text-[14px] text-white placeholder:text-white/35 focus:border-elec-yellow/40 focus:outline-none"
             />
             <div className="flex flex-wrap gap-1.5">
-              <span className="text-[12px] font-medium text-white/45">Quick pick</span>
+              <span className="text-[12px] font-medium text-white">Quick pick</span>
               {['Residential', 'Commercial', 'Landlord', 'Letting Agent', 'Repeat'].map((t) => (
                 <button
                   key={t}
                   onClick={() => setBulkTagDraft(t)}
-                  className="inline-flex h-7 items-center rounded-full border border-white/[0.08] bg-white/[0.04] px-2.5 text-[11.5px] font-medium text-white/65 transition-colors hover:border-elec-yellow/30 hover:bg-white/[0.08] hover:text-elec-yellow touch-manipulation"
+                  className="inline-flex h-7 items-center rounded-full border border-white/[0.08] bg-white/[0.04] px-2.5 text-[11.5px] font-medium text-white transition-colors hover:border-elec-yellow/30 hover:bg-white/[0.08] hover:text-elec-yellow touch-manipulation"
                 >
                   + {t}
                 </button>
@@ -1503,7 +1583,7 @@ export default function CustomersPage() {
             <AlertDialogTitle className="text-base font-bold text-white">
               Delete {selectedIds.size} customer{selectedIds.size === 1 ? '' : 's'}?
             </AlertDialogTitle>
-            <AlertDialogDescription className="text-sm text-white/65">
+            <AlertDialogDescription className="text-sm text-white">
               This will permanently remove the selected customers and cannot be undone.
             </AlertDialogDescription>
           </AlertDialogHeader>
@@ -1532,7 +1612,7 @@ export default function CustomersPage() {
             <AlertDialogTitle className="text-base font-bold text-white">
               Delete customer?
             </AlertDialogTitle>
-            <AlertDialogDescription className="text-sm text-white/65">
+            <AlertDialogDescription className="text-sm text-white">
               This will permanently remove this customer and cannot be undone.
             </AlertDialogDescription>
           </AlertDialogHeader>

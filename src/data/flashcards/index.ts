@@ -29,6 +29,17 @@ import { commsAndData } from './commsAndData';
 import { electricalMachines } from './electricalMachines';
 import { advancedInspection } from './advancedInspection';
 import { solarPvDesign } from './solarPvDesign';
+import { specialLocations } from './specialLocations';
+import { evCharging } from './evCharging';
+import { amendment4Changes } from './amendment4Changes';
+import { am2Preparation } from './am2Preparation';
+import { prosumerInstallations } from './prosumerInstallations';
+import { fireAlarm2025Changes } from './fireAlarm2025Changes';
+import { emergencyLighting2025 } from './emergencyLighting2025';
+import { patTesting } from './patTesting';
+import { asbestosAwareness } from './asbestosAwareness';
+import { heatPumpDesign } from './heatPumpDesign';
+import { undergroundServices } from './undergroundServices';
 
 export type { FlashcardData, FlashcardSetMeta, FlashcardLevel } from './types';
 
@@ -64,6 +75,17 @@ export const flashcardSets: Record<string, FlashcardData[]> = {
   'electrical-machines': electricalMachines,
   'advanced-inspection': advancedInspection,
   'solar-pv-design': solarPvDesign,
+  'special-locations': specialLocations,
+  'ev-charging': evCharging,
+  'amendment-4-changes': amendment4Changes,
+  'am2-preparation': am2Preparation,
+  'prosumer-installations': prosumerInstallations,
+  'fire-alarm-2025': fireAlarm2025Changes,
+  'emergency-lighting-2025': emergencyLighting2025,
+  'pat-testing': patTesting,
+  'asbestos-awareness': asbestosAwareness,
+  'heat-pump-design': heatPumpDesign,
+  'underground-services': undergroundServices,
 };
 
 /** Full metadata for each flashcard set — used by the hub page and filtering */
@@ -100,7 +122,7 @@ export const flashcardSetDefinitions: FlashcardSetMeta[] = [
     difficulty: 'advanced',
     estimatedTime: '18 mins',
     category: 'Testing & Inspection',
-    level: 'Level 3',
+    level: 'Both',
   },
   {
     id: 'safe-isolation',
@@ -133,7 +155,7 @@ export const flashcardSetDefinitions: FlashcardSetMeta[] = [
     difficulty: 'advanced',
     estimatedTime: '20 mins',
     category: 'Testing & Inspection',
-    level: 'Level 3',
+    level: 'Both',
   },
   {
     id: 'earthing-bonding',
@@ -151,7 +173,7 @@ export const flashcardSetDefinitions: FlashcardSetMeta[] = [
     title: 'Circuit Protection',
     iconName: 'ShieldCheck',
     description: 'MCBs, RCDs, RCBOs, fuses, discrimination and fault current',
-    count: 25,
+    count: 27,
     difficulty: 'intermediate',
     estimatedTime: '15 mins',
     category: 'Installation',
@@ -166,7 +188,7 @@ export const flashcardSetDefinitions: FlashcardSetMeta[] = [
     difficulty: 'intermediate',
     estimatedTime: '15 mins',
     category: 'Installation',
-    level: 'Level 2',
+    level: 'Both',
   },
   {
     id: 'electrical-science',
@@ -177,7 +199,7 @@ export const flashcardSetDefinitions: FlashcardSetMeta[] = [
     difficulty: 'beginner',
     estimatedTime: '15 mins',
     category: 'Basic Theory',
-    level: 'Level 2',
+    level: 'Both',
   },
   {
     id: 'first-second-fix',
@@ -188,7 +210,7 @@ export const flashcardSetDefinitions: FlashcardSetMeta[] = [
     difficulty: 'beginner',
     estimatedTime: '15 mins',
     category: 'Installation',
-    level: 'Level 2',
+    level: 'Both',
   },
   {
     id: 'environmental-tech',
@@ -199,7 +221,7 @@ export const flashcardSetDefinitions: FlashcardSetMeta[] = [
     difficulty: 'advanced',
     estimatedTime: '15 mins',
     category: 'Green Technology',
-    level: 'Level 3',
+    level: 'Both',
   },
 
   // ── Level 2 new sets ────────────────────────────────────────────
@@ -212,7 +234,7 @@ export const flashcardSetDefinitions: FlashcardSetMeta[] = [
     difficulty: 'beginner',
     estimatedTime: '15 mins',
     category: 'Safety',
-    level: 'Level 2',
+    level: 'Both',
   },
   {
     id: 'cable-selection',
@@ -223,7 +245,7 @@ export const flashcardSetDefinitions: FlashcardSetMeta[] = [
     difficulty: 'intermediate',
     estimatedTime: '18 mins',
     category: 'Installation',
-    level: 'Level 2',
+    level: 'Both',
   },
   {
     id: 'diversity-demand',
@@ -234,7 +256,7 @@ export const flashcardSetDefinitions: FlashcardSetMeta[] = [
     difficulty: 'intermediate',
     estimatedTime: '15 mins',
     category: 'Basic Theory',
-    level: 'Level 2',
+    level: 'Both',
   },
   {
     id: 'tools-equipment',
@@ -245,7 +267,7 @@ export const flashcardSetDefinitions: FlashcardSetMeta[] = [
     difficulty: 'beginner',
     estimatedTime: '15 mins',
     category: 'Installation',
-    level: 'Level 2',
+    level: 'Both',
   },
   {
     id: 'part-p-regs',
@@ -256,7 +278,7 @@ export const flashcardSetDefinitions: FlashcardSetMeta[] = [
     difficulty: 'intermediate',
     estimatedTime: '15 mins',
     category: 'Regulations',
-    level: 'Level 2',
+    level: 'Both',
   },
   {
     id: 'containment-calcs',
@@ -267,7 +289,7 @@ export const flashcardSetDefinitions: FlashcardSetMeta[] = [
     difficulty: 'intermediate',
     estimatedTime: '15 mins',
     category: 'Installation',
-    level: 'Level 2',
+    level: 'Both',
   },
   {
     id: 'documentation-forms',
@@ -278,7 +300,7 @@ export const flashcardSetDefinitions: FlashcardSetMeta[] = [
     difficulty: 'beginner',
     estimatedTime: '15 mins',
     category: 'Testing & Inspection',
-    level: 'Level 2',
+    level: 'Both',
   },
   {
     id: 'formulae-basic',
@@ -289,7 +311,7 @@ export const flashcardSetDefinitions: FlashcardSetMeta[] = [
     difficulty: 'beginner',
     estimatedTime: '15 mins',
     category: 'Basic Theory',
-    level: 'Level 2',
+    level: 'Both',
   },
 
   // ── Level 3 new sets ────────────────────────────────────────────
@@ -302,7 +324,7 @@ export const flashcardSetDefinitions: FlashcardSetMeta[] = [
     difficulty: 'advanced',
     estimatedTime: '18 mins',
     category: 'Testing & Inspection',
-    level: 'Level 3',
+    level: 'Both',
   },
   {
     id: 'motor-control',
@@ -313,7 +335,7 @@ export const flashcardSetDefinitions: FlashcardSetMeta[] = [
     difficulty: 'advanced',
     estimatedTime: '18 mins',
     category: 'Installation',
-    level: 'Level 3',
+    level: 'Both',
   },
   {
     id: 'lighting-design',
@@ -324,7 +346,7 @@ export const flashcardSetDefinitions: FlashcardSetMeta[] = [
     difficulty: 'intermediate',
     estimatedTime: '15 mins',
     category: 'Installation',
-    level: 'Level 3',
+    level: 'Both',
   },
   {
     id: 'fire-alarm-systems',
@@ -335,7 +357,7 @@ export const flashcardSetDefinitions: FlashcardSetMeta[] = [
     difficulty: 'advanced',
     estimatedTime: '18 mins',
     category: 'Safety',
-    level: 'Level 3',
+    level: 'Both',
   },
   {
     id: 'comms-data',
@@ -346,7 +368,7 @@ export const flashcardSetDefinitions: FlashcardSetMeta[] = [
     difficulty: 'intermediate',
     estimatedTime: '15 mins',
     category: 'Installation',
-    level: 'Level 3',
+    level: 'Both',
   },
   {
     id: 'electrical-machines',
@@ -357,7 +379,7 @@ export const flashcardSetDefinitions: FlashcardSetMeta[] = [
     difficulty: 'advanced',
     estimatedTime: '18 mins',
     category: 'Basic Theory',
-    level: 'Level 3',
+    level: 'Both',
   },
   {
     id: 'advanced-inspection',
@@ -368,18 +390,139 @@ export const flashcardSetDefinitions: FlashcardSetMeta[] = [
     difficulty: 'advanced',
     estimatedTime: '18 mins',
     category: 'Testing & Inspection',
-    level: 'Level 3',
+    level: 'Both',
   },
   {
     id: 'solar-pv-design',
     title: 'Solar PV Design',
     iconName: 'Leaf',
-    description: 'PV fundamentals, system design, G98/G99 grid connection and A3:2024',
+    description: 'PV fundamentals, system design, G98/G99 grid connection and prosumer switching',
     count: 28,
     difficulty: 'advanced',
     estimatedTime: '18 mins',
     category: 'Green Technology',
-    level: 'Level 3',
+    level: 'Both',
+  },
+  {
+    id: 'special-locations',
+    title: 'Special Locations (Part 7)',
+    iconName: 'ShieldCheck',
+    description: 'Bathroom zones, saunas, pools and marinas — written against A4:2026',
+    count: 30,
+    difficulty: 'advanced',
+    estimatedTime: '20 mins',
+    category: 'Regulations',
+    level: 'Both',
+  },
+  {
+    id: 'ev-charging',
+    title: 'EV Charging Installations',
+    iconName: 'Zap',
+    description: 'BS 7671 Section 722 and Approved Document S — scope, PME, Mode 3 and Part S duties',
+    count: 24,
+    difficulty: 'advanced',
+    estimatedTime: '16 mins',
+    category: 'Green Technology',
+    level: 'Both',
+  },
+  {
+    id: 'amendment-4-changes',
+    title: 'What Changed in A4:2026',
+    iconName: 'BookOpen',
+    description: 'Amendment 4 — new Section 545, deleted regs, prosumer scope and notice changes',
+    count: 24,
+    difficulty: 'advanced',
+    estimatedTime: '16 mins',
+    category: 'Regulations',
+    level: 'Both',
+  },
+  {
+    id: 'am2-preparation',
+    title: 'AM2 Preparation',
+    iconName: 'Target',
+    description: 'The four sections, the seven faults, every cable type and the Section B test list',
+    count: 26,
+    difficulty: 'advanced',
+    estimatedTime: '17 mins',
+    category: 'Testing & Inspection',
+    level: 'Both',
+  },
+  {
+    id: 'prosumer-installations',
+    title: 'Prosumer Installations (Part 8)',
+    iconName: 'Leaf',
+    description: 'Chapter 82 — island vs connected mode, earthing per mode and neutral switching',
+    count: 24,
+    difficulty: 'advanced',
+    estimatedTime: '16 mins',
+    category: 'Green Technology',
+    level: 'Both',
+  },
+  {
+    id: 'fire-alarm-2025',
+    title: 'BS 5839-1:2025 Changes',
+    iconName: 'Flame',
+    description: 'Heat detectors banned in sleeping rooms, zone plans, T2 batteries and variations',
+    count: 19,
+    difficulty: 'advanced',
+    estimatedTime: '12 mins',
+    category: 'Safety',
+    level: 'Both',
+  },
+  {
+    id: 'emergency-lighting-2025',
+    title: 'Emergency Lighting BS 5266-1:2025',
+    iconName: 'Lightbulb',
+    description: 'Expanded scope, resilience, lux levels and 5-yearly photometric verification',
+    count: 18,
+    difficulty: 'advanced',
+    estimatedTime: '12 mins',
+    category: 'Safety',
+    level: 'Both',
+  },
+  {
+    id: 'pat-testing',
+    title: 'PAT — Portable Equipment',
+    iconName: 'Wrench',
+    description: 'HSG107 — user checks, formal inspection, and why there is no legal PAT interval',
+    count: 18,
+    difficulty: 'intermediate',
+    estimatedTime: '12 mins',
+    category: 'Testing & Inspection',
+    level: 'Both',
+  },
+  {
+    id: 'asbestos-awareness',
+    title: 'Asbestos Awareness',
+    iconName: 'Shield',
+    description: 'CAR 2012 duty to manage, survey types and what a CDM client must tell you',
+    count: 20,
+    difficulty: 'intermediate',
+    estimatedTime: '13 mins',
+    category: 'Safety',
+    level: 'Both',
+  },
+  {
+    id: 'heat-pump-design',
+    title: 'Heat Pump Design (MCS)',
+    iconName: 'Leaf',
+    description: 'MIS 3005-D — sizing, the 55% rule, 55°C rating and flow temperature limits',
+    count: 20,
+    difficulty: 'advanced',
+    estimatedTime: '13 mins',
+    category: 'Green Technology',
+    level: 'Both',
+  },
+  {
+    id: 'underground-services',
+    title: 'Underground Services (HSG47)',
+    iconName: 'Cable',
+    description: 'Safe digging, trial holes, cable strikes and why the tool risk is counter-intuitive',
+    count: 18,
+    difficulty: 'intermediate',
+    estimatedTime: '12 mins',
+    category: 'Safety',
+    level: 'Both',
   },
 ];
 

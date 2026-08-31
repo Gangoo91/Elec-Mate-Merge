@@ -309,7 +309,7 @@ export default function PolicyDetailPage() {
               <button
                 onClick={handlePublish}
                 disabled={saving}
-                className="h-9 px-3.5 rounded-full bg-elec-yellow text-black text-[12.5px] font-semibold hover:bg-elec-yellow/90 transition-colors touch-manipulation disabled:opacity-40"
+                className="h-9 px-3.5 rounded-full bg-elec-yellow text-black text-[12.5px] font-semibold hover:bg-elec-yellow/90 transition-colors touch-manipulation disabled:bg-white/[0.08] disabled:text-white/70"
               >
                 {policy.status === 'live' ? `Publish v${policy.version + 1} →` : 'Publish v1 →'}
               </button>

@@ -9,6 +9,7 @@ import { useState, useCallback, useRef } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import type { PortfolioEntry } from '@/types/portfolio';
+import { gradeForScore, type EPAGrade } from '@/lib/epa/grading';
 
 export interface DiscussionQuestion {
   id: string;
@@ -25,7 +26,7 @@ export interface DiscussionQuestion {
 
 export interface ResponseScore {
   score: number;
-  grade: 'fail' | 'pass' | 'distinction';
+  grade: EPAGrade;
   feedback: string;
   strengthsShown: string[];
   areasToImprove: string[];
@@ -51,7 +52,7 @@ export interface SessionResult {
   questions: DiscussionQuestion[];
   responses: DiscussionResponse[];
   overallScore: number;
-  predictedGrade: 'fail' | 'pass' | 'distinction';
+  predictedGrade: EPAGrade;
   componentScores: {
     technicalKnowledge: number;
     practicalApplication: number;
@@ -253,8 +254,7 @@ export function useEPAProfessionalDiscussion() {
     const avgReflection = avg('reflection');
     const avgProblemSolving = avg('problemSolving');
 
-    const predictedGrade: SessionResult['predictedGrade'] =
-      avgScore >= 70 ? 'distinction' : avgScore >= 40 ? 'pass' : 'fail';
+    const predictedGrade: SessionResult['predictedGrade'] = gradeForScore(avgScore);
 
     const timeSpentSeconds = sessionStartRef.current
       ? Math.round((new Date().getTime() - sessionStartRef.current.getTime()) / 1000)

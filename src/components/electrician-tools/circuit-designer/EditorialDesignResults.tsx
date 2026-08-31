@@ -5176,7 +5176,7 @@ const ActionButton = ({
     className={cn(
       'h-12 px-4 text-[13px] font-semibold rounded-xl border transition-all touch-manipulation active:scale-[0.99] text-left',
       primary
-        ? 'bg-elec-yellow text-black border-elec-yellow hover:bg-elec-yellow/90 disabled:opacity-50'
+        ? 'bg-elec-yellow text-black border-elec-yellow hover:bg-elec-yellow/90 disabled:bg-white/[0.08] disabled:text-white/70'
         : 'bg-[hsl(0_0%_10%)] text-white border-white/[0.10] hover:border-white/25 disabled:opacity-50',
       disabled && 'cursor-not-allowed'
     )}

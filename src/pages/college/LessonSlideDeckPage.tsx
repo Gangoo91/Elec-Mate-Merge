@@ -1597,7 +1597,7 @@ function PresenterMode({
           type="button"
           onClick={onNext}
           disabled={index === total - 1}
-          className="h-12 px-5 rounded-lg bg-elec-yellow text-black hover:bg-elec-yellow/90 disabled:opacity-30 text-[14px] font-semibold touch-manipulation"
+          className="h-12 px-5 rounded-lg bg-elec-yellow text-black hover:bg-elec-yellow/90 disabled:bg-white/[0.08] disabled:text-white/70 text-[14px] font-semibold touch-manipulation"
         >
           Next →
         </button>

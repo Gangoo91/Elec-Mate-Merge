@@ -546,7 +546,7 @@ export default function NonComplianceNoticePage() {
         {/* Actions */}
         <motion.div variants={itemVariants} className="flex gap-3 pt-2 lg:col-span-2 lg:justify-end">
           <button onClick={() => { storageSetJSONSync(DRAFT_KEY, data); toast.success('Draft saved'); }} className="h-12 flex-1 rounded-xl border border-white/[0.12] bg-white/[0.04] text-[14px] font-medium text-white transition-colors hover:bg-white/[0.08] touch-manipulation active:scale-[0.99] lg:flex-none lg:px-8">Save draft</button>
-          <button onClick={handleSave} disabled={isSaving} className="flex h-12 flex-1 items-center justify-center rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-colors hover:bg-elec-yellow/90 touch-manipulation active:scale-[0.99] disabled:opacity-60 lg:flex-none lg:w-auto lg:px-10">
+          <button onClick={handleSave} disabled={isSaving} className="flex h-12 flex-1 items-center justify-center rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-colors hover:bg-elec-yellow/90 touch-manipulation active:scale-[0.99] disabled:bg-white/[0.08] disabled:text-white/70 lg:flex-none lg:w-auto lg:px-10">
             {isSaving ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" />Saving...</> : existingReportId ? 'Update notice' : 'Download PDF'}
           </button>
         </motion.div>

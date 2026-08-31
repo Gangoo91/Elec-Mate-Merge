@@ -1,51 +1,33 @@
 /**
  * DiaryEntryCard
  *
- * Redesigned entry card with mood colour strip, task pills,
- * skill badges, italic quote for what_i_learned, and tap-to-detail.
- * Wider mood strip, press feedback via motion, readable white text.
+ * One entry in the site diary feed.
+ *
+ * Rewritten as a single responsive card. It previously maintained two complete
+ * layouts side by side — a `hidden lg:flex` horizontal one and a `lg:hidden`
+ * stacked one — which is why the desktop version read as three cramped columns
+ * separated by hairline dividers, and why every change had to be made twice.
+ *
+ * Colour: the eight skill badges were a rainbow (blue, red, purple, amber,
+ * cyan, orange, pink, green) from a map whose own comment said it existed "for
+ * variety". There is no legend anywhere, and eight hues are not separable by
+ * eye in any case — the badge TEXT is the information. They are now quiet
+ * neutral chips, so a card reads as a day's work rather than a colour chart.
+ *
+ * Mood: a green / amber / red bar ran down every card while the emoji beside
+ * the date already stated the mood exactly. The bar is now the accent for a
+ * good day and plain white otherwise, which keeps a column of entries scannable
+ * without painting a traffic-light down the page.
  */
 
 import { motion } from 'framer-motion';
-import {
-  MapPin,
-  Pencil,
-  Trash2,
-  ChevronRight,
-  Camera,
-  Briefcase,
-  CheckCircle2,
-} from 'lucide-react';
+import { MapPin, Pencil, Trash2, ChevronRight, Camera, Briefcase, CheckCircle2 } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
+import { moodFill, MOOD_EMOJI } from '@/lib/site-diary/mood';
 import type { SiteDiaryEntry } from '@/hooks/site-diary/useSiteDiaryEntries';
 import type { PortfolioNudge } from '@/hooks/site-diary/useDiaryCoach';
 
-const moodEmojis: Record<number, string> = {
-  1: '😢',
-  2: '😔',
-  3: '😐',
-  4: '🙂',
-  5: '😊',
-};
-
-/** Returns a colour class for the left mood strip based on mood rating */
-function moodStripColour(mood: number | null): string {
-  if (!mood) return 'bg-white/10';
-  if (mood >= 4) return 'bg-green-400';
-  if (mood === 3) return 'bg-amber-400';
-  return 'bg-red-400';
-}
-
-/** Skill colour mapping for variety */
-const skillColours: Record<string, string> = {
-  'Practical Skills': 'bg-blue-500/15 text-blue-400 border-blue-500/25',
-  'Health & Safety': 'bg-red-500/15 text-red-400 border-red-500/25',
-  'Testing & Inspection': 'bg-purple-500/15 text-purple-400 border-purple-500/25',
-  'Wiring & Containment': 'bg-amber-500/15 text-amber-400 border-amber-500/25',
-  Regulations: 'bg-cyan-500/15 text-cyan-400 border-cyan-500/25',
-  'Tools & Equipment': 'bg-orange-500/15 text-orange-400 border-orange-500/25',
-  Communication: 'bg-pink-500/15 text-pink-400 border-pink-500/25',
-  'Problem Solving': 'bg-green-500/15 text-green-400 border-green-500/25',
-};
 
 interface DiaryEntryCardProps {
   entry: SiteDiaryEntry;
@@ -54,7 +36,12 @@ interface DiaryEntryCardProps {
   onEdit?: (entry: SiteDiaryEntry) => void;
   onDelete?: (id: string) => void;
   portfolioNudge?: PortfolioNudge;
+  /** The feed already groups by day, so the card would repeat it. */
+  hideDate?: boolean;
 }
+
+/** Quiet meta chip — used for both tasks and skills, with skills a shade down. */
+const chip = 'inline-flex items-center rounded-lg px-2.5 py-1 text-[12px] text-white';
 
 export function DiaryEntryCard({
   entry,
@@ -63,6 +50,7 @@ export function DiaryEntryCard({
   onEdit,
   onDelete,
   portfolioNudge,
+  hideDate = false,
 }: DiaryEntryCardProps) {
   const formattedDate = new Date(entry.date + 'T00:00:00').toLocaleDateString('en-GB', {
     weekday: compact ? 'short' : 'long',
@@ -70,166 +58,124 @@ export function DiaryEntryCard({
     month: compact ? 'short' : 'long',
   });
 
+  const photoCount = entry.photos?.length ?? 0;
+  const showSkills = !compact && entry.skills_practised.length > 0;
+
   return (
-    <div className="relative group">
+    <div className="group relative">
       <motion.button
         whileTap={{ scale: 0.99 }}
         onClick={onTap}
-        className="w-full text-left rounded-xl overflow-hidden bg-white/[0.03] border border-white/[0.08] hover:bg-white/[0.06] hover:border-white/[0.12] touch-manipulation transition-all duration-200"
+        className={cn(
+          'w-full overflow-hidden rounded-xl border border-elec-yellow/25 text-left',
+          'transition-colors touch-manipulation hover:border-elec-yellow/50',
+          CARD_SURFACE
+        )}
       >
         <div className="flex">
-          {/* Mood colour strip */}
-          <div className={`w-1 lg:w-1.5 flex-shrink-0 ${moodStripColour(entry.mood_rating)}`} />
+          <div
+            className={cn('w-1 flex-shrink-0 sm:w-1.5', moodFill(entry.mood_rating))}
+            aria-hidden
+          />
 
-          <div className="flex-1 min-w-0 p-4 sm:p-5 lg:py-4 lg:px-6">
-            {/* === DESKTOP: Single-row horizontal layout === */}
-            <div className="hidden lg:flex lg:items-center lg:gap-5">
-              {/* Date + mood + site */}
-              <div className="w-44 flex-shrink-0">
-                <div className="flex items-center gap-2">
-                  <span className="text-sm font-semibold text-white">{formattedDate}</span>
-                  {entry.mood_rating && <span className="text-base">{moodEmojis[entry.mood_rating]}</span>}
-                </div>
-                <div className="flex items-center gap-1.5 mt-1">
-                  <MapPin className="h-3 w-3 text-elec-yellow flex-shrink-0" />
-                  <span className="text-xs text-white truncate">{entry.site_name}</span>
-                </div>
-              </div>
+          <div className="min-w-0 flex-1 space-y-2.5 p-4 sm:p-5">
+            {/* Date, mood, site — and the at-a-glance meta on the right */}
+            <div className="flex items-center gap-2">
+              {hideDate ? (
+                entry.site_name && (
+                  <span className="flex min-w-0 items-center gap-1.5">
+                    <MapPin className="h-3.5 w-3.5 flex-shrink-0 text-elec-yellow" aria-hidden />
+                    <span className="truncate text-[14px] font-semibold text-white">
+                      {entry.site_name}
+                    </span>
+                  </span>
+                )
+              ) : (
+                <span className="text-[14px] font-semibold text-white">{formattedDate}</span>
+              )}
+              {entry.mood_rating && (
+                <span className="text-[15px]" title={`Mood ${entry.mood_rating} of 5`}>
+                  {MOOD_EMOJI[entry.mood_rating]}
+                </span>
+              )}
 
-              {/* Divider */}
-              <div className="w-px h-10 bg-white/[0.08] flex-shrink-0" />
-
-              {/* Tasks + learned */}
-              <div className="flex-1 min-w-0">
-                {entry.tasks_completed.length > 0 && (
-                  <div className="flex flex-wrap gap-1.5">
-                    {entry.tasks_completed.map((task) => (
-                      <span key={task} className="px-2.5 py-1 rounded-lg bg-white/[0.06] border border-white/[0.06] text-[12px] text-white">{task}</span>
-                    ))}
-                  </div>
+              <span className="ml-auto flex items-center gap-2.5">
+                {photoCount > 0 && (
+                  <span className="flex items-center gap-1 text-white/70">
+                    <Camera className="h-3.5 w-3.5" aria-hidden />
+                    <span className="text-[11px] tabular-nums">{photoCount}</span>
+                  </span>
                 )}
-                {!compact && entry.what_i_learned && (
-                  <p className="text-[12px] text-white italic leading-relaxed line-clamp-1 border-l-2 border-elec-yellow/30 pl-2 mt-2">
-                    &ldquo;{entry.what_i_learned}&rdquo;
-                  </p>
+                {!compact && entry.linked_portfolio_id && (
+                  <span className="inline-flex items-center gap-1 rounded-md border border-elec-yellow/40 px-2 py-0.5 text-[10px] font-medium text-elec-yellow">
+                    <CheckCircle2 className="h-2.5 w-2.5" aria-hidden />
+                    Portfolio
+                  </span>
                 )}
-              </div>
-
-              {/* Divider */}
-              <div className="w-px h-10 bg-white/[0.08] flex-shrink-0" />
-
-              {/* Skills */}
-              <div className="w-56 flex-shrink-0">
-                {!compact && entry.skills_practised.length > 0 ? (
-                  <div className="flex flex-wrap gap-1 justify-end">
-                    {entry.skills_practised.map((skill) => (
-                      <span key={skill} className={`px-2 py-0.5 rounded text-[10px] font-medium border ${skillColours[skill] || 'bg-white/[0.06] text-white border-white/10'}`}>{skill}</span>
-                    ))}
-                  </div>
-                ) : null}
-                {/* Status badges */}
-                <div className="flex items-center gap-2 justify-end mt-1.5">
-                  {entry.photos && entry.photos.length > 0 && (
-                    <span className="flex items-center gap-0.5 text-white">
-                      <Camera className="h-3 w-3" /><span className="text-[10px]">{entry.photos.length}</span>
-                    </span>
-                  )}
-                  {!compact && entry.linked_portfolio_id && (
-                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-green-500/10 border border-green-500/20 text-[10px] font-medium text-green-400">
-                      <CheckCircle2 className="h-2.5 w-2.5" /> Portfolio
-                    </span>
-                  )}
-                  {!compact && portfolioNudge && !entry.linked_portfolio_id && (
-                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-elec-yellow/10 border border-elec-yellow/20 text-[10px] font-medium text-elec-yellow">
-                      <Briefcase className="h-2.5 w-2.5" /> Evidence
-                    </span>
-                  )}
-                </div>
-              </div>
-
-              <ChevronRight className="h-4 w-4 text-white flex-shrink-0" />
+                <ChevronRight className="h-4 w-4 flex-shrink-0 text-white/70" aria-hidden />
+              </span>
             </div>
 
-            {/* === MOBILE: Stacked layout === */}
-            <div className="lg:hidden space-y-2.5">
-              {/* Header row */}
-              <div className="flex items-center gap-2">
-                <span className="text-[13px] font-semibold text-white">{formattedDate}</span>
-                {entry.mood_rating && <span className="text-sm">{moodEmojis[entry.mood_rating]}</span>}
-                <span className="text-white">·</span>
-                <div className="flex items-center gap-1 min-w-0 flex-1">
-                  <MapPin className="h-3 w-3 text-elec-yellow flex-shrink-0" />
-                  <span className="text-xs text-white truncate">{entry.site_name}</span>
-                </div>
-                {entry.photos && entry.photos.length > 0 && (
-                  <span className="flex items-center gap-0.5 text-white flex-shrink-0">
-                    <Camera className="h-3 w-3" /><span className="text-[10px]">{entry.photos.length}</span>
-                  </span>
-                )}
-                <ChevronRight className="h-3.5 w-3.5 text-white flex-shrink-0" />
+            {!hideDate && entry.site_name && (
+              <div className="flex items-center gap-1.5">
+                <MapPin className="h-3 w-3 flex-shrink-0 text-elec-yellow" aria-hidden />
+                <span className="truncate text-[12px] text-white/85">{entry.site_name}</span>
               </div>
+            )}
 
-              {/* Tasks */}
-              {entry.tasks_completed.length > 0 && (
-                <div className="flex flex-wrap gap-1.5">
-                  {entry.tasks_completed.slice(0, 4).map((task) => (
-                    <span key={task} className="px-2.5 py-1 rounded-lg bg-white/[0.06] text-[11px] text-white">{task}</span>
-                  ))}
-                  {entry.tasks_completed.length > 4 && (
-                    <span className="px-2.5 py-1 rounded-lg bg-white/[0.03] text-[11px] text-white">+{entry.tasks_completed.length - 4}</span>
-                  )}
-                </div>
-              )}
-
-              {/* Skills */}
-              {!compact && entry.skills_practised.length > 0 && (
-                <div className="flex flex-wrap gap-1.5">
-                  {entry.skills_practised.map((skill) => (
-                    <span key={skill} className={`px-2 py-0.5 rounded-md text-[10px] font-medium border ${skillColours[skill] || 'bg-white/[0.06] text-white border-white/10'}`}>{skill}</span>
-                  ))}
-                </div>
-              )}
-
-              {/* Portfolio badge — constrained width */}
-              {!compact && portfolioNudge && !entry.linked_portfolio_id && (
-                <div className="flex">
-                  <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-elec-yellow/[0.08] border border-elec-yellow/20 text-[11px] font-medium text-elec-yellow max-w-full overflow-hidden">
-                    <Briefcase className="h-3 w-3 flex-shrink-0" />
-                    <span className="truncate">{portfolioNudge.nudge}</span>
+            {entry.tasks_completed.length > 0 && (
+              <div className="flex flex-wrap gap-1.5">
+                {entry.tasks_completed.map((task) => (
+                  <span key={task} className={cn(chip, 'bg-white/[0.08]')}>
+                    {task}
                   </span>
-                </div>
-              )}
-              {!compact && entry.linked_portfolio_id && (
-                <div className="flex">
-                  <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-green-500/[0.08] border border-green-500/20 text-[11px] font-medium text-green-400">
-                    <CheckCircle2 className="h-3 w-3 flex-shrink-0" /> In Portfolio
-                  </span>
-                </div>
-              )}
+                ))}
+              </div>
+            )}
 
-              {/* What I learned */}
-              {!compact && entry.what_i_learned && (
-                <p className="text-[11px] text-white italic leading-relaxed line-clamp-2 border-l-2 border-elec-yellow/30 pl-2.5">
-                  &ldquo;{entry.what_i_learned}&rdquo;
-                </p>
-              )}
-            </div>
+            {!compact && entry.what_i_learned && (
+              <p className="border-l-2 border-elec-yellow/50 pl-2.5 text-[13px] italic leading-relaxed text-white/85">
+                &ldquo;{entry.what_i_learned}&rdquo;
+              </p>
+            )}
+
+            {/* Skills sit a shade below tasks — they are the category, not the work. */}
+            {showSkills && (
+              <div className="flex flex-wrap gap-1.5">
+                {entry.skills_practised.map((skill) => (
+                  <span
+                    key={skill}
+                    className="inline-flex items-center rounded-md border border-white/[0.14] px-2 py-0.5 text-[10.5px] font-medium text-white/85"
+                  >
+                    {skill}
+                  </span>
+                ))}
+              </div>
+            )}
+
+            {!compact && portfolioNudge && !entry.linked_portfolio_id && (
+              <span className="inline-flex max-w-full items-center gap-1.5 rounded-lg border border-elec-yellow/40 px-2.5 py-1 text-[11px] font-medium text-elec-yellow">
+                <Briefcase className="h-3 w-3 flex-shrink-0" aria-hidden />
+                <span className="truncate">{portfolioNudge.nudge}</span>
+              </span>
+            )}
           </div>
         </div>
       </motion.button>
 
-      {/* Desktop hover edit/delete buttons */}
+      {/* Edit / delete. Keyboard-reachable via focus-within, not hover only. */}
       {(onEdit || onDelete) && (
-        <div className="absolute top-2 right-2 hidden group-hover:flex items-center gap-1">
+        <div className="absolute right-2 top-2 hidden items-center gap-1 group-hover:flex group-focus-within:flex">
           {onEdit && (
             <button
               onClick={(e) => {
                 e.stopPropagation();
                 onEdit(entry);
               }}
-              className="h-8 w-8 flex items-center justify-center rounded-lg bg-elec-yellow/15 text-elec-yellow touch-manipulation active:bg-elec-yellow/25 transition-colors"
+              aria-label="Edit entry"
+              className="flex h-11 w-11 items-center justify-center rounded-lg border border-elec-yellow/40 text-elec-yellow transition-colors touch-manipulation hover:border-elec-yellow"
             >
-              <Pencil className="h-3.5 w-3.5" />
+              <Pencil className="h-3.5 w-3.5" aria-hidden />
             </button>
           )}
           {onDelete && (
@@ -238,9 +184,10 @@ export function DiaryEntryCard({
                 e.stopPropagation();
                 onDelete(entry.id);
               }}
-              className="h-8 w-8 flex items-center justify-center rounded-lg bg-red-500/15 text-red-400 touch-manipulation active:bg-red-500/25 transition-colors"
+              aria-label="Delete entry"
+              className="flex h-11 w-11 items-center justify-center rounded-lg border border-red-400/50 text-red-400 transition-colors touch-manipulation hover:border-red-400"
             >
-              <Trash2 className="h-3.5 w-3.5" />
+              <Trash2 className="h-3.5 w-3.5" aria-hidden />
             </button>
           )}
         </div>

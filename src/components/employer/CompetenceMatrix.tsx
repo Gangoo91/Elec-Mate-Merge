@@ -933,7 +933,7 @@ export function CompetenceMatrix({ profiles }: CompetenceMatrixProps) {
                     <button
                       onClick={() => nudgeWorker(w.employeeId, w.name)}
                       disabled={nudgingId === w.employeeId}
-                      className="h-11 w-full rounded-full bg-elec-yellow text-black text-[13px] font-semibold touch-manipulation disabled:opacity-50 flex items-center justify-center gap-2"
+                      className="h-11 w-full rounded-full bg-elec-yellow text-black text-[13px] font-semibold touch-manipulation disabled:bg-white/[0.08] disabled:text-white/70 flex items-center justify-center gap-2"
                     >
                       {nudgingId === w.employeeId ? (
                         <Loader2 className="h-4 w-4 animate-spin" />

@@ -103,7 +103,7 @@ export default function SurveyCapture({ onPick, disabled, variant }: Props) {
               type="button"
               disabled={disabled}
               onClick={() => take('camera')}
-              className="flex h-12 flex-1 items-center justify-center gap-2 rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-colors hover:bg-elec-yellow/90 touch-manipulation active:scale-[0.98] disabled:opacity-50"
+              className="flex h-12 flex-1 items-center justify-center gap-2 rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-colors hover:bg-elec-yellow/90 touch-manipulation active:scale-[0.98] disabled:bg-white/[0.08] disabled:text-white/70"
             >
               <Camera className="h-[18px] w-[18px]" />
               Take a photo
@@ -147,7 +147,7 @@ export default function SurveyCapture({ onPick, disabled, variant }: Props) {
         type="button"
         disabled={disabled}
         onClick={() => take('camera')}
-        className="flex h-12 flex-1 items-center justify-center gap-2 rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-colors hover:bg-elec-yellow/90 touch-manipulation active:scale-[0.98] disabled:opacity-50"
+        className="flex h-12 flex-1 items-center justify-center gap-2 rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-colors hover:bg-elec-yellow/90 touch-manipulation active:scale-[0.98] disabled:bg-white/[0.08] disabled:text-white/70"
       >
         <Camera className="h-[18px] w-[18px]" />
         Add a photo

@@ -1327,7 +1327,7 @@ const InspectionDetailsSectionInner = ({
                               insertPhrase('limitationsOfInspection', customLimitation.trim());
                               setCustomLimitation('');
                             }}
-                            className="mt-2.5 h-11 w-full rounded-xl bg-elec-yellow text-sm font-semibold text-black transition-all touch-manipulation active:scale-[0.98] disabled:opacity-40"
+                            className="mt-2.5 h-11 w-full rounded-xl bg-elec-yellow text-sm font-semibold text-black transition-all touch-manipulation active:scale-[0.98] disabled:bg-white/[0.08] disabled:text-white/70"
                           >
                             Add to limitations
                           </button>

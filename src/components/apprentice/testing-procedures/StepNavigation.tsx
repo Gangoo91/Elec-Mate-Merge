@@ -56,7 +56,7 @@ const StepNavigation = ({
         ))}
       </div>
 
-      <div className="text-center text-[12px] text-white/55 font-mono">
+      <div className="text-center text-[12px] text-white/70 font-mono">
         Step {currentStep} of {totalSteps} · {Math.round((currentStep / totalSteps) * 100)}%
       </div>
     </div>

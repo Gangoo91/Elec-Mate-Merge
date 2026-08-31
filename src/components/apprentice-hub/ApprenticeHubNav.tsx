@@ -42,7 +42,7 @@ export function ApprenticeHubNav({ activeTab, onTabChange, onCapture }: Apprenti
           {/* Back */}
           <button
             onClick={() => navigate('/dashboard')}
-            className="flex items-center gap-2 text-[12px] uppercase tracking-[0.18em] text-white/55 hover:text-white/85 transition-colors touch-manipulation flex-shrink-0 h-11 -ml-1"
+            className="flex items-center gap-2 text-[12px] uppercase tracking-[0.18em] text-white/70 hover:text-white transition-colors touch-manipulation flex-shrink-0 h-11 -ml-1"
             aria-label="Back"
           >
             <ArrowLeft className="h-4 w-4" />
@@ -61,9 +61,14 @@ export function ApprenticeHubNav({ activeTab, onTabChange, onCapture }: Apprenti
                   onClick={() => onTabChange(item.id)}
                   className={cn(
                     'relative flex items-center h-14 px-2.5 sm:px-3.5 text-[13px] sm:text-[13.5px] font-medium tracking-tight whitespace-nowrap touch-manipulation transition-colors',
-                    isActive
-                      ? 'text-white'
-                      : 'text-white/55 hover:text-white/85'
+                    /*
+                     * Inactive tabs sat at 55% and only ever reached 85% on
+                     * hover, so three of the four labels read as grey and none
+                     * of them ever went white. State still needs to be legible
+                     * at a glance — muted is 70% now, and hover/active go to
+                     * full white rather than stopping short.
+                     */
+                    isActive ? 'text-white' : 'text-white/70 hover:text-white'
                   )}
                   aria-current={isActive ? 'page' : undefined}
                 >
@@ -71,7 +76,7 @@ export function ApprenticeHubNav({ activeTab, onTabChange, onCapture }: Apprenti
                   <span
                     aria-hidden
                     className={cn(
-                      'absolute left-2.5 right-2.5 sm:left-3.5 sm:right-3.5 bottom-0 h-px transition-all',
+                      'absolute left-2.5 right-2.5 sm:left-3.5 sm:right-3.5 bottom-0 h-0.5 rounded-full transition-all',
                       isActive ? 'bg-elec-yellow' : 'bg-transparent'
                     )}
                   />

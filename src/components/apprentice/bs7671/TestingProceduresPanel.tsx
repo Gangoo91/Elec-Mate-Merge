@@ -41,12 +41,12 @@ const TestingProceduresPanel = ({ progress }: TestingProceduresPanelProps) => {
       {/* Search and Filter */}
       <div className="flex flex-col sm:flex-row gap-2">
         <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/55" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/70" />
           <Input
             placeholder="Search tests..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="pl-10 h-11 text-base touch-manipulation border-white/[0.08] focus:border-elec-yellow/50 focus:ring-elec-yellow/20 bg-white/[0.02] text-white placeholder:text-white/55"
+            className="pl-10 h-11 text-base touch-manipulation border-white/[0.08] focus:border-elec-yellow/50 focus:ring-elec-yellow/20 bg-white/[0.06] text-white placeholder:text-white/70"
           />
         </div>
         <div className="flex gap-1.5">
@@ -59,7 +59,7 @@ const TestingProceduresPanel = ({ progress }: TestingProceduresPanelProps) => {
                 className={`px-3 rounded-lg text-[12px] font-medium border transition-all touch-manipulation h-11 ${
                   isActive
                     ? 'bg-elec-yellow text-black border-elec-yellow'
-                    : 'bg-white/[0.02] text-white/85 border-white/[0.08] hover:bg-white/[0.04]'
+                    : 'bg-white/[0.06] text-white/85 border-white/[0.08] hover:bg-white/[0.04]'
                 }`}
               >
                 {level}
@@ -77,9 +77,9 @@ const TestingProceduresPanel = ({ progress }: TestingProceduresPanelProps) => {
 
           return (
             <Collapsible key={test.id}>
-              <CollapsibleTrigger className="w-full flex items-center justify-between gap-3 p-4 rounded-xl bg-white/[0.02] border border-white/[0.06] hover:bg-white/[0.04] touch-manipulation h-auto min-h-[44px] transition-colors text-left">
+              <CollapsibleTrigger className="w-full flex items-center justify-between gap-3 p-4 rounded-xl bg-white/[0.06] border border-white/[0.10] hover:bg-white/[0.04] touch-manipulation h-auto min-h-[44px] transition-colors text-left">
                 <div className="min-w-0 flex-1 space-y-1">
-                  <div className="flex items-baseline gap-2 text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  <div className="flex items-baseline gap-2 text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
                     <span>{test.difficulty}</span>
                     <span className="text-white/25">·</span>
                     <span>{test.duration}</span>
@@ -96,16 +96,16 @@ const TestingProceduresPanel = ({ progress }: TestingProceduresPanelProps) => {
                 </div>
                 <div className="flex items-center gap-2 flex-shrink-0">
                   {testDone && <CheckCircle className="h-4 w-4 text-elec-yellow" />}
-                  <ChevronDown className="h-4 w-4 text-white/55 transition-transform [[data-state=open]>&]:rotate-180" />
+                  <ChevronDown className="h-4 w-4 text-white/70 transition-transform [[data-state=open]>&]:rotate-180" />
                 </div>
               </CollapsibleTrigger>
               <CollapsibleContent>
-                <div className="px-4 pb-4 pt-3 mt-1 space-y-4 text-[14px] rounded-b-xl bg-white/[0.02]">
+                <div className="px-4 pb-4 pt-3 mt-1 space-y-4 text-[14px] rounded-b-xl bg-white/[0.06]">
                   <p className="text-white/85 leading-relaxed">{test.purpose}</p>
 
                   {test.testLimits.length > 0 && (
                     <div className="space-y-1.5">
-                      <h4 className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                      <h4 className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
                         Test limits
                       </h4>
                       <div className="space-y-1">
@@ -126,7 +126,7 @@ const TestingProceduresPanel = ({ progress }: TestingProceduresPanelProps) => {
 
                   {test.commonIssues.length > 0 && (
                     <div className="space-y-1.5">
-                      <h4 className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                      <h4 className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
                         Common issues
                       </h4>
                       <ul className="space-y-1.5">
@@ -153,7 +153,7 @@ const TestingProceduresPanel = ({ progress }: TestingProceduresPanelProps) => {
         })}
 
         {filtered.length === 0 && (
-          <div className="text-center py-8 text-white/55 text-[13px]">
+          <div className="text-center py-8 text-white/70 text-[13px]">
             No tests match your search. Try different keywords.
           </div>
         )}

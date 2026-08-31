@@ -113,13 +113,13 @@ const quizQuestions = [
       'Why does a sampling rate that is too slow cause problems in a feedback control loop?',
     options: [
       'It uses more processor time',
-      'The time between samples is dead time, during which the system cannot respond to any change — and excessive dead time leads to oscillation and instability',
+      'Nothing is seen between one sample and the next, so that gap behaves as dead time — and too much of it makes a loop oscillate',
       'It increases the resolution error',
       'It causes the transmitter to fail',
     ],
     correctIndex: 1,
     explanation:
-      'Between samples the digital system is completely unresponsive to changes in the process measurement. That is dead time. In an alarm system it delays the alarm; in a feedback control loop excessive dead time leads to oscillation and instability — which Module 5 covers in depth.',
+      'For the whole gap between samples the system registers nothing the process does. That gap is dead time. In an alarm system it delays the alarm; in a feedback control loop excessive dead time leads to oscillation and instability — which Module 5 covers in depth.',
   },
   {
     id: 5,
@@ -146,7 +146,7 @@ const quizQuestions = [
     ],
     correctIndex: 1,
     explanation:
-      'Industrial process measurements are far more forgiving than bench measurements. A large furnace may be adequately sampled once per minute, and even fast feedback processes such as flow and pressure can be controlled with reasonable stability sampling just a few times per second. A digital oscilloscope may sample billions of times per second because the signals demand it.',
+      'Industrial process measurements are far more forgiving than bench measurements. Once a minute may be ample for a large furnace, and a few times a second is usually enough to hold even a quick loop like flow or pressure steady. A digital oscilloscope may sample billions of times per second because the signals demand it.',
   },
 ];
 
@@ -285,8 +285,8 @@ const InstrumentationModule2Section5 = () => {
         <InlineCheck
           id="ins-2-5-resolution"
           question="A pressure measurement ranged 0–10 bar goes through a 12-bit converter. What is the smallest pressure change the system can represent?"
-          options={['About 0.0024 bar', 'About 0.024 bar', 'About 0.24 bar', 'About 1 bar']}
-          correctIndex={0}
+          options={['About 0.024 bar', 'About 0.24 bar', 'About 0.0024 bar', 'About 1 bar']}
+          correctIndex={2}
           explanation="4096 counts across a 10 bar span gives roughly 0.0024 bar per count. That is the resolution floor. Note it depends entirely on the SPAN — re-range the same transmitter to 0–100 bar and each count is now worth ten times as much pressure, so resolution in engineering units gets ten times worse."
         />
 
@@ -300,9 +300,9 @@ const InstrumentationModule2Section5 = () => {
         >
           <p>
             Each time a converter samples its input, the resulting number is fixed until the next
-            sample. The analogy in the source is exact: it is like monitoring a continuously moving
-            object by taking a series of still photographs. Any changes happening between sampling
-            events are not detected, and therefore are not present in the data at all.
+            sample. Think of it as watching something move by way of a series of still photographs:
+            whatever the subject did between two frames leaves no trace, so as far as the data is
+            concerned it never happened.
           </p>
           <p>
             It follows that the sampling rate must be at least as often as significant changes are
@@ -316,10 +316,9 @@ const InstrumentationModule2Section5 = () => {
           </p>
           <p>
             The good news for process work is that industrial measurements are{' '}
-            <strong>far more forgiving</strong> than bench measurements. A large furnace may be
-            adequately sampled once per minute. Even fast feedback processes such as liquid flow and
-            pressure control may be controlled with reasonable stability sampling just a few times
-            per second.
+            <strong>far more forgiving</strong> than bench measurements. Once a minute is ample for
+            a large furnace. Even the quick loops — liquid flow, pressure — will hold steady on a
+            few samples a second.
           </p>
           <p>
             Compare that with a digital storage oscilloscope, which may sample billions of times per
@@ -339,8 +338,8 @@ const InstrumentationModule2Section5 = () => {
           </p>
           <p>
             <strong>
-              The time between samples is dead time to the system: time during which the digital
-              system will be completely unresponsive to any changes in process measurement.
+              The gap between one sample and the next is dead time. For the whole of it the system
+              is blind — whatever the process does in that window, nothing registers.
             </strong>
           </p>
           <p>What that costs depends on what the signal is for:</p>
@@ -460,11 +459,11 @@ const InstrumentationModule2Section5 = () => {
           question="A flow loop hunts. A technician increases the transmitter damping and the displayed value steadies, but the valve continues to swing. What has actually happened?"
           options={[
             'The problem is solved — the reading is stable now',
-            'The display is smoother but the controller is now acting on older information, so the instability is likely to be worse',
             'The transmitter has been recalibrated',
             'The valve has been damaged',
+            'The display is smoother but the controller is now acting on older information, so the instability is likely to be worse',
           ]}
-          correctIndex={1}
+          correctIndex={3}
           explanation="Damping smooths what is displayed and delays what is reported. The controller now receives a lagged version of the process, which adds dead time to the loop — and excessive dead time is a cause of oscillation, not a cure for it. The steadier display is masking a loop that has been made harder to control."
         />
 
@@ -523,12 +522,12 @@ const InstrumentationModule2Section5 = () => {
           id="ins-2-5-discrete"
           question="A guard interlock switch is wired normally CLOSED, so the circuit is made when the guard is shut. A wire is severed. What does the control system see?"
           options={[
-            'The guard as closed, because the switch has not moved',
             'The guard as open — the same state as an unsafe condition, so the machine will not run',
+            'The guard as closed, because the switch has not moved',
             'Nothing, because a broken wire is undetectable on a digital input',
             'An analogue fault code',
           ]}
-          correctIndex={1}
+          correctIndex={0}
           explanation="A broken wire breaks the circuit, which is indistinguishable from the guard being opened. The machine therefore refuses to run — the failure lands in the safe direction. This is exactly the live-zero reasoning from Section 2.1 applied to a discrete signal: arrange the wiring so the failure mode and the dangerous condition look the same."
         />
 

@@ -491,7 +491,7 @@ export function EmployerMate({
                   onClick={() => send()}
                   disabled={!input.trim() || sending}
                   aria-label="Send"
-                  className="h-11 w-11 shrink-0 flex items-center justify-center rounded-full bg-elec-yellow text-black disabled:opacity-40 touch-manipulation active:scale-95 transition-transform"
+                  className="h-11 w-11 shrink-0 flex items-center justify-center rounded-full bg-elec-yellow text-black disabled:bg-white/[0.08] disabled:text-white/70 touch-manipulation active:scale-95 transition-transform"
                 >
                   <ArrowUp className="h-5 w-5" />
                 </button>

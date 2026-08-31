@@ -190,16 +190,10 @@ const InstrumentationModule4Section2 = () => {
         <TLDR
           points={[
             'Frequency and period are reciprocals — f = 1 ÷ T — and carry identical information. Measuring one is not the same job as measuring the other.',
-            'Section 1’s errors came from the instrument disturbing the circuit. None of that applies here. Counting has its own error, and it is a different shape.',
             '🔴 A counter can only count whole events, and its gate does not align with the signal — so every counted reading carries a ±1 count uncertainty.',
             '🔴 That ±1 is a fixed number of counts, not a fixed percentage. Its significance depends entirely on how many counts you accumulated.',
-            '3 Hz over a 1 s gate is 3 counts ±1 — about ±33 per cent, and worthless.',
-            'Time one cycle of that same 3 Hz against a 1 MHz clock and you accumulate 333 333 ticks — about ±0.0003 per cent.',
-            'The rule inverts at the top: a 1 MHz signal counted over 1 s gives ±0.0001 per cent, but its period is one tick, or ±100 per cent.',
             'So measure period at low frequency and frequency at high frequency — derived, not memorised. Whichever accumulates more counts wins.',
-            'A longer gate improves resolution and slows the update. That is dead time, and Module 3 Section 4 covered what it costs a control loop.',
             'K-factor converts pulses to engineering units: f = kQ, so Q = f ÷ k and total volume V = f × t ÷ k.',
-            'A turbine meter’s linear output gives turndowns commonly beyond 10:1, against about 4:1 at best for an orifice plate.',
             'A wrong threshold does not give a wrong amplitude — it gives a wrong count, and on a totaliser that error never comes back.',
           ]}
         />
@@ -379,12 +373,12 @@ const InstrumentationModule4Section2 = () => {
           id="ins-4-2-crossover"
           question="A vibration monitor must resolve a shaft speed of about 6 Hz to better than 0.5 per cent, and update at least once a second. Counting cycles over a 1 s gate gives 6 counts. What should the instrument do?"
           options={[
-            'Measure the period against a fast clock, which gives far better resolution within a single cycle',
             'Amplify the pulse signal',
             'Accept ±17 per cent as the best achievable',
+            'Measure the period against a fast clock, which gives far better resolution within a single cycle',
             'Extend the gate time to 200 seconds',
           ]}
-          correctIndex={0}
+          correctIndex={2}
           explanation="Extending the gate would work for resolution but destroys the update requirement — 200 seconds is not once a second. Timing one 167 ms period against a megahertz clock accumulates about 167 000 ticks, meeting both requirements at once. That is exactly why instruments switch method at the bottom of their range."
         />
 
@@ -429,11 +423,11 @@ const InstrumentationModule4Section2 = () => {
           question="A frequency input on a fast pressure loop is set to a 5 second gate time because it gave a tidier display. What has that cost the control system?"
           options={[
             'Nothing — gate time only affects the display',
-            'Up to 5 seconds of dead time, plus averaging that hides real variation within each window',
             'A loss of accuracy proportional to the gate time',
             'The input will miss pulses between gates',
+            'Up to 5 seconds of dead time, plus averaging that hides real variation within each window',
           ]}
-          correctIndex={1}
+          correctIndex={3}
           explanation="The reading updates once every 5 seconds, so the controller is blind between updates — that is dead time, and Module 3 Section 4 explained why it destabilises a loop. Each reading is also a 5 second average, so genuine variation inside the window never reaches the control system at all. Resolution improved; responsiveness was spent to buy it."
         />
 
@@ -586,12 +580,12 @@ const InstrumentationModule4Section2 = () => {
           id="ins-4-2-duty"
           question="A heater is driven by a switched output at a fixed 10 Hz. An engineer puts a frequency counter on it to check the heater demand and reads a rock-steady 10 Hz at every demand setting. Why?"
           options={[
+            'The demand is carried in the duty cycle, which is independent of frequency — the counter is reading the wrong property',
             'The gate time is too long to see the change',
             'The counter is faulty',
-            'The demand is carried in the duty cycle, which is independent of frequency — the counter is reading the wrong property',
             'The heater is not responding to the demand signal',
           ]}
-          correctIndex={2}
+          correctIndex={0}
           explanation="Duty cycle and frequency are independent. The output switches at 10 Hz whatever the demand; what changes is the proportion of each 100 ms period for which it is on. A frequency counter reports a perfectly correct and completely irrelevant number — which is why it looks like nothing is wrong."
         />
 
@@ -803,7 +797,7 @@ const InstrumentationModule4Section2 = () => {
               <ChevronLeft className="h-3 w-3" /> Previous section
             </span>
             <span className="mt-1 truncate text-[14px] font-semibold text-white">
-              Voltage, current, resistance
+              Measuring voltage, current and resistance
             </span>
           </button>
           <button
@@ -814,7 +808,7 @@ const InstrumentationModule4Section2 = () => {
               Next section <ChevronRight className="h-3 w-3" />
             </span>
             <span className="mt-1 truncate text-[14px] font-semibold text-white">
-              Accuracy and error
+              Accuracy, resolution and error
             </span>
           </button>
         </div>

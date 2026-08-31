@@ -388,7 +388,7 @@ const QualificationConfirmationDialog = ({
                 type="button"
                 onClick={handleConfirm}
                 disabled={isConfirming}
-                className="flex-1 h-12 rounded-xl bg-elec-yellow text-black text-[15px] font-semibold touch-manipulation active:scale-[0.97] transition-transform hover:bg-elec-yellow/90 disabled:opacity-60 inline-flex items-center justify-center gap-2"
+                className="flex-1 h-12 rounded-xl bg-elec-yellow text-black text-[15px] font-semibold touch-manipulation active:scale-[0.97] transition-transform hover:bg-elec-yellow/90 disabled:bg-white/[0.08] disabled:text-white/70 inline-flex items-center justify-center gap-2"
               >
                 {isConfirming ? (
                   <>

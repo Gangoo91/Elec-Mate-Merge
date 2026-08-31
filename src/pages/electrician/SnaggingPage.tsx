@@ -856,7 +856,7 @@ const SnaggingPage = () => {
             <Button
               onClick={handleSendReport}
               disabled={sendBusy || !sendRecipient.trim() || sendIds.length === 0}
-              className="w-full h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold text-[14px] rounded-xl touch-manipulation disabled:opacity-40 active:scale-[0.98] transition-all"
+              className="w-full h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold text-[14px] rounded-xl touch-manipulation disabled:bg-white/[0.08] disabled:text-white/70 active:scale-[0.98] transition-all"
             >
               {sendBusy ? (
                 <span className="flex items-center gap-2">
@@ -1098,7 +1098,7 @@ const SnaggingPage = () => {
             <Button
               onClick={handleSubmit}
               disabled={!formTitle.trim() || submitting}
-              className="w-full h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold text-[14px] rounded-xl touch-manipulation disabled:opacity-40 active:scale-[0.98] transition-all"
+              className="w-full h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold text-[14px] rounded-xl touch-manipulation disabled:bg-white/[0.08] disabled:text-white/70 active:scale-[0.98] transition-all"
             >
               {submitting ? (
                 <span className="flex items-center gap-2">

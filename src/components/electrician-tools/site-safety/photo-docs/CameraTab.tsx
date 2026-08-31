@@ -1054,7 +1054,7 @@ export default function CameraTab({
               (isQuickMode ? isUploadingQueue : isUploading) ||
               (isQuickMode && quickQueue.length === 0)
             }
-            className="w-full h-12 rounded-xl bg-elec-yellow text-black font-semibold flex items-center justify-center gap-2 touch-manipulation active:bg-yellow-400 hover:bg-yellow-400 disabled:opacity-50 transition-colors"
+            className="w-full h-12 rounded-xl bg-elec-yellow text-black font-semibold flex items-center justify-center gap-2 touch-manipulation active:bg-yellow-400 hover:bg-yellow-400 disabled:bg-white/[0.08] disabled:text-white/70 transition-colors"
           >
             {(isQuickMode ? isUploadingQueue : isUploading) ? (
               <>

@@ -288,7 +288,7 @@ export default function AttestOJT() {
                     name.trim().length < 2 ||
                     !email.trim().includes('@')
                   }
-                  className="w-full h-12 rounded-xl bg-elec-yellow text-black font-semibold text-[14px] hover:bg-elec-yellow/90 transition-colors disabled:opacity-50 inline-flex items-center justify-center gap-2"
+                  className="w-full h-12 rounded-xl bg-elec-yellow text-black font-semibold text-[14px] hover:bg-elec-yellow/90 transition-colors disabled:bg-white/[0.08] disabled:text-white/70 inline-flex items-center justify-center gap-2"
                 >
                   {submitting ? (
                     <>

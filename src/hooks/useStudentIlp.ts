@@ -301,6 +301,68 @@ export function useStudentIlp({ collegeStudentId }: Args): StudentIlpHook {
         .select(ILP_COLS)
         .single();
       if (insErr) throw insErr;
+
+      /*
+       * 🔴 CARRY THE GOALS FORWARD.
+       *
+       * This used to archive the previous ILP and insert a fresh one, and
+       * stop there — so every goal stayed attached to the version that had
+       * just been archived. A new version therefore started EMPTY: the
+       * learner opened their plan to "no goals set", their five goals having
+       * silently become history, and the tutor who had just written them saw
+       * the same nothing and would have had to type them all again.
+       *
+       * A new ILP version is a REVIEW of the same plan, not a new plan —
+       * ai-generate-ilp's own prompt says "refine it, keep what's working".
+       * So goals move across, and they move across WITH the learner's own
+       * state on them: what they ticked off, what they commented, what they
+       * acknowledged. Losing that would be the same bug wearing a hat.
+       *
+       * Best-effort: a failure here must not lose the tutor the version they
+       * just wrote, so it is reported and swallowed rather than thrown.
+       */
+      if (existing?.id && inserted?.id) {
+        const { data: priorGoals, error: readErr } = await supabase
+          .from('college_ilp_goals')
+          .select(GOAL_COLS)
+          .eq('ilp_id', existing.id)
+          .order('position', { ascending: true })
+          .order('created_at', { ascending: true });
+
+        if (readErr) {
+          console.error('ILP version: could not read prior goals to carry forward', readErr);
+        } else if (priorGoals?.length) {
+          const carried = (priorGoals as IlpGoal[]).map((g) => ({
+            ilp_id: (inserted as Ilp).id,
+            student_id: collegeStudentId,
+            college_id: collegeId,
+            position: g.position,
+            category: g.category,
+            priority: g.priority,
+            source: g.source,
+            title: g.title,
+            description: g.description,
+            acceptance_criteria: g.acceptance_criteria,
+            target_date: g.target_date,
+            // The learner's own work on the goal travels with it.
+            status: g.status,
+            completed_at: g.completed_at,
+            completed_by: g.completed_by,
+            student_comment: g.student_comment,
+            student_comment_at: g.student_comment_at,
+            student_acknowledged: g.student_acknowledged,
+            student_acknowledged_at: g.student_acknowledged_at,
+            tutor_comment: g.tutor_comment,
+            tutor_comment_at: g.tutor_comment_at,
+            created_by: g.created_by ?? uid,
+          }));
+          const { error: copyErr } = await supabase.from('college_ilp_goals').insert(carried);
+          if (copyErr) {
+            console.error('ILP version: goals were not carried to the new version', copyErr);
+          }
+        }
+      }
+
       return inserted as Ilp;
     },
     [collegeStudentId]

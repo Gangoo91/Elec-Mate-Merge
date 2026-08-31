@@ -169,7 +169,15 @@ export interface HubWorkItem {
   trailing?: string;
   /** Volt on the rule and the figure. Reserve it for real cost of delay. */
   urgent?: boolean;
-  to: string;
+  /**
+   * Where the row goes. Optional so a row can open a sheet instead — on a
+   * single-page workspace like off-the-job training the work IS this page, and
+   * forcing a route meant either navigating to yourself or not using this list
+   * at all.
+   */
+  to?: string;
+  /** Handled in place. Takes precedence over `to` when both are given. */
+  onClick?: () => void;
 }
 
 /**
@@ -207,9 +215,10 @@ export const HubWorkList = ({
   const hidden = items.length - shown.length;
   const count = `${items.length} ${items.length === 1 ? unit : `${unit}s`}`;
 
-  const go = (to: string) => {
+  const go = (item: Pick<HubWorkItem, 'to' | 'onClick'>) => {
     haptic.light();
-    navigate(to);
+    if (item.onClick) item.onClick();
+    else if (item.to) navigate(item.to);
   };
 
   return (
@@ -247,7 +256,7 @@ export const HubWorkList = ({
             <li key={item.id}>
               <button
                 type="button"
-                onClick={() => go(item.to)}
+                onClick={() => go(item)}
                 className="flex w-full items-center gap-3 px-4 py-3.5 text-left transition-colors touch-manipulation hover:bg-white/[0.06] active:bg-white/[0.09] sm:px-5"
               >
                 {/* A rule, not a dot or a pill. What kind of thing this is is
@@ -293,7 +302,7 @@ export const HubWorkList = ({
         {hidden > 0 && (
           <button
             type="button"
-            onClick={() => go(items[visible].to)}
+            onClick={() => go(items[visible])}
             className="flex h-11 w-full items-center justify-center border-t border-white/[0.10] text-[12.5px] font-semibold text-white transition-colors touch-manipulation hover:bg-white/[0.06] active:bg-white/[0.09]"
           >
             {hidden} more

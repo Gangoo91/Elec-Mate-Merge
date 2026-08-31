@@ -409,7 +409,7 @@ export const SurveyAnalysisPanel = ({ visit, autoStart = false }: SurveyAnalysis
           <Button
             onClick={() => startAnalysis(visit)}
             disabled={isStarting || !hasData}
-            className="h-12 w-full touch-manipulation rounded-xl bg-elec-yellow text-[14px] font-semibold text-black transition-transform hover:bg-elec-yellow/90 active:scale-[0.98] disabled:opacity-50"
+            className="h-12 w-full touch-manipulation rounded-xl bg-elec-yellow text-[14px] font-semibold text-black transition-transform hover:bg-elec-yellow/90 active:scale-[0.98] disabled:bg-white/[0.08] disabled:text-white/70"
           >
             {isStarting ? (
               <>

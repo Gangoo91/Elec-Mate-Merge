@@ -258,7 +258,7 @@ export function ProjectSuggestedLinks({
             type="button"
             onClick={handleLinkAll}
             disabled={linkingAll}
-            className="w-full mt-2.5 h-11 rounded-xl bg-elec-yellow text-black text-[13px] font-semibold touch-manipulation active:scale-[0.98] transition-all disabled:opacity-60 flex items-center justify-center gap-2"
+            className="w-full mt-2.5 h-11 rounded-xl bg-elec-yellow text-black text-[13px] font-semibold touch-manipulation active:scale-[0.98] transition-all disabled:bg-white/[0.08] disabled:text-white/70 flex items-center justify-center gap-2"
           >
             {linkingAll && <Loader2 className="h-4 w-4 animate-spin" />}
             Link all {suggestions.length}

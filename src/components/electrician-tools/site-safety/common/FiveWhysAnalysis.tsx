@@ -278,7 +278,7 @@ export function FiveWhysAnalysis({
                 type="button"
                 onClick={handleSave}
                 disabled={isSaving || !canSave}
-                className="flex h-11 w-full touch-manipulation items-center justify-center gap-2 rounded-xl bg-elec-yellow text-[14px] font-semibold text-black transition-all duration-150 active:scale-[0.99] active:brightness-125 disabled:opacity-40"
+                className="flex h-11 w-full touch-manipulation items-center justify-center gap-2 rounded-xl bg-elec-yellow text-[14px] font-semibold text-black transition-all duration-150 active:scale-[0.99] active:brightness-125 disabled:bg-white/[0.08] disabled:text-white/70"
               >
                 {isSaving && <Loader2 className="h-4 w-4 animate-spin" aria-hidden />}
                 {isSaving ? 'Saving…' : 'Save root cause analysis'}

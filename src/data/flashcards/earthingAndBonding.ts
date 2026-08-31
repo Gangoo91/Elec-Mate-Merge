@@ -81,9 +81,9 @@ export const earthingAndBonding: FlashcardData[] = [
   {
     id: 'eb9',
     question:
-      'According to BS 7671 Regulation 411.3.1.2, what extraneous-conductive-parts must be connected to the MET by main protective bonding conductors?',
+      'Which extraneous-conductive-parts must be connected to the MET by main protective bonding conductors?',
     answer:
-      'Main protective bonding conductors must be connected to: metal water service pipes, metal gas installation pipes, other metal service pipes and ducting, metal central heating and air-conditioning systems, exposed metallic structural parts of the building, and the lightning protection system where applicable.',
+      'Metal water service pipes, metal gas installation pipes, other metal service pipes and ducting, metal central heating and air-conditioning systems, exposed metallic structural parts of the building, and the lightning protection system where applicable. The requirement sits under Reg 411.3.1 (protective earthing and protective equipotential bonding); the conductors themselves must comply with Chapter 54.',
     category: 'Main Bonding',
     difficulty: 'medium',
   },
@@ -110,7 +110,7 @@ export const earthingAndBonding: FlashcardData[] = [
     question:
       'When is main protective bonding required at the origin of an electrical installation?',
     answer:
-      'Main protective bonding is required at every installation where extraneous-conductive-parts are present. It must be carried out at the origin of the installation regardless of the earthing system (TN-S, TN-C-S, or TT). It is a fundamental requirement of Regulation 411.3.1.2 for automatic disconnection of supply (ADS) to operate correctly.',
+      'At every installation where extraneous-conductive-parts are present, at the origin, regardless of earthing system (TN-S, TN-C-S or TT). It sits under Reg 411.3.1 and is fundamental to automatic disconnection of supply working as intended. ⚠️ In A4:2026, 411.3.1.2 is about DISCONNECTION TIMES, not bonding — older material citing it for bonding is out of date.',
     category: 'Main Bonding',
     difficulty: 'easy',
   },

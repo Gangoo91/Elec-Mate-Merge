@@ -52,9 +52,9 @@ const AssessmentBestPractices = () => {
         {practices.map((practice, index) => (
           <div
             key={index}
-            className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2"
+            className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-2"
           >
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
               {practice.title}
             </span>
             <ul className="space-y-1.5">
@@ -72,7 +72,7 @@ const AssessmentBestPractices = () => {
         ))}
       </div>
 
-      <div className="rounded-xl border border-red-500/30 bg-red-500/[0.04] p-4 sm:p-5 space-y-2">
+      <div className="rounded-xl border border-white/[0.12] border-l-[3px] border-l-red-500 bg-white/[0.06] p-4 sm:p-5 space-y-2">
         <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">
           Safety warning
         </span>

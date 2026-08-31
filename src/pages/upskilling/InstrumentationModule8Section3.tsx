@@ -284,19 +284,12 @@ const InstrumentationModule8Section3 = () => {
         <TLDR
           points={[
             '🔴 An intermittent is not a harder fault. It is a different kind of problem.',
-            'Every method in Section 1 assumes the fault is present while you test. An intermittent breaks that assumption.',
             'A test run during a healthy period returns a healthy result — accurate, and completely useless.',
-            'A clean set of results is what a sound system produces AND what an intermittent produces between episodes. They are indistinguishable.',
             '🔴 So stop trying to observe the fault and set something up to capture it while you are elsewhere.',
-            'Module 4 Section 5 owns the capture instruments — and their limits, which matter here.',
             'A quiet overnight record rules out slow excursions and dropouts. It does not rule out a fast glitch.',
             '🔴 Correlation is the diagnosis. A fault tied to something else has had most of its mystery removed.',
-            'Correlate against temperature, vibration, load, weather, plant state, time of day and recent work.',
-            'Some faults leave physical evidence of a past event — discolouration, staining, pitting.',
-            'Increasing frequency means deterioration: bad for the plant, good for catching it.',
             '🔴🔴 Never clear a fault you cannot explain. “It is working now” is not a repair.',
             '🔴 Disturbing a poor connection can temporarily restore it — so investigating can mask the fault.',
-            'A fault that returns after sign-off is worse than one that never cleared, because a record now says it was fixed.',
           ]}
         />
 
@@ -517,12 +510,12 @@ const InstrumentationModule8Section3 = () => {
           id="ins-8-3-capture"
           question="An intermittent is suspected to be a very brief dropout. A meter with min/max is left on the loop for two nights and records nothing. What is the correct conclusion?"
           options={[
-            'The test could not have caught a transient shorter than the meter’s scan time, so it has not addressed the suspected fault',
             'The fault must be in the controller',
             'The fault has cleared itself',
             'The loop is healthy and the fault report was wrong',
+            'The test could not have caught a transient shorter than the meter’s scan time, so it has not addressed the suspected fault',
           ]}
-          correctIndex={0}
+          correctIndex={3}
           explanation="The capture method has to match the fault being hunted. A brief dropout is precisely the case a sampled instrument can miss entirely, so a quiet record is consistent with both a sound loop and the suspected fault — which makes it no evidence at all."
         />
 
@@ -788,12 +781,12 @@ const InstrumentationModule8Section3 = () => {
           id="ins-8-3-signoff"
           question="You remake several terminations on a loop with an intermittent fault and it has behaved for a week. What is the honest status?"
           options={[
-            'Resolved — a week of good behaviour confirms it',
             'Not present since the work, cause unconfirmed — because disturbance alone can produce this result',
+            'Resolved — a week of good behaviour confirms it',
             'Resolved, provided the terminations were the only thing changed',
             'Unresolved, and the work should be undone',
           ]}
-          correctIndex={1}
+          correctIndex={0}
           explanation="A week proves the fault is not currently occurring, which is what a genuine repair and a temporarily restored connection both look like. Recording the distinction costs nothing now and saves the next investigation from starting in the wrong place."
         />
 

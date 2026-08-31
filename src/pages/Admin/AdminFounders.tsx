@@ -1120,7 +1120,7 @@ export default function AdminFounders() {
                       !inviteEmail.trim() ||
                       !inviteEmail.includes('@')
                     }
-                    className="inline-flex h-11 shrink-0 touch-manipulation items-center justify-center gap-2 rounded-full bg-elec-yellow px-5 text-[13px] font-semibold text-black disabled:opacity-50"
+                    className="inline-flex h-11 shrink-0 touch-manipulation items-center justify-center gap-2 rounded-full bg-elec-yellow px-5 text-[13px] font-semibold text-black disabled:bg-white/[0.08] disabled:text-white/70"
                   >
                     {sendInviteMutation.isPending ? (
                       <Loader2 className="h-4 w-4 animate-spin" />

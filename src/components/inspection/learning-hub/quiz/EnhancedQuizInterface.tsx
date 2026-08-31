@@ -312,7 +312,7 @@ const EnhancedQuizInterface = ({
             <Button
               onClick={handleNext}
               disabled={selectedAnswer === null}
-              className="flex-1 sm:flex-initial min-h-[52px] bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold disabled:opacity-50 shadow-lg px-4 sm:px-6"
+              className="flex-1 sm:flex-initial min-h-[52px] bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold disabled:bg-white/[0.08] disabled:text-white/70 shadow-lg px-4 sm:px-6"
             >
               {progress.current === progress.total ? (
                 <>

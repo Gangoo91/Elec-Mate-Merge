@@ -30,7 +30,7 @@ import { useQuery } from '@tanstack/react-query';
 import { cn } from '@/lib/utils';
 import { CARD_BASE, CARD_NEUTRAL, CARD_SURFACE } from '@/components/ui/card-recipe';
 import { supabase } from '@/integrations/supabase/client';
-import { useVideoBookmarks } from '@/hooks/learning-videos/useVideoBookmarks';
+import { useVideoWatchSession } from '@/hooks/learning-videos/useVideoWatchCredit';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import {
   BS7671_A4_CHANGES,
@@ -430,7 +430,8 @@ export { AM2LearningOutcomes as LearningOutcomes } from '@/components/apprentice
    Tap to play inline — replaces thumbnail with iframe via
    Capacitor.isNativePlatform() proxy on native, youtube-nocookie embed
    on web. Tap is also a hard signal we record as a "watch start" via
-   the existing useVideoBookmarks().trackVideoWatched(videoId) hook.
+   useVideoWatchCredit(), which records the watch AND credits the
+   off-the-job minutes + XP for it.
 */
 
 /** Extract the YouTube video ID from any common URL shape. */
@@ -474,12 +475,17 @@ export function VideoCard({
   const maxThumb = videoId ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg` : null;
   const hqThumb = videoId ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg` : null;
 
-  const { trackVideoWatched } = useVideoBookmarks();
+  // Credits REAL watch time as off-the-job minutes, not just a "seen" flag.
+  // This used to call trackVideoWatched() alone, so a video played from a
+  // course page earned zero minutes and zero XP. See useVideoWatchSession —
+  // the clock stops when the tab is hidden and the credit is capped at the
+  // video's runtime.
+  const { startWatch } = useVideoWatchSession();
   const [isPlaying, setIsPlaying] = useState(false);
 
   const handlePlay = () => {
     if (!videoId) return;
-    trackVideoWatched(videoId).catch(() => {});
+    startWatch({ videoId, title, channel, duration, category: topic });
     setIsPlaying(true);
   };
 
@@ -609,12 +615,14 @@ function VideoListRow({ url, title, channel, duration, topic }: VideoListItem) {
   const maxThumb = videoId ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg` : null;
   const hqThumb = videoId ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg` : null;
 
-  const { trackVideoWatched } = useVideoBookmarks();
+  // Same credit path as VideoCard — a video watched from a list row is the
+  // same off-the-job activity as one watched from a card.
+  const { startWatch } = useVideoWatchSession();
   const [isPlaying, setIsPlaying] = useState(false);
 
   const handlePlay = () => {
     if (!videoId) return;
-    trackVideoWatched(videoId).catch(() => {});
+    startWatch({ videoId, title, channel, duration, category: topic });
     setIsPlaying(true);
   };
 

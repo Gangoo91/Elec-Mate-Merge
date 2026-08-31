@@ -407,7 +407,7 @@ export function JobSafetyPack({ onNavigate, onBack }: JobSafetyPackProps) {
             <button
               onClick={handleExport}
               disabled={exporting || packLoading}
-              className="inline-flex items-center gap-2 h-11 px-5 rounded-xl bg-elec-yellow text-black text-[13px] font-semibold hover:bg-elec-yellow/90 disabled:opacity-50 transition-colors touch-manipulation"
+              className="inline-flex items-center gap-2 h-11 px-5 rounded-xl bg-elec-yellow text-black text-[13px] font-semibold hover:bg-elec-yellow/90 disabled:bg-white/[0.08] disabled:text-white/70 transition-colors touch-manipulation"
             >
               {exporting ? (
                 <Loader2 className="h-4 w-4 animate-spin" aria-hidden />
@@ -736,7 +736,7 @@ export function JobSafetyPack({ onNavigate, onBack }: JobSafetyPackProps) {
             <button
               onClick={handleExport}
               disabled={exporting}
-              className="w-full inline-flex items-center justify-center gap-2 h-12 rounded-xl bg-elec-yellow text-black text-[14px] font-semibold disabled:opacity-50 transition-colors touch-manipulation"
+              className="w-full inline-flex items-center justify-center gap-2 h-12 rounded-xl bg-elec-yellow text-black text-[14px] font-semibold disabled:bg-white/[0.08] disabled:text-white/70 transition-colors touch-manipulation"
             >
               {exporting ? (
                 <Loader2 className="h-4 w-4 animate-spin" aria-hidden />

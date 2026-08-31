@@ -619,7 +619,7 @@ export function BusinessSettingsDialog({
             <Button
               onClick={handleSave}
               disabled={saving}
-              className="flex-1 h-12 touch-manipulation bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 disabled:opacity-60"
+              className="flex-1 h-12 touch-manipulation bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 disabled:bg-white/[0.08] disabled:text-white/70"
             >
               <Save className="h-4 w-4 mr-2" />
               {saving ? 'Saving…' : 'Save Settings'}

@@ -9,6 +9,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { Eyebrow, SectionHeader } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
 
 export interface TopicRow {
@@ -57,7 +58,7 @@ export function TopicMasteryList({ topics }: TopicMasteryListProps) {
     return (
       <div className="space-y-3">
         <SectionHeader eyebrow="Topic mastery" title="No data yet" />
-        <p className="text-[13px] text-white/55">
+        <p className="text-[13px] text-white">
           Take a quiz or run a flashcard session — your topic mastery will populate here.
         </p>
       </div>
@@ -99,35 +100,27 @@ export function TopicMasteryList({ topics }: TopicMasteryListProps) {
       <ul className="grid grid-cols-1 md:grid-cols-2 gap-2">
         {sorted.map((row) => {
           const score = blended(row);
+          /*
+           * 🔴 A weak topic was drawn in red — red border, red number.
+           * Every topic starts weak, so a learner in week one opened this
+           * to a grid of red saying they had failed twenty subjects they
+           * had never studied. Red means REFERRED BACK in this product.
+           * Strength now reads as degree of volt: strong topics glow,
+           * everything else is quietly white.
+           */
           const tone =
-            score < 0
-              ? 'border-white/[0.06]'
-              : score >= 70
-                ? 'border-elec-yellow/25'
-                : score >= 50
-                  ? 'border-white/[0.08]'
-                  : 'border-red-500/25';
-          const valueTone =
-            score < 0
-              ? 'text-white/40'
-              : score >= 70
-                ? 'text-elec-yellow'
-                : score >= 50
-                  ? 'text-white'
-                  : 'text-red-300';
+            score >= 70 ? 'border-elec-yellow/25' : 'border-white/[0.08]';
+          const valueTone = score >= 70 ? 'text-elec-yellow' : 'text-white';
           return (
             <li
               key={row.label}
-              className={cn(
-                'rounded-xl border bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3',
-                tone
-              )}
+              className={cn('rounded-2xl border p-4 sm:p-5 space-y-3', CARD_SURFACE, tone)}
             >
               <div className="flex items-baseline justify-between gap-3">
                 <div className="min-w-0 space-y-0.5">
                   <Eyebrow>{row.label}</Eyebrow>
                   {row.lastStudiedAt && (
-                    <span className="text-[11px] text-white/40 font-mono block">
+                    <span className="text-[11px] text-white font-mono block">
                       Last studied {fmtRelative(row.lastStudiedAt)}
                     </span>
                   )}
@@ -151,7 +144,7 @@ export function TopicMasteryList({ topics }: TopicMasteryListProps) {
               <button
                 type="button"
                 onClick={() => goPractise(row)}
-                className="inline-flex items-center h-8 px-3 rounded-md bg-elec-yellow text-black text-[11.5px] font-semibold hover:bg-elec-yellow/90 transition-colors touch-manipulation"
+                className="inline-flex items-center h-11 px-4 rounded-lg bg-elec-yellow text-black text-[12.5px] font-semibold hover:bg-elec-yellow/90 transition-colors touch-manipulation"
               >
                 {(score < 0 || score < 50) ? 'Start practising →' : 'Sharpen further →'}
               </button>
@@ -175,7 +168,7 @@ function SubBar({ label, value }: { label: string; value: number | null }) {
           : 'bg-white/30';
   return (
     <div className="flex items-center gap-2">
-      <span className="text-[10px] uppercase tracking-[0.14em] text-white/55 w-14 flex-shrink-0">
+      <span className="text-[10px] uppercase tracking-[0.14em] text-white w-14 flex-shrink-0">
         {label}
       </span>
       <div className="flex-1 h-1 bg-white/[0.04] rounded-full overflow-hidden">
@@ -184,7 +177,7 @@ function SubBar({ label, value }: { label: string; value: number | null }) {
           style={{ width: `${pct}%` }}
         />
       </div>
-      <span className="text-[11px] text-white/85 font-mono tabular-nums w-10 text-right flex-shrink-0">
+      <span className="text-[11px] text-white font-mono tabular-nums w-10 text-right flex-shrink-0">
         {value == null ? '—' : `${Math.round(pct)}%`}
       </span>
     </div>

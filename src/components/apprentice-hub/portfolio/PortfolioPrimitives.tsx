@@ -15,7 +15,7 @@ export const Eyebrow = ({
 }) => (
   <span
     className={cn(
-      'text-[10px] font-medium uppercase tracking-[0.18em] text-white/55',
+      'text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow',
       className
     )}
   >
@@ -40,7 +40,7 @@ export const SectionHeader = ({
       <h3 className="text-[18px] sm:text-[20px] font-semibold text-white tracking-tight leading-tight">
         {title}
       </h3>
-      {meta && <p className="text-[12px] text-white/55 leading-snug">{meta}</p>}
+      {meta && <p className="text-[12px] leading-snug text-white">{meta}</p>}
     </div>
     {action && <div className="flex-shrink-0">{action}</div>}
   </div>
@@ -64,7 +64,7 @@ export const KpiCell = ({
     <Tag
       onClick={onClick}
       className={cn(
-        'rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-3 sm:p-4 text-left space-y-1.5',
+        'rounded-xl border border-elec-yellow/35 bg-gradient-to-br from-white/[0.19] via-white/[0.105] to-white/[0.065] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.16),0_2px_10px_-4px_rgba(0,0,0,0.65)] p-3 sm:p-4 text-left space-y-1.5',
         onClick && 'touch-manipulation hover:bg-white/[0.03] transition-colors active:scale-[0.99]'
       )}
     >
@@ -77,7 +77,7 @@ export const KpiCell = ({
       >
         {value}
       </div>
-      {sub && <span className="text-[11px] text-white/55 block">{sub}</span>}
+      {sub && <span className="block text-[11px] text-white">{sub}</span>}
     </Tag>
   );
 };
@@ -114,7 +114,7 @@ export const SecondaryAction = ({
   <button
     onClick={onClick}
     className={cn(
-      'h-12 rounded-xl border border-white/[0.08] bg-[hsl(0_0%_10%)] text-white text-[13px] font-semibold hover:bg-white/[0.04] transition-colors touch-manipulation inline-flex items-center justify-center gap-2',
+      'h-12 rounded-xl border border-elec-yellow/35 bg-gradient-to-br from-white/[0.19] via-white/[0.105] to-white/[0.065] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.16),0_2px_10px_-4px_rgba(0,0,0,0.65)] text-white text-[13px] font-semibold hover:bg-white/[0.04] transition-colors touch-manipulation inline-flex items-center justify-center gap-2',
       className
     )}
   >

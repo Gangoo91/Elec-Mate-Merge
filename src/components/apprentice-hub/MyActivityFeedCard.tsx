@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import {
   useMyCollegeActivity,
   type CollegeActivityItem,
@@ -24,12 +25,12 @@ const KIND_LABEL: Record<CollegeActivityKind, string> = {
 };
 
 const KIND_TONE: Record<CollegeActivityKind, string> = {
-  tutor_comment: 'text-white/85',
-  assessor_verdict: 'text-white/85',
-  iqa_verdict: 'text-white/85',
-  new_goal: 'text-white/85',
-  tutor_goal_comment: 'text-white/85',
-  observation: 'text-white/85',
+  tutor_comment: 'text-white',
+  assessor_verdict: 'text-white',
+  iqa_verdict: 'text-white',
+  new_goal: 'text-white',
+  tutor_goal_comment: 'text-white',
+  observation: 'text-white',
 };
 
 function fmtRel(iso: string): string {
@@ -56,12 +57,12 @@ export function MyActivityFeedCard() {
 
   if (items.length === 0) {
     return (
-      <section className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_10%)] overflow-hidden">
+      <section className={cn('rounded-2xl border border-white/[0.06] overflow-hidden', CARD_SURFACE)}>
         <div className="px-4 sm:px-5 py-4 sm:py-5">
-          <div className="text-[11px] sm:text-[11.5px] font-medium uppercase tracking-[0.18em] text-cyan-300/85">
+          <div className="text-[11px] sm:text-[11.5px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
             Recent activity
           </div>
-          <p className="mt-3 text-[12.5px] text-white/85 leading-snug">
+          <p className="mt-3 text-[12.5px] text-white leading-snug">
             Nothing from your college team in the last 30 days. As they comment, sign things off,
             and log observations, it'll appear here.
           </p>
@@ -71,14 +72,14 @@ export function MyActivityFeedCard() {
   }
 
   return (
-    <section className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_10%)] overflow-hidden">
+    <section className={cn('rounded-2xl border border-white/[0.06] overflow-hidden', CARD_SURFACE)}>
       <div className="px-4 sm:px-5 py-4 sm:py-5">
         <div className="flex items-baseline justify-between gap-3 flex-wrap">
-          <div className="text-[11px] sm:text-[11.5px] font-medium uppercase tracking-[0.18em] text-cyan-300/85">
+          <div className="text-[11px] sm:text-[11.5px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
             Recent activity
           </div>
           {unread_count > 0 && (
-            <span className="text-[10.5px] tabular-nums text-white/85">
+            <span className="text-[10.5px] tabular-nums text-white">
               {unread_count} {unread_count === 1 ? 'item needs' : 'items need'} action
             </span>
           )}
@@ -92,7 +93,7 @@ export function MyActivityFeedCard() {
           <button
             type="button"
             onClick={() => setExpanded((x) => !x)}
-            className="mt-2 px-1 text-[11.5px] font-medium text-white/85 hover:text-white/85 transition-colors touch-manipulation"
+            className="mt-2 px-1 text-[11.5px] font-medium text-white hover:text-white transition-colors touch-manipulation"
           >
             {expanded ? 'Show less' : `Show ${Math.min(15, items.length - 5)} more`}
           </button>
@@ -134,7 +135,7 @@ function ActivityRow({ item, onClick }: { item: CollegeActivityItem; onClick: ()
             {item.title}
           </div>
           {item.preview && (
-            <div className="mt-1 text-[11.5px] text-white/85 leading-snug line-clamp-2">
+            <div className="mt-1 text-[11.5px] text-white leading-snug line-clamp-2">
               {item.preview}
             </div>
           )}
@@ -143,7 +144,7 @@ function ActivityRow({ item, onClick }: { item: CollegeActivityItem; onClick: ()
           {item.is_unread && (
             <span className="h-1.5 w-1.5 rounded-full bg-white/[0.02]" aria-label="unread" />
           )}
-          <span className="text-[10.5px] text-white/95 tabular-nums whitespace-nowrap">
+          <span className="text-[10.5px] text-white tabular-nums whitespace-nowrap">
             {fmtRel(item.occurred_at)}
           </span>
         </div>
@@ -154,7 +155,7 @@ function ActivityRow({ item, onClick }: { item: CollegeActivityItem; onClick: ()
 
 function Skeleton() {
   return (
-    <section className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_10%)] overflow-hidden">
+    <section className={cn('rounded-2xl border border-white/[0.06] overflow-hidden', CARD_SURFACE)}>
       <div className="px-4 sm:px-5 py-4 sm:py-5 space-y-3">
         <div className="h-3 w-28 rounded-full bg-white/[0.05]" />
         {[0, 1, 2].map((i) => (

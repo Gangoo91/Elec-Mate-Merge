@@ -100,13 +100,13 @@ export function AssignedQuizzesCard() {
   };
 
   if (loading) {
-    return <div className="h-[180px] animate-pulse rounded-2xl bg-[hsl(0_0%_12%)]/60" />;
+    return <div className="h-[180px] animate-pulse rounded-2xl bg-white/[0.03]" />;
   }
 
   if (quizzes.length === 0) {
     return (
       <Section eyebrow="Quizzes & assessments" subtle="Nothing yet">
-        <p className="text-[13px] sm:text-[13.5px] text-white/90 leading-relaxed">
+        <p className="text-[13px] sm:text-[13.5px] text-white leading-relaxed">
           Quizzes and assessments will appear here when your tutor sends them.
         </p>
       </Section>
@@ -154,7 +154,7 @@ export function AssignedQuizzesCard() {
         <button
           type="button"
           onClick={() => setShowAll(true)}
-          className="w-full px-1 py-3 text-left text-[12px] font-medium text-white/90 hover:text-white touch-manipulation transition-colors"
+          className="w-full px-1 py-3 text-left text-[12px] font-medium text-white hover:text-white touch-manipulation transition-colors"
         >
           View all {sorted.length} →
         </button>
@@ -180,18 +180,21 @@ function Section({
 }) {
   return (
     <section
-      className={cn('rounded-2xl border bg-[hsl(0_0%_10%)] overflow-hidden',
+      className={cn('rounded-2xl border overflow-hidden',
         accent ? 'border-elec-yellow/30' : 'border-white/[0.06]'
       )}
     >
       <header className="px-4 sm:px-5 pt-4 sm:pt-5 pb-3 flex items-baseline justify-between gap-3">
-        <h2 className="text-[11px] sm:text-[11.5px] font-medium uppercase tracking-[0.18em] text-white">
+        {/* Volt, like every other card eyebrow on these pages. This one was
+            white, so "Quizzes & assessments" read as a different kind of
+            thing from "Off-the-job training" sitting beside it. */}
+        <h2 className="text-[11px] sm:text-[11.5px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
           {eyebrow}
         </h2>
         {subtle && (
           <span
             className={cn('text-[11px] tabular-nums whitespace-nowrap',
-              subtleTone === 'red' ? 'text-red-300' : 'text-white/85'
+              subtleTone === 'red' ? 'text-red-300' : 'text-white'
             )}
           >
             {subtle}
@@ -231,7 +234,7 @@ function NewArrivalsBanner({
       <button
         type="button"
         onClick={onDismiss}
-        className="text-[11px] text-white/85 hover:text-white touch-manipulation flex-shrink-0"
+        className="text-[11px] text-white hover:text-white touch-manipulation flex-shrink-0"
       >
         Got it
       </button>
@@ -243,15 +246,28 @@ function QuizRow({ q, isNew, onClick }: { q: AssignedQuiz; isNew: boolean; onCli
   const statusMeta = (() => {
     if (q.status === 'overdue')
       return { label: 'Overdue', cls: 'text-red-300', accentLabel: 'Open' };
-    if (q.status === 'completed')
+    if (q.status === 'completed') {
+      /*
+       * A completed quiz below the pass mark used to read exactly like one
+       * above it — "33%" and "67%" both in plain white, both labelled "View".
+       * The score is the whole signal on this row, so a below-pass result
+       * takes volt: the app's "this needs you" colour.
+       *
+       * The label stays neutral. Every row navigates to the same quiz page
+       * whatever its status, and that page decides whether a retake is
+       * offered — so promising "Retake" here could be a lie.
+       */
+      const belowPass =
+        q.best_percentage != null && q.pass_mark != null && q.best_percentage < q.pass_mark;
       return {
         label: q.best_percentage != null ? `${q.best_percentage}%` : 'Completed',
-        cls: 'text-white/85',
-        accentLabel: 'View',
+        cls: belowPass ? 'text-elec-yellow font-semibold' : 'text-white',
+        accentLabel: 'Open',
       };
+    }
     if (q.status === 'in_progress')
-      return { label: 'In progress', cls: 'text-white/85', accentLabel: 'Resume' };
-    return { label: kindWord(q.kind), cls: 'text-white/90', accentLabel: 'Start' };
+      return { label: 'In progress', cls: 'text-white', accentLabel: 'Resume' };
+    return { label: kindWord(q.kind), cls: 'text-white', accentLabel: 'Start' };
   })();
 
   return (
@@ -274,7 +290,7 @@ function QuizRow({ q, isNew, onClick }: { q: AssignedQuiz; isNew: boolean; onCli
         </h3>
 
         {/* Meta line — single sentence rather than chips */}
-        <p className="mt-1 text-[11.5px] sm:text-[11px] text-white/85 tabular-nums leading-relaxed">
+        <p className="mt-1 text-[11.5px] sm:text-[11px] text-white tabular-nums leading-relaxed">
           <span className={statusMeta.cls}>{statusMeta.label}</span>
           <Sep />
           <span>{q.questions_count} questions</span>
@@ -315,5 +331,5 @@ function QuizRow({ q, isNew, onClick }: { q: AssignedQuiz; isNew: boolean; onCli
 }
 
 function Sep() {
-  return <span className="mx-1.5 text-white/25">·</span>;
+  return <span className="mx-1.5 text-white">·</span>;
 }

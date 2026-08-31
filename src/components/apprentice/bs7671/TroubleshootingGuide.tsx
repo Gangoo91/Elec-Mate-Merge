@@ -11,7 +11,7 @@ const TroubleshootingGuide = ({ stepData }: TroubleshootingGuideProps) => {
 
   return (
     <Card className="bg-gradient-to-br from-white/5 to-elec-card border-orange-500/20 overflow-hidden relative animate-fade-in">
-      <div className="absolute top-0 right-0 w-48 h-48 bg-orange-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+      <div className="absolute top-0 right-0 w-48 h-48 bg-white/[0.06] rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
       <CardHeader className="pb-3 relative">
         <CardTitle className="text-white flex items-center gap-3">
           <div className="p-2 rounded-xl bg-gradient-to-br from-orange-500/20 to-orange-500/5 border border-orange-500/30">
@@ -24,7 +24,7 @@ const TroubleshootingGuide = ({ stepData }: TroubleshootingGuideProps) => {
         {stepData.troubleshooting.map((troubleshoot, index) => (
           <div key={index} className="p-4 rounded-xl bg-white/10 border border-white/10 space-y-4">
             <div className="flex items-start gap-3">
-              <div className="p-2 rounded-lg bg-orange-500/20 flex-shrink-0">
+              <div className="p-2 rounded-lg bg-white/[0.06] flex-shrink-0">
                 <HelpCircle className="h-4 w-4 text-orange-400" />
               </div>
               <div className="flex-1">
@@ -35,7 +35,7 @@ const TroubleshootingGuide = ({ stepData }: TroubleshootingGuideProps) => {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="p-3 rounded-xl bg-orange-500/10 border border-orange-500/20">
+              <div className="p-3 rounded-xl bg-white/[0.06] border border-orange-500/20">
                 <span className="text-xs font-medium text-orange-400 block mb-2">
                   Possible Causes
                 </span>
@@ -49,7 +49,7 @@ const TroubleshootingGuide = ({ stepData }: TroubleshootingGuideProps) => {
                 </ul>
               </div>
 
-              <div className="p-3 rounded-xl bg-green-500/10 border border-green-500/20">
+              <div className="p-3 rounded-xl bg-white/[0.06] border border-green-500/20">
                 <span className="text-xs font-medium text-green-400 block mb-2">Solutions</span>
                 <ul className="space-y-1.5">
                   {troubleshoot.solutions.map((solution, solutionIndex) => (
@@ -67,9 +67,9 @@ const TroubleshootingGuide = ({ stepData }: TroubleshootingGuideProps) => {
           </div>
         ))}
 
-        <div className="p-4 rounded-xl bg-elec-yellow/10 border border-elec-yellow/30">
+        <div className="p-4 rounded-xl bg-white/[0.06] border border-elec-yellow/30">
           <div className="flex items-start gap-3">
-            <div className="p-2 rounded-lg bg-elec-yellow/20 flex-shrink-0">
+            <div className="p-2 rounded-lg bg-white/[0.06] flex-shrink-0">
               <Shield className="h-4 w-4 text-elec-yellow" />
             </div>
             <div>

@@ -225,7 +225,7 @@ export const ProfessionalCardsForm: React.FC<ProfessionalCardsFormProps> = ({
             <button
               onClick={() => addLicence(newLicence)}
               disabled={!newLicence}
-              className="px-4 min-h-[48px] rounded-lg bg-elec-yellow text-black font-medium touch-manipulation active:scale-95 disabled:opacity-50"
+              className="px-4 min-h-[48px] rounded-lg bg-elec-yellow text-black font-medium touch-manipulation active:scale-95 disabled:bg-white/[0.08] disabled:text-white/70"
             >
               Add
             </button>

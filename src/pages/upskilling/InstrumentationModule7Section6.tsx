@@ -274,18 +274,12 @@ const InstrumentationModule7Section6 = () => {
         <TLDR
           points={[
             '🔴 Calibration asks whether a device is accurate. Commissioning asks whether the right device is wired to the right input, reading the right way round.',
-            'Those are different questions, and passing one says nothing about the other.',
             'A perfectly calibrated transmitter on the wrong input passes every calibration check ever devised.',
-            'Commissioning proves the installation as built, before the process runs on it.',
-            'Module 6 Section 2 owns the tool and the injection technique. This section owns the activity.',
             'Nothing can be proven on an unfinished loop — the proof expires the moment work resumes.',
             '🔴 Inject at the FIELD DEVICE, not the marshalling cabinet. Cabinet injection leaves the field end unproven.',
-            'It is a two-person job: one injects, one watches the display and the alarms.',
             '🔴 The fault that justifies all of it is the transposed loop — two transmitters swapped.',
             '🔴 Each transposed loop looks flawless in isolation. Nothing is faulty. Only an end-to-end check with a distinct value finds it.',
-            'Check an intermediate point, not just the ends — two different scalings agree at 4 and 20 mA.',
             'Proving a trip means watching the action happen, not watching the number arrive.',
-            'Mark up what you find. Commissioning is when the drawing and the installation first meet.',
           ]}
         />
 
@@ -480,12 +474,12 @@ const InstrumentationModule7Section6 = () => {
           id="ins-7-6-confirm"
           question="During a loop check the technician at the field device announces “injecting 12 mA”. What is the most useful thing the person at the controller can say back?"
           options={[
-            'The value the display is actually showing, before hearing what it should be',
             'That the loop appears healthy',
             'That the alarm has not activated',
             'Confirmation that 12 mA was expected',
+            'The value the display is actually showing, before hearing what it should be',
           ]}
-          correctIndex={0}
+          correctIndex={3}
           explanation="Reporting the observed value is a test; agreeing with an expected value is not. Once somebody knows what the answer should be, a display reading close to it stops being scrutinised — which is exactly how a loop with a range mismatch gets signed off as correct."
         />
 
@@ -669,12 +663,12 @@ const InstrumentationModule7Section6 = () => {
           id="ins-7-6-transposed"
           question="Two adjacent temperature loops have been transposed during installation. Both are checked by injecting current at the marshalling cabinet. What is the result?"
           options={[
-            'One loop fails the check',
             'Both loops pass — the fault is entirely outside the section of path being tested',
+            'One loop fails the check',
             'Both loops read backwards',
             'The alarms activate on both loops',
           ]}
-          correctIndex={1}
+          correctIndex={0}
           explanation="Cabinet injection tests from the cabinet to the host, and the transposition is on the field side of that. Both checks therefore return correct results, and the exercise ends by certifying an installation that is wired to the wrong vessels."
         />
 

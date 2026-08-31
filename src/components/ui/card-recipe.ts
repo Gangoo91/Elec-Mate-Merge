@@ -85,8 +85,23 @@ export const CARD_BASE = cn(
  * reading 900 lines of teaching content.
  */
 export const SURFACE_DEPTH =
-  'shadow-[inset_0_1px_0_0_rgba(255,255,255,0.16),0_2px_10px_-4px_rgba(0,0,0,0.65)]';
+  'shadow-[inset_0_1px_0_0_rgba(255,255,255,0.13),0_2px_10px_-4px_rgba(0,0,0,0.7)]';
 
+/**
+ * Darkened 2026-08-31, back toward the certificate forms.
+ *
+ * The 08-29 brightening (0.14/0.075/0.045 → 0.19/0.105/0.065) overshot. Next
+ * to `fieldStyles.cardCn` — the card the EICR and specialist certificate forms
+ * use across 158 files, at `from-white/[0.08] to-white/[0.04]` — the hub cards
+ * read as washed-out grey rather than dark and rich, and the two halves of the
+ * app no longer looked like the same product.
+ *
+ * This lands between them: roughly 60% of the 08-29 brightness, which is close
+ * to the cert-form depth, while keeping the two things that make a hub card
+ * feel physical and a cert card feel flat — the diagonal ramp and the 1px
+ * inset bevel. Hover and active ramps moved down with it, or hover would have
+ * brightened past the old resting state.
+ */
 /**
  * The lit surface. Brightened 2026-08-29 — roughly a third more light at each
  * stop (0.14/0.075/0.045 → 0.19/0.105/0.065). Still a diagonal ramp, so a card
@@ -94,7 +109,7 @@ export const SURFACE_DEPTH =
  * reading off a slate.
  */
 export const CARD_SURFACE = cn(
-  'bg-gradient-to-br from-white/[0.19] via-white/[0.105] to-white/[0.065]',
+  'bg-gradient-to-br from-white/[0.11] via-white/[0.065] to-white/[0.04]',
   SURFACE_DEPTH
 );
 
@@ -139,8 +154,8 @@ export const CARD_PRIMARY = cn(
 export const CARD_NEUTRAL = cn(
   'border-elec-yellow/35',
   CARD_SURFACE,
-  'hover:border-elec-yellow/60 hover:from-white/[0.19] hover:via-white/[0.11] hover:to-white/[0.07]',
-  'active:from-white/[0.22]'
+  'hover:border-elec-yellow/60 hover:from-white/[0.14] hover:via-white/[0.085] to-white/[0.055]',
+  'active:from-white/[0.16]'
 );
 
 /** Not available yet — dimmed, and callers should skip the action word. */

@@ -197,14 +197,10 @@ const InstrumentationModule3Section3 = () => {
         <TLDR
           points={[
             'Conditioning solves three problems: the signal is the wrong size, it is referenced to the wrong thing, or it carries content the receiver should not act on.',
-            'A signal much smaller than the input range wastes resolution, not just amplitude — you lose most of the converter’s counts.',
-            'Voltage exists between two points. Sources come floating, ground-referenced, elevated or centre-grounded, and each connects differently.',
-            'A bridge circuit removes the sensing element’s offset and hands you a common-mode voltage in exchange.',
             'A single-ended input measures against its own ground. Over any distance, that ground is not the same ground the sensor is using.',
             'A differential input measures the difference between two wires and rejects what they share — which is exactly what common-mode noise is.',
             'Bonding the two grounds together does not fix it. It creates a ground loop.',
             'Galvanic isolation removes the shared path entirely, and also resolves active/passive mismatches and protects the input.',
-            'Filtering is called damping here. Cutoff frequency f = 1 ÷ (2πRC), and at that frequency about 70.7 per cent of the signal gets through.',
             '🔴 Too much damping makes the transmitter lie to the control system — and the resulting instability is invisible on the trend. Use as little as necessary.',
           ]}
         />
@@ -310,11 +306,11 @@ const InstrumentationModule3Section3 = () => {
           question="A 0–10 V analogue input resolves its range into 4096 counts. A sensor only ever produces 0–1 V. Roughly what is the smallest change the system can see?"
           options={[
             'About 0.24 mV, the full resolution of the input',
-            'About 2.4 mV, because only about a tenth of the counts are ever used',
             'About 24 mV',
+            'About 2.4 mV, because only about a tenth of the counts are ever used',
             'It depends on the cable length',
           ]}
-          correctIndex={1}
+          correctIndex={2}
           explanation="10 V ÷ 4096 ≈ 2.4 mV per count, and that step size is fixed by the input range, not by the signal. A signal spanning only 1 V crosses about 410 of the 4096 counts, so the effective resolution on that measurement is about 2.4 mV — roughly ten times coarser than if the signal filled the range. Amplifying by ten recovers it."
         />
 
@@ -480,10 +476,10 @@ const InstrumentationModule3Section3 = () => {
           options={[
             'The thermocouple is the wrong type',
             'The thermocouple is faulty',
-            'A floating source has been connected to an input that needs a ground reference, so nothing defines where the signal sits',
             'The input needs a 250 Ω resistor',
+            'A floating source has been connected to an input that needs a ground reference, so nothing defines where the signal sits',
           ]}
-          correctIndex={2}
+          correctIndex={3}
           explanation="An insulated junction is a floating source — it has no connection to earth. A single-ended input needs to know where the other end of the measurement is, and nothing here defines it, so the signal drifts with whatever capacitive coupling happens to be around. A differential input, or a defined reference path, resolves it. The motor is a symptom, not the cause."
         />
 

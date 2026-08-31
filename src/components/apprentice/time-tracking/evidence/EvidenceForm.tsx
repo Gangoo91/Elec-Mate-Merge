@@ -158,7 +158,7 @@ const EvidenceForm = ({ onAddEvidence, isUploading, setIsUploading }: EvidenceFo
       <div className="flex justify-end">
         <Button
           type="submit"
-          className="w-full h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation disabled:opacity-40"
+          className="w-full h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation disabled:bg-white/[0.08] disabled:text-white/70"
           disabled={isUploading}
         >
           {isUploading ? 'Uploading...' : 'Add to training record'}

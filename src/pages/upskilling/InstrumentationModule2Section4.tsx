@@ -81,11 +81,11 @@ const quizQuestions = [
   {
     id: 2,
     question:
-      'The weight density of water is 62.4 lb/ft³ at standard temperature. At temperatures common in power generation boilers it may be as low as:',
-    options: ['58 lb/ft³', '50 lb/ft³', '36 lb/ft³', '20 lb/ft³'],
+      'Water is close to 1000 kg/m³ at everyday temperatures. At the temperatures a power-generation boiler runs at, roughly what does that fall to?',
+    options: ['930 kg/m³', '850 kg/m³', '580 kg/m³', '320 kg/m³'],
     correctIndex: 2,
     explanation:
-      'As low as 36 lb/ft³ — a reduction of roughly 42%. A hydrostatic level measurement configured for cold water and applied to hot boiler water would be badly wrong, which is why boiler drum level is treated as a specialist measurement with compensation rather than a routine one.',
+      'Around 580 kg/m³ — a reduction of roughly 42%. A hydrostatic level measurement configured for cold water and applied to hot boiler water would be badly wrong, which is why boiler drum level is treated as a specialist measurement with compensation rather than a routine one.',
   },
   {
     id: 3,
@@ -98,7 +98,7 @@ const quizQuestions = [
     ],
     correctIndex: 1,
     explanation:
-      'Many different liquid-liquid interface columns can have the same hydrostatic pressure without being identical to one another. A single pressure reading cannot tell you which arrangement produced it, so interface measurement needs a principle that distinguishes the two materials rather than just weighing the column.',
+      'Any number of different splits between the two liquids can weigh exactly the same, so the pressure at the bottom does not identify which split produced it. Weighing the column cannot separate them — you need a principle that can actually tell the two materials apart.',
   },
   {
     id: 4,
@@ -162,9 +162,9 @@ const InstrumentationModule2Section4 = () => {
         <TLDR
           points={[
             '🔴 Most level measurements are INFERRED, not measured. A hydrostatic instrument weighs a column of liquid and converts that to a height by assuming a density.',
-            'Change the product or its temperature and the assumption breaks. Water is 62.4 lb/ft³ cold and as little as 36 lb/ft³ at boiler temperatures — a 42% shift in the very number the conversion depends on.',
+            'Change the product or its temperature and the assumption breaks. Water is close to 1000 kg/m³ cold and nearer 580 kg/m³ at boiler temperatures — a 42% shift in the very number the conversion depends on.',
             'A sightglass and its vessel form a U-tube manometer, which is why unequal-height columns can balance perfectly well if their densities differ.',
-            'Interfaces defeat pressure entirely: many different liquid-liquid interface columns produce the SAME hydrostatic pressure without being identical.',
+            'Interfaces defeat pressure entirely: any number of different splits between two liquids weigh exactly the same, so the reading cannot tell them apart.',
             'Radar, guided radar and ultrasonic all work on time of flight — emit a pulse, time the reflection, convert to distance. They measure the surface rather than the weight.',
             'Position sensing answers "how far". Proximity sensing answers "is it there". Do not buy the first when the second will do.',
           ]}
@@ -225,8 +225,8 @@ const InstrumentationModule2Section4 = () => {
           <p>It is tempting to treat density variation as a rounding error. It is not.</p>
           <p>
             <strong>
-              The weight density of water is 62.4 lb/ft³ at standard temperature, but may be as low
-              as only 36 lb/ft³ at temperatures common for power generation boilers.
+              Water sits near 1000 kg/m³ at ordinary temperatures and can fall to roughly 580 kg/m³
+              once it is as hot as a power-generation boiler keeps it.
             </strong>
           </p>
           <p>
@@ -247,12 +247,12 @@ const InstrumentationModule2Section4 = () => {
           id="ins-2-4-density"
           question="A tank is used alternately for two products of different density. The DP level transmitter is configured for the heavier one. What happens when the lighter product is stored?"
           options={[
-            'Nothing — the instrument self-compensates',
             'The indicated level reads LOW, because the lighter column produces less pressure for the same height',
+            'Nothing — the instrument self-compensates',
             'The indicated level reads HIGH',
             'The transmitter will fail to zero',
           ]}
-          correctIndex={1}
+          correctIndex={0}
           explanation="Less dense product produces less pressure for the same physical height. The transmitter, configured to expect the heavier product, converts that lower pressure into a lower indicated level. The tank is fuller than the display claims — which is the dangerous direction of error on an overfill."
         />
 
@@ -340,8 +340,8 @@ const InstrumentationModule2Section4 = () => {
           <p>
             The difficulty is that{' '}
             <strong>
-              many different liquid-liquid interface columns can have the same hydrostatic pressure
-              without being identical to one another
+              any number of different splits between two liquids weigh exactly the same at the
+              bottom of the vessel
             </strong>
             . A tall oil layer over a short water layer and a short oil layer over a tall water
             layer can weigh exactly the same. The pressure reading cannot distinguish them, because
@@ -365,10 +365,10 @@ const InstrumentationModule2Section4 = () => {
             in the vessel, and the sightglass under-reads while looking entirely healthy.
           </p>
           <p>
-            For interface work in a sightglass, the source is explicit that the only way to ensure
-            proper two-part indication is to <strong>keep both ports submerged</strong>. Resolving
-            an interface properly needs a principle that can distinguish the two materials — guided
-            radar and capacitance both do this — rather than one that merely weighs the column.
+            For interface work in a sightglass there is only one way to get a proper two-part
+            indication: <strong>keep both ports submerged</strong>. Resolving an interface properly
+            needs a principle that can distinguish the two materials — guided radar and capacitance
+            both do this — rather than one that merely weighs the column.
           </p>
         </ConceptBlock>
 
@@ -425,11 +425,11 @@ const InstrumentationModule2Section4 = () => {
           question="Why is a radar level instrument unaffected by a change of product density?"
           options={[
             'Because it compensates for density internally',
-            'Because it locates the surface by timing a reflection, rather than inferring height from the weight of the column',
             'Because radar pulses travel faster through denser liquids',
+            'Because it locates the surface by timing a reflection, rather than inferring height from the weight of the column',
             'It is affected — density must be configured',
           ]}
-          correctIndex={1}
+          correctIndex={2}
           explanation="Time of flight measures the distance to the surface. Density does not enter the calculation at all, because the instrument is not weighing anything. That is the fundamental difference between measuring level and inferring it."
         />
 
@@ -443,8 +443,8 @@ const InstrumentationModule2Section4 = () => {
         >
           <p>
             <strong>
-              Perhaps the simplest form of solid or liquid level measurement is with a float: a
-              device that rides on the surface of the fluid or solid within the storage vessel.
+              The most direct way to follow a level is to put something on top of it and watch where
+              that sits &mdash; a float, riding the surface inside the vessel.
             </strong>
           </p>
           <p>Two requirements follow directly, and both are practical failure modes:</p>
@@ -520,11 +520,11 @@ const InstrumentationModule2Section4 = () => {
           question="A displacer-type level instrument is moved to a tank holding a lighter product. What happens?"
           options={[
             'Nothing — displacers are density-independent',
-            'It reads low, because the lighter liquid provides less buoyancy for the same submerged depth',
             'It reads high',
             'The displacer will float',
+            'It reads low, because the lighter liquid provides less buoyancy for the same submerged depth',
           ]}
-          correctIndex={1}
+          correctIndex={3}
           explanation="A displacer measures the buoyant force, and buoyancy depends on the density of the liquid displaced. A lighter product supports less weight for the same submerged depth, so the instrument sees less change and reports a lower level. Like the hydrostatic case, the instrument is working perfectly and the assumption behind it is not."
         />
 
@@ -593,12 +593,12 @@ const InstrumentationModule2Section4 = () => {
           id="ins-2-4-noncontact"
           question="An ultrasonic level instrument in an agitated vessel reads erratically, sometimes reporting a level far above the true one. What is the most likely cause?"
           options={[
-            'The product density has changed',
             'The instrument is receiving reflections from the agitator or from foam rather than from the liquid surface',
+            'The product density has changed',
             'The transmitter has lost power',
             'The ultrasonic frequency has drifted',
           ]}
-          correctIndex={1}
+          correctIndex={0}
           explanation="A time-of-flight instrument reports the reflection it detects. Internal structure and foam both produce returns, and a return from something closer than the surface converts to a shorter distance — which reads as a higher level. Density is irrelevant here; the instrument is not weighing anything."
         />
 
@@ -882,7 +882,7 @@ const InstrumentationModule2Section4 = () => {
         <KeyTakeaways
           points={[
             'Most level measurements are inferred. A hydrostatic instrument weighs a column and converts that weight to a height using an assumed density.',
-            'Water is 62.4 lb/ft³ at standard temperature and as little as 36 lb/ft³ at boiler temperatures — about a 42% change in the assumption the conversion rests on.',
+            'Water is near 1000 kg/m³ cold and around 580 kg/m³ at boiler temperatures — about a 42% change in the assumption the conversion rests on.',
             'A sightglass and its vessel form a U-tube manometer, so a cooler, denser column in the glass balances a taller one in the vessel and the glass under-reads.',
             'Many different liquid-liquid interface columns produce the same hydrostatic pressure, so a pressure reading cannot resolve an interface.',
             'Radar, guided radar and ultrasonic all time a reflection: flight time is proportional to distance, and density never enters the calculation.',
@@ -914,7 +914,7 @@ const InstrumentationModule2Section4 = () => {
               Next section <ChevronRight className="h-3 w-3" />
             </span>
             <span className="mt-1 truncate text-[14px] font-semibold text-white">
-              Digital and analogue output
+              Analogue and digital output
             </span>
           </button>
         </div>

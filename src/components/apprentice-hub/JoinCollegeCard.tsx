@@ -1,3 +1,5 @@
+import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { motion } from 'framer-motion';
 import { School } from 'lucide-react';
 import { CollegeInviteAccept } from '@/components/college/CollegeInviteAccept';
@@ -24,14 +26,14 @@ export function JoinCollegeCard({ onJoined }: Props) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.2, delay: 0.05 }}
     >
-      <div className="rounded-2xl border border-white/[0.08] bg-[hsl(0_0%_11%)] p-5 sm:p-6">
+      <div className={cn('rounded-2xl border border-white/[0.08] p-5 sm:p-6', CARD_SURFACE)}>
         <div className="flex items-start gap-3 mb-5">
-          <div className="h-10 w-10 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20 grid place-items-center shrink-0">
+          <div className="h-10 w-10 rounded-xl bg-white/[0.06] border border-elec-yellow/30 grid place-items-center shrink-0">
             <School className="h-5 w-5 text-elec-yellow" />
           </div>
           <div className="min-w-0">
             <h2 className="text-[15px] font-semibold text-white">Join your college</h2>
-            <p className="text-[12.5px] text-white/60 mt-0.5 leading-relaxed">
+            <p className="text-[12.5px] text-white mt-0.5 leading-relaxed">
               Enter the invite code from your tutor to link your apprenticeship. Your learning
               plan, off-the-job hours, quizzes and portfolio will sync automatically.
             </p>

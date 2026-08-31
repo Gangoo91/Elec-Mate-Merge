@@ -412,7 +412,7 @@ export function TaskDetailSheet({
                     type="button"
                     onClick={() => { haptic.success(); handleAction(() => onMarkDone(task.id)); }}
                     disabled={actionLoading}
-                    className="h-12 w-full rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-colors hover:bg-elec-yellow/90 disabled:opacity-50 touch-manipulation active:scale-[0.99]"
+                    className="h-12 w-full rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-colors hover:bg-elec-yellow/90 disabled:bg-white/[0.08] disabled:text-white/70 touch-manipulation active:scale-[0.99]"
                   >
                     Mark done
                   </button>
@@ -421,7 +421,7 @@ export function TaskDetailSheet({
                     type="button"
                     onClick={() => handleAction(() => onReopen(task.id))}
                     disabled={actionLoading}
-                    className="h-12 w-full rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-colors hover:bg-elec-yellow/90 disabled:opacity-50 touch-manipulation active:scale-[0.99]"
+                    className="h-12 w-full rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-colors hover:bg-elec-yellow/90 disabled:bg-white/[0.08] disabled:text-white/70 touch-manipulation active:scale-[0.99]"
                   >
                     Reopen
                   </button>

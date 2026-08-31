@@ -337,7 +337,7 @@ export const DocumentationQuizNewStyle = () => {
         <Button
           onClick={handleNext}
           disabled={selectedAnswer === undefined}
-          className="bg-elec-yellow text-black hover:bg-yellow-400 disabled:opacity-50 disabled:cursor-not-allowed text-base px-6 py-3"
+          className="bg-elec-yellow text-black hover:bg-yellow-400 disabled:bg-white/[0.08] disabled:text-white/70 disabled:cursor-not-allowed text-base px-6 py-3"
         >
           {!showExplanation
             ? 'Submit Answer'

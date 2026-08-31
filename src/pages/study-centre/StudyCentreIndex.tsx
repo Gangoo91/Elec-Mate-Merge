@@ -271,7 +271,7 @@ export default function StudyCentreIndex() {
         title: 'Flashcards',
         value: String(flashcardSetDefinitions.length),
         valueLabel: 'revision decks',
-        to: '/apprentice/on-job-tools/flashcards',
+        to: '/study-centre/flashcards',
       },
       {
         id: 'revision',

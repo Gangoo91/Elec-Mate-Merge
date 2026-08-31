@@ -171,7 +171,7 @@ export default function GetQuoteView() {
                 <button
                   type="submit"
                   disabled={submit.isPending}
-                  className="w-full h-12 rounded-xl bg-elec-yellow text-black font-semibold text-[14px] flex items-center justify-center gap-2 active:scale-[0.99] disabled:opacity-50 touch-manipulation"
+                  className="w-full h-12 rounded-xl bg-elec-yellow text-black font-semibold text-[14px] flex items-center justify-center gap-2 active:scale-[0.99] disabled:bg-white/[0.08] disabled:text-white/70 touch-manipulation"
                 >
                   {submit.isPending ? (
                     <>

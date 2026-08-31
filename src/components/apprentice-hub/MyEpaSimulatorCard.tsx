@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { supabase } from '@/integrations/supabase/client';
 import { realtimeChannelName } from '@/lib/realtimeChannel';
 
@@ -32,11 +33,11 @@ const TYPE_LABEL: Record<SessionType, string> = {
 };
 
 const GRADE_TONE: Record<string, string> = {
-  distinction: 'text-white/85',
-  merit: 'text-white/85',
-  pass: 'text-white/85',
-  fail: 'text-white/85',
-  refer: 'text-white/85',
+  distinction: 'text-white',
+  merit: 'text-white',
+  pass: 'text-white',
+  fail: 'text-white',
+  refer: 'text-white',
 };
 
 function fmtRel(iso: string | null): string {
@@ -51,7 +52,7 @@ function fmtRel(iso: string | null): string {
 }
 
 function gradeTone(grade: string | null): string {
-  if (!grade) return 'text-white/85';
+  if (!grade) return 'text-white';
   const key = grade.toLowerCase();
   return GRADE_TONE[key] ?? 'text-white';
 }
@@ -133,14 +134,14 @@ export function MyEpaSimulatorCard() {
   const empty = sessions.length === 0;
 
   return (
-    <section className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_10%)] overflow-hidden">
+    <section className={cn('rounded-2xl border border-white/[0.06] overflow-hidden', CARD_SURFACE)}>
       <div className="px-4 sm:px-5 py-4 sm:py-5">
         <div className="flex items-baseline justify-between gap-3 flex-wrap">
-          <div className="text-[11px] sm:text-[11.5px] font-medium uppercase tracking-[0.18em] text-amber-300/85">
+          <div className="text-[11px] sm:text-[11.5px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
             EPA simulator
           </div>
           {summary.total > 0 && (
-            <span className="text-[10.5px] tabular-nums text-white/85">
+            <span className="text-[10.5px] tabular-nums text-white">
               {summary.total} {summary.total === 1 ? 'run' : 'runs'} so far
             </span>
           )}
@@ -148,14 +149,14 @@ export function MyEpaSimulatorCard() {
 
         {empty ? (
           <>
-            <p className="mt-3 text-[12.5px] text-white/90 leading-snug">
+            <p className="mt-3 text-[12.5px] text-white leading-snug">
               Practice your EPA before the real one. Knowledge tests, professional discussions, all
               marked instantly with a predicted grade.
             </p>
             <button
               type="button"
               onClick={() => navigate('/apprentice/epa-simulator?tab=readiness')}
-              className="mt-4 w-full h-11 rounded-lg bg-elec-yellow text-black text-[13px] font-semibold hover:bg-elec-yellow/90 transition-colors touch-manipulation"
+              className="mt-4 h-11 w-full rounded-lg bg-elec-yellow px-5 text-[13px] font-semibold text-black transition-colors touch-manipulation hover:bg-elec-yellow/90 sm:w-auto"
             >
               Take your first mock
             </button>
@@ -172,7 +173,7 @@ export function MyEpaSimulatorCard() {
                 >
                   {summary.latest?.predicted_grade ?? '—'}
                 </div>
-                <div className="mt-1 text-[10.5px] uppercase tracking-[0.14em] text-white/95">
+                <div className="mt-1 text-[10.5px] uppercase tracking-[0.14em] text-white">
                   Latest predicted grade
                 </div>
               </div>
@@ -182,13 +183,13 @@ export function MyEpaSimulatorCard() {
                     {summary.latest?.overall_score ?? '—'}
                   </span>
                   {summary.latest?.overall_score != null && (
-                    <span className="text-[12px] text-white/95">%</span>
+                    <span className="text-[12px] text-white">%</span>
                   )}
                   {summary.trendDelta != null && summary.trendDelta !== 0 && (
                     <span
                       className={cn(
                         'ml-1 text-[10.5px] font-medium tabular-nums',
-                        summary.trendDelta > 0 ? 'text-white/85' : 'text-white/85'
+                        summary.trendDelta > 0 ? 'text-white' : 'text-white'
                       )}
                     >
                       {summary.trendDelta > 0 ? '+' : ''}
@@ -196,13 +197,13 @@ export function MyEpaSimulatorCard() {
                     </span>
                   )}
                 </div>
-                <div className="mt-1 text-[10.5px] uppercase tracking-[0.14em] text-white/95">
+                <div className="mt-1 text-[10.5px] uppercase tracking-[0.14em] text-white">
                   Latest score
                 </div>
               </div>
             </div>
 
-            <p className="mt-3 text-[11.5px] sm:text-[12px] text-white/85 leading-snug">
+            <p className="mt-3 text-[11.5px] sm:text-[12px] text-white leading-snug">
               Your tutor sees these results on Student 360 — the more you practice, the sharper
               their read of your readiness gets.
             </p>
@@ -218,14 +219,14 @@ export function MyEpaSimulatorCard() {
               <button
                 type="button"
                 onClick={() => navigate('/apprentice/epa-simulator?tab=discussion')}
-                className="h-11 rounded-lg border border-white/[0.06] bg-white/[0.02] text-[12.5px] font-semibold text-white/85 hover:bg-white/[0.02] transition-colors touch-manipulation"
+                className="h-11 rounded-lg border border-white/[0.06] bg-white/[0.02] text-[12.5px] font-semibold text-white hover:bg-white/[0.02] transition-colors touch-manipulation"
               >
                 Pro discussion
               </button>
             </div>
 
             <div className="mt-5 -mx-1">
-              <div className="px-1 text-[10.5px] font-medium uppercase tracking-[0.16em] text-white/95">
+              <div className="px-1 text-[10.5px] font-medium uppercase tracking-[0.16em] text-white">
                 Recent runs
               </div>
               <ul className="mt-2 divide-y divide-white/[0.05]">
@@ -235,7 +236,7 @@ export function MyEpaSimulatorCard() {
                       <span className="text-[12.5px] font-medium text-white">
                         {TYPE_LABEL[s.session_type]}
                       </span>
-                      <span className="text-[10.5px] text-white/85">{fmtRel(s.completed_at)}</span>
+                      <span className="text-[10.5px] text-white">{fmtRel(s.completed_at)}</span>
                     </div>
                     <div className="shrink-0 flex items-baseline gap-3 tabular-nums">
                       <span className="text-[11.5px] text-white">
@@ -257,7 +258,7 @@ export function MyEpaSimulatorCard() {
                 <button
                   type="button"
                   onClick={() => navigate('/apprentice/epa-simulator?tab=history')}
-                  className="mt-2 px-1 text-[11.5px] font-medium text-white/85 hover:text-white/85 transition-colors touch-manipulation"
+                  className="mt-2 px-1 text-[11.5px] font-medium text-white hover:text-white transition-colors touch-manipulation"
                 >
                   See full history →
                 </button>
@@ -272,7 +273,7 @@ export function MyEpaSimulatorCard() {
 
 function Skeleton() {
   return (
-    <section className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_10%)] overflow-hidden">
+    <section className={cn('rounded-2xl border border-white/[0.06] overflow-hidden', CARD_SURFACE)}>
       <div className="px-4 sm:px-5 py-4 sm:py-5 space-y-4">
         <div className="h-3 w-28 rounded-full bg-white/[0.05]" />
         <div className="grid grid-cols-2 gap-3">

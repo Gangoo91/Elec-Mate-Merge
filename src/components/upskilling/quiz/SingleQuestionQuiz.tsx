@@ -354,7 +354,7 @@ const SingleQuestionQuiz = (props: SingleQuestionQuizProps) => {
               onClick={handlePreviousQuestion}
               disabled={currentQuestion === 0 || answered}
               variant="outline"
-              className="bg-transparent border-elec-yellow text-elec-yellow hover:bg-elec-yellow hover:text-elec-dark disabled:opacity-50 disabled:cursor-not-allowed"
+              className="bg-transparent border-elec-yellow text-elec-yellow hover:bg-elec-yellow hover:text-elec-dark disabled:bg-white/[0.08] disabled:text-white/70 disabled:cursor-not-allowed"
             >
               <ArrowLeft className="mr-2 h-4 w-4" />
               Previous
@@ -365,7 +365,7 @@ const SingleQuestionQuiz = (props: SingleQuestionQuizProps) => {
             <Button
               onClick={handleSubmitAnswer}
               disabled={selectedOption === null}
-              className={`bg-elec-yellow text-elec-dark hover:bg-yellow-500 disabled:opacity-50 disabled:cursor-not-allowed ${
+              className={`bg-elec-yellow text-elec-dark hover:bg-yellow-500 disabled:bg-white/[0.08] disabled:text-white/70 disabled:cursor-not-allowed ${
                 isMobile ? 'w-full py-3' : ''
               }`}
             >

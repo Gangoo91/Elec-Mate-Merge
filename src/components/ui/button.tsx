@@ -27,6 +27,14 @@ const buttonVariants = cva(
   'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 touch-manipulation active:scale-[0.98]',
   {
     variants: {
+      /*
+       * 🔴 The base classes carry `disabled:opacity-50`, which is right for a
+       * neutral or outline button and WRONG for the two solid-volt ones.
+       * Translucent volt over this app's near-black ground does not read as a
+       * faded yellow — it goes muddy brown, so a disabled primary looked like
+       * a rendering fault rather than a disabled control. The volt variants
+       * therefore opt out of the fade and go neutral instead.
+       */
       variant: {
         default: 'bg-primary text-primary-foreground hover:bg-primary/90 active:bg-primary/80',
         destructive:
@@ -38,14 +46,14 @@ const buttonVariants = cva(
         ghost: 'hover:bg-accent hover:text-accent-foreground active:bg-accent/80',
         link: 'text-primary underline-offset-4 hover:underline active:opacity-70',
         accent:
-          'bg-elec-yellow text-black hover:bg-elec-yellow/90 active:bg-elec-yellow/80 font-semibold shadow-sm',
+          'bg-elec-yellow text-black hover:bg-elec-yellow/90 active:bg-elec-yellow/80 font-semibold shadow-sm disabled:bg-white/[0.08] disabled:text-white/70 disabled:shadow-none disabled:opacity-100',
         'accent-outline':
           'border-2 border-elec-yellow/40 text-elec-yellow hover:bg-elec-yellow/10 hover:border-elec-yellow/60 active:bg-elec-yellow/20 font-medium',
         'accent-ghost':
           'text-elec-yellow hover:bg-elec-yellow/10 hover:text-elec-yellow/90 active:bg-elec-yellow/20 font-medium',
         // iOS-Native variants
         'ios-primary':
-          'bg-elec-yellow text-black font-semibold rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.12)] transition-all duration-ios-fast ease-ios-ease active:scale-[0.97] active:shadow-[0_1px_4px_rgba(0,0,0,0.1)]',
+          'bg-elec-yellow text-black font-semibold rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.12)] transition-all duration-ios-fast ease-ios-ease active:scale-[0.97] active:shadow-[0_1px_4px_rgba(0,0,0,0.1)] disabled:bg-white/[0.08] disabled:text-white/70 disabled:shadow-none disabled:opacity-100',
         'ios-secondary':
           'bg-white/10 text-white font-medium rounded-xl border border-white/20 transition-all duration-ios-fast ease-ios-ease active:scale-[0.97] active:bg-white/15',
         'ios-ghost':

@@ -1256,7 +1256,7 @@ export default function AdminBusinessOutreach() {
                 <button
                   onClick={sendTest}
                   disabled={!testEmail}
-                  className="inline-flex h-12 w-full touch-manipulation items-center justify-center gap-2 rounded-full bg-elec-yellow text-[14px] font-semibold text-black disabled:cursor-not-allowed disabled:opacity-40"
+                  className="inline-flex h-12 w-full touch-manipulation items-center justify-center gap-2 rounded-full bg-elec-yellow text-[14px] font-semibold text-black disabled:cursor-not-allowed disabled:bg-white/[0.08] disabled:text-white/70"
                 >
                   <Send className="h-4 w-4" />
                   Send test
@@ -1319,7 +1319,7 @@ export default function AdminBusinessOutreach() {
                 <button
                   onClick={() => importMutation.mutate()}
                   disabled={!csvText.trim() || importMutation.isPending}
-                  className="inline-flex h-12 w-full touch-manipulation items-center justify-center gap-2 rounded-full bg-elec-yellow text-[14px] font-semibold text-black disabled:cursor-not-allowed disabled:opacity-40"
+                  className="inline-flex h-12 w-full touch-manipulation items-center justify-center gap-2 rounded-full bg-elec-yellow text-[14px] font-semibold text-black disabled:cursor-not-allowed disabled:bg-white/[0.08] disabled:text-white/70"
                 >
                   {importMutation.isPending ? (
                     <Loader2 className="h-4 w-4 animate-spin" />

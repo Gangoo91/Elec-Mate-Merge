@@ -104,7 +104,7 @@ const SiteConditionTab = () => {
   return (
     <div className="space-y-5 animate-fade-in">
       <div className="space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
           Site condition evaluation
         </span>
         <h2 className="text-[20px] sm:text-[24px] font-semibold tracking-tight text-white leading-tight">
@@ -116,9 +116,9 @@ const SiteConditionTab = () => {
         </p>
       </div>
 
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-3">
+      <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 space-y-3">
         <div className="flex items-baseline justify-between">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
             Progress
           </span>
           <span className="text-[12px] text-white/85 font-mono">
@@ -139,10 +139,10 @@ const SiteConditionTab = () => {
         return (
           <div
             key={index}
-            className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3"
+            className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3"
           >
             <div className="flex items-baseline justify-between">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
                 {category.category}
               </span>
               <span className="text-[12px] text-white/85 font-mono">
@@ -163,7 +163,7 @@ const SiteConditionTab = () => {
                       ${
                         isChecked
                           ? 'bg-white/[0.04] border-white/10'
-                          : 'bg-white/[0.02] border-white/[0.06] hover:border-white/10'
+                          : 'bg-white/[0.06] border-white/[0.10] hover:border-white/10'
                       }
                     `}
                   >
@@ -188,19 +188,19 @@ const SiteConditionTab = () => {
         );
       })}
 
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+      <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
           Environmental factors guide
         </span>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
           {environmentalFactors.map((factor, index) => (
             <div
               key={index}
-              className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-2"
+              className="rounded-lg border border-white/[0.10] bg-white/[0.06] p-3 space-y-2"
             >
               <p className="text-[14px] text-white">{factor.factor}</p>
               <p className="text-[12px] text-white/70 leading-relaxed">
-                <span className="text-white/55">Optimal: </span>
+                <span className="text-white/70">Optimal: </span>
                 {factor.optimalRange}
               </p>
               <ul className="space-y-1">
@@ -219,8 +219,8 @@ const SiteConditionTab = () => {
         </div>
       </div>
 
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+      <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
           Environmental notes
         </span>
         <MobileInput
@@ -237,7 +237,7 @@ const SiteConditionTab = () => {
         </Button>
       </div>
 
-      <div className="rounded-xl border border-red-500/30 bg-red-500/[0.04] p-4 sm:p-5 space-y-2">
+      <div className="rounded-xl border border-white/[0.12] border-l-[3px] border-l-red-500 bg-white/[0.06] p-4 sm:p-5 space-y-2">
         <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">
           Weather considerations
         </span>

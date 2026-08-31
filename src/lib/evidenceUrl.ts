@@ -23,7 +23,20 @@ import { supabase } from '@/integrations/supabase/client';
      through untouched.
    ========================================================================== */
 
-const EVIDENCE_BUCKETS = ['portfolio-evidence', 'evidence-files'] as const;
+/*
+ * `visual-uploads` is here because site-diary photos used to be written to it.
+ *
+ * That bucket is PRIVATE, but the old upload path stored `getPublicUrl(...)`,
+ * i.e. a `/object/public/visual-uploads/...` link. A public path against a
+ * private bucket is a 403, and because the bucket was not in this list the
+ * resolver passed it straight through — so every historic diary photo rendered
+ * as the broken-image fallback. Listing it here means those references get a
+ * signed URL like any other and the pictures come back.
+ *
+ * Current uploads go to `portfolio-evidence`; this is for what is already in
+ * the table.
+ */
+const EVIDENCE_BUCKETS = ['portfolio-evidence', 'evidence-files', 'visual-uploads'] as const;
 type EvidenceBucket = (typeof EVIDENCE_BUCKETS)[number];
 
 const SIGN_TTL_SECONDS = 3600; // signed URL valid for 1h

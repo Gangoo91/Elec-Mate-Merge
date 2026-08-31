@@ -186,15 +186,11 @@ const InstrumentationModule3Section4 = () => {
         <TLDR
           points={[
             'Per unit converts any linear range to any other: turn the input into a fraction from 0 to 1, then turn that fraction into the output.',
-            'A real measurement is a chain of conversions, and every handover is somewhere error can enter.',
             'Converter resolution = analogue span ÷ (2ⁿ − 1). A 12-bit converter on 0–10 V resolves about 2.44 mV.',
-            'Quantisation error is inherent, not a fault: one count corresponds to a whole range of possible inputs.',
-            'Some converters deliberately over-range — a −3.3 to 103.3 per cent converter covers more than the stated range, and the count arithmetic must use the real endpoints.',
             'Nyquist says twice the frequency is the theoretical minimum sample rate. Ten times is the realistic target.',
             'Too slow a sample rate costs you twice: dead time in the loop, and aliasing that invents a smooth low-frequency signal that was never there.',
             'Differential-pressure flow is non-linear — P = kQ². Double the flow and the pressure quadruples.',
             '🔴 The square root must be extracted exactly once. Twice and the reading is high everywhere except 0 and 100 per cent, where a two-point check would catch it.',
-            'DP flow is least trustworthy at the bottom of its range, because the square root magnifies error there. That is what low-flow cutoff is for.',
           ]}
         />
 
@@ -379,8 +375,8 @@ const InstrumentationModule3Section4 = () => {
         <InlineCheck
           id="ins-3-4-counts"
           question="A 12-bit input (0–4095 counts) is scaled 0–250 bar with no over-range. The count is 1638. What is the pressure?"
-          options={['164 bar', '40 bar', '100 bar', '125 bar']}
-          correctIndex={2}
+          options={['164 bar', '40 bar', '125 bar', '100 bar']}
+          correctIndex={3}
           explanation="Per unit = 1638 ÷ 4095 = 0.4. Pressure = 0.4 × 250 = 100 bar. Same two steps as every other conversion in this course — the count range is just another range."
         />
 
@@ -656,8 +652,8 @@ const InstrumentationModule3Section4 = () => {
         <InlineCheck
           id="ins-3-4-sqrt"
           question="A DP transmitter is ranged 0–100 kPa for a flow of 0–500 l/s, with the square root extracted in the host. The transmitter outputs 12 mA. What is the flow?"
-          options={['125 l/s', '500 l/s', '250 l/s', '354 l/s']}
-          correctIndex={3}
+          options={['354 l/s', '125 l/s', '500 l/s', '250 l/s']}
+          correctIndex={0}
           explanation="12 mA is 50 per cent, so the differential pressure is 50 kPa — half of range. Flow is proportional to the square root: √0.5 = 0.707, so flow is 0.707 × 500 ≈ 354 l/s. Reading 12 mA as half flow gives 250 l/s and is wrong by over a hundred litres a second, which is the whole reason characterisation exists."
         />
 

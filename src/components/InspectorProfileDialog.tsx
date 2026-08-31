@@ -441,7 +441,7 @@ const InspectorProfileDialog = ({ onProfileSelected }: InspectorProfileDialogPro
                     type="button"
                     onClick={handleSave}
                     disabled={!formData.name.trim()}
-                    className="h-12 w-full rounded-xl bg-elec-yellow text-black text-sm font-semibold touch-manipulation active:scale-[0.98] transition-all disabled:opacity-50"
+                    className="h-12 w-full rounded-xl bg-elec-yellow text-black text-sm font-semibold touch-manipulation active:scale-[0.98] transition-all disabled:bg-white/[0.08] disabled:text-white/70"
                   >
                     {editingProfile ? 'Update profile' : 'Save profile'}
                   </button>

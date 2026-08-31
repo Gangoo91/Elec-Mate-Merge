@@ -200,16 +200,11 @@ const InstrumentationModule7Section1 = () => {
 
         <TLDR
           points={[
-            'Module 3 owns what a 4–20 mA loop is and how it works. This module is about installing, testing and maintaining one.',
             'A P&ID shows what the plant does. A loop diagram shows what is at the terminals.',
             '🔴 It is the most detailed drawing of a control system as a whole — only a schematic of one individual instrument goes further.',
             'Dashed lines are individual copper wires, not whole cables. That is the main difference in reading one.',
-            'It carries terminal numbers, cable numbers, junction box numbers, wire colours and earthing points.',
             '🔴 A P&ID can hide devices entirely — signal transducers and converters that do not affect the process still have terminals and still fail.',
             '🔴 The layout is deliberately rigid: field instruments left, panel and control room right, tag and range text along the bottom.',
-            'That rigidity is the point. Creativity and readability conflict when a drawing is this dense.',
-            'Wire colours look like trivia until you have worked on a system without them.',
-            'Every detail on the diagram is a question you do not have to answer with a meter.',
             'Read it before travelling — it turns an exploratory visit into a planned one.',
           ]}
         />
@@ -375,12 +370,12 @@ const InstrumentationModule7Section1 = () => {
           id="ins-7-1-devices"
           question="A loop is not working. The P&ID shows a transmitter, a controller and a valve, and all three test correctly in isolation. What should you look at?"
           options={[
-            'The loop diagram, which will show any devices and junction boxes the P&ID omitted',
             'Replace the cable',
             'The control system configuration',
+            'The loop diagram, which will show any devices and junction boxes the P&ID omitted',
             'Repeat the tests — one of them must be faulty',
           ]}
-          correctIndex={0}
+          correctIndex={2}
           explanation="Three good devices and a broken loop means the fault is between them — in cabling, terminations, or a device the P&ID never showed. The loop diagram is the only drawing that lists every junction box, transducer and terminal in the path, and it costs nothing to read before pulling anything apart."
         />
 
@@ -475,11 +470,11 @@ const InstrumentationModule7Section1 = () => {
           question="You are handed an unfamiliar loop sheet and need the transmitter's terminal numbers. Where do you look first?"
           options={[
             'Anywhere — the layout varies by drafter',
-            'The left-hand side, where field instruments are always drawn',
             'The bottom, where the text is',
             'The right-hand side, nearest the panel',
+            'The left-hand side, where field instruments are always drawn',
           ]}
-          correctIndex={1}
+          correctIndex={3}
           explanation="A transmitter is a field instrument, and field instruments are always on the left. The convention exists precisely so this is not a search — you know where the answer should be before you start looking, which is what makes a dense drawing usable."
         />
 

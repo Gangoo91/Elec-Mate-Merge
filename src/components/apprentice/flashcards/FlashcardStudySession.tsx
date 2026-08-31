@@ -1,12 +1,47 @@
+/**
+ * The flashcard study screen (ELE-1655).
+ *
+ * ## Why the flip is built the way it is
+ *
+ * The old version drove a CSS `rotateY` from a single `isFlipped` state while
+ * framer's `AnimatePresence` swapped the card underneath it. Advancing a card
+ * changed the flip and the card in the same commit, so a 0.4s rotation played
+ * during the swap — Andrew: "I'm clicking next and it's just flipping back to
+ * the answer."
+ *
+ * Two things fixed it, and both matter:
+ *
+ * 1. `flipAnimatable` — the rotation transition is switched OFF for the frame
+ *    in which a new card mounts, so the next card can only ever appear on its
+ *    question face, instantly. It cannot rotate into view.
+ * 2. The tap-to-flip guard in `onTap` — react-swipeable listens for `touchend`
+ *    on the whole card, and `e.stopPropagation()` inside a Button's `onClick`
+ *    cannot stop it, because click happens after touchend. Every tap on
+ *    "Got it" was therefore ALSO toggling the flip.
+ *
+ * ## Design
+ *
+ * Built from `@/components/shared/surfaceStyles` so it reads as the same
+ * product as the rest of the app: full-bleed cards on a phone, hierarchy from
+ * type rather than icons, and every piece of text full white — de-emphasis is
+ * `opacity` on a whole element, never a `text-white/55` that renders as grey.
+ */
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { Button } from '@/components/ui/button';
-import { ArrowLeft, RotateCcw, CheckCircle, XCircle } from 'lucide-react';
+import { ArrowLeft, RotateCcw, CheckCircle, XCircle, Sparkles } from 'lucide-react';
 import { useStudyStreak } from '@/hooks/useStudyStreak';
 import { useFlashcardProgress } from '@/hooks/useFlashcardProgress';
 import { useFlashcardAchievements } from '@/hooks/useFlashcardAchievements';
 import { flashcardSets, type FlashcardData } from '@/data/flashcards';
 import { useSwipeable } from 'react-swipeable';
-import { AnimatePresence, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
+import { cn } from '@/lib/utils';
+import {
+  eyebrowCn,
+  ghostButtonCn,
+  primaryButtonCn,
+  statValueCn,
+} from '@/components/shared/surfaceStyles';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import MiniProgressRing from './MiniProgressRing';
 import AchievementUnlockToast from './AchievementUnlockToast';
 
@@ -25,6 +60,19 @@ const haptic = (pattern: number | number[]) => {
   }
 };
 
+/** Anything that handles its own tap and must not also flip the card. */
+const INTERACTIVE = 'button, a, input, textarea, select, [role="button"]';
+
+/**
+ * One face of the flip card.
+ *
+ * Deliberately NOT `cardCn`: that carries `-mx-4` so a card can go full-bleed
+ * on a phone, and a negative margin on an `absolute inset-0` face makes it
+ * wider than the card it sits in and shunts it off to the left. Same surface
+ * — gradient, border, radius — without the bleed.
+ */
+const faceCn = cn('absolute inset-0 rounded-2xl border border-elec-yellow/35', CARD_SURFACE);
+
 const FlashcardStudySession = ({
   setId,
   studyMode,
@@ -34,11 +82,12 @@ const FlashcardStudySession = ({
   const [flashcards, setFlashcards] = useState<FlashcardData[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isFlipped, setIsFlipped] = useState(false);
+  /** False for the frame a new card mounts, so the flip cannot animate on swap. */
+  const [flipAnimatable, setFlipAnimatable] = useState(true);
   const [masteredCards, setMasteredCards] = useState<Set<string>>(new Set());
   const [isCompleted, setIsCompleted] = useState(false);
   const [sessionStartTime] = useState(Date.now());
   const [correctAnswers, setCorrectAnswers] = useState(0);
-  const [swipeDirection, setSwipeDirection] = useState<'left' | 'right' | null>(null);
   const [swipeFeedback, setSwipeFeedback] = useState<'correct' | 'incorrect' | null>(null);
 
   const { recordSession } = useStudyStreak();
@@ -91,19 +140,37 @@ const FlashcardStudySession = ({
     studyMode,
   ]);
 
+  /*
+   * Re-enable the flip transition one frame AFTER the card changes.
+   *
+   * Two rAFs, not one: the first fires before the browser has painted the new
+   * card, so re-enabling there would still let the very first paint animate.
+   */
+  useEffect(() => {
+    setFlipAnimatable(false);
+    let inner = 0;
+    const outer = requestAnimationFrame(() => {
+      inner = requestAnimationFrame(() => setFlipAnimatable(true));
+    });
+    return () => {
+      cancelAnimationFrame(outer);
+      cancelAnimationFrame(inner);
+    };
+  }, [currentIndex]);
+
   const currentCard = flashcards[currentIndex];
-  const progress =
-    flashcards.length > 0 ? Math.round(((currentIndex + 1) / flashcards.length) * 100) : 0;
+  const total = flashcards.length;
+  const progress = total > 0 ? Math.round(((currentIndex + 1) / total) * 100) : 0;
 
   const handleFlip = useCallback(() => {
+    haptic(8);
     setIsFlipped((prev) => !prev);
   }, []);
 
   const handleNextCard = useCallback(() => {
     if (currentIndex < flashcards.length - 1) {
-      setSwipeDirection(null);
-      setCurrentIndex((prev) => prev + 1);
       setIsFlipped(false);
+      setCurrentIndex((prev) => prev + 1);
     } else {
       setIsCompleted(true);
     }
@@ -117,11 +184,10 @@ const FlashcardStudySession = ({
       setCorrectAnswers((prev) => prev + 1);
     }
     setSwipeFeedback('correct');
-    setSwipeDirection('right');
     setTimeout(() => {
       setSwipeFeedback(null);
       handleNextCard();
-    }, 300);
+    }, 220);
   }, [currentCard, setId, updateCardProgress, handleNextCard]);
 
   const handleMarkIncorrect = useCallback(() => {
@@ -130,11 +196,10 @@ const FlashcardStudySession = ({
       updateCardProgress(setId, currentCard.id, false);
     }
     setSwipeFeedback('incorrect');
-    setSwipeDirection('left');
     setTimeout(() => {
       setSwipeFeedback(null);
       handleNextCard();
-    }, 300);
+    }, 220);
   }, [currentCard, setId, updateCardProgress, handleNextCard]);
 
   const handleRestart = () => {
@@ -143,7 +208,6 @@ const FlashcardStudySession = ({
     setMasteredCards(new Set());
     setIsCompleted(false);
     setCorrectAnswers(0);
-    setSwipeDirection(null);
     setSwipeFeedback(null);
     sessionRecordedRef.current = false;
   };
@@ -155,23 +219,55 @@ const FlashcardStudySession = ({
     onSwipedRight: () => {
       if (isFlipped) handleMarkCorrect();
     },
-    onTap: () => {
-      handleFlip();
-    },
+    /*
+     * Reveal is an onClick on the card, NOT react-swipeable's `onTap`.
+     *
+     * Two bugs, one cause. `onTap` fires on touchend, so:
+     *
+     *  - With `trackMouse: false` it never fires for a mouse at all — the card
+     *    said "Tap to reveal", showed a pointer cursor, and was completely
+     *    inert on a desktop. Only the space bar worked.
+     *  - The verdict buttons call `e.stopPropagation()`, but that is on the
+     *    React *click* event, which happens after touchend and cannot stop a
+     *    touch handler — so every tap on "Got it" advanced the card AND
+     *    toggled the flip.
+     *
+     * A plain click fires for mouse and touch alike, and `stopPropagation` on
+     * the buttons genuinely stops it. Swipes are unaffected: the browser
+     * suppresses the click when the finger has travelled.
+     */
     trackMouse: false,
     delta: 50,
   });
 
+  // Keyboard: space/enter reveals, arrows mark. Desktop study is a real use case.
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (isCompleted) return;
+      if (e.code === 'Space' || e.code === 'Enter') {
+        e.preventDefault();
+        handleFlip();
+      } else if (e.code === 'ArrowRight' && isFlipped) {
+        handleMarkCorrect();
+      } else if (e.code === 'ArrowLeft' && isFlipped) {
+        handleMarkIncorrect();
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [handleFlip, handleMarkCorrect, handleMarkIncorrect, isFlipped, isCompleted]);
+
+  const achievementToast = <AchievementUnlockToast achievements={recentlyUnlocked} />;
+
   if (flashcards.length === 0) {
     return (
-      <div className="flex items-center justify-center min-h-[400px]">
-        <p className="text-[14px] text-white/55">Loading flashcards…</p>
+      <div className="flex min-h-[400px] items-center justify-center">
+        <p className="text-[14px] text-white opacity-70">Loading flashcards…</p>
       </div>
     );
   }
 
-  const achievementToast = <AchievementUnlockToast achievements={recentlyUnlocked} />;
-
+  // ─── Completion ───────────────────────────────────────────────────────────
   if (isCompleted) {
     const sessionDuration = Math.round((Date.now() - sessionStartTime) / 1000 / 60);
     const successRate = Math.round((correctAnswers / flashcards.length) * 100);
@@ -179,189 +275,190 @@ const FlashcardStudySession = ({
       successRate >= 80 ? 'Outstanding' : successRate >= 60 ? 'Well done' : 'Keep practising';
 
     return (
-      <div className="max-w-2xl mx-auto px-4 pb-20 space-y-6 animate-fade-in text-left">
+      <div className="mx-auto max-w-2xl space-y-5 px-4 pb-20 text-left">
         {achievementToast}
 
-        <div className="flex flex-col items-center pt-8 space-y-3">
+        <div className="flex flex-col items-center space-y-3 pt-8">
           <MiniProgressRing score={successRate} size={120} strokeWidth={6} />
-          <h2 className="text-[20px] sm:text-[22px] font-semibold text-white">
+          <h2 className="text-[22px] font-semibold tracking-tight text-white">
             {performanceLabel}
           </h2>
           {successRate === 100 && (
-            <p className="text-[12px] text-elec-yellow font-medium">Perfect score</p>
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-elec-yellow px-3 py-1 text-[12px] font-semibold text-black">
+              <Sparkles className="h-3.5 w-3.5" />
+              Perfect score
+            </span>
           )}
         </div>
 
-        <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 grid grid-cols-3 gap-4">
-          <div className="space-y-1">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-              Cards
-            </span>
-            <p className="text-[20px] font-semibold text-white font-mono">{flashcards.length}</p>
-          </div>
-          <div className="space-y-1">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-              Accuracy
-            </span>
-            <p className="text-[20px] font-semibold text-white font-mono">{successRate}%</p>
-          </div>
-          <div className="space-y-1">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-              Time
-            </span>
-            <p className="text-[20px] font-semibold text-white font-mono">
-              {sessionDuration || '<1'}m
-            </p>
-          </div>
+        <div className={cn('grid grid-cols-3 divide-x divide-white/[0.14] overflow-hidden rounded-2xl border border-elec-yellow/35', CARD_SURFACE)}>
+          {[
+            { label: 'Cards', value: String(flashcards.length) },
+            { label: 'Accuracy', value: `${successRate}%` },
+            { label: 'Time', value: `${sessionDuration || '<1'}m` },
+          ].map((stat) => (
+            <div key={stat.label} className="px-4 py-4">
+              <span className={eyebrowCn}>{stat.label}</span>
+              <p className={cn(statValueCn, 'text-white')}>{stat.value}</p>
+            </div>
+          ))}
         </div>
 
         <div className="flex flex-col gap-3">
-          <Button
-            onClick={handleRestart}
-            className="bg-elec-yellow text-black hover:bg-elec-yellow/90 h-12 text-[14px] font-semibold touch-manipulation active:scale-[0.98]"
-          >
-            <RotateCcw className="mr-2 h-5 w-5" />
+          <button type="button" onClick={handleRestart} className={cn(primaryButtonCn, 'w-full')}>
+            <RotateCcw className="mr-2 inline h-5 w-5" />
             Study again
-          </Button>
-          <Button
-            variant="outline"
-            onClick={onExit}
-            className="border-white/15 text-white hover:bg-white/[0.05] h-12 text-[14px] touch-manipulation active:scale-[0.98]"
-          >
-            <ArrowLeft className="mr-2 h-5 w-5" />
+          </button>
+          <button type="button" onClick={onExit} className={cn(ghostButtonCn, 'w-full')}>
+            <ArrowLeft className="mr-2 inline h-5 w-5" />
             Back to sets
-          </Button>
+          </button>
         </div>
       </div>
     );
   }
 
+  // ─── Study ────────────────────────────────────────────────────────────────
   return (
-    <div className="max-w-2xl mx-auto px-4 pb-20 space-y-4 animate-fade-in text-left">
+    <div className="mx-auto max-w-2xl space-y-4 px-4 pb-20 text-left">
       {achievementToast}
 
-      <div className="flex items-center justify-between pt-2">
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={onExit}
-          className="border-white/15 text-white hover:bg-white/[0.05] h-10 touch-manipulation"
-        >
-          <ArrowLeft className="h-4 w-4 mr-1" />
+      {/* Session bar */}
+      <div className="flex items-center justify-between gap-3 pt-2">
+        <button type="button" onClick={onExit} className={ghostButtonCn}>
+          <ArrowLeft className="mr-1.5 inline h-4 w-4" />
           Exit
-        </Button>
+        </button>
 
         <div className="flex items-center gap-2">
-          <span className="text-[12px] text-white/85 font-mono px-2 py-1 rounded-md border border-white/10 bg-white/[0.03]">
-            {currentIndex + 1}/{flashcards.length}
+          <span className="rounded-full border border-white/[0.12] bg-white/[0.06] px-3 py-1.5 text-[12px] font-semibold tabular-nums text-white">
+            {currentIndex + 1}/{total}
           </span>
-          <span className="inline-flex items-center gap-1 text-[12px] text-white/85 font-mono px-2 py-1 rounded-md border border-white/10 bg-white/[0.03]">
-            <CheckCircle className="h-3 w-3 text-elec-yellow" />
+          <span className="inline-flex items-center gap-1.5 rounded-full border border-white/[0.12] bg-white/[0.06] px-3 py-1.5 text-[12px] font-semibold tabular-nums text-white">
+            <CheckCircle className="h-3.5 w-3.5 text-elec-yellow" />
             {masteredCards.size}
           </span>
-          <MiniProgressRing score={progress} size={28} strokeWidth={2.5} />
+          <MiniProgressRing score={progress} size={30} strokeWidth={2.5} />
         </div>
       </div>
 
-      <div {...swipeHandlers} className="relative" style={{ perspective: '1000px' }}>
+      {/* Progress rail — one glance at how far through you are */}
+      <div className="h-1 w-full overflow-hidden rounded-full bg-white/[0.10]">
+        <motion.div
+          className="h-full rounded-full bg-elec-yellow"
+          initial={false}
+          animate={{ width: `${progress}%` }}
+          transition={{ duration: 0.3, ease: 'easeOut' }}
+        />
+      </div>
+
+      {/* The card */}
+      <div {...swipeHandlers} className="relative" style={{ perspective: '1200px' }}>
         {swipeFeedback && (
           <div
-            className={`absolute inset-0 z-20 rounded-2xl pointer-events-none transition-opacity ${
+            className={cn(
+              'pointer-events-none absolute inset-0 z-20 rounded-2xl border-2 transition-opacity',
               swipeFeedback === 'correct'
-                ? 'bg-elec-yellow/[0.04] border-2 border-elec-yellow/40'
-                : 'bg-red-500/[0.04] border-2 border-red-500/40'
-            }`}
+                ? 'border-elec-yellow/50 bg-elec-yellow/[0.06]'
+                : 'border-red-500/50 bg-red-500/[0.06]'
+            )}
           />
         )}
 
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={currentIndex}
-            initial={{
-              x: swipeDirection === 'right' ? -100 : swipeDirection === 'left' ? 100 : 0,
-              opacity: 0,
-            }}
-            animate={{ x: 0, opacity: 1 }}
-            exit={{
-              x: swipeDirection === 'right' ? 300 : swipeDirection === 'left' ? -300 : 0,
-              opacity: 0,
-            }}
-            transition={{ duration: 0.25 }}
+        <div
+          role="button"
+          tabIndex={0}
+          aria-label={isFlipped ? 'Hide the answer' : 'Reveal the answer'}
+          onClick={(e) => {
+            /*
+             * A click that started on a verdict button is that button's, not a
+             * reveal.
+             *
+             * `hit !== e.currentTarget` is load-bearing: this card carries
+             * `role="button"` for accessibility, and `closest()` matches the
+             * element it starts from — so without the comparison the guard
+             * matched the CARD ITSELF and swallowed every reveal.
+             */
+            const hit = (e.target as HTMLElement | null)?.closest(INTERACTIVE);
+            if (hit && hit !== e.currentTarget) return;
+            handleFlip();
+          }}
+          className="relative min-h-[360px] w-full cursor-pointer touch-manipulation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/60 sm:min-h-[420px]"
+          style={{
+            transformStyle: 'preserve-3d',
+            // Off for the frame a new card mounts — see flipAnimatable.
+            transition: flipAnimatable ? 'transform 0.45s cubic-bezier(0.4,0,0.2,1)' : 'none',
+            transform: isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)',
+          }}
+        >
+          {/* Question */}
+          <div
+            className={cn(faceCn, 'flex flex-col justify-between p-5 sm:p-8')}
+            style={{ backfaceVisibility: 'hidden' }}
           >
-            <div
-              className="w-full min-h-[350px] sm:min-h-[400px] cursor-pointer"
-              style={{
-                transformStyle: 'preserve-3d',
-                transition: 'transform 0.4s ease',
-                transform: isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)',
-              }}
-            >
-              <div
-                className="absolute inset-0 rounded-2xl bg-white/[0.02] border border-white/[0.06] p-5 sm:p-8 flex flex-col"
-                style={{ backfaceVisibility: 'hidden' }}
-              >
-                <div className="flex items-baseline justify-between mb-6 text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-                  <span>{currentCard?.category}</span>
-                  {currentCard?.difficulty && <span>{currentCard.difficulty}</span>}
-                </div>
-
-                <div className="flex-1 flex items-center justify-center">
-                  <p className="text-[18px] sm:text-[20px] text-white font-medium leading-relaxed text-center">
-                    {currentCard?.question}
-                  </p>
-                </div>
-
-                <p className="text-[12px] text-white/55 text-center mt-4">Tap to flip</p>
-              </div>
-
-              <div
-                className="absolute inset-0 rounded-2xl bg-white/[0.02] border border-elec-yellow/20 p-5 sm:p-8 flex flex-col"
-                style={{
-                  backfaceVisibility: 'hidden',
-                  transform: 'rotateY(180deg)',
-                }}
-              >
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85 mb-4">
-                  Answer
+            <div className="flex items-center justify-between">
+              <span className={eyebrowCn}>Question</span>
+              {currentCard?.difficulty && (
+                <span className="rounded-full border border-white/[0.12] bg-white/[0.06] px-2.5 py-1 text-[11px] font-medium capitalize text-white">
+                  {currentCard.difficulty}
                 </span>
-
-                <div className="flex-1 flex items-center justify-center">
-                  <p className="text-[16px] sm:text-[18px] text-white font-medium leading-relaxed text-center">
-                    {currentCard?.answer}
-                  </p>
-                </div>
-
-                <div className="grid grid-cols-2 gap-3 mt-4">
-                  <Button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleMarkIncorrect();
-                    }}
-                    variant="outline"
-                    className="border-white/15 text-white hover:bg-white/[0.05] h-12 touch-manipulation active:scale-[0.98]"
-                  >
-                    <XCircle className="mr-2 h-5 w-5" />
-                    Need practice
-                  </Button>
-                  <Button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleMarkCorrect();
-                    }}
-                    className="bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold h-12 touch-manipulation active:scale-[0.98]"
-                  >
-                    <CheckCircle className="mr-2 h-5 w-5" />
-                    Got it
-                  </Button>
-                </div>
-
-                <p className="text-[12px] text-white/55 text-center mt-3">
-                  Swipe right = got it · Swipe left = need practice
-                </p>
-              </div>
+              )}
             </div>
-          </motion.div>
-        </AnimatePresence>
+
+            <p className="py-6 text-[19px] font-semibold leading-snug tracking-tight text-white sm:text-[22px]">
+              {currentCard?.question}
+            </p>
+
+            <div className="flex items-center justify-center gap-2 text-[13px] font-medium text-white opacity-70">
+              <RotateCcw className="h-4 w-4" />
+              Tap to reveal
+            </div>
+          </div>
+
+          {/* Answer */}
+          <div
+            className={cn(faceCn, 'flex flex-col justify-between p-5 sm:p-8')}
+            style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}
+          >
+            <span className={eyebrowCn}>Answer</span>
+
+            <div className="max-h-[200px] overflow-y-auto py-4 sm:max-h-[240px]">
+              <p className="text-[16px] leading-relaxed text-white sm:text-[17px]">
+                {currentCard?.answer}
+              </p>
+            </div>
+
+            <div className="space-y-3">
+              <div className="grid grid-cols-2 gap-3">
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleMarkIncorrect();
+                  }}
+                  className={cn(ghostButtonCn, 'h-12 w-full')}
+                >
+                  <XCircle className="mr-2 inline h-5 w-5" />
+                  Need practice
+                </button>
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleMarkCorrect();
+                  }}
+                  className={cn(primaryButtonCn, 'h-12 w-full')}
+                >
+                  <CheckCircle className="mr-2 inline h-5 w-5" />
+                  Got it
+                </button>
+              </div>
+              <p className="text-center text-[12px] text-white opacity-70">
+                Swipe right for got it · swipe left for practice
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

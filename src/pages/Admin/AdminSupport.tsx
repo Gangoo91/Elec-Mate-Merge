@@ -465,7 +465,7 @@ export default function AdminSupport() {
                     }
                     disabled={!replyMessage.trim() || replyMutation.isPending}
                     aria-label="Send reply"
-                    className="h-11 w-11 rounded-full bg-elec-yellow text-black flex items-center justify-center hover:bg-elec-yellow/90 disabled:opacity-50 disabled:cursor-not-allowed touch-manipulation shrink-0 transition-colors"
+                    className="h-11 w-11 rounded-full bg-elec-yellow text-black flex items-center justify-center hover:bg-elec-yellow/90 disabled:bg-white/[0.08] disabled:text-white/70 disabled:cursor-not-allowed touch-manipulation shrink-0 transition-colors"
                   >
                     {replyMutation.isPending ? (
                       <Loader2 className="h-4 w-4 animate-spin" />

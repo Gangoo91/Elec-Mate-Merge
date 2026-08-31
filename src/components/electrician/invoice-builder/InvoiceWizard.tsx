@@ -470,7 +470,7 @@ export const InvoiceWizard = ({
               <button
                 onClick={handleGenerate}
                 disabled={isGenerating || !canSave}
-                className="flex-1 sm:flex-none sm:px-10 h-12 bg-elec-yellow text-black hover:brightness-110 font-semibold text-[15px] rounded-xl touch-manipulation active:scale-[0.98] disabled:opacity-50"
+                className="flex-1 sm:flex-none sm:px-10 h-12 bg-elec-yellow text-black hover:brightness-110 font-semibold text-[15px] rounded-xl touch-manipulation active:scale-[0.98] disabled:bg-white/[0.08] disabled:text-white/70"
               >
                 {isGenerating
                   ? 'Creating…'

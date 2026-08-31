@@ -96,7 +96,7 @@ const DiagramDisplay = ({ stepData, systemType, installationType }: DiagramDispl
 
   return (
     <Card className="bg-gradient-to-br from-white/5 to-elec-card border-indigo-500/20 overflow-hidden relative animate-fade-in">
-      <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+      <div className="absolute top-0 right-0 w-64 h-64 bg-white/[0.06] rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
       <CardHeader className="pb-3 relative">
         <CardTitle className="text-white flex items-center gap-3">
           <div className="p-2.5 rounded-xl bg-gradient-to-br from-indigo-500/20 to-indigo-500/5 border border-indigo-500/30">

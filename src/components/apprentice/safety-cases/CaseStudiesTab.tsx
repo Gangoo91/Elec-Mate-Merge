@@ -613,14 +613,14 @@ const CaseStudiesTab = () => {
     `h-9 px-3 rounded-lg border text-[12px] touch-manipulation transition-all ${
       active
         ? 'bg-elec-yellow text-black font-semibold border-elec-yellow'
-        : 'bg-white/[0.02] text-white/85 border-white/10 hover:bg-white/[0.05]'
+        : 'bg-white/[0.06] text-white/85 border-white/10 hover:bg-white/[0.05]'
     }`;
 
   return (
     <div className="space-y-6 animate-fade-in text-left">
       {/* Header */}
       <div className="space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
           Case studies library
         </span>
         <h2 className="text-[24px] sm:text-[28px] font-bold tracking-tight text-white leading-tight">
@@ -633,21 +633,33 @@ const CaseStudiesTab = () => {
       </div>
 
       {/* Filters */}
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+      <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 space-y-3">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
           Filter by severity
         </span>
         <div className="flex flex-wrap gap-2">
-          <button onClick={() => setFilterSeverity('all')} className={filterButtonClass(filterSeverity === 'all')}>
+          <button
+            onClick={() => setFilterSeverity('all')}
+            className={filterButtonClass(filterSeverity === 'all')}
+          >
             All
           </button>
-          <button onClick={() => setFilterSeverity('Fatal')} className={filterButtonClass(filterSeverity === 'Fatal')}>
+          <button
+            onClick={() => setFilterSeverity('Fatal')}
+            className={filterButtonClass(filterSeverity === 'Fatal')}
+          >
             Fatal
           </button>
-          <button onClick={() => setFilterSeverity('Serious')} className={filterButtonClass(filterSeverity === 'Serious')}>
+          <button
+            onClick={() => setFilterSeverity('Serious')}
+            className={filterButtonClass(filterSeverity === 'Serious')}
+          >
             Serious
           </button>
-          <button onClick={() => setFilterSeverity('Near Miss')} className={filterButtonClass(filterSeverity === 'Near Miss')}>
+          <button
+            onClick={() => setFilterSeverity('Near Miss')}
+            className={filterButtonClass(filterSeverity === 'Near Miss')}
+          >
             Near Miss
           </button>
         </div>
@@ -657,11 +669,11 @@ const CaseStudiesTab = () => {
         {filteredCaseStudies.map((study) => (
           <div
             key={study.id}
-            className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4"
+            className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-4"
           >
             {/* Title + meta */}
             <div className="space-y-2">
-              <div className="flex items-baseline gap-3 text-[10px] font-medium uppercase tracking-[0.18em] text-white/55 flex-wrap">
+              <div className="flex items-baseline gap-3 text-[10px] font-medium uppercase tracking-[0.18em] text-white/70 flex-wrap">
                 <span>{study.severity}</span>
                 <span className="text-white/25">·</span>
                 <span>{study.category}</span>
@@ -671,7 +683,7 @@ const CaseStudiesTab = () => {
               <h3 className="text-[16px] sm:text-[18px] font-medium text-white leading-snug">
                 {study.title}
               </h3>
-              <div className="flex items-center gap-4 text-[12px] text-white/55 flex-wrap">
+              <div className="flex items-center gap-4 text-[12px] text-white/70 flex-wrap">
                 <span className="flex items-center gap-1">
                   <Calendar className="h-3 w-3" />
                   {study.date}
@@ -695,8 +707,8 @@ const CaseStudiesTab = () => {
 
             {/* Causes & prevention */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-              <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 space-y-2">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
                   Root causes
                 </span>
                 <ul className="space-y-1.5">
@@ -710,15 +722,15 @@ const CaseStudiesTab = () => {
                     </li>
                   ))}
                   {study.rootCauses.length > 3 && (
-                    <li className="text-[12px] text-white/55">
+                    <li className="text-[12px] text-white/70">
                       +{study.rootCauses.length - 3} more
                     </li>
                   )}
                 </ul>
               </div>
 
-              <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 space-y-2">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
                   Prevention measures
                 </span>
                 <ul className="space-y-1.5">
@@ -732,7 +744,7 @@ const CaseStudiesTab = () => {
                     </li>
                   ))}
                   {study.preventiveMeasures.length > 3 && (
-                    <li className="text-[12px] text-white/55">
+                    <li className="text-[12px] text-white/70">
                       +{study.preventiveMeasures.length - 3} more
                     </li>
                   )}
@@ -741,8 +753,8 @@ const CaseStudiesTab = () => {
             </div>
 
             {/* Lesson learned */}
-            <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 space-y-2">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
                 Key lesson
               </span>
               <p className="text-[14px] text-white/85 leading-relaxed italic">
@@ -751,18 +763,18 @@ const CaseStudiesTab = () => {
             </div>
 
             {/* Regulations + actions */}
-            <div className="flex items-center justify-between gap-3 flex-wrap pt-2 border-t border-white/[0.06]">
+            <div className="flex items-center justify-between gap-3 flex-wrap pt-2 border-t border-white/[0.10]">
               <div className="flex flex-wrap gap-1.5">
                 {study.regulations.slice(0, 2).map((regulation, regIndex) => (
                   <span
                     key={regIndex}
-                    className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]"
+                    className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.07]"
                   >
                     {regulation}
                   </span>
                 ))}
                 {study.regulations.length > 2 && (
-                  <span className="text-[12px] text-white/55 px-2 py-0.5">
+                  <span className="text-[12px] text-white/70 px-2 py-0.5">
                     +{study.regulations.length - 2}
                   </span>
                 )}
@@ -799,9 +811,9 @@ const CaseStudiesTab = () => {
       </div>
 
       {/* Analytics summary */}
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
+      <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-4">
         <div className="space-y-2">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
             Analytics
           </span>
           <p className="text-[14px] text-white/85 leading-relaxed">
@@ -825,7 +837,7 @@ const CaseStudiesTab = () => {
             },
           ].map((m) => (
             <div key={m.label} className="space-y-1">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
                 {m.label}
               </span>
               <p className="text-[20px] font-semibold text-white font-mono">{m.value}</p>

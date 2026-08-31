@@ -255,7 +255,7 @@ const EmergencyLightingStandardsQuiz = () => {
           <Button
             onClick={handleNext}
             disabled={selectedAnswers[currentQuestion] === undefined}
-            className="bg-elec-yellow text-black hover:bg-elec-yellow/90 disabled:opacity-50"
+            className="bg-elec-yellow text-black hover:bg-elec-yellow/90 disabled:bg-white/[0.08] disabled:text-white/70"
           >
             {currentQuestion === questions.length - 1 ? 'Finish Quiz' : 'Next'}
           </Button>

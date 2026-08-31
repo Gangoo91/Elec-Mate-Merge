@@ -140,7 +140,7 @@ const AssessmentToolsTab = () => {
     <div className="space-y-6 animate-fade-in text-left">
       {/* Header */}
       <div className="space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
           Assessment centre
         </span>
         <h2 className="text-[24px] sm:text-[28px] font-bold tracking-tight text-white leading-tight">
@@ -153,27 +153,27 @@ const AssessmentToolsTab = () => {
       </div>
 
       {/* Stats strip */}
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 grid grid-cols-2 sm:grid-cols-4 gap-4">
+      <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 grid grid-cols-2 sm:grid-cols-4 gap-4">
         <div className="space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
             Tools
           </span>
           <p className="text-[20px] font-semibold text-white">{assessmentTools.length}</p>
         </div>
         <div className="space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
             Completed
           </span>
           <p className="text-[20px] font-semibold text-white">{completedCount}</p>
         </div>
         <div className="space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
             Average
           </span>
           <p className="text-[20px] font-semibold text-white">{Math.round(averageScore)}%</p>
         </div>
         <div className="space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
             Certificates
           </span>
           <p className="text-[20px] font-semibold text-white">{certificatesEarned}</p>
@@ -188,11 +188,11 @@ const AssessmentToolsTab = () => {
           return (
             <div
               key={tool.id}
-              className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4"
+              className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-4"
             >
               <div className="flex items-start justify-between gap-3">
                 <div className="flex-1 space-y-2">
-                  <div className="flex items-baseline gap-3 text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  <div className="flex items-baseline gap-3 text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
                     <span>{tool.difficulty}</span>
                     <span className="text-white/25">·</span>
                     <span>{tool.type}</span>
@@ -212,21 +212,21 @@ const AssessmentToolsTab = () => {
               <p className="text-[14px] text-white/85 leading-relaxed">{tool.description}</p>
 
               {/* Stats */}
-              <div className="grid grid-cols-3 gap-3 pt-2 border-t border-white/[0.06]">
+              <div className="grid grid-cols-3 gap-3 pt-2 border-t border-white/[0.10]">
                 <div>
-                  <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
                     Questions
                   </p>
                   <p className="text-[14px] text-white font-mono">{tool.questions}</p>
                 </div>
                 <div>
-                  <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
                     Pass score
                   </p>
                   <p className="text-[14px] text-white font-mono">{tool.passingScore}%</p>
                 </div>
                 <div>
-                  <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
                     Attempts
                   </p>
                   <p className="text-[14px] text-white font-mono">{tool.attempts}</p>
@@ -237,7 +237,7 @@ const AssessmentToolsTab = () => {
               {tool.bestScore > 0 && (
                 <div className="space-y-2">
                   <div className="flex items-baseline justify-between">
-                    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
                       Best score
                     </span>
                     <span className="text-[12px] text-white/85 font-mono">{tool.bestScore}%</span>
@@ -253,16 +253,16 @@ const AssessmentToolsTab = () => {
 
               {/* Topics */}
               <div className="space-y-2">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
                   Topics
                 </span>
                 <div className="flex flex-wrap gap-1.5">
                   {tool.topics.map((topic, topicIndex) => (
                     <span
                       key={topicIndex}
-                      className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] inline-flex items-center gap-1"
+                      className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.07] inline-flex items-center gap-1"
                     >
-                      <CheckSquare className="h-3 w-3 text-white/55" />
+                      <CheckSquare className="h-3 w-3 text-white/70" />
                       {topic}
                     </span>
                   ))}
@@ -288,7 +288,7 @@ const AssessmentToolsTab = () => {
                   </Button>
                 )}
                 {tool.certificate && (
-                  <span className="inline-flex items-center gap-1 text-[12px] text-white/55 px-2 rounded-md border border-white/10 bg-white/[0.03]">
+                  <span className="inline-flex items-center gap-1 text-[12px] text-white/70 px-2 rounded-md border border-white/10 bg-white/[0.07]">
                     <Award className="h-3 w-3" />
                     Cert
                   </span>
@@ -300,8 +300,8 @@ const AssessmentToolsTab = () => {
       </div>
 
       {/* Performance summary */}
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4 pt-4">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+      <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-4 pt-4">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
           Performance
         </span>
         <p className="text-[14px] text-white/85 leading-relaxed">
@@ -329,10 +329,10 @@ const AssessmentToolsTab = () => {
           ].map((metric) => (
             <div
               key={metric.label}
-              className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2"
+              className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 space-y-2"
             >
               <div className="flex items-baseline justify-between">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
                   {metric.label}
                 </span>
                 <span className="text-[12px] text-white/85 font-mono">{metric.value}</span>

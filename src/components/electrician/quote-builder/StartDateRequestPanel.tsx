@@ -218,7 +218,7 @@ const StartDateRequestPanel = ({ quote }: { quote: Quote }) => {
           type="button"
           onClick={handleConfirm}
           disabled={saving}
-          className="h-11 rounded-xl bg-elec-yellow px-5 text-[14px] font-semibold text-black transition-colors hover:bg-elec-yellow/90 touch-manipulation disabled:opacity-50"
+          className="h-11 rounded-xl bg-elec-yellow px-5 text-[14px] font-semibold text-black transition-colors hover:bg-elec-yellow/90 touch-manipulation disabled:bg-white/[0.08] disabled:text-white/70"
         >
           {saving ? 'Confirming…' : awaitingClient ? 'Confirm their original date' : 'Confirm this date'}
         </button>
@@ -289,7 +289,7 @@ const StartDateRequestPanel = ({ quote }: { quote: Quote }) => {
             type="button"
             onClick={handleSuggest}
             disabled={!chosenDate || sending}
-            className="mt-2.5 h-11 w-full rounded-xl bg-elec-yellow text-[14px] font-semibold text-black transition-colors hover:bg-elec-yellow/90 touch-manipulation disabled:opacity-40"
+            className="mt-2.5 h-11 w-full rounded-xl bg-elec-yellow text-[14px] font-semibold text-black transition-colors hover:bg-elec-yellow/90 touch-manipulation disabled:bg-white/[0.08] disabled:text-white/70"
           >
             {sending ? 'Sending…' : chosenDate ? `Send ${prettyDate(chosenDate)}` : 'Pick a day'}
           </button>

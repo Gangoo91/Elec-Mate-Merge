@@ -179,11 +179,9 @@ const InstrumentationModule1Section3 = () => {
 
         <TLDR
           points={[
-            'A reading is not collected from the process — it is manufactured by a chain of conversions, and any link in that chain can be wrong while every other link looks healthy. A number on its own is not a measurement either: value, units and range together are, because 12 mA means nothing until you know what the instrument is ranged for.',
+            'A reading is not collected from the process — it is manufactured by a chain of conversions, and any link can be wrong while every other link looks healthy.',
             'Accuracy, precision, resolution and repeatability are four different properties. Accuracy is closeness to truth; precision is the spread of repeats; resolution is the smallest change that can be shown; repeatability is whether the same condition gives the same answer.',
             'A loop tolerates a known accuracy error far better than poor repeatability. A loop that gets a different number for the same condition will hunt, and tuning cannot fix it.',
-            'Local indication is not a leftover from before control rooms. It is the reading that has not travelled, and it is still there when the panel, the network or the plant supply is not.',
-            'Alarms are a separate role from indication. An indicator waits to be looked at; an alarm comes and finds you. An alarm that is always on has stopped being either.',
             'Feedback is what makes a loop a loop. Open-loop control decides without ever asking what the process did; closed-loop measures the controlled variable and returns it to the controller.',
             'A controller compares exactly two numbers — process variable and setpoint. Manual mode does not stop the measurement or the indication; it stops the calculation being used.',
           ]}
@@ -459,11 +457,11 @@ const InstrumentationModule1Section3 = () => {
           question="A flow transmitter feeding a control loop reads 2% low, consistently, at every flow. Which is worse for the loop: that, or a transmitter accurate on average whose reading wanders by ±2% at a steady flow?"
           options={[
             'The consistent 2% offset, because the loop always controls to the wrong value',
-            'The wandering reading, because the controller acts on changes that are not happening',
             'They are equally serious — both are 2% errors',
+            'The wandering reading, because the controller acts on changes that are not happening',
             'Neither affects the loop; both are calibration issues only',
           ]}
-          correctIndex={1}
+          correctIndex={2}
           explanation="A consistent offset is predictable and correctable — the loop holds steady and a calibration will find it. A wandering reading tells the controller the process is moving when it is not, so the controller moves the valve for no reason and injects a real disturbance into a stable process. Repeatability is the property a loop cannot do without."
         />
 
@@ -551,10 +549,10 @@ const InstrumentationModule1Section3 = () => {
           options={[
             'In the wiring between the transmitter and the input card',
             'In the scaling configured in the control system',
-            'In the transmitter measurement itself — its sensor, process connection or calibration',
             'In the mechanical gauge, since two devices agree and only one does not',
+            'In the transmitter measurement itself — its sensor, process connection or calibration',
           ]}
-          correctIndex={2}
+          correctIndex={3}
           explanation="The screen and the integral display share the transmitter’s sensing element and conversion, so their agreement proves only the wiring and the scaling. The mechanical gauge is the one independent measurement in the set. Two readings from a single source do not outvote one reading from another source — though the gauge itself still has to be proved before it is trusted absolutely."
         />
 
@@ -729,12 +727,12 @@ const InstrumentationModule1Section3 = () => {
           id="ins-1-3-open-closed"
           question="A conveyor oven runs its burners at a fixed firing rate set during commissioning, with a temperature indicator on the front panel for the operator. Is this closed-loop temperature control?"
           options={[
+            'No — the measurement is indicated but never returned to anything that acts on it',
             'Yes — there is a temperature measurement and a heat source',
             'Yes — the operator can see the temperature and intervene',
-            'No — the measurement is indicated but never returned to anything that acts on it',
             'No — closed-loop requires a PID controller specifically',
           ]}
-          correctIndex={2}
+          correctIndex={0}
           explanation="Measuring and displaying a value does not close a loop. Nothing takes that reading and acts on it automatically, so the firing rate is unaffected by whatever the temperature does. Add a human who watches the indicator and adjusts the burners and it becomes a loop again — with the operator as the controller — but that is manual control, not automatic control."
         />
 
@@ -989,7 +987,7 @@ const InstrumentationModule1Section3 = () => {
               Next section <ChevronRight className="h-3 w-3" />
             </span>
             <span className="mt-1 truncate text-[14px] font-semibold text-white">
-              Standards and traceability
+              Standards, traceability and why they matter
             </span>
           </button>
         </div>

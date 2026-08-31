@@ -504,7 +504,7 @@ export function RoomShapePicker({ open, onOpenChange, onShapePlaced, getPlacemen
             <Button
               onClick={handlePlaceShape}
               disabled={!!closure && !closure.ok}
-              className="w-full h-12 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold text-sm touch-manipulation disabled:opacity-50"
+              className="w-full h-12 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold text-sm touch-manipulation disabled:bg-white/[0.08] disabled:text-white/70"
             >
               {closure && !closure.ok ? 'Fix wall lengths to continue' : `Place ${selectedShape.name}`}
             </Button>

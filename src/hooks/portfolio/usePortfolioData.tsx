@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import {
   PortfolioEntry,
   PortfolioCategory,
@@ -115,10 +115,36 @@ const mapEvidenceFileRow = (row: any): PortfolioFile => ({
 
 // Map database row to PortfolioEntry
 // `evidenceFileRows` comes from the junction table join; falls back to legacy storage_urls
-const mapDbToEntry = (row: any, evidenceFileRows?: any[]): PortfolioEntry => {
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+const mapDbToEntry = (
+  row: any,
+  evidenceFileRows?: any[],
+  countersignedIds?: Set<string>,
+  categoryNames?: Map<string, string>
+): PortfolioEntry => {
+  /*
+   * 🔴 `portfolio_items.category` is a mixed-type text column. It holds a
+   * display name ("Reflection & Learning"), a slug ("site-diary-evidence"),
+   * OR a `qualification_categories.id` UUID, depending on which capture path
+   * wrote the row.
+   *
+   * The UUID case fell straight through to `name: row.category`, so the
+   * detail sheet rendered "b0ef4374-f154-4557-a9dc-ed7915f2eff3" as a chip
+   * beside the status — a raw database id shown to the learner where
+   * "Installation Methods" belongs. It affects 4 of the 19 rows in production
+   * and every surface that prints a category: the chip, the filters and the
+   * evidence pack the assessor reads.
+   *
+   * Resolve it here rather than at each call site, so one fix covers them all.
+   */
+  const rawCategory: string = row.category ?? '';
+  const resolvedName =
+    (UUID_RE.test(rawCategory) ? categoryNames?.get(rawCategory) : undefined) ?? rawCategory;
+
   const category = defaultCategories.find((c) => c.id === row.category) || {
     id: row.category,
-    name: row.category,
+    name: resolvedName,
     description: '',
     icon: 'folder',
     color: 'gray',
@@ -156,7 +182,23 @@ const mapDbToEntry = (row: any, evidenceFileRows?: any[]): PortfolioEntry => {
     status: row.status || 'draft',
     timeSpent: row.time_spent || 0,
     awardingBodyStandards: row.awarding_body_standards || [],
-    isVerified: row.is_supervisor_verified || false,
+    /*
+     * 🔴 This read `is_supervisor_verified` alone.
+     *
+     * That column is NOT the verification record. The real one is
+     * `supervisor_verifications` — the QR flow where a named supervisor
+     * countersigns the evidence and `verified_at` is stamped. The column is a
+     * loose mirror of it with no trigger keeping the two in step, and RLS
+     * gives the learner a blanket own-row UPDATE while giving assessors SELECT
+     * only, so the learner is the only party who can set it directly.
+     *
+     * They already disagree in production: one item carries the flag with no
+     * countersignature behind it at all. The grid was therefore badging an
+     * item "Verified" on the strength of a boolean the learner controls.
+     *
+     * Trust the signature, not the flag.
+     */
+    isVerified: countersignedIds ? countersignedIds.has(row.id) : false,
     metadata:
       row.metadata && typeof row.metadata === 'object' && !Array.isArray(row.metadata)
         ? row.metadata
@@ -253,6 +295,14 @@ export const usePortfolioData = () => {
   const [analytics, setAnalytics] = useState<PortfolioAnalytics | null>(null);
   const [groups, setGroups] = useState<PortfolioGroup[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  /*
+   * The realtime handler maps rows too, and it has to map them the SAME way
+   * as the initial fetch. Without these, a realtime UPDATE would re-run
+   * mapDbToEntry with no lookups and silently strip the Verified badge and
+   * re-expose the raw category UUID until the next full reload.
+   */
+  const countersignedRef = useRef<Set<string>>(new Set());
+  const categoryNamesRef = useRef<Map<string, string>>(new Map());
 
   // Load data from Supabase
   const loadData = useCallback(async () => {
@@ -265,14 +315,44 @@ export const usePortfolioData = () => {
       setIsLoading(true);
 
       // Evidence file URLs live on portfolio_items.storage_urls (no junction table).
-      const { data: rows, error: rowsError } = await supabase
-        .from('portfolio_items')
-        .select('*')
-        .eq('user_id', user.id)
-        .order('created_at', { ascending: false });
+      const [{ data: rows, error: rowsError }, { data: categoryRows }, { data: verifications }] =
+        await Promise.all([
+        supabase
+          .from('portfolio_items')
+          .select('*')
+          .eq('user_id', user.id)
+          .order('created_at', { ascending: false }),
+        // Category names, for rows whose `category` is a qualification
+        // category id rather than a label.
+        supabase.from('qualification_categories').select('id, name'),
+        // Only rows a supervisor has actually signed — a pending request has
+        // portfolio_item_id but no verified_at, and must not read as verified.
+        supabase
+          .from('supervisor_verifications')
+          .select('portfolio_item_id, verified_at')
+          .eq('requested_by', user.id)
+          .not('verified_at', 'is', null),
+      ]);
       if (rowsError) throw rowsError;
 
-      const mappedEntries = (rows || []).map((row: any) => mapDbToEntry(row, undefined));
+      const countersignedIds = new Set<string>(
+        ((verifications ?? []) as Array<{ portfolio_item_id: string | null }>)
+          .map((v) => v.portfolio_item_id)
+          .filter((id): id is string => !!id)
+      );
+
+      const categoryNames = new Map<string, string>(
+        ((categoryRows ?? []) as Array<{ id: string; name: string | null }>)
+          .filter((c) => !!c.name)
+          .map((c) => [c.id, c.name as string])
+      );
+
+      countersignedRef.current = countersignedIds;
+      categoryNamesRef.current = categoryNames;
+
+      const mappedEntries = (rows || []).map((row: any) =>
+        mapDbToEntry(row, undefined, countersignedIds, categoryNames)
+      );
       setEntries(mappedEntries);
     } catch (error) {
       console.error('Error loading portfolio data:', error);
@@ -307,10 +387,20 @@ export const usePortfolioData = () => {
         },
         (payload) => {
           if (payload.eventType === 'INSERT') {
-            const newEntry = mapDbToEntry(payload.new);
+            const newEntry = mapDbToEntry(
+              payload.new,
+              undefined,
+              countersignedRef.current,
+              categoryNamesRef.current
+            );
             setEntries((prev) => [newEntry, ...prev]);
           } else if (payload.eventType === 'UPDATE') {
-            const updatedEntry = mapDbToEntry(payload.new);
+            const updatedEntry = mapDbToEntry(
+              payload.new,
+              undefined,
+              countersignedRef.current,
+              categoryNamesRef.current
+            );
             setEntries((prev) => prev.map((e) => (e.id === updatedEntry.id ? updatedEntry : e)));
           } else if (payload.eventType === 'DELETE') {
             setEntries((prev) => prev.filter((e) => e.id !== payload.old.id));

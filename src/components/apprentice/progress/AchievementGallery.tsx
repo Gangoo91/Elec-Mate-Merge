@@ -18,6 +18,7 @@ import { useMemo, useState } from 'react';
 import {
   Award,
   BookOpen,
+  ChevronDown,
   ClipboardCheck,
   Clock,
   Crown,
@@ -48,6 +49,7 @@ import {
 } from '@/data/achievementDefinitions';
 import type { NextUpAchievement } from '@/hooks/useAchievementChecker';
 import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 
 /** Defs store icons as lucide component names (strings) — resolve here. */
 const ICON_MAP: Record<string, LucideIcon> = {
@@ -80,10 +82,10 @@ const resolveIcon = (name: string): LucideIcon => ICON_MAP[name] ?? Trophy;
  * palette (the data file only exports text + bg classes).
  */
 const RARITY_BORDERS: Record<AchievementRarity, string> = {
-  common: 'border-gray-400/25',
-  uncommon: 'border-green-400/25',
-  rare: 'border-blue-400/25',
-  epic: 'border-purple-400/25',
+  common: 'border-white/[0.10]',
+  uncommon: 'border-white/[0.14]',
+  rare: 'border-white/[0.18]',
+  epic: 'border-elec-yellow/20',
   legendary: 'border-elec-yellow/30',
 };
 
@@ -103,13 +105,22 @@ export function AchievementGallery({
   nextUp,
 }: AchievementGalleryProps) {
   const [selected, setSelected] = useState<GalleryAchievement | null>(null);
+  const [showLocked, setShowLocked] = useState(false);
 
-  // Unlocked first, then locked — definition order preserved within each.
-  const ordered = useMemo(() => {
-    const unlocked = achievements.filter((a) => a.isUnlocked);
-    const locked = achievements.filter((a) => !a.isUnlocked);
-    return [...unlocked, ...locked];
-  }, [achievements]);
+  /*
+   * 🔴 Locked badges used to be rendered inline with the unlocked ones, all
+   * 38 of them. Early on that is thirty-odd dim tiles — eight rows of grey
+   * carrying no information the learner can act on — sitting between the
+   * grade card and the topic mastery they came for. Earned badges stay on
+   * show; the rest live behind one line they can open.
+   */
+  const { unlocked, locked } = useMemo(
+    () => ({
+      unlocked: achievements.filter((a) => a.isUnlocked),
+      locked: achievements.filter((a) => !a.isUnlocked),
+    }),
+    [achievements]
+  );
 
   const nextUpIcon = useMemo(() => {
     if (!nextUp) return Trophy;
@@ -122,21 +133,21 @@ export function AchievementGallery({
       {/* Header row — eyebrow + mono counter */}
       <div className="flex items-baseline justify-between gap-3">
         <Eyebrow>Achievements</Eyebrow>
-        <span className="text-[11px] font-mono tabular-nums text-white/55">
+        <span className="text-[11px] font-mono tabular-nums text-white">
           {unlockedCount} of {totalCount}
         </span>
       </div>
 
       {/* Next up — the one badge the checker tracks live progress for */}
       {nextUp && (
-        <div className="flex items-center gap-3 rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_10%)] px-4 py-3.5">
+        <div className={cn('flex items-center gap-3 rounded-2xl border border-white/[0.06] px-4 py-3.5', CARD_SURFACE)}>
           <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-elec-yellow/20 bg-elec-yellow/[0.06]">
             <NextUpIcon icon={nextUpIcon} />
           </span>
           <span className="flex-1 min-w-0">
             <span className="flex items-baseline justify-between gap-2">
               <span className="text-[13.5px] font-medium text-white truncate">{nextUp.title}</span>
-              <span className="text-[11px] font-mono tabular-nums text-white/55 shrink-0">
+              <span className="text-[11px] font-mono tabular-nums text-white shrink-0">
                 {nextUp.current}/{nextUp.target}
               </span>
             </span>
@@ -150,48 +161,45 @@ export function AchievementGallery({
         </div>
       )}
 
-      {/* Badge grid — unlocked first */}
-      <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
-        {ordered.map((badge) => {
-          const Icon = resolveIcon(badge.icon);
-          return (
-            <button
-              key={badge.id}
-              type="button"
-              onClick={() => setSelected(badge)}
-              aria-label={`${badge.title} — ${badge.rarity}, ${
-                badge.isUnlocked ? 'unlocked' : 'locked'
-              }`}
+      {/* Earned badges — always on show */}
+      {unlocked.length > 0 && (
+        <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
+          {unlocked.map((badge) => (
+            <BadgeTile key={badge.id} badge={badge} onSelect={setSelected} />
+          ))}
+        </div>
+      )}
+
+      {/* Locked shelf — one line by default, the full set one tap away */}
+      {locked.length > 0 && (
+        <>
+          <button
+            type="button"
+            onClick={() => setShowLocked((v) => !v)}
+            aria-expanded={showLocked}
+            className={cn('flex w-full items-center justify-between gap-3 rounded-2xl border border-white/[0.06] px-4 h-11 text-left touch-manipulation transition-colors hover:bg-white/[0.03]', CARD_SURFACE)}
+          >
+            <span className="text-[13px] font-medium text-white">
+              {showLocked ? 'Hide locked badges' : `${locked.length} more to unlock`}
+            </span>
+            <ChevronDown
               className={cn(
-                'flex flex-col items-center justify-center gap-2 rounded-xl border px-2 py-4 text-center touch-manipulation transition-colors',
-                badge.isUnlocked
-                  ? cn(
-                      RARITY_BORDERS[badge.rarity],
-                      RARITY_BG_COLOURS[badge.rarity],
-                      'hover:bg-white/[0.04]'
-                    )
-                  : 'border-white/[0.06] bg-[hsl(0_0%_10%)] hover:bg-white/[0.03]'
+                'h-4 w-4 shrink-0 text-white transition-transform',
+                showLocked && 'rotate-180'
               )}
-            >
-              <Icon
-                className={cn(
-                  'h-5 w-5',
-                  badge.isUnlocked ? RARITY_COLOURS[badge.rarity] : 'text-white/25'
-                )}
-                strokeWidth={2}
-              />
-              <span
-                className={cn(
-                  'text-[10.5px] leading-tight line-clamp-2',
-                  badge.isUnlocked ? 'text-white/85 font-medium' : 'text-white/40'
-                )}
-              >
-                {badge.title}
-              </span>
-            </button>
-          );
-        })}
-      </div>
+              strokeWidth={2}
+            />
+          </button>
+
+          {showLocked && (
+            <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
+              {locked.map((badge) => (
+                <BadgeTile key={badge.id} badge={badge} onSelect={setSelected} />
+              ))}
+            </div>
+          )}
+        </>
+      )}
 
       {/* Badge detail — bottom sheet */}
       <Sheet open={selected !== null} onOpenChange={(open) => !open && setSelected(null)}>
@@ -218,7 +226,7 @@ export function AchievementGallery({
                     icon={resolveIcon(selected.icon)}
                     className={cn(
                       'h-8 w-8',
-                      selected.isUnlocked ? RARITY_COLOURS[selected.rarity] : 'text-white/30'
+                      selected.isUnlocked ? RARITY_COLOURS[selected.rarity] : 'text-white/40'
                     )}
                   />
                 </span>
@@ -240,7 +248,7 @@ export function AchievementGallery({
 
                 <div className="space-y-1">
                   {!selected.isUnlocked && <Eyebrow>How to earn it</Eyebrow>}
-                  <p className="text-[13px] text-white/60 leading-relaxed">
+                  <p className="text-[13px] text-white leading-relaxed">
                     {selected.description}
                   </p>
                 </div>
@@ -254,7 +262,7 @@ export function AchievementGallery({
                   <div className="w-full max-w-xs space-y-1.5 pt-1">
                     <div className="flex items-baseline justify-between gap-2">
                       <Eyebrow>Progress</Eyebrow>
-                      <span className="text-[11px] font-mono tabular-nums text-white/55">
+                      <span className="text-[11px] font-mono tabular-nums text-white">
                         {nextUp.current}/{nextUp.target}
                       </span>
                     </div>
@@ -272,6 +280,44 @@ export function AchievementGallery({
         </SheetContent>
       </Sheet>
     </section>
+  );
+}
+
+/**
+ * One badge tile. Locked tiles stay legible rather than near-invisible —
+ * the title is the whole point of showing them, and a learner scanning for
+ * what to chase next cannot read text at 40% white.
+ */
+function BadgeTile({
+  badge,
+  onSelect,
+}: {
+  badge: GalleryAchievement;
+  onSelect: (b: GalleryAchievement) => void;
+}) {
+  const Icon = resolveIcon(badge.icon);
+  return (
+    <button
+      type="button"
+      onClick={() => onSelect(badge)}
+      aria-label={`${badge.title} — ${badge.rarity}, ${badge.isUnlocked ? 'unlocked' : 'locked'}`}
+      className={cn(
+        'flex flex-col items-center justify-center gap-2 rounded-xl border px-2 py-4 text-center touch-manipulation transition-colors',
+        badge.isUnlocked
+          ? cn(RARITY_BORDERS[badge.rarity], RARITY_BG_COLOURS[badge.rarity], 'hover:bg-white/[0.06]')
+          : 'border-white/[0.06] hover:bg-white/[0.03]'
+      )}
+    >
+      <Icon
+        className={cn('h-5 w-5', badge.isUnlocked ? RARITY_COLOURS[badge.rarity] : 'text-white/40')}
+        strokeWidth={2}
+      />
+      <span
+        className={cn('text-[10.5px] leading-tight line-clamp-2 text-white', badge.isUnlocked && 'font-medium')}
+      >
+        {badge.title}
+      </span>
+    </button>
   );
 }
 

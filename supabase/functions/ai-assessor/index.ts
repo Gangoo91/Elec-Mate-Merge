@@ -228,7 +228,22 @@ function compactContextForPrompt(ctx: SubmissionContext): string {
       lines.push(`  Reflection: ${(it.reflection_notes as string).slice(0, 240)}`);
     if (it.supervisor_feedback)
       lines.push(`  Supervisor: ${(it.supervisor_feedback as string).slice(0, 200)}`);
-    if (it.is_supervisor_verified) lines.push(`  ✓ Supervisor verified`);
+    /*
+     * 🔴 This used to emit "✓ Supervisor verified" into the assessor prompt,
+     * which the model reads as third-party corroboration of the evidence.
+     *
+     * `portfolio_items.is_supervisor_verified` cannot carry that meaning:
+     * nothing in the app or in any edge function writes it, and RLS gives the
+     * learner a blanket own-row UPDATE while giving tutors and assessors
+     * SELECT only. So the only party who can set the flag is the person being
+     * assessed. Feeding it in as corroboration lets a learner upgrade the
+     * model's read of their own evidence.
+     *
+     * Stated for what it is, so the model can weigh it accordingly.
+     */
+    if (it.is_supervisor_verified) {
+      lines.push(`  (learner marked this as supervisor-checked — self-declared, not confirmed)`);
+    }
   }
 
   if (ctx.observations.length) {

@@ -425,7 +425,7 @@ const InvoiceSettingsSheet = ({
                       setNewCustomInvoiceTerm('');
                     }
                   }}
-                  className="h-11 px-4 rounded-xl bg-elec-yellow text-black text-[13px] font-semibold hover:bg-elec-yellow/90 transition-colors touch-manipulation disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="h-11 px-4 rounded-xl bg-elec-yellow text-black text-[13px] font-semibold hover:bg-elec-yellow/90 transition-colors touch-manipulation disabled:bg-white/[0.08] disabled:text-white/70 disabled:cursor-not-allowed"
                 >
                   Add
                 </button>
@@ -438,7 +438,7 @@ const InvoiceSettingsSheet = ({
               type="button"
               onClick={handleSave}
               disabled={isSaving}
-              className="w-full h-12 rounded-xl bg-elec-yellow text-black font-semibold text-[14px] hover:bg-elec-yellow/90 transition-colors touch-manipulation disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full h-12 rounded-xl bg-elec-yellow text-black font-semibold text-[14px] hover:bg-elec-yellow/90 transition-colors touch-manipulation disabled:bg-white/[0.08] disabled:text-white/70 disabled:cursor-not-allowed"
             >
               {isSaving ? 'Saving…' : 'Save'}
             </button>

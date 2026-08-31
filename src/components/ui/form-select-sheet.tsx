@@ -219,7 +219,7 @@ const FormSelectSheet: React.FC<FormSelectSheetProps> = ({
           type="button"
           onClick={handleCustomSubmit}
           disabled={!customValue.trim()}
-          className="h-11 rounded-xl bg-elec-yellow text-sm font-semibold text-black touch-manipulation active:scale-[0.98] disabled:opacity-40"
+          className="h-11 rounded-xl bg-elec-yellow text-sm font-semibold text-black touch-manipulation active:scale-[0.98] disabled:bg-white/[0.08] disabled:text-white/70"
         >
           Confirm
         </button>

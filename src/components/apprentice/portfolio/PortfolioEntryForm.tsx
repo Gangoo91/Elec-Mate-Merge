@@ -723,7 +723,7 @@ const PortfolioEntryForm = ({
           type="button"
           onClick={nextStep}
           disabled={!canProceed()}
-          className="flex-1 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold py-3 h-12 disabled:opacity-50"
+          className="flex-1 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold py-3 h-12 disabled:bg-white/[0.08] disabled:text-white/70"
         >
           Next
           <ChevronRight className="h-4 w-4 ml-1" />
@@ -732,7 +732,7 @@ const PortfolioEntryForm = ({
         <Button
           type="submit"
           disabled={!canProceed()}
-          className="flex-1 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold py-3 h-12 disabled:opacity-50"
+          className="flex-1 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold py-3 h-12 disabled:bg-white/[0.08] disabled:text-white/70"
         >
           <Check className="h-4 w-4 mr-1" />
           {initialData ? 'Update Entry' : 'Create Entry'}

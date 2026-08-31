@@ -375,7 +375,7 @@ export function JobCostsSection({ jobId }: { jobId: string }) {
                   <button
                     onClick={handleAdd}
                     disabled={isAdding}
-                    className="flex-1 h-11 rounded-xl bg-elec-yellow text-black text-[13.5px] font-semibold touch-manipulation disabled:opacity-60"
+                    className="flex-1 h-11 rounded-xl bg-elec-yellow text-black text-[13.5px] font-semibold touch-manipulation disabled:bg-white/[0.08] disabled:text-white/70"
                   >
                     {isAdding ? 'Saving…' : 'Add cost'}
                   </button>

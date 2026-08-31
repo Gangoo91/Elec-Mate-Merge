@@ -1,71 +1,76 @@
+/**
+ * Installation guides index.
+ *
+ * Rebuilt on the Business Hub shell so it matches the on-the-job hub that
+ * links to it and the four guides it links on to.
+ *
+ * What changed beyond the shell:
+ *
+ * - The four installation types were colour-coded blue, green, orange and
+ *   amber, each with a translucent fill. Four different washes on a near-black
+ *   page is both off-brand — the app is volt and white — and the muddy-fill
+ *   problem four times over (see `card-recipe.ts`). They are now standard hub
+ *   tool cards, told apart by their words rather than by a colour key nobody
+ *   was given.
+ *
+ * - The quick-reference toggles were `bg-white/5` on `bg-white/10` chips with a
+ *   coloured ring when selected. Same lit surface as everything else now, with
+ *   selection carried on the border.
+ *
+ * - Headings were Title Case ("Quick Reference", "Installation Types"); the
+ *   house style is sentence case, and the section label comes from the grid.
+ */
+
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { Shield } from 'lucide-react';
+import { itemVariants } from '@/components/college/primitives';
 import {
-  Zap,
-  Home,
-  Building,
-  Factory,
-  Sparkles,
-  ChevronRight,
-  Shield,
-  type LucideIcon,
-} from 'lucide-react';
-import { SmartBackButton } from '@/components/ui/smart-back-button';
+  HubPage,
+  HubBody,
+  HubMasthead,
+  HubToolGrid,
+  HubSectionHeading,
+  type HubTool,
+} from '@/components/hub/HubPrimitives';
+import { CALLOUT, PANEL_LABEL_ACCENT } from '@/components/ui/panel-recipe';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { quickRefCards } from '@/data/installation-guides/installationQuickRefData';
 import { QuickReferencePanel } from '@/components/apprentice/installation-guides/QuickReferencePanel';
+import { cn } from '@/lib/utils';
 
-// ── Installation type link cards ──────────────────────────────────────
+const BASE = '/apprentice/on-job-tools/electrical-installation-guides';
 
-interface InstallationType {
-  title: string;
-  icon: LucideIcon;
-  path: string;
-  colour: string;
-  borderColour: string;
-  bgColour: string;
-  textColour: string;
-}
-
-const installationTypes: InstallationType[] = [
+const installationTypes: HubTool[] = [
   {
+    id: 'domestic',
     title: 'Domestic',
-    icon: Home,
-    path: '/apprentice/on-job-tools/electrical-installation-guides/domestic',
-    colour: 'blue',
-    borderColour: 'border-blue-500/30',
-    bgColour: 'bg-blue-500/10',
-    textColour: 'text-blue-400',
+    description: 'Houses, flats, extensions and rewires.',
+    meta: 'Part P, RCDs, ring finals, bathroom zones',
+    to: `${BASE}/domestic`,
   },
   {
+    id: 'commercial',
     title: 'Commercial',
-    icon: Building,
-    path: '/apprentice/on-job-tools/electrical-installation-guides/commercial',
-    colour: 'green',
-    borderColour: 'border-green-500/30',
-    bgColour: 'bg-green-500/10',
-    textColour: 'text-green-400',
+    description: 'Offices, retail and hospitality.',
+    meta: 'Three-phase distribution, emergency lighting, fire alarm interfaces, Section 537',
+    to: `${BASE}/commercial`,
   },
   {
+    id: 'industrial',
     title: 'Industrial',
-    icon: Factory,
-    path: '/apprentice/on-job-tools/electrical-installation-guides/industrial',
-    colour: 'orange',
-    borderColour: 'border-orange-500/30',
-    bgColour: 'bg-orange-500/10',
-    textColour: 'text-orange-400',
+    description: 'Heavy plant, factories and motor control.',
+    meta: 'ATEX zones, hazardous areas, IP/IK ratings, prospective fault current',
+    to: `${BASE}/industrial`,
   },
   {
+    id: 'specialist',
     title: 'Specialist',
-    icon: Sparkles,
-    path: '/apprentice/on-job-tools/electrical-installation-guides/specialist',
-    colour: 'amber',
-    borderColour: 'border-amber-500/30',
-    bgColour: 'bg-amber-500/10',
-    textColour: 'text-amber-400',
+    description: 'Special locations with their own Part 7 rules.',
+    meta: 'EV charging, solar PV, heat pumps, swimming pools and saunas',
+    to: `${BASE}/specialist`,
   },
 ];
-
-// ── Main Component ────────────────────────────────────────────────────
 
 const ElectricalInstallationGuides = () => {
   const [activeCardId, setActiveCardId] = useState<string | null>(null);
@@ -77,102 +82,76 @@ const ElectricalInstallationGuides = () => {
   const activeCard = quickRefCards.find((c) => c.id === activeCardId) ?? null;
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6 animate-fade-in px-4 pb-20">
-      {/* ── Header ─────────────────────────────────────────────────── */}
-      <div className="flex items-center justify-between gap-3">
-        <SmartBackButton />
-        <div className="flex items-center gap-2">
-          <h1 className="text-lg font-bold text-white">Electrical Installation Guides</h1>
-          <Zap className="h-5 w-5 text-elec-yellow shrink-0" />
-        </div>
-      </div>
+    <HubPage>
+      <HubMasthead
+        section="Apprentice · Installation guides"
+        title="Installation guides"
+        backTo="/apprentice/on-job-tools"
+      />
 
-      {/* ── Stats Strip ────────────────────────────────────────────── */}
-      <div className="flex items-center justify-center gap-2 text-white text-xs flex-wrap">
-        <span className="bg-white/10 border border-white/10 rounded-full px-3 py-1">
-          7 references
-        </span>
-        <span className="bg-white/10 border border-white/10 rounded-full px-3 py-1">
-          4 installation types
-        </span>
-        <span className="bg-white/10 border border-white/10 rounded-full px-3 py-1">
-          BS 7671:2018+A4:2026
-        </span>
-      </div>
+      <HubBody>
+        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
+          Planning, circuits, testing and reference material for each kind of installation you will
+          work on. Reflects BS 7671:2018+A4:2026.
+        </p>
 
-      {/* ── Quick Reference Toggle Grid ────────────────────────────── */}
-      <section className="space-y-3">
-        <h2 className="text-white text-sm font-semibold uppercase tracking-wider">
-          Quick Reference
-        </h2>
-
-        <div className="grid grid-cols-3 gap-2">
-          {quickRefCards.map((card) => {
-            const isActive = card.id === activeCardId;
-            const Icon = card.icon;
-            return (
-              <button
-                key={card.id}
-                onClick={() => toggleCard(card.id)}
-                className={`flex flex-col items-center justify-center gap-1.5 rounded-xl border p-3 min-h-[72px] transition-all touch-manipulation ${
-                  isActive
-                    ? `${card.bgColour} ${card.borderColour} ring-2 ${card.ringColour}`
-                    : 'bg-white/5 border-white/10 active:bg-white/10'
-                }`}
-              >
-                <Icon className={`h-5 w-5 ${isActive ? card.textColour : 'text-white'}`} />
-                <span
-                  className={`text-[11px] leading-tight text-center font-medium ${isActive ? card.textColour : 'text-white'}`}
+        <div className="space-y-3">
+          <HubSectionHeading>Quick reference</HubSectionHeading>
+          {/* Four across from sm up: there are seven cards, so three columns
+              leaves a lone chip on a third row. */}
+          <div className="grid grid-cols-3 gap-2 sm:grid-cols-4 sm:gap-3">
+            {quickRefCards.map((card) => {
+              const isActive = card.id === activeCardId;
+              const Icon = card.icon;
+              return (
+                <button
+                  key={card.id}
+                  onClick={() => toggleCard(card.id)}
+                  aria-pressed={isActive}
+                  className={cn(
+                    'flex min-h-[72px] flex-col items-center justify-center gap-1.5 rounded-xl border p-3',
+                    'transition-colors touch-manipulation active:scale-[0.98]',
+                    CARD_SURFACE,
+                    isActive
+                      ? 'border-elec-yellow'
+                      : 'border-elec-yellow/25 hover:border-elec-yellow/50'
+                  )}
                 >
-                  {card.label}
-                </span>
-              </button>
-            );
-          })}
+                  <Icon
+                    className={cn('h-5 w-5', isActive ? 'text-elec-yellow' : 'text-white')}
+                    aria-hidden
+                  />
+                  <span
+                    className={cn(
+                      'text-center text-[11px] font-medium leading-tight',
+                      isActive ? 'text-elec-yellow' : 'text-white'
+                    )}
+                  >
+                    {card.label}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
         </div>
-      </section>
 
-      {/* ── Active Quick Reference Panel ───────────────────────────── */}
-      {activeCard && <QuickReferencePanel card={activeCard} />}
+        {activeCard && <QuickReferencePanel card={activeCard} />}
 
-      {/* ── Installation Types ─────────────────────────────────────── */}
-      <section className="space-y-3">
-        <h2 className="text-white text-sm font-semibold uppercase tracking-wider">
-          Installation Types
-        </h2>
+        <HubToolGrid label="Choose the setting" cards={installationTypes} columns="four" />
 
-        <div className="space-y-2">
-          {installationTypes.map((type) => {
-            const Icon = type.icon;
-            return (
-              <Link
-                key={type.title}
-                to={type.path}
-                className={`flex items-center gap-3 h-14 px-4 rounded-xl border ${type.borderColour} ${type.bgColour} active:opacity-80 transition-all touch-manipulation group`}
-              >
-                <div className="p-2 rounded-lg bg-white/10">
-                  <Icon className={`h-5 w-5 ${type.textColour}`} />
-                </div>
-                <span className="text-white text-sm font-medium flex-1">{type.title}</span>
-                <ChevronRight className="h-4 w-4 text-white" />
-              </Link>
-            );
-          })}
-        </div>
-      </section>
-
-      {/* ── Compliance Banner ──────────────────────────────────────── */}
-      <div className="flex items-start gap-3 p-4 rounded-xl border border-elec-yellow/30 bg-elec-yellow/10">
-        <Shield className="h-5 w-5 text-elec-yellow shrink-0 mt-0.5" />
-        <div className="space-y-1">
-          <p className="text-white text-sm font-semibold">Compliance Reminder</p>
-          <p className="text-white text-sm">
-            All electrical work must comply with BS 7671:2018+A4:2026, Part P Building Regulations,
-            and GN3 Inspection &amp; Testing guidance. Always check for the latest amendments.
+        <motion.div variants={itemVariants} className={cn(CALLOUT, 'space-y-1')}>
+          <div className="flex items-center gap-2">
+            <Shield className="h-4 w-4 flex-shrink-0 text-elec-yellow" aria-hidden />
+            <span className={PANEL_LABEL_ACCENT}>Compliance</span>
+          </div>
+          <p className="text-[14px] leading-relaxed text-white/85">
+            All electrical work must comply with BS 7671:2018+A4:2026, Part P of the Building
+            Regulations, and GN3 for inspection and testing. Check for the latest amendments before
+            you rely on anything here.
           </p>
-        </div>
-      </div>
-    </div>
+        </motion.div>
+      </HubBody>
+    </HubPage>
   );
 };
 

@@ -53,7 +53,7 @@ class SafetyCasesErrorBoundary extends Component<Props, State> {
       return (
         <div className="min-h-screen bg-white/10 p-6 flex items-center justify-center">
           <Card className="bg-gradient-to-br from-white/5 to-elec-card border-red-500/30 max-w-2xl w-full overflow-hidden relative animate-fade-in">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-red-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+            <div className="absolute top-0 right-0 w-64 h-64 bg-white/[0.06] rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
 
             <CardHeader className="relative">
               <CardTitle className="text-white flex items-center gap-3">
@@ -68,9 +68,9 @@ class SafetyCasesErrorBoundary extends Component<Props, State> {
             </CardHeader>
 
             <CardContent className="space-y-4 relative">
-              <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/30">
+              <div className="p-4 rounded-xl bg-white/[0.06] border border-red-500/30">
                 <div className="flex items-start gap-3">
-                  <div className="p-2 rounded-lg bg-red-500/20 flex-shrink-0">
+                  <div className="p-2 rounded-lg bg-white/[0.06] flex-shrink-0">
                     <FileWarning className="h-4 w-4 text-red-400" />
                   </div>
                   <p className="text-sm text-white">

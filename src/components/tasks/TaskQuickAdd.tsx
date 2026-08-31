@@ -121,7 +121,7 @@ export function TaskQuickAdd({ onQuickSave, onExpandForm, onShowTemplates }: Tas
               onClick={handleSubmit}
               disabled={saving}
               aria-label="Add task"
-              className="h-9 w-9 flex items-center justify-center rounded-lg bg-elec-yellow text-black touch-manipulation active:scale-[0.95] disabled:opacity-50 shrink-0"
+              className="h-9 w-9 flex items-center justify-center rounded-lg bg-elec-yellow text-black touch-manipulation active:scale-[0.95] disabled:bg-white/[0.08] disabled:text-white/70 shrink-0"
             >
               {saving ? (
                 <div className="w-3.5 h-3.5 border-2 border-black/30 border-t-black rounded-full animate-spin" />

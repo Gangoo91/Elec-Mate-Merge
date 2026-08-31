@@ -278,7 +278,7 @@ export const bs7671ReferenceCards: BS7671ReferenceCard[] = [
           heading: 'Pre-2004 UK Colours (may be found in older installations)',
           codes: [
             { colour: 'Red', tailwindBg: 'bg-red-600', function: 'Line (single-phase) / L1' },
-            { colour: 'Yellow', tailwindBg: 'bg-yellow-400', function: 'L2 (three-phase)' },
+            { colour: 'Yellow', tailwindBg: 'bg-elec-yellow', function: 'L2 (three-phase)' },
             {
               colour: 'Blue',
               tailwindBg: 'bg-blue-500',

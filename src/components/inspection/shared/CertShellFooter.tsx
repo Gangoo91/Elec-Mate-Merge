@@ -194,7 +194,7 @@ const CertShellFooter: React.FC<CertShellFooterProps> = ({
                   onGenerate?.();
                 }}
                 disabled={!canGenerate}
-                className="h-12 w-full rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-transform hover:bg-elec-yellow/90 disabled:bg-elec-yellow disabled:opacity-50 touch-manipulation active:scale-[0.99] lg:w-auto lg:px-10 outline-none focus:outline-none focus-visible:outline-none"
+                className="h-12 w-full rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-transform hover:bg-elec-yellow/90 disabled:bg-elec-yellow disabled:bg-white/[0.08] disabled:text-white/70 touch-manipulation active:scale-[0.99] lg:w-auto lg:px-10 outline-none focus:outline-none focus-visible:outline-none"
               >
                 {generateLabel}
               </button>
@@ -219,7 +219,7 @@ const CertShellFooter: React.FC<CertShellFooterProps> = ({
                   scrollToTop();
                 }}
                 disabled={!canNext}
-                className="h-12 flex-[2] rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-transform hover:bg-elec-yellow/90 disabled:opacity-50 touch-manipulation active:scale-[0.99] lg:flex-none lg:px-10 outline-none focus:outline-none focus-visible:outline-none"
+                className="h-12 flex-[2] rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-transform hover:bg-elec-yellow/90 disabled:bg-white/[0.08] disabled:text-white/70 touch-manipulation active:scale-[0.99] lg:flex-none lg:px-10 outline-none focus:outline-none focus-visible:outline-none"
               >
                 {nextLabels[currentIndex] || 'Continue'}
               </button>

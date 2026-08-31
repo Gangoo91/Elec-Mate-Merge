@@ -765,17 +765,16 @@ const CommercialCircuitGuide = () => {
   return (
     <div className="space-y-6">
       {/* Three-Phase Distribution Systems */}
-      <Card className="border-elec-yellow/30 bg-white/5">
-        <CardHeader>
+      <Card variant="plain">
+        <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <Triangle className="h-6 w-6 text-elec-yellow" />
-            <CardTitle className="text-elec-yellow">{threePhaseDistribution.title}</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">{threePhaseDistribution.title}</CardTitle>
           </div>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <Alert className="border-elec-yellow/50 bg-elec-yellow/10">
+        <CardContent className="space-y-4 p-0">
+          <Alert className="border-elec-yellow/60 bg-white/[0.06]">
             <Info className="h-4 w-4 text-elec-yellow" />
-            <AlertDescription className="text-yellow-200 text-sm">
+            <AlertDescription className="text-elec-yellow text-sm">
               {threePhaseDistribution.description}
             </AlertDescription>
           </Alert>
@@ -831,18 +830,17 @@ const CommercialCircuitGuide = () => {
       </Card>
 
       {/* Load Balancing Requirements */}
-      <Card className="border-white/[0.06] bg-white/5">
-        <CardHeader>
+      <Card variant="plain">
+        <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <Activity className="h-6 w-6 text-white/55" />
-            <CardTitle className="text-white">{loadBalancing.title}</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">{loadBalancing.title}</CardTitle>
           </div>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 p-0">
           <p className="text-sm text-white">{loadBalancing.description}</p>
 
           {loadBalancing.principles.map((principle, index) => (
-            <div key={index} className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+            <div key={index} className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
               <h4 className="font-medium text-white mb-2">{principle.principle}</h4>
               <p className="text-sm text-white/85 mb-2">{principle.explanation}</p>
               {'target' in principle && (
@@ -878,11 +876,11 @@ const CommercialCircuitGuide = () => {
             </div>
           ))}
 
-          <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+          <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
             <h4 className="font-medium text-white mb-3">Practical Load Distribution Examples</h4>
             <div className="space-y-3">
               {loadBalancing.practicalGuidance.map((guide, idx) => (
-                <div key={idx} className="bg-white/[0.02] p-3 rounded border border-white/[0.06]">
+                <div key={idx} className="bg-white/[0.06] p-3 rounded border border-white/[0.10]">
                   <h5 className="font-medium text-white/85 text-sm mb-1">{guide.scenario}</h5>
                   <p className="text-xs text-white mb-1">
                     <strong>Approach:</strong> {guide.approach}
@@ -895,12 +893,12 @@ const CommercialCircuitGuide = () => {
             </div>
           </div>
 
-          <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+          <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
             <h4 className="font-medium text-white mb-3">Monitoring Recommendations</h4>
             <ul className="space-y-1">
               {loadBalancing.monitoring.map((item, idx) => (
                 <li key={idx} className="text-sm text-white/85 flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-white/55 mt-0.5 flex-shrink-0" />
+                  <CheckCircle className="h-4 w-4 text-white/70 mt-0.5 flex-shrink-0" />
                   {item}
                 </li>
               ))}
@@ -910,18 +908,17 @@ const CommercialCircuitGuide = () => {
       </Card>
 
       {/* Sub-Distribution Board Design */}
-      <Card className="border-white/[0.06] bg-white/5">
-        <CardHeader>
+      <Card variant="plain">
+        <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <Building className="h-6 w-6 text-white/55" />
-            <CardTitle className="text-white">{subDistributionDesign.title}</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">{subDistributionDesign.title}</CardTitle>
           </div>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 p-0">
           <p className="text-sm text-white">{subDistributionDesign.description}</p>
 
           {subDistributionDesign.hierarchy.map((level, index) => (
-            <div key={index} className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+            <div key={index} className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
               <div className="flex flex-wrap items-center gap-2 mb-3">
                 <h4 className="font-medium text-white">{level.level}</h4>
                 <Badge variant="outline" className="border-white/10 text-white text-xs">
@@ -949,8 +946,8 @@ const CommercialCircuitGuide = () => {
             </div>
           ))}
 
-          <Alert className="border-white/[0.06] bg-white/[0.02]">
-            <AlertTriangle className="h-4 w-4 text-white/55" />
+          <Alert className="border-white/[0.10] bg-white/[0.06]">
+            <AlertTriangle className="h-4 w-4 text-white/70" />
             <AlertDescription className="text-white/85 text-sm">
               <strong>Design Considerations:</strong>
               <ul className="mt-2 space-y-1">
@@ -967,21 +964,20 @@ const CommercialCircuitGuide = () => {
       </Card>
 
       {/* Busbar Trunking Systems */}
-      <Card className="border-white/[0.06] bg-white/5">
-        <CardHeader>
+      <Card variant="plain">
+        <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <Network className="h-6 w-6 text-white/55" />
-            <CardTitle className="text-white">{busbarTrunking.title}</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">{busbarTrunking.title}</CardTitle>
           </div>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 p-0">
           <p className="text-sm text-white">{busbarTrunking.description}</p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {busbarTrunking.types.map((type, index) => (
               <div
                 key={index}
-                className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]"
+                className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]"
               >
                 <div className="flex items-center gap-2 mb-2">
                   <h4 className="font-medium text-white text-sm">{type.type}</h4>
@@ -1008,7 +1004,7 @@ const CommercialCircuitGuide = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+            <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
               <h4 className="font-medium text-white/85 mb-3">Installation Requirements</h4>
               <ul className="space-y-1">
                 {busbarTrunking.installationRequirements.map((req, idx) => (
@@ -1020,7 +1016,7 @@ const CommercialCircuitGuide = () => {
               </ul>
             </div>
 
-            <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+            <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
               <h4 className="font-medium text-white/85 mb-3">Testing Requirements</h4>
               <ul className="space-y-1">
                 {busbarTrunking.testingRequirements.map((req, idx) => (
@@ -1036,21 +1032,20 @@ const CommercialCircuitGuide = () => {
       </Card>
 
       {/* Cable Sizing */}
-      <Card className="border-white/[0.06] bg-white/5">
-        <CardHeader>
+      <Card variant="plain">
+        <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <Cable className="h-6 w-6 text-white/55" />
-            <CardTitle className="text-white">{cableSizing.title}</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">{cableSizing.title}</CardTitle>
           </div>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 p-0">
           <p className="text-sm text-white">{cableSizing.description}</p>
 
           {/* Diversity Factors */}
-          <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+          <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
             <h4 className="font-medium text-white mb-2">{cableSizing.diversityFactors.title}</h4>
-            <Alert className="border-white/[0.06] bg-white/[0.02] mb-3">
-              <Info className="h-4 w-4 text-white/55" />
+            <Alert className="border-white/[0.10] bg-white/[0.06] mb-3">
+              <Info className="h-4 w-4 text-white/70" />
               <AlertDescription className="text-white/85 text-xs">
                 {cableSizing.diversityFactors.note}
               </AlertDescription>
@@ -1058,7 +1053,7 @@ const CommercialCircuitGuide = () => {
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-white/[0.06]">
+                  <tr className="border-b border-white/[0.10]">
                     <th className="text-left py-2 text-white/85">Load Type</th>
                     <th className="text-left py-2 text-white/85">Diversity</th>
                     <th className="text-left py-2 text-white/85">Notes</th>
@@ -1066,7 +1061,7 @@ const CommercialCircuitGuide = () => {
                 </thead>
                 <tbody>
                   {cableSizing.diversityFactors.factors.map((factor, idx) => (
-                    <tr key={idx} className="border-b border-white/[0.06]">
+                    <tr key={idx} className="border-b border-white/[0.10]">
                       <td className="py-2 text-white text-xs">{factor.load}</td>
                       <td className="py-2 text-white text-xs">{factor.diversity}</td>
                       <td className="py-2 text-white text-xs">{factor.notes}</td>
@@ -1078,12 +1073,12 @@ const CommercialCircuitGuide = () => {
           </div>
 
           {/* Grouping Factors */}
-          <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+          <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
             <h4 className="font-medium text-white mb-2">{cableSizing.groupingFactors.title}</h4>
             <p className="text-xs text-white mb-3">{cableSizing.groupingFactors.description}</p>
             <div className="grid grid-cols-4 md:grid-cols-6 gap-2 mb-3">
               {cableSizing.groupingFactors.table.map((row, idx) => (
-                <div key={idx} className="bg-white/[0.02] p-2 rounded text-center">
+                <div key={idx} className="bg-white/[0.06] p-2 rounded text-center">
                   <div className="text-white/85 text-xs font-medium">{row.circuits} circuits</div>
                   <div className="text-white text-sm font-bold">{row.factor}</div>
                 </div>
@@ -1100,19 +1095,19 @@ const CommercialCircuitGuide = () => {
           </div>
 
           {/* Thermal Insulation Factors */}
-          <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+          <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
             <h4 className="font-medium text-white mb-2">{cableSizing.thermalInsulation.title}</h4>
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-white/[0.06]">
+                  <tr className="border-b border-white/[0.10]">
                     <th className="text-left py-2 text-white/85">Length in Insulation</th>
                     <th className="text-left py-2 text-white/85">Derating Factor</th>
                   </tr>
                 </thead>
                 <tbody>
                   {cableSizing.thermalInsulation.table.map((row, idx) => (
-                    <tr key={idx} className="border-b border-white/[0.06]">
+                    <tr key={idx} className="border-b border-white/[0.10]">
                       <td className="py-2 text-white text-xs">{row.length}</td>
                       <td className="py-2 text-white text-xs">{row.factor}</td>
                     </tr>
@@ -1123,14 +1118,14 @@ const CommercialCircuitGuide = () => {
           </div>
 
           {/* Commercial Cable Sizes */}
-          <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+          <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
             <h4 className="font-medium text-white mb-2">
               {cableSizing.commercialCableSizes.title}
             </h4>
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-white/[0.06]">
+                  <tr className="border-b border-white/[0.10]">
                     <th className="text-left py-2 text-white/85">Cable Size</th>
                     <th className="text-left py-2 text-white/85">Current Rating</th>
                     <th className="text-left py-2 text-white/85">Typical Use</th>
@@ -1138,7 +1133,7 @@ const CommercialCircuitGuide = () => {
                 </thead>
                 <tbody>
                   {cableSizing.commercialCableSizes.cables.map((cable, idx) => (
-                    <tr key={idx} className="border-b border-white/[0.06]">
+                    <tr key={idx} className="border-b border-white/[0.10]">
                       <td className="py-2 text-white text-xs font-medium">{cable.size}</td>
                       <td className="py-2 text-white text-xs">{cable.current}</td>
                       <td className="py-2 text-white text-xs">{cable.use}</td>
@@ -1152,21 +1147,20 @@ const CommercialCircuitGuide = () => {
       </Card>
 
       {/* Maximum Demand Calculations */}
-      <Card className="border-white/[0.06] bg-white/5">
-        <CardHeader>
+      <Card variant="plain">
+        <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <Calculator className="h-6 w-6 text-white/55" />
-            <CardTitle className="text-white">{maximumDemand.title}</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">{maximumDemand.title}</CardTitle>
           </div>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 p-0">
           <p className="text-sm text-white">{maximumDemand.description}</p>
 
           <div className="space-y-3">
             {maximumDemand.method.steps.map((step, index) => (
               <div
                 key={index}
-                className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]"
+                className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]"
               >
                 <div className="flex items-center gap-2 mb-2">
                   <Badge variant="outline" className="border-white/10 text-white">
@@ -1187,14 +1181,14 @@ const CommercialCircuitGuide = () => {
           </div>
 
           {/* Example Calculation */}
-          <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+          <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
             <h4 className="font-medium text-white mb-3">
               {maximumDemand.exampleCalculation.title}
             </h4>
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-white/[0.06]">
+                  <tr className="border-b border-white/[0.10]">
                     <th className="text-left py-2 text-white/85">Load Item</th>
                     <th className="text-left py-2 text-white/85">Connected</th>
                     <th className="text-left py-2 text-white/85">Diversity</th>
@@ -1203,7 +1197,7 @@ const CommercialCircuitGuide = () => {
                 </thead>
                 <tbody>
                   {maximumDemand.exampleCalculation.loads.map((load, idx) => (
-                    <tr key={idx} className="border-b border-white/[0.06]">
+                    <tr key={idx} className="border-b border-white/[0.10]">
                       <td className="py-2 text-white text-xs">{load.item}</td>
                       <td className="py-2 text-white text-xs">{load.connected}</td>
                       <td className="py-2 text-white text-xs">{load.diversity}</td>
@@ -1212,7 +1206,7 @@ const CommercialCircuitGuide = () => {
                   ))}
                 </tbody>
                 <tfoot>
-                  <tr className="border-t-2 border-white/[0.06]">
+                  <tr className="border-t-2 border-white/[0.10]">
                     <td colSpan={3} className="py-2 text-white font-medium">
                       Total Diversified Load
                     </td>
@@ -1223,7 +1217,7 @@ const CommercialCircuitGuide = () => {
                 </tfoot>
               </table>
             </div>
-            <div className="mt-3 p-3 bg-white/[0.02] rounded border border-white/[0.06]">
+            <div className="mt-3 p-3 bg-white/[0.06] rounded border border-white/[0.10]">
               <p className="text-xs text-white/85">
                 <strong>Calculation:</strong> {maximumDemand.exampleCalculation.calculation}
               </p>
@@ -1236,17 +1230,16 @@ const CommercialCircuitGuide = () => {
       </Card>
 
       {/* Power Factor Correction */}
-      <Card className="border-white/[0.06] bg-white/5">
-        <CardHeader>
+      <Card variant="plain">
+        <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <Gauge className="h-6 w-6 text-white/55" />
-            <CardTitle className="text-white">{powerFactorCorrection.title}</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">{powerFactorCorrection.title}</CardTitle>
           </div>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 p-0">
           <p className="text-sm text-white">{powerFactorCorrection.description}</p>
 
-          <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+          <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
             <h4 className="font-medium text-white mb-3">Power Factor Basics</h4>
             <ul className="space-y-2">
               {powerFactorCorrection.basics.explanation.map((item, idx) => (
@@ -1266,17 +1259,17 @@ const CommercialCircuitGuide = () => {
             {powerFactorCorrection.correctionMethods.map((method, index) => (
               <div
                 key={index}
-                className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]"
+                className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]"
               >
                 <h5 className="font-medium text-white/85 mb-2">{method.method}</h5>
                 <p className="text-xs text-white mb-2">{method.description}</p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs">
                   <div>
-                    <span className="text-white/55">Advantages: </span>
+                    <span className="text-white/70">Advantages: </span>
                     <span className="text-white/85">{method.advantages}</span>
                   </div>
                   <div>
-                    <span className="text-white/55">Disadvantages: </span>
+                    <span className="text-white/70">Disadvantages: </span>
                     <span className="text-white/85">{method.disadvantages}</span>
                   </div>
                 </div>
@@ -1288,7 +1281,7 @@ const CommercialCircuitGuide = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+            <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
               <h4 className="font-medium text-white/85 mb-3">Typical Power Factors</h4>
               <div className="space-y-1">
                 {powerFactorCorrection.typicalValues.map((item, idx) => (
@@ -1300,7 +1293,7 @@ const CommercialCircuitGuide = () => {
               </div>
             </div>
 
-            <div className="bg-red-500/10 p-4 rounded-lg border border-red-500/20">
+            <div className="p-4 rounded-lg border border-white/[0.12] border-l-[3px] border-l-red-500 bg-white/[0.06]">
               <h4 className="font-medium text-red-200 mb-3">Safety Considerations</h4>
               <ul className="space-y-1">
                 {powerFactorCorrection.safetyConsiderations.map((item, idx) => (
@@ -1316,19 +1309,18 @@ const CommercialCircuitGuide = () => {
       </Card>
 
       {/* Socket Circuits: Ring vs Radial */}
-      <Card className="border-white/[0.06] bg-white/5">
-        <CardHeader>
+      <Card variant="plain">
+        <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <Zap className="h-6 w-6 text-white/55" />
-            <CardTitle className="text-white">{socketCircuits.title}</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">{socketCircuits.title}</CardTitle>
           </div>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 p-0">
           <p className="text-sm text-white">{socketCircuits.description}</p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* Ring Circuit */}
-            <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+            <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
               <h4 className="font-medium text-white mb-2">
                 {socketCircuits.comparison.ring.title}
               </h4>
@@ -1365,7 +1357,7 @@ const CommercialCircuitGuide = () => {
             </div>
 
             {/* Radial Circuit */}
-            <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+            <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
               <h4 className="font-medium text-white mb-2">
                 {socketCircuits.comparison.radial.title}
               </h4>
@@ -1407,7 +1399,7 @@ const CommercialCircuitGuide = () => {
             </div>
           </div>
 
-          <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+          <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
             <h4 className="font-medium text-white mb-3">Commercial Considerations</h4>
             <ul className="space-y-1">
               {socketCircuits.commercialConsiderations.map((item, idx) => (
@@ -1419,8 +1411,8 @@ const CommercialCircuitGuide = () => {
             </ul>
           </div>
 
-          <Alert className="border-white/[0.06] bg-white/[0.02]">
-            <Info className="h-4 w-4 text-white/55" />
+          <Alert className="border-white/[0.10] bg-white/[0.06]">
+            <Info className="h-4 w-4 text-white/70" />
             <AlertDescription className="text-white/85 text-sm">
               {socketCircuits.recommendation}
             </AlertDescription>
@@ -1429,27 +1421,26 @@ const CommercialCircuitGuide = () => {
       </Card>
 
       {/* Server Room & IT Power */}
-      <Card className="border-white/[0.06] bg-white/5">
-        <CardHeader>
+      <Card variant="plain">
+        <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <Server className="h-6 w-6 text-white/55" />
-            <CardTitle className="text-white">{serverRoomPower.title}</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">{serverRoomPower.title}</CardTitle>
           </div>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 p-0">
           <p className="text-sm text-white">{serverRoomPower.description}</p>
 
           {/* Power Supply Architecture */}
-          <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+          <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
             <h4 className="font-medium text-white mb-3">
               {serverRoomPower.supplyRequirements.title}
             </h4>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               {serverRoomPower.supplyRequirements.configurations.map((config, idx) => (
-                <div key={idx} className="bg-white/[0.02] p-3 rounded border border-white/[0.06]">
+                <div key={idx} className="bg-white/[0.06] p-3 rounded border border-white/[0.10]">
                   <h5 className="font-medium text-white/85 text-sm mb-1">{config.type}</h5>
                   <p className="text-xs text-white mb-1">{config.description}</p>
-                  <p className="text-xs text-yellow-300">
+                  <p className="text-xs text-elec-yellow">
                     <strong>Reliability:</strong> {config.reliability}
                   </p>
                   <p className="text-xs text-white">
@@ -1461,11 +1452,11 @@ const CommercialCircuitGuide = () => {
           </div>
 
           {/* UPS Requirements */}
-          <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+          <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
             <h4 className="font-medium text-white mb-3">{serverRoomPower.upsRequirements.title}</h4>
             <div className="space-y-3">
               {serverRoomPower.upsRequirements.types.map((type, idx) => (
-                <div key={idx} className="bg-white/[0.02] p-3 rounded border border-white/[0.06]">
+                <div key={idx} className="bg-white/[0.06] p-3 rounded border border-white/[0.10]">
                   <div className="flex items-center gap-2 mb-1">
                     <h5 className="font-medium text-white/85 text-sm">{type.type}</h5>
                     <Badge variant="outline" className="border-white/10 text-white text-xs">
@@ -1516,13 +1507,13 @@ const CommercialCircuitGuide = () => {
           </div>
 
           {/* Clean Earth */}
-          <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+          <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
             <h4 className="font-medium text-white mb-3">{serverRoomPower.cleanEarth.title}</h4>
             <p className="text-xs text-white mb-3">{serverRoomPower.cleanEarth.description}</p>
 
             <div className="space-y-3 mb-4">
               {serverRoomPower.cleanEarth.methods.map((method, idx) => (
-                <div key={idx} className="bg-white/[0.02] p-3 rounded border border-white/[0.06]">
+                <div key={idx} className="bg-white/[0.06] p-3 rounded border border-white/[0.10]">
                   <h5 className="font-medium text-white/85 text-sm mb-1">{method.method}</h5>
                   <p className="text-xs text-white">{method.description}</p>
                   <p className="text-xs text-white/85">
@@ -1535,7 +1526,7 @@ const CommercialCircuitGuide = () => {
               ))}
             </div>
 
-            <Alert className="border-red-500/50 bg-red-500/10">
+            <Alert className="border-white/[0.12] border-l-[3px] border-l-red-500 bg-white/[0.06]">
               <AlertTriangle className="h-4 w-4 text-red-400" />
               <AlertDescription className="text-red-200 text-xs">
                 <strong>Critical Points:</strong>
@@ -1550,13 +1541,13 @@ const CommercialCircuitGuide = () => {
 
           {/* Power Distribution & Cooling */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+            <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
               <h4 className="font-medium text-white mb-3">
                 {serverRoomPower.powerDistribution.title}
               </h4>
               <div className="space-y-2">
                 {serverRoomPower.powerDistribution.components.map((comp, idx) => (
-                  <div key={idx} className="bg-white/[0.02] p-2 rounded border border-white/[0.06]">
+                  <div key={idx} className="bg-white/[0.06] p-2 rounded border border-white/[0.10]">
                     <h5 className="font-medium text-white/85 text-xs">{comp.item}</h5>
                     <p className="text-xs text-white">{comp.description}</p>
                   </div>
@@ -1564,7 +1555,7 @@ const CommercialCircuitGuide = () => {
               </div>
             </div>
 
-            <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+            <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
               <h4 className="font-medium text-white mb-3">
                 {serverRoomPower.coolingIntegration.title}
               </h4>
@@ -1582,16 +1573,15 @@ const CommercialCircuitGuide = () => {
       </Card>
 
       {/* Commercial Circuit Design Summary */}
-      <Card className="border-white/[0.06] bg-white/5">
-        <CardHeader>
+      <Card variant="plain">
+        <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <Settings className="h-6 w-6 text-white/55" />
-            <CardTitle className="text-white">Commercial Circuit Design Summary</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">Commercial Circuit Design Summary</CardTitle>
           </div>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 p-0">
           {circuitDesign.map((circuit, index) => (
-            <div key={index} className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+            <div key={index} className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
               <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-3 mb-3">
                 <div className="flex-1">
                   <h4 className="font-medium text-white text-base mb-1">{circuit.circuit}</h4>
@@ -1601,7 +1591,7 @@ const CommercialCircuitGuide = () => {
                   <Badge variant="outline" className="border-white/10 text-white text-xs">
                     {circuit.cable}
                   </Badge>
-                  <Badge variant="outline" className="border-white/10 text-white/55 text-xs">
+                  <Badge variant="outline" className="border-white/10 text-white/70 text-xs">
                     {circuit.protection}
                   </Badge>
                 </div>

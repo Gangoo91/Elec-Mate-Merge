@@ -174,7 +174,7 @@ const GoalSettingTracker = () => {
             <button
               onClick={handleAdd}
               disabled={!title.trim()}
-              className="flex-1 h-11 rounded-xl bg-elec-yellow text-black text-xs font-semibold touch-manipulation active:scale-[0.98] disabled:opacity-30"
+              className="flex-1 h-11 rounded-xl bg-elec-yellow text-black text-xs font-semibold touch-manipulation active:scale-[0.98] disabled:bg-white/[0.08] disabled:text-white/70"
             >
               Save Goal
             </button>

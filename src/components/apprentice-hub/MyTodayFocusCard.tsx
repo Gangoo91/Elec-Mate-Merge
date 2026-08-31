@@ -1,26 +1,43 @@
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { RefreshCw } from 'lucide-react';
+import { ChevronRight, RefreshCw } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { useApprenticeDailyBrief, type ActionKind } from '@/hooks/useApprenticeDailyBrief';
 
 /* ==========================================================================
-   MyTodayFocusCard — 1-3 bullets of what to do today. Lazy-on-open caching.
-   ELE-900 (B5).
+   MyTodayFocusCard — the one to three things worth doing today.
+
+   REDESIGNED 2026-08-31. Two things made this the ugliest card in the hub:
+
+   🔴 THE CARD WAS VOLT-TINTED. `bg-elec-yellow/[0.06]` with a volt border.
+      Translucent volt over a near-black ground does not read as a soft
+      yellow — it goes KHAKI. Sat next to the neutral "This week" card it
+      looked like a rendering fault. Volt on this ground is only ever solid,
+      and it belongs on a control, never on 500px of card.
+
+   🔴 A SOLID VOLT PILL ON EVERY ROW. Three here, four on the card beside it:
+      seven maximum-emphasis buttons on one screen, so the eye had nowhere to
+      rest and none of them read as more important than any other. The row
+      IS the action now — same shape as HubWorkList: a rule, the words, a
+      chevron. That also fixes the tap target, which was a 36px pill.
+
+   ⚠️ Inner rows were `bg-black/20` — DARKER than the card containing them,
+      which reads as holes punched in the surface rather than items on it.
    ========================================================================== */
 
 function resolveHref(kind: ActionKind, target?: string): string {
-  // College Hub is now hub-and-spoke (/apprentice/college/<section>) —
-  // map each daily-brief action to its focused sub-page rather than a
-  // fragment on the (no-longer-stacked) landing page.
+  // College Hub is hub-and-spoke (/apprentice/college/<section>) — map each
+  // daily-brief action to its focused sub-page.
   switch (kind) {
     case 'open_quiz':
       return target
         ? `/apprentice/college/activities?quiz=${target}`
         : '/apprentice/college/activities';
     case 'open_otj':
-      return '/apprentice/college/activities';
+      return '/apprentice/college/activities#otj';
     case 'open_portfolio':
-      return '/apprentice/college/activities';
+      return '/apprentice/college/activities#portfolio';
     case 'open_ac':
       return '/apprentice/college/progress';
     case 'open_epa_brief':
@@ -38,8 +55,19 @@ export function MyTodayFocusCard() {
 
   if (loading) {
     return (
-      <div className="rounded-2xl border border-white/10 bg-white/5 p-5 text-sm text-white/60">
-        Loading today's focus…
+      <div
+        className={cn(
+          'rounded-2xl border border-white/[0.06] p-5 animate-pulse',
+          CARD_SURFACE
+        )}
+      >
+        <div className="h-3 w-24 rounded-full bg-white/10" />
+        <div className="mt-3 h-5 w-2/3 rounded-full bg-white/10" />
+        <div className="mt-4 space-y-2">
+          {[0, 1].map((i) => (
+            <div key={i} className="h-14 rounded-xl bg-white/[0.04]" />
+          ))}
+        </div>
       </div>
     );
   }
@@ -49,14 +77,14 @@ export function MyTodayFocusCard() {
     <motion.section
       initial={{ opacity: 0, y: 6 }}
       animate={{ opacity: 1, y: 0 }}
-      className="rounded-2xl border border-elec-yellow/30 bg-elec-yellow/[0.06] p-5"
+      className={cn('overflow-hidden rounded-2xl border border-elec-yellow/35', CARD_SURFACE)}
     >
-      <div className="flex items-start justify-between gap-3">
-        <div>
+      <div className="flex items-start justify-between gap-3 px-4 pt-4 sm:px-5 sm:pt-5">
+        <div className="min-w-0">
           <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-elec-yellow">
             Today's focus
           </div>
-          <h3 className="mt-2 text-lg font-semibold text-white leading-snug">
+          <h3 className="mt-2 text-[17px] font-semibold leading-snug text-white">
             {brief.headline ?? brief.greeting ?? 'Pick one thing today.'}
           </h3>
         </div>
@@ -65,37 +93,49 @@ export function MyTodayFocusCard() {
           onClick={() => void refresh()}
           disabled={refreshing}
           aria-label="Refresh today's focus"
-          className="rounded-full border border-white/10 bg-white/5 p-2 text-white/60 hover:text-white touch-manipulation disabled:opacity-40"
+          // -mr-2/-mt-2 keeps a 44px target without pushing the icon off the
+          // card's optical edge.
+          className="-mr-2 -mt-2 flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-white transition-colors touch-manipulation hover:bg-white/[0.06] disabled:opacity-40"
         >
-          <RefreshCw className={`h-3.5 w-3.5 ${refreshing ? 'animate-spin' : ''}`} />
+          <RefreshCw className={cn('h-4 w-4', refreshing && 'animate-spin')} />
         </button>
       </div>
 
       {brief.bullets.length > 0 && (
-        <ul className="mt-4 space-y-3">
+        <ul className="mt-4 divide-y divide-white/[0.10] border-t border-white/[0.10]">
           {brief.bullets.map((b, i) => (
-            <li
-              key={i}
-              className="rounded-xl border border-white/10 bg-black/20 p-3"
-            >
-              <div className="text-sm font-medium text-white">{b.title}</div>
-              <p className="mt-1 text-xs text-white/70 leading-relaxed">{b.why}</p>
-              <div className="mt-2">
-                <button
-                  type="button"
-                  onClick={() => navigate(resolveHref(b.action_kind, b.action_target))}
-                  className="inline-flex items-center h-9 px-3 rounded-full bg-elec-yellow text-black text-[12px] font-semibold touch-manipulation"
-                >
-                  {b.action_label} →
-                </button>
-              </div>
+            <li key={i}>
+              <button
+                type="button"
+                onClick={() => navigate(resolveHref(b.action_kind, b.action_target))}
+                className="flex w-full items-start gap-3 px-4 py-3.5 text-left transition-colors touch-manipulation hover:bg-white/[0.06] active:bg-white/[0.09] sm:px-5"
+              >
+                <span
+                  aria-hidden="true"
+                  className="mt-0.5 h-8 w-[3px] shrink-0 rounded-full bg-elec-yellow"
+                />
+                <span className="min-w-0 flex-1">
+                  <span className="block text-[14px] font-semibold leading-snug text-white">
+                    {b.title}
+                  </span>
+                  <span className="mt-1 block text-[12.5px] leading-relaxed text-white">
+                    {b.why}
+                  </span>
+                  <span className="mt-1.5 block text-[12px] font-medium text-elec-yellow">
+                    {b.action_label}
+                  </span>
+                </span>
+                <ChevronRight className="mt-0.5 h-4 w-4 shrink-0 text-white" aria-hidden="true" />
+              </button>
             </li>
           ))}
         </ul>
       )}
 
       {brief.encouragement && (
-        <p className="mt-4 text-xs text-white/60 italic">{brief.encouragement}</p>
+        <p className="border-t border-white/[0.10] px-4 py-3.5 text-[12.5px] leading-relaxed text-white sm:px-5">
+          {brief.encouragement}
+        </p>
       )}
     </motion.section>
   );

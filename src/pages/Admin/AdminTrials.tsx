@@ -2341,7 +2341,7 @@ export default function AdminTrials() {
                           }
                         }}
                         disabled={sendReminderMutation.isPending}
-                        className="flex h-12 w-full touch-manipulation items-center justify-center gap-2 rounded-xl bg-elec-yellow text-[13px] font-semibold text-black transition-opacity hover:opacity-90 disabled:opacity-50"
+                        className="flex h-12 w-full touch-manipulation items-center justify-center gap-2 rounded-xl bg-elec-yellow text-[13px] font-semibold text-black transition-opacity hover:opacity-90 disabled:bg-white/[0.08] disabled:text-white/70"
                       >
                         <Mail className="h-4 w-4" />
                         {sendReminderMutation.isPending ? 'Sending…' : 'Send trial reminder'}

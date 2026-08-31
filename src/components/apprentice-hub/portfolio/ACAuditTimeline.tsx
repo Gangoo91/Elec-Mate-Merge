@@ -172,16 +172,16 @@ export function ACAuditTimeline({ signoff, evidenceCount, lastEvidenceAt }: ACAu
                 <div className="flex items-baseline justify-between gap-3">
                   <p className="text-[13.5px] font-medium text-white leading-snug">{step.label}</p>
                   {step.when && (
-                    <span className="text-[11px] text-white/55 font-mono tabular-nums shrink-0">
+                    <span className="text-[11px] text-white font-mono tabular-nums shrink-0">
                       {step.when}
                     </span>
                   )}
                 </div>
                 {step.note && (
-                  <p className="text-[12px] text-white/60 leading-snug mt-1">{step.note}</p>
+                  <p className="text-[12px] text-white leading-snug mt-1">{step.note}</p>
                 )}
                 {step.detail && (
-                  <p className="text-[12px] text-white/75 leading-relaxed italic mt-1.5 pl-2.5 border-l-2 border-white/10">
+                  <p className="text-[12px] text-white leading-relaxed italic mt-1.5 pl-2.5 border-l-2 border-white/10">
                     {step.detail}
                   </p>
                 )}

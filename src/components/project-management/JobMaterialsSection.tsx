@@ -262,7 +262,7 @@ export const JobMaterialsSection = ({
                   onClick={handleAdd}
                   disabled={!newName.trim() || adding}
                   aria-label="Add material"
-                  className="h-11 w-11 rounded-xl bg-elec-yellow text-black flex items-center justify-center touch-manipulation active:scale-[0.96] disabled:opacity-40 shrink-0"
+                  className="h-11 w-11 rounded-xl bg-elec-yellow text-black flex items-center justify-center touch-manipulation active:scale-[0.96] disabled:bg-white/[0.08] disabled:text-white/70 shrink-0"
                 >
                   {adding ? <Loader2 className="h-4 w-4 animate-spin" /> : <Plus className="h-4 w-4" />}
                 </button>

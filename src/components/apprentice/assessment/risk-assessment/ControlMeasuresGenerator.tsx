@@ -97,7 +97,7 @@ const ControlMeasuresGenerator = ({ onControlMeasuresAdded }: ControlMeasuresGen
   return (
     <div className="space-y-5 animate-fade-in">
       <div className="space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
           Control measures generator
         </span>
         <h3 className="text-[16px] sm:text-[18px] font-medium text-white">
@@ -105,8 +105,8 @@ const ControlMeasuresGenerator = ({ onControlMeasuresAdded }: ControlMeasuresGen
         </h3>
       </div>
 
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+      <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 space-y-2">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
           Hierarchy of controls
         </span>
         <p className="text-[14px] text-white/85 leading-relaxed">
@@ -118,10 +118,10 @@ const ControlMeasuresGenerator = ({ onControlMeasuresAdded }: ControlMeasuresGen
       {controlMeasureCategories.map((category) => (
         <div
           key={category.category}
-          className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3"
+          className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3"
         >
           <div className="space-y-1">
-            <div className="flex items-baseline gap-3 text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <div className="flex items-baseline gap-3 text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
               <span>Level {category.hierarchy}</span>
               <span className="text-white/25">·</span>
               <span>{category.category}</span>
@@ -142,7 +142,7 @@ const ControlMeasuresGenerator = ({ onControlMeasuresAdded }: ControlMeasuresGen
                     ${
                       isSelected
                         ? 'bg-white/[0.04] border-white/10'
-                        : 'bg-white/[0.02] border-white/[0.06] hover:border-white/10'
+                        : 'bg-white/[0.06] border-white/[0.10] hover:border-white/10'
                     }
                   `}
                 >
@@ -166,8 +166,8 @@ const ControlMeasuresGenerator = ({ onControlMeasuresAdded }: ControlMeasuresGen
         </div>
       ))}
 
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+      <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
           Custom control measure
         </span>
         <div className="flex gap-2 items-end">
@@ -191,7 +191,7 @@ const ControlMeasuresGenerator = ({ onControlMeasuresAdded }: ControlMeasuresGen
       </div>
 
       {selectedMeasures.length > 0 && (
-        <div className="rounded-xl border border-elec-yellow/20 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-3">
+        <div className="rounded-xl border border-elec-yellow/20 bg-white/[0.06] p-4 sm:p-5 space-y-3">
           <div className="flex items-baseline justify-between">
             <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
               Selected measures

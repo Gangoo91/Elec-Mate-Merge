@@ -208,7 +208,7 @@ export default function MarkingQueuePage() {
               type="button"
               onClick={handleBulkGrade}
               disabled={!!bulkGrading}
-              className="inline-flex items-center h-10 px-4 rounded-full bg-elec-yellow text-black text-[13px] font-semibold disabled:opacity-50 touch-manipulation"
+              className="inline-flex items-center h-10 px-4 rounded-full bg-elec-yellow text-black text-[13px] font-semibold disabled:bg-white/[0.08] disabled:text-white/70 touch-manipulation"
             >
               {bulkGrading
                 ? `Grading… ${bulkGrading.done} / ${bulkGrading.total}`
@@ -354,7 +354,7 @@ export default function MarkingQueuePage() {
               type="button"
               onClick={handleApproveSelected}
               disabled={!!approving}
-              className="inline-flex items-center h-11 px-5 rounded-full bg-elec-yellow text-black text-[13px] font-semibold disabled:opacity-50 touch-manipulation"
+              className="inline-flex items-center h-11 px-5 rounded-full bg-elec-yellow text-black text-[13px] font-semibold disabled:bg-white/[0.08] disabled:text-white/70 touch-manipulation"
             >
               {approving
                 ? `Approving… ${approving.done} / ${approving.total}`

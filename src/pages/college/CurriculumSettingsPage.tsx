@@ -206,7 +206,7 @@ export default function CurriculumSettingsPage() {
           <button
             onClick={save}
             disabled={saving}
-            className="h-11 px-6 rounded-full bg-elec-yellow hover:bg-elec-yellow/90 text-black text-[13px] font-medium transition-colors disabled:opacity-40"
+            className="h-11 px-6 rounded-full bg-elec-yellow hover:bg-elec-yellow/90 text-black text-[13px] font-medium transition-colors disabled:bg-white/[0.08] disabled:text-white/70"
           >
             {saving ? 'Saving…' : 'Save settings'}
           </button>

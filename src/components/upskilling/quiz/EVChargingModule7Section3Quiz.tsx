@@ -331,7 +331,7 @@ export const EVChargingModule7Section3Quiz = () => {
           <Button
             onClick={handleNextQuestion}
             disabled={selectedAnswer === -1}
-            className="bg-elec-yellow text-elec-dark hover:bg-yellow-600 disabled:opacity-50"
+            className="bg-elec-yellow text-elec-dark hover:bg-yellow-600 disabled:bg-white/[0.08] disabled:text-white/70"
           >
             {currentQuestion === quizQuestions.length - 1 ? 'Finish Quiz' : 'Next'}
             <ArrowRight className="ml-2 h-4 w-4" />

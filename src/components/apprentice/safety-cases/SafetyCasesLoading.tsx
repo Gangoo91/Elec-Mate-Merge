@@ -10,7 +10,7 @@ const SafetyCasesLoading = ({ message = 'Loading safety cases...' }: SafetyCases
   return (
     <div className="min-h-[400px] flex items-center justify-center animate-fade-in">
       <Card className="bg-gradient-to-br from-white/5 to-elec-card border-white/10 max-w-md w-full overflow-hidden relative">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-elec-yellow/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+        <div className="absolute top-0 right-0 w-64 h-64 bg-white/[0.06] rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
 
         <CardHeader className="relative">
           <div className="flex items-center justify-center gap-3">

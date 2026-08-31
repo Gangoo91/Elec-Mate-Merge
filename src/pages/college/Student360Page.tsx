@@ -2593,7 +2593,7 @@ function EmptyCard({
         <button
           onClick={action.onClick}
           disabled={action.disabled}
-          className="mt-4 h-10 px-5 rounded-full bg-elec-yellow hover:bg-elec-yellow/90 text-black text-[12.5px] font-medium transition-colors disabled:opacity-40"
+          className="mt-4 h-10 px-5 rounded-full bg-elec-yellow hover:bg-elec-yellow/90 text-black text-[12.5px] font-medium transition-colors disabled:bg-white/[0.08] disabled:text-white/70"
         >
           {action.label}
         </button>

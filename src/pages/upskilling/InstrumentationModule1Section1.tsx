@@ -258,12 +258,12 @@ const InstrumentationModule1Section1 = () => {
           id="ins-1-1-variables"
           question="A vibration probe on a large pump motor. Which measured quantity is that, on the list above?"
           options={[
-            'Physical dimension',
             'Machine position, motion or acceleration',
+            'Physical dimension',
             'Chemical concentration',
             'Count',
           ]}
-          correctIndex={1}
+          correctIndex={0}
           explanation="Vibration is periodic motion, so it sits under position, motion and acceleration. It is normally measured to predict bearing failure before it happens rather than to control anything — a good early example of measurement without control."
         />
 
@@ -478,8 +478,8 @@ const InstrumentationModule1Section1 = () => {
         <InlineCheck
           id="ins-1-1-tags"
           question="You find a device tagged FT-208 on a drawing. Without knowing anything else, what is it?"
-          options={['A flow transmitter', 'A fuel tank', 'A flow totaliser', 'A field terminal']}
-          correctIndex={0}
+          options={['A fuel tank', 'A flow totaliser', 'A flow transmitter', 'A field terminal']}
+          correctIndex={2}
           explanation="F is the measured variable — flow. T is the function — transmitter. So FT-208 senses flow and reports it as a signal. The number identifies which one; the letters tell you what it does."
         />
 
@@ -736,11 +736,11 @@ const InstrumentationModule1Section1 = () => {
           question="A colleague says a loop 'must be fine, I tested continuity end to end'. What has that actually proved?"
           options={[
             'That the measurement is accurate',
-            'That a conductive path exists — nothing about whether the reading is correct',
             'That the transmitter is correctly ranged',
             'That the instrument has been calibrated',
+            'That a conductive path exists — nothing about whether the reading is correct',
           ]}
-          correctIndex={1}
+          correctIndex={3}
           explanation="Continuity proves a path. It says nothing about whether the sensing element is healthy, whether the transmitter is ranged correctly, or whether the control system is scaled to match. A loop can be electrically perfect and still report a wrong number — which is the distinction this whole course is built around."
         />
 

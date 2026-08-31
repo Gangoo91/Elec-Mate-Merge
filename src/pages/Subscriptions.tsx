@@ -535,7 +535,19 @@ const Subscriptions = () => {
   // ── Visible plans ──────────────────────────────────────────────────────────
   // Mate (business_ai) is deliberately not sold from this page — one grid of
   // Apprentice · Electrician · Employer · College.
-  const HIDDEN_PLAN_IDS = new Set(['business-ai-monthly', 'business-ai-yearly']);
+  /*
+   * 🔴 31 Aug 2026: 'mate-monthly' added. The web data (stripePriceData) calls
+   * the plan `business-ai-*`, but the NATIVE data (nativePriceData, used when
+   * isNative) calls the same retired plan `mate-monthly` — so hiding only the
+   * business-ai ids left it on sale at £34.99 inside the iOS and Android apps.
+   * Keep both naming schemes here; the two datasets do not agree.
+   */
+  const HIDDEN_PLAN_IDS = new Set([
+    'business-ai-monthly',
+    'business-ai-yearly',
+    'mate-monthly',
+    'mate-yearly',
+  ]);
   const visiblePlans = plans.filter((p) => !HIDDEN_PLAN_IDS.has(p.id));
 
   // ── Render ────────────────────────────────────────────────────────────────

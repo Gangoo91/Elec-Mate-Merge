@@ -82,7 +82,7 @@ export const CustomerPropertiesTab = ({ customerId, onRefresh }: CustomerPropert
           setEditingProperty(null);
           setShowAddDialog(true);
         }}
-        className="h-12 w-full rounded-xl bg-elec-yellow text-[14px] font-semibold text-black transition-all hover:bg-elec-yellow/90 active:scale-[0.99] disabled:opacity-50 touch-manipulation"
+        className="h-12 w-full rounded-xl bg-elec-yellow text-[14px] font-semibold text-black transition-all hover:bg-elec-yellow/90 active:scale-[0.99] disabled:bg-white/[0.08] disabled:text-white/70 touch-manipulation"
         disabled={isAdding}
       >
         Add property

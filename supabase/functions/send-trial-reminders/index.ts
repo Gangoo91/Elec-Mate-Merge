@@ -191,6 +191,49 @@ interface ReceiptStats {
 }
 
 /**
+ * What Stripe will ACTUALLY take when the trial ends, in pence.
+ *
+ * 🔴 The receipt email used to quote the flat tier price (£19.99 / £6.99),
+ * which is wrong for anyone carrying a discount. Referred users get a
+ * "Referral: Free first month" coupon at 100% off — their first invoice is £0 —
+ * and this email told them they were about to be charged £19.99. Craig Burden
+ * replied on 2026-08-31 asking whether his free month had been forgotten; it
+ * hadn't, the email was simply lying to him. Six referred users were on a live
+ * trial at the time, all queued to receive the same thing.
+ *
+ * Reading the upcoming invoice rather than the coupon covers every case —
+ * referral coupons, promo codes, proration, tax — because it is the number
+ * Stripe is going to charge.
+ *
+ * Returns null when there is nothing to read (app-store subscribers have no
+ * Stripe customer, and a failed lookup must not block the email); callers fall
+ * back to the tier price.
+ */
+async function upcomingChargePence(stripeCustomerId: string | null): Promise<number | null> {
+  const key = Deno.env.get('STRIPE_SECRET_KEY');
+  if (!key || !stripeCustomerId) return null;
+
+  try {
+    const res = await fetch(
+      `https://api.stripe.com/v1/invoices/upcoming?customer=${encodeURIComponent(stripeCustomerId)}`,
+      { headers: { Authorization: `Bearer ${key}` } }
+    );
+    // 404 simply means no invoice is scheduled — not an error worth logging.
+    if (!res.ok) return null;
+    const invoice = await res.json();
+    return typeof invoice?.amount_due === 'number' ? invoice.amount_due : null;
+  } catch (err) {
+    console.warn('upcomingChargePence failed (falling back to tier price):', err);
+    return null;
+  }
+}
+
+/** "£19.99", or "£0" when a discount clears the first invoice entirely. */
+function formatPence(pence: number): string {
+  return pence % 100 === 0 ? `£${pence / 100}` : `£${(pence / 100).toFixed(2)}`;
+}
+
+/**
  * "tomorrow" vs "in two days".
  *
  * The receipt job selects anyone whose trial ends 24-48h out, because the cron
@@ -210,9 +253,13 @@ function getReceiptEmail(
   stats: ReceiptStats,
   role: string,
   price: string,
-  when: string
+  when: string,
+  /** What Stripe will actually take at trial end, e.g. '£0' for a referral
+   *  coupon. Null when unknown (app-store subscribers, failed lookup). */
+  firstCharge: string | null = null
 ): EmailTemplate {
   const safeName = firstName?.trim() || 'mate';
+  const firstMonthFree = firstCharge === '£0';
   const isApprentice = role === 'apprentice';
   const hasActivity = isApprentice
     ? stats.quizzes > 0
@@ -263,9 +310,17 @@ function getReceiptEmail(
       ? `Your trial ends ${when} — there’s still time to sit one mock exam and see where you stand before it does.`
       : `Your trial ends ${when} — there’s still time to put one real job through it and see what it saves you.`;
 
-  const keepLine = hasActivity
-    ? `All of it stays with you for ${price}/month. Do nothing and your plan continues — or cancel before ${when === 'tomorrow' ? 'then' : 'it ends'} and you pay nothing at all.`
-    : `If it’s not for you, cancel before it ends and you pay nothing. If you keep it, it’s ${price}/month and everything stays unlocked.`;
+  /*
+    Anyone holding a referral coupon has a £0 first invoice. Quoting the list
+    price at them reads as though we have forgotten — which is exactly what
+    happened on 2026-08-31 — so say the true number first and the ongoing rate
+    second.
+  */
+  const keepLine = firstMonthFree
+    ? `Your first month is on the house — that's the referral credit, and <strong>nothing will be taken when the trial ends</strong>. After that it's ${price}/month, and you can cancel any time before it.`
+    : hasActivity
+      ? `All of it stays with you for ${price}/month. Do nothing and your plan continues — or cancel before ${when === 'tomorrow' ? 'then' : 'it ends'} and you pay nothing at all.`
+      : `If it’s not for you, cancel before it ends and you pay nothing. If you keep it, it’s ${price}/month and everything stays unlocked.`;
 
   return {
     subject,
@@ -278,7 +333,8 @@ function getReceiptEmail(
       '',
       ...(hasActivity ? statLines.map((l) => `- ${l}`) : []),
       '',
-      keepLine,
+      // keepLine carries a <strong> for the HTML body; strip tags for text.
+      keepLine.replace(/<[^>]+>/g, ''),
       '',
       ctaUrl,
       '',
@@ -457,7 +513,10 @@ serve(async (req) => {
       return Boolean(data);
     }
 
-    const PROFILE_COLS = 'id, full_name, trial_end, subscription_tier, subscription_source';
+    // stripe_customer_id is needed to read the upcoming invoice, so the email
+    // can quote what will actually be taken rather than the list price.
+    const PROFILE_COLS =
+      'id, full_name, trial_end, subscription_tier, subscription_source, stripe_customer_id';
 
     // 1. Activation email — REAL trialists (card on file) who signed up
     //    ~24h ago (18-30h window gives 12h of slack for a daily job).
@@ -558,12 +617,28 @@ serve(async (req) => {
       }
 
       const firstName = user.full_name?.split(' ')[0] || 'there';
+
+      // What Stripe will really take. Falls back to the tier price for
+      // app-store subscribers and any lookup that fails.
+      // `price` stays the ongoing monthly rate. `firstCharge` is what Stripe
+      // will actually take when the trial ends — different for anyone holding
+      // a referral coupon or promo code, and null when unknowable.
       const price = isApprentice ? '£6.99' : '£19.99';
+      // `u`'s inferred shape comes from PROFILE_COLS but doesn't carry the new
+      // column, so widen through `unknown` rather than assert a mismatched type.
+      const due = await upcomingChargePence(
+        (u as unknown as { stripe_customer_id: string | null }).stripe_customer_id ?? null
+      );
+      const firstCharge = due === null ? null : formatPence(due);
+      if (due === 0) {
+        console.log(`Receipt for ${user.email}: first invoice is £0 (discount applied)`);
+      }
+
       const when = endsWhen((u as { trial_end: string | null }).trial_end, now);
       if (
         await sendEmail(
           user.email,
-          getReceiptEmail(firstName, receipt, u.role ?? 'electrician', price, when)
+          getReceiptEmail(firstName, receipt, u.role ?? 'electrician', price, when, firstCharge)
         )
       ) {
         await supabase.from('trial_emails_sent').insert({

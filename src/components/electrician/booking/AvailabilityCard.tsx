@@ -343,7 +343,7 @@ const AvailabilityCard = ({ settings }: { settings: BookingSettings }) => {
         type="button"
         onClick={handleSave}
         disabled={!dirty || save.isPending}
-        className="mt-5 h-12 w-full rounded-xl bg-elec-yellow text-[14px] font-semibold text-black transition-colors hover:bg-elec-yellow/90 touch-manipulation disabled:opacity-40"
+        className="mt-5 h-12 w-full rounded-xl bg-elec-yellow text-[14px] font-semibold text-black transition-colors hover:bg-elec-yellow/90 touch-manipulation disabled:bg-white/[0.08] disabled:text-white/70"
       >
         {save.isPending ? 'Saving…' : dirty ? 'Save changes' : 'Saved'}
       </button>

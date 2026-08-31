@@ -152,7 +152,7 @@ export function SaveToListSheet({ open, onOpenChange, product }: SaveToListSheet
                 type="button"
                 onClick={handleCreateAndAdd}
                 disabled={!newListName.trim() || saving}
-                className="mt-3 h-12 w-full rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-colors touch-manipulation active:scale-[0.98] disabled:opacity-50"
+                className="mt-3 h-12 w-full rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-colors touch-manipulation active:scale-[0.98] disabled:bg-white/[0.08] disabled:text-white/70"
               >
                 {saving ? 'Saving…' : 'Create and add'}
               </button>

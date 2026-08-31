@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { supabase } from '@/integrations/supabase/client';
 import { realtimeChannelName } from '@/lib/realtimeChannel';
 import { useToast } from '@/hooks/use-toast';
@@ -159,14 +160,14 @@ export function MyTutorMessagesCard() {
 
   return (
     <>
-      <section className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_10%)] overflow-hidden">
+      <section className={cn('rounded-2xl border border-white/[0.06] overflow-hidden', CARD_SURFACE)}>
         <div className="px-4 sm:px-5 py-4 sm:py-5">
           <div className="flex items-baseline justify-between gap-3 flex-wrap">
-            <div className="text-[11px] sm:text-[11.5px] font-medium uppercase tracking-[0.18em] text-blue-300/85">
+            <div className="text-[11px] sm:text-[11.5px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
               Messages
             </div>
             {unreadTotal > 0 && (
-              <span className="text-[10.5px] tabular-nums text-white/85">
+              <span className="text-[10.5px] tabular-nums text-white">
                 {unreadTotal} unread from your tutor
               </span>
             )}
@@ -174,7 +175,7 @@ export function MyTutorMessagesCard() {
 
           {empty ? (
             <>
-              <p className="mt-3 text-[12.5px] text-white/90 leading-snug">
+              <p className="mt-3 text-[12.5px] text-white leading-snug">
                 Got a question for your tutor? Start a conversation. They'll see it the next time
                 they open your Student 360.
               </p>
@@ -194,11 +195,11 @@ export function MyTutorMessagesCard() {
                     latestMsg.sender_kind === 'tutor' ? 'border-white/[0.06]' : 'border-white/[0.10]'
                   )}
                 >
-                  <div className="text-[10.5px] uppercase tracking-[0.14em] text-white/95">
+                  <div className="text-[10.5px] uppercase tracking-[0.14em] text-white">
                     {latestMsg.sender_kind === 'tutor' ? 'Tutor' : 'You'} ·{' '}
                     {fmtRel(latestMsg.created_at)}
                   </div>
-                  <p className="mt-0.5 text-[12.5px] text-white/85 leading-snug line-clamp-2">
+                  <p className="mt-0.5 text-[12.5px] text-white leading-snug line-clamp-2">
                     {latestMsg.body}
                   </p>
                 </div>
@@ -209,7 +210,7 @@ export function MyTutorMessagesCard() {
                 className={cn('mt-4 w-full h-11 rounded-lg text-[13px] font-semibold transition-colors touch-manipulation',
                   unreadTotal > 0
                     ? 'bg-white/[0.02] text-white hover:bg-white/[0.02]'
-                    : 'border border-white/[0.10] bg-white/[0.02] text-white/85 hover:text-white hover:border-white/[0.22]'
+                    : 'border border-white/[0.10] bg-white/[0.02] text-white hover:text-white hover:border-white/[0.22]'
                 )}
               >
                 {unreadTotal > 0 ? 'Read tutor message →' : 'Open conversation'}
@@ -226,7 +227,7 @@ export function MyTutorMessagesCard() {
 
 function Skeleton() {
   return (
-    <section className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_10%)] overflow-hidden">
+    <section className={cn('rounded-2xl border border-white/[0.06] overflow-hidden', CARD_SURFACE)}>
       <div className="px-4 sm:px-5 py-4 sm:py-5 space-y-3">
         <div className="h-3 w-20 rounded-full bg-white/[0.05]" />
         <div className="h-12 rounded-md bg-white/[0.04]" />

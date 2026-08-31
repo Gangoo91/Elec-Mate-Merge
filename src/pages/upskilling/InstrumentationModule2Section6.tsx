@@ -69,8 +69,7 @@ const outcomes = [
 const quizQuestions = [
   {
     id: 1,
-    question:
-      'The source describes flow as arguably the most complex process variable to measure. One reason given is that:',
+    question: 'Flow is arguably the most complex process variable to measure. One reason is that:',
     options: [
       'Flowmeters are more expensive than other instruments',
       'The variable itself lacks a singular definition — volumetric, mass and standardised volumetric flow are different quantities',
@@ -79,7 +78,7 @@ const quizQuestions = [
     ],
     correctIndex: 1,
     explanation:
-      '"Flow" may mean volumetric flow, mass flow, or standardised volumetric flow — the number of gas volumes flowing supposing different pressure and temperature values than the line actually operates at. Agreeing which one is wanted is part of the selection, not a detail to settle afterwards.',
+      '"Flow" may mean volumetric flow, mass flow, or standardised volumetric flow — a gas volume counted as though the line were at some agreed reference pressure and temperature rather than the ones it is really at. Agreeing which one is wanted is part of the selection, not a detail to settle afterwards.',
   },
   {
     id: 2,
@@ -106,12 +105,12 @@ const quizQuestions = [
     ],
     correctIndex: 1,
     explanation:
-      'The source is explicit: the dynamic properties of fluids change with flow rate, and most flow measurement technologies cannot achieve respectable measurement linearity from the maximum rated flow all the way to zero, no matter how well matched they are to the application.',
+      'A fluid does not behave the same way at 5 per cent of full flow as it does at 95 per cent, so the physics the meter relies on shifts underneath it. Very few technologies stay linear all the way down to zero, however well chosen they are for the duty — which is why rangeability, not accuracy, is usually what decides whether a meter suits a job.',
   },
   {
     id: 4,
     question:
-      'Why is flowmeter installation described as a constant source of friction between piping and instrumentation engineers?',
+      'Why does flowmeter installation so often cause disagreement between piping and instrumentation engineers?',
     options: [
       'Because instruments are expensive',
       'Because what is excellent piping layout for process function and economy is often poor for good flow measurement, and vice versa',
@@ -190,15 +189,14 @@ const InstrumentationModule2Section6 = () => {
           onSite="You will meet instruments this course has never mentioned. The principle is transferable; the catalogue is not."
         >
           <p>
-            The source arrives at this conclusion after working through an entire chapter of flow
-            technologies, and it is worth taking seriously:
+            Having worked through the technologies, one conclusion is worth carrying above all the
+            others:
           </p>
           <p>
             <strong>
-              What matters most is that you thoroughly understand the physical principles upon which
-              each flowmeter depends. If the &ldquo;first principles&rdquo; of each technology are
-              understood, the appropriate applications and potential problems become much easier to
-              see.
+              Learn what each meter physically relies on, and the rest follows. Once you know which
+              property a technology is actually sensing, both the jobs it suits and the ways it can
+              be fooled stop being a list to memorise and become something you can work out.
             </strong>
           </p>
           <p>
@@ -247,11 +245,11 @@ const InstrumentationModule2Section6 = () => {
           question="You meet an unfamiliar instrument that measures level by weighing the entire vessel on load cells. Without knowing anything else, what will defeat it?"
           options={[
             'A change in product density',
-            'Anything that adds or removes weight that is not product — build-up on the walls, ice, someone standing on the platform, pipework strain',
             'A change in ambient temperature',
+            'Anything that adds or removes weight that is not product — build-up on the walls, ice, someone standing on the platform, pipework strain',
             'Nothing — weighing is an absolute measurement',
           ]}
-          correctIndex={1}
+          correctIndex={2}
           explanation="The principle is weight, so the vulnerability is anything contributing weight that is not the product you want to measure. Note this method is immune to density in the way a hydrostatic instrument is not — it genuinely weighs contents rather than inferring height. You worked that out from the mechanism without ever having been taught this device."
         />
 
@@ -269,11 +267,11 @@ const InstrumentationModule2Section6 = () => {
           </p>
           <p>
             <strong>1. What is being measured, exactly?</strong> Not &ldquo;flow&rdquo; but which
-            flow. The source is blunt that the variable lacks a singular definition —{' '}
-            <strong>volumetric</strong> flow, <strong>mass</strong> flow, or{' '}
-            <strong>standardised volumetric</strong> flow, meaning gas volumes supposing different
-            pressure and temperature values than the line actually runs at. These are different
-            quantities and a measurement of one is not a measurement of another.
+            flow. The variable has no single definition — <strong>volumetric</strong> flow,{' '}
+            <strong>mass</strong> flow, or <strong>standardised volumetric</strong> flow, meaning
+            gas volumes supposing different pressure and temperature values than the line actually
+            runs at. These are different quantities and a measurement of one is not a measurement of
+            another.
           </p>
           <p>
             <strong>2. What does the process forbid?</strong> Conductivity, permitted pressure loss,
@@ -286,9 +284,9 @@ const InstrumentationModule2Section6 = () => {
           </p>
           <p>
             <strong>4. What will the process do to it?</strong> Abrasion, coating, corrosion,
-            crystallisation. The source notes that flowmeters are subject to far more wear and tear
-            than most other primary sensing elements, because the sensing element must lie directly
-            in the path of a potentially abrasive stream.
+            crystallisation. Flowmeters take more punishment than almost any other primary sensing
+            element, for the simple reason that the sensing element has to sit in the stream itself
+            rather than alongside it.
           </p>
           <p>
             <strong>5. Can it be installed properly?</strong> Straight run, orientation, access.
@@ -318,14 +316,14 @@ const InstrumentationModule2Section6 = () => {
         >
           <p>
             Accuracy is the specification people argue about and rangeability is the one that
-            defeats them. The source states it plainly for flow:{' '}
+            defeats them.{' '}
             <strong>
-              most flow measurement technologies cannot achieve respectable measurement linearity
-              from the maximum rated flow all the way to zero flow, no matter how well matched they
-              might be to the process application
-            </strong>
-            . Part of the reason is that the dynamic properties of the fluids themselves change with
-            flow rate — the physics is not the same at 5% as at 95%.
+              Very few flow technologies hold a usable linearity all the way from full rated flow
+              down to nothing, however well matched they are to the duty.
+            </strong>{' '}
+            Part of the reason sits in the fluid rather than the meter: how a fluid moves changes
+            with how fast it is moving, so the behaviour the instrument depends on is not the same
+            at 5 per cent as at 95 per cent.
           </p>
           <p>The same shape has appeared repeatedly in this module:</p>
           <ul>
@@ -362,11 +360,11 @@ const InstrumentationModule2Section6 = () => {
           question="A specification asks for ±0.5% accuracy from 2% to 100% of range on a single flow instrument. What is the honest response?"
           options={[
             'Find the manufacturer whose datasheet claims it',
-            'Challenge the requirement — most technologies cannot stay linear to near-zero, so either the range narrows, a high-rangeability technology is paid for, or the low end is excluded',
             'Fit a DP set and add damping',
             'Accept it and calibrate more often',
+            'Challenge the requirement — most technologies cannot stay linear to near-zero, so either the range narrows, a high-rangeability technology is paid for, or the low end is excluded',
           ]}
-          correctIndex={1}
+          correctIndex={3}
           explanation="A datasheet figure quoted under reference conditions at a favourable point in the range does not mean the instrument holds that accuracy at 2% of span. The professional response is to surface the conflict at specification time rather than discover it at commissioning, when the options have narrowed to arguing about whose fault it is."
         />
 
@@ -378,25 +376,22 @@ const InstrumentationModule2Section6 = () => {
           plainEnglish="You cannot hang an instrument anywhere convenient and expect it to work as designed. Where it goes is part of choosing it."
           onSite="If a measurement has never been right since the day it was installed, stop suspecting the instrument and go and look at how it is fitted."
         >
-          <p>
-            The source is direct about this, and about the organisational reason it keeps happening:
-          </p>
+          <p>The point is blunt enough to state without hedging:</p>
           <p>
             <strong>
-              The performance of most flowmeter technologies critically depends on proper
-              installation. One cannot simply hang a flowmeter at any location in a piping system
-              and expect it to function as designed.
+              How a flowmeter is fitted decides whether it works. You cannot put one wherever the
+              pipework happens to be convenient and expect the specification to survive.
             </strong>
           </p>
           <p>
-            It then names the cause, which is not technical:{' '}
+            The cause is not technical, and it is worth naming plainly:{' '}
             <strong>
-              this is a constant source of friction between piping (mechanical) engineers and
-              instrumentation (controls) engineers on large industrial projects
-            </strong>
-            . What counts as excellent piping layout for process function and economy is often poor
-            for good flow measurement, and the reverse. In many cases the flowmeter gets installed
-            improperly and{' '}
+              on large projects the piping designer and the instrument engineer are optimising for
+              different things, and their answers conflict.
+            </strong>{' '}
+            A pipe run that is elegant for process flow and cheap to build is frequently a poor
+            place to measure, and a layout that would suit the meter is awkward everywhere else. The
+            meter is often the side that loses, and{' '}
             <strong>
               the instrument technicians have to deal with the resulting measurement problems during
               start-up
@@ -524,12 +519,12 @@ const InstrumentationModule2Section6 = () => {
           id="ins-2-6-datasheet"
           question="Instrument A is quoted at ±0.1% of span; instrument B at ±0.1% of reading. Both are ranged 0–100 bar. Which is more accurate at 20 bar?"
           options={[
-            'They are identical',
             'Instrument B — 0.1% of 20 bar is 0.02 bar, where A is 0.1% of the 100 bar span, or 0.1 bar',
+            'They are identical',
             'Instrument A',
             'It cannot be determined',
           ]}
-          correctIndex={1}
+          correctIndex={0}
           explanation="Percentage of span fixes the error at 0.1 bar regardless of where you are reading; percentage of reading scales it down to 0.02 bar at 20 bar. At full scale they are equal — which is exactly why comparing headline figures without reading what they refer to is misleading."
         />
 

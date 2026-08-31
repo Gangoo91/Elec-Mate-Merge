@@ -505,7 +505,7 @@ export default function CompletionNoticePage() {
           <button
             onClick={handleSave}
             disabled={isSaving}
-            className="h-12 w-full rounded-xl bg-elec-yellow text-[15px] font-semibold text-black hover:bg-elec-yellow/90 active:scale-[0.99] touch-manipulation disabled:opacity-60 flex items-center justify-center sm:w-auto sm:flex-1 lg:flex-none lg:w-auto lg:px-10"
+            className="h-12 w-full rounded-xl bg-elec-yellow text-[15px] font-semibold text-black hover:bg-elec-yellow/90 active:scale-[0.99] touch-manipulation disabled:bg-white/[0.08] disabled:text-white/70 flex items-center justify-center sm:w-auto sm:flex-1 lg:flex-none lg:w-auto lg:px-10"
           >
             {isSaving ? <><Loader2 className="h-4 w-4 animate-spin mr-2" />Saving...</> : existingReportId ? 'Update Notice' : 'Download PDF'}
           </button>

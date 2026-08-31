@@ -117,9 +117,9 @@ const specialCircuitGroups = [
 
 const SpecialistCircuitsPanel = () => (
   <div className="space-y-6">
-    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
+    <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-4">
       <div className="space-y-1">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
           Cable types
         </span>
         <h3 className="text-[16px] font-semibold text-white leading-tight">
@@ -130,18 +130,18 @@ const SpecialistCircuitsPanel = () => (
         {cableTypes.map((cable, index) => (
           <div
             key={index}
-            className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1.5"
+            className="rounded-lg border border-white/[0.10] bg-white/[0.06] p-3 space-y-1.5"
           >
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
               <div className="flex-1 space-y-0.5">
                 <h4 className="text-[14px] font-medium text-white">{cable.application}</h4>
-                <p className="text-[12px] text-white/55">{cable.notes}</p>
+                <p className="text-[12px] text-white/70">{cable.notes}</p>
               </div>
               <div className="flex flex-wrap gap-1.5">
-                <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+                <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.07]">
                   {cable.cable}
                 </span>
-                <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+                <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.07]">
                   {cable.protection}
                 </span>
               </div>
@@ -151,9 +151,9 @@ const SpecialistCircuitsPanel = () => (
       </div>
     </div>
 
-    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
+    <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-4">
       <div className="space-y-1">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
           Grid connection
         </span>
         <h3 className="text-[16px] font-semibold text-white leading-tight">
@@ -164,7 +164,7 @@ const SpecialistCircuitsPanel = () => (
         {gridConnectionRequirements.map((req, index) => (
           <div
             key={index}
-            className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 sm:p-4 space-y-2"
+            className="rounded-lg border border-white/[0.10] bg-white/[0.06] p-3 sm:p-4 space-y-2"
           >
             <h4 className="text-[14px] font-medium text-white">{req.standard}</h4>
             <p className="text-[13px] text-white/85 leading-relaxed">{req.description}</p>
@@ -184,9 +184,9 @@ const SpecialistCircuitsPanel = () => (
       </div>
     </div>
 
-    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
+    <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-4">
       <div className="space-y-1">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
           Special considerations
         </span>
         <h3 className="text-[16px] font-semibold text-white leading-tight">
@@ -197,7 +197,7 @@ const SpecialistCircuitsPanel = () => (
         {specialCircuitGroups.map((group, idx) => (
           <div
             key={idx}
-            className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-2"
+            className="rounded-lg border border-white/[0.10] bg-white/[0.06] p-3 space-y-2"
           >
             <h4 className="text-[14px] font-medium text-white">{group.title}</h4>
             <ul className="space-y-1">

@@ -307,7 +307,7 @@ export const SmartHomeModule5Section5Quiz = () => {
             <Button
               onClick={handleNextQuestion}
               disabled={selectedAnswer === null}
-              className="bg-elec-yellow text-elec-dark hover:bg-yellow-500 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="bg-elec-yellow text-elec-dark hover:bg-yellow-500 disabled:bg-white/[0.08] disabled:text-white/70 disabled:cursor-not-allowed"
             >
               Submit Answer
             </Button>

@@ -159,13 +159,13 @@ const ProfessionalToolGuide = () => {
       {/* Compliance note — editorial */}
       <motion.div
         variants={itemVariants}
-        className="rounded-2xl border border-amber-500/20 bg-amber-500/[0.04] px-5 py-4 sm:px-6 sm:py-5"
+        className={cn('rounded-2xl border border-elec-yellow/35 px-5 py-4 sm:px-6 sm:py-5', CARD_SURFACE)}
       >
         <div className="flex items-baseline gap-2 mb-2">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-amber-300/85">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
             Compliance
           </span>
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
             · Standards
           </span>
         </div>

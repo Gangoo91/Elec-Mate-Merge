@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { supabase } from '@/integrations/supabase/client';
 
 /* ==========================================================================
@@ -72,6 +73,10 @@ export function MyTimetableCard() {
   const [targets, setTargets] = useState<IlpTargetRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [hasCohort, setHasCohort] = useState(false);
+  /** Most recent past lesson, only loaded when nothing is scheduled ahead. */
+  const [lastTaught, setLastTaught] = useState<{ title: string; scheduled_date: string } | null>(
+    null
+  );
 
   const fetchAll = useCallback(async () => {
     const { data: u } = await supabase.auth.getUser();
@@ -127,6 +132,34 @@ export function MyTimetableCard() {
       setLessons(((lessonsRes as { data: unknown }).data ?? []) as LessonRow[]);
     if (targetsRes && !('error' in targetsRes && targetsRes.error))
       setTargets(((targetsRes as { data: unknown }).data ?? []) as IlpTargetRow[]);
+
+    /*
+     * Nothing scheduled ahead is not the same as nothing to say.
+     *
+     * A learner between teaching blocks got a card reading "No lessons or ILP
+     * deadlines scheduled in the next 14 days" — a dead end that gives them
+     * no way to tell a quiet fortnight from a timetable their college has
+     * stopped maintaining. This one has three lessons on record, the most
+     * recent 89 days ago; that gap is the useful fact. Only fetched when the
+     * forward window came back empty, so the common case costs nothing.
+     */
+    const forwardEmpty =
+      (((lessonsRes as { data: unknown } | null)?.data as unknown[] | null)?.length ?? 0) === 0 &&
+      (((targetsRes as { data: unknown } | null)?.data as unknown[] | null)?.length ?? 0) === 0;
+
+    if (forwardEmpty && cohortId) {
+      const { data: past } = await supabase
+        .from('college_lesson_plans')
+        .select('id, title, scheduled_date')
+        .eq('cohort_id', cohortId)
+        .lt('scheduled_date', startDateOnly)
+        .order('scheduled_date', { ascending: false })
+        .limit(1)
+        .maybeSingle();
+      setLastTaught((past as { title: string; scheduled_date: string } | null) ?? null);
+    } else {
+      setLastTaught(null);
+    }
     setLoading(false);
   }, []);
 
@@ -191,29 +224,51 @@ export function MyTimetableCard() {
 
   if (grouped.length === 0) {
     return (
-      <section className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_10%)] overflow-hidden">
+      <section className={cn('rounded-2xl border border-white/[0.06] overflow-hidden', CARD_SURFACE)}>
         <div className="px-4 sm:px-5 py-4 sm:py-5">
-          <div className="text-[11px] sm:text-[11.5px] font-medium uppercase tracking-[0.18em] text-emerald-300/85">
+          <div className="text-[11px] sm:text-[11.5px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
             This fortnight
           </div>
-          <p className="mt-3 text-[12.5px] text-white/85 leading-snug">
-            {hasCohort
-              ? 'No lessons or ILP deadlines scheduled in the next 14 days.'
-              : "You're not in a cohort yet — your tutor needs to add you to one before lessons appear here."}
-          </p>
+          {!hasCohort ? (
+            <p className="mt-3 text-[12.5px] leading-snug text-white">
+              You're not in a cohort yet — your tutor needs to add you to one before lessons appear
+              here.
+            </p>
+          ) : lastTaught ? (
+            <div className="mt-3 space-y-1">
+              <p className="text-[12.5px] leading-snug text-white">
+                Nothing scheduled in the next 14 days.
+              </p>
+              <p className="text-[12.5px] leading-snug text-white">
+                Your last session was{' '}
+                <span className="font-medium">{lastTaught.title}</span> on{' '}
+                {DAY_FMT.format(new Date(lastTaught.scheduled_date))}
+                {(() => {
+                  const days = Math.round(
+                    (Date.now() - new Date(lastTaught.scheduled_date).getTime()) / 86_400_000
+                  );
+                  return days > 21 ? ` — ${days} days ago.` : '.';
+                })()}
+              </p>
+            </div>
+          ) : (
+            <p className="mt-3 text-[12.5px] leading-snug text-white">
+              No lessons or ILP deadlines scheduled in the next 14 days.
+            </p>
+          )}
         </div>
       </section>
     );
   }
 
   return (
-    <section className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_10%)] overflow-hidden">
+    <section className={cn('rounded-2xl border border-white/[0.06] overflow-hidden', CARD_SURFACE)}>
       <div className="px-4 sm:px-5 py-4 sm:py-5">
         <div className="flex items-baseline justify-between gap-3 flex-wrap">
-          <div className="text-[11px] sm:text-[11.5px] font-medium uppercase tracking-[0.18em] text-emerald-300/85">
+          <div className="text-[11px] sm:text-[11.5px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
             This fortnight
           </div>
-          <span className="text-[10.5px] tabular-nums text-white/85">
+          <span className="text-[10.5px] tabular-nums text-white">
             {lessons.length} {lessons.length === 1 ? 'lesson' : 'lessons'}
             {targets.length > 0 &&
               ` · ${targets.length} ILP ${targets.length === 1 ? 'target' : 'targets'}`}
@@ -223,7 +278,7 @@ export function MyTimetableCard() {
         <div className="mt-3 space-y-4">
           {grouped.map((day) => (
             <div key={day.dateKey}>
-              <div className="text-[10.5px] font-medium uppercase tracking-[0.16em] text-white/95">
+              <div className="text-[10.5px] font-medium uppercase tracking-[0.16em] text-white">
                 {day.label}
               </div>
               <ul className="mt-1.5 -mx-1 divide-y divide-white/[0.05]">
@@ -242,7 +297,7 @@ export function MyTimetableCard() {
 function AgendaRow({ item }: { item: AgendaItem }) {
   // start_time is a `time` column (HH:MM:SS). Trim to HH:MM for display.
   const time = item.start_time ? item.start_time.slice(0, 5) : null;
-  const tone = item.kind === 'lesson' ? 'text-white/85' : 'text-white/85';
+  const tone = item.kind === 'lesson' ? 'text-white' : 'text-white';
   const kindLabel = item.kind === 'lesson' ? 'Lesson' : 'ILP target';
   return (
     <li className="px-1 py-2.5 flex items-baseline justify-between gap-3">
@@ -255,19 +310,19 @@ function AgendaRow({ item }: { item: AgendaItem }) {
           {item.title}
         </div>
         {item.detail && (
-          <div className="mt-1 text-[11.5px] text-white/85 leading-snug line-clamp-2">
+          <div className="mt-1 text-[11.5px] text-white leading-snug line-clamp-2">
             {item.detail}
           </div>
         )}
       </div>
-      {time && <span className="shrink-0 text-[11.5px] tabular-nums text-white/90">{time}</span>}
+      {time && <span className="shrink-0 text-[11.5px] tabular-nums text-white">{time}</span>}
     </li>
   );
 }
 
 function Skeleton() {
   return (
-    <section className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_10%)] overflow-hidden">
+    <section className={cn('rounded-2xl border border-white/[0.06] overflow-hidden', CARD_SURFACE)}>
       <div className="px-4 sm:px-5 py-4 sm:py-5 space-y-3">
         <div className="h-3 w-28 rounded-full bg-white/[0.05]" />
         {[0, 1, 2].map((i) => (

@@ -124,7 +124,7 @@ export function ACHeatmap({
       <CollapsibleTrigger asChild>
         <button
           className={cn(
-            'w-full text-left rounded-xl border bg-[hsl(0_0%_10%)] p-4 sm:p-5 transition-colors touch-manipulation',
+            'w-full text-left rounded-xl border bg-gradient-to-br from-white/[0.19] via-white/[0.105] to-white/[0.065] p-4 sm:p-5 transition-colors touch-manipulation',
             open ? 'border-white/[0.12]' : 'border-white/[0.06] hover:bg-white/[0.03]'
           )}
         >
@@ -148,7 +148,7 @@ export function ACHeatmap({
                 </span>
               </div>
               {!open && (
-                <p className="text-[11.5px] text-white/55 leading-snug">
+                <p className="text-[11.5px] text-white leading-snug">
                   {roll.referred > 0 ? (
                     <span className="text-red-300">
                       {roll.referred} need{roll.referred === 1 ? 's' : ''} action ·{' '}
@@ -160,7 +160,7 @@ export function ACHeatmap({
             </div>
             <ChevronDown
               className={cn(
-                'h-5 w-5 text-white/55 shrink-0 transition-transform duration-200',
+                'h-5 w-5 text-white shrink-0 transition-transform duration-200',
                 open && 'rotate-180 text-elec-yellow'
               )}
             />
@@ -169,13 +169,13 @@ export function ACHeatmap({
       </CollapsibleTrigger>
 
       <CollapsibleContent>
-        <div className="mt-2 rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-4">
+        <div className="mt-2 rounded-xl border border-elec-yellow/35 bg-gradient-to-br from-white/[0.19] via-white/[0.105] to-white/[0.065] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.16),0_2px_10px_-4px_rgba(0,0,0,0.65)] p-4 sm:p-5 space-y-4">
           {/* Legend */}
           <div className="flex flex-wrap gap-x-4 gap-y-2 pb-3 border-b border-white/[0.06]">
             {LEGEND.map((l) => (
               <span
                 key={l.label}
-                className="flex items-center gap-1.5 text-[10px] uppercase tracking-[0.14em] text-white/70"
+                className="flex items-center gap-1.5 text-[10px] uppercase tracking-[0.14em] text-white"
               >
                 <span className={cn('w-2.5 h-2.5 rounded-sm', l.cls)} />
                 {l.label}
@@ -196,14 +196,14 @@ export function ACHeatmap({
                 <div key={unit.unitCode} className="space-y-2 min-w-0">
                   <div className="flex items-baseline justify-between gap-3">
                     <div className="min-w-0 flex-1 flex items-baseline gap-2">
-                      <span className="text-[10px] font-mono uppercase tracking-[0.14em] text-white/60 flex-shrink-0">
+                      <span className="text-[10px] font-mono uppercase tracking-[0.14em] text-white flex-shrink-0">
                         {unit.unitCode}
                       </span>
                       <span className="text-[13px] font-medium text-white truncate">
                         {unit.unitTitle}
                       </span>
                     </div>
-                    <span className="text-[11px] font-mono text-white/90 tabular-nums flex-shrink-0">
+                    <span className="text-[11px] font-mono text-white tabular-nums flex-shrink-0">
                       {unitDone}/{allUnitACs.length}
                     </span>
                   </div>
@@ -272,7 +272,7 @@ function Stat({
       >
         {value}
       </div>
-      <div className="text-[9px] font-medium uppercase tracking-[0.18em] text-white/55">
+      <div className="text-[9px] font-medium uppercase tracking-[0.18em] text-white">
         {label}
       </div>
     </div>

@@ -2,8 +2,36 @@ import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { CheckCircle2, XCircle, ChevronDown, ChevronUp, HelpCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { useCourseProgress } from '@/hooks/useCourseProgress';
 import { deriveProgressKeys } from '@/lib/apprentice-progress';
+
+/**
+ * Restyled 2026-08-31 onto the card recipe.
+ *
+ * 🔴 WHAT WAS WRONG. This component predated the recipe and carried two flat
+ * near-black fills of its own: hsl(0 0% 12%) for the card and hsl(0 0% 9%) for
+ * every answer option — so the options were DARKER than the card they sat in,
+ * and a page with three checks on it read as a column of black slabs. The
+ * recipe's own comment already names that failure exactly: "a column of
+ * near-black slabs — fine for a dense dashboard, tiring for someone reading
+ * 900 lines of teaching content." This component simply never got migrated.
+ *
+ * 🔴 NOW: CARD_SURFACE + border-elec-yellow/35, identical to TLDR, so a check
+ * reads as part of the page rather than a hole punched in it. Options sit on a
+ * LIGHTER translucent white than the card, which is the right way round.
+ *
+ * 🔴 ACCENT changed blue → volt. The blue hairline and blue "Quick check" label
+ * were the only blue in the Study Centre and looked borrowed from another app.
+ *
+ * ⚠️ THE SELECTED STATE was `bg-elec-yellow/[0.10]`, which the card recipe
+ * explicitly bans as a background — a volt wash over a dark ground goes muddy
+ * brown. Selection is now carried by a brighter white surface + a volt BORDER
+ * and a solid volt bullet. Gold edge, never gold face.
+ *
+ * Semantic colours (emerald correct / red wrong) are unchanged — those are
+ * meaning, not decoration.
+ */
 
 export interface InlineCheckProps {
   id?: string;
@@ -68,20 +96,23 @@ export const InlineCheck: React.FC<InlineCheckProps> = ({
     return (
       <section
         aria-labelledby={`${id}-label`}
-        className="relative overflow-hidden rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06]"
+        className={cn(
+          'relative overflow-hidden rounded-2xl border border-elec-yellow/35',
+          CARD_SURFACE
+        )}
       >
-        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-blue-500/70 via-cyan-400/70 to-blue-400/70 opacity-70" />
-        <div className="px-5 sm:px-6 py-4 sm:py-5">
+        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/70 to-elec-yellow/0" />
+        <div className="px-4 py-4 sm:px-6 sm:py-5">
           <div className="flex items-center gap-2 mb-3">
-            <HelpCircle className="h-3.5 w-3.5 text-blue-300" />
+            <HelpCircle className="h-3.5 w-3.5 text-elec-yellow" />
             <span
               id={`${id}-label`}
-              className="text-[10.5px] font-medium uppercase tracking-[0.18em] text-blue-300"
+              className="text-[10.5px] font-medium uppercase tracking-[0.18em] text-elec-yellow"
             >
               Quick check
             </span>
           </div>
-          <p className="text-[15px] sm:text-[16px] font-semibold text-white leading-snug">
+          <p className="text-[15.5px] font-semibold leading-snug text-white sm:text-[16.5px]">
             {question}
           </p>
 
@@ -89,16 +120,25 @@ export const InlineCheck: React.FC<InlineCheckProps> = ({
             type="button"
             onClick={() => setRevealed(!revealed)}
             className={cn(
-              'mt-4 w-full text-left rounded-xl px-4 py-3 border transition-colors touch-manipulation active:scale-[0.99]',
-              'focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/50',
+              'group relative mt-4 flex min-h-11 w-full items-center justify-between gap-3 overflow-hidden',
+              'rounded-xl border py-2.5 pl-4 pr-3 text-left transition-[background-color,border-color] duration-150',
+              'touch-manipulation [-webkit-tap-highlight-color:transparent] active:scale-[0.995]',
+              'focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/60',
               revealed
-                ? 'bg-elec-yellow/[0.10] border-elec-yellow/40'
-                : 'bg-[hsl(0_0%_9%)] border-white/[0.08] hover:bg-[hsl(0_0%_11%)]'
+                ? 'border-elec-yellow/55 bg-white/[0.13]'
+                : 'border-white/[0.10] bg-white/[0.04] hover:border-white/[0.18] hover:bg-white/[0.08]'
             )}
           >
-            <div className="flex items-center justify-between gap-3">
-              <span className="text-[13.5px] text-white">
-                {revealed ? 'Hide answer' : 'Tap to reveal'}
+            <span
+              aria-hidden
+              className={cn(
+                'absolute inset-y-0 left-0 w-[3px] rounded-l-xl transition-colors',
+                revealed ? 'bg-elec-yellow' : 'bg-transparent'
+              )}
+            />
+            <div className="flex flex-1 items-center justify-between gap-3">
+              <span className="text-[13.5px] font-medium text-white">
+                {revealed ? 'Hide answer' : 'Show answer'}
               </span>
               {revealed ? (
                 <ChevronUp className="h-4 w-4 text-elec-yellow" />
@@ -109,13 +149,13 @@ export const InlineCheck: React.FC<InlineCheckProps> = ({
           </button>
 
           {revealed && (
-            <div className="mt-3 rounded-xl bg-emerald-500/[0.06] border border-emerald-500/30 p-4">
-              <div className="text-[10.5px] font-medium uppercase tracking-[0.18em] text-emerald-300 mb-1.5">
+            <div className="mt-3 rounded-xl border border-emerald-400/45 bg-emerald-400/[0.10] p-4">
+              <div className="mb-1.5 text-[10.5px] font-medium uppercase tracking-[0.18em] text-emerald-400">
                 Answer
               </div>
               <p className="text-[13.5px] text-white leading-relaxed">{correctAnswer}</p>
               {explanation && (
-                <p className="mt-2 text-[13px] text-white/85 leading-relaxed">{explanation}</p>
+                <p className="mt-2 text-[13px] text-white leading-relaxed">{explanation}</p>
               )}
             </div>
           )}
@@ -131,29 +171,36 @@ export const InlineCheck: React.FC<InlineCheckProps> = ({
   return (
     <section
       aria-labelledby={`${id}-label`}
-      className="relative overflow-hidden rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06]"
+      className={cn(
+        'relative overflow-hidden rounded-2xl border border-elec-yellow/35',
+        CARD_SURFACE
+      )}
     >
-      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-blue-500/70 via-cyan-400/70 to-blue-400/70 opacity-70" />
-      <div className="px-5 sm:px-6 py-4 sm:py-5">
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/70 to-elec-yellow/0" />
+      <div className="px-4 py-4 sm:px-6 sm:py-5">
         <div className="flex items-center gap-2 mb-3">
-          <HelpCircle className="h-3.5 w-3.5 text-blue-300" />
+          <HelpCircle className="h-3.5 w-3.5 text-elec-yellow" />
           <span
             id={`${id}-label`}
-            className="text-[10.5px] font-medium uppercase tracking-[0.18em] text-blue-300"
+            className="text-[10.5px] font-medium uppercase tracking-[0.18em] text-elec-yellow"
           >
             Quick check
           </span>
         </div>
 
-        <p className="text-[15px] sm:text-[16px] font-semibold text-white leading-snug">
+        <p className="text-[15.5px] font-semibold leading-snug text-white sm:text-[16.5px]">
           {question}
         </p>
 
-        <div className="mt-4 space-y-2">
+        {/* Options. A 3px LEFT ACCENT BAR carries state, not a badge — it reads
+            faster on a phone, keeps every line of text on the same left margin,
+            and leaves the row quiet until it has something to say. */}
+        <div className="mt-4 space-y-1.5">
           {options.map((opt, idx) => {
             const sel = selected === idx;
             const isCorrectOpt = submitted && idx === correctIndex;
             const isWrongOpt = submitted && sel && idx !== correctIndex;
+            const settled = isCorrectOpt || isWrongOpt;
 
             return (
               <button
@@ -163,100 +210,107 @@ export const InlineCheck: React.FC<InlineCheckProps> = ({
                 disabled={submitted}
                 aria-pressed={sel}
                 className={cn(
-                  'group w-full text-left rounded-xl px-4 py-3 border transition-colors touch-manipulation active:scale-[0.99]',
-                  'focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/50',
+                  'group relative flex w-full items-center gap-3 overflow-hidden rounded-xl',
+                  'min-h-11 py-2.5 pl-4 pr-3 text-left',
+                  'border transition-[background-color,border-color] duration-150',
+                  'touch-manipulation [-webkit-tap-highlight-color:transparent] active:scale-[0.995]',
+                  'focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/60',
                   isCorrectOpt
-                    ? 'bg-emerald-500/[0.08] border-emerald-500/40'
+                    ? 'border-emerald-400/45 bg-emerald-400/[0.10]'
                     : isWrongOpt
-                      ? 'bg-red-500/[0.08] border-red-500/40'
+                      ? 'border-red-400/45 bg-red-400/[0.10]'
                       : sel
-                        ? 'bg-elec-yellow/[0.10] border-elec-yellow/40'
-                        : 'bg-[hsl(0_0%_9%)] border-white/[0.08] hover:bg-[hsl(0_0%_11%)]'
+                        ? 'border-elec-yellow/55 bg-white/[0.13]'
+                        : 'border-white/[0.10] bg-white/[0.04] hover:border-white/[0.18] hover:bg-white/[0.08]',
+                  submitted && !settled && 'opacity-45'
                 )}
               >
-                <div className="flex items-center gap-3">
-                  <div
-                    className={cn(
-                      'shrink-0 h-7 w-7 rounded-full border flex items-center justify-center text-[11px] font-bold',
-                      isCorrectOpt
-                        ? 'bg-emerald-500/20 border-emerald-500/50 text-emerald-300'
-                        : isWrongOpt
-                          ? 'bg-red-500/20 border-red-500/50 text-red-300'
-                          : sel
-                            ? 'bg-elec-yellow/20 border-elec-yellow/50 text-elec-yellow'
-                            : 'bg-white/[0.04] border-white/[0.12] text-white/80'
-                    )}
-                  >
+                <span
+                  aria-hidden
+                  className={cn(
+                    'absolute inset-y-0 left-0 w-[3px] rounded-l-xl transition-colors',
+                    isCorrectOpt
+                      ? 'bg-emerald-400'
+                      : isWrongOpt
+                        ? 'bg-red-400'
+                        : sel
+                          ? 'bg-elec-yellow'
+                          : 'bg-transparent'
+                  )}
+                />
+                <span className="flex-1 text-[14px] leading-snug text-white">{opt}</span>
+                {settled && (
+                  <span aria-hidden className="shrink-0">
                     {isCorrectOpt ? (
-                      <CheckCircle2 className="h-3.5 w-3.5" />
-                    ) : isWrongOpt ? (
-                      <XCircle className="h-3.5 w-3.5" />
+                      <CheckCircle2 className="h-[18px] w-[18px] text-emerald-400" />
                     ) : (
-                      String.fromCharCode(65 + idx)
+                      <XCircle className="h-[18px] w-[18px] text-red-400" />
                     )}
-                  </div>
-                  <span
-                    className={cn(
-                      'flex-1 text-[14px] leading-snug',
-                      isCorrectOpt
-                        ? 'text-emerald-200'
-                        : isWrongOpt
-                          ? 'text-red-200'
-                          : 'text-white'
-                    )}
-                  >
-                    {opt}
                   </span>
-                </div>
+                )}
               </button>
             );
           })}
         </div>
 
-        <div className="mt-4 flex items-center justify-between gap-3">
+        {/* Action row. Before submitting: one volt button. After: the verdict
+            leads and "Try again" becomes the quiet option, because by then the
+            result is the thing worth reading. */}
+        <div className="mt-4 flex items-center gap-3">
           {!submitted ? (
             <button
               type="button"
               onClick={handleSubmit}
               disabled={selected === null}
-              className="inline-flex items-center gap-1.5 h-10 px-5 rounded-full bg-elec-yellow hover:bg-elec-yellow/90 text-black text-[13px] font-semibold touch-manipulation active:scale-[0.98] disabled:opacity-40 disabled:cursor-not-allowed"
-            >
-              Check
-            </button>
-          ) : (
-            <button
-              type="button"
-              onClick={() => {
-                setSubmitted(false);
-                setSelected(null);
-              }}
-              className="inline-flex items-center gap-1.5 h-10 px-4 rounded-full bg-white/[0.04] border border-white/[0.08] text-white text-[12.5px] font-medium touch-manipulation hover:bg-white/[0.08]"
-            >
-              Try again
-            </button>
-          )}
-          {submitted && (
-            <span
               className={cn(
-                'text-[11.5px] font-medium',
-                isCorrect ? 'text-emerald-300' : 'text-orange-300'
+                'inline-flex h-11 items-center justify-center rounded-full px-6',
+                'bg-elec-yellow text-[13px] font-semibold text-black',
+                'touch-manipulation [-webkit-tap-highlight-color:transparent]',
+                'transition-[opacity,transform] active:scale-[0.98] hover:bg-elec-yellow/90',
+                'disabled:cursor-not-allowed disabled:opacity-35'
               )}
             >
-              {isCorrect ? '✓ Spot on' : 'Not quite'}
-            </span>
+              Check answer
+            </button>
+          ) : (
+            <>
+              <span
+                className={cn(
+                  'inline-flex h-11 flex-1 items-center gap-2 rounded-full border px-4',
+                  'text-[13px] font-semibold text-white',
+                  isCorrect
+                    ? 'border-emerald-400/45 bg-emerald-400/[0.10]'
+                    : 'border-orange-400/45 bg-orange-400/[0.10]'
+                )}
+              >
+                {isCorrect ? (
+                  <CheckCircle2 className="h-4 w-4 shrink-0 text-emerald-400" />
+                ) : (
+                  <XCircle className="h-4 w-4 shrink-0 text-orange-400" />
+                )}
+                {isCorrect ? 'Correct' : 'Not quite — the right answer is marked'}
+              </span>
+              <button
+                type="button"
+                onClick={() => {
+                  setSubmitted(false);
+                  setSelected(null);
+                }}
+                className={cn(
+                  'inline-flex h-11 shrink-0 items-center rounded-full border border-white/[0.18] px-4',
+                  'bg-white/[0.06] text-[12.5px] font-medium text-white',
+                  'touch-manipulation hover:bg-white/[0.10]'
+                )}
+              >
+                Retry
+              </button>
+            </>
           )}
         </div>
 
         {submitted && explanation && (
-          <div
-            className={cn(
-              'mt-3 rounded-xl border p-3.5',
-              isCorrect
-                ? 'bg-emerald-500/[0.06] border-emerald-500/30'
-                : 'bg-orange-500/[0.06] border-orange-500/30'
-            )}
-          >
-            <p className="text-[13px] text-white leading-relaxed">{explanation}</p>
+          <div className="mt-3 rounded-xl border border-white/[0.12] bg-white/[0.05] p-3.5">
+            <p className="text-[13px] leading-relaxed text-white">{explanation}</p>
           </div>
         )}
       </div>

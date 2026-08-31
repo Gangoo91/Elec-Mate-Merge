@@ -71,9 +71,9 @@ const SiteAssessmentSummary = ({ progress }: SiteAssessmentSummaryProps) => {
   };
 
   return (
-    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
+    <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-4">
       <div className="flex items-baseline justify-between">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
           Summary
         </span>
         <span className="text-[12px] text-white/85 font-mono">
@@ -101,12 +101,12 @@ const SiteAssessmentSummary = ({ progress }: SiteAssessmentSummaryProps) => {
           return (
             <div
               key={section}
-              className="p-2 rounded-lg bg-white/[0.02] border border-white/[0.06] text-center"
+              className="p-2 rounded-lg bg-white/[0.06] border border-white/[0.10] text-center"
             >
               <div className="text-[14px] font-medium text-white font-mono">
                 {sectionProgress.checked}/{sectionProgress.total}
               </div>
-              <div className="text-[10px] uppercase tracking-[0.18em] text-white/55 mt-0.5">
+              <div className="text-[10px] uppercase tracking-[0.18em] text-white/70 mt-0.5">
                 {sectionLabelsMap[section]}
               </div>
             </div>
@@ -120,7 +120,11 @@ const SiteAssessmentSummary = ({ progress }: SiteAssessmentSummaryProps) => {
           disabled={progress.completedCount === 0}
           className="flex-1 h-11 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98] disabled:opacity-30"
         >
-          {allDone ? <CheckCircle className="mr-2 h-4 w-4" /> : <Download className="mr-2 h-4 w-4" />}
+          {allDone ? (
+            <CheckCircle className="mr-2 h-4 w-4" />
+          ) : (
+            <Download className="mr-2 h-4 w-4" />
+          )}
           Export
         </Button>
         <Button

@@ -114,7 +114,7 @@ export const CustomerContacts: React.FC<Props> = ({ customerId }) => {
             <button
               onClick={handleAdd}
               disabled={!draft.name.trim()}
-              className="flex h-9 items-center rounded-full bg-elec-yellow px-4 text-[12px] font-semibold text-black hover:bg-elec-yellow/90 disabled:opacity-40 touch-manipulation"
+              className="flex h-9 items-center rounded-full bg-elec-yellow px-4 text-[12px] font-semibold text-black hover:bg-elec-yellow/90 disabled:bg-white/[0.08] disabled:text-white/70 touch-manipulation"
             >
               Save contact
             </button>

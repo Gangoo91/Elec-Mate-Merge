@@ -226,7 +226,7 @@ const WagoConnectionMethods = () => {
       <div className="space-y-6 animate-fade-in">
         {/* Header with Back Button */}
         <Card className="bg-gradient-to-br from-white/5 to-elec-card border-orange-500/20 overflow-hidden relative">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-orange-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+          <div className="absolute top-0 right-0 w-64 h-64 bg-white/[0.06] rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
           <CardHeader className="relative">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
               <div className="space-y-1">
@@ -268,7 +268,7 @@ const WagoConnectionMethods = () => {
         {/* Connector Details */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
           <Card className="bg-gradient-to-br from-white/5 to-elec-card border-blue-500/20 overflow-hidden relative">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2" />
+            <div className="absolute top-0 right-0 w-32 h-32 bg-white/[0.06] rounded-full blur-2xl -translate-y-1/2 translate-x-1/2" />
             <CardHeader className="pb-3 relative">
               <CardTitle className="text-white flex items-center gap-3 text-base">
                 <div className="p-2 rounded-xl bg-gradient-to-br from-blue-500/20 to-blue-500/5 border border-blue-500/30">
@@ -283,7 +283,7 @@ const WagoConnectionMethods = () => {
           </Card>
 
           <Card className="bg-gradient-to-br from-white/5 to-elec-card border-green-500/20 overflow-hidden relative">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-green-500/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2" />
+            <div className="absolute top-0 right-0 w-32 h-32 bg-white/[0.06] rounded-full blur-2xl -translate-y-1/2 translate-x-1/2" />
             <CardHeader className="pb-3 relative">
               <CardTitle className="text-white flex items-center gap-3 text-base">
                 <div className="p-2 rounded-xl bg-gradient-to-br from-green-500/20 to-green-500/5 border border-green-500/30">
@@ -305,7 +305,7 @@ const WagoConnectionMethods = () => {
           </Card>
 
           <Card className="bg-gradient-to-br from-white/5 to-elec-card border-purple-500/20 overflow-hidden relative">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-purple-500/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2" />
+            <div className="absolute top-0 right-0 w-32 h-32 bg-white/[0.06] rounded-full blur-2xl -translate-y-1/2 translate-x-1/2" />
             <CardHeader className="pb-3 relative">
               <CardTitle className="text-white flex items-center gap-3 text-base">
                 <div className="p-2 rounded-xl bg-gradient-to-br from-purple-500/20 to-purple-500/5 border border-purple-500/30">
@@ -329,7 +329,7 @@ const WagoConnectionMethods = () => {
 
         {/* Step-by-Step Connection Guide */}
         <Card className="bg-gradient-to-br from-white/5 to-elec-card border-elec-yellow/20 overflow-hidden relative">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-elec-yellow/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+          <div className="absolute top-0 right-0 w-64 h-64 bg-white/[0.06] rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
           <CardHeader className="relative">
             <CardTitle className="text-white flex items-center gap-3">
               <div className="p-2.5 rounded-xl bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 border border-elec-yellow/30">
@@ -349,7 +349,7 @@ const WagoConnectionMethods = () => {
                     activeStep === index
                       ? 'bg-elec-yellow text-black'
                       : index < activeStep
-                        ? 'bg-green-500/20 text-green-400 border border-green-500/30'
+                        ? 'bg-white/[0.06] text-green-400 border border-green-500/30'
                         : 'bg-white/10 text-white border border-white/10 hover:border-white/20'
                   }`}
                 >
@@ -377,9 +377,9 @@ const WagoConnectionMethods = () => {
                 </div>
 
                 {currentStep.safetyNote && (
-                  <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/20">
+                  <div className="p-4 rounded-xl bg-white/[0.06] border border-red-500/20">
                     <div className="flex items-start gap-3">
-                      <div className="p-2 rounded-lg bg-red-500/20 flex-shrink-0">
+                      <div className="p-2 rounded-lg bg-white/[0.06] flex-shrink-0">
                         <AlertTriangle className="h-4 w-4 text-red-400" />
                       </div>
                       <div>
@@ -390,9 +390,9 @@ const WagoConnectionMethods = () => {
                   </div>
                 )}
 
-                <div className="p-4 rounded-xl bg-cyan-500/10 border border-cyan-500/20">
+                <div className="p-4 rounded-xl bg-white/[0.06] border border-cyan-500/20">
                   <div className="flex items-start gap-3 mb-3">
-                    <div className="p-2 rounded-lg bg-cyan-500/20 flex-shrink-0">
+                    <div className="p-2 rounded-lg bg-white/[0.06] flex-shrink-0">
                       <Info className="h-4 w-4 text-cyan-400" />
                     </div>
                     <h4 className="font-semibold text-cyan-400">Professional Tips</h4>
@@ -441,7 +441,7 @@ const WagoConnectionMethods = () => {
     <div className="space-y-6 animate-fade-in">
       {/* Hero Header */}
       <Card className="bg-gradient-to-br from-white/5 to-elec-card border-orange-500/20 overflow-hidden relative">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-orange-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+        <div className="absolute top-0 right-0 w-64 h-64 bg-white/[0.06] rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
         <CardHeader className="relative">
           <CardTitle className="text-white flex items-center gap-3">
             <div className="p-2.5 rounded-xl bg-gradient-to-br from-orange-500/20 to-orange-500/5 border border-orange-500/30">
@@ -457,9 +457,9 @@ const WagoConnectionMethods = () => {
             connections ideal for testing scenarios.
           </p>
 
-          <div className="p-4 rounded-xl bg-elec-yellow/10 border border-elec-yellow/30">
+          <div className="p-4 rounded-xl bg-white/[0.06] border border-elec-yellow/30">
             <div className="flex items-start gap-3">
-              <div className="p-2 rounded-lg bg-elec-yellow/20 flex-shrink-0">
+              <div className="p-2 rounded-lg bg-white/[0.06] flex-shrink-0">
                 <Info className="h-4 w-4 text-elec-yellow" />
               </div>
               <div>
@@ -485,14 +485,14 @@ const WagoConnectionMethods = () => {
             className="bg-gradient-to-br from-white/5 to-elec-card border-white/10 hover:border-elec-yellow/30 transition-all duration-300 cursor-pointer group overflow-hidden relative"
             onClick={() => handleConnectorSelect(connector)}
           >
-            <div className="absolute top-0 right-0 w-32 h-32 bg-elec-yellow/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity" />
+            <div className="absolute top-0 right-0 w-32 h-32 bg-white/[0.06] rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity" />
             <CardHeader className="relative">
               <div className="space-y-3">
                 <div className="flex items-start justify-between gap-3">
                   <CardTitle className="text-white text-lg leading-tight">
                     {connector.name}
                   </CardTitle>
-                  <Badge className="bg-orange-500/10 text-orange-400 border border-orange-500/30 flex-shrink-0 text-xs">
+                  <Badge className="bg-white/[0.06] text-orange-400 border border-orange-500/30 flex-shrink-0 text-xs">
                     {connector.wireCapacity}
                   </Badge>
                 </div>
@@ -501,7 +501,7 @@ const WagoConnectionMethods = () => {
             </CardHeader>
 
             <CardContent className="space-y-4 relative">
-              <div className="p-3 rounded-xl bg-green-500/10 border border-green-500/20">
+              <div className="p-3 rounded-xl bg-white/[0.06] border border-green-500/20">
                 <h4 className="font-medium text-green-400 mb-2 text-sm">Key Applications</h4>
                 <ul className="space-y-1.5">
                   {connector.applications.slice(0, 3).map((app, index) => (
@@ -513,7 +513,7 @@ const WagoConnectionMethods = () => {
                 </ul>
               </div>
 
-              <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/20">
+              <div className="p-3 rounded-xl bg-white/[0.06] border border-blue-500/20">
                 <h4 className="font-medium text-blue-400 mb-2 text-sm">Advantages</h4>
                 <ul className="space-y-1.5">
                   {connector.advantages.slice(0, 2).map((advantage, index) => (
@@ -539,7 +539,7 @@ const WagoConnectionMethods = () => {
 
       {/* General Safety Guidelines */}
       <Card className="bg-gradient-to-br from-white/5 to-elec-card border-red-500/20 overflow-hidden relative">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-red-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+        <div className="absolute top-0 right-0 w-64 h-64 bg-white/[0.06] rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
         <CardHeader className="relative">
           <CardTitle className="text-white flex items-center gap-3">
             <div className="p-2.5 rounded-xl bg-gradient-to-br from-red-500/20 to-red-500/5 border border-red-500/30">
@@ -552,7 +552,7 @@ const WagoConnectionMethods = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="p-4 rounded-xl bg-white/10 border border-red-500/20">
               <div className="flex items-center gap-3 mb-3">
-                <div className="p-2 rounded-lg bg-red-500/20">
+                <div className="p-2 rounded-lg bg-white/[0.06]">
                   <Shield className="h-4 w-4 text-red-400" />
                 </div>
                 <h4 className="font-semibold text-white">Before Making Connections</h4>
@@ -573,7 +573,7 @@ const WagoConnectionMethods = () => {
             </div>
             <div className="p-4 rounded-xl bg-white/10 border border-green-500/20">
               <div className="flex items-center gap-3 mb-3">
-                <div className="p-2 rounded-lg bg-green-500/20">
+                <div className="p-2 rounded-lg bg-white/[0.06]">
                   <CheckCircle className="h-4 w-4 text-green-400" />
                 </div>
                 <h4 className="font-semibold text-white">Connection Best Practices</h4>

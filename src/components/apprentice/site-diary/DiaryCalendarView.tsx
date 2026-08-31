@@ -11,14 +11,11 @@ import { useState, useMemo } from 'react';
 import { todayLocalISO } from '@/lib/localDate';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import type { SiteDiaryEntry } from '@/hooks/site-diary/useSiteDiaryEntries';
+import { moodFill } from '@/lib/site-diary/mood';
 
 /** Returns dot colour based on mood rating */
-function moodDotColour(mood: number | null): string {
-  if (!mood) return 'bg-white/30';
-  if (mood >= 4) return 'bg-green-400';
-  if (mood === 3) return 'bg-amber-400';
-  return 'bg-red-400';
-}
+/** Single definition — see `@/lib/site-diary/mood`. */
+const moodDotColour = moodFill;
 
 interface DiaryCalendarViewProps {
   entries: SiteDiaryEntry[];
@@ -71,7 +68,7 @@ export function DiaryCalendarView({ entries, onDayTap, onEmptyDayTap, selectedDa
   const today = todayLocalISO();
 
   return (
-    <div className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-4">
+    <div className="rounded-xl bg-white/[0.07] border border-white/[0.10] p-4">
       {/* Month navigation */}
       <div className="flex items-center justify-between mb-4">
         <button
@@ -102,7 +99,7 @@ export function DiaryCalendarView({ entries, onDayTap, onEmptyDayTap, selectedDa
       <div className="grid grid-cols-7 gap-1">
         {/* Empty cells for offset */}
         {Array.from({ length: startOffset }).map((_, i) => (
-          <div key={`empty-${i}`} className="aspect-square" />
+          <div key={`empty-${i}`} className="aspect-square sm:aspect-auto sm:h-16" />
         ))}
 
         {/* Day cells */}
@@ -139,11 +136,11 @@ export function DiaryCalendarView({ entries, onDayTap, onEmptyDayTap, selectedDa
               key={day}
               onClick={handleClick}
               disabled={isFuture}
-              className={`aspect-square min-h-[44px] flex flex-col items-center justify-center rounded-lg text-xs touch-manipulation transition-colors ${
+              className={`aspect-square min-h-[44px] sm:aspect-auto sm:h-16 flex flex-col items-center justify-center rounded-lg text-xs touch-manipulation transition-colors ${
                 isFuture
                   ? 'text-white cursor-default'
                   : isSelected
-                    ? 'bg-elec-yellow/25 text-elec-yellow font-bold ring-2 ring-elec-yellow/40'
+                    ? 'bg-white/[0.06] text-elec-yellow font-bold ring-2 ring-elec-yellow/40'
                     : isToday
                       ? 'ring-1 ring-elec-yellow/30 text-elec-yellow font-semibold active:bg-white/10'
                       : hasEntries

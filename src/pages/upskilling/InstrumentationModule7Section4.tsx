@@ -205,21 +205,12 @@ const InstrumentationModule7Section4 = () => {
 
         <TLDR
           points={[
-            'Module 3 Section 5 owns the physics of screening and twisting. This section is selection, routing and identification.',
             'Instrument cable is twisted pairs plus a screen, because a signal circuit faces both coupling mechanisms.',
             '🔴 Pairs inside one multipair cable run alongside each other for the whole length — which is exactly the condition that produces coupling.',
             '🔴 An overall screen cannot prevent pair-to-pair coupling, because both pairs are inside it and there is no barrier between them.',
-            'Differing twist rates between pairs handle the magnetic half of that problem.',
             'Individual screens handle the capacitive half — that is the only thing that puts a barrier between pairs.',
-            'So a multipair carrying several low-level signals wants individual screens, usually with an overall screen too.',
-            'Segregation attacks both coupling mechanisms at once, which is why it is the cheapest measure available.',
-            'It is also a decision that must be made before the containment goes in, not after.',
             '🔴 Colour coding is not international. Check the specification for the installation rather than assuming.',
-            'Conductor size on an instrument circuit is a mechanical decision, not an electrical one.',
-            'Armour is mechanical protection and is not a substitute for a screen — they do different jobs.',
             '🔴 Protective earthing is a safety function. Functional earthing and bonding exist to make equipment work — screening and EMC.',
-            '🔴 On power wiring more bonding is better. On a signal reference a second earth creates a circulating current. Opposite instincts.',
-            '🔴 Table 51 (A4:2026): neither FE nor green-and-yellow may identify a functional bonding conductor.',
             '🔴🔴 Never lift a protective earth to cure noise. If the fix needs that, the fix is wrong.',
           ]}
         />
@@ -355,12 +346,12 @@ const InstrumentationModule7Section4 = () => {
           id="ins-7-4-multipair"
           question="A multipair cable with a single overall screen carries eight 4–20 mA signals. One pair shows interference that tracks another pair's signal. What is the fix?"
           options={[
-            'A cable with individual screens per pair — the overall screen cannot separate pairs from each other',
             'Increase the conductor size',
+            'A cable with individual screens per pair — the overall screen cannot separate pairs from each other',
             'Re-terminate the overall screen',
             'Earth the overall screen at both ends',
           ]}
-          correctIndex={0}
+          correctIndex={1}
           explanation="Interference that tracks another pair's signal is crosstalk between pairs, and both pairs are inside the same screen. Earthing at both ends would make things worse by creating the ground loop Module 3 Section 5 warned about. The construction is wrong for the duty, and only individual screens address it."
         />
 
@@ -546,11 +537,11 @@ const InstrumentationModule7Section4 = () => {
           question="A cable is specified as steel wire armoured with no screen. A colleague says the armour will do the screening job. Is that right?"
           options={[
             'Yes — armour is conductive, so it acts as a screen',
-            'No — armour is mechanical protection, and a screen is a specific electrical function with its own earthing requirement',
             'Yes, provided the armour is earthed at both ends',
+            'No — armour is mechanical protection, and a screen is a specific electrical function with its own earthing requirement',
             'Only for low-frequency interference',
           ]}
-          correctIndex={1}
+          correctIndex={2}
           explanation="They are different functions that happen to both involve metal. A screen has to form a continuous equipotential shell around the conductors and be earthed at exactly one point, per Module 3 Section 5. Armour is there to stop the cable being damaged, and treating it as a screen means relying on something never designed or terminated for that purpose."
         />
 
@@ -633,11 +624,11 @@ const InstrumentationModule7Section4 = () => {
           question="A conductor is installed solely to earth cable screens for EMC purposes. How should it NOT be identified?"
           options={[
             'With a cable number',
-            'Green-and-yellow, or with the designation FE',
             'With a ferrule at each end',
             'With the tag of the loop it serves',
+            'Green-and-yellow, or with the designation FE',
           ]}
-          correctIndex={1}
+          correctIndex={3}
           explanation="Table 51 in BS 7671:2018+A4:2026 explicitly states that neither FE nor the green-and-yellow bi-colour should identify a functional bonding conductor. Green-and-yellow asserts that a conductor is protective, and a functional-only conductor making that claim misleads whoever works on it later."
         />
 

@@ -3348,7 +3348,7 @@ const ProjectDetailPage = () => {
                 type="button"
                 onClick={handleEditSave}
                 disabled={!editTitle.trim() || editSaving}
-                className="w-full h-12 rounded-xl bg-elec-yellow text-black text-base font-semibold touch-manipulation active:scale-[0.98] transition-transform disabled:opacity-50"
+                className="w-full h-12 rounded-xl bg-elec-yellow text-black text-base font-semibold touch-manipulation active:scale-[0.98] transition-transform disabled:bg-white/[0.08] disabled:text-white/70"
               >
                 {editSaving ? 'Saving…' : 'Save changes'}
               </button>

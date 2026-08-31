@@ -13,7 +13,11 @@
 import Calculations from '@/pages/electrician-tools/Calculations';
 
 const OnJobCalculations = () => (
-  <Calculations backTo="/apprentice" section="Apprentice" title="Calculations" />
+  <Calculations
+    backTo="/apprentice/on-job-tools"
+    section="Apprentice · On-the-job tools"
+    title="Calculations"
+  />
 );
 
 export default OnJobCalculations;

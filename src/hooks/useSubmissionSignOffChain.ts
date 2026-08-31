@@ -4,9 +4,20 @@ import { supabase } from '@/integrations/supabase/client';
 /* ==========================================================================
    useSubmissionSignOffChain — surfaces the full sign-off chain that already
    exists in the schema but isn't shown to tutors:
+
+   ⚠️ REMOVED: a `portfolio_items` rollup of `is_supervisor_verified`.
+   It queried `.eq('submission_id', …)` and portfolio_items HAS NO
+   submission_id column, so PostgREST errored on every open of the tutor's
+   submission drawer, `itemsTotal` was always 0 and the "N/M items
+   supervisor-verified" line never rendered — a dead request behind a feature
+   nobody could see. Not repaired, because the flag is self-declared (no code
+   writes it; RLS gives the learner own-row UPDATE and assessors SELECT only),
+   so showing it to a tutor as corroboration would be worse than showing
+   nothing. The real chain below — signatures, signed_off_at, iqa_verified_at
+   — is genuine.
+
      • portfolio_submissions: signed_off_at / by, iqa_verified_at / by
      • portfolio_signatures: rich signature rows (employer, supervisor, tutor)
-     • portfolio_items: is_supervisor_verified rollup
    ========================================================================== */
 
 export type SignerRole = 'apprentice' | 'employer' | 'supervisor' | 'tutor' | 'iqa' | string;
@@ -30,9 +41,6 @@ export interface SignOffChain {
   signedOff: { at: string | null; by_user_id: string | null; by_name: string | null };
   /** IQA verification at submission level */
   iqaVerified: { at: string | null; by_user_id: string | null; by_name: string | null };
-  /** Number of underlying portfolio_items already supervisor-verified */
-  itemsSupervisorVerified: number;
-  itemsTotal: number;
   /** Quick rollups by signer role for the chain badge */
   hasEmployer: boolean;
   hasSupervisor: boolean;
@@ -50,7 +58,7 @@ export function useSubmissionSignOffChain(submissionId: string | null): SignOffC
     }
     setState((s) => ({ ...s, loading: true }));
 
-    const [{ data: sub }, { data: sigs }, { data: items }] = await Promise.all([
+    const [{ data: sub }, { data: sigs }] = await Promise.all([
       supabase
         .from('portfolio_submissions')
         .select('signed_off_at, signed_off_by, iqa_verified_at, iqa_verified_by')
@@ -63,10 +71,6 @@ export function useSubmissionSignOffChain(submissionId: string | null): SignOffC
         )
         .eq('submission_id', submissionId)
         .order('signed_at', { ascending: true }),
-      supabase
-        .from('portfolio_items')
-        .select('id, is_supervisor_verified')
-        .eq('submission_id', submissionId),
     ]);
 
     const subRow = (sub ?? null) as
@@ -78,7 +82,6 @@ export function useSubmissionSignOffChain(submissionId: string | null): SignOffC
         }
       | null;
     const sigList = ((sigs ?? []) as Array<PortfolioSignature & { submission_id: string }>);
-    const itemRows = ((items ?? []) as Array<{ id: string; is_supervisor_verified: boolean | null }>);
 
     // Resolve names for signer_id, signed_off_by, iqa_verified_by — best effort
     const userIds = new Set<string>();
@@ -86,7 +89,7 @@ export function useSubmissionSignOffChain(submissionId: string | null): SignOffC
     if (subRow?.signed_off_by) userIds.add(subRow.signed_off_by);
     if (subRow?.iqa_verified_by) userIds.add(subRow.iqa_verified_by);
 
-    let nameMap = new Map<string, string>();
+    const nameMap = new Map<string, string>();
     if (userIds.size > 0) {
       const { data: profiles } = await supabase
         .from('profiles')
@@ -121,8 +124,6 @@ export function useSubmissionSignOffChain(submissionId: string | null): SignOffC
         by_user_id: subRow?.iqa_verified_by ?? null,
         by_name: subRow?.iqa_verified_by ? nameMap.get(subRow.iqa_verified_by) ?? null : null,
       },
-      itemsSupervisorVerified: itemRows.filter((i) => i.is_supervisor_verified).length,
-      itemsTotal: itemRows.length,
       hasEmployer: enrichedSigs.some((s) => (s.signer_role ?? '').toLowerCase() === 'employer'),
       hasSupervisor: enrichedSigs.some((s) => (s.signer_role ?? '').toLowerCase() === 'supervisor'),
       hasTutor: enrichedSigs.some((s) => (s.signer_role ?? '').toLowerCase() === 'tutor'),
@@ -144,8 +145,6 @@ function initial(): SignOffChain {
     signatures: [],
     signedOff: { at: null, by_user_id: null, by_name: null },
     iqaVerified: { at: null, by_user_id: null, by_name: null },
-    itemsSupervisorVerified: 0,
-    itemsTotal: 0,
     hasEmployer: false,
     hasSupervisor: false,
     hasTutor: false,

@@ -503,7 +503,7 @@ export default function LimitationNoticePage() {
         {/* Actions */}
         <motion.div variants={itemVariants} className="flex gap-3 pt-2 lg:justify-end lg:col-span-2">
           <button className="flex-1 h-12 rounded-xl border border-white/[0.12] bg-white/[0.04] text-[14px] font-medium text-white hover:bg-white/[0.08] touch-manipulation active:scale-[0.99] transition-all lg:flex-none lg:px-10" onClick={() => { storageSetJSONSync(DRAFT_KEY, data); toast.success('Draft saved'); }}>Save Draft</button>
-          <button className="flex-1 h-12 rounded-xl bg-elec-yellow text-[15px] font-semibold text-black hover:bg-elec-yellow/90 touch-manipulation active:scale-[0.99] transition-all disabled:opacity-60 lg:flex-none lg:px-10 inline-flex items-center justify-center" onClick={handleSave} disabled={isSaving}>
+          <button className="flex-1 h-12 rounded-xl bg-elec-yellow text-[15px] font-semibold text-black hover:bg-elec-yellow/90 touch-manipulation active:scale-[0.99] transition-all disabled:bg-white/[0.08] disabled:text-white/70 lg:flex-none lg:px-10 inline-flex items-center justify-center" onClick={handleSave} disabled={isSaving}>
             {isSaving ? <><Loader2 className="h-4 w-4 animate-spin mr-2" />Saving...</> : existingReportId ? 'Update Notice' : 'Download PDF'}
           </button>
         </motion.div>

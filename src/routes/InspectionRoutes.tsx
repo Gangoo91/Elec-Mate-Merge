@@ -34,6 +34,9 @@ const EmergencyLightingCertificate = lazyWithRetry(
   () => import('@/pages/inspection/EmergencyLightingCertificate')
 );
 const SolarPVCertificate = lazyWithRetry(() => import('@/pages/inspection/SolarPVCertificate'));
+const PlugInSolarCertificate = lazyWithRetry(
+  () => import('@/pages/inspection/PlugInSolarCertificate')
+);
 const PATTestingCertificate = lazyWithRetry(() => import('@/pages/inspection/PATTestingCertificate'));
 
 // BESS Certificate
@@ -117,6 +120,8 @@ export default function InspectionRoutes() {
         {/* Solar PV Installation Certificate (MCS Compliance) */}
         <Route path="solar-pv/new" element={<SolarPVCertificate />} />
         <Route path="solar-pv/:id" element={<SolarPVCertificate />} />
+        <Route path="plug-in-solar/new" element={<PlugInSolarCertificate />} />
+        <Route path="plug-in-solar/:id" element={<PlugInSolarCertificate />} />
 
         {/* PAT Testing Certificate (IET CoP) */}
         <Route path="pat-testing/new" element={<PATTestingCertificate />} />

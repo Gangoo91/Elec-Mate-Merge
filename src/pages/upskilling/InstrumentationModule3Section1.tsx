@@ -300,12 +300,12 @@ const InstrumentationModule3Section1 = () => {
           id="ins-3-1-current"
           question="A 4–20 mA loop runs 400 metres. What does the extra cable resistance do to the measured value?"
           options={[
+            'Nothing to the value — it increases the voltage the supply must provide, and only matters if the supply runs out of headroom',
             'It halves the resolution',
             'It reduces the current in proportion to the length',
-            'Nothing to the value — it increases the voltage the supply must provide, and only matters if the supply runs out of headroom',
             'It adds noise proportional to the distance',
           ]}
-          correctIndex={2}
+          correctIndex={0}
           explanation="The current is the same at every point in a series loop, so the value is unaffected. What the extra resistance consumes is supply voltage. The failure mode, if the run is too long or the loop load too high, is that the supply cannot drive 20 mA — so the signal saturates below full scale rather than reading progressively low."
         />
 
@@ -356,11 +356,11 @@ const InstrumentationModule3Section1 = () => {
           question="Which failure mode is a pulse signal MORE vulnerable to than a 4–20 mA signal?"
           options={[
             'Loss of loop supply',
+            'Electrical interference creating false transitions, which are counted as real pulses',
             'Cable resistance changing with temperature',
             'Voltage drop along the cable',
-            'Electrical interference creating false transitions, which are counted as real pulses',
           ]}
-          correctIndex={3}
+          correctIndex={1}
           explanation="A pulse signal ignores amplitude, so attenuation and voltage drop are irrelevant. What it cannot ignore is anything that looks like a transition — induced noise can add counts that never happened, and on a totaliser those counts accumulate permanently."
         />
 
@@ -417,12 +417,12 @@ const InstrumentationModule3Section1 = () => {
           id="ins-3-1-measure"
           question="You need to check the current on a live two-wire loop feeding a running control loop. Which approach disturbs the process least?"
           options={[
-            'Use a clamp-on milliammeter, or measure across designed-in test provision',
             'Disconnect the transmitter and simulate the signal',
             'Switch the controller to manual and then break the loop',
+            'Use a clamp-on milliammeter, or measure across designed-in test provision',
             'Break the loop and insert a milliammeter in series',
           ]}
-          correctIndex={0}
+          correctIndex={2}
           explanation="Breaking a two-wire loop de-energises the transmitter as well as interrupting the signal. A clamp-on milliammeter, or a voltage measurement across designed-in test diodes or a shunt resistor, obtains the same information without opening the circuit. Putting the controller in manual first is sensible practice, but it does not prevent the transmitter losing power."
         />
 
@@ -586,17 +586,17 @@ const InstrumentationModule3Section1 = () => {
             </strong>
           </p>
           <p>
-            Work a real one. A level transmitter is ranged 15 to 85 inches, output 4&ndash;20 mA.
-            What current corresponds to a level of 32 inches?
+            Work a real one. A level transmitter is ranged 400 to 2100 mm, output 4&ndash;20 mA.
+            What current corresponds to a level of 820 mm?
           </p>
           <ul>
             <li>
-              <strong>Step one — convert to per unit.</strong> The input span is 85 &minus; 15 = 70
-              inches. (32 &minus; 15) ÷ 70 = <strong>0.2429 per unit</strong>, or 24.29%.
+              <strong>Step one &mdash; convert to per unit.</strong> The input span is 2100 &minus;
+              400 = 1700 mm. (820 &minus; 400) ÷ 1700 = <strong>0.2471 per unit</strong>, or 24.71%.
             </li>
             <li>
-              <strong>Step two — convert per unit to output.</strong> The output span is 20 &minus;
-              4 = 16 mA. (0.2429 × 16) + 4 = <strong>7.886 mA</strong>.
+              <strong>Step two &mdash; convert per unit to output.</strong> The output span is 20
+              &minus; 4 = 16 mA. (0.2471 &times; 16) + 4 = <strong>7.953 mA</strong>.
             </li>
           </ul>
           <p>
@@ -604,7 +604,7 @@ const InstrumentationModule3Section1 = () => {
             4, divide by 16 to get per unit, then scale into engineering units.
           </p>
           <p>
-            Its real value is that it does not care what the two ends are. Inches to milliamps,
+            Its real value is that it does not care what the two ends are. Millimetres to milliamps,
             milliamps to percent, percent to psi on an I/P converter, degrees to counts on a PLC
             input. Every one of those is the same two steps with different numbers, which is why{' '}
             <strong>thinking in per unit</strong> is worth more than memorising any individual
@@ -615,8 +615,8 @@ const InstrumentationModule3Section1 = () => {
         <InlineCheck
           id="ins-3-1-perunit"
           question="A pressure transmitter is ranged 0–250 bar with a 4–20 mA output. It is reading 13.2 mA. What is the pressure?"
-          options={['132 bar', '143.75 bar', '165 bar', '206 bar']}
-          correctIndex={1}
+          options={['132 bar', '165 bar', '206 bar', '143.75 bar']}
+          correctIndex={3}
           explanation="Per unit = (13.2 − 4) ÷ 16 = 0.575. Pressure = 0.575 × (250 − 0) + 0 = 143.75 bar. Note that reading 13.2 mA as though it were a straight percentage of 20 mA would give 66%, or 165 bar — which is the error the live zero invites if you forget to subtract it."
         />
 

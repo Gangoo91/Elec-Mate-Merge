@@ -270,7 +270,7 @@ export default function BookingSlotPicker() {
                 type="button"
                 onClick={handleConfirm}
                 disabled={confirming || remainingSeconds <= 0}
-                className="w-full h-12 bg-elec-yellow text-black font-semibold rounded-xl hover:bg-elec-yellow/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                className="w-full h-12 bg-elec-yellow text-black font-semibold rounded-xl hover:bg-elec-yellow/90 disabled:bg-white/[0.08] disabled:text-white/70 disabled:cursor-not-allowed transition-colors"
               >
                 {confirming ? 'Confirming…' : 'Confirm booking'}
               </button>

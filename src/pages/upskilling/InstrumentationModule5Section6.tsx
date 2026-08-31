@@ -203,16 +203,10 @@ const InstrumentationModule5Section6 = () => {
         <TLDR
           points={[
             'Five questions handle any unfamiliar loop: what type of process, which direction of action, which terms, what it looks like when wrong, and what good means here.',
-            'HVAC room temperature: self-regulating, very slow, heavily lagged, clean signal.',
-            'That combination is one of the few where derivative genuinely earns its place.',
-            'It needs integral, because self-regulating processes always do — otherwise it settles off setpoint.',
             'Liquid pressure on a pump discharge: fast, often noisy, and self-regulating. PI, and no derivative.',
-            'Gas pressure in a fixed volume: integrating, like tank level — strong proportional, little integral.',
             'So “pressure control” is not one problem. The fluid decides which one you have.',
             '🔴 Motor speed: a drive in closed-loop speed control has already closed a fast loop inside itself.',
-            '🔴 A process controller sending it a speed setpoint is therefore cascade control.',
             '🔴 Cascade works only if the inner loop is substantially faster than the outer one.',
-            'A cascade fails from the inside out — check the inner loop before tuning the outer one.',
             'The answers differ on all three. The method does not, which is what makes it worth having.',
           ]}
         />
@@ -388,12 +382,12 @@ const InstrumentationModule5Section6 = () => {
           id="ins-5-6-pressure"
           question="A pump discharge pressure loop is noisy and hunts. Somebody suggests adding derivative action to catch the swings sooner. Good idea?"
           options={[
-            'No — the loop is fast and the signal is noisy, which is the combination derivative handles worst',
             'Yes, provided the gain is reduced at the same time',
             'Only if the integral action is removed',
             'Yes — derivative anticipates and will reduce the hunting',
+            'No — the loop is fast and the signal is noisy, which is the combination derivative handles worst',
           ]}
-          correctIndex={0}
+          correctIndex={3}
           explanation="Derivative works well on slow, heavily lagged, clean processes. A pump discharge pressure loop is the opposite on all three counts. The derivative contribution from the turbulence noise would swamp anything useful and drive the valve continuously. Reduce the gain, and address the noise at source if it matters."
         />
 
@@ -443,12 +437,12 @@ const InstrumentationModule5Section6 = () => {
           id="ins-5-6-cascade"
           question="A drive is configured with a 10 second acceleration ramp. It sits under a flow loop that responds in about 3 seconds. What is the consequence?"
           options={[
-            'None — ramp rates only affect starting from rest',
             'The inner loop is slower than the outer one, so the cascade requirement is broken and the two will fight',
+            'None — ramp rates only affect starting from rest',
             'The flow loop will simply respond more slowly',
             'The drive will trip on overcurrent',
           ]}
-          correctIndex={1}
+          correctIndex={0}
           explanation="A ramp rate applies to every speed change, not just to starting. With the inner loop taking 10 seconds to deliver what the outer loop asked for in 3, the outer loop corrects into a delay it cannot see — the cascade requirement is inverted, and the result is a sustained oscillation with neither loop showing a fault on its own."
         />
 

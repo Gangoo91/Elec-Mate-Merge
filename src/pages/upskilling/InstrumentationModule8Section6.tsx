@@ -270,18 +270,12 @@ const InstrumentationModule8Section6 = () => {
 
         <TLDR
           points={[
-            'Module 1 Section 5 owns hazardous areas, DSEAR and safe working generally. This section owns the hazards created by diagnosis itself.',
             '🔴 Fault finding often needs the plant running, because Section 3 showed a test during a healthy period proves nothing.',
-            'So diagnosis deliberately disturbs a system that is working — unlike installation or calibration, which happen on isolated equipment.',
             '🔴 Opening a live loop is a control action. What happens next is a property of the process, not of the loop.',
             'A self-regulating process settles, an integrating one ramps, a runaway one accelerates (Module 5 Section 1).',
             '🔴 On a live loop the signal you inject is a COMMAND — source 20 mA and the controller acts as though the process is at full scale.',
             'Putting a controller in manual transfers the process to a person. That is agreed, not simply done.',
             '🔴 While a protection is inhibited it is absent, and nothing about the plant indicates it — the same silence as a failed dormant trip.',
-            'So an inhibit is time-bounded, visible, and deliberately removed.',
-            'Weigh reversibility: a link goes back, a tripped plant does not simply un-trip.',
-            'The useful question before touching anything: what is this loop controlling, and what happens if its signal is lost or wrong?',
-            'Some decisions are not yours alone — taking a deliberate trip lands on operations and production.',
             '🔴 Record every temporary change when you make it, and confirm it removed before you leave.',
           ]}
         />
@@ -465,11 +459,11 @@ const InstrumentationModule8Section6 = () => {
           question="A technician sources 12 mA into a live temperature loop to check the panel indicator, with the controller still in automatic. What else happens?"
           options={[
             'Nothing — the indicator is a separate device',
-            'The controller treats 12 mA as the measurement and acts on it, moving whatever it controls',
             'The controller alarms and holds its last output',
+            'The controller treats 12 mA as the measurement and acts on it, moving whatever it controls',
             'The transmitter overrides the injected signal',
           ]}
-          correctIndex={1}
+          correctIndex={2}
           explanation="Everything downstream of the injection point sees a measurement, because that is what a 4–20 mA signal is. The controller has no way to distinguish a test from the process, so it responds to the value it is given — as does any alarm or trip configured on that signal."
         />
 
@@ -656,10 +650,10 @@ const InstrumentationModule8Section6 = () => {
           options={[
             'Informing the next shift of the results',
             'Recording the test results',
-            'Returning the controller to automatic and confirming it — a loop left in manual is not controlling anything',
             'Recalibrating the transmitter',
+            'Returning the controller to automatic and confirming it — a loop left in manual is not controlling anything',
           ]}
-          correctIndex={2}
+          correctIndex={3}
           explanation="The loop will sit in manual indefinitely, holding a fixed output while the process moves around it, and nothing will indicate that this is unintended. It is the exact pattern Section 4 described — a system left in a state nobody meant, with no symptom at the time."
         />
 

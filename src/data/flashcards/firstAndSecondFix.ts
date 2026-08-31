@@ -29,9 +29,9 @@ export const firstAndSecondFix: FlashcardData[] = [
   {
     id: 'fsf4',
     question:
-      "According to BS 7671 Regulation 522.6.101, what are the 'safe zones' for cable routes in walls?",
+      "What are the 'prescribed zones' for cables concealed in a wall or partition?",
     answer:
-      'Cables must run in prescribed safe zones: horizontally within 150 mm of the top of the wall or ceiling, horizontally within 150 mm of a finished floor, vertically within 150 mm of the edge of a wall or partition, and horizontally or vertically to an accessory within 150 mm of that accessory. Cables outside safe zones must be protected by 30 mA RCD or earthed metal covering.',
+      'A prescribed zone is within 150 mm of the top of the wall or partition, or within 150 mm of an angle formed by two adjoining walls or partitions; a zone is also formed horizontally or vertically to an accessory. Cables outside a prescribed zone need 30 mA RCD protection or earthed metallic covering. ⚠️ In A4:2026 this is Reg 522.6.202 with Table 52.1 governing depth — the old 522.6.101 number no longer applies.',
     category: 'Cable Routes',
     difficulty: 'medium',
   },

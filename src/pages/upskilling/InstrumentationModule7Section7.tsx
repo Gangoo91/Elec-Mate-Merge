@@ -285,20 +285,13 @@ const InstrumentationModule7Section7 = () => {
 
         <TLDR
           points={[
-            'Section 6 proved a signal gets from one end to the other. That is not a cable test and does not replace one.',
             '🔴 Test the cable as a cable: every device off, at both ends, before any test voltage is applied.',
             'An insulation test applies hundreds of volts to a circuit built for 24 — connected electronics receive all of it.',
-            'BS 7671 requires insulation tests before connecting equipment that could influence the test or be damaged by it.',
             '🔴 Table 64: SELV and PELV are tested at 250 V DC with a minimum of 0.5 MΩ.',
-            'The 500 V / 1.0 MΩ row applies to circuits up to 500 V with the exception of SELV and PELV — so it is the wrong row here.',
             '🔴 The 500 V reflex carried over from power work is the mistake worth naming.',
-            'Test core to core, each core to earth, each core to screen, and the screen itself.',
             '🔴 A cable sitting exactly on 0.5 MΩ still diverts about 48 µA — roughly 0.3% of a 16 mA span.',
             '🔴 So Table 64 is a safety threshold, not a measurement-quality threshold. Put the contribution in the error budget.',
-            'The trend matters more than the pass — insulation degrades progressively rather than failing suddenly.',
             'Prove a screen is earthed at ONE end: continuous end to end, AND open to earth at the far end.',
-            'Moisture gets in at terminations, not through intact sheath — which is why glanding is a sealing job.',
-            'Record measured values and the test voltage, plus anything that could not be tested.',
           ]}
         />
 
@@ -520,10 +513,10 @@ const InstrumentationModule7Section7 = () => {
           </p>
           <p>
             That matters because <strong>500 V is the reflex</strong>. It is the routine figure for
-            general low voltage work, the setting the instrument is probably still on, and the
-            number most electricians would give without thinking. Carried onto an instrument circuit
-            it does two things at once: it applies twice the intended test voltage, and if anything
-            has been left connected it applies that to equipment built for a fraction of it.
+            general low voltage work, and very often the setting the instrument is already on from
+            the last job. Carried onto an instrument circuit it does two things at once: it applies
+            twice the intended test voltage, and if anything has been left connected it applies that
+            to equipment built for a fraction of it.
           </p>
           <p>
             Worth being clear about scope: the minimum values above are the acceptance criteria in

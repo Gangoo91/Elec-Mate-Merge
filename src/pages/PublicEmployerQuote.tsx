@@ -204,7 +204,7 @@ export default function PublicEmployerQuote() {
               type="button"
               onClick={() => decide('accepted')}
               disabled={deciding || !signedName.trim()}
-              className="h-12 w-full rounded-xl bg-elec-yellow text-black text-[14px] font-semibold touch-manipulation disabled:opacity-50 flex items-center justify-center gap-2"
+              className="h-12 w-full rounded-xl bg-elec-yellow text-black text-[14px] font-semibold touch-manipulation disabled:bg-white/[0.08] disabled:text-white/70 flex items-center justify-center gap-2"
             >
               {deciding ? <Loader2 className="h-4 w-4 animate-spin" /> : <CheckCircle2 className="h-4 w-4" />}
               Accept quote

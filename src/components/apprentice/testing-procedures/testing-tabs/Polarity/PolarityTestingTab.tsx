@@ -1,15 +1,21 @@
+import { CALLOUT_DANGER, PANEL } from '@/components/ui/panel-recipe';
+import { cn } from '@/lib/utils';
+import CommonIssuesCard from '../../CommonIssuesCard';
+import { polarityIssues } from '../../commonIssues';
+import { PolarityDiagram } from '../../diagrams/TestDiagrams';
+
 const PolarityTestingTab = () => {
   const items = [
-    'Verify that single pole devices (switches, fuses) are connected in the line conductor only',
-    'Check that bayonet/Edison screw lampholders have line conductor connected to the centre contact',
-    'Confirm that all socket outlets have line/neutral/earth connected to the correct terminals',
-    'Use a continuity tester to check correct polarity throughout the installation',
-    'Pay special attention to two-way and intermediate switching arrangements',
+    'Verify that every fuse and single-pole control or protective device is connected in the line conductor only — Regulation 643.6(a)',
+    'Check that centre contact bayonet and Edison screw lampholders have the outer or screwed contact connected to the neutral, so the shell is not live',
+    'Confirm that all socket outlets have line, neutral and earth landed on the correct terminals',
+    'Prove polarity with a continuity test on the dead circuit, before it is energised',
+    'Pay particular attention to two-way and intermediate switching, where the common and the strappers are easily crossed',
   ];
 
   return (
     <div className="space-y-6">
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
+      <div className={cn(PANEL, "space-y-4")}>
         <div className="space-y-1">
           <h2 className="text-[20px] sm:text-[22px] font-semibold text-white leading-tight">
             Polarity testing
@@ -32,21 +38,25 @@ const PolarityTestingTab = () => {
           ))}
         </ul>
 
-        <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4">
-          <img
-            loading="lazy"
-            src="/placeholder.svg"
-            alt="Polarity Testing Method"
-            className="mx-auto max-h-64"
-          />
-          <p className="text-[12px] text-center mt-2 text-white/55">
-            Socket outlet and switch polarity testing diagram
-          </p>
-        </div>
+        <PolarityDiagram />
       </div>
 
-      <div className="rounded-xl border border-red-500/30 bg-red-500/[0.04] p-4 sm:p-5 space-y-1">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">
+      <div className={cn(PANEL, "space-y-1")}>
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+          The lampholder exception worth knowing
+        </span>
+        <p className="text-[14px] text-white/85 leading-relaxed">
+          Regulation 643.6(b) requires centre contact bayonet and Edison screw lampholders to have
+          the outer contact on the neutral — but it explicitly excepts{' '}
+          <span className="text-white">E14 and E27 lampholders to BS EN 60238</span>. Those are the
+          common small and standard screw sizes, and their construction already protects against
+          contact with the shell. Knowing the exception matters: coding a modern E27 fitting as a
+          fault because the shell is not on the neutral is a wrong call.
+        </p>
+      </div>
+
+      <div className={cn(CALLOUT_DANGER, "space-y-1")}>
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-400">
           Safety warning
         </span>
         <p className="text-[14px] text-white/85 leading-relaxed">
@@ -55,6 +65,7 @@ const PolarityTestingTab = () => {
           any issues found.
         </p>
       </div>
+      <CommonIssuesCard issues={polarityIssues} />
     </div>
   );
 };

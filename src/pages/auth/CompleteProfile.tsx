@@ -206,7 +206,7 @@ const CompleteProfile = () => {
               <Button
                 onClick={handleSubmit}
                 disabled={!selectedRole || isSubmitting}
-                className="mt-6 h-14 w-full rounded-2xl bg-elec-yellow text-[16px] font-semibold text-black shadow-lg shadow-elec-yellow/20 transition-all hover:bg-elec-yellow/90 disabled:opacity-50"
+                className="mt-6 h-14 w-full rounded-2xl bg-elec-yellow text-[16px] font-semibold text-black shadow-lg shadow-elec-yellow/20 transition-all hover:bg-elec-yellow/90 disabled:bg-white/[0.08] disabled:text-white/70"
               >
                 {isSubmitting ? (
                   <>Saving...</>

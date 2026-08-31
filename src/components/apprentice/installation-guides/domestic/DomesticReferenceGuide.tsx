@@ -488,23 +488,22 @@ const DomesticReferenceGuide = () => {
   return (
     <div className="space-y-6">
       {/* BS 7671 Key Regulations */}
-      <Card className="border-white/[0.06] bg-white/[0.02]">
-        <CardHeader>
+      <Card variant="plain">
+        <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <Book className="h-6 w-6 text-white/55" />
-            <CardTitle className="text-white">{bs7671References.title}</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">{bs7671References.title}</CardTitle>
           </div>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <Alert className="border-white/[0.06] bg-white/[0.02]">
-            <Info className="h-4 w-4 text-white/55" />
+        <CardContent className="space-y-4 p-0">
+          <Alert className="border-white/[0.10] bg-white/[0.06]">
+            <Info className="h-4 w-4 text-white/70" />
             <AlertDescription className="text-white/85 text-sm">
               <strong>Current Edition:</strong> {bs7671References.edition}
             </AlertDescription>
           </Alert>
 
           {bs7671References.sections.map((section, index) => (
-            <div key={index} className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+            <div key={index} className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
               <h4 className="font-medium text-white mb-3">{section.part}</h4>
               <div className="space-y-2">
                 {section.keyRegulations.map((reg, idx) => (
@@ -528,21 +527,20 @@ const DomesticReferenceGuide = () => {
       </Card>
 
       {/* IET Guidance Notes */}
-      <Card className="border-white/[0.06] bg-white/[0.02]">
-        <CardHeader>
+      <Card variant="plain">
+        <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <FileText className="h-6 w-6 text-white/55" />
-            <CardTitle className="text-white">{ietGuidanceNotes.title}</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">{ietGuidanceNotes.title}</CardTitle>
           </div>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 p-0">
           <p className="text-sm text-white/85">{ietGuidanceNotes.description}</p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {ietGuidanceNotes.notes.map((note, index) => (
               <div
                 key={index}
-                className="bg-white/[0.02] p-3 rounded-lg border border-white/[0.06]"
+                className="bg-white/[0.06] p-3 rounded-lg border border-white/[0.10]"
               >
                 <div className="flex items-center gap-2 mb-2">
                   <Badge variant="outline" className="border-white/10 text-white text-xs">
@@ -555,7 +553,7 @@ const DomesticReferenceGuide = () => {
                   {note.topics.map((topic, idx) => (
                     <span
                       key={idx}
-                      className="text-xs bg-white/[0.02] text-white/85 px-2 py-0.5 rounded"
+                      className="text-xs bg-white/[0.06] text-white/85 px-2 py-0.5 rounded"
                     >
                       {topic}
                     </span>
@@ -565,7 +563,7 @@ const DomesticReferenceGuide = () => {
             ))}
           </div>
 
-          <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+          <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
             <h4 className="font-medium text-white mb-3">Additional IET Publications</h4>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
               {ietGuidanceNotes.additionalPublications.map((pub, idx) => (
@@ -580,28 +578,27 @@ const DomesticReferenceGuide = () => {
       </Card>
 
       {/* Part P Summary */}
-      <Card className="border-white/[0.06] bg-white/[0.02]">
-        <CardHeader>
+      <Card variant="plain">
+        <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <Building className="h-6 w-6 text-white/55" />
-            <CardTitle className="text-white">{partPRequirementsSummary.title}</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">{partPRequirementsSummary.title}</CardTitle>
           </div>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <Alert className="border-white/[0.06] bg-white/[0.02]">
-            <Info className="h-4 w-4 text-white/55" />
+        <CardContent className="space-y-4 p-0">
+          <Alert className="border-white/[0.10] bg-white/[0.06]">
+            <Info className="h-4 w-4 text-white/70" />
             <AlertDescription className="text-white/85 text-sm">
               <strong>Applicability:</strong> {partPRequirementsSummary.applicability}
             </AlertDescription>
           </Alert>
 
           {partPRequirementsSummary.keyPoints.map((point, index) => (
-            <div key={index} className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+            <div key={index} className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
               <h4 className="font-medium text-white mb-3">{point.aspect}</h4>
               <ul className="space-y-1">
                 {point.details.map((detail, idx) => (
                   <li key={idx} className="text-sm text-white/85 flex items-start gap-2">
-                    <CheckCircle className="h-4 w-4 text-white/55 mt-0.5 flex-shrink-0" />
+                    <CheckCircle className="h-4 w-4 text-white/70 mt-0.5 flex-shrink-0" />
                     {detail}
                   </li>
                 ))}
@@ -609,7 +606,7 @@ const DomesticReferenceGuide = () => {
             </div>
           ))}
 
-          <div className="bg-red-500/10 p-4 rounded-lg border border-red-500/20">
+          <div className="p-4 rounded-lg border border-white/[0.12] border-l-[3px] border-l-red-500 bg-white/[0.06]">
             <h4 className="font-medium text-red-200 mb-3">Non-Compliance Penalties</h4>
             <ul className="space-y-1">
               {partPRequirementsSummary.penalties.map((penalty, idx) => (
@@ -624,21 +621,20 @@ const DomesticReferenceGuide = () => {
       </Card>
 
       {/* Competent Person Schemes */}
-      <Card className="border-white/[0.06] bg-white/[0.02]">
-        <CardHeader>
+      <Card variant="plain">
+        <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <Award className="h-6 w-6 text-white/55" />
-            <CardTitle className="text-white">{competentPersonSchemes.title}</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">{competentPersonSchemes.title}</CardTitle>
           </div>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 p-0">
           <p className="text-sm text-white/85">{competentPersonSchemes.description}</p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {competentPersonSchemes.schemes.map((scheme, index) => (
               <div
                 key={index}
-                className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]"
+                className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]"
               >
                 <div className="flex items-center justify-between mb-2">
                   <h4 className="font-medium text-white">{scheme.name}</h4>
@@ -655,7 +651,7 @@ const DomesticReferenceGuide = () => {
                   {scheme.features.map((feature, idx) => (
                     <span
                       key={idx}
-                      className="text-xs bg-white/[0.02] text-white/85 px-2 py-0.5 rounded"
+                      className="text-xs bg-white/[0.06] text-white/85 px-2 py-0.5 rounded"
                     >
                       {feature}
                     </span>
@@ -666,7 +662,7 @@ const DomesticReferenceGuide = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+            <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
               <h4 className="font-medium text-white mb-3">Registration Requirements</h4>
               <ul className="space-y-1">
                 {competentPersonSchemes.registrationRequirements.map((req, idx) => (
@@ -678,12 +674,12 @@ const DomesticReferenceGuide = () => {
               </ul>
             </div>
 
-            <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+            <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
               <h4 className="font-medium text-white mb-3">Benefits of Registration</h4>
               <ul className="space-y-1">
                 {competentPersonSchemes.benefits.map((benefit, idx) => (
                   <li key={idx} className="text-sm text-white/85 flex items-start gap-2">
-                    <CheckCircle className="h-4 w-4 text-white/55 mt-0.5 flex-shrink-0" />
+                    <CheckCircle className="h-4 w-4 text-white/70 mt-0.5 flex-shrink-0" />
                     {benefit}
                   </li>
                 ))}
@@ -694,16 +690,15 @@ const DomesticReferenceGuide = () => {
       </Card>
 
       {/* Advanced Installation Scenarios */}
-      <Card className="border-white/[0.06] bg-white/[0.02]">
-        <CardHeader>
+      <Card variant="plain">
+        <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <Building className="h-6 w-6 text-white/55" />
-            <CardTitle className="text-white">Advanced Installation Scenarios</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">Advanced Installation Scenarios</CardTitle>
           </div>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 p-0">
           {advancedScenarios.map((scenario, index) => (
-            <div key={index} className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+            <div key={index} className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
               <h4 className="font-medium text-white mb-3">{scenario.scenario}</h4>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
@@ -747,16 +742,15 @@ const DomesticReferenceGuide = () => {
       </Card>
 
       {/* Practical Installation Techniques */}
-      <Card className="border-white/[0.06] bg-white/[0.02]">
-        <CardHeader>
+      <Card variant="plain">
+        <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <Wrench className="h-6 w-6 text-white/55" />
-            <CardTitle className="text-white">Practical Installation Techniques</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">Practical Installation Techniques</CardTitle>
           </div>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 p-0">
           {practicalTechniques.map((technique, index) => (
-            <div key={index} className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+            <div key={index} className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
               <h4 className="font-medium text-white mb-2">{technique.technique}</h4>
               <p className="text-sm text-white mb-3">{technique.description}</p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
@@ -773,16 +767,15 @@ const DomesticReferenceGuide = () => {
       </Card>
 
       {/* Common Problems & Solutions */}
-      <Card className="border-white/[0.06] bg-white/[0.02]">
-        <CardHeader>
+      <Card variant="plain">
+        <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <AlertTriangle className="h-6 w-6 text-white/55" />
-            <CardTitle className="text-white">Common Problems & Solutions</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">Common Problems & Solutions</CardTitle>
           </div>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 p-0">
           {commonProblems.map((problem, index) => (
-            <div key={index} className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+            <div key={index} className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
               <h4 className="font-medium text-white mb-3">{problem.problem}</h4>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm mb-3">
@@ -819,16 +812,15 @@ const DomesticReferenceGuide = () => {
       </Card>
 
       {/* Cost Estimation & Project Management */}
-      <Card className="border-white/[0.06] bg-white/[0.02]">
-        <CardHeader>
+      <Card variant="plain">
+        <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <Calculator className="h-6 w-6 text-white/55" />
-            <CardTitle className="text-white">Cost Estimation & Project Management</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">Cost Estimation & Project Management</CardTitle>
           </div>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 p-0">
           {costEstimation.map((estimate, index) => (
-            <div key={index} className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+            <div key={index} className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
               <div className="flex items-center justify-between mb-3">
                 <h4 className="font-medium text-white">{estimate.category}</h4>
                 <Badge variant="outline" className="border-white/10 text-white">
@@ -866,39 +858,38 @@ const DomesticReferenceGuide = () => {
       </Card>
 
       {/* Regional Considerations */}
-      <Card className="border-white/[0.06] bg-white/[0.02]">
-        <CardHeader>
+      <Card variant="plain">
+        <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <MapPin className="h-6 w-6 text-yellow-400" />
-            <CardTitle className="text-yellow-300">UK Regional Considerations</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">UK Regional Considerations</CardTitle>
           </div>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 p-0">
           {regionalConsiderations.map((region, index) => (
             <div
               key={index}
-              className="bg-yellow-500/10 p-4 rounded-lg border border-yellow-500/20"
+              className="bg-white/[0.06] p-4 rounded-lg border border-elec-yellow/20"
             >
               <h4 className="font-medium text-white mb-3">{region.region}</h4>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                 <div>
-                  <h5 className="font-medium text-yellow-200 mb-2">Regional Specifics</h5>
+                  <h5 className="font-medium text-elec-yellow mb-2">Regional Specifics</h5>
                   <ul className="space-y-1">
                     {region.specifics.map((specific, idx) => (
                       <li key={idx} className="text-white text-xs flex items-start gap-2">
-                        <span className="w-1.5 h-1.5 bg-yellow-400 rounded-full mt-1.5 flex-shrink-0"></span>
+                        <span className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-1.5 flex-shrink-0"></span>
                         {specific}
                       </li>
                     ))}
                   </ul>
                 </div>
                 <div>
-                  <h5 className="font-medium text-yellow-200 mb-2">Key Contacts</h5>
+                  <h5 className="font-medium text-elec-yellow mb-2">Key Contacts</h5>
                   <ul className="space-y-1">
                     {region.contacts.map((contact, idx) => (
                       <li key={idx} className="text-white text-xs flex items-start gap-2">
-                        <span className="w-1.5 h-1.5 bg-yellow-400 rounded-full mt-1.5 flex-shrink-0"></span>
+                        <span className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-1.5 flex-shrink-0"></span>
                         {contact}
                       </li>
                     ))}
@@ -911,19 +902,18 @@ const DomesticReferenceGuide = () => {
       </Card>
 
       {/* Useful References */}
-      <Card className="border-white/[0.06] bg-white/[0.02]">
-        <CardHeader>
+      <Card variant="plain">
+        <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <ExternalLink className="h-6 w-6 text-white/55" />
-            <CardTitle className="text-white">Essential Reference Documents</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">Essential Reference Documents</CardTitle>
           </div>
         </CardHeader>
-        <CardContent>
-          <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+        <CardContent className="p-0">
+          <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               {usefulReferences.map((ref, idx) => (
                 <div key={idx} className="flex items-start gap-2">
-                  <Book className="h-4 w-4 text-white/55 mt-0.5 flex-shrink-0" />
+                  <Book className="h-4 w-4 text-white/70 mt-0.5 flex-shrink-0" />
                   <div>
                     <span className="text-white/85 text-sm font-medium">{ref.resource}</span>
                     <p className="text-white text-xs">{ref.description}</p>
@@ -936,15 +926,14 @@ const DomesticReferenceGuide = () => {
       </Card>
 
       {/* Safety Deep Dive */}
-      <Card className="border-red-500/30 bg-white/5">
-        <CardHeader>
+      <Card variant="plain">
+        <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <Shield className="h-6 w-6 text-red-400" />
-            <CardTitle className="text-red-300">Safety Deep Dive</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">Safety Deep Dive</CardTitle>
           </div>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <Alert className="border-red-500/50 bg-red-500/10">
+        <CardContent className="space-y-4 p-0">
+          <Alert className="border-white/[0.12] border-l-[3px] border-l-red-500 bg-white/[0.06]">
             <AlertTriangle className="h-4 w-4 text-red-400" />
             <AlertDescription className="text-red-200">
               <strong>Critical Safety Points:</strong> These safety considerations can prevent
@@ -953,7 +942,7 @@ const DomesticReferenceGuide = () => {
           </Alert>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="bg-red-500/10 p-4 rounded-lg border border-red-500/20">
+            <div className="p-4 rounded-lg border border-white/[0.12] border-l-[3px] border-l-red-500 bg-white/[0.06]">
               <h4 className="font-medium text-red-200 mb-3">Before Starting Work</h4>
               <ul className="space-y-2 text-sm">
                 <li className="text-white flex items-start gap-2">
@@ -979,7 +968,7 @@ const DomesticReferenceGuide = () => {
               </ul>
             </div>
 
-            <div className="bg-red-500/10 p-4 rounded-lg border border-red-500/20">
+            <div className="p-4 rounded-lg border border-white/[0.12] border-l-[3px] border-l-red-500 bg-white/[0.06]">
               <h4 className="font-medium text-red-200 mb-3">During Installation</h4>
               <ul className="space-y-2 text-sm">
                 <li className="text-white flex items-start gap-2">
@@ -1009,16 +998,15 @@ const DomesticReferenceGuide = () => {
       </Card>
 
       {/* Project Timeline */}
-      <Card className="border-white/[0.06] bg-white/5">
-        <CardHeader>
+      <Card variant="plain">
+        <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <Clock className="h-6 w-6 text-white/55" />
-            <CardTitle className="text-white">Typical Project Timeline</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">Typical Project Timeline</CardTitle>
           </div>
         </CardHeader>
-        <CardContent>
+        <CardContent className="p-0">
           <div className="space-y-4">
-            <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+            <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
               <h4 className="font-medium text-white mb-3">Full House Rewire (3-bedroom)</h4>
               <div className="grid grid-cols-2 md:grid-cols-7 gap-2 text-sm">
                 <div className="text-center">

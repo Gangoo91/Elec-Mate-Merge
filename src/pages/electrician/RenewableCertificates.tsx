@@ -33,6 +33,14 @@ const INSTALL_CERTS: Tile[] = [
     accent: 'bg-yellow-500',
   },
   {
+    id: 'plug-in-solar',
+    standard: 'SI 2026/848 · G98',
+    title: 'Plug-in Solar',
+    description: 'Suitability assessment & commissioning, 800 VA',
+    to: '/electrician/inspection-testing/plug-in-solar/new',
+    accent: 'bg-amber-400',
+  },
+  {
     id: 'battery',
     standard: 'IET CoP',
     title: 'Battery Storage',

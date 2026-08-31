@@ -39,6 +39,8 @@ interface SectionDef {
   eyebrow: string;
   title: string;
   description: string;
+  /** `lead` gives the first card two thirds — see SubPageShell. */
+  layout?: 'even' | 'lead';
   render: () => JSX.Element;
 }
 
@@ -62,6 +64,8 @@ const SECTIONS: Record<Section, SectionDef> = {
     title: 'Learning plan & messages',
     description:
       'Goals your tutor has set, your messages back, and the comment thread between you.',
+    // The plan is the page; messages are the aside.
+    layout: 'lead',
     render: () => (
       <>
         <MyCollegePlanCard />
@@ -156,7 +160,12 @@ export default function MyCollegeSectionPage() {
   }
 
   return (
-    <SubPageShell eyebrow={def.eyebrow} title={def.title} description={def.description}>
+    <SubPageShell
+      eyebrow={def.eyebrow}
+      title={def.title}
+      description={def.description}
+      layout={def.layout}
+    >
       {def.render()}
     </SubPageShell>
   );

@@ -1046,7 +1046,7 @@ export default function CustomerDetailPage() {
             <AlertDialogAction
               onClick={handleMerge}
               disabled={isMerging}
-              className="h-11 w-full touch-manipulation rounded-xl bg-elec-yellow font-semibold text-black transition-all hover:bg-elec-yellow/90 active:scale-[0.98] disabled:opacity-50"
+              className="h-11 w-full touch-manipulation rounded-xl bg-elec-yellow font-semibold text-black transition-all hover:bg-elec-yellow/90 active:scale-[0.98] disabled:bg-white/[0.08] disabled:text-white/70"
             >
               {isMerging ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Merge customers'}
             </AlertDialogAction>

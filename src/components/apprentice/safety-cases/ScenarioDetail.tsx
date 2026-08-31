@@ -1,12 +1,6 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import {
-  ArrowLeft,
-  ArrowRight,
-  Send,
-  CheckCircle,
-  XCircle,
-} from 'lucide-react';
+import { ArrowLeft, ArrowRight, Send, CheckCircle, XCircle } from 'lucide-react';
 import ScenarioOption from './ScenarioOption';
 import { SafetyScenario } from './safetyScenarios';
 
@@ -65,9 +59,9 @@ const ScenarioDetail: React.FC<ScenarioDetailProps> = ({
         </Button>
 
         {/* Score card */}
-        <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+        <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3">
           <div className="flex items-baseline justify-between">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
               Result
             </span>
             <span className="text-[12px] text-white/85 font-mono">
@@ -86,8 +80,8 @@ const ScenarioDetail: React.FC<ScenarioDetailProps> = ({
         </div>
 
         {/* Step-by-step review */}
-        <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
             Step review
           </span>
 
@@ -100,14 +94,14 @@ const ScenarioDetail: React.FC<ScenarioDetailProps> = ({
                   {result.isCorrect ? (
                     <CheckCircle className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-1" />
                   ) : (
-                    <XCircle className="h-4 w-4 text-white/55 flex-shrink-0 mt-1" />
+                    <XCircle className="h-4 w-4 text-white/70 flex-shrink-0 mt-1" />
                   )}
                   <div className="flex-1">
                     <p className="text-[14px] text-white/85 leading-relaxed">
                       Step {idx + 1}: {s.question}
                     </p>
                     {!result.isCorrect && correctOption && (
-                      <p className="text-[12px] text-white/55 mt-0.5">
+                      <p className="text-[12px] text-white/70 mt-0.5">
                         Correct answer: {correctOption.text}
                       </p>
                     )}
@@ -120,13 +114,13 @@ const ScenarioDetail: React.FC<ScenarioDetailProps> = ({
 
         {/* Real incident */}
         {scenario.realCase && (
-          <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-2">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
               Real incident
             </span>
             <p className="text-[14px] text-white/85 leading-relaxed">{scenario.realCase.summary}</p>
             {scenario.realCase.fineAmount && (
-              <p className="text-[12px] text-white/55">Fine: {scenario.realCase.fineAmount}</p>
+              <p className="text-[12px] text-white/70">Fine: {scenario.realCase.fineAmount}</p>
             )}
             <p className="text-[14px] text-white/85 leading-relaxed">
               {scenario.realCase.consequence}
@@ -136,8 +130,8 @@ const ScenarioDetail: React.FC<ScenarioDetailProps> = ({
 
         {/* Key regulation */}
         {scenario.steps[0]?.options.find((o) => o.isCorrect)?.regulation && (
-          <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-2">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
               Key regulation
             </span>
             <p className="text-[14px] text-white/85 leading-relaxed">
@@ -181,9 +175,9 @@ const ScenarioDetail: React.FC<ScenarioDetailProps> = ({
       </Button>
 
       {/* Step progress */}
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-3">
+      <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 space-y-3">
         <div className="flex items-baseline justify-between">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
             Step {currentStepIndex + 1} of {totalSteps}
           </span>
           <span className="text-[12px] text-white/85 font-mono">
@@ -208,8 +202,8 @@ const ScenarioDetail: React.FC<ScenarioDetailProps> = ({
 
       {/* Briefing (first step only) */}
       {currentStepIndex === 0 && (
-        <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-2">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
             {scenario.location}
           </span>
           <p className="text-[14px] text-white/85 leading-relaxed">{scenario.briefing}</p>
@@ -217,8 +211,8 @@ const ScenarioDetail: React.FC<ScenarioDetailProps> = ({
       )}
 
       {/* Current situation */}
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+      <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-2">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
           Situation
         </span>
         <p className="text-[14px] text-white/85 leading-relaxed">{step.situation}</p>
@@ -226,7 +220,7 @@ const ScenarioDetail: React.FC<ScenarioDetailProps> = ({
 
       {/* Question */}
       <div className="space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
           Question
         </span>
         <p className="text-[16px] sm:text-[18px] font-medium text-white leading-snug">

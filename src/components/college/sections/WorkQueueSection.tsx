@@ -284,7 +284,7 @@ export function WorkQueueSection({ onNavigate }: WorkQueueSectionProps) {
                                 handleStartWork(item);
                               }}
                               disabled={savingItemId === item.id}
-                              className="ml-auto inline-flex items-center h-9 px-3.5 rounded-full bg-elec-yellow text-black text-[12px] font-semibold hover:bg-elec-yellow/90 active:scale-[0.98] transition-all touch-manipulation disabled:opacity-50"
+                              className="ml-auto inline-flex items-center h-9 px-3.5 rounded-full bg-elec-yellow text-black text-[12px] font-semibold hover:bg-elec-yellow/90 active:scale-[0.98] transition-all touch-manipulation disabled:bg-white/[0.08] disabled:text-white/70"
                             >
                               {savingItemId === item.id ? 'Saving…' : 'Start work →'}
                             </button>

@@ -196,14 +196,10 @@ const InstrumentationModule4Section1 = () => {
           points={[
             'The instrumentation difference is not the meter — it is that measuring takes something from the circuit, and each quantity is disturbed by a different mechanism.',
             'A voltmeter must draw current, so it loads the source. On a low-impedance power circuit this is invisible; on a pH electrode it is ruinous.',
-            'Worked example: a 300 MΩ source producing 100 mV, read on a 10 MΩ meter, shows about 3.2 mV — a few per cent of the truth, with nothing faulty.',
             'The swamping rule: the meter’s resistance must far exceed the source’s. Modern FET inputs reach into the trillions of ohms, which is what makes it workable.',
-            'Null-balance measures by comparison and draws no current at balance, which is how precision measurement was done before high-impedance amplifiers existed.',
             'An ammeter has to be in the circuit, which means breaking it — and on a two-wire loop that de-energises the transmitter.',
-            'On power systems you never break the circuit. A CT behaves as a current source into what is nearly a short circuit; a VT behaves as a voltage source into an open circuit.',
             '🔴 Never open-circuit an energised CT secondary. Stepping current down means stepping voltage up, and the CT will generate a dangerous voltage trying to push its current through the break.',
             '🔴 That is why a CT secondary never carries a fuse — the protective device would create the hazard.',
-            'An ohmmeter injects current, and I²R in an RTD warms it. Self-heating is always a positive error, and reducing the current costs signal-to-noise ratio.',
           ]}
         />
 
@@ -351,12 +347,12 @@ const InstrumentationModule4Section1 = () => {
           id="ins-4-1-loading"
           question="A thermocouple with about 20 Ω of source resistance is read on a 10 MΩ voltmeter. How much loading error is there?"
           options={[
-            'Utterly negligible — the meter’s resistance is around half a million times the source’s',
             'About 5 per cent',
+            'Utterly negligible — the meter’s resistance is around half a million times the source’s',
             'It cannot be calculated without knowing the temperature',
             'About 50 per cent — the same problem as the pH electrode',
           ]}
-          correctIndex={0}
+          correctIndex={1}
           explanation="The divider gives the meter 10 000 000 ÷ 10 000 020 of the voltage — a couple of parts per million. This is the point about the swamping rule: the same meter is hopeless on a pH electrode and perfect on a thermocouple, because what matters is the ratio, not the meter alone."
         />
 
@@ -521,11 +517,11 @@ const InstrumentationModule4Section1 = () => {
           question="You need to remove a panel ammeter from an energised CT circuit. What do you do first?"
           options={[
             'Isolate the instrument at its terminals and withdraw it',
-            'Short-circuit the CT secondary, using the test switch or shorting link provided',
             'Open the CT secondary fuse',
+            'Short-circuit the CT secondary, using the test switch or shorting link provided',
             'Nothing special — the CT output is a low-level signal',
           ]}
-          correctIndex={1}
+          correctIndex={2}
           explanation="A shorted CT secondary is its safest and easiest condition. There is no CT secondary fuse to open, because a fuse would create the very open circuit that is dangerous. Simply withdrawing the instrument leaves the secondary open with the primary energised."
         />
 

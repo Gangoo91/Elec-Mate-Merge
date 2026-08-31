@@ -14,15 +14,15 @@ const ScenarioCard: React.FC<ScenarioCardProps> = ({ scenario, onClick, isComple
       type="button"
       onClick={onClick}
       className="
-        w-full text-left p-4 rounded-xl border border-white/[0.06]
-        bg-white/[0.02] cursor-pointer touch-manipulation
+        w-full text-left p-4 rounded-xl border border-white/[0.10]
+        bg-white/[0.06] cursor-pointer touch-manipulation
         active:scale-[0.98] active:bg-white/[0.04] transition-all
       "
     >
       <div className="flex items-start justify-between gap-3">
         <div className="flex-1 min-w-0 space-y-2">
           <h3 className="text-white font-medium text-[15px] leading-snug">{scenario.title}</h3>
-          <div className="flex items-center gap-3 text-[12px] text-white/55">
+          <div className="flex items-center gap-3 text-[12px] text-white/70">
             <span>{scenario.difficulty}</span>
             <span className="text-white/25">·</span>
             <span className="flex items-center gap-1">
@@ -40,7 +40,7 @@ const ScenarioCard: React.FC<ScenarioCardProps> = ({ scenario, onClick, isComple
           {isCompleted ? (
             <CheckCircle className="h-5 w-5 text-elec-yellow" />
           ) : (
-            <ChevronRight className="h-5 w-5 text-white/55" />
+            <ChevronRight className="h-5 w-5 text-white/70" />
           )}
         </div>
       </div>

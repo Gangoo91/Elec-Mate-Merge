@@ -456,7 +456,7 @@ export default function AdminVerificationQueue() {
                         Reject
                       </button>
                       <button
-                        className="flex-1 h-12 rounded-full bg-elec-yellow text-black text-[13px] font-semibold hover:brightness-110 transition touch-manipulation disabled:opacity-50 flex items-center justify-center gap-2"
+                        className="flex-1 h-12 rounded-full bg-elec-yellow text-black text-[13px] font-semibold hover:brightness-110 transition touch-manipulation disabled:bg-white/[0.08] disabled:text-white/70 flex items-center justify-center gap-2"
                         onClick={() =>
                           selectedProfile && approveMutation.mutate(selectedProfile.id)
                         }

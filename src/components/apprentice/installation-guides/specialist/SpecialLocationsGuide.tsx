@@ -709,86 +709,86 @@ const SpecialLocationsGuide = () => {
   const getColorClasses = (color: string) => {
     const colors: Record<string, { border: string; bg: string; text: string; badge: string }> = {
       cyan: {
-        border: 'border-white/[0.06]',
-        bg: 'bg-white/[0.02]',
+        border: 'border-white/[0.10]',
+        bg: 'bg-white/[0.06]',
         text: 'text-white',
         badge: 'border-white/10 text-white',
       },
       blue: {
-        border: 'border-white/[0.06]',
-        bg: 'bg-white/[0.02]',
+        border: 'border-white/[0.10]',
+        bg: 'bg-white/[0.06]',
         text: 'text-white',
         badge: 'border-white/10 text-white',
       },
       orange: {
-        border: 'border-white/[0.06]',
-        bg: 'bg-white/[0.02]',
+        border: 'border-white/[0.10]',
+        bg: 'bg-white/[0.06]',
         text: 'text-white',
         badge: 'border-white/10 text-white',
       },
       yellow: {
-        border: 'border-yellow-500/30',
-        bg: 'bg-yellow-500/10',
-        text: 'text-yellow-300',
-        badge: 'border-yellow-400 text-yellow-300',
+        border: 'border-elec-yellow/30',
+        bg: 'bg-white/[0.06]',
+        text: 'text-elec-yellow',
+        badge: 'border-elec-yellow text-elec-yellow',
       },
       green: {
-        border: 'border-white/[0.06]',
-        bg: 'bg-white/[0.02]',
+        border: 'border-white/[0.10]',
+        bg: 'bg-white/[0.06]',
         text: 'text-white',
         badge: 'border-white/10 text-white',
       },
       purple: {
-        border: 'border-white/[0.06]',
-        bg: 'bg-white/[0.02]',
+        border: 'border-white/[0.10]',
+        bg: 'bg-white/[0.06]',
         text: 'text-white',
         badge: 'border-white/10 text-white',
       },
       teal: {
-        border: 'border-white/[0.06]',
-        bg: 'bg-white/[0.02]',
+        border: 'border-white/[0.10]',
+        bg: 'bg-white/[0.06]',
         text: 'text-white',
         badge: 'border-white/10 text-white',
       },
       sky: {
-        border: 'border-white/[0.06]',
-        bg: 'bg-white/[0.02]',
+        border: 'border-white/[0.10]',
+        bg: 'bg-white/[0.06]',
         text: 'text-white',
         badge: 'border-white/10 text-white',
       },
       red: {
         border: 'border-red-500/30',
-        bg: 'bg-red-500/10',
+        bg: 'bg-white/[0.06]',
         text: 'text-red-300',
         badge: 'border-red-400 text-red-300',
       },
       pink: {
-        border: 'border-white/[0.06]',
-        bg: 'bg-white/[0.02]',
+        border: 'border-white/[0.10]',
+        bg: 'bg-white/[0.06]',
         text: 'text-white',
         badge: 'border-white/10 text-white',
       },
       amber: {
-        border: 'border-white/[0.06]',
-        bg: 'bg-white/[0.02]',
+        border: 'border-white/[0.10]',
+        bg: 'bg-white/[0.06]',
         text: 'text-white',
         badge: 'border-white/10 text-white',
       },
       indigo: {
-        border: 'border-white/[0.06]',
-        bg: 'bg-white/[0.02]',
+        border: 'border-white/[0.10]',
+        bg: 'bg-white/[0.06]',
         text: 'text-white',
         badge: 'border-white/10 text-white',
       },
       emerald: {
-        border: 'border-white/[0.06]',
-        bg: 'bg-white/[0.02]',
+        border: 'border-white/[0.10]',
+        bg: 'bg-white/[0.06]',
         text: 'text-white',
         badge: 'border-white/10 text-white',
       },
       lime: {
-        border: 'border-white/[0.06]',
-        bg: 'bg-white/[0.02]',
+        border: 'border-white/[0.10]',
+        bg: 'bg-white/[0.06]',
         text: 'text-white',
         badge: 'border-white/10 text-white',
       },
@@ -799,8 +799,8 @@ const SpecialLocationsGuide = () => {
         badge: 'border-slate-400 text-white',
       },
       fuchsia: {
-        border: 'border-white/[0.06]',
-        bg: 'bg-white/[0.02]',
+        border: 'border-white/[0.10]',
+        bg: 'bg-white/[0.06]',
         text: 'text-white',
         badge: 'border-white/10 text-white',
       },
@@ -835,15 +835,14 @@ const SpecialLocationsGuide = () => {
   return (
     <div className="space-y-6">
       {/* Introduction */}
-      <Card className="border-elec-yellow/30 bg-white/5">
-        <CardHeader>
+      <Card variant="plain">
+        <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <MapPin className="h-6 w-6 text-elec-yellow" />
-            <CardTitle className="text-elec-yellow">BS 7671 Part 7: Special Locations</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">BS 7671 Part 7: Special Locations</CardTitle>
           </div>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <Alert className="border-elec-yellow/50 bg-elec-yellow/10">
+        <CardContent className="space-y-4 p-0">
+          <Alert className="border-elec-yellow/60 bg-white/[0.06]">
             <Info className="h-4 w-4 text-elec-yellow" />
             <AlertDescription className="text-elec-yellow/90">
               Part 7 of BS 7671 contains requirements for special installations and locations. These
@@ -858,23 +857,23 @@ const SpecialLocationsGuide = () => {
             </h4>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
               <div className="flex items-start gap-2">
-                <Droplets className="h-4 w-4 text-white/55 mt-0.5 flex-shrink-0" />
+                <Droplets className="h-4 w-4 text-white/70 mt-0.5 flex-shrink-0" />
                 <span className="text-white">
                   Increased risk of electric shock (wet locations, pools)
                 </span>
               </div>
               <div className="flex items-start gap-2">
-                <Flame className="h-4 w-4 text-white/55 mt-0.5 flex-shrink-0" />
+                <Flame className="h-4 w-4 text-white/70 mt-0.5 flex-shrink-0" />
                 <span className="text-white">
                   High temperature environments (saunas, hot rooms)
                 </span>
               </div>
               <div className="flex items-start gap-2">
-                <Users className="h-4 w-4 text-white/55 mt-0.5 flex-shrink-0" />
+                <Users className="h-4 w-4 text-white/70 mt-0.5 flex-shrink-0" />
                 <span className="text-white">Vulnerable persons (medical, agricultural)</span>
               </div>
               <div className="flex items-start gap-2">
-                <HardHat className="h-4 w-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                <HardHat className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <span className="text-white">
                   Temporary installations (construction, exhibitions)
                 </span>
@@ -893,7 +892,7 @@ const SpecialLocationsGuide = () => {
           bathroomQuickRef.icon,
           bathroomQuickRef.description
         )}
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 p-0">
           <div
             className={`${getColorClasses(bathroomQuickRef.color).bg} p-4 rounded-lg border ${getColorClasses(bathroomQuickRef.color).border}`}
           >
@@ -901,7 +900,7 @@ const SpecialLocationsGuide = () => {
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-white/[0.06]">
+                  <tr className="border-b border-white/[0.10]">
                     <th className="text-left py-2 text-white/85">Zone</th>
                     <th className="text-left py-2 text-white/85">Description</th>
                     <th className="text-left py-2 text-white/85">IP Rating</th>
@@ -910,7 +909,7 @@ const SpecialLocationsGuide = () => {
                 </thead>
                 <tbody>
                   {bathroomQuickRef.zones.map((zone, idx) => (
-                    <tr key={idx} className="border-b border-white/[0.06]">
+                    <tr key={idx} className="border-b border-white/[0.10]">
                       <td className="py-2 text-white font-medium">{zone.zone}</td>
                       <td className="py-2 text-white">{zone.description}</td>
                       <td className="py-2 text-white">{zone.ipRating}</td>
@@ -922,7 +921,7 @@ const SpecialLocationsGuide = () => {
             </div>
           </div>
 
-          <div className="flex items-center justify-between p-3 bg-white/[0.02] rounded-lg border border-white/[0.06]">
+          <div className="flex items-center justify-between p-3 bg-white/[0.06] rounded-lg border border-white/[0.10]">
             <span className="text-white/85 text-sm">
               For complete bathroom installation guidance:
             </span>
@@ -946,7 +945,7 @@ const SpecialLocationsGuide = () => {
           swimmingPoolsRef.icon,
           swimmingPoolsRef.description
         )}
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 p-0">
           <div
             className={`${getColorClasses(swimmingPoolsRef.color).bg} p-4 rounded-lg border ${getColorClasses(swimmingPoolsRef.color).border}`}
           >
@@ -954,7 +953,7 @@ const SpecialLocationsGuide = () => {
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-white/[0.06]">
+                  <tr className="border-b border-white/[0.10]">
                     <th className="text-left py-2 text-white/85">Zone</th>
                     <th className="text-left py-2 text-white/85">Description</th>
                     <th className="text-left py-2 text-white/85">IP Rating</th>
@@ -963,7 +962,7 @@ const SpecialLocationsGuide = () => {
                 </thead>
                 <tbody>
                   {swimmingPoolsRef.zones.map((zone, idx) => (
-                    <tr key={idx} className="border-b border-white/[0.06]">
+                    <tr key={idx} className="border-b border-white/[0.10]">
                       <td className="py-2 text-white font-medium">{zone.zone}</td>
                       <td className="py-2 text-white">{zone.description}</td>
                       <td className="py-2 text-white">{zone.ipRating}</td>
@@ -978,7 +977,7 @@ const SpecialLocationsGuide = () => {
           <div className="space-y-2">
             {swimmingPoolsRef.keyRequirements.map((req, idx) => (
               <div key={idx} className="flex items-start gap-2 text-sm">
-                <CheckCircle className="h-4 w-4 text-white/55 mt-0.5 flex-shrink-0" />
+                <CheckCircle className="h-4 w-4 text-white/70 mt-0.5 flex-shrink-0" />
                 <span className="text-white">{req}</span>
               </div>
             ))}
@@ -995,14 +994,14 @@ const SpecialLocationsGuide = () => {
           saunasData.icon,
           saunasData.description
         )}
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 p-0">
           <div
             className={`${getColorClasses(saunasData.color).bg} p-4 rounded-lg border ${getColorClasses(saunasData.color).border}`}
           >
             <h4 className="font-medium text-white mb-3">Temperature Zones</h4>
             <div className="space-y-3">
               {saunasData.temperatureZones.map((zone, idx) => (
-                <div key={idx} className="bg-white/[0.02] p-3 rounded border border-white/[0.06]">
+                <div key={idx} className="bg-white/[0.06] p-3 rounded border border-white/[0.10]">
                   <div className="flex items-center justify-between mb-2">
                     <span className="font-medium text-white/85">{zone.zone}</span>
                     <Badge variant="outline" className="border-white/10 text-white text-xs">
@@ -1031,7 +1030,7 @@ const SpecialLocationsGuide = () => {
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-white/[0.06]">
+                  <tr className="border-b border-white/[0.10]">
                     <th className="text-left py-2 text-white/85">Cable Type</th>
                     <th className="text-left py-2 text-white/85">Max Temp</th>
                     <th className="text-left py-2 text-white/85">Suitability</th>
@@ -1039,7 +1038,7 @@ const SpecialLocationsGuide = () => {
                 </thead>
                 <tbody>
                   {saunasData.cableTypes.map((cable, idx) => (
-                    <tr key={idx} className="border-b border-white/[0.06]">
+                    <tr key={idx} className="border-b border-white/[0.10]">
                       <td className="py-2 text-white">{cable.type}</td>
                       <td className="py-2 text-white">{cable.maxTemp}</td>
                       <td className="py-2 text-white">{cable.suitability}</td>
@@ -1050,8 +1049,8 @@ const SpecialLocationsGuide = () => {
             </div>
           </div>
 
-          <Alert className="border-white/[0.06] bg-white/[0.02]">
-            <AlertTriangle className="h-4 w-4 text-white/55" />
+          <Alert className="border-white/[0.10] bg-white/[0.06]">
+            <AlertTriangle className="h-4 w-4 text-white/70" />
             <AlertDescription className="text-white/85 text-sm">
               Metal conduit is NOT permitted in saunas due to the risk of burns from hot metalwork.
             </AlertDescription>
@@ -1068,19 +1067,19 @@ const SpecialLocationsGuide = () => {
           constructionSitesData.icon,
           constructionSitesData.description
         )}
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 p-0">
           <div
             className={`${getColorClasses(constructionSitesData.color).bg} p-4 rounded-lg border ${getColorClasses(constructionSitesData.color).border}`}
           >
             <h4 className="font-medium text-white mb-3">Voltage Requirements</h4>
             <div className="space-y-3">
               {constructionSitesData.voltageRequirements.map((volt, idx) => (
-                <div key={idx} className="bg-yellow-600/20 p-3 rounded border border-yellow-500/30">
+                <div key={idx} className="bg-white/[0.06] p-3 rounded border border-elec-yellow/30">
                   <div className="flex items-center gap-2 mb-2">
-                    <Badge variant="outline" className="border-yellow-400 text-yellow-300">
+                    <Badge variant="outline" className="border-elec-yellow text-elec-yellow">
                       {volt.voltage}
                     </Badge>
-                    <span className="text-yellow-100 font-medium">{volt.use}</span>
+                    <span className="text-elec-yellow font-medium">{volt.use}</span>
                   </div>
                   <div className="text-sm text-white">
                     <span className="text-white">Protection: </span>
@@ -1105,7 +1104,7 @@ const SpecialLocationsGuide = () => {
               <div className="space-y-2">
                 {constructionSitesData.transformerRequirements.map((trans, idx) => (
                   <div key={idx} className="text-sm">
-                    <span className="text-yellow-200 font-medium">{trans.type}</span>
+                    <span className="text-elec-yellow font-medium">{trans.type}</span>
                     <div className="text-white mt-1">
                       Rating: {trans.rating} | Outlets: {trans.outlets}
                     </div>
@@ -1121,7 +1120,7 @@ const SpecialLocationsGuide = () => {
               <div className="space-y-2">
                 {constructionSitesData.earthingSystems.map((earth, idx) => (
                   <div key={idx} className="text-sm">
-                    <span className="text-yellow-200 font-medium">{earth.system}</span>
+                    <span className="text-elec-yellow font-medium">{earth.system}</span>
                     <div className="text-white">{earth.description}</div>
                   </div>
                 ))}
@@ -1133,7 +1132,7 @@ const SpecialLocationsGuide = () => {
             <h4 className="font-medium text-white">Key Requirements</h4>
             {constructionSitesData.keyRequirements.map((req, idx) => (
               <div key={idx} className="flex items-start gap-2 text-sm">
-                <CheckCircle className="h-4 w-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <span className="text-white">{req}</span>
               </div>
             ))}
@@ -1150,9 +1149,9 @@ const SpecialLocationsGuide = () => {
           agriculturalData.icon,
           agriculturalData.description
         )}
-        <CardContent className="space-y-4">
-          <Alert className="border-white/[0.06] bg-white/[0.02]">
-            <AlertTriangle className="h-4 w-4 text-white/55" />
+        <CardContent className="space-y-4 p-0">
+          <Alert className="border-white/[0.10] bg-white/[0.06]">
+            <AlertTriangle className="h-4 w-4 text-white/70" />
             <AlertDescription className="text-white/85 text-sm">
               <strong>Livestock are more vulnerable to electric shock than humans.</strong> Touch
               voltage must not exceed 25V AC or 60V DC in areas accessible to livestock.
@@ -1165,7 +1164,7 @@ const SpecialLocationsGuide = () => {
             <h4 className="font-medium text-white mb-3">Livestock Protection Requirements</h4>
             <div className="space-y-3">
               {agriculturalData.livestockProtection.map((item, idx) => (
-                <div key={idx} className="bg-white/[0.02] p-3 rounded border border-white/[0.06]">
+                <div key={idx} className="bg-white/[0.06] p-3 rounded border border-white/[0.10]">
                   <span className="text-white/85 font-medium">{item.aspect}</span>
                   <div className="text-sm mt-1">
                     <span className="text-white/85">{item.requirement}</span>
@@ -1183,7 +1182,7 @@ const SpecialLocationsGuide = () => {
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-white/[0.06]">
+                  <tr className="border-b border-white/[0.10]">
                     <th className="text-left py-2 text-white/85">Location</th>
                     <th className="text-left py-2 text-white/85">IP Rating</th>
                     <th className="text-left py-2 text-white/85">Reason</th>
@@ -1191,7 +1190,7 @@ const SpecialLocationsGuide = () => {
                 </thead>
                 <tbody>
                   {agriculturalData.ipRatings.map((ip, idx) => (
-                    <tr key={idx} className="border-b border-white/[0.06]">
+                    <tr key={idx} className="border-b border-white/[0.10]">
                       <td className="py-2 text-white">{ip.location}</td>
                       <td className="py-2 text-white">{ip.ipRating}</td>
                       <td className="py-2 text-white">{ip.reason}</td>
@@ -1209,7 +1208,7 @@ const SpecialLocationsGuide = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
               {agriculturalData.bonding.map((item, idx) => (
                 <div key={idx} className="flex items-start gap-2 text-sm">
-                  <Shield className="h-4 w-4 text-white/55 mt-0.5 flex-shrink-0" />
+                  <Shield className="h-4 w-4 text-white/70 mt-0.5 flex-shrink-0" />
                   <span className="text-white">{item}</span>
                 </div>
               ))}
@@ -1227,8 +1226,8 @@ const SpecialLocationsGuide = () => {
           restrictiveLocationsData.icon,
           restrictiveLocationsData.description
         )}
-        <CardContent className="space-y-4">
-          <Alert className="border-red-500/50 bg-red-500/10">
+        <CardContent className="space-y-4 p-0">
+          <Alert className="border-white/[0.12] border-l-[3px] border-l-red-500 bg-white/[0.06]">
             <AlertTriangle className="h-4 w-4 text-red-400" />
             <AlertDescription className="text-red-200 text-sm">
               <strong>CRITICAL:</strong> SELV is the ONLY permitted protective measure in
@@ -1252,7 +1251,7 @@ const SpecialLocationsGuide = () => {
               <ul className="space-y-2">
                 {restrictiveLocationsData.examples.map((example, idx) => (
                   <li key={idx} className="flex items-start gap-2 text-sm">
-                    <Box className="h-4 w-4 text-white/55 mt-0.5 flex-shrink-0" />
+                    <Box className="h-4 w-4 text-white/70 mt-0.5 flex-shrink-0" />
                     <span className="text-white">{example}</span>
                   </li>
                 ))}
@@ -1284,7 +1283,7 @@ const SpecialLocationsGuide = () => {
           caravanParksData.icon,
           caravanParksData.description
         )}
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 p-0">
           <div
             className={`${getColorClasses(caravanParksData.color).bg} p-4 rounded-lg border ${getColorClasses(caravanParksData.color).border}`}
           >
@@ -1292,14 +1291,14 @@ const SpecialLocationsGuide = () => {
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-white/[0.06]">
+                  <tr className="border-b border-white/[0.10]">
                     <th className="text-left py-2 text-white/85">Aspect</th>
                     <th className="text-left py-2 text-white/85">Requirement</th>
                   </tr>
                 </thead>
                 <tbody>
                   {caravanParksData.supplyPillars.map((item, idx) => (
-                    <tr key={idx} className="border-b border-white/[0.06]">
+                    <tr key={idx} className="border-b border-white/[0.10]">
                       <td className="py-2 text-white">{item.aspect}</td>
                       <td className="py-2 text-white">{item.requirement}</td>
                     </tr>
@@ -1315,7 +1314,7 @@ const SpecialLocationsGuide = () => {
             <h4 className="font-medium text-white mb-3">Earthing Requirements</h4>
             <div className="space-y-2">
               {caravanParksData.earthingRequirements.map((earth, idx) => (
-                <div key={idx} className="bg-white/[0.02] p-3 rounded border border-white/[0.06]">
+                <div key={idx} className="bg-white/[0.06] p-3 rounded border border-white/[0.10]">
                   <span className="text-white/85 font-medium">{earth.system}</span>
                   <div className="text-sm text-white">{earth.details}</div>
                   <div className="text-xs text-white">{earth.resistance || earth.notes}</div>
@@ -1328,7 +1327,7 @@ const SpecialLocationsGuide = () => {
             <h4 className="font-medium text-white">Hook-Up Requirements</h4>
             {caravanParksData.hookUpRequirements.map((req, idx) => (
               <div key={idx} className="flex items-start gap-2 text-sm">
-                <CheckCircle className="h-4 w-4 text-white/55 mt-0.5 flex-shrink-0" />
+                <CheckCircle className="h-4 w-4 text-white/70 mt-0.5 flex-shrink-0" />
                 <span className="text-white">{req}</span>
               </div>
             ))}
@@ -1345,9 +1344,9 @@ const SpecialLocationsGuide = () => {
           marinasData.icon,
           marinasData.description
         )}
-        <CardContent className="space-y-4">
-          <Alert className="border-white/[0.06] bg-white/[0.02]">
-            <AlertTriangle className="h-4 w-4 text-white/55" />
+        <CardContent className="space-y-4 p-0">
+          <Alert className="border-white/[0.10] bg-white/[0.06]">
+            <AlertTriangle className="h-4 w-4 text-white/70" />
             <AlertDescription className="text-white/85 text-sm">
               <strong>WARNING:</strong> PME (TN-C-S) earthing is NOT permitted at marinas. Water
               must NEVER be used as an earth electrode due to electric shock risk to swimmers.
@@ -1361,14 +1360,14 @@ const SpecialLocationsGuide = () => {
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-white/[0.06]">
+                  <tr className="border-b border-white/[0.10]">
                     <th className="text-left py-2 text-white/85">Location</th>
                     <th className="text-left py-2 text-white/85">IP Rating</th>
                   </tr>
                 </thead>
                 <tbody>
                   {marinasData.ipRatings.map((ip, idx) => (
-                    <tr key={idx} className="border-b border-white/[0.06]">
+                    <tr key={idx} className="border-b border-white/[0.10]">
                       <td className="py-2 text-white">{ip.location}</td>
                       <td className="py-2 text-white">{ip.rating}</td>
                     </tr>
@@ -1381,7 +1380,7 @@ const SpecialLocationsGuide = () => {
           <div className="space-y-2">
             {marinasData.keyRequirements.map((req, idx) => (
               <div key={idx} className="flex items-start gap-2 text-sm">
-                <CheckCircle className="h-4 w-4 text-white/55 mt-0.5 flex-shrink-0" />
+                <CheckCircle className="h-4 w-4 text-white/70 mt-0.5 flex-shrink-0" />
                 <span className="text-white">{req}</span>
               </div>
             ))}
@@ -1398,14 +1397,14 @@ const SpecialLocationsGuide = () => {
           medicalLocationsData.icon,
           medicalLocationsData.description
         )}
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 p-0">
           <div
             className={`${getColorClasses(medicalLocationsData.color).bg} p-4 rounded-lg border ${getColorClasses(medicalLocationsData.color).border}`}
           >
             <h4 className="font-medium text-white mb-3">Group Classifications</h4>
             <div className="space-y-3">
               {medicalLocationsData.groupClassifications.map((group, idx) => (
-                <div key={idx} className="bg-red-600/20 p-3 rounded border border-red-500/30">
+                <div key={idx} className="bg-white/[0.06] p-3 rounded border border-red-500/30">
                   <div className="flex items-center gap-2 mb-2">
                     <Badge variant="outline" className="border-red-400 text-red-300">
                       {group.group}
@@ -1451,7 +1450,7 @@ const SpecialLocationsGuide = () => {
             </div>
           </div>
 
-          <Alert className="border-red-500/50 bg-red-500/10">
+          <Alert className="border-white/[0.12] border-l-[3px] border-l-red-500 bg-white/[0.06]">
             <Heart className="h-4 w-4 text-red-400" />
             <AlertDescription className="text-red-200 text-sm">
               Medical electrical installations are life-critical. Specialist design and installation
@@ -1470,7 +1469,7 @@ const SpecialLocationsGuide = () => {
           exhibitionsData.icon,
           exhibitionsData.description
         )}
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 p-0">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div
               className={`${getColorClasses(exhibitionsData.color).bg} p-4 rounded-lg border ${getColorClasses(exhibitionsData.color).border}`}
@@ -1493,7 +1492,7 @@ const SpecialLocationsGuide = () => {
               <div className="space-y-2">
                 {exhibitionsData.keyRequirements.map((req, idx) => (
                   <div key={idx} className="flex items-start gap-2 text-sm">
-                    <CheckCircle className="h-4 w-4 text-white/55 mt-0.5 flex-shrink-0" />
+                    <CheckCircle className="h-4 w-4 text-white/70 mt-0.5 flex-shrink-0" />
                     <span className="text-white">{req}</span>
                   </div>
                 ))}
@@ -1512,17 +1511,17 @@ const SpecialLocationsGuide = () => {
           solarPVRef.icon,
           solarPVRef.description
         )}
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 p-0">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
             {solarPVRef.keyPoints.map((point, idx) => (
               <div key={idx} className="flex items-start gap-2 text-sm">
-                <Sun className="h-4 w-4 text-white/55 mt-0.5 flex-shrink-0" />
+                <Sun className="h-4 w-4 text-white/70 mt-0.5 flex-shrink-0" />
                 <span className="text-white">{point}</span>
               </div>
             ))}
           </div>
 
-          <div className="flex items-center justify-between p-3 bg-white/[0.02] rounded-lg border border-white/[0.06]">
+          <div className="flex items-center justify-between p-3 bg-white/[0.06] rounded-lg border border-white/[0.10]">
             <span className="text-white/85 text-sm">
               For complete Solar PV installation guidance:
             </span>
@@ -1546,7 +1545,7 @@ const SpecialLocationsGuide = () => {
           mobileUnitsData.icon,
           mobileUnitsData.description
         )}
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 p-0">
           <div
             className={`${getColorClasses(mobileUnitsData.color).bg} p-4 rounded-lg border ${getColorClasses(mobileUnitsData.color).border}`}
           >
@@ -1554,14 +1553,14 @@ const SpecialLocationsGuide = () => {
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-white/[0.06]">
+                  <tr className="border-b border-white/[0.10]">
                     <th className="text-left py-2 text-white/85">Aspect</th>
                     <th className="text-left py-2 text-white/85">Requirement</th>
                   </tr>
                 </thead>
                 <tbody>
                   {mobileUnitsData.supplyRequirements.map((item, idx) => (
-                    <tr key={idx} className="border-b border-white/[0.06]">
+                    <tr key={idx} className="border-b border-white/[0.10]">
                       <td className="py-2 text-white">{item.aspect}</td>
                       <td className="py-2 text-white">{item.requirement}</td>
                     </tr>
@@ -1574,7 +1573,7 @@ const SpecialLocationsGuide = () => {
           <div className="space-y-2">
             {mobileUnitsData.keyRequirements.map((req, idx) => (
               <div key={idx} className="flex items-start gap-2 text-sm">
-                <CheckCircle className="h-4 w-4 text-white/55 mt-0.5 flex-shrink-0" />
+                <CheckCircle className="h-4 w-4 text-white/70 mt-0.5 flex-shrink-0" />
                 <span className="text-white">{req}</span>
               </div>
             ))}
@@ -1591,17 +1590,17 @@ const SpecialLocationsGuide = () => {
           evChargingRef.icon,
           evChargingRef.description
         )}
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 p-0">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
             {evChargingRef.keyPoints.map((point, idx) => (
               <div key={idx} className="flex items-start gap-2 text-sm">
-                <Zap className="h-4 w-4 text-white/55 mt-0.5 flex-shrink-0" />
+                <Zap className="h-4 w-4 text-white/70 mt-0.5 flex-shrink-0" />
                 <span className="text-white">{point}</span>
               </div>
             ))}
           </div>
 
-          <div className="flex items-center justify-between p-3 bg-white/[0.02] rounded-lg border border-white/[0.06]">
+          <div className="flex items-center justify-between p-3 bg-white/[0.06] rounded-lg border border-white/[0.10]">
             <span className="text-white/85 text-sm">
               For complete EV Charging installation guidance:
             </span>
@@ -1625,7 +1624,7 @@ const SpecialLocationsGuide = () => {
           gangwaysData.icon,
           gangwaysData.description
         )}
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 p-0">
           <div
             className={`${getColorClasses(gangwaysData.color).bg} p-4 rounded-lg border ${getColorClasses(gangwaysData.color).border}`}
           >
@@ -1672,14 +1671,14 @@ const SpecialLocationsGuide = () => {
           fairgroundsData.icon,
           fairgroundsData.description
         )}
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 p-0">
           <div
             className={`${getColorClasses(fairgroundsData.color).bg} p-4 rounded-lg border ${getColorClasses(fairgroundsData.color).border}`}
           >
             <h4 className="font-medium text-white mb-3">Amusement Device Requirements</h4>
             <div className="space-y-2">
               {fairgroundsData.amusementDevices.map((device, idx) => (
-                <div key={idx} className="bg-white/[0.02] p-3 rounded border border-white/[0.06]">
+                <div key={idx} className="bg-white/[0.06] p-3 rounded border border-white/[0.10]">
                   <span className="text-white/85 font-medium">{device.type}</span>
                   <div className="text-sm text-white">{device.protection}</div>
                   <div className="text-xs text-white">{device.notes}</div>
@@ -1691,7 +1690,7 @@ const SpecialLocationsGuide = () => {
           <div className="space-y-2">
             {fairgroundsData.keyRequirements.map((req, idx) => (
               <div key={idx} className="flex items-start gap-2 text-sm">
-                <CheckCircle className="h-4 w-4 text-white/55 mt-0.5 flex-shrink-0" />
+                <CheckCircle className="h-4 w-4 text-white/70 mt-0.5 flex-shrink-0" />
                 <span className="text-white">{req}</span>
               </div>
             ))}
@@ -1700,17 +1699,17 @@ const SpecialLocationsGuide = () => {
       </Card>
 
       {/* Critical Safety Summary */}
-      <Card className="border-red-500/50 bg-red-500/10">
-        <CardHeader>
-          <CardTitle className="text-red-300 flex items-center gap-2">
+      <Card className="border-white/[0.12] border-l-[3px] border-l-red-500 bg-white/[0.06]">
+        <CardHeader className="p-0 pb-3">
+          <CardTitle className="text-[15px] font-semibold tracking-tight text-white flex items-center gap-2">
             <Shield className="h-6 w-6" />
             Special Locations Critical Safety Summary
           </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 p-0">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
             <div className="space-y-3">
-              <div className="bg-red-500/10 p-3 rounded-lg border border-red-500/30">
+              <div className="p-3 rounded-lg border border-white/[0.12] border-l-[3px] border-l-red-500 bg-white/[0.06]">
                 <h4 className="font-medium text-red-200 mb-2">Always Remember</h4>
                 <ul className="space-y-1 text-white">
                   <li>Part 7 requirements SUPPLEMENT Parts 1-6</li>
@@ -1721,7 +1720,7 @@ const SpecialLocationsGuide = () => {
               </div>
             </div>
             <div className="space-y-3">
-              <div className="bg-white/[0.02] p-3 rounded-lg border border-white/[0.06]">
+              <div className="bg-white/[0.06] p-3 rounded-lg border border-white/[0.10]">
                 <h4 className="font-medium text-white/85 mb-2">Before Starting Work</h4>
                 <ul className="space-y-1 text-white">
                   <li>Identify ALL applicable special location sections</li>

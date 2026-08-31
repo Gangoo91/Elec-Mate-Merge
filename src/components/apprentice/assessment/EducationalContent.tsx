@@ -68,7 +68,7 @@ const EducationalContent = () => {
 
       <Tabs defaultValue="regulations" className="w-full">
         <div className="overflow-x-auto scrollbar-hide -mx-4 px-4 sm:mx-0 sm:px-0 mb-5">
-          <TabsList className="w-full min-w-max bg-white/[0.02] border border-white/[0.06] p-1 rounded-xl">
+          <TabsList className="w-full min-w-max bg-white/[0.06] border border-white/[0.10] p-1 rounded-xl">
             <TabsTrigger
               value="regulations"
               className="flex-1 data-[state=active]:bg-elec-yellow data-[state=active]:text-black rounded-lg transition-all"
@@ -98,8 +98,8 @@ const EducationalContent = () => {
 
         <TabsContent value="regulations" className="space-y-3">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-2">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
                 BS 7671 requirements
               </span>
               <ul className="space-y-1.5">
@@ -108,7 +108,7 @@ const EducationalContent = () => {
                     key={index}
                     className="flex items-baseline gap-2 text-[14px] text-white/85 leading-relaxed"
                   >
-                    <span className="text-[11px] font-mono text-white/55 min-w-[36px]">
+                    <span className="text-[11px] font-mono text-white/70 min-w-[36px]">
                       {item.section}
                     </span>
                     <span>{item.title}</span>
@@ -117,8 +117,8 @@ const EducationalContent = () => {
               </ul>
             </div>
 
-            <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-2">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
                 Health & safety regulations
               </span>
               <ul className="space-y-1.5">
@@ -137,7 +137,7 @@ const EducationalContent = () => {
         </TabsContent>
 
         <TabsContent value="hazards" className="space-y-3">
-          <div className="rounded-xl border border-red-500/30 bg-red-500/[0.04] p-4 sm:p-5 space-y-2">
+          <div className="rounded-xl border border-white/[0.12] border-l-[3px] border-l-red-500 bg-white/[0.06] p-4 sm:p-5 space-y-2">
             <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">
               High risk hazards
             </span>
@@ -154,8 +154,8 @@ const EducationalContent = () => {
             </ul>
           </div>
 
-          <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-2">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
               Medium risk hazards
             </span>
             <ul className="space-y-1.5">
@@ -174,8 +174,8 @@ const EducationalContent = () => {
 
         <TabsContent value="ppe" className="space-y-3">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-2">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
                 Essential PPE
               </span>
               <ul className="space-y-2">
@@ -188,8 +188,8 @@ const EducationalContent = () => {
               </ul>
             </div>
 
-            <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-2">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
                 PPE inspection
               </span>
               <ul className="space-y-1.5">
@@ -208,8 +208,8 @@ const EducationalContent = () => {
         </TabsContent>
 
         <TabsContent value="tips" className="space-y-3">
-          <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-2">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
               Assessment best practices
             </span>
             <ul className="space-y-1.5">
@@ -225,8 +225,8 @@ const EducationalContent = () => {
             </ul>
           </div>
 
-          <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-2">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
               Documentation tips
             </span>
             <ul className="space-y-1.5">

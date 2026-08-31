@@ -137,7 +137,7 @@ export function AddResourceLinkDialog({ open, onOpenChange, onSave }: Props) {
             type="button"
             onClick={handleSave}
             disabled={!canSave || saving}
-            className="h-11 w-full sm:w-auto px-6 rounded-full bg-elec-yellow hover:bg-elec-yellow/90 text-black text-[13px] font-medium transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+            className="h-11 w-full sm:w-auto px-6 rounded-full bg-elec-yellow hover:bg-elec-yellow/90 text-black text-[13px] font-medium transition-colors disabled:bg-white/[0.08] disabled:text-white/70 disabled:cursor-not-allowed"
           >
             {saving ? 'Adding…' : 'Add link'}
           </button>

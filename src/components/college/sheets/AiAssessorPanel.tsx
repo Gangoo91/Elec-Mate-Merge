@@ -292,7 +292,7 @@ export function AiAssessorPanel({ submissionId, studentName, onApplied }: Props)
             type="button"
             onClick={handleApply}
             disabled={applying}
-            className="h-9 px-4 rounded-full bg-elec-yellow text-black text-[12.5px] font-semibold hover:bg-elec-yellow/90 active:scale-[0.98] disabled:opacity-50 transition-all touch-manipulation inline-flex items-center gap-1.5"
+            className="h-9 px-4 rounded-full bg-elec-yellow text-black text-[12.5px] font-semibold hover:bg-elec-yellow/90 active:scale-[0.98] disabled:bg-white/[0.08] disabled:text-white/70 transition-all touch-manipulation inline-flex items-center gap-1.5"
           >
             <Check className="h-3.5 w-3.5" strokeWidth={3} />
             {applying ? 'Applying…' : 'Apply to submission'}

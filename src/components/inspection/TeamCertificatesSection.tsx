@@ -633,7 +633,7 @@ const TeamCertificatesSection: React.FC = () => {
               type="button"
               disabled={!returnComment.trim() || !!actingReviewId}
               onClick={handleReturn}
-              className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-elec-yellow text-sm font-semibold text-black touch-manipulation active:scale-[0.98] disabled:opacity-50"
+              className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-elec-yellow text-sm font-semibold text-black touch-manipulation active:scale-[0.98] disabled:bg-white/[0.08] disabled:text-white/70"
             >
               {actingReviewId ? 'Returning…' : 'Return with comments'}
             </button>

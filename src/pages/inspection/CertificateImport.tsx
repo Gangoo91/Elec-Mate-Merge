@@ -542,7 +542,7 @@ export default function CertificateImport() {
                 type="button"
                 disabled={isWorking}
                 onClick={() => fileRef.current?.click()}
-                className="flex h-14 w-full items-center justify-center gap-2 rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-transform touch-manipulation active:scale-[0.98] disabled:opacity-60"
+                className="flex h-14 w-full items-center justify-center gap-2 rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-transform touch-manipulation active:scale-[0.98] disabled:bg-white/[0.08] disabled:text-white/70"
               >
                 {isWorking ? (
                   <>
@@ -913,7 +913,7 @@ export default function CertificateImport() {
             <button
               onClick={createDraft}
               disabled={isWorking}
-              className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-elec-yellow text-[15px] font-semibold text-black touch-manipulation active:scale-[0.98] disabled:opacity-60"
+              className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-elec-yellow text-[15px] font-semibold text-black touch-manipulation active:scale-[0.98] disabled:bg-white/[0.08] disabled:text-white/70"
             >
               {isWorking ? <Loader2 className="h-5 w-5 animate-spin" /> : null}
               Create draft certificate

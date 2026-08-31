@@ -269,20 +269,13 @@ const InstrumentationModule8Section2 = () => {
 
         <TLDR
           points={[
-            'Section 1 gave the method. This is what to do with the symptom before the first test.',
             '🔴 Symptoms sort onto one axis: obvious or plausible.',
-            'An out-of-range signal announces itself — alarms fire, nobody trusts it, it gets fixed. That is a GOOD fault.',
             '🔴 A wrong signal that stays inside the valid range is the dangerous one, because everything believes it.',
             '🔴 So the worst faults produce the mildest symptoms. Severity runs opposite to obviousness.',
             'Three questions sort any symptom before you touch anything.',
-            '1. Is the signal valid, or outside the range entirely?',
             '🔴 Zero current is not four milliamps — that distinction is the whole reason the live zero exists.',
-            '2. Does it move, or is it static?',
             '🔴 A real process is never perfectly still, so a completely flat trace is suspicious rather than reassuring.',
-            'A frozen plausible reading means a blocked impulse line, a sensor holding its last value, or stale data.',
-            '3. Is it wrong everywhere, or only somewhere in the range?',
             'Wrong by a constant amount, wrong in proportion, or right then flat — each names a different cause.',
-            'Each answer routes to the section that owns it. The triage is the work; the sections are the destinations.',
           ]}
         />
 
@@ -514,12 +507,12 @@ const InstrumentationModule8Section2 = () => {
           id="ins-8-2-zero"
           question="A control room display shows a level loop at 0 mA. The operator says the vessel is definitely not empty. What does the current alone tell you?"
           options={[
-            'No current is flowing, so the circuit is not intact — this is a loop fault rather than a measurement one',
             'The vessel really is empty and the operator is mistaken',
             'The controller has been left in manual',
+            'No current is flowing, so the circuit is not intact — this is a loop fault rather than a measurement one',
             'The transmitter is out of calibration',
           ]}
-          correctIndex={0}
+          correctIndex={2}
           explanation="An empty vessel would produce current at the bottom of the live range, not an absence of current. Zero means nothing is flowing at all, which points at an open circuit, a lost supply or a dead transmitter — and the operator's observation is consistent rather than in conflict."
         />
 
@@ -659,11 +652,11 @@ const InstrumentationModule8Section2 = () => {
           question="A flow reading has been perfectly constant for three days on a plant whose output has varied. What is the most useful next step?"
           options={[
             'Recalibrate the flow transmitter',
-            'Establish whether the reading responded to a known process change — if it did not, the measurement is severed from the process',
             'Replace the transmitter',
             'Check the loop resistance',
+            'Establish whether the reading responded to a known process change — if it did not, the measurement is severed from the process',
           ]}
-          correctIndex={1}
+          correctIndex={3}
           explanation="Calibrating or replacing the transmitter assumes the instrument is at fault, and a blocked line or a closed isolating valve leaves it entirely healthy. Correlating the reading against a change that must have moved it is the test that distinguishes a genuine measurement from a held one."
         />
 
@@ -786,12 +779,12 @@ const InstrumentationModule8Section2 = () => {
           id="ins-8-2-common"
           question="Four loops in the same marshalling cabinet all start reading zero within a few minutes of each other. Where should you look first?"
           options={[
-            'The four transmitters in turn',
             'What those four loops have in common — a shared supply is the obvious candidate',
+            'The four transmitters in turn',
             'The controller configuration',
             'The four field cables',
           ]}
-          correctIndex={1}
+          correctIndex={0}
           explanation="Four independent failures within minutes is not a plausible coincidence, whereas one shared element failing and affecting four loops is entirely ordinary. Checking which loops in that cabinet are unaffected narrows it further, because they eliminate everything they share with the failed ones."
         />
 

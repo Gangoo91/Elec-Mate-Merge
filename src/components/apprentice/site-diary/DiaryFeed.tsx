@@ -141,6 +141,7 @@ export function DiaryFeed({
               >
                 <DiaryEntryCard
                   entry={entry}
+                  hideDate
                   onTap={() => onEntryTap?.(entry)}
                   onEdit={onEdit}
                   onDelete={onDelete ? (id) => onDelete(id) : undefined}

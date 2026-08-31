@@ -753,11 +753,10 @@ const IndustrialTestingGuide = () => {
   return (
     <div className="space-y-6">
       {/* Testing Overview */}
-      <Card className="border-elec-yellow/30 bg-white/5">
-        <CardHeader>
+      <Card variant="plain">
+        <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <TestTube className="h-6 w-6 text-elec-yellow" />
-            <CardTitle className="text-elec-yellow">
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">
               Industrial Testing & Certification Guide
             </CardTitle>
           </div>
@@ -789,20 +788,19 @@ const IndustrialTestingGuide = () => {
 
         {/* Testing Safety */}
         <TabsContent value="safety" className="space-y-4">
-          <Card className="border-red-500/30 bg-white/5">
-            <CardHeader>
+          <Card variant="plain">
+            <CardHeader className="p-0 pb-3">
               <div className="flex items-center gap-2">
-                <Shield className="h-6 w-6 text-red-400" />
-                <CardTitle className="text-red-300">High-Power Testing Safety</CardTitle>
+                <CardTitle className="text-[15px] font-semibold tracking-tight text-white">High-Power Testing Safety</CardTitle>
               </div>
               <p className="text-white">
                 Industrial testing requires enhanced safety measures due to higher voltages,
                 currents, and fault levels
               </p>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-4 p-0">
               {highPowerTestingSafety.preparation.map((prep, index) => (
-                <div key={index} className="bg-red-500/10 p-4 rounded-lg border border-red-500/20">
+                <div key={index} className="p-4 rounded-lg border border-white/[0.12] border-l-[3px] border-l-red-500 bg-white/[0.06]">
                   <h3 className="font-bold text-red-300 mb-3">{prep.step}</h3>
                   <ul className="space-y-2">
                     {prep.details.map((detail, i) => (
@@ -818,21 +816,21 @@ const IndustrialTestingGuide = () => {
           </Card>
 
           {/* GS38 Requirements */}
-          <Card className="border-white/[0.06] bg-white/5">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
+          <Card variant="plain">
+            <CardHeader className="p-0 pb-3">
+              <CardTitle className="text-[15px] font-semibold tracking-tight text-white flex items-center gap-2">
                 <AlertTriangle className="h-5 w-5" />
                 GS38 Test Equipment Requirements
               </CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="p-0">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                 {highPowerTestingSafety.gs38Requirements.map((req, index) => (
                   <div
                     key={index}
-                    className="flex items-start gap-2 text-sm text-white bg-white/[0.02] p-3 rounded"
+                    className="flex items-start gap-2 text-sm text-white bg-white/[0.06] p-3 rounded"
                   >
-                    <Shield className="h-4 w-4 text-white/55 mt-0.5 flex-shrink-0" />
+                    <Shield className="h-4 w-4 text-white/70 mt-0.5 flex-shrink-0" />
                     {req}
                   </div>
                 ))}
@@ -841,39 +839,38 @@ const IndustrialTestingGuide = () => {
           </Card>
 
           {/* Prospective Fault Current */}
-          <Card className="border-white/[0.06] bg-white/5">
-            <CardHeader>
+          <Card variant="plain">
+            <CardHeader className="p-0 pb-3">
               <div className="flex items-center gap-2">
-                <Zap className="h-6 w-6 text-white/55" />
-                <CardTitle className="text-white">Prospective Fault Current (PSCC)</CardTitle>
+                <CardTitle className="text-[15px] font-semibold tracking-tight text-white">Prospective Fault Current (PSCC)</CardTitle>
               </div>
             </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+            <CardContent className="space-y-4 p-0">
+              <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
                 <h3 className="font-bold text-white mb-3">Why PSCC Matters</h3>
                 <ul className="space-y-2">
                   {prospectiveFaultCurrent.importance.map((item, i) => (
                     <li key={i} className="flex items-start gap-2 text-sm text-white">
-                      <Zap className="h-4 w-4 text-white/55 mt-0.5 flex-shrink-0" />
+                      <Zap className="h-4 w-4 text-white/70 mt-0.5 flex-shrink-0" />
                       {item}
                     </li>
                   ))}
                 </ul>
               </div>
 
-              <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+              <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
                 <h3 className="font-bold text-white mb-3">Typical PSCC Values</h3>
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm">
                     <thead>
-                      <tr className="border-b border-white/[0.06]">
+                      <tr className="border-b border-white/[0.10]">
                         <th className="text-left py-2 px-3 text-white">Location</th>
                         <th className="text-left py-2 px-3 text-white">Typical PSCC</th>
                       </tr>
                     </thead>
                     <tbody className="text-white">
                       {prospectiveFaultCurrent.typicalValues.map((val, i) => (
-                        <tr key={i} className="border-b border-white/[0.06]">
+                        <tr key={i} className="border-b border-white/[0.10]">
                           <td className="py-2 px-3">{val.location}</td>
                           <td className="py-2 px-3 font-medium text-white/85">{val.pscc}</td>
                         </tr>
@@ -888,21 +885,20 @@ const IndustrialTestingGuide = () => {
 
         {/* Motor Testing */}
         <TabsContent value="motors" className="space-y-4">
-          <Card className="border-white/[0.06] bg-white/5">
-            <CardHeader>
+          <Card variant="plain">
+            <CardHeader className="p-0 pb-3">
               <div className="flex items-center gap-2">
-                <Cog className="h-6 w-6 text-white/55" />
-                <CardTitle className="text-white">Motor Testing Procedures</CardTitle>
+                <CardTitle className="text-[15px] font-semibold tracking-tight text-white">Motor Testing Procedures</CardTitle>
               </div>
               <p className="text-white">
                 Comprehensive testing for induction motors including insulation and winding tests
               </p>
             </CardHeader>
-            <CardContent className="space-y-6">
+            <CardContent className="space-y-6 p-0">
               {motorTesting.map((test, index) => (
                 <div
                   key={index}
-                  className="bg-white/[0.02] p-5 rounded-lg border border-white/[0.06]"
+                  className="bg-white/[0.06] p-5 rounded-lg border border-white/[0.10]"
                 >
                   <div className="flex items-center justify-between gap-3 mb-4">
                     <h3 className="font-bold text-white text-lg">{test.test}</h3>
@@ -913,24 +909,24 @@ const IndustrialTestingGuide = () => {
                   </p>
 
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                    <div className="bg-white/[0.02] p-4 rounded border border-white/[0.06]">
+                    <div className="bg-white/[0.06] p-4 rounded border border-white/[0.10]">
                       <h4 className="text-white/85 font-medium mb-3">Test Method</h4>
                       <ol className="space-y-2">
                         {test.method.map((step, i) => (
                           <li key={i} className="flex items-start gap-2 text-sm text-white">
-                            <span className="text-white/55 font-medium">{i + 1}.</span>
+                            <span className="text-white/70 font-medium">{i + 1}.</span>
                             {step}
                           </li>
                         ))}
                       </ol>
                     </div>
 
-                    <div className="bg-white/[0.02] p-4 rounded border border-white/[0.06]">
+                    <div className="bg-white/[0.06] p-4 rounded border border-white/[0.10]">
                       <h4 className="text-white/85 font-medium mb-3">Acceptable Limits</h4>
                       <ul className="space-y-2">
                         {test.acceptableLimits.map((limit, i) => (
                           <li key={i} className="flex items-start gap-2 text-sm text-white">
-                            <CheckCircle className="h-4 w-4 text-white/55 mt-0.5 flex-shrink-0" />
+                            <CheckCircle className="h-4 w-4 text-white/70 mt-0.5 flex-shrink-0" />
                             {limit}
                           </li>
                         ))}
@@ -938,12 +934,12 @@ const IndustrialTestingGuide = () => {
                     </div>
                   </div>
 
-                  <div className="mt-4 bg-yellow-500/10 p-3 rounded border border-yellow-500/20">
-                    <h4 className="text-yellow-200 font-medium mb-2">Important Notes</h4>
+                  <div className="mt-4 bg-white/[0.06] p-3 rounded border border-elec-yellow/20">
+                    <h4 className="text-white font-medium mb-2">Important Notes</h4>
                     <ul className="space-y-1">
                       {test.notes.map((note, i) => (
                         <li key={i} className="flex items-start gap-2 text-sm text-white">
-                          <AlertTriangle className="h-4 w-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                          <AlertTriangle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                           {note}
                         </li>
                       ))}
@@ -958,22 +954,21 @@ const IndustrialTestingGuide = () => {
         {/* System Testing */}
         <TabsContent value="systems" className="space-y-4">
           {/* Earth Fault Loop Impedance */}
-          <Card className="border-white/[0.06] bg-white/5">
-            <CardHeader>
+          <Card variant="plain">
+            <CardHeader className="p-0 pb-3">
               <div className="flex items-center gap-2">
-                <Gauge className="h-6 w-6 text-white/55" />
-                <CardTitle className="text-white">Earth Fault Loop Impedance (Zs)</CardTitle>
+                <CardTitle className="text-[15px] font-semibold tracking-tight text-white">Earth Fault Loop Impedance (Zs)</CardTitle>
               </div>
               <p className="text-white">
                 Industrial installations present unique challenges for EFLI testing
               </p>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-4 p-0">
               {/* Considerations */}
               {earthFaultLoopImpedance.considerations.map((item, index) => (
                 <div
                   key={index}
-                  className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]"
+                  className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]"
                 >
                   <h3 className="font-bold text-white mb-2">{item.factor}</h3>
                   <p className="text-white text-sm mb-3">
@@ -982,7 +977,7 @@ const IndustrialTestingGuide = () => {
                   <ul className="space-y-1">
                     {item.solutions.map((sol, i) => (
                       <li key={i} className="flex items-start gap-2 text-sm text-white">
-                        <CheckCircle className="h-4 w-4 text-white/55 mt-0.5 flex-shrink-0" />
+                        <CheckCircle className="h-4 w-4 text-white/70 mt-0.5 flex-shrink-0" />
                         {sol}
                       </li>
                     ))}
@@ -991,12 +986,12 @@ const IndustrialTestingGuide = () => {
               ))}
 
               {/* Max Zs Values Table */}
-              <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+              <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
                 <h3 className="font-bold text-white mb-3">Maximum Zs Values (Common Devices)</h3>
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm">
                     <thead>
-                      <tr className="border-b border-white/[0.06]">
+                      <tr className="border-b border-white/[0.10]">
                         <th className="text-left py-2 px-3 text-white">Device</th>
                         <th className="text-left py-2 px-3 text-white">Max Zs</th>
                         <th className="text-left py-2 px-3 text-white">Voltage</th>
@@ -1004,7 +999,7 @@ const IndustrialTestingGuide = () => {
                     </thead>
                     <tbody className="text-white">
                       {earthFaultLoopImpedance.maxZsValues.map((val, i) => (
-                        <tr key={i} className="border-b border-white/[0.06]">
+                        <tr key={i} className="border-b border-white/[0.10]">
                           <td className="py-2 px-3">{val.device}</td>
                           <td className="py-2 px-3 font-medium text-white/85">{val.maxZs}</td>
                           <td className="py-2 px-3">{val.voltage}</td>
@@ -1016,8 +1011,8 @@ const IndustrialTestingGuide = () => {
               </div>
 
               {/* Testing Method */}
-              <div className="bg-yellow-500/10 p-4 rounded-lg border border-yellow-500/20">
-                <h3 className="font-bold text-yellow-300 mb-3">Testing Procedure</h3>
+              <div className="bg-white/[0.06] p-4 rounded-lg border border-elec-yellow/20">
+                <h3 className="font-bold text-white mb-3">Testing Procedure</h3>
                 <ol className="space-y-2">
                   {earthFaultLoopImpedance.testingMethod.map((step, i) => (
                     <li key={i} className="text-sm text-white">
@@ -1030,22 +1025,21 @@ const IndustrialTestingGuide = () => {
           </Card>
 
           {/* Safety Circuit Testing */}
-          <Card className="border-red-500/30 bg-white/5">
-            <CardHeader>
+          <Card variant="plain">
+            <CardHeader className="p-0 pb-3">
               <div className="flex items-center gap-2">
-                <Shield className="h-6 w-6 text-red-400" />
-                <CardTitle className="text-red-300">
+                <CardTitle className="text-[15px] font-semibold tracking-tight text-white">
                   Functional Testing of Safety Circuits
                 </CardTitle>
               </div>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-4 p-0">
               {safetyCircuitTesting.map((system, index) => (
-                <div key={index} className="bg-red-500/10 p-4 rounded-lg border border-red-500/20">
+                <div key={index} className="p-4 rounded-lg border border-white/[0.12] border-l-[3px] border-l-red-500 bg-white/[0.06]">
                   <h3 className="font-bold text-red-300 mb-3">{system.system}</h3>
                   <div className="space-y-3">
                     {system.tests.map((test, i) => (
-                      <div key={i} className="bg-red-500/5 p-3 rounded border border-red-500/10">
+                      <div key={i} className="bg-white/[0.06] p-3 rounded border border-red-500/10">
                         <h4 className="text-red-200 font-medium mb-1">{test.test}</h4>
                         <p className="text-white text-sm mb-1">
                           <strong>Method:</strong> {test.method}
@@ -1066,24 +1060,23 @@ const IndustrialTestingGuide = () => {
         {/* Predictive Testing */}
         <TabsContent value="predictive" className="space-y-4">
           {/* Thermographic Surveys */}
-          <Card className="border-white/[0.06] bg-white/5">
-            <CardHeader>
+          <Card variant="plain">
+            <CardHeader className="p-0 pb-3">
               <div className="flex items-center gap-2">
-                <Thermometer className="h-6 w-6 text-white/55" />
-                <CardTitle className="text-white">Thermographic Surveys</CardTitle>
+                <CardTitle className="text-[15px] font-semibold tracking-tight text-white">Thermographic Surveys</CardTitle>
               </div>
               <p className="text-white">
                 Non-contact temperature measurement to identify hot spots and failing connections
               </p>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-4 p-0">
               {/* Applications */}
-              <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+              <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
                 <h3 className="font-bold text-white mb-3">Applications</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
                   {thermographicSurveys.applications.map((app, i) => (
                     <div key={i} className="flex items-center gap-2 text-sm text-white">
-                      <Eye className="h-4 w-4 text-white/55" />
+                      <Eye className="h-4 w-4 text-white/70" />
                       {app}
                     </div>
                   ))}
@@ -1091,16 +1084,16 @@ const IndustrialTestingGuide = () => {
               </div>
 
               {/* Procedure */}
-              <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+              <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
                 <h3 className="font-bold text-white mb-3">Survey Procedure</h3>
                 <div className="space-y-3">
                   {thermographicSurveys.procedure.map((proc, index) => (
                     <div
                       key={index}
-                      className="bg-white/[0.02] p-3 rounded border border-white/[0.06]"
+                      className="bg-white/[0.06] p-3 rounded border border-white/[0.10]"
                     >
                       <div className="flex items-center gap-2 mb-2">
-                        <div className="w-8 h-8 rounded-full bg-white/[0.02] flex items-center justify-center">
+                        <div className="w-8 h-8 rounded-full bg-white/[0.06] flex items-center justify-center">
                           <span className="text-white font-bold text-sm">{proc.step}</span>
                         </div>
                         <h4 className="text-white/85 font-medium">{proc.action}</h4>
@@ -1118,7 +1111,7 @@ const IndustrialTestingGuide = () => {
               </div>
 
               {/* Severity Table */}
-              <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+              <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
                 <h3 className="font-bold text-white mb-3">Severity Classification</h3>
                 <div className="space-y-2">
                   {thermographicSurveys.severity.map((sev, i) => (
@@ -1126,12 +1119,12 @@ const IndustrialTestingGuide = () => {
                       key={i}
                       className={`p-3 rounded border flex items-center justify-between ${
                         sev.colour === 'green'
-                          ? 'bg-white/[0.02] border-white/[0.06]'
+                          ? 'bg-white/[0.06] border-white/[0.10]'
                           : sev.colour === 'yellow'
-                            ? 'bg-yellow-500/10 border-yellow-500/30'
+                            ? 'bg-white/[0.06] border-elec-yellow/30'
                             : sev.colour === 'orange'
-                              ? 'bg-white/[0.02] border-white/[0.06]'
-                              : 'bg-red-500/10 border-red-500/30'
+                              ? 'bg-white/[0.06] border-white/[0.10]'
+                              : 'bg-white/[0.06] border-red-500/30'
                       }`}
                     >
                       <div className="flex items-center gap-4">
@@ -1141,7 +1134,7 @@ const IndustrialTestingGuide = () => {
                             sev.colour === 'green'
                               ? 'border-white/10 text-white'
                               : sev.colour === 'yellow'
-                                ? 'border-yellow-400 text-yellow-300'
+                                ? 'border-elec-yellow text-elec-yellow'
                                 : sev.colour === 'orange'
                                   ? 'border-white/10 text-white'
                                   : 'border-red-400 text-red-300'
@@ -1158,12 +1151,12 @@ const IndustrialTestingGuide = () => {
               </div>
 
               {/* Common Faults */}
-              <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+              <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
                 <h3 className="font-bold text-white mb-3">Common Faults Detected</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                   {thermographicSurveys.commonFaults.map((fault, i) => (
                     <div key={i} className="flex items-center gap-2 text-sm text-white">
-                      <AlertTriangle className="h-4 w-4 text-white/55" />
+                      <AlertTriangle className="h-4 w-4 text-white/70" />
                       {fault}
                     </div>
                   ))}
@@ -1173,21 +1166,20 @@ const IndustrialTestingGuide = () => {
           </Card>
 
           {/* Vibration Analysis */}
-          <Card className="border-white/[0.06] bg-white/5">
-            <CardHeader>
+          <Card variant="plain">
+            <CardHeader className="p-0 pb-3">
               <div className="flex items-center gap-2">
-                <Activity className="h-6 w-6 text-white/55" />
-                <CardTitle className="text-white">Vibration Analysis Basics</CardTitle>
+                <CardTitle className="text-[15px] font-semibold tracking-tight text-white">Vibration Analysis Basics</CardTitle>
               </div>
               <p className="text-white">{vibrationAnalysis.purpose}</p>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-4 p-0">
               {/* Parameters */}
-              <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+              <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
                 <h3 className="font-bold text-white mb-3">Measurement Parameters</h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                   {vibrationAnalysis.parameters.map((param, i) => (
-                    <div key={i} className="bg-white/[0.02] p-3 rounded border border-white/[0.06]">
+                    <div key={i} className="bg-white/[0.06] p-3 rounded border border-white/[0.10]">
                       <h4 className="text-white/85 font-medium mb-1">{param.parameter}</h4>
                       <p className="text-white text-xs mb-1">Units: {param.units}</p>
                       <p className="text-white text-sm">Best for: {param.bestFor}</p>
@@ -1197,12 +1189,12 @@ const IndustrialTestingGuide = () => {
               </div>
 
               {/* Common Faults */}
-              <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+              <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
                 <h3 className="font-bold text-white mb-3">Common Fault Signatures</h3>
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm">
                     <thead>
-                      <tr className="border-b border-white/[0.06]">
+                      <tr className="border-b border-white/[0.10]">
                         <th className="text-left py-2 px-3 text-white">Fault</th>
                         <th className="text-left py-2 px-3 text-white">Frequency</th>
                         <th className="text-left py-2 px-3 text-white">Characteristics</th>
@@ -1210,7 +1202,7 @@ const IndustrialTestingGuide = () => {
                     </thead>
                     <tbody className="text-white">
                       {vibrationAnalysis.commonFaults.map((fault, i) => (
-                        <tr key={i} className="border-b border-white/[0.06]">
+                        <tr key={i} className="border-b border-white/[0.10]">
                           <td className="py-2 px-3 font-medium text-white/85">{fault.fault}</td>
                           <td className="py-2 px-3">{fault.frequency}</td>
                           <td className="py-2 px-3">{fault.characteristics}</td>
@@ -1222,26 +1214,26 @@ const IndustrialTestingGuide = () => {
               </div>
 
               {/* ISO Limits */}
-              <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+              <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
                 <h3 className="font-bold text-white mb-3">ISO 10816 Vibration Limits (mm/s RMS)</h3>
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm">
                     <thead>
-                      <tr className="border-b border-white/[0.06]">
+                      <tr className="border-b border-white/[0.10]">
                         <th className="text-left py-2 px-3 text-white">Class</th>
                         <th className="text-left py-2 px-3 text-white">Description</th>
                         <th className="text-center py-2 px-3 text-white">Good</th>
-                        <th className="text-center py-2 px-3 text-yellow-300">Alarm</th>
+                        <th className="text-center py-2 px-3 text-elec-yellow">Alarm</th>
                         <th className="text-center py-2 px-3 text-red-300">Danger</th>
                       </tr>
                     </thead>
                     <tbody className="text-white">
                       {vibrationAnalysis.isoLimits.map((limit, i) => (
-                        <tr key={i} className="border-b border-white/[0.06]">
+                        <tr key={i} className="border-b border-white/[0.10]">
                           <td className="py-2 px-3 font-medium text-white/85">{limit.class}</td>
                           <td className="py-2 px-3">{limit.description}</td>
                           <td className="py-2 px-3 text-center text-white">{limit.good}</td>
-                          <td className="py-2 px-3 text-center text-yellow-300">{limit.alarm}</td>
+                          <td className="py-2 px-3 text-center text-elec-yellow">{limit.alarm}</td>
                           <td className="py-2 px-3 text-center text-red-300">{limit.danger}</td>
                         </tr>
                       ))}
@@ -1253,21 +1245,20 @@ const IndustrialTestingGuide = () => {
           </Card>
 
           {/* PAT Testing */}
-          <Card className="border-white/[0.06] bg-white/5">
-            <CardHeader>
+          <Card variant="plain">
+            <CardHeader className="p-0 pb-3">
               <div className="flex items-center gap-2">
-                <Settings className="h-6 w-6 text-white/55" />
-                <CardTitle className="text-white">PAT Testing in Industrial Environments</CardTitle>
+                <CardTitle className="text-[15px] font-semibold tracking-tight text-white">PAT Testing in Industrial Environments</CardTitle>
               </div>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-4 p-0">
               {/* Considerations */}
-              <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+              <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
                 <h3 className="font-bold text-white mb-3">Industrial Considerations</h3>
                 <ul className="space-y-2">
                   {patTesting.considerations.map((item, i) => (
                     <li key={i} className="flex items-start gap-2 text-sm text-white">
-                      <AlertTriangle className="h-4 w-4 text-white/55 mt-0.5 flex-shrink-0" />
+                      <AlertTriangle className="h-4 w-4 text-white/70 mt-0.5 flex-shrink-0" />
                       {item}
                     </li>
                   ))}
@@ -1275,11 +1266,11 @@ const IndustrialTestingGuide = () => {
               </div>
 
               {/* Equipment Categories */}
-              <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+              <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
                 <h3 className="font-bold text-white mb-3">Equipment Categories</h3>
                 <div className="space-y-3">
                   {patTesting.equipmentCategories.map((cat, i) => (
-                    <div key={i} className="bg-white/[0.02] p-3 rounded border border-white/[0.06]">
+                    <div key={i} className="bg-white/[0.06] p-3 rounded border border-white/[0.10]">
                       <div className="flex items-center justify-between mb-2">
                         <h4 className="text-white/85 font-medium">{cat.category}</h4>
                         <Badge variant="outline" className="border-white/10 text-white">
@@ -1296,12 +1287,12 @@ const IndustrialTestingGuide = () => {
               </div>
 
               {/* Test Limits */}
-              <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+              <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
                 <h3 className="font-bold text-white mb-3">Test Limits</h3>
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm">
                     <thead>
-                      <tr className="border-b border-white/[0.06]">
+                      <tr className="border-b border-white/[0.10]">
                         <th className="text-left py-2 px-3 text-white">Test</th>
                         <th className="text-left py-2 px-3 text-white">Pass Limit</th>
                         <th className="text-left py-2 px-3 text-white">Notes</th>
@@ -1309,7 +1300,7 @@ const IndustrialTestingGuide = () => {
                     </thead>
                     <tbody className="text-white">
                       {patTesting.testLimits.map((limit, i) => (
-                        <tr key={i} className="border-b border-white/[0.06]">
+                        <tr key={i} className="border-b border-white/[0.10]">
                           <td className="py-2 px-3">{limit.test}</td>
                           <td className="py-2 px-3 font-medium text-white">{limit.pass}</td>
                           <td className="py-2 px-3 text-white">{limit.notes}</td>
@@ -1326,35 +1317,34 @@ const IndustrialTestingGuide = () => {
         {/* Documentation */}
         <TabsContent value="documentation" className="space-y-4">
           {/* EIC */}
-          <Card className="border-white/[0.06] bg-white/5">
-            <CardHeader>
+          <Card variant="plain">
+            <CardHeader className="p-0 pb-3">
               <div className="flex items-center gap-2">
-                <FileCheck className="h-6 w-6 text-white/55" />
-                <CardTitle className="text-white">{documentation.eic.title}</CardTitle>
+                <CardTitle className="text-[15px] font-semibold tracking-tight text-white">{documentation.eic.title}</CardTitle>
               </div>
               <p className="text-white">{documentation.eic.use}</p>
             </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+            <CardContent className="space-y-4 p-0">
+              <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
                 <h3 className="font-bold text-white mb-3">Standard Contents</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                   {documentation.eic.contents.map((item, i) => (
                     <div key={i} className="flex items-start gap-2 text-sm text-white">
-                      <CheckCircle className="h-4 w-4 text-white/55 mt-0.5 flex-shrink-0" />
+                      <CheckCircle className="h-4 w-4 text-white/70 mt-0.5 flex-shrink-0" />
                       {item}
                     </div>
                   ))}
                 </div>
               </div>
 
-              <div className="bg-yellow-500/10 p-4 rounded-lg border border-yellow-500/20">
-                <h3 className="font-bold text-yellow-300 mb-3">
+              <div className="bg-white/[0.06] p-4 rounded-lg border border-elec-yellow/20">
+                <h3 className="font-bold text-white mb-3">
                   Additional Industrial Requirements
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                   {documentation.eic.industrialAdditions.map((item, i) => (
                     <div key={i} className="flex items-start gap-2 text-sm text-white">
-                      <Factory className="h-4 w-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                      <Factory className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                       {item}
                     </div>
                   ))}
@@ -1364,22 +1354,21 @@ const IndustrialTestingGuide = () => {
           </Card>
 
           {/* EICR */}
-          <Card className="border-white/[0.06] bg-white/5">
-            <CardHeader>
+          <Card variant="plain">
+            <CardHeader className="p-0 pb-3">
               <div className="flex items-center gap-2">
-                <ClipboardCheck className="h-6 w-6 text-white/55" />
-                <CardTitle className="text-white">{documentation.eicr.title}</CardTitle>
+                <CardTitle className="text-[15px] font-semibold tracking-tight text-white">{documentation.eicr.title}</CardTitle>
               </div>
               <p className="text-white">{documentation.eicr.use}</p>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-4 p-0">
               {/* Sections */}
-              <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+              <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
                 <h3 className="font-bold text-white mb-3">Report Sections</h3>
                 <ul className="space-y-2">
                   {documentation.eicr.sections.map((section, i) => (
                     <li key={i} className="flex items-start gap-2 text-sm text-white">
-                      <FileText className="h-4 w-4 text-white/55 mt-0.5 flex-shrink-0" />
+                      <FileText className="h-4 w-4 text-white/70 mt-0.5 flex-shrink-0" />
                       {section}
                     </li>
                   ))}
@@ -1387,7 +1376,7 @@ const IndustrialTestingGuide = () => {
               </div>
 
               {/* Observation Codes */}
-              <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+              <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
                 <h3 className="font-bold text-white mb-3">Observation Codes</h3>
                 <div className="space-y-2">
                   {documentation.eicr.codes.map((code, i) => (
@@ -1395,12 +1384,12 @@ const IndustrialTestingGuide = () => {
                       key={i}
                       className={`p-3 rounded border flex items-center gap-4 ${
                         code.colour === 'red'
-                          ? 'bg-red-500/10 border-red-500/30'
+                          ? 'bg-white/[0.06] border-red-500/30'
                           : code.colour === 'orange'
-                            ? 'bg-white/[0.02] border-white/[0.06]'
+                            ? 'bg-white/[0.06] border-white/[0.10]'
                             : code.colour === 'yellow'
-                              ? 'bg-yellow-500/10 border-yellow-500/30'
-                              : 'bg-white/[0.02] border-white/[0.06]'
+                              ? 'bg-white/[0.06] border-elec-yellow/30'
+                              : 'bg-white/[0.06] border-white/[0.10]'
                       }`}
                     >
                       <Badge
@@ -1411,7 +1400,7 @@ const IndustrialTestingGuide = () => {
                             : code.colour === 'orange'
                               ? 'border-white/10 text-white'
                               : code.colour === 'yellow'
-                                ? 'border-yellow-400 text-yellow-300'
+                                ? 'border-elec-yellow text-elec-yellow'
                                 : 'border-white/10 text-white'
                         }`}
                       >
@@ -1424,19 +1413,19 @@ const IndustrialTestingGuide = () => {
               </div>
 
               {/* Inspection Frequencies */}
-              <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+              <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
                 <h3 className="font-bold text-white mb-3">Recommended Inspection Frequencies</h3>
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm">
                     <thead>
-                      <tr className="border-b border-white/[0.06]">
+                      <tr className="border-b border-white/[0.10]">
                         <th className="text-left py-2 px-3 text-white">Premises Type</th>
                         <th className="text-left py-2 px-3 text-white">Maximum Interval</th>
                       </tr>
                     </thead>
                     <tbody className="text-white">
                       {documentation.eicr.inspectionFrequencies.map((freq, i) => (
-                        <tr key={i} className="border-b border-white/[0.06]">
+                        <tr key={i} className="border-b border-white/[0.10]">
                           <td className="py-2 px-3">{freq.premises}</td>
                           <td className="py-2 px-3 font-medium text-white/85">{freq.frequency}</td>
                         </tr>
@@ -1449,22 +1438,21 @@ const IndustrialTestingGuide = () => {
           </Card>
 
           {/* Commissioning */}
-          <Card className="border-white/[0.06] bg-white/5">
-            <CardHeader>
+          <Card variant="plain">
+            <CardHeader className="p-0 pb-3">
               <div className="flex items-center gap-2">
-                <CheckCircle className="h-6 w-6 text-white/55" />
-                <CardTitle className="text-white">Commissioning Procedures</CardTitle>
+                <CardTitle className="text-[15px] font-semibold tracking-tight text-white">Commissioning Procedures</CardTitle>
               </div>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-4 p-0">
               {/* Stages */}
               {commissioning.stages.map((stage, index) => (
                 <div
                   key={index}
-                  className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]"
+                  className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]"
                 >
                   <div className="flex items-center gap-3 mb-3">
-                    <div className="w-8 h-8 rounded-full bg-white/[0.02] flex items-center justify-center">
+                    <div className="w-8 h-8 rounded-full bg-white/[0.06] flex items-center justify-center">
                       <span className="text-white font-bold text-sm">{index + 1}</span>
                     </div>
                     <h3 className="font-bold text-white">{stage.stage}</h3>
@@ -1472,7 +1460,7 @@ const IndustrialTestingGuide = () => {
                   <ul className="space-y-1 ml-11">
                     {stage.activities.map((activity, i) => (
                       <li key={i} className="flex items-start gap-2 text-sm text-white">
-                        <CheckCircle className="h-4 w-4 text-white/55 mt-0.5 flex-shrink-0" />
+                        <CheckCircle className="h-4 w-4 text-white/70 mt-0.5 flex-shrink-0" />
                         {activity}
                       </li>
                     ))}
@@ -1481,12 +1469,12 @@ const IndustrialTestingGuide = () => {
               ))}
 
               {/* Checklist */}
-              <div className="bg-yellow-500/10 p-4 rounded-lg border border-yellow-500/30">
-                <h3 className="font-bold text-yellow-300 mb-3">Final Commissioning Checklist</h3>
+              <div className="bg-white/[0.06] p-4 rounded-lg border border-elec-yellow/30">
+                <h3 className="font-bold text-white mb-3">Final Commissioning Checklist</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                   {commissioning.checklistItems.map((item, i) => (
                     <div key={i} className="flex items-start gap-2 text-sm text-white">
-                      <CheckCircle className="h-4 w-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                      <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                       {item}
                     </div>
                   ))}
@@ -1498,14 +1486,14 @@ const IndustrialTestingGuide = () => {
       </Tabs>
 
       {/* Critical Safety Notice */}
-      <Card className="border-red-500/50 bg-red-500/10">
-        <CardHeader>
-          <CardTitle className="text-red-300 flex items-center gap-2">
+      <Card className="border-white/[0.12] border-l-[3px] border-l-red-500 bg-white/[0.06]">
+        <CardHeader className="p-0 pb-3">
+          <CardTitle className="text-[15px] font-semibold tracking-tight text-white flex items-center gap-2">
             <Shield className="h-6 w-6" />
             Critical Industrial Testing Safety
           </CardTitle>
         </CardHeader>
-        <CardContent className="p-4">
+        <CardContent className="p-4 p-0">
           <div className="space-y-3 text-sm text-white">
             <p>
               <strong className="text-red-300">Arc Flash Protection:</strong> Industrial testing on

@@ -233,6 +233,28 @@ export default defineConfig(({ mode }) => ({
     alias: {
       '@': path.resolve(__dirname, './src'),
     },
+    /**
+     * 🔴 Force ONE React. Do not remove.
+     *
+     * The Deno toolchain used for the Supabase edge functions writes a
+     * `node_modules/.deno/` tree (1.7 GB) containing its own copies of npm
+     * packages — including react-hook-form AND its own react@18.3.1. On
+     * 31/08/2026 Vite's dep optimiser resolved react-hook-form from there, so
+     * the pre-bundled chunk inlined `.deno/react@18.3.1/.../react.development.js`
+     * while the app itself ran on top-level `node_modules/react`.
+     *
+     * Two React instances means the second one's hook dispatcher is always
+     * null, so the FIRST hook any such package calls throws. It surfaced as
+     * "Cannot read properties of null (reading 'useRef')" in CustomerForm —
+     * whose only hook is react-hook-form's `useForm` — and would hit every
+     * form in the app.
+     *
+     * `dedupe` makes Vite resolve these to a single copy no matter what else
+     * appears under node_modules, so a stray Deno/npm tree cannot split React
+     * again. If this ever recurs, check for a second react under
+     * node_modules/.deno and clear node_modules/.vite.
+     */
+    dedupe: ['react', 'react-dom', 'react-router-dom', 'react-hook-form'],
   },
   esbuild: {
     drop: ['console'],

@@ -394,7 +394,7 @@ export const SiteNoteSheet = ({
                 type="button"
                 onClick={handleSave}
                 disabled={busy || !body.trim()}
-                className="flex h-12 flex-[1.6] items-center justify-center gap-2 rounded-xl bg-elec-yellow text-[14px] font-semibold text-black transition-all active:scale-[0.99] disabled:opacity-50 touch-manipulation"
+                className="flex h-12 flex-[1.6] items-center justify-center gap-2 rounded-xl bg-elec-yellow text-[14px] font-semibold text-black transition-all active:scale-[0.99] disabled:bg-white/[0.08] disabled:text-white/70 touch-manipulation"
               >
                 {busy ? (
                   <>

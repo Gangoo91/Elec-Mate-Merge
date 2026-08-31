@@ -1754,7 +1754,7 @@ const TimeTrackerPage = () => {
                 <Button
                   onClick={handleBillSelected}
                   disabled={billingMulti}
-                  className="h-10 px-4 text-[13.5px] font-semibold bg-elec-yellow hover:bg-elec-yellow/90 text-black rounded-xl touch-manipulation active:scale-[0.98] disabled:opacity-60"
+                  className="h-10 px-4 text-[13.5px] font-semibold bg-elec-yellow hover:bg-elec-yellow/90 text-black rounded-xl touch-manipulation active:scale-[0.98] disabled:bg-white/[0.08] disabled:text-white/70"
                 >
                   {billingMulti ? (
                     <>

@@ -243,7 +243,7 @@ export function GenerateTasksSheet({
                 type="button"
                 onClick={handlePropose}
                 disabled={description.trim().length < 10 || loading}
-                className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-colors hover:bg-elec-yellow/90 disabled:opacity-40 touch-manipulation active:scale-[0.99]"
+                className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-colors hover:bg-elec-yellow/90 disabled:bg-white/[0.08] disabled:text-white/70 touch-manipulation active:scale-[0.99]"
               >
                 {loading ? (
                   <>
@@ -267,7 +267,7 @@ export function GenerateTasksSheet({
                   type="button"
                   onClick={handleCreate}
                   disabled={chosen.length === 0 || creating}
-                  className="flex h-12 flex-1 items-center justify-center gap-2 rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-colors hover:bg-elec-yellow/90 disabled:opacity-40 touch-manipulation active:scale-[0.99]"
+                  className="flex h-12 flex-1 items-center justify-center gap-2 rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-colors hover:bg-elec-yellow/90 disabled:bg-white/[0.08] disabled:text-white/70 touch-manipulation active:scale-[0.99]"
                 >
                   {creating ? (
                     <>

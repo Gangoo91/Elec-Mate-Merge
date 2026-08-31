@@ -139,7 +139,7 @@ export function CalculatorResultEmail({ result }: Props) {
         <button
           type="submit"
           disabled={state === 'sending'}
-          className="h-12 touch-manipulation rounded-xl bg-elec-yellow px-6 text-[15px] font-bold text-black transition-colors hover:brightness-95 disabled:opacity-60"
+          className="h-12 touch-manipulation rounded-xl bg-elec-yellow px-6 text-[15px] font-bold text-black transition-colors hover:brightness-95 disabled:bg-white/[0.08] disabled:text-white/70"
         >
           {state === 'sending' ? 'Sending…' : 'Send it'}
         </button>

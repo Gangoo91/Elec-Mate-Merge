@@ -218,7 +218,7 @@ export default function CreateProjectSheet({
             <button
               onClick={() => handleCreate(false)}
               disabled={!name.trim() || isCreating || isUpdating}
-              className="w-full h-12 rounded-xl bg-elec-yellow text-sm font-semibold text-black flex items-center justify-center gap-2 touch-manipulation active:bg-yellow-400 disabled:opacity-50 transition-all"
+              className="w-full h-12 rounded-xl bg-elec-yellow text-sm font-semibold text-black flex items-center justify-center gap-2 touch-manipulation active:bg-yellow-400 disabled:bg-white/[0.08] disabled:text-white/70 transition-all"
             >
               {isCreating || isUpdating ? (
                 <>

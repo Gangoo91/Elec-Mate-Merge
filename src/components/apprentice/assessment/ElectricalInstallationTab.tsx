@@ -145,7 +145,7 @@ const ElectricalInstallationTab = () => {
   return (
     <div className="space-y-5 animate-fade-in">
       <div className="space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
           Electrical installation assessment
         </span>
         <h2 className="text-[20px] sm:text-[24px] font-semibold tracking-tight text-white leading-tight">
@@ -157,9 +157,9 @@ const ElectricalInstallationTab = () => {
         </p>
       </div>
 
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-3">
+      <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 space-y-3">
         <div className="flex items-baseline justify-between">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
             Progress
           </span>
           <span className="text-[12px] text-white/85 font-mono">
@@ -180,10 +180,10 @@ const ElectricalInstallationTab = () => {
         return (
           <div
             key={index}
-            className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3"
+            className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3"
           >
             <div className="flex items-baseline justify-between">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
                 {category.category}
               </span>
               <span className="text-[12px] text-white/85 font-mono">
@@ -204,7 +204,7 @@ const ElectricalInstallationTab = () => {
                       ${
                         isChecked
                           ? 'bg-white/[0.04] border-white/10'
-                          : 'bg-white/[0.02] border-white/[0.06] hover:border-white/10'
+                          : 'bg-white/[0.06] border-white/[0.10] hover:border-white/10'
                       }
                     `}
                   >
@@ -229,8 +229,8 @@ const ElectricalInstallationTab = () => {
         );
       })}
 
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+      <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
           Key standards & regulations
         </span>
         <div className="space-y-3">
@@ -254,8 +254,8 @@ const ElectricalInstallationTab = () => {
         </div>
       </div>
 
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+      <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
           Testing priorities
         </span>
         <div className="space-y-2">
@@ -265,7 +265,7 @@ const ElectricalInstallationTab = () => {
                 <p className="text-[14px] text-white">{test.test}</p>
                 <p className="text-[13px] text-white/70 leading-relaxed">{test.reason}</p>
               </div>
-              <span className="flex-shrink-0 text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+              <span className="flex-shrink-0 text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.07]">
                 {test.priority}
               </span>
             </div>
@@ -273,8 +273,8 @@ const ElectricalInstallationTab = () => {
         </div>
       </div>
 
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+      <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
           Findings & recommendations
         </span>
         <MobileInput
@@ -291,7 +291,7 @@ const ElectricalInstallationTab = () => {
         </Button>
       </div>
 
-      <div className="rounded-xl border border-red-500/30 bg-red-500/[0.04] p-4 sm:p-5 space-y-2">
+      <div className="rounded-xl border border-white/[0.12] border-l-[3px] border-l-red-500 bg-white/[0.06] p-4 sm:p-5 space-y-2">
         <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">
           Important reminder
         </span>

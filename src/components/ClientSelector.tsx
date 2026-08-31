@@ -7,9 +7,20 @@ import { cn } from '@/lib/utils';
 interface ClientSelectorProps {
   onSelectCustomer: (customer: Customer | null) => void;
   selectedCustomerId?: string;
+  /**
+   * Overrides the trigger's styling. Optional and additive (ELE-1660): the
+   * default keeps every existing caller pixel-identical, while a form built on
+   * the underline language can hand in something that does not read as a
+   * black box dropped into a card.
+   */
+  triggerClassName?: string;
 }
 
-const ClientSelector = ({ onSelectCustomer, selectedCustomerId }: ClientSelectorProps) => {
+const ClientSelector = ({
+  onSelectCustomer,
+  selectedCustomerId,
+  triggerClassName,
+}: ClientSelectorProps) => {
   const [isSheetOpen, setIsSheetOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(null);
@@ -85,10 +96,13 @@ const ClientSelector = ({ onSelectCustomer, selectedCustomerId }: ClientSelector
         <button
           type="button"
           onClick={() => setIsSheetOpen(true)}
-          className="w-full h-12 rounded-xl bg-[hsl(0_0%_10%)] border border-white/[0.10] flex items-center justify-between px-4 text-[14px] text-white touch-manipulation hover:bg-white/[0.04] hover:border-white/[0.15] active:scale-[0.99] transition-all"
+          className={
+            triggerClassName ??
+            'w-full h-12 rounded-xl bg-[hsl(0_0%_10%)] border border-white/[0.10] flex items-center justify-between px-4 text-[14px] text-white touch-manipulation hover:bg-white/[0.04] hover:border-white/[0.15] active:scale-[0.99] transition-all'
+          }
         >
           <span>Search clients…</span>
-          <ChevronDown className="h-4 w-4 text-white/70" />
+          <ChevronDown className="h-4 w-4 text-white" />
         </button>
       )}
 

@@ -1693,7 +1693,7 @@ export const EnhancedQuoteItemsStep = ({
           <Button
             onClick={handleAddItem}
             disabled={!newItem.description || newItem.unitPrice <= 0}
-            className="w-full h-12 bg-elec-yellow text-black hover:brightness-110 font-semibold rounded-xl touch-manipulation active:scale-[0.98] disabled:opacity-40"
+            className="w-full h-12 bg-elec-yellow text-black hover:brightness-110 font-semibold rounded-xl touch-manipulation active:scale-[0.98] disabled:bg-white/[0.08] disabled:text-white/70"
           >
             Add to Quote
           </Button>

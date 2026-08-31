@@ -11,6 +11,9 @@ import {
 import { toast } from 'sonner';
 import { storageGetSync, storageSetSync } from '@/utils/storage';
 import TestingResources from '@/components/apprentice/testing-procedures/TestingResources';
+import TestSequenceCard from '@/components/apprentice/testing-procedures/TestSequenceCard';
+import { CALLOUT_INSET } from '@/components/ui/panel-recipe';
+import { cn } from '@/lib/utils';
 import R1R2TestingTab from '@/components/apprentice/testing-procedures/testing-tabs/R1R2Testing/R1R2TestingTab';
 import IRTestingTab from '@/components/apprentice/testing-procedures/testing-tabs/InsulationResistance/IRTestingTab';
 import ZsTestingTab from '@/components/apprentice/testing-procedures/testing-tabs/EarthFaultLoop/ZsTestingTab';
@@ -25,7 +28,8 @@ import {
   GitBranch,
   Check,
 } from 'lucide-react';
-import { PageFrame, PageHero, itemVariants } from '@/components/college/primitives';
+import { itemVariants } from '@/components/college/primitives';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 
 const TestingProcedures = () => {
   const navigate = useNavigate();
@@ -35,9 +39,9 @@ const TestingProcedures = () => {
   const [lastVisited, setLastVisited] = useState<string | null>(null);
 
   const testingOptions = [
-    { value: 'r1r2', label: 'R1+R2 Testing', icon: Zap },
-    { value: 'ir', label: 'IR Testing', icon: Activity },
-    { value: 'zs', label: 'Zs Testing', icon: GitBranch },
+    { value: 'r1r2', label: 'R₁+R₂ continuity', icon: Zap },
+    { value: 'ir', label: 'Insulation resistance', icon: Activity },
+    { value: 'zs', label: 'Earth fault loop (Zs)', icon: GitBranch },
     { value: 'polarity', label: 'Polarity', icon: Check },
   ];
 
@@ -49,15 +53,15 @@ const TestingProcedures = () => {
     }
   }, []);
 
+  /*
+   * No toast on tab change. It used to fire one saying "your progress is
+   * automatically saved" — nothing of the sort happens. The only thing stored
+   * is which tab you were last on; the step you had reached inside a tab is
+   * lost the moment you switch. Switching is its own feedback anyway.
+   */
   const handleTabChange = (value: string) => {
     setActiveTab(value);
     storageSetSync('lastTestingTab', value);
-
-    // Show toast when switching tabs
-    toast.success(`Switched to ${getTabName(value)} procedure`, {
-      description: 'Your progress is automatically saved',
-      duration: 2000,
-    });
   };
 
   const renderTabContent = () => {
@@ -75,114 +79,108 @@ const TestingProcedures = () => {
     }
   };
 
-  const getTabName = (tabId: string) => {
-    switch (tabId) {
-      case 'r1r2':
-        return 'R1+R2 Testing';
-      case 'ir':
-        return 'Insulation Resistance';
-      case 'zs':
-        return 'Earth Fault Loop';
-      case 'polarity':
-        return 'Polarity';
-      default:
-        return tabId;
-    }
-  };
+  /* Derived from testingOptions rather than a second switch — the two lists
+     had already drifted apart ("Zs Testing" against "Earth Fault Loop"). */
+  const getTabName = (tabId: string) =>
+    testingOptions.find((tab) => tab.value === tabId)?.label ?? tabId;
 
   return (
-    <PageFrame className="px-4 sm:px-6 lg:px-8">
-      <motion.div variants={itemVariants}>
-        <Button
-          variant="ghost"
-          onClick={() => navigate('/apprentice/on-job-tools')}
-          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
-        >
-          <ArrowLeft className="mr-2 h-5 w-5" />
-          Back
-        </Button>
-      </motion.div>
+    <HubPage>
+      <HubMasthead
+        section="Apprentice · Testing"
+        title="Testing procedures"
+        backTo="/apprentice/on-job-tools"
+      />
+      <HubBody>
+        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
+          Step-by-step guides for four core BS 7671 tests — R₁+R₂ continuity, insulation resistance
+          and polarity are dead tests; earth fault loop impedance is carried out live. Reflects
+          BS 7671:2018+A4:2026.
+        </p>
 
-      <motion.div variants={itemVariants}>
-        <PageHero
-          eyebrow="Apprentice · Testing"
-          title="Testing procedures"
-          description="Step-by-step guides for the four core BS 7671 dead tests — R1+R2, insulation resistance, earth fault loop and polarity. Reflects BS 7671:2018+A4:2026."
-          tone="yellow"
-        />
-      </motion.div>
-
-      {lastVisited && activeTab !== lastVisited && (
-        <div className="bg-blue-950/20 border border-blue-500/30 rounded-md p-3 mb-6 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <BookmarkCheck className="h-5 w-5 text-blue-400" />
-            <span className="text-sm text-blue-100">
-              You last viewed the <span className="font-medium">{getTabName(lastVisited)}</span>{' '}
-              procedure.
-            </span>
-          </div>
-          <Button
-            size="sm"
-            variant="outline"
-            className="text-xs border-blue-500/40 hover:bg-blue-800/20"
-            onClick={() => setActiveTab(lastVisited)}
+        {lastVisited && activeTab !== lastVisited && (
+          /* Was blue, then briefly a volt wash — which is the muddy-brown rule
+             again. Neutral lit surface, accent on the edge and the icon. */
+          <div
+            className={cn(
+              CALLOUT_INSET,
+              'flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between'
+            )}
           >
-            Return
-          </Button>
-        </div>
-      )}
-
-      <div className="w-full space-y-6">
-        <div className="flex justify-center relative">
-          <Select value={activeTab} onValueChange={handleTabChange}>
-            <SelectTrigger className="w-[280px] md:w-[320px]">
-              <SelectValue placeholder="Select testing procedure">
-                <div className="flex items-center gap-2">
-                  {(() => {
-                    const currentTab = testingOptions.find((tab) => tab.value === activeTab);
-                    const IconComponent = currentTab?.icon;
-                    return (
-                      <>
-                        {IconComponent && <IconComponent className="h-4 w-4" />}
-                        {currentTab?.label}
-                      </>
-                    );
-                  })()}
-                </div>
-              </SelectValue>
-            </SelectTrigger>
-            <SelectContent>
-              {testingOptions.map((tab) => {
-                const IconComponent = tab.icon;
-                return (
-                  <SelectItem key={tab.value} value={tab.value}>
-                    <div className="flex items-center gap-2">
-                      <IconComponent className="h-4 w-4" />
-                      {tab.label}
-                    </div>
-                  </SelectItem>
-                );
-              })}
-            </SelectContent>
-          </Select>
-
-          <div className="absolute top-0 right-0">
+            <div className="flex items-center gap-2">
+              <BookmarkCheck className="h-4 w-4 shrink-0 text-elec-yellow" />
+              <span className="text-[14px] text-white">
+                You were last on{' '}
+                <span className="font-medium">{getTabName(lastVisited)}</span>.
+              </span>
+            </div>
             <Button
-              variant="ghost"
               size="sm"
-              className="rounded-full h-8 w-8 p-0"
-              onClick={() => toast.info('Need help? Contact your supervisor or send us feedback.')}
+              variant="outline"
+              className="h-11 shrink-0 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
+              onClick={() => setActiveTab(lastVisited)}
             >
-              <HelpCircle className="h-4 w-4" />
+              Go back to it
             </Button>
           </div>
+        )}
+
+        <TestSequenceCard />
+
+        <div className="w-full space-y-6">
+          <div className="flex justify-center relative">
+            <Select value={activeTab} onValueChange={handleTabChange}>
+              <SelectTrigger className="w-[280px] md:w-[320px]">
+                <SelectValue placeholder="Select testing procedure">
+                  <div className="flex items-center gap-2">
+                    {(() => {
+                      const currentTab = testingOptions.find((tab) => tab.value === activeTab);
+                      const IconComponent = currentTab?.icon;
+                      return (
+                        <>
+                          {IconComponent && <IconComponent className="h-4 w-4" />}
+                          {currentTab?.label}
+                        </>
+                      );
+                    })()}
+                  </div>
+                </SelectValue>
+              </SelectTrigger>
+              <SelectContent>
+                {testingOptions.map((tab) => {
+                  const IconComponent = tab.icon;
+                  return (
+                    <SelectItem key={tab.value} value={tab.value}>
+                      <div className="flex items-center gap-2">
+                        <IconComponent className="h-4 w-4" />
+                        {tab.label}
+                      </div>
+                    </SelectItem>
+                  );
+                })}
+              </SelectContent>
+            </Select>
+
+            <div className="absolute top-0 right-0">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="rounded-full h-8 w-8 p-0"
+                onClick={() =>
+                  toast.info('Need help? Contact your supervisor or send us feedback.')
+                }
+              >
+                <HelpCircle className="h-4 w-4" />
+              </Button>
+            </div>
+          </div>
+
+          <div className="w-full animate-fade-in">{renderTabContent()}</div>
         </div>
 
-        <div className="w-full animate-fade-in">{renderTabContent()}</div>
-      </div>
-
-      <TestingResources />
-    </PageFrame>
+        <TestingResources />
+      </HubBody>
+    </HubPage>
   );
 };
 

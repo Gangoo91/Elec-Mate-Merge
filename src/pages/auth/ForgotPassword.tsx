@@ -120,7 +120,7 @@ const ForgotPassword = () => {
                   <Button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full h-12 rounded-xl text-[15px] font-semibold bg-elec-yellow hover:bg-elec-yellow/90 text-black shadow-[0_1px_20px_rgba(250,204,21,0.15)] active:scale-[0.98] disabled:opacity-50 transition-all duration-150"
+                    className="w-full h-12 rounded-xl text-[15px] font-semibold bg-elec-yellow hover:bg-elec-yellow/90 text-black shadow-[0_1px_20px_rgba(250,204,21,0.15)] active:scale-[0.98] disabled:bg-white/[0.08] disabled:text-white/70 transition-all duration-150"
                   >
                     {isSubmitting ? (
                       <>

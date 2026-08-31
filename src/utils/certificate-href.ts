@@ -51,6 +51,7 @@ const PATH_ROUTED = new Set([
   'non-compliance-notice',
   'pat-testing',
   'permit-to-work',
+  'plug-in-solar',
   'pre-purchase-survey',
   'routine-inspection',
   'safe-isolation',

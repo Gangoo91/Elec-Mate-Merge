@@ -182,11 +182,10 @@ const IndustrialReferenceGuide = () => {
 
   return (
     <div className="space-y-6">
-      <Card className="border-elec-yellow/30 bg-white/5">
-        <CardHeader>
+      <Card variant="plain">
+        <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <Book className="h-6 w-6 text-elec-yellow" />
-            <CardTitle className="text-elec-yellow">Industrial Installation Reference</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">Industrial Installation Reference</CardTitle>
           </div>
           <p className="text-white">
             Comprehensive standards, testing procedures, and technical specifications
@@ -204,18 +203,17 @@ const IndustrialReferenceGuide = () => {
 
         <TabsContent value="standards" className="space-y-4">
           {standardsAndRegulations.map((category, index) => (
-            <Card key={index} className="border-white/[0.06] bg-white/5">
-              <CardHeader>
+            <Card key={index} className="border-white/[0.10] bg-white/5">
+              <CardHeader className="p-0 pb-3">
                 <div className="flex items-center gap-2">
-                  <Shield className="h-6 w-6 text-white/55" />
-                  <CardTitle className="text-white">{category.category}</CardTitle>
+                  <CardTitle className="text-[15px] font-semibold tracking-tight text-white">{category.category}</CardTitle>
                 </div>
               </CardHeader>
-              <CardContent className="space-y-3">
+              <CardContent className="space-y-3 p-0">
                 {category.standards.map((standard, stdIndex) => (
                   <div
                     key={stdIndex}
-                    className="bg-white/[0.02] p-3 rounded-lg border border-white/[0.06]"
+                    className="bg-white/[0.06] p-3 rounded-lg border border-white/[0.10]"
                   >
                     <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-2 mb-2">
                       <h4 className="font-semibold text-white">{standard.code}</h4>
@@ -232,16 +230,15 @@ const IndustrialReferenceGuide = () => {
         </TabsContent>
 
         <TabsContent value="emergency" className="space-y-4">
-          <Card className="border-red-500/30 bg-white/5">
-            <CardHeader>
+          <Card variant="plain">
+            <CardHeader className="p-0 pb-3">
               <div className="flex items-center gap-2">
-                <AlertTriangle className="h-6 w-6 text-red-400" />
-                <CardTitle className="text-red-300">Emergency System Requirements</CardTitle>
+                <CardTitle className="text-[15px] font-semibold tracking-tight text-white">Emergency System Requirements</CardTitle>
               </div>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-4 p-0">
               {emergencySystemRequirements.map((system, index) => (
-                <div key={index} className="bg-red-500/10 p-4 rounded-lg border border-red-500/20">
+                <div key={index} className="p-4 rounded-lg border border-white/[0.12] border-l-[3px] border-l-red-500 bg-white/[0.06]">
                   <div className="flex items-center justify-between gap-3 mb-3">
                     <h3 className="font-semibold text-red-300">{system.system}</h3>
                     <Badge variant="outline" className="border-red-400 text-red-300 text-xs">
@@ -269,18 +266,17 @@ const IndustrialReferenceGuide = () => {
         </TabsContent>
 
         <TabsContent value="testing" className="space-y-4">
-          <Card className="border-white/[0.06] bg-white/5">
-            <CardHeader>
+          <Card variant="plain">
+            <CardHeader className="p-0 pb-3">
               <div className="flex items-center gap-2">
-                <FileCheck className="h-6 w-6 text-white/55" />
-                <CardTitle className="text-white">Industrial Testing Procedures</CardTitle>
+                <CardTitle className="text-[15px] font-semibold tracking-tight text-white">Industrial Testing Procedures</CardTitle>
               </div>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-4 p-0">
               {testingProcedures.map((test, index) => (
                 <div
                   key={index}
-                  className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]"
+                  className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]"
                 >
                   <h3 className="font-semibold text-white mb-3">{test.test}</h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 text-sm">
@@ -312,18 +308,17 @@ const IndustrialReferenceGuide = () => {
         </TabsContent>
 
         <TabsContent value="protection" className="space-y-4">
-          <Card className="border-white/[0.06] bg-white/5">
-            <CardHeader>
+          <Card variant="plain">
+            <CardHeader className="p-0 pb-3">
               <div className="flex items-center gap-2">
-                <Settings className="h-6 w-6 text-white/55" />
-                <CardTitle className="text-white">Industrial Protection Devices</CardTitle>
+                <CardTitle className="text-[15px] font-semibold tracking-tight text-white">Industrial Protection Devices</CardTitle>
               </div>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-4 p-0">
               {protectionDevices.map((device, index) => (
                 <div
                   key={index}
-                  className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]"
+                  className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]"
                 >
                   <div className="flex items-center justify-between gap-3 mb-3">
                     <h3 className="font-semibold text-white">{device.device}</h3>

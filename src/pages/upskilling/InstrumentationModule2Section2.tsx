@@ -189,9 +189,9 @@ const InstrumentationModule2Section2 = () => {
             that, and they differ in ways that decide the job.
           </p>
           <p>
-            <strong>Thermistors</strong> are devices made of metal oxide which either increase in
-            resistance with increasing temperature — a positive temperature coefficient — or
-            decrease with increasing temperature, a negative temperature coefficient.
+            <strong>Thermistors</strong> are built from metal oxides, and they come in two senses:
+            resistance climbing as it gets hotter (a positive temperature coefficient) or falling as
+            it gets hotter (a negative one).
           </p>
           <p>
             <strong>RTDs</strong> — resistance temperature detectors — are made of pure metal wire,
@@ -293,7 +293,7 @@ const InstrumentationModule2Section2 = () => {
           </p>
           <ul>
             <li>
-              For <strong>reference grade</strong> platinum wire, the most common alpha value is{' '}
+              <strong>Reference grade</strong> platinum wire usually carries an alpha of{' '}
               <strong>0.003902</strong>.
             </li>
             <li>
@@ -379,10 +379,9 @@ const InstrumentationModule2Section2 = () => {
             </strong>
           </p>
           <p>
-            If the resistances of the two current-carrying wires are precisely identical —{' '}
+            Provided both current-carrying legs present exactly the same resistance &mdash;{' '}
             <strong>
-              and this includes the electrical resistance of any connections within those paths,
-              such as terminal blocks
+              which has to include every connection along the way, terminal blocks included
             </strong>{' '}
             — the calculated RTD voltage is the true one and no wire-resistance error appears.
           </p>
@@ -404,11 +403,11 @@ const InstrumentationModule2Section2 = () => {
           question="A three-wire Pt100 reads correctly at ambient but drifts increasingly wrong as the process heats. A technician finds a badly made joint in ONE of the current-carrying legs. Why does that matter?"
           options={[
             'It adds resistance, and any added resistance is an error',
-            'It breaks the assumption that the two current-carrying legs are equal, so the cancellation no longer works',
             'It reduces the excitation current below specification',
             'It has no effect — three-wire connections cancel all lead resistance',
+            'It breaks the assumption that the two current-carrying legs are equal, so the cancellation no longer works',
           ]}
-          correctIndex={1}
+          correctIndex={3}
           explanation="Three-wire cancellation works by subtracting the drop on one current-carrying leg from the drop on the other. That is only valid while the two legs — including their terminations — are equal. An extra joint in one leg destroys the symmetry the whole method depends on, and the error appears."
         />
 
@@ -474,9 +473,8 @@ const InstrumentationModule2Section2 = () => {
           onSite="This is the single idea that makes thermocouples make sense. Everything awkward about them follows from it."
         >
           <p>
-            In its simplest form a thermocouple is nothing more than a pair of dissimilar-metal
-            wires joined at one end. That joint — the one in the process — is the{' '}
-            <strong>measurement junction</strong>.
+            Strip a thermocouple back and it is two wires of different metals joined at one end. The
+            joint that sits in the process is the <strong>measurement junction</strong>.
           </p>
           <p>
             But the circuit cannot end there. The two wires have to join something eventually, and
@@ -490,10 +488,10 @@ const InstrumentationModule2Section2 = () => {
             </strong>
           </p>
           <p>
-            This makes thermocouples <strong>inherently differential sensing devices</strong>: they
-            generate a measurable voltage in proportion to the difference in temperature between two
-            locations. It is an inescapable fact of thermocouple circuits, and it complicates
-            interpreting any voltage you measure from one.
+            So a thermocouple is <strong>always reporting a difference</strong>, never an absolute
+            temperature: the voltage it produces tracks how far apart two places are thermally. That
+            is not a quirk to be designed around but a property of the circuit, and it is what makes
+            any voltage read from one harder to interpret than it first appears.
           </p>
           <p>
             Put plainly: a thermocouple cannot tell you how hot the process is. It can only tell you
@@ -623,12 +621,12 @@ const InstrumentationModule2Section2 = () => {
           id="ins-2-2-refjunction"
           question="Why does a thermocouple transmitter contain a temperature sensor of its own?"
           options={[
-            'To monitor the transmitter electronics for overheating',
             'To measure the reference junction, so the missing half of the differential measurement can be added back',
+            'To monitor the transmitter electronics for overheating',
             'To provide a backup reading if the thermocouple fails',
             'To compensate for cable resistance',
           ]}
-          correctIndex={1}
+          correctIndex={0}
           explanation="A thermocouple only produces a voltage proportional to the difference between the measurement and reference junctions. The transmitter measures its own terminals — the reference junction — looks up the voltage that accounts for, and adds it back. Without that, the reading would drift every time the panel temperature changed."
         />
 
@@ -768,8 +766,8 @@ const InstrumentationModule2Section2 = () => {
           <p>
             The <strong>emissivity factor</strong> varies with the composition of a substance — and
             beyond composition, surface finish and shape also affect how much radiation a sensor
-            receives from an object. A more comprehensive measure of an object&rsquo;s
-            &ldquo;thermal-optical measureability&rdquo; is <strong>emittance</strong>.
+            receives from an object. A fuller way of describing how readable a surface is to a
+            thermal instrument is its <strong>emittance</strong>.
           </p>
           <ul>
             <li>

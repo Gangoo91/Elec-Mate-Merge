@@ -378,7 +378,7 @@ export const EVChargingModule6Section4Quiz = () => {
           <Button
             onClick={handleNext}
             disabled={!showAnswer && selectedAnswers[currentQuestion] === undefined}
-            className="bg-elec-yellow text-black hover:bg-yellow-400 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="bg-elec-yellow text-black hover:bg-yellow-400 disabled:bg-white/[0.08] disabled:text-white/70 disabled:cursor-not-allowed"
           >
             {showAnswer
               ? currentQuestion === quizData.length - 1

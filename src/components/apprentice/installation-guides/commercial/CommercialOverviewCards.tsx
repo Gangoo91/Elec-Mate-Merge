@@ -1026,7 +1026,7 @@ const CommercialOverviewCards = () => {
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {overviewStats.map((stat, index) => (
           <Card key={index} className="border-elec-yellow/30 bg-white/5">
-            <CardContent className="p-4">
+            <CardContent className="p-4 p-0">
               <div className="flex items-center gap-2 mb-2">
                 <stat.icon className="h-4 w-4 text-elec-yellow" />
                 <span className="text-xs text-white">{stat.label}</span>
@@ -1041,14 +1041,14 @@ const CommercialOverviewCards = () => {
       {/* SECTION 1: WHAT IS COMMERCIAL ELECTRICAL WORK? */}
       {/* ============================================ */}
 
-      <Card className="border-elec-yellow/30 bg-white/5">
-        <CardHeader>
+      <Card variant="plain">
+        <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-3">
-            <div className="p-2 bg-elec-yellow/20 rounded-lg">
+            <div className="p-2 bg-white/[0.06] rounded-lg">
               <Building className="h-6 w-6 text-elec-yellow" />
             </div>
             <div>
-              <CardTitle className="text-elec-yellow text-xl">
+              <CardTitle className="text-[15px] font-semibold tracking-tight text-white">
                 What is Commercial Electrical Work?
               </CardTitle>
               <p className="text-white text-sm mt-1">
@@ -1057,11 +1057,10 @@ const CommercialOverviewCards = () => {
             </div>
           </div>
         </CardHeader>
-        <CardContent className="space-y-6">
+        <CardContent className="space-y-6 p-0">
           {/* Work Type Comparison Table */}
           <div className="bg-neutral-800/50 p-4 rounded-lg border border-neutral-700">
             <h4 className="font-semibold text-white mb-4 flex items-center gap-2">
-              <Layers className="h-5 w-5 text-elec-yellow" />
               Domestic vs Commercial vs Industrial
             </h4>
             <div className="overflow-x-auto">
@@ -1096,7 +1095,6 @@ const CommercialOverviewCards = () => {
           {/* Types of Commercial Premises */}
           <div>
             <h4 className="font-semibold text-white mb-4 flex items-center gap-2">
-              <Store className="h-5 w-5 text-elec-yellow" />
               Types of Commercial Premises
             </h4>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -1105,31 +1103,31 @@ const CommercialOverviewCards = () => {
                   key={idx}
                   className={`p-4 rounded-lg border ${
                     premise.color === 'blue'
-                      ? 'bg-white/[0.02] border-white/[0.06]'
+                      ? 'bg-white/[0.06] border-white/[0.10]'
                       : premise.color === 'pink'
-                        ? 'bg-white/[0.02] border-white/[0.06]'
+                        ? 'bg-white/[0.06] border-white/[0.10]'
                         : premise.color === 'amber'
-                          ? 'bg-white/[0.02] border-white/[0.06]'
+                          ? 'bg-white/[0.06] border-white/[0.10]'
                           : premise.color === 'purple'
-                            ? 'bg-white/[0.02] border-white/[0.06]'
+                            ? 'bg-white/[0.06] border-white/[0.10]'
                             : premise.color === 'green'
-                              ? 'bg-white/[0.02] border-white/[0.06]'
-                              : 'bg-red-500/10 border-red-500/30'
+                              ? 'bg-white/[0.06] border-white/[0.10]'
+                              : 'bg-white/[0.06] border-red-500/30'
                   }`}
                 >
                   <div className="flex items-center gap-2 mb-2">
                     <premise.icon
                       className={`h-5 w-5 ${
                         premise.color === 'blue'
-                          ? 'text-white/55'
+                          ? 'text-white/70'
                           : premise.color === 'pink'
-                            ? 'text-white/55'
+                            ? 'text-white/70'
                             : premise.color === 'amber'
-                              ? 'text-white/55'
+                              ? 'text-white/70'
                               : premise.color === 'purple'
-                                ? 'text-white/55'
+                                ? 'text-white/70'
                                 : premise.color === 'green'
-                                  ? 'text-white/55'
+                                  ? 'text-white/70'
                                   : 'text-red-400'
                       }`}
                     />
@@ -1153,15 +1151,14 @@ const CommercialOverviewCards = () => {
           </div>
 
           {/* Why Commercial is Different */}
-          <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+          <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
             <h4 className="font-semibold text-white mb-4 flex items-center gap-2">
-              <Info className="h-5 w-5" />
               Why Commercial Work is Different
             </h4>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {whyCommercialDifferent.map((factor, idx) => (
                 <div key={idx} className="flex items-start gap-3">
-                  <factor.icon className="h-5 w-5 text-white/55 mt-1 flex-shrink-0" />
+                  <factor.icon className="h-5 w-5 text-white/70 mt-1 flex-shrink-0" />
                   <div>
                     <span className="font-medium text-white text-sm">{factor.factor}</span>
                     <p className="text-xs text-white mt-1">{factor.description}</p>
@@ -1174,7 +1171,6 @@ const CommercialOverviewCards = () => {
           {/* Career Progression */}
           <div>
             <h4 className="font-semibold text-white mb-4 flex items-center gap-2">
-              <ArrowUpRight className="h-5 w-5 text-elec-yellow" />
               Career Progression in Commercial Electrical Work
             </h4>
             <div className="space-y-4">
@@ -1199,7 +1195,7 @@ const CommercialOverviewCards = () => {
                           <Badge
                             key={sidx}
                             variant="outline"
-                            className="text-xs border-white/[0.06] text-white/55"
+                            className="text-xs border-white/[0.10] text-white/70"
                           >
                             {skill}
                           </Badge>
@@ -1213,7 +1209,7 @@ const CommercialOverviewCards = () => {
                           <Badge
                             key={qidx}
                             variant="outline"
-                            className="text-xs border-white/[0.06] text-white/55"
+                            className="text-xs border-white/[0.10] text-white/70"
                           >
                             {qual}
                           </Badge>
@@ -1232,32 +1228,32 @@ const CommercialOverviewCards = () => {
       {/* SECTION 2: OFFICE FIT-OUTS */}
       {/* ============================================ */}
 
-      <Card className="border-white/[0.06] bg-white/5">
-        <CardHeader>
+      <Card variant="plain">
+        <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-3">
-            <div className="p-2 bg-white/[0.02] rounded-lg">
-              <Briefcase className="h-6 w-6 text-white/55" />
+            <div className="p-2 bg-white/[0.06] rounded-lg">
+              <Briefcase className="h-6 w-6 text-white/70" />
             </div>
             <div>
-              <CardTitle className="text-white text-xl">Office Fit-Outs</CardTitle>
+              <CardTitle className="text-[15px] font-semibold tracking-tight text-white">Office Fit-Outs</CardTitle>
               <p className="text-white text-sm mt-1">
                 Complete guide to electrical installations in office environments
               </p>
             </div>
           </div>
         </CardHeader>
-        <CardContent className="space-y-6">
+        <CardContent className="space-y-6 p-0">
           {/* Office Layout Types */}
           <div>
             <h4 className="font-semibold text-white mb-4 flex items-center gap-2">
-              <Layers className="h-5 w-5 text-white/55" />
+              <Layers className="h-5 w-5 text-white/70" />
               Office Layout Types & Electrical Approaches
             </h4>
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
               {officeLayoutTypes.map((layout, idx) => (
                 <div
                   key={idx}
-                  className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]"
+                  className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]"
                 >
                   <h5 className="font-medium text-white mb-2">{layout.type}</h5>
                   <p className="text-xs text-white mb-3">{layout.description}</p>
@@ -1278,13 +1274,12 @@ const CommercialOverviewCards = () => {
           </div>
 
           {/* Lighting Requirements */}
-          <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+          <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
             <h4 className="font-semibold text-white mb-4 flex items-center gap-2">
-              <Lightbulb className="h-5 w-5" />
               Lighting Requirements (BS EN 12464-1)
             </h4>
-            <Alert className="border-white/[0.06] bg-white/[0.02] mb-4">
-              <Info className="h-4 w-4 text-white/55" />
+            <Alert className="border-white/[0.10] bg-white/[0.06] mb-4">
+              <Info className="h-4 w-4 text-white/70" />
               <AlertDescription className="text-white/85 text-sm">
                 <strong>Key Standard:</strong> BS EN 12464-1 specifies minimum maintained
                 illuminance levels for indoor workplaces. These are minimum values - actual design
@@ -1294,7 +1289,7 @@ const CommercialOverviewCards = () => {
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-white/[0.06]">
+                  <tr className="border-b border-white/[0.10]">
                     <th className="text-left py-2 text-white/85">Area</th>
                     <th className="text-left py-2 text-white/85">Lux Level</th>
                     <th className="text-left py-2 text-white/85 hidden md:table-cell">Standard</th>
@@ -1303,7 +1298,7 @@ const CommercialOverviewCards = () => {
                 </thead>
                 <tbody>
                   {officeLuxLevels.map((level, idx) => (
-                    <tr key={idx} className="border-b border-white/[0.06]">
+                    <tr key={idx} className="border-b border-white/[0.10]">
                       <td className="py-2 text-white font-medium">{level.area}</td>
                       <td className="py-2">
                         <Badge variant="outline" className="border-white/10 text-white text-xs">
@@ -1320,12 +1315,11 @@ const CommercialOverviewCards = () => {
           </div>
 
           {/* Data and Power Segregation */}
-          <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+          <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
             <h4 className="font-semibold text-white mb-4 flex items-center gap-2">
-              <Network className="h-5 w-5" />
               {dataSegregation.title}
             </h4>
-            <Alert className="border-red-500/50 bg-red-500/10 mb-4">
+            <Alert className="border-white/[0.12] border-l-[3px] border-l-red-500 bg-white/[0.06] mb-4">
               <AlertTriangle className="h-4 w-4 text-red-400" />
               <AlertDescription className="text-red-200 text-sm">
                 <strong>Critical:</strong> Failure to segregate power and data cables can cause
@@ -1336,7 +1330,7 @@ const CommercialOverviewCards = () => {
               {dataSegregation.requirements.map((req, idx) => (
                 <div
                   key={idx}
-                  className="flex items-start gap-3 bg-white/[0.02] p-3 rounded border border-white/[0.06]"
+                  className="flex items-start gap-3 bg-white/[0.06] p-3 rounded border border-white/[0.10]"
                 >
                   <Badge
                     variant="outline"
@@ -1356,14 +1350,14 @@ const CommercialOverviewCards = () => {
           {/* Containment Systems */}
           <div>
             <h4 className="font-semibold text-white mb-4 flex items-center gap-2">
-              <Cable className="h-5 w-5 text-white/55" />
+              <Cable className="h-5 w-5 text-white/70" />
               Trunking & Containment Systems
             </h4>
             <div className="space-y-4">
               {officeContainmentSystems.map((system, idx) => (
                 <div
                   key={idx}
-                  className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]"
+                  className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]"
                 >
                   <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-3 mb-3">
                     <div>
@@ -1383,7 +1377,7 @@ const CommercialOverviewCards = () => {
                       <ul className="mt-1 space-y-1">
                         {system.advantages.map((adv, aidx) => (
                           <li key={aidx} className="text-xs text-white flex items-start gap-2">
-                            <CheckCircle className="h-3 w-3 text-white/55 mt-0.5 flex-shrink-0" />
+                            <CheckCircle className="h-3 w-3 text-white/70 mt-0.5 flex-shrink-0" />
                             {adv}
                           </li>
                         ))}
@@ -1400,15 +1394,14 @@ const CommercialOverviewCards = () => {
           </div>
 
           {/* Typical Office Circuits */}
-          <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+          <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
             <h4 className="font-semibold text-white mb-4 flex items-center gap-2">
-              <CircuitBoard className="h-5 w-5" />
               Typical Office Circuits
             </h4>
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-white/[0.06]">
+                  <tr className="border-b border-white/[0.10]">
                     <th className="text-left py-2 text-white/85">Circuit</th>
                     <th className="text-left py-2 text-white/85">Cable</th>
                     <th className="text-left py-2 text-white/85">Protection</th>
@@ -1417,7 +1410,7 @@ const CommercialOverviewCards = () => {
                 </thead>
                 <tbody>
                   {officeTypicalCircuits.map((circuit, idx) => (
-                    <tr key={idx} className="border-b border-white/[0.06]">
+                    <tr key={idx} className="border-b border-white/[0.10]">
                       <td className="py-2 text-white font-medium">{circuit.circuit}</td>
                       <td className="py-2">
                         <Badge variant="outline" className="border-white/10 text-white text-xs">
@@ -1440,7 +1433,7 @@ const CommercialOverviewCards = () => {
           </div>
 
           {/* Server Room Alert */}
-          <Alert className="border-red-500/50 bg-red-500/10">
+          <Alert className="border-white/[0.12] border-l-[3px] border-l-red-500 bg-white/[0.06]">
             <Server className="h-4 w-4 text-red-400" />
             <AlertDescription className="text-red-200 text-sm">
               <strong>Server Room Considerations:</strong> Server rooms require dedicated circuits,
@@ -1456,32 +1449,32 @@ const CommercialOverviewCards = () => {
       {/* SECTION 3: RETAIL & SHOP INSTALLATIONS */}
       {/* ============================================ */}
 
-      <Card className="border-white/[0.06] bg-white/5">
-        <CardHeader>
+      <Card variant="plain">
+        <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-3">
-            <div className="p-2 bg-white/[0.02] rounded-lg">
-              <Store className="h-6 w-6 text-white/55" />
+            <div className="p-2 bg-white/[0.06] rounded-lg">
+              <Store className="h-6 w-6 text-white/70" />
             </div>
             <div>
-              <CardTitle className="text-white text-xl">Retail & Shop Installations</CardTitle>
+              <CardTitle className="text-[15px] font-semibold tracking-tight text-white">Retail & Shop Installations</CardTitle>
               <p className="text-white text-sm mt-1">
                 Display lighting, POS systems, security, and accessibility requirements
               </p>
             </div>
           </div>
         </CardHeader>
-        <CardContent className="space-y-6">
+        <CardContent className="space-y-6 p-0">
           {/* Display Lighting */}
           <div>
             <h4 className="font-semibold text-white mb-4 flex items-center gap-2">
-              <Sparkles className="h-5 w-5 text-white/55" />
+              <Sparkles className="h-5 w-5 text-white/70" />
               Display Lighting & Track Systems
             </h4>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {retailLightingTypes.map((lighting, idx) => (
                 <div
                   key={idx}
-                  className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]"
+                  className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]"
                 >
                   <h5 className="font-medium text-white mb-2">{lighting.type}</h5>
                   <p className="text-xs text-white mb-2">{lighting.description}</p>
@@ -1502,13 +1495,12 @@ const CommercialOverviewCards = () => {
           </div>
 
           {/* POS & Till Circuits */}
-          <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+          <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
             <h4 className="font-semibold text-white mb-4 flex items-center gap-2">
-              <CreditCard className="h-5 w-5" />
               POS & Till Circuits
             </h4>
-            <Alert className="border-white/[0.06] bg-white/[0.02] mb-4">
-              <Info className="h-4 w-4 text-white/55" />
+            <Alert className="border-white/[0.10] bg-white/[0.06] mb-4">
+              <Info className="h-4 w-4 text-white/70" />
               <AlertDescription className="text-white/85 text-sm">
                 Point of Sale systems are business-critical. Consider UPS protection to prevent data
                 loss during power failures and ensure adequate data connectivity for card payments.
@@ -1517,7 +1509,7 @@ const CommercialOverviewCards = () => {
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-white/[0.06]">
+                  <tr className="border-b border-white/[0.10]">
                     <th className="text-left py-2 text-white/85">Equipment</th>
                     <th className="text-left py-2 text-white/85">Circuit</th>
                     <th className="text-left py-2 text-white/85">Protection</th>
@@ -1526,7 +1518,7 @@ const CommercialOverviewCards = () => {
                 </thead>
                 <tbody>
                   {retailPOSCircuits.map((item, idx) => (
-                    <tr key={idx} className="border-b border-white/[0.06]">
+                    <tr key={idx} className="border-b border-white/[0.10]">
                       <td className="py-2 text-white font-medium">{item.equipment}</td>
                       <td className="py-2 text-white">{item.circuit}</td>
                       <td className="py-2 text-white">{item.protection}</td>
@@ -1539,14 +1531,13 @@ const CommercialOverviewCards = () => {
           </div>
 
           {/* Security Systems */}
-          <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+          <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
             <h4 className="font-semibold text-white mb-4 flex items-center gap-2">
-              <Lock className="h-5 w-5" />
               Security Systems Integration
             </h4>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {retailSecuritySystems.map((system, idx) => (
-                <div key={idx} className="bg-white/[0.02] p-3 rounded border border-white/[0.06]">
+                <div key={idx} className="bg-white/[0.06] p-3 rounded border border-white/[0.10]">
                   <h5 className="font-medium text-white mb-2">{system.system}</h5>
                   <div className="space-y-1 text-xs">
                     <p className="text-white">
@@ -1563,13 +1554,12 @@ const CommercialOverviewCards = () => {
           </div>
 
           {/* Refrigeration Circuits */}
-          <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+          <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
             <h4 className="font-semibold text-white mb-4 flex items-center gap-2">
-              <Refrigerator className="h-5 w-5" />
               Refrigeration Circuits (Food Retail)
             </h4>
-            <Alert className="border-white/[0.06] bg-white/[0.02] mb-4">
-              <AlertTriangle className="h-4 w-4 text-white/55" />
+            <Alert className="border-white/[0.10] bg-white/[0.06] mb-4">
+              <AlertTriangle className="h-4 w-4 text-white/70" />
               <AlertDescription className="text-white/85 text-sm">
                 <strong>Food Safety:</strong> Refrigeration circuits must be on dedicated supplies
                 to prevent accidental isolation. Consider alarm systems for temperature monitoring
@@ -1579,7 +1569,7 @@ const CommercialOverviewCards = () => {
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-white/[0.06]">
+                  <tr className="border-b border-white/[0.10]">
                     <th className="text-left py-2 text-white/85">Equipment</th>
                     <th className="text-left py-2 text-white/85">Rating</th>
                     <th className="text-left py-2 text-white/85">Circuit</th>
@@ -1588,7 +1578,7 @@ const CommercialOverviewCards = () => {
                 </thead>
                 <tbody>
                   {retailRefrigerationCircuits.map((item, idx) => (
-                    <tr key={idx} className="border-b border-white/[0.06]">
+                    <tr key={idx} className="border-b border-white/[0.10]">
                       <td className="py-2 text-white font-medium">{item.equipment}</td>
                       <td className="py-2 text-white">{item.rating}</td>
                       <td className="py-2 text-white">{item.circuit}</td>
@@ -1605,12 +1595,11 @@ const CommercialOverviewCards = () => {
           </div>
 
           {/* Emergency Lighting */}
-          <div className="bg-red-500/10 p-4 rounded-lg border border-red-500/30">
+          <div className="p-4 rounded-lg border border-white/[0.12] border-l-[3px] border-l-red-500 bg-white/[0.06]">
             <h4 className="font-semibold text-red-300 mb-4 flex items-center gap-2">
-              <AlertTriangle className="h-5 w-5" />
               Emergency Lighting for Public Areas
             </h4>
-            <Alert className="border-red-500/50 bg-red-500/10 mb-4">
+            <Alert className="border-white/[0.12] border-l-[3px] border-l-red-500 bg-white/[0.06] mb-4">
               <Shield className="h-4 w-4 text-red-400" />
               <AlertDescription className="text-red-200 text-sm">
                 <strong>BS 5266-1:</strong> Emergency lighting is required in all premises to which
@@ -1620,7 +1609,7 @@ const CommercialOverviewCards = () => {
             </Alert>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {retailEmergencyLighting.map((area, idx) => (
-                <div key={idx} className="bg-red-600/10 p-3 rounded border border-red-500/20">
+                <div key={idx} className="bg-white/[0.06] p-3 rounded border border-red-500/20">
                   <h5 className="font-medium text-red-300 mb-2">{area.area}</h5>
                   <div className="space-y-1 text-xs">
                     <p className="text-white">
@@ -1639,13 +1628,12 @@ const CommercialOverviewCards = () => {
           </div>
 
           {/* Accessibility Requirements */}
-          <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+          <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
             <h4 className="font-semibold text-white mb-4 flex items-center gap-2">
-              <Accessibility className="h-5 w-5" />
               Accessibility Requirements (DDA/Equality Act)
             </h4>
-            <Alert className="border-white/[0.06] bg-white/[0.02] mb-4">
-              <Info className="h-4 w-4 text-white/55" />
+            <Alert className="border-white/[0.10] bg-white/[0.06] mb-4">
+              <Info className="h-4 w-4 text-white/70" />
               <AlertDescription className="text-white/85 text-sm">
                 <strong>Equality Act 2010:</strong> Service providers must make reasonable
                 adjustments to ensure disabled people can access services. This includes
@@ -1656,9 +1644,9 @@ const CommercialOverviewCards = () => {
               {accessibilityRequirements.map((req, idx) => (
                 <div
                   key={idx}
-                  className="flex items-start gap-3 bg-white/[0.02] p-3 rounded border border-white/[0.06]"
+                  className="flex items-start gap-3 bg-white/[0.06] p-3 rounded border border-white/[0.10]"
                 >
-                  <CheckCircle className="h-4 w-4 text-white/55 mt-0.5 flex-shrink-0" />
+                  <CheckCircle className="h-4 w-4 text-white/70 mt-0.5 flex-shrink-0" />
                   <div>
                     <span className="font-medium text-white text-sm">{req.requirement}</span>
                     <p className="text-xs text-white mt-1">{req.detail}</p>
@@ -1677,29 +1665,29 @@ const CommercialOverviewCards = () => {
       {/* SECTION 4: RESTAURANT & COMMERCIAL KITCHEN */}
       {/* ============================================ */}
 
-      <Card className="border-white/[0.06] bg-white/5">
-        <CardHeader>
+      <Card variant="plain">
+        <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-3">
-            <div className="p-2 bg-white/[0.02] rounded-lg">
-              <ChefHat className="h-6 w-6 text-white/55" />
+            <div className="p-2 bg-white/[0.06] rounded-lg">
+              <ChefHat className="h-6 w-6 text-white/70" />
             </div>
             <div>
-              <CardTitle className="text-white text-xl">Restaurant & Commercial Kitchen</CardTitle>
+              <CardTitle className="text-[15px] font-semibold tracking-tight text-white">Restaurant & Commercial Kitchen</CardTitle>
               <p className="text-white text-sm mt-1">
                 Three-phase equipment, IP ratings, extraction, and fire suppression
               </p>
             </div>
           </div>
         </CardHeader>
-        <CardContent className="space-y-6">
+        <CardContent className="space-y-6 p-0">
           {/* Commercial Kitchen Equipment Ratings */}
           <div>
             <h4 className="font-semibold text-white mb-4 flex items-center gap-2">
-              <Zap className="h-5 w-5 text-white/55" />
+              <Zap className="h-5 w-5 text-white/70" />
               Commercial Kitchen Equipment Electrical Requirements
             </h4>
-            <Alert className="border-white/[0.06] bg-white/[0.02] mb-4">
-              <AlertTriangle className="h-4 w-4 text-white/55" />
+            <Alert className="border-white/[0.10] bg-white/[0.06] mb-4">
+              <AlertTriangle className="h-4 w-4 text-white/70" />
               <AlertDescription className="text-white/85 text-sm">
                 <strong>High Power Demand:</strong> Commercial kitchens have significant electrical
                 loads, often 50-150kW or more. Three-phase distribution and careful load balancing
@@ -1709,7 +1697,7 @@ const CommercialOverviewCards = () => {
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-white/[0.06]">
+                  <tr className="border-b border-white/[0.10]">
                     <th className="text-left py-2 text-white/85">Equipment</th>
                     <th className="text-left py-2 text-white/85">Rating</th>
                     <th className="text-left py-2 text-white/85">Phase</th>
@@ -1719,7 +1707,7 @@ const CommercialOverviewCards = () => {
                 </thead>
                 <tbody>
                   {kitchenEquipmentRatings.map((item, idx) => (
-                    <tr key={idx} className="border-b border-white/[0.06]">
+                    <tr key={idx} className="border-b border-white/[0.10]">
                       <td className="py-2 text-white font-medium">{item.equipment}</td>
                       <td className="py-2">
                         <Badge variant="outline" className="border-red-400 text-red-300 text-xs">
@@ -1741,13 +1729,12 @@ const CommercialOverviewCards = () => {
           </div>
 
           {/* IP Ratings for Commercial Kitchens */}
-          <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+          <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
             <h4 className="font-semibold text-white mb-4 flex items-center gap-2">
-              <Droplets className="h-5 w-5" />
               IP Ratings for Commercial Kitchens
             </h4>
-            <Alert className="border-white/[0.06] bg-white/[0.02] mb-4">
-              <Shield className="h-4 w-4 text-white/55" />
+            <Alert className="border-white/[0.10] bg-white/[0.06] mb-4">
+              <Shield className="h-4 w-4 text-white/70" />
               <AlertDescription className="text-white/85 text-sm">
                 <strong>Minimum IP44:</strong> Commercial kitchen areas typically require IP44
                 minimum, with IP65 in areas subject to washdown, steam, or grease.
@@ -1756,7 +1743,7 @@ const CommercialOverviewCards = () => {
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-white/[0.06]">
+                  <tr className="border-b border-white/[0.10]">
                     <th className="text-left py-2 text-white/85">Zone</th>
                     <th className="text-left py-2 text-white/85">IP Rating</th>
                     <th className="text-left py-2 text-white/85 hidden md:table-cell">Reason</th>
@@ -1765,7 +1752,7 @@ const CommercialOverviewCards = () => {
                 </thead>
                 <tbody>
                   {kitchenIPRatings.map((zone, idx) => (
-                    <tr key={idx} className="border-b border-white/[0.06]">
+                    <tr key={idx} className="border-b border-white/[0.10]">
                       <td className="py-2 text-white font-medium">{zone.zone}</td>
                       <td className="py-2">
                         <Badge variant="outline" className="border-white/10 text-white text-xs">
@@ -1784,9 +1771,8 @@ const CommercialOverviewCards = () => {
           </div>
 
           {/* Extraction System Supplies */}
-          <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+          <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
             <h4 className="font-semibold text-white mb-4 flex items-center gap-2">
-              <Wind className="h-5 w-5" />
               Extraction System Supplies
             </h4>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
@@ -1796,7 +1782,7 @@ const CommercialOverviewCards = () => {
                   {extractionSystemSupply.components.map((comp, idx) => (
                     <div
                       key={idx}
-                      className="bg-white/[0.02] p-3 rounded border border-white/[0.06]"
+                      className="bg-white/[0.06] p-3 rounded border border-white/[0.10]"
                     >
                       <div className="flex items-center justify-between mb-1">
                         <span className="font-medium text-white/85 text-sm">{comp.component}</span>
@@ -1813,7 +1799,7 @@ const CommercialOverviewCards = () => {
               </div>
               <div>
                 <h5 className="font-medium text-white mb-3">Interlock Requirements</h5>
-                <Alert className="border-red-500/50 bg-red-500/10 mb-3">
+                <Alert className="border-white/[0.12] border-l-[3px] border-l-red-500 bg-white/[0.06] mb-3">
                   <AlertTriangle className="h-4 w-4 text-red-400" />
                   <AlertDescription className="text-red-200 text-xs">
                     <strong>Gas Safety:</strong> Extraction must interlock with gas supplies - if
@@ -1823,7 +1809,7 @@ const CommercialOverviewCards = () => {
                 <ul className="space-y-2">
                   {extractionSystemSupply.interlock.map((item, idx) => (
                     <li key={idx} className="text-sm text-white flex items-start gap-2">
-                      <CheckCircle className="h-4 w-4 text-white/55 mt-0.5 flex-shrink-0" />
+                      <CheckCircle className="h-4 w-4 text-white/70 mt-0.5 flex-shrink-0" />
                       {item}
                     </li>
                   ))}
@@ -1833,12 +1819,11 @@ const CommercialOverviewCards = () => {
           </div>
 
           {/* Fire Suppression Integration */}
-          <div className="bg-red-500/10 p-4 rounded-lg border border-red-500/30">
+          <div className="p-4 rounded-lg border border-white/[0.12] border-l-[3px] border-l-red-500 bg-white/[0.06]">
             <h4 className="font-semibold text-red-300 mb-4 flex items-center gap-2">
-              <Flame className="h-5 w-5" />
               Fire Suppression Integration
             </h4>
-            <Alert className="border-red-500/50 bg-red-500/10 mb-4">
+            <Alert className="border-white/[0.12] border-l-[3px] border-l-red-500 bg-white/[0.06] mb-4">
               <AlertTriangle className="h-4 w-4 text-red-400" />
               <AlertDescription className="text-red-200 text-sm">
                 <strong>Critical Integration:</strong> Kitchen fire suppression systems (Ansul,
@@ -1848,7 +1833,7 @@ const CommercialOverviewCards = () => {
             </Alert>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {fireSuppressionIntegration.map((system, idx) => (
-                <div key={idx} className="bg-red-600/10 p-3 rounded border border-red-500/20">
+                <div key={idx} className="bg-white/[0.06] p-3 rounded border border-red-500/20">
                   <h5 className="font-medium text-red-300 mb-2">{system.system}</h5>
                   <div className="space-y-1 text-xs">
                     <p className="text-white">
@@ -1865,13 +1850,12 @@ const CommercialOverviewCards = () => {
           </div>
 
           {/* HACCP Compliance */}
-          <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+          <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
             <h4 className="font-semibold text-white mb-4 flex items-center gap-2">
-              <Shield className="h-5 w-5" />
               HACCP Compliance Considerations
             </h4>
-            <Alert className="border-white/[0.06] bg-white/[0.02] mb-4">
-              <Info className="h-4 w-4 text-white/55" />
+            <Alert className="border-white/[0.10] bg-white/[0.06] mb-4">
+              <Info className="h-4 w-4 text-white/70" />
               <AlertDescription className="text-white/85 text-sm">
                 <strong>HACCP:</strong> Hazard Analysis Critical Control Points - electrical
                 installations must support food safety requirements and not create contamination
@@ -1881,7 +1865,7 @@ const CommercialOverviewCards = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
               {haccpConsiderations.map((item, idx) => (
                 <div key={idx} className="text-sm text-white flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-white/55 mt-0.5 flex-shrink-0" />
+                  <CheckCircle className="h-4 w-4 text-white/70 mt-0.5 flex-shrink-0" />
                   {item}
                 </div>
               ))}
@@ -1894,31 +1878,31 @@ const CommercialOverviewCards = () => {
       {/* SECTION 5: HOTELS & HOSPITALITY */}
       {/* ============================================ */}
 
-      <Card className="border-white/[0.06] bg-white/5">
-        <CardHeader>
+      <Card variant="plain">
+        <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-3">
-            <div className="p-2 bg-white/[0.02] rounded-lg">
-              <Hotel className="h-6 w-6 text-white/55" />
+            <div className="p-2 bg-white/[0.06] rounded-lg">
+              <Hotel className="h-6 w-6 text-white/70" />
             </div>
             <div>
-              <CardTitle className="text-white text-xl">Hotels & Hospitality</CardTitle>
+              <CardTitle className="text-[15px] font-semibold tracking-tight text-white">Hotels & Hospitality</CardTitle>
               <p className="text-white text-sm mt-1">
                 Guest room circuits, card key systems, and emergency requirements
               </p>
             </div>
           </div>
         </CardHeader>
-        <CardContent className="space-y-6">
+        <CardContent className="space-y-6 p-0">
           {/* Guest Room Circuits */}
           <div>
             <h4 className="font-semibold text-white mb-4 flex items-center gap-2">
-              <BedDouble className="h-5 w-5 text-white/55" />
+              <BedDouble className="h-5 w-5 text-white/70" />
               Guest Room Circuits
             </h4>
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-white/[0.06]">
+                  <tr className="border-b border-white/[0.10]">
                     <th className="text-left py-2 text-white/85">Circuit</th>
                     <th className="text-left py-2 text-white/85">Cable</th>
                     <th className="text-left py-2 text-white/85">Protection</th>
@@ -1927,7 +1911,7 @@ const CommercialOverviewCards = () => {
                 </thead>
                 <tbody>
                   {guestRoomCircuits.map((circuit, idx) => (
-                    <tr key={idx} className="border-b border-white/[0.06]">
+                    <tr key={idx} className="border-b border-white/[0.10]">
                       <td className="py-2 text-white font-medium">{circuit.circuit}</td>
                       <td className="py-2">
                         <Badge variant="outline" className="border-white/10 text-white text-xs">
@@ -1948,14 +1932,13 @@ const CommercialOverviewCards = () => {
           </div>
 
           {/* Card Key Systems */}
-          <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+          <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
             <h4 className="font-semibold text-white mb-4 flex items-center gap-2">
-              <KeyRound className="h-5 w-5" />
               Card Key Systems
             </h4>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
               {cardKeySystemTypes.map((system, idx) => (
-                <div key={idx} className="bg-white/[0.02] p-4 rounded border border-white/[0.06]">
+                <div key={idx} className="bg-white/[0.06] p-4 rounded border border-white/[0.10]">
                   <h5 className="font-medium text-white mb-2">{system.type}</h5>
                   <p className="text-sm text-white mb-2">{system.description}</p>
                   <Badge variant="outline" className="border-white/10 text-white text-xs mb-3">
@@ -1975,15 +1958,14 @@ const CommercialOverviewCards = () => {
           </div>
 
           {/* Common Area Lighting */}
-          <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+          <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
             <h4 className="font-semibold text-white mb-4 flex items-center gap-2">
-              <Lightbulb className="h-5 w-5" />
               Common Area Lighting Control
             </h4>
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-white/[0.06]">
+                  <tr className="border-b border-white/[0.10]">
                     <th className="text-left py-2 text-white/85">Area</th>
                     <th className="text-left py-2 text-white/85">Lux Level</th>
                     <th className="text-left py-2 text-white/85">Control</th>
@@ -1992,7 +1974,7 @@ const CommercialOverviewCards = () => {
                 </thead>
                 <tbody>
                   {hotelCommonAreas.map((area, idx) => (
-                    <tr key={idx} className="border-b border-white/[0.06]">
+                    <tr key={idx} className="border-b border-white/[0.10]">
                       <td className="py-2 text-white font-medium">{area.area}</td>
                       <td className="py-2">
                         <Badge variant="outline" className="border-white/10 text-white text-xs">
@@ -2012,7 +1994,7 @@ const CommercialOverviewCards = () => {
 
           {/* Back of House vs Front of House */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-            <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+            <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
               <h5 className="font-semibold text-white mb-3 flex items-center gap-2">
                 <Sparkles className="h-5 w-5" />
                 {backOfHouseVsFrontOfHouse.frontOfHouse.title}
@@ -2023,7 +2005,7 @@ const CommercialOverviewCards = () => {
               <ul className="space-y-2">
                 {backOfHouseVsFrontOfHouse.frontOfHouse.items.map((item, idx) => (
                   <li key={idx} className="text-sm text-white flex items-start gap-2">
-                    <CheckCircle className="h-4 w-4 text-white/55 mt-0.5 flex-shrink-0" />
+                    <CheckCircle className="h-4 w-4 text-white/70 mt-0.5 flex-shrink-0" />
                     {item}
                   </li>
                 ))}
@@ -2049,12 +2031,11 @@ const CommercialOverviewCards = () => {
           </div>
 
           {/* Emergency Systems */}
-          <div className="bg-red-500/10 p-4 rounded-lg border border-red-500/30">
+          <div className="p-4 rounded-lg border border-white/[0.12] border-l-[3px] border-l-red-500 bg-white/[0.06]">
             <h4 className="font-semibold text-red-300 mb-4 flex items-center gap-2">
-              <AlertTriangle className="h-5 w-5" />
               Emergency Systems Requirements
             </h4>
-            <Alert className="border-red-500/50 bg-red-500/10 mb-4">
+            <Alert className="border-white/[0.12] border-l-[3px] border-l-red-500 bg-white/[0.06] mb-4">
               <Shield className="h-4 w-4 text-red-400" />
               <AlertDescription className="text-red-200 text-sm">
                 <strong>BS 5839 & BS 5266:</strong> Hotels require comprehensive fire detection,
@@ -2064,7 +2045,7 @@ const CommercialOverviewCards = () => {
             </Alert>
             <div className="space-y-3">
               {hotelEmergencySystems.map((system, idx) => (
-                <div key={idx} className="bg-red-600/10 p-3 rounded border border-red-500/20">
+                <div key={idx} className="bg-white/[0.06] p-3 rounded border border-red-500/20">
                   <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-2 mb-2">
                     <h5 className="font-medium text-red-300">{system.system}</h5>
                     <Badge variant="outline" className="border-red-400 text-red-300 text-xs w-fit">
@@ -2091,23 +2072,22 @@ const CommercialOverviewCards = () => {
       {/* ============================================ */}
 
       {/* Project Types Guide */}
-      <Card className="border-white/[0.06] bg-white/5">
-        <CardHeader>
+      <Card variant="plain">
+        <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <Building className="h-6 w-6 text-white/55" />
-            <CardTitle className="text-white">Commercial Project Types</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">Commercial Project Types</CardTitle>
           </div>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 p-0">
           {projectTypes.map((project, index) => (
-            <div key={index} className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+            <div key={index} className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
               <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 mb-3">
                 <h4 className="font-medium text-white">{project.type}</h4>
                 <div className="flex flex-wrap gap-2">
                   <Badge variant="outline" className="border-white/10 text-white text-xs">
                     {project.duration}
                   </Badge>
-                  <Badge variant="outline" className="border-white/10 text-white/55 text-xs">
+                  <Badge variant="outline" className="border-white/10 text-white/70 text-xs">
                     {project.cost}
                   </Badge>
                 </div>
@@ -2125,16 +2105,15 @@ const CommercialOverviewCards = () => {
       </Card>
 
       {/* Compliance Requirements */}
-      <Card className="border-white/[0.06] bg-white/5">
-        <CardHeader>
+      <Card variant="plain">
+        <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <FileCheck className="h-6 w-6 text-white/55" />
-            <CardTitle className="text-white">Compliance Requirements</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">Compliance Requirements</CardTitle>
           </div>
         </CardHeader>
-        <CardContent className="space-y-3">
+        <CardContent className="space-y-3 p-0">
           {complianceRequirements.map((req, index) => (
-            <div key={index} className="bg-white/[0.02] p-3 rounded-lg border border-white/[0.06]">
+            <div key={index} className="bg-white/[0.06] p-3 rounded-lg border border-white/[0.10]">
               <div className="flex items-start justify-between gap-3">
                 <div className="flex-1">
                   <h4 className="font-medium text-white/85 mb-1">{req.requirement}</h4>
@@ -2146,8 +2125,8 @@ const CommercialOverviewCards = () => {
                     req.level === 'Critical'
                       ? 'border-red-500 text-red-400'
                       : req.level === 'Legal'
-                        ? 'border-white/10 text-white/55'
-                        : 'border-white/10 text-white/55'
+                        ? 'border-white/10 text-white/70'
+                        : 'border-white/10 text-white/70'
                   }`}
                 >
                   {req.level}
@@ -2159,14 +2138,13 @@ const CommercialOverviewCards = () => {
       </Card>
 
       {/* Pre-Project Checklist */}
-      <Card className="border-white/[0.06] bg-white/5">
-        <CardHeader>
+      <Card variant="plain">
+        <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <CheckCircle className="h-6 w-6 text-white/55" />
-            <CardTitle className="text-white">Commercial Project Checklist</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">Commercial Project Checklist</CardTitle>
           </div>
         </CardHeader>
-        <CardContent className="space-y-2">
+        <CardContent className="space-y-2 p-0">
           {[
             'Coordinate with building management and other trades',
             'Obtain all necessary permits and Building Control approval',
@@ -2178,7 +2156,7 @@ const CommercialOverviewCards = () => {
             'Prepare comprehensive testing and commissioning plan',
           ].map((item, index) => (
             <div key={index} className="flex items-center gap-2 text-sm">
-              <CheckCircle className="h-4 w-4 text-white/55 flex-shrink-0" />
+              <CheckCircle className="h-4 w-4 text-white/70 flex-shrink-0" />
               <span className="text-white">{item}</span>
             </div>
           ))}

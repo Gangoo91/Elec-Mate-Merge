@@ -440,7 +440,7 @@ const SecuritySection = ({ eyebrow }: SecuritySectionProps) => {
             <Button
               onClick={handleBiometricPasswordSubmit}
               disabled={biometricVerifying || !biometricPassword}
-              className="w-full h-12 rounded-full text-[14px] font-semibold bg-elec-yellow hover:bg-elec-yellow/90 text-black touch-manipulation disabled:opacity-50"
+              className="w-full h-12 rounded-full text-[14px] font-semibold bg-elec-yellow hover:bg-elec-yellow/90 text-black touch-manipulation disabled:bg-white/[0.08] disabled:text-white/70"
             >
               {biometricVerifying ? 'Verifying…' : `Enable ${biometric.biometricType}`}
             </Button>

@@ -23,9 +23,9 @@ const IndustrialComplianceRequirements = () => {
   ];
 
   return (
-    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
+    <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-4">
       <div className="space-y-1">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
           Compliance
         </span>
         <h3 className="text-[18px] font-semibold text-white leading-tight">
@@ -39,11 +39,11 @@ const IndustrialComplianceRequirements = () => {
         {complianceRequirements.map((req, index) => (
           <div
             key={index}
-            className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1.5"
+            className="rounded-lg border border-white/[0.10] bg-white/[0.06] p-3 space-y-1.5"
           >
             <h4 className="text-[14px] font-medium text-white">{req.standard}</h4>
             <p className="text-[13px] text-white/85 leading-relaxed">{req.description}</p>
-            <p className="text-[12px] text-white/55">Application: {req.application}</p>
+            <p className="text-[12px] text-white/70">Application: {req.application}</p>
           </div>
         ))}
       </div>

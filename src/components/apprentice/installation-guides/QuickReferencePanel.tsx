@@ -29,8 +29,8 @@ interface QuickReferencePanelProps {
 
 function TipBanner({ text }: { text: string }) {
   return (
-    <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
-      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">Tip</span>
+    <div className="rounded-lg border border-white/[0.10] bg-white/[0.06] p-3 space-y-1">
+      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">Tip</span>
       <p className="text-[14px] text-white/85 leading-relaxed">{text}</p>
     </div>
   );
@@ -48,10 +48,10 @@ function Section({
   const [open, setOpen] = useState(defaultOpen);
   return (
     <Collapsible open={open} onOpenChange={setOpen}>
-      <CollapsibleTrigger className="flex items-center justify-between w-full h-11 px-3 rounded-lg border border-white/[0.06] bg-white/[0.02] touch-manipulation">
+      <CollapsibleTrigger className="flex items-center justify-between w-full h-11 px-3 rounded-lg border border-white/[0.10] bg-white/[0.06] touch-manipulation">
         <span className="text-[14px] text-white font-medium">{title}</span>
         <ChevronDown
-          className={`h-4 w-4 text-white/55 transition-transform ${open ? 'rotate-180' : ''}`}
+          className={`h-4 w-4 text-white/70 transition-transform ${open ? 'rotate-180' : ''}`}
         />
       </CollapsibleTrigger>
       <CollapsibleContent className="pt-3 space-y-3">{children}</CollapsibleContent>
@@ -61,10 +61,10 @@ function Section({
 
 function DataCard({ items }: { items: { label: string; value: string }[] }) {
   return (
-    <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1.5">
+    <div className="rounded-lg border border-white/[0.10] bg-white/[0.06] p-3 space-y-1.5">
       {items.map((item, i) => (
         <div key={i} className="flex justify-between gap-2">
-          <span className="text-[13px] text-white/55">{item.label}</span>
+          <span className="text-[13px] text-white/70">{item.label}</span>
           <span className="text-[13px] text-white text-right">{item.value}</span>
         </div>
       ))}
@@ -213,7 +213,7 @@ function CableColoursPanel() {
       <ColourTable title="Current harmonised colours (post-2004)" rows={newColours} />
       <ColourTable title="Old colours (pre-2004)" rows={oldColours} />
 
-      <div className="rounded-xl border border-red-500/30 bg-red-500/[0.04] p-3 space-y-2">
+      <div className="rounded-xl border border-red-500/30 bg-white/[0.06] p-3 space-y-2">
         <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">
           Key safety points
         </span>
@@ -247,7 +247,7 @@ function SafeIsolationPanel() {
         {safeIsolationSteps.map((s) => (
           <div
             key={s.step}
-            className="flex items-start gap-3 rounded-lg border border-white/[0.06] bg-white/[0.02] p-3"
+            className="flex items-start gap-3 rounded-lg border border-white/[0.10] bg-white/[0.06] p-3"
           >
             <span className="flex items-center justify-center w-7 h-7 rounded-full bg-white/[0.05] text-white/85 text-[13px] font-semibold shrink-0">
               {s.step}
@@ -260,7 +260,7 @@ function SafeIsolationPanel() {
         ))}
       </div>
 
-      <div className="rounded-xl border border-red-500/30 bg-red-500/[0.04] p-3 space-y-2">
+      <div className="rounded-xl border border-red-500/30 bg-white/[0.06] p-3 space-y-2">
         <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">
           Critical rules
         </span>
@@ -332,7 +332,7 @@ export function QuickReferencePanel({ card }: QuickReferencePanelProps) {
   };
 
   return (
-    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-4 animate-fade-in">
+    <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 space-y-4 animate-fade-in">
       {panels[card.id] ?? null}
     </div>
   );

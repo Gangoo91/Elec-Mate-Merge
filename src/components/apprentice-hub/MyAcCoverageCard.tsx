@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { supabase } from '@/integrations/supabase/client';
 import { realtimeChannelName } from '@/lib/realtimeChannel';
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
@@ -88,6 +89,8 @@ export function MyAcCoverageCard() {
   // qualification catalogue. null = not loaded yet.
   const { qualificationCode, isLoading: qualLoading } = useStudentQualification();
   const [saUnits, setSaUnits] = useState<StandaloneUnit[] | null>(null);
+  /** unit_code → unit_title, so the breakdown names units instead of coding them. */
+  const [unitTitles, setUnitTitles] = useState<Map<string, string>>(new Map());
 
   const fetchAll = useCallback(async () => {
     const { data: u } = await supabase.auth.getUser();
@@ -107,13 +110,51 @@ export function MyAcCoverageCard() {
       setLoading(false);
       return;
     }
-    const { data } = await supabase
+    /*
+     * 🔴 This had no qualification filter.
+     *
+     * `student_ac_coverage` is keyed by (student_id, qualification_code) and
+     * the sync writes a row set per qualification. This learner has 693 rows
+     * spanning BOTH 2357 and 5357 — so the card summed two courses into one
+     * denominator and reported "17 / 693 ACs · 2% of your course". Neither
+     * course has 693 criteria; 5357 has 340 and 2357 has 450. The headline
+     * progress figure on the College Hub was measured against a total that
+     * does not correspond to any qualification the learner is on.
+     *
+     * Scope it to the authoritative code — the college's enrolment, same as
+     * everywhere else. Without one, fall back to unfiltered rather than
+     * showing nothing.
+     */
+    let q = supabase
       .from('student_ac_coverage')
       .select('unit_code, ac_code, status')
       .eq('student_id', csId);
+    if (qualificationCode) q = q.eq('qualification_code', qualificationCode);
+
+    // Unit names for the breakdown. The college funnel below reads
+    // student_ac_coverage, which carries codes only — without this the list
+    // is "312/212", "103/003", "114/014" and a learner cannot tell which
+    // unit is which, let alone which to pick up next.
+    const titlesQ = qualificationCode
+      ? supabase
+          .from('qualification_requirements')
+          .select('unit_code, unit_title')
+          .eq('qualification_code', qualificationCode)
+      : null;
+
+    const [{ data }, titlesRes] = await Promise.all([q, titlesQ ?? Promise.resolve({ data: null })]);
     setRows((data ?? []) as CoverageRow[]);
+    if (titlesRes?.data) {
+      setUnitTitles(
+        new Map(
+          (titlesRes.data as Array<{ unit_code: string; unit_title: string | null }>)
+            .filter((r) => !!r.unit_title)
+            .map((r) => [r.unit_code, r.unit_title as string])
+        )
+      );
+    }
     setLoading(false);
-  }, []);
+  }, [qualificationCode]);
 
   useEffect(() => {
     fetchAll();
@@ -136,7 +177,7 @@ export function MyAcCoverageCard() {
     const [reqsRes, itemsRes] = await Promise.all([
       supabase
         .from('qualification_requirements')
-        .select('unit_code, ac_code')
+        .select('unit_code, unit_title, ac_code')
         .eq('qualification_code', qualificationCode),
       supabase.from('portfolio_items').select('assessment_criteria_met').eq('user_id', uid),
     ]);
@@ -144,6 +185,13 @@ export function MyAcCoverageCard() {
       setSaUnits([]);
       return;
     }
+    setUnitTitles(
+      new Map(
+        ((reqsRes.data ?? []) as Array<{ unit_code: string; unit_title: string | null }>)
+          .filter((r) => !!r.unit_title)
+          .map((r) => [r.unit_code, r.unit_title as string])
+      )
+    );
     // Catalogue: distinct AC codes per unit.
     const catalogue = new Map<string, Set<string>>();
     for (const r of reqsRes.data ?? []) {
@@ -300,13 +348,13 @@ export function MyAcCoverageCard() {
     const gapUnits = units.filter((x) => x.claimed < x.total).slice(0, 3);
 
     return (
-      <section className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_10%)] overflow-hidden">
+      <section className={cn('rounded-2xl border border-white/[0.06] overflow-hidden', CARD_SURFACE)}>
         <div className="px-4 sm:px-5 py-4 sm:py-5">
           <div className="flex items-baseline justify-between gap-3 flex-wrap">
-            <div className="text-[11px] sm:text-[11.5px] font-medium uppercase tracking-[0.18em] text-purple-300/85">
+            <div className="text-[11px] sm:text-[11.5px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
               Qualification progress
             </div>
-            <span className="text-[10.5px] tabular-nums text-white/85">
+            <span className="text-[10.5px] tabular-nums text-white">
               {totalClaimed} / {totalAcs} ACs evidenced
             </span>
           </div>
@@ -315,7 +363,7 @@ export function MyAcCoverageCard() {
             <span className="text-[28px] sm:text-[32px] font-semibold tabular-nums text-white leading-none">
               {pct}%
             </span>
-            <span className="text-[11px] uppercase tracking-[0.14em] text-white/95">
+            <span className="text-[11px] uppercase tracking-[0.14em] text-white">
               of your course has evidence
             </span>
           </div>
@@ -329,7 +377,7 @@ export function MyAcCoverageCard() {
 
           {gapUnits.length > 0 && (
             <div className="mt-5 -mx-1">
-              <div className="px-1 text-[10.5px] font-medium uppercase tracking-[0.16em] text-white/95">
+              <div className="px-1 text-[10.5px] font-medium uppercase tracking-[0.16em] text-white">
                 Biggest gaps
               </div>
               <ul className="mt-2 space-y-2">
@@ -337,6 +385,7 @@ export function MyAcCoverageCard() {
                   <UnitGapRow
                     key={u.unit_code}
                     unitCode={u.unit_code}
+                    unitTitle={unitTitles.get(u.unit_code)}
                     done={u.claimed}
                     total={u.total}
                     gapAcs={u.gapAcs}
@@ -361,12 +410,12 @@ export function MyAcCoverageCard() {
 
   if (summary.total === 0) {
     return (
-      <section className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_10%)] overflow-hidden">
+      <section className={cn('rounded-2xl border border-white/[0.06] overflow-hidden', CARD_SURFACE)}>
         <div className="px-4 sm:px-5 py-4 sm:py-5">
-          <div className="text-[11px] sm:text-[11.5px] font-medium uppercase tracking-[0.18em] text-purple-300/85">
+          <div className="text-[11px] sm:text-[11.5px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
             Qualification progress
           </div>
-          <p className="mt-3 text-[12.5px] text-white/85 leading-snug">
+          <p className="mt-3 text-[12.5px] text-white leading-snug">
             Your qualification's AC catalogue isn't loaded yet. Once your tutor seeds it, this card
             shows your live progress through every assessment criterion.
           </p>
@@ -384,13 +433,13 @@ export function MyAcCoverageCard() {
   ];
 
   return (
-    <section className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_10%)] overflow-hidden">
+    <section className={cn('rounded-2xl border border-white/[0.06] overflow-hidden', CARD_SURFACE)}>
       <div className="px-4 sm:px-5 py-4 sm:py-5">
         <div className="flex items-baseline justify-between gap-3 flex-wrap">
-          <div className="text-[11px] sm:text-[11.5px] font-medium uppercase tracking-[0.18em] text-purple-300/85">
+          <div className="text-[11px] sm:text-[11.5px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
             Qualification progress
           </div>
-          <span className="text-[10.5px] tabular-nums text-white/85">
+          <span className="text-[10.5px] tabular-nums text-white">
             {summary.completedish} / {summary.total} ACs covered
           </span>
         </div>
@@ -399,7 +448,7 @@ export function MyAcCoverageCard() {
           <span className="text-[28px] sm:text-[32px] font-semibold tabular-nums text-white leading-none">
             {summary.pct}%
           </span>
-          <span className="text-[11px] uppercase tracking-[0.14em] text-white/95">
+          <span className="text-[11px] uppercase tracking-[0.14em] text-white">
             of your course evidenced or beyond
           </span>
         </div>
@@ -437,7 +486,7 @@ export function MyAcCoverageCard() {
             (s) => (
               <div key={s} className="flex items-center gap-1.5">
                 <span className={cn('h-2 w-2 rounded-full', STATUS_TONE[s])} />
-                <span className="text-[10.5px] text-white/90 tabular-nums">
+                <span className="text-[10.5px] text-white tabular-nums">
                   {STATUS_LABEL[s]} {summary.buckets[s]}
                 </span>
               </div>
@@ -448,7 +497,7 @@ export function MyAcCoverageCard() {
         {/* Unit-level breakdown — top 4 with most outstanding */}
         {summary.units.length > 0 && (
           <div className="mt-5 -mx-1">
-            <div className="px-1 text-[10.5px] font-medium uppercase tracking-[0.16em] text-white/95">
+            <div className="px-1 text-[10.5px] font-medium uppercase tracking-[0.16em] text-white">
               By unit
             </div>
             <ul className="mt-2 space-y-2">
@@ -456,6 +505,7 @@ export function MyAcCoverageCard() {
                 <UnitGapRow
                   key={u.unit_code}
                   unitCode={u.unit_code}
+                  unitTitle={unitTitles.get(u.unit_code)}
                   done={u.evidenced + u.assessed + u.confirmed}
                   total={u.total}
                   gapAcs={u.gapAcs}
@@ -470,7 +520,7 @@ export function MyAcCoverageCard() {
             tailored to the apprentice's current gaps. Only show when the
             student has unfinished ACs. */}
         {studentId && summary.buckets.not_started + summary.buckets.in_progress > 0 && (
-          <div className="mt-5 rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.04] px-4 py-3.5">
+          <div className={cn('mt-5 rounded-xl border border-elec-yellow/35 px-4 py-3.5', CARD_SURFACE)}>
             <div className="flex items-start justify-between gap-3 flex-wrap">
               <div className="min-w-0 flex-1">
                 <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-elec-yellow">
@@ -479,7 +529,7 @@ export function MyAcCoverageCard() {
                 <div className="mt-1 text-[13px] font-medium text-white">
                   Get AI-suggested jobs that hit your current gaps
                 </div>
-                <p className="mt-1 text-[11.5px] text-white/85 leading-snug">
+                <p className="mt-1 text-[11.5px] text-white leading-snug">
                   Real on-site work — each idea covers multiple criteria efficiently and tells you
                   exactly what photos and witness statements to capture.
                 </p>
@@ -487,7 +537,7 @@ export function MyAcCoverageCard() {
               <button
                 type="button"
                 onClick={() => setIdeasOpen(true)}
-                className="shrink-0 h-10 px-4 rounded-lg bg-elec-yellow text-black text-[12.5px] font-semibold hover:bg-elec-yellow/90 transition-colors touch-manipulation"
+                className="h-11 shrink-0 rounded-lg bg-elec-yellow px-4 text-[12.5px] font-semibold text-black transition-colors touch-manipulation hover:bg-elec-yellow/90"
               >
                 Get ideas →
               </button>
@@ -498,7 +548,7 @@ export function MyAcCoverageCard() {
 
       {/* Job ideas dialog */}
       <Dialog open={ideasOpen} onOpenChange={setIdeasOpen}>
-        <DialogContent className="sm:max-w-[640px] max-h-[90vh] overflow-y-auto bg-[hsl(0_0%_10%)] border-white/[0.08] text-white">
+        <DialogContent className={cn('sm:max-w-[640px] max-h-[90vh] overflow-y-auto border-white/[0.08] text-white', CARD_SURFACE)}>
           <DialogTitle className="text-[16px] font-semibold tracking-tight text-white">
             Job ideas for your gaps
           </DialogTitle>
@@ -544,12 +594,20 @@ export function MyAcCoverageCard() {
    as mono chips, and a one-tap capture seeded for the unit. */
 function UnitGapRow({
   unitCode,
+  unitTitle,
   done,
   total,
   gapAcs,
   onCapture,
 }: {
   unitCode: string;
+  /**
+   * The unit's name. Without it this list read "312/212", "110",
+   * "103/003", "114/014" — bare catalogue codes that tell a learner nothing
+   * about what the unit covers or which one to pick up next. The titles were
+   * sitting in `qualification_requirements.unit_title` the whole time.
+   */
+  unitTitle?: string | null;
   done: number;
   total: number;
   gapAcs: string[];
@@ -559,14 +617,26 @@ function UnitGapRow({
   return (
     <li className="px-1 py-1">
       <div className="flex items-baseline justify-between gap-3">
-        <span className="text-[12px] font-medium text-white">{unitCode}</span>
-        <span className="text-[10.5px] tabular-nums text-white/85">
+        <span className="min-w-0 flex-1">
+          <span className="text-[12px] font-medium text-white">{unitCode}</span>
+          {unitTitle && (
+            <span className="ml-2 text-[11.5px] text-white">{unitTitle}</span>
+          )}
+        </span>
+        <span className="shrink-0 text-[10.5px] tabular-nums text-white">
           {done} / {total} evidenced
         </span>
       </div>
       <div className="mt-1 h-1.5 rounded-full bg-white/[0.05] overflow-hidden">
         <div
-          className={cn('h-full rounded-full', pct >= 25 ? 'bg-white/[0.02]' : 'bg-white/[0.20]')}
+          /*
+           * 🔴 This was INVERTED: `pct >= 25 ? 'bg-white/[0.02]' : 'bg-white/[0.20]'`,
+           * so a unit you had made progress on got a 2%-white fill —
+           * invisible against the 5%-white track it sits in — while a unit
+           * you had barely started got the brighter one. The bars said the
+           * opposite of the numbers beside them. Progress earns volt.
+           */
+          className={cn('h-full rounded-full', pct > 0 ? 'bg-elec-yellow' : 'bg-white/[0.20]')}
           style={{ width: `${Math.max(2, pct)}%` }}
         />
       </div>
@@ -576,13 +646,13 @@ function UnitGapRow({
             {gapAcs.slice(0, 3).map((ac) => (
               <span
                 key={ac}
-                className="text-[10px] font-mono text-white/45 px-1.5 py-0.5 rounded-md border border-white/[0.08] bg-white/[0.02]"
+                className="text-[10px] font-mono text-white px-1.5 py-0.5 rounded-md border border-white/[0.08] bg-white/[0.02]"
               >
                 {ac}
               </span>
             ))}
             {gapAcs.length > 3 && (
-              <span className="text-[10px] font-mono text-white/35">+{gapAcs.length - 3}</span>
+              <span className="text-[10px] font-mono text-white">+{gapAcs.length - 3}</span>
             )}
           </div>
           <button
@@ -600,7 +670,7 @@ function UnitGapRow({
 
 function Skeleton() {
   return (
-    <section className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_10%)] overflow-hidden">
+    <section className={cn('rounded-2xl border border-white/[0.06] overflow-hidden', CARD_SURFACE)}>
       <div className="px-4 sm:px-5 py-4 sm:py-5 space-y-4">
         <div className="h-3 w-32 rounded-full bg-white/[0.05]" />
         <div className="h-8 w-20 rounded-md bg-white/[0.05]" />

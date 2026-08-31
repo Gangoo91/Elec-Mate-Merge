@@ -1,3 +1,5 @@
+import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Sheet, SheetContent, SheetTitle } from '@/components/ui/sheet';
 import { supabase } from '@/integrations/supabase/client';
@@ -100,14 +102,14 @@ export function MyReflectionCard() {
 
   return (
     <>
-      <section className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_10%)] overflow-hidden">
+      <section className={cn('rounded-2xl border border-white/[0.06] overflow-hidden', CARD_SURFACE)}>
         <div className="px-4 sm:px-5 py-4 sm:py-5">
           <div className="flex items-baseline justify-between gap-3 flex-wrap">
-            <div className="text-[11px] sm:text-[11.5px] font-medium uppercase tracking-[0.18em] text-cyan-300/85">
+            <div className="text-[11px] sm:text-[11.5px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
               Reflection
             </div>
             {!loading && streak > 0 && (
-              <span className="text-[10.5px] tabular-nums text-white/85">{streak}-day streak</span>
+              <span className="text-[10.5px] tabular-nums text-white">{streak}-day streak</span>
             )}
           </div>
 
@@ -122,7 +124,10 @@ export function MyReflectionCard() {
           <button
             type="button"
             onClick={() => setCaptureOpen(true)}
-            className="mt-4 w-full h-11 rounded-lg bg-elec-yellow text-black text-[13px] font-semibold hover:bg-elec-yellow/90 transition-colors touch-manipulation"
+            // Full-bleed on a phone, intrinsic from `sm` up. At desktop width a
+            // w-full primary became a 1,100px slab of solid volt — the
+            // loudest thing on the page by an order of magnitude.
+            className="mt-4 h-11 w-full rounded-lg bg-elec-yellow px-5 text-[13px] font-semibold text-black transition-colors touch-manipulation hover:bg-elec-yellow/90 sm:w-auto"
           >
             {reflectedToday ? 'Add another reflection' : 'Capture today'}
           </button>
@@ -130,7 +135,7 @@ export function MyReflectionCard() {
           {/* Past reflections */}
           {!loading && rows.length > 0 && (
             <div className="mt-5 -mx-1">
-              <div className="px-1 text-[10.5px] font-medium uppercase tracking-[0.16em] text-white/95">
+              <div className="px-1 text-[10.5px] font-medium uppercase tracking-[0.16em] text-white">
                 Past reflections
               </div>
               <ul className="mt-2 divide-y divide-white/[0.05]">
@@ -146,12 +151,12 @@ export function MyReflectionCard() {
                           {r.title ?? 'Reflection'}
                         </div>
                         {r.description && (
-                          <div className="mt-0.5 text-[11.5px] text-white/85 leading-snug line-clamp-2">
+                          <div className="mt-0.5 text-[11.5px] text-white leading-snug line-clamp-2">
                             {r.description}
                           </div>
                         )}
                       </div>
-                      <span className="shrink-0 text-[10.5px] text-white/95 tabular-nums whitespace-nowrap">
+                      <span className="shrink-0 text-[10.5px] text-white tabular-nums whitespace-nowrap">
                         {fmtDate(r.date_completed ?? r.created_at)}
                       </span>
                     </button>
@@ -162,7 +167,7 @@ export function MyReflectionCard() {
                 <button
                   type="button"
                   onClick={() => setShowAll((v) => !v)}
-                  className="mt-2 px-1 text-[11.5px] font-medium text-white/85 hover:text-white/85 transition-colors touch-manipulation"
+                  className="mt-2 px-1 text-[11.5px] font-medium text-white hover:text-white transition-colors touch-manipulation"
                 >
                   {showAll ? 'Show less' : `Show ${Math.min(17, rows.length - 3)} more`}
                 </button>
@@ -200,13 +205,13 @@ function ReflectionViewerSheet({
         {row && (
           <div className="flex h-full flex-col">
             <header className="px-4 sm:px-5 pt-5 pb-4 border-b border-white/[0.06]">
-              <div className="text-[11px] font-medium uppercase tracking-[0.18em] text-cyan-300/85">
+              <div className="text-[11px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
                 Reflection
               </div>
               <h2 className="mt-1 text-[18px] sm:text-[20px] font-semibold text-white leading-tight">
                 {row.title ?? 'Reflection'}
               </h2>
-              <p className="mt-1 text-[11.5px] text-white/85">
+              <p className="mt-1 text-[11.5px] text-white">
                 {fmtDate(row.date_completed ?? row.created_at)}
                 {row.created_at && (
                   <>
@@ -233,7 +238,7 @@ function ReflectionViewerSheet({
                   {row.description}
                 </div>
               ) : (
-                <p className="text-[12.5px] text-white/85">No content recorded.</p>
+                <p className="text-[12.5px] text-white">No content recorded.</p>
               )}
             </div>
 
@@ -241,7 +246,7 @@ function ReflectionViewerSheet({
               <button
                 type="button"
                 onClick={onClose}
-                className="w-full h-11 rounded-lg border border-white/[0.10] bg-white/[0.02] text-[13px] font-medium text-white/80 hover:text-white hover:border-white/[0.22] transition-colors touch-manipulation"
+                className="h-11 w-full rounded-lg border border-white/[0.10] bg-white/[0.04] px-5 text-[13px] font-medium text-white transition-colors touch-manipulation hover:border-white/[0.22] sm:w-auto"
               >
                 Close
               </button>

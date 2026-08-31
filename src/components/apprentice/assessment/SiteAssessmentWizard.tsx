@@ -1,7 +1,4 @@
-import {
-  sectionLabels,
-  getCategoriesBySection,
-} from './data/siteAssessmentChecklist';
+import { sectionLabels, getCategoriesBySection } from './data/siteAssessmentChecklist';
 import SiteAssessmentCategory from './SiteAssessmentCategory';
 import SiteAssessmentSummary from './SiteAssessmentSummary';
 import type { useAssessmentProgress } from './hooks/useAssessmentProgress';
@@ -25,7 +22,7 @@ const SiteAssessmentWizard = ({ progress }: SiteAssessmentWizardProps) => {
 
         return (
           <div key={section} className="space-y-3">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
               {sectionConfig.label}
             </span>
 

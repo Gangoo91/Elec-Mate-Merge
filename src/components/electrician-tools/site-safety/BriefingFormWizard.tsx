@@ -1208,7 +1208,7 @@ export const BriefingFormWizard = ({
                 type="button"
                 onClick={() => handleSave(false)}
                 disabled={saving}
-                className="h-14 w-full touch-manipulation bg-elec-yellow text-base font-semibold text-black transition-[filter,transform] active:scale-[0.98] active:brightness-110 disabled:opacity-50"
+                className="h-14 w-full touch-manipulation bg-elec-yellow text-base font-semibold text-black transition-[filter,transform] active:scale-[0.98] active:brightness-110 disabled:bg-white/[0.08] disabled:text-white/70"
               >
                 {saving ? (
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />

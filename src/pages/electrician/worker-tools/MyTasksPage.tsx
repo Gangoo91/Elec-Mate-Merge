@@ -425,7 +425,7 @@ function TaskDetail({
           type="button"
           onClick={handleComment}
           disabled={!comment.trim() || addComment.isPending}
-          className="h-11 w-11 shrink-0 rounded-xl bg-elec-yellow text-black flex items-center justify-center touch-manipulation active:scale-[0.98] transition-transform disabled:opacity-40"
+          className="h-11 w-11 shrink-0 rounded-xl bg-elec-yellow text-black flex items-center justify-center touch-manipulation active:scale-[0.98] transition-transform disabled:bg-white/[0.08] disabled:text-white/70"
           aria-label="Send update"
         >
           {addComment.isPending ? (

@@ -265,7 +265,7 @@ const ProfessionalBodySelector: React.FC<ProfessionalBodySelectorProps> = ({ onC
             type="button"
             onClick={handleComplete}
             disabled={saving}
-            className="w-full sm:w-auto sm:mx-auto sm:flex sm:min-w-[260px] inline-flex items-center justify-center gap-2 text-[12px] font-semibold uppercase tracking-[0.14em] text-black bg-elec-yellow hover:bg-elec-yellow/90 active:bg-elec-yellow/85 rounded-full px-5 py-3 min-h-[44px] touch-manipulation transition-colors disabled:opacity-50"
+            className="w-full sm:w-auto sm:mx-auto sm:flex sm:min-w-[260px] inline-flex items-center justify-center gap-2 text-[12px] font-semibold uppercase tracking-[0.14em] text-black bg-elec-yellow hover:bg-elec-yellow/90 active:bg-elec-yellow/85 rounded-full px-5 py-3 min-h-[44px] touch-manipulation transition-colors disabled:bg-white/[0.08] disabled:text-white/70"
           >
             {saving ? (
               <>

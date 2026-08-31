@@ -308,7 +308,7 @@ export function EditEmployeeDialog({ employee, open, onOpenChange }: EditEmploye
                     type="button"
                     onClick={() => fileInputRef.current?.click()}
                     disabled={isUploading}
-                    className="absolute -bottom-1 -right-1 h-10 w-10 rounded-full bg-elec-yellow text-black flex items-center justify-center shadow-md hover:bg-elec-yellow/90 transition-colors disabled:opacity-50 touch-manipulation"
+                    className="absolute -bottom-1 -right-1 h-10 w-10 rounded-full bg-elec-yellow text-black flex items-center justify-center shadow-md hover:bg-elec-yellow/90 transition-colors disabled:bg-white/[0.08] disabled:text-white/70 touch-manipulation"
                     aria-label="Upload photo"
                   >
                     {isUploading ? (

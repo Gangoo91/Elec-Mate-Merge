@@ -63,6 +63,11 @@ const PREFIX_MAP: Record<string, string> = {
   // "PPS", not "SURVEY" — it goes to a house-buyer alongside a mortgage
   // valuation and a building survey, and must not read like an EICR reference.
   'pre-purchase-survey': 'PPS',
+  // "PIS", not the fallback "PLUG-IN-SOLAR", which is unwieldy on a cover and
+  // in an email subject. Short enough to read as a reference, distinct from the
+  // "PV"/"SOLAR-PV" used by designed installations under Section 712 — the two
+  // must never be confused, because they carry completely different liability.
+  'plug-in-solar': 'PIS',
 };
 
 export const certificatePrefixFor = (reportType: string): string =>

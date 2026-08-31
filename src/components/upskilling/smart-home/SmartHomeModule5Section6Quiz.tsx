@@ -321,7 +321,7 @@ export const SmartHomeModule5Section6Quiz = () => {
           <Button
             onClick={nextQuestion}
             disabled={!selectedAnswers[currentQuestion]}
-            className="bg-elec-yellow text-elec-dark hover:bg-yellow-500 disabled:opacity-50"
+            className="bg-elec-yellow text-elec-dark hover:bg-yellow-500 disabled:bg-white/[0.08] disabled:text-white/70"
           >
             {currentQuestion === questions.length - 1 ? 'Finish Quiz' : 'Next Question'}
           </Button>

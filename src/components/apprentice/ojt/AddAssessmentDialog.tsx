@@ -209,7 +209,7 @@ const AddAssessmentDialog = ({ open, onOpenChange, onAddAssessment }: AddAssessm
               <Button
                 onClick={handleSubmit}
                 disabled={!valid}
-                className="h-12 rounded-xl bg-elec-yellow text-black font-semibold text-[14px] hover:bg-elec-yellow/90 disabled:opacity-40"
+                className="h-12 rounded-xl bg-elec-yellow text-black font-semibold text-[14px] hover:bg-elec-yellow/90 disabled:bg-white/[0.08] disabled:text-white/70"
               >
                 Add assessment
               </Button>

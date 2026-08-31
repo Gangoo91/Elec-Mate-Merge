@@ -19,14 +19,22 @@ const AchievementUnlockToast = ({ achievements }: AchievementUnlockToastProps) =
             animate={{ y: 0, opacity: 1, scale: 1 }}
             exit={{ y: -60, opacity: 0, scale: 0.95 }}
             transition={{ delay: i * 0.15, type: 'spring', stiffness: 300 }}
-            className="flex items-center gap-3 px-4 py-3 rounded-xl border border-elec-yellow/30 bg-elec-yellow/[0.04] backdrop-blur-md shadow-xl"
+            /*
+             * Solid volt, not a `/[0.04]` wash.
+             *
+             * A translucent yellow over near-black mixes into sludge, which is
+             * the wrong reward for unlocking something. Black-on-volt is the
+             * house treatment for "this is the good news" and it reads at a
+             * glance on a phone in daylight.
+             */
+            className="flex items-center gap-3 rounded-xl bg-elec-yellow px-4 py-3 shadow-xl"
           >
-            <Trophy className="h-5 w-5 text-elec-yellow flex-shrink-0" />
+            <Trophy className="h-5 w-5 shrink-0 text-black" />
             <div className="space-y-0.5">
-              <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-black opacity-70">
                 Achievement unlocked
               </p>
-              <p className="text-[14px] font-medium text-white">{a.title}</p>
+              <p className="text-[14px] font-bold text-black">{a.title}</p>
             </div>
           </motion.div>
         ))}

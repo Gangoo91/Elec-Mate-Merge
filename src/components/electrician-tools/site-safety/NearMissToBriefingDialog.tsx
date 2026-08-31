@@ -281,7 +281,7 @@ export const NearMissToBriefingDialog = ({ open, onClose, nearMissReport }: Prop
                 type="button"
                 onClick={handleGenerateAndCreate}
                 disabled={generating}
-                className="flex h-11 flex-[1.4] touch-manipulation items-center justify-center gap-2 rounded-xl bg-elec-yellow text-[14px] font-semibold text-black transition-all duration-150 active:scale-[0.98] active:brightness-125 disabled:opacity-50"
+                className="flex h-11 flex-[1.4] touch-manipulation items-center justify-center gap-2 rounded-xl bg-elec-yellow text-[14px] font-semibold text-black transition-all duration-150 active:scale-[0.98] active:brightness-125 disabled:bg-white/[0.08] disabled:text-white/70"
               >
                 {generating && <Loader2 className="h-4 w-4 animate-spin" aria-hidden />}
                 {generating ? 'Generating…' : 'Create briefing'}

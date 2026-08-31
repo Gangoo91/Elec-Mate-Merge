@@ -1007,7 +1007,7 @@ export default function AdminAnnouncements() {
                                 pushMutation.mutate({ id: pushConfirm.id, mode: 'audience' })
                               }
                               disabled={pushMutation.isPending}
-                              className="h-11 rounded-full text-[12.5px] font-semibold touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/90 disabled:opacity-50"
+                              className="h-11 rounded-full text-[12.5px] font-semibold touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/90 disabled:bg-white/[0.08] disabled:text-white/70"
                             >
                               {pushMutation.isPending ? 'Sending…' : 'Send to everyone'}
                             </button>
@@ -1030,7 +1030,7 @@ export default function AdminAnnouncements() {
                               type="button"
                               onClick={() => setPushConfirm(editAnnouncement)}
                               disabled={pushMutation.isPending}
-                              className="h-11 rounded-full text-[12.5px] font-semibold touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/90 disabled:opacity-50"
+                              className="h-11 rounded-full text-[12.5px] font-semibold touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/90 disabled:bg-white/[0.08] disabled:text-white/70"
                             >
                               Send to audience
                             </button>

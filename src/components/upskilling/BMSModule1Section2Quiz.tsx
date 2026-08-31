@@ -139,7 +139,7 @@ const BMSModule1Section2Quiz = ({ onBack }: BMSModule1Section2QuizProps) => {
               <Button
                 onClick={handleNext}
                 disabled={selectedAnswers[currentQuestion] === undefined}
-                className="bg-elec-yellow text-elec-dark hover:bg-yellow-600 disabled:opacity-50"
+                className="bg-elec-yellow text-elec-dark hover:bg-yellow-600 disabled:bg-white/[0.08] disabled:text-white/70"
               >
                 {currentQuestion === bmsModule1Section2QuizData.length - 1
                   ? 'Complete Quiz'

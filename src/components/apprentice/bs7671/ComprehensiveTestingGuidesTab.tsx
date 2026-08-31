@@ -34,17 +34,17 @@ const ComprehensiveTestingGuidesTab = () => {
   const getDifficultyConfig = (difficulty: string) => {
     switch (difficulty) {
       case 'Beginner':
-        return { bg: 'bg-green-500/10', text: 'text-green-400', border: 'border-green-500/30' };
+        return { bg: 'bg-white/[0.06]', text: 'text-green-400', border: 'border-green-500/30' };
       case 'Intermediate':
         return {
-          bg: 'bg-elec-yellow/10',
+          bg: 'bg-white/[0.06]',
           text: 'text-elec-yellow',
           border: 'border-elec-yellow/30',
         };
       case 'Advanced':
-        return { bg: 'bg-red-500/10', text: 'text-red-400', border: 'border-red-500/30' };
+        return { bg: 'bg-white/[0.06]', text: 'text-red-400', border: 'border-red-500/30' };
       default:
-        return { bg: 'bg-blue-500/10', text: 'text-blue-400', border: 'border-blue-500/30' };
+        return { bg: 'bg-white/[0.06]', text: 'text-blue-400', border: 'border-blue-500/30' };
     }
   };
 
@@ -62,7 +62,7 @@ const ComprehensiveTestingGuidesTab = () => {
     <div className="space-y-6 animate-fade-in">
       {/* Hero Header Card */}
       <Card className="bg-gradient-to-br from-white/5 to-elec-card border-cyan-500/20 overflow-hidden relative">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-cyan-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+        <div className="absolute top-0 right-0 w-64 h-64 bg-white/[0.06] rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
         <CardHeader className="relative">
           <CardTitle className="text-white flex items-center gap-3">
             <div className="p-2.5 rounded-xl bg-gradient-to-br from-cyan-500/20 to-cyan-500/5 border border-cyan-500/30">
@@ -80,21 +80,21 @@ const ComprehensiveTestingGuidesTab = () => {
 
           <div className="grid grid-cols-3 gap-3">
             <div className="p-4 rounded-xl bg-white/10 border border-white/10 text-center">
-              <div className="p-2 rounded-lg bg-green-500/20 inline-block mb-2">
+              <div className="p-2 rounded-lg bg-white/[0.06] inline-block mb-2">
                 <Book className="h-4 w-4 text-green-400" />
               </div>
               <div className="text-2xl font-bold text-green-400">{allBS7671Tests.length}</div>
               <div className="text-xs text-white">Available Guides</div>
             </div>
             <div className="p-4 rounded-xl bg-white/10 border border-white/10 text-center">
-              <div className="p-2 rounded-lg bg-blue-500/20 inline-block mb-2">
+              <div className="p-2 rounded-lg bg-white/[0.06] inline-block mb-2">
                 <Activity className="h-4 w-4 text-blue-400" />
               </div>
               <div className="text-2xl font-bold text-blue-400">100+</div>
               <div className="text-xs text-white">Detailed Steps</div>
             </div>
             <div className="p-4 rounded-xl bg-white/10 border border-white/10 text-center">
-              <div className="p-2 rounded-lg bg-purple-500/20 inline-block mb-2">
+              <div className="p-2 rounded-lg bg-white/[0.06] inline-block mb-2">
                 <Shield className="h-4 w-4 text-purple-400" />
               </div>
               <div className="text-2xl font-bold text-purple-400">BS 7671</div>
@@ -113,7 +113,7 @@ const ComprehensiveTestingGuidesTab = () => {
               key={guide.id}
               className="bg-gradient-to-br from-white/5 to-elec-card border-white/10 hover:border-elec-yellow/30 transition-all duration-300 overflow-hidden relative group"
             >
-              <div className="absolute top-0 right-0 w-32 h-32 bg-elec-yellow/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="absolute top-0 right-0 w-32 h-32 bg-white/[0.06] rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity" />
               <CardHeader className="relative">
                 <div className="space-y-3">
                   <CardTitle className="text-white text-lg leading-tight">{guide.title}</CardTitle>
@@ -123,7 +123,7 @@ const ComprehensiveTestingGuidesTab = () => {
                     >
                       {guide.difficulty}
                     </Badge>
-                    <Badge className="bg-blue-500/10 text-blue-400 border border-blue-500/30">
+                    <Badge className="bg-white/[0.06] text-blue-400 border border-blue-500/30">
                       <Clock className="h-3 w-3 mr-1" />
                       {guide.steps.length} steps
                     </Badge>
@@ -133,13 +133,13 @@ const ComprehensiveTestingGuidesTab = () => {
               </CardHeader>
 
               <CardContent className="space-y-3 relative">
-                <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/20">
+                <div className="p-3 rounded-xl bg-white/[0.06] border border-blue-500/20">
                   <h4 className="font-medium text-blue-400 mb-2 text-sm">Purpose</h4>
                   <p className="text-sm text-white">{guide.purpose}</p>
                 </div>
 
                 {guide.testLimits && guide.testLimits.length > 0 && (
-                  <div className="p-3 rounded-xl bg-green-500/10 border border-green-500/20">
+                  <div className="p-3 rounded-xl bg-white/[0.06] border border-green-500/20">
                     <h4 className="font-medium text-green-400 mb-2 text-sm">Test Limits</h4>
                     <div className="space-y-1">
                       {guide.testLimits.map((limit, index) => (
@@ -154,7 +154,7 @@ const ComprehensiveTestingGuidesTab = () => {
                   </div>
                 )}
 
-                <div className="p-3 rounded-xl bg-orange-500/10 border border-orange-500/20">
+                <div className="p-3 rounded-xl bg-white/[0.06] border border-orange-500/20">
                   <h4 className="font-medium text-orange-400 mb-2 text-sm flex items-center gap-2">
                     <AlertTriangle className="h-3.5 w-3.5" />
                     Common Issues
@@ -169,7 +169,7 @@ const ComprehensiveTestingGuidesTab = () => {
                   </ul>
                 </div>
 
-                <div className="p-3 rounded-xl bg-purple-500/10 border border-purple-500/20">
+                <div className="p-3 rounded-xl bg-white/[0.06] border border-purple-500/20">
                   <h4 className="font-medium text-purple-400 mb-2 text-sm">Key Features</h4>
                   <div className="grid grid-cols-2 gap-2 text-xs text-white">
                     <div className="flex items-center gap-1.5">
@@ -206,7 +206,7 @@ const ComprehensiveTestingGuidesTab = () => {
 
       {/* Professional Tips Card */}
       <Card className="bg-gradient-to-br from-white/5 to-elec-card border-elec-yellow/20 overflow-hidden relative">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-elec-yellow/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+        <div className="absolute top-0 right-0 w-64 h-64 bg-white/[0.06] rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
         <CardHeader className="relative">
           <CardTitle className="text-white flex items-center gap-3">
             <div className="p-2.5 rounded-xl bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 border border-elec-yellow/30">
@@ -219,7 +219,7 @@ const ComprehensiveTestingGuidesTab = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="p-4 rounded-xl bg-white/10 border border-white/10">
               <div className="flex items-center gap-3 mb-4">
-                <div className="p-2 rounded-lg bg-green-500/20">
+                <div className="p-2 rounded-lg bg-white/[0.06]">
                   <CheckCircle className="h-4 w-4 text-green-400" />
                 </div>
                 <h4 className="font-semibold text-white">Before You Start</h4>
@@ -240,7 +240,7 @@ const ComprehensiveTestingGuidesTab = () => {
             </div>
             <div className="p-4 rounded-xl bg-white/10 border border-white/10">
               <div className="flex items-center gap-3 mb-4">
-                <div className="p-2 rounded-lg bg-blue-500/20">
+                <div className="p-2 rounded-lg bg-white/[0.06]">
                   <Activity className="h-4 w-4 text-blue-400" />
                 </div>
                 <h4 className="font-semibold text-white">Best Practices</h4>

@@ -30,6 +30,8 @@ interface EPAProfessionalDiscussionProps {
   portfolioEntries: PortfolioEntry[];
   qualificationCode: string;
   onSessionComplete?: () => void;
+  /** Fires when a session starts or ends, so the page can guard navigation. */
+  onActiveChange?: (active: boolean) => void;
 }
 
 const GRADE_LABELS: Record<string, string> = {
@@ -47,7 +49,7 @@ const Eyebrow = ({
 }) => (
   <span
     className={cn(
-      'text-[10px] font-medium uppercase tracking-[0.18em] text-white/55',
+      'text-[10px] font-medium uppercase tracking-[0.18em] text-white/70',
       className
     )}
   >
@@ -77,6 +79,7 @@ export function EPAProfessionalDiscussion({
   portfolioEntries,
   qualificationCode,
   onSessionComplete,
+  onActiveChange,
 }: EPAProfessionalDiscussionProps) {
   const {
     questions,
@@ -166,6 +169,13 @@ export function EPAProfessionalDiscussion({
     : null;
 
   /* ─── SETUP STATE ──────────────────────────────────────────── */
+  /* Tell the page when a session is live so it can warn before you navigate
+     away — switching tabs unmounts this component and loses the session. */
+  useEffect(() => {
+    onActiveChange?.(isSessionActive);
+    return () => onActiveChange?.(false);
+  }, [isSessionActive, onActiveChange]);
+
   if (!isSessionActive && !sessionResult) {
     return (
       <div className="px-4 sm:px-6 py-6 space-y-6">
@@ -194,7 +204,7 @@ export function EPAProfessionalDiscussion({
             ].map((skill) => (
               <span
                 key={skill}
-                className="text-[12px] text-white/85 px-2.5 py-0.5 rounded-md border border-white/[0.08] bg-white/[0.02]"
+                className="text-[12px] text-white/85 px-2.5 py-0.5 rounded-md border border-white/[0.08] bg-white/[0.06]"
               >
                 {skill}
               </span>
@@ -215,7 +225,7 @@ export function EPAProfessionalDiscussion({
             ].map((step, i) => (
               <li
                 key={i}
-                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] px-4 py-3 sm:px-5 sm:py-4"
+                className="rounded-xl border border-white/[0.10] bg-white/[0.06] px-4 py-3 sm:px-5 sm:py-4"
               >
                 <div className="flex items-baseline gap-3">
                   <span className="text-[11px] font-mono text-elec-yellow/85 flex-shrink-0">
@@ -233,7 +243,7 @@ export function EPAProfessionalDiscussion({
 
         {/* Action */}
         {portfolioEntries.length === 0 ? (
-          <div className="rounded-xl border border-elec-yellow/30 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-1.5">
+          <div className="rounded-xl border border-elec-yellow/30 bg-white/[0.06] p-4 sm:p-5 space-y-1.5">
             <Eyebrow className="text-elec-yellow">Add portfolio evidence first</Eyebrow>
             <p className="text-[13px] text-white/85 leading-relaxed">
               The discussion is grounded in your actual portfolio entries. Add at least one piece
@@ -241,7 +251,7 @@ export function EPAProfessionalDiscussion({
             </p>
             <a
               href="/apprentice/hub"
-              className="inline-flex items-center h-9 px-3 mt-1 rounded-md bg-elec-yellow text-black text-[12px] font-semibold hover:bg-elec-yellow/90 transition-colors touch-manipulation"
+              className="inline-flex items-center h-11 px-3 mt-1 rounded-md bg-elec-yellow text-black text-[12px] font-semibold hover:bg-elec-yellow/90 transition-colors touch-manipulation"
             >
               Go to portfolio →
             </a>
@@ -262,7 +272,7 @@ export function EPAProfessionalDiscussion({
                 <>Start mock discussion →</>
               )}
             </button>
-            <div className="flex items-baseline gap-2 text-[10px] uppercase tracking-[0.18em] text-white/40">
+            <div className="flex items-baseline gap-2 text-[10px] uppercase tracking-[0.18em] text-white/70">
               <span>{portfolioEntries.length} portfolio entries</span>
               <span>·</span>
               <span>~15 min session</span>
@@ -281,7 +291,7 @@ export function EPAProfessionalDiscussion({
         ? 'text-elec-yellow'
         : grade === 'pass'
           ? 'text-white/85'
-          : 'text-red-300';
+          : 'text-red-400';
 
     const strengths = sessionResult.responses
       .flatMap((r) => r.score?.strengthsShown || [])
@@ -302,7 +312,7 @@ export function EPAProfessionalDiscussion({
             >
               {sessionResult.overallScore}
             </span>
-            <span className="text-[18px] text-white/40 font-mono">/ 100</span>
+            <span className="text-[18px] text-white/70 font-mono">/ 100</span>
           </div>
           <p className="text-[14px] text-white/70 leading-relaxed">
             {sessionResult.responses.filter((r) => r.score).length} of{' '}
@@ -315,7 +325,7 @@ export function EPAProfessionalDiscussion({
         {/* Component scores */}
         <section className="space-y-3">
           <Eyebrow>Component scores</Eyebrow>
-          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3">
+          <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3">
             <ComponentBar label="Technical knowledge" score={sessionResult.componentScores.technicalKnowledge} />
             <ComponentBar label="Practical application" score={sessionResult.componentScores.practicalApplication} />
             <ComponentBar label="Communication" score={sessionResult.componentScores.communication} />
@@ -347,7 +357,7 @@ export function EPAProfessionalDiscussion({
               {sessionResult.improvementSuggestions.map((suggestion, i) => (
                 <li
                   key={i}
-                  className="rounded-xl border border-elec-yellow/20 bg-elec-yellow/[0.03] px-4 py-3 sm:px-5 sm:py-4"
+                  className="rounded-xl border border-elec-yellow/20 bg-white/[0.06] px-4 py-3 sm:px-5 sm:py-4"
                 >
                   <p className="text-[14px] text-white/85 leading-relaxed">{suggestion}</p>
                 </li>
@@ -365,17 +375,17 @@ export function EPAProfessionalDiscussion({
               const score = resp?.score;
               const qGradeClass =
                 score?.grade === 'distinction'
-                  ? 'text-elec-yellow border-elec-yellow/30 bg-elec-yellow/[0.06]'
+                  ? 'text-elec-yellow border-elec-yellow/30 bg-white/[0.06]'
                   : score?.grade === 'pass'
-                    ? 'text-white/85 border-white/[0.08] bg-white/[0.03]'
-                    : 'text-red-300 border-red-500/30 bg-red-500/[0.05]';
+                    ? 'text-white/85 border-white/[0.08] bg-white/[0.07]'
+                    : 'text-red-400 border-red-500/30 bg-white/[0.06]';
               return (
                 <li
                   key={q.id}
-                  className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] px-4 py-3 sm:px-5 sm:py-4 space-y-2"
+                  className="rounded-xl border border-white/[0.10] bg-white/[0.06] px-4 py-3 sm:px-5 sm:py-4 space-y-2"
                 >
                   <div className="flex items-baseline gap-3">
-                    <span className="text-[11px] font-mono text-white/40 flex-shrink-0">
+                    <span className="text-[11px] font-mono text-white/70 flex-shrink-0">
                       {String(i + 1).padStart(2, '0')}
                     </span>
                     <p className="text-[14px] text-white leading-snug flex-1">{q.question}</p>
@@ -391,14 +401,14 @@ export function EPAProfessionalDiscussion({
                     )}
                   </div>
                   {q.portfolioContext && (
-                    <p className="text-[12px] text-white/55 italic pl-7">
+                    <p className="text-[12px] text-white/70 italic pl-7">
                       Drawn from: {q.portfolioContext}
                     </p>
                   )}
                   {score && (
                     <p className="text-[12px] text-white/70 leading-relaxed pl-7">{score.feedback}</p>
                   )}
-                  {!score && <p className="text-[12px] text-white/40 italic pl-7">Not answered</p>}
+                  {!score && <p className="text-[12px] text-white/70 italic pl-7">Not answered</p>}
                 </li>
               );
             })}
@@ -407,7 +417,7 @@ export function EPAProfessionalDiscussion({
 
         <button
           onClick={handleReset}
-          className="w-full h-12 rounded-xl border border-white/[0.08] bg-white/[0.02] text-white text-[14px] font-semibold hover:bg-white/[0.04] transition-colors touch-manipulation inline-flex items-center justify-center gap-2"
+          className="w-full h-12 rounded-xl border border-white/[0.08] bg-white/[0.06] text-white text-[14px] font-semibold hover:bg-white/[0.04] transition-colors touch-manipulation inline-flex items-center justify-center gap-2"
         >
           <RotateCcw className="h-4 w-4" />
           Start new discussion
@@ -425,7 +435,7 @@ export function EPAProfessionalDiscussion({
           <Eyebrow>
             Question {currentQuestionIndex + 1} / {totalCount}
           </Eyebrow>
-          <span className="text-[10px] font-mono text-white/40 uppercase tracking-[0.18em]">
+          <span className="text-[10px] font-mono text-white/70 uppercase tracking-[0.18em]">
             {answeredCount} answered
           </span>
         </div>
@@ -443,7 +453,7 @@ export function EPAProfessionalDiscussion({
           <>
             {/* Portfolio source — surfaced prominently */}
             {currentQuestion.portfolioContext && (
-              <div className="rounded-xl border border-elec-yellow/20 bg-elec-yellow/[0.03] px-4 py-3 sm:px-5 sm:py-4 space-y-1.5">
+              <div className="rounded-xl border border-elec-yellow/20 bg-white/[0.06] px-4 py-3 sm:px-5 sm:py-4 space-y-1.5">
                 <Eyebrow className="text-elec-yellow">Drawn from your portfolio</Eyebrow>
                 <p className="text-[13px] text-white/85 leading-relaxed italic">
                   {currentQuestion.portfolioContext}
@@ -456,7 +466,7 @@ export function EPAProfessionalDiscussion({
               <div className="flex items-baseline gap-2 flex-wrap">
                 <Eyebrow>Assessor question</Eyebrow>
                 {currentQuestion.targetLO && (
-                  <span className="text-[10px] font-mono text-white/55 uppercase tracking-[0.14em]">
+                  <span className="text-[10px] font-mono text-white/70 uppercase tracking-[0.14em]">
                     LO {currentQuestion.targetLO}
                   </span>
                 )}
@@ -466,7 +476,7 @@ export function EPAProfessionalDiscussion({
                   </span>
                 )}
                 {currentQuestion.questionType && (
-                  <span className="text-[10px] uppercase tracking-[0.14em] text-white/40">
+                  <span className="text-[10px] uppercase tracking-[0.14em] text-white/70">
                     {currentQuestion.questionType}
                   </span>
                 )}
@@ -477,7 +487,7 @@ export function EPAProfessionalDiscussion({
             </div>
 
             {/* Grade descriptors — collapsible */}
-            <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] overflow-hidden">
+            <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] overflow-hidden">
               <button
                 onClick={() => setDescriptorsOpen(!descriptorsOpen)}
                 className="w-full flex items-center justify-between px-4 py-3 text-left touch-manipulation h-11"
@@ -485,20 +495,20 @@ export function EPAProfessionalDiscussion({
                 <Eyebrow>Grade descriptors</Eyebrow>
                 <ChevronDown
                   className={cn(
-                    'h-4 w-4 text-white/55 transition-transform',
+                    'h-4 w-4 text-white/70 transition-transform',
                     descriptorsOpen && 'rotate-180'
                   )}
                 />
               </button>
               {descriptorsOpen && (
                 <div className="px-4 pb-4 space-y-2">
-                  <div className="rounded-lg border border-white/[0.06] bg-[hsl(0_0%_10%)] p-3 space-y-1">
+                  <div className="rounded-lg border border-white/[0.10] bg-white/[0.06] p-3 space-y-1">
                     <Eyebrow>Pass</Eyebrow>
                     <p className="text-[13px] text-white/85 leading-relaxed">
                       {currentQuestion.gradeDescriptors.pass}
                     </p>
                   </div>
-                  <div className="rounded-lg border border-elec-yellow/20 bg-elec-yellow/[0.03] p-3 space-y-1">
+                  <div className="rounded-lg border border-elec-yellow/20 bg-white/[0.06] p-3 space-y-1">
                     <Eyebrow className="text-elec-yellow">Distinction</Eyebrow>
                     <p className="text-[13px] text-white/85 leading-relaxed">
                       {currentQuestion.gradeDescriptors.distinction}
@@ -511,7 +521,7 @@ export function EPAProfessionalDiscussion({
             {/* Response area */}
             {existingResponse?.score ? (
               <div className="space-y-3">
-                <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 space-y-1.5">
+                <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 space-y-1.5">
                   <Eyebrow>Your response</Eyebrow>
                   <p className="text-[13px] text-white/85 leading-relaxed whitespace-pre-wrap">
                     {existingResponse.responseText}
@@ -526,7 +536,7 @@ export function EPAProfessionalDiscussion({
                   value={responseText}
                   onChange={(e) => setResponseText(e.target.value)}
                   placeholder="Type or speak your response. Aim for 3–5 paragraphs covering your experience, reasoning, and reflection…"
-                  className="w-full min-h-[200px] p-4 rounded-xl bg-white/[0.02] border border-white/[0.08] text-[14px] text-white placeholder:text-white/40 focus:border-elec-yellow/40 focus:ring-1 focus:ring-elec-yellow/20 touch-manipulation resize-none leading-relaxed"
+                  className="w-full min-h-[200px] p-4 rounded-xl bg-white/[0.06] border border-white/[0.08] text-[14px] text-white placeholder:text-white/70 focus:border-elec-yellow/40 focus:ring-1 focus:ring-elec-yellow/20 touch-manipulation resize-none leading-relaxed"
                   disabled={isScoring}
                 />
 
@@ -545,8 +555,8 @@ export function EPAProfessionalDiscussion({
                       className={cn(
                         'h-11 w-11 rounded-lg flex items-center justify-center touch-manipulation transition-colors shrink-0 border',
                         isListening
-                          ? 'bg-red-500/[0.08] border-red-500/40 text-red-300 animate-pulse'
-                          : 'bg-white/[0.02] border-white/[0.08] text-white/85 hover:bg-white/[0.04]'
+                          ? 'bg-white/[0.06] border-red-500/40 text-red-400 animate-pulse'
+                          : 'bg-white/[0.06] border-white/[0.08] text-white/85 hover:bg-white/[0.04]'
                       )}
                       aria-label={isListening ? 'Stop recording' : 'Start voice input'}
                     >
@@ -562,7 +572,7 @@ export function EPAProfessionalDiscussion({
                         'Tap to speak'
                       )}
                     </span>
-                    <span className="ml-auto text-[10px] font-mono text-white/40 uppercase tracking-[0.14em]">
+                    <span className="ml-auto text-[10px] font-mono text-white/70 uppercase tracking-[0.14em]">
                       {responseText.length} chars
                     </span>
                   </div>
@@ -594,7 +604,7 @@ export function EPAProfessionalDiscussion({
       </div>
 
       {/* Navigation */}
-      <div className="px-4 sm:px-6 py-3 border-t border-white/[0.06] flex items-center justify-between gap-3">
+      <div className="px-4 sm:px-6 py-3 border-t border-white/[0.10] flex items-center justify-between gap-3">
         <button
           onClick={() => {
             previousQuestion();
@@ -606,7 +616,7 @@ export function EPAProfessionalDiscussion({
             setDescriptorsOpen(false);
           }}
           disabled={currentQuestionIndex === 0}
-          className="h-11 px-4 rounded-lg border border-white/[0.08] bg-white/[0.02] text-white text-[13px] font-medium hover:bg-white/[0.04] transition-colors touch-manipulation disabled:opacity-30"
+          className="h-11 px-4 rounded-lg border border-white/[0.08] bg-white/[0.06] text-white text-[13px] font-medium hover:bg-white/[0.04] transition-colors touch-manipulation disabled:opacity-30"
         >
           ← Previous
         </button>
@@ -614,7 +624,7 @@ export function EPAProfessionalDiscussion({
         {currentQuestionIndex < totalCount - 1 ? (
           <button
             onClick={handleNext}
-            className="h-11 px-4 rounded-lg border border-white/[0.08] bg-white/[0.02] text-white text-[13px] font-medium hover:bg-white/[0.04] transition-colors touch-manipulation"
+            className="h-11 px-4 rounded-lg border border-white/[0.08] bg-white/[0.06] text-white text-[13px] font-medium hover:bg-white/[0.04] transition-colors touch-manipulation"
           >
             Next →
           </button>
@@ -645,10 +655,10 @@ function ScoreFeedback({ score }: { score: ResponseScore }) {
       ? 'text-elec-yellow'
       : score.grade === 'pass'
         ? 'text-white/85'
-        : 'text-red-300';
+        : 'text-red-400';
 
   return (
-    <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-4">
+    <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-4">
       {/* Score + grade */}
       <div className="space-y-1">
         <Eyebrow>Score · {GRADE_LABELS[score.grade]}</Eyebrow>
@@ -661,7 +671,7 @@ function ScoreFeedback({ score }: { score: ResponseScore }) {
           >
             {score.score}
           </span>
-          <span className="text-[12px] text-white/40 font-mono">/ 100</span>
+          <span className="text-[12px] text-white/70 font-mono">/ 100</span>
         </div>
         <p className="text-[13px] text-white/85 leading-relaxed">{score.feedback}</p>
       </div>

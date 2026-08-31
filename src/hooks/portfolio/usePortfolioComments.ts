@@ -48,9 +48,18 @@ interface UsePortfolioCommentsReturn {
   getUnreadForEvidence: (evidenceId: string) => number;
 }
 
-// Generate unique ID
-const generateId = (prefix: string) =>
-  `${prefix}-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+/**
+ * portfolio_comments.id is a uuid column, so a "comment-<ts>-<rand>" string
+ * is rejected outright (22P02). Generate a real one.
+ */
+const generateId = (): string =>
+  typeof crypto !== 'undefined' && 'randomUUID' in crypto
+    ? crypto.randomUUID()
+    : // Fallback for the rare context without randomUUID.
+      'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+        const r = (Math.random() * 16) | 0;
+        return (c === 'x' ? r : (r & 0x3) | 0x8).toString(16);
+      });
 
 // Get initials from name
 const getInitials = (name: string): string => {
@@ -97,7 +106,15 @@ export function usePortfolioComments(): UsePortfolioCommentsReturn {
       const { data, error: fetchError } = await supabase
         .from('portfolio_comments')
         .select('*')
-        .or(`action_owner.eq.${user.id},author_id.eq.${user.id}`)
+        /*
+         * 🔴 This was `action_owner.eq.<me>,author_id.eq.<me>` — which
+         * excludes the one case the feature exists for: a TUTOR commenting on
+         * MY evidence. That row has author_id = the tutor and, unless they set
+         * an action owner, nothing pointing at me — so tutor feedback was
+         * filtered out before it ever reached the UI. `user_id` is the learner
+         * the thread belongs to, and RLS already restricts the rest.
+         */
+        .or(`user_id.eq.${user.id},action_owner.eq.${user.id},author_id.eq.${user.id}`)
         .order('created_at', { ascending: true });
 
       if (fetchError) throw fetchError;
@@ -181,20 +198,26 @@ export function usePortfolioComments(): UsePortfolioCommentsReturn {
 
       const newComment: PortfolioComment = {
         ...comment,
-        id: generateId('comment'),
+        id: generateId(),
         createdAt: new Date().toISOString(),
       };
 
       try {
         const { error: insertError } = await supabase
           .from('portfolio_comments')
-          .insert(mapCommentToDatabase(newComment));
+          .insert(mapCommentToDatabase(newComment, user.id));
 
+        /*
+         * Do NOT swallow this. The old code warned to the console and then
+         * added the comment to local state regardless, so a failed write was
+         * indistinguishable from a successful one until the next reload —
+         * which is how a completely non-functional insert survived unnoticed.
+         */
         if (insertError) {
-          console.warn('Failed to save comment to database:', insertError);
+          console.error('Failed to save comment:', insertError);
+          throw insertError;
         }
 
-        // Optimistically add to local state
         setComments((prev) => [...prev, newComment]);
       } catch (err) {
         console.error('Error adding comment:', err);
@@ -256,11 +279,11 @@ export function usePortfolioComments(): UsePortfolioCommentsReturn {
       try {
         const { error: updateError } = await supabase
           .from('portfolio_comments')
+          // resolved_by / resolved_at are not columns on portfolio_comments;
+          // including them failed the whole update.
           .update({
             is_resolved: true,
-            resolved_by: user.id,
             resolved_by_name: user.user_metadata?.full_name || 'Apprentice',
-            resolved_at: now,
             requires_action: false,
             updated_at: now,
           })
@@ -343,7 +366,12 @@ function mapDatabaseComment(row: any): PortfolioComment {
   return {
     id: row.id,
     contextType: row.context_type,
-    contextId: row.context_id,
+    // 🔴 This read `row.context_id`. There IS no context_id column — the
+    // evidence a comment hangs off is `evidence_id`. So contextId was
+    // undefined on every row, and getCommentsForEvidence (which matches on
+    // contextId === evidenceId) never matched anything. Tutor feedback was
+    // fetched and then silently filtered out of every thread.
+    contextId: row.evidence_id,
     parentId: row.parent_id,
     authorId: row.author_id,
     authorName: row.author_name,
@@ -354,20 +382,36 @@ function mapDatabaseComment(row: any): PortfolioComment {
     requiresAction: row.requires_action,
     actionOwner: row.action_owner,
     isResolved: row.is_resolved,
-    resolvedBy: row.resolved_by,
+    // resolved_by / resolved_at are not columns on this table either.
     resolvedByName: row.resolved_by_name,
-    resolvedAt: row.resolved_at,
     createdAt: row.created_at,
     updatedAt: row.updated_at,
   };
 }
 
 // Map PortfolioComment to database row
-function mapCommentToDatabase(comment: PortfolioComment): any {
+/**
+ * 🔴 Every insert this produced was rejected, and the rejection was swallowed.
+ *
+ * portfolio_comments requires id (uuid), user_id, evidence_id, context_type,
+ * content, author_name and author_role. The old mapper sent NEITHER user_id
+ * NOR evidence_id, sent a non-UUID id ("comment-1712…-a1b2c3"), and sent three
+ * columns that do not exist (context_id, resolved_by, resolved_at). The insert
+ * failed on every path, `addComment` logged it with console.warn and then
+ * optimistically pushed the comment into local state anyway — so an apprentice
+ * replying to a tutor watched their message appear and be lost on reload,
+ * while the tutor never received it.
+ *
+ * `ownerId` is the learner whose portfolio the thread belongs to; the RLS
+ * INSERT check requires user_id = auth.uid() for a learner posting on their
+ * own evidence.
+ */
+function mapCommentToDatabase(comment: PortfolioComment, ownerId: string): any {
   return {
     id: comment.id,
+    user_id: ownerId,
+    evidence_id: comment.contextId,
     context_type: comment.contextType,
-    context_id: comment.contextId,
     parent_id: comment.parentId,
     author_id: comment.authorId,
     author_name: comment.authorName,
@@ -378,9 +422,7 @@ function mapCommentToDatabase(comment: PortfolioComment): any {
     requires_action: comment.requiresAction,
     action_owner: comment.actionOwner,
     is_resolved: comment.isResolved,
-    resolved_by: comment.resolvedBy,
     resolved_by_name: comment.resolvedByName,
-    resolved_at: comment.resolvedAt,
     created_at: comment.createdAt,
     updated_at: comment.updatedAt,
   };

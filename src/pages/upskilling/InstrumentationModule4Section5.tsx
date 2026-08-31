@@ -195,16 +195,10 @@ const InstrumentationModule4Section5 = () => {
         <TLDR
           points={[
             'Sections 1 to 4 were about taking a reading correctly. This one is about what happens to it afterwards.',
-            'A single reading answers a question about one moment. A sequence answers a question about a trend, and the trend is where the predictive value is.',
             '🔴 Record what you found as well as what you left. With only one of the two, drift over time cannot be calculated at all.',
-            'Drift that suddenly grows is a component beginning to fail, and it says so early — but only to somebody holding the history.',
             '🔴 The sign of an error is information. Reading low and reading high are different faults, and magnitude alone discards the direction a drift is moving.',
-            'A number without context cannot be compared with anything. Which point, which instrument, what conditions, when.',
             '🔴 A meter has a scan time, so it is a sampled instrument — everything Module 3 Section 4 said about sampling applies to it.',
-            'An event shorter than the scan time can happen entirely between samples and leave no trace. The reading afterwards is perfectly correct.',
             'A basic min/max capture proves an excursion happened and cannot tell you when. Logging with timestamps is a different capability.',
-            'Choosing a logging interval is the same trade as a gate time or a damping value: resolution against manageability, for the third time in this course.',
-            'Judge plausibility before recording. The per-unit reverse check from Module 3 Section 4 takes thirty seconds and splits the system in two.',
             'A record that cannot be compared with anything is reassurance, not evidence.',
           ]}
         />
@@ -344,12 +338,12 @@ const InstrumentationModule4Section5 = () => {
           id="ins-4-5-sign"
           question="Three annual checks on the same transmitter record errors of −0.2 %, −0.5 % and −0.9 % of span. What does the pattern suggest?"
           options={[
-            'A consistent one-way drift that is accelerating, which is worth investigating before it goes out of tolerance',
             'A calibration procedure error',
+            'A consistent one-way drift that is accelerating, which is worth investigating before it goes out of tolerance',
             'Nothing can be concluded from three readings',
             'Random scatter within tolerance — no action needed',
           ]}
-          correctIndex={0}
+          correctIndex={1}
           explanation="All three are negative and the steps are growing — 0.3 then 0.4. That is a component changing, not noise, and it is visible only because the signs were recorded. Had these been logged as 0.2, 0.5 and 0.9, the direction would have been preserved by luck; had they been mixed signs recorded unsigned, the trend would have been invisible."
         />
 
@@ -449,11 +443,11 @@ const InstrumentationModule4Section5 = () => {
           question="A logger is set to sample every 60 seconds to keep the file manageable. It records a smooth cycle with a period of about 20 minutes on a tank that operators say is steady. What should you suspect first?"
           options={[
             'A genuine 20-minute process cycle nobody has noticed',
-            'Aliasing — something varying much faster than the sample interval is being folded into a slow apparent cycle',
             'A fault in the logger',
+            'Aliasing — something varying much faster than the sample interval is being folded into a slow apparent cycle',
             'Drift in the level transmitter',
           ]}
-          correctIndex={1}
+          correctIndex={2}
           explanation="The operators and the instrument disagree, and the instrument is sampling slowly. A smooth, plausible slow cycle produced by a slow sampler is the signature of aliasing, exactly as Module 3 Section 4 described. Sample faster, or filter ahead of the logger, before building a theory about the process."
         />
 

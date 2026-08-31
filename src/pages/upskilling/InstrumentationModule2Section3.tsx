@@ -213,11 +213,11 @@ const InstrumentationModule2Section3 = () => {
           question="A pressure reading on a sealed vessel drifts by a small amount every day, correlating with the weather. What is the most likely explanation?"
           options={[
             'The transmitter is failing',
-            'It is a gauge instrument, so its reference is atmospheric pressure — which is what is moving',
             'The vessel is leaking',
             'The impulse line is blocked',
+            'It is a gauge instrument, so its reference is atmospheric pressure — which is what is moving',
           ]}
-          correctIndex={1}
+          correctIndex={3}
           explanation="A gauge instrument reads relative to atmosphere, so barometric changes appear in the reading as though the process had changed. On a sealed vessel where the true pressure is steady, that is the signature. If the process genuinely needs a weather-independent number, it wants an absolute instrument."
         />
 
@@ -253,11 +253,11 @@ const InstrumentationModule2Section3 = () => {
           <p>
             The important structural point:{' '}
             <strong>
-              bellows, diaphragms and bourdon tubes alike may all be used to measure differential
-              and/or absolute pressure in addition to gauge
-            </strong>
-            . All that is needed is to subject the other side of the element either to another
-            applied pressure, for differential measurement, or to a vacuum chamber, for absolute.
+              every one of these elements &mdash; bellows, diaphragm, bourdon tube &mdash; can be
+              made to read gauge, differential or absolute pressure.
+            </strong>{' '}
+            Nothing about the element changes. What changes is what you present to its other side: a
+            second process pressure gives you differential, and a sealed vacuum gives you absolute.
           </p>
           <p>
             The engineering challenge in doing that is getting the movement out to a pointer while
@@ -300,10 +300,10 @@ const InstrumentationModule2Section3 = () => {
             tubes among them.
           </p>
           <p>
-            One honest caveat, which the source is explicit about: these derivations assume friction
-            plays no significant role. No industrial flow is truly frictionless — especially through
-            a primitive element like an orifice plate — so the theoretical equations are adjusted to
-            match real behaviour. The principle holds; the arithmetic is empirically corrected.
+            One honest caveat worth stating: these derivations assume friction plays no significant
+            role. No industrial flow is truly frictionless — especially through a primitive element
+            like an orifice plate — so the theoretical equations are adjusted to match real
+            behaviour. The principle holds; the arithmetic is empirically corrected.
           </p>
         </ConceptBlock>
 
@@ -363,11 +363,11 @@ const InstrumentationModule2Section3 = () => {
           question="A DP flow loop shows 50% on the operator display. Square-root extraction is configured in the transmitter AND in the DCS. What is the true flow?"
           options={[
             '50% — the extractions cancel out',
-            'Higher than 50%, because the square root has been taken twice',
             'Exactly 25%',
+            'Higher than 50%, because the square root has been taken twice',
             'It cannot be determined without the orifice size',
           ]}
-          correctIndex={1}
+          correctIndex={2}
           explanation="Taking the root twice pulls mid-range values upward each time: 50% DP becomes 70.7% after one extraction, and 84.1% after a second. The display is over-reading. The ends still agree — 0% and 100% survive any number of extractions — which is exactly why this error hides during a two-point loop check."
         />
 
@@ -587,11 +587,11 @@ const InstrumentationModule2Section3 = () => {
           question="You open the equalise valve on a DP flow transmitter in service. What should the transmitter read?"
           options={[
             'Full scale, because both sides are now pressurised',
-            'Zero, because both sides of the cell now see the same pressure',
             'The line pressure',
+            'Zero, because both sides of the cell now see the same pressure',
             'It should be left alone — equalising damages the cell',
           ]}
-          correctIndex={1}
+          correctIndex={2}
           explanation="Equalising ties both sides of the sensing cell together, so the differential across it is zero regardless of what the line pressure is. A healthy transmitter reads zero. That is the quickest way to prove the instrument without disconnecting it — and if it does not zero, you have found the fault."
         />
 

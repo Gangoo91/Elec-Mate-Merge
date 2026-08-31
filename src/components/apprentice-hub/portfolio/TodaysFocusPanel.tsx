@@ -22,8 +22,8 @@ const KIND_TONE: Record<FocusAC['reasonKind'], string> = {
   referred: 'border-red-400/30 text-red-300 bg-red-500/[0.08]',
   'quick-win': 'border-elec-yellow/30 text-elec-yellow bg-elec-yellow/[0.05]',
   'recent-match': 'border-elec-yellow/20 text-elec-yellow/85 bg-elec-yellow/[0.03]',
-  foundational: 'border-white/[0.10] text-white/85 bg-white/[0.04]',
-  'next-up': 'border-white/[0.08] text-white/55 bg-white/[0.02]',
+  foundational: 'border-white/[0.10] text-white bg-white/[0.04]',
+  'next-up': 'border-white/[0.08] text-white bg-white/[0.02]',
 };
 
 interface TodaysFocusPanelProps {
@@ -47,7 +47,7 @@ export function TodaysFocusPanel({
           title="Top 3 to capture next"
           meta="Picking your highest-impact ACs…"
         />
-        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-5">
+        <div className="rounded-xl border border-elec-yellow/35 bg-gradient-to-br from-white/[0.19] via-white/[0.105] to-white/[0.065] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.16),0_2px_10px_-4px_rgba(0,0,0,0.65)] p-5">
           <div className="h-3 w-2/3 bg-white/[0.05] rounded animate-pulse" />
           <div className="h-3 w-3/4 bg-white/[0.05] rounded animate-pulse mt-3" />
           <div className="h-3 w-1/2 bg-white/[0.05] rounded animate-pulse mt-3" />
@@ -62,7 +62,7 @@ export function TodaysFocusPanel({
         <SectionHeader eyebrow="Today's focus" title="All caught up" />
         <div className="rounded-xl border border-elec-yellow/30 bg-elec-yellow/[0.04] p-5 space-y-1.5">
           <Eyebrow className="text-elec-yellow">Strong coverage</Eyebrow>
-          <p className="text-[14px] text-white/85 leading-relaxed">
+          <p className="text-[14px] text-white leading-relaxed">
             Every assessment criterion already has at least one piece of evidence. Focus on
             depth and quality next — the EPA gateway looks at both.
           </p>
@@ -86,7 +86,7 @@ export function TodaysFocusPanel({
         {focus.map((f, i) => (
           <li
             key={f.acFullRef}
-            className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] hover:bg-white/[0.04] transition-colors px-4 py-3 sm:px-5 sm:py-4"
+            className="rounded-xl border border-elec-yellow/35 bg-gradient-to-br from-white/[0.19] via-white/[0.105] to-white/[0.065] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.16),0_2px_10px_-4px_rgba(0,0,0,0.65)] hover:bg-white/[0.04] transition-colors px-4 py-3 sm:px-5 sm:py-4"
           >
             <div className="flex items-baseline gap-3">
               <span className="text-[11px] font-mono text-elec-yellow/85 flex-shrink-0">
@@ -97,7 +97,7 @@ export function TodaysFocusPanel({
                   <span className="text-[11px] font-mono text-elec-yellow">
                     {f.acRef}
                   </span>
-                  <span className="text-[10px] uppercase tracking-[0.14em] text-white/45">
+                  <span className="text-[10px] uppercase tracking-[0.14em] text-white">
                     Unit {f.unitCode}
                   </span>
                   <span
@@ -110,7 +110,7 @@ export function TodaysFocusPanel({
                   </span>
                 </div>
                 <p className="text-[14px] text-white leading-snug">{f.acText}</p>
-                <p className="text-[12px] text-white/70 leading-snug italic">{f.reason}</p>
+                <p className="text-[12px] text-white leading-snug italic">{f.reason}</p>
               </div>
             </div>
             <div className="pl-7 mt-3">

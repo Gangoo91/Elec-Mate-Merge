@@ -338,7 +338,7 @@ export default function AdminDataExport() {
                       <button
                         onClick={() => isSuperAdmin && handleOpenExport(config)}
                         disabled={!isSuperAdmin}
-                        className="w-full h-11 inline-flex items-center justify-center gap-2 rounded-full bg-elec-yellow text-black text-[13px] font-semibold touch-manipulation transition-colors hover:bg-elec-yellow/90 disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="w-full h-11 inline-flex items-center justify-center gap-2 rounded-full bg-elec-yellow text-black text-[13px] font-semibold touch-manipulation transition-colors hover:bg-elec-yellow/90 disabled:bg-white/[0.08] disabled:text-white/70 disabled:cursor-not-allowed"
                       >
                         <Download className="h-4 w-4" />
                         Configure export
@@ -509,7 +509,7 @@ export default function AdminDataExport() {
                 <button
                   onClick={() => exportMutation.mutate()}
                   disabled={exportMutation.isPending || selectedFields.length === 0}
-                  className="w-full h-11 inline-flex items-center justify-center gap-2 rounded-full bg-elec-yellow text-black text-[13px] font-semibold touch-manipulation transition-colors hover:bg-elec-yellow/90 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full h-11 inline-flex items-center justify-center gap-2 rounded-full bg-elec-yellow text-black text-[13px] font-semibold touch-manipulation transition-colors hover:bg-elec-yellow/90 disabled:bg-white/[0.08] disabled:text-white/70 disabled:cursor-not-allowed"
                 >
                   {exportMutation.isPending ? (
                     <>

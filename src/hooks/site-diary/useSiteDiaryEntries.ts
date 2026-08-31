@@ -291,11 +291,27 @@ export function useSiteDiaryEntries() {
     [user]
   );
 
-  // Get recent sites for quick-select
-  const recentSites = Array.from(new Set(entries.map((e) => e.site_name).filter(Boolean))).slice(
-    0,
-    5
-  );
+  /*
+   * Recent sites for quick-select.
+   *
+   * De-duplicated case-insensitively: a plain Set treated "Sellafield" and
+   * "sellafield" as two different sites, so the same place appeared twice in
+   * the chips and split the feed's grouping. The first spelling entered wins,
+   * since that is the one the apprentice chose most recently.
+   */
+  const recentSites = (() => {
+    const seen = new Set<string>();
+    const out: string[] = [];
+    for (const name of entries.map((e) => e.site_name)) {
+      if (!name) continue;
+      const key = name.trim().toLowerCase();
+      if (!key || seen.has(key)) continue;
+      seen.add(key);
+      out.push(name.trim());
+      if (out.length === 5) break;
+    }
+    return out;
+  })();
 
   return {
     entries,

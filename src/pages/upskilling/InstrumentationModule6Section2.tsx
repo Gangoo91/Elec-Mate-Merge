@@ -196,18 +196,12 @@ const InstrumentationModule6Section2 = () => {
 
         <TLDR
           points={[
-            'Module 1 Section 4 owns the theory of standards and traceability. This section is the equipment.',
-            'A loop calibrator does three different things, and confusing them wastes a lot of time.',
             'READ — a passive load, measuring current something else is driving.',
             '🔴 SOURCE — an active source, supplying the energy as well as the information. The loop supply is not used.',
             '🔴 SIMULATE — regulates the current while relying on an external supply, exactly like a two-wire transmitter.',
-            'So source and simulate map onto Module 3 Section 2’s active and passive outputs — the same distinction, in a test instrument.',
             'Simulate mode replaces the transmitter and exercises the cable, the input card, the display and the control system.',
-            'A deadweight tester realises pressure from known mass over a known area, so it is calculated rather than compared.',
-            'An ice bath is a temperature reference by physics — ice and water coexisting hold essentially 0 °C, with no certificate involved.',
             '🔴 Simulating an input tests everything after the point of simulation and nothing before it.',
             '🔴 So a decade box in place of an RTD calibrates the transmitter and excludes the sensor entirely.',
-            'A calibration is only as good as the standard, so the standard’s own certificate must be current and its uncertainty small enough.',
           ]}
         />
 
@@ -320,12 +314,12 @@ const InstrumentationModule6Section2 = () => {
           id="ins-6-2-mode"
           question="A controller input is being tested on the bench with no transmitter and no loop supply connected. The calibrator is set to SIMULATE and nothing happens. Why?"
           options={[
-            'Simulate mode regulates current from an external supply, and there is no supply in the circuit — source mode is needed',
             'The controller input is faulty',
+            'Simulate mode regulates current from an external supply, and there is no supply in the circuit — source mode is needed',
             'Simulate mode only works on digital controllers',
             'The calibrator is faulty',
           ]}
-          correctIndex={0}
+          correctIndex={1}
           explanation="Simulate mode mimics a two-wire transmitter, which is a load that regulates current someone else provides. With no supply present there is nothing to regulate. Source mode makes the calibrator provide the energy itself, which is what this bench setup needs."
         />
 
@@ -334,11 +328,11 @@ const InstrumentationModule6Section2 = () => {
           question="A loop is faultless when the calibrator simulates 4, 8, 12, 16 and 20 mA, but reads wrong with the transmitter connected. What has that established?"
           options={[
             'The cable is faulty',
-            'Everything downstream of the transmitter is sound, so the fault is the transmitter or its process connection',
             'The controller needs re-ranging',
+            'Everything downstream of the transmitter is sound, so the fault is the transmitter or its process connection',
             'Nothing conclusive',
           ]}
-          correctIndex={1}
+          correctIndex={2}
           explanation="The simulation exercised the cable, isolators, input card, ranging and display, and all of it behaved. The only parts not included in that test were the transmitter and what it is connected to. The test has divided the system in two and told you which half to look in."
         />
 

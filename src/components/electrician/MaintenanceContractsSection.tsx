@@ -430,7 +430,7 @@ export function MaintenanceContractsSection({ prefill }: MaintenanceContractsSec
                     <button
                       onClick={() => handleSendForSignature(c.id)}
                       disabled={sendBusy === c.id}
-                      className="flex h-9 flex-1 items-center justify-center gap-1.5 whitespace-nowrap rounded-xl bg-elec-yellow px-3 text-[12px] font-semibold text-black touch-manipulation disabled:opacity-60"
+                      className="flex h-9 flex-1 items-center justify-center gap-1.5 whitespace-nowrap rounded-xl bg-elec-yellow px-3 text-[12px] font-semibold text-black touch-manipulation disabled:bg-white/[0.08] disabled:text-white/70"
                     >
                       {sendBusy === c.id ? (
                         <Loader2 className="h-3.5 w-3.5 animate-spin" />
@@ -757,7 +757,7 @@ export function MaintenanceContractsSection({ prefill }: MaintenanceContractsSec
                 <button
                   onClick={handleSave}
                   disabled={!canSave || creating}
-                  className="h-12 w-full rounded-xl bg-elec-yellow text-[15px] font-bold text-black touch-manipulation disabled:opacity-50"
+                  className="h-12 w-full rounded-xl bg-elec-yellow text-[15px] font-bold text-black touch-manipulation disabled:bg-white/[0.08] disabled:text-white/70"
                 >
                   Set up contract
                 </button>

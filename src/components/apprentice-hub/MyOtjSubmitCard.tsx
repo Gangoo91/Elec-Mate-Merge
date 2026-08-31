@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { ChevronRight, Sparkles } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { supabase } from '@/integrations/supabase/client';
 import { realtimeChannelName } from '@/lib/realtimeChannel';
 import { useToast } from '@/hooks/use-toast';
@@ -49,10 +50,10 @@ const STATUS_LABEL: Record<VerificationStatus, string> = {
 };
 
 const STATUS_TONE: Record<VerificationStatus, string> = {
-  pending: 'text-white/85',
-  verified: 'text-white/85',
-  rejected: 'text-white/85',
-  verified_by_employer: 'text-white/85',
+  pending: 'text-white',
+  verified: 'text-white',
+  rejected: 'text-white',
+  verified_by_employer: 'text-white',
 };
 
 const ACTIVITY_LABEL: Record<string, string> = {
@@ -229,15 +230,15 @@ export function MyOtjSubmitCard() {
 
   return (
     <>
-      <section className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_10%)] overflow-hidden">
+      <section className={cn('rounded-2xl border border-white/[0.06] overflow-hidden', CARD_SURFACE)}>
         <div className="px-4 sm:px-5 py-4 sm:py-5">
           {/* Eyebrow */}
           <div className="flex items-baseline justify-between gap-3 flex-wrap">
-            <div className="text-[11px] sm:text-[11.5px] font-medium uppercase tracking-[0.18em] text-emerald-300/85">
+            <div className="text-[11px] sm:text-[11.5px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
               Off-the-job training
             </div>
             {summary.pendingMin > 0 && (
-              <span className="text-[10.5px] tabular-nums text-white/85">
+              <span className="text-[10.5px] tabular-nums text-white">
                 {fmtHours(summary.pendingMin)} awaiting tutor
               </span>
             )}
@@ -245,12 +246,12 @@ export function MyOtjSubmitCard() {
 
           {/* Headline numbers */}
           <div className="mt-3 grid grid-cols-3 gap-3 sm:gap-5">
-            <Stat value={fmtHours(summary.verifiedMin)} label="Verified" tone="text-white/85" />
-            <Stat value={fmtHours(summary.pendingMin)} label="Pending" tone="text-white/85" />
+            <Stat value={fmtHours(summary.verifiedMin)} label="Verified" tone="text-white" />
+            <Stat value={fmtHours(summary.pendingMin)} label="Pending" tone="text-white" />
             <Stat value={fmtHours(summary.last7Min)} label="Last 7 days" tone="text-white" />
           </div>
 
-          <p className="mt-3 text-[11.5px] sm:text-[12px] text-white/85 leading-snug">
+          <p className="mt-3 text-[11.5px] sm:text-[12px] text-white leading-snug">
             Your apprenticeship has a set number of off-the-job training hours to reach by
             gateway. Submit work activities here and your tutor signs them off.
           </p>
@@ -259,7 +260,11 @@ export function MyOtjSubmitCard() {
               AI path lands on College AI with a pre-prompt that fires the
               write-back loop, drafting the OTJ entry + portfolio item +
               optional ILP goal off a real story. */}
-          <div className="mt-4 grid grid-cols-1 sm:grid-cols-[1fr_auto] gap-2">
+          {/* Both buttons intrinsic from `sm` up. `1fr_auto` gave the solid volt
+              primary every spare pixel — roughly 560px of yellow at desktop
+              width, which made it the loudest thing on the page by a mile.
+              Full-width stacked on a phone, where that is correct. */}
+          <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center">
             <button
               type="button"
               onClick={() => {
@@ -268,18 +273,27 @@ export function MyOtjSubmitCard() {
                 setAiPrefill(null);
                 setOpen(true);
               }}
-              className="h-11 rounded-lg bg-elec-yellow text-black text-[13px] font-semibold hover:bg-elec-yellow/90 transition-colors touch-manipulation"
+              className="h-11 w-full rounded-lg bg-elec-yellow px-5 text-[13px] font-semibold text-black transition-colors touch-manipulation hover:bg-elec-yellow/90 sm:w-auto"
             >
               Submit work activity
             </button>
             <button
               type="button"
               onClick={() => setAiPromptOpen((x) => !x)}
+              aria-expanded={aiPromptOpen}
               className={cn(
-                'inline-flex items-center justify-center gap-1.5 h-11 px-4 rounded-lg border text-[13px] font-semibold transition-colors touch-manipulation',
+                'inline-flex h-11 w-full items-center justify-center gap-1.5 rounded-lg border px-4 text-[13px] font-semibold transition-colors touch-manipulation sm:w-auto',
+                /*
+                 * ⚠️ Both branches of this ternary used to be the same —
+                 * `border-white/[0.06] bg-white/[0.02] text-white`, differing
+                 * only by a hover set to the SAME colour as the base. So the
+                 * toggle had no visible pressed state at all: with the AI
+                 * panel open the button looked exactly as it did closed. The
+                 * surface was also 2% white, which barely reads as a control.
+                 */
                 aiPromptOpen
-                  ? 'border-white/[0.06] bg-white/[0.02] text-white/85'
-                  : 'border-white/[0.06] bg-white/[0.02] text-white/85 hover:bg-white/[0.02]'
+                  ? 'border-elec-yellow/40 bg-white/[0.10] text-elec-yellow'
+                  : 'border-white/[0.12] bg-white/[0.06] text-white hover:bg-white/[0.10]'
               )}
             >
               <Sparkles className="h-3.5 w-3.5" />
@@ -292,7 +306,7 @@ export function MyOtjSubmitCard() {
               SubmitWorkOtjSheet opens prefilled with it. Always editable. */}
           {aiPromptOpen && (
             <div className="mt-3 rounded-xl border border-white/[0.06] bg-white/[0.02] p-3.5 space-y-2.5">
-              <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/85">
+              <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white">
                 Tell me what you did
               </div>
               <textarea
@@ -301,10 +315,10 @@ export function MyOtjSubmitCard() {
                 placeholder="e.g. rewired a kitchen consumer unit with my supervisor, took 4 hours, learned how to terminate the SWA properly"
                 rows={3}
                 disabled={aiPromptLoading}
-                className="w-full px-3 py-2 rounded-lg bg-white/[0.03] border border-white/[0.08] text-[12.5px] text-white placeholder:text-white/45 leading-snug focus:outline-none focus:border-white/[0.06] focus:ring-1 focus:ring-white/10 touch-manipulation resize-none disabled:opacity-60"
+                className="w-full px-3 py-2 rounded-lg bg-white/[0.03] border border-white/[0.08] text-[12.5px] text-white placeholder:text-white leading-snug focus:outline-none focus:border-white/[0.06] focus:ring-1 focus:ring-white/10 touch-manipulation resize-none disabled:opacity-60"
               />
               <div className="flex items-center justify-between gap-2">
-                <p className="text-[10.5px] text-white/65 leading-snug">
+                <p className="text-[10.5px] text-white leading-snug">
                   AI drafts a starter — you review, edit, then submit. Nothing is auto-filed.
                 </p>
                 <button
@@ -312,11 +326,13 @@ export function MyOtjSubmitCard() {
                   onClick={() => void handleGenerateProposal()}
                   disabled={aiPromptLoading || aiPromptText.trim().length < 8}
                   className={cn(
-                    'shrink-0 inline-flex items-center gap-1.5 h-9 px-3.5 rounded-lg text-[12px] font-semibold transition-colors touch-manipulation',
+                    'shrink-0 inline-flex items-center gap-1.5 h-11 px-4 rounded-lg text-[12.5px] font-semibold transition-colors touch-manipulation',
                     aiPromptLoading
-                      ? 'bg-elec-yellow/60 text-black/70'
+                      ? // 🔴 Faded volt over near-black goes muddy brown. A
+                        // disabled primary must go NEUTRAL, not translucent volt.
+                        'bg-white/[0.08] text-white/70 cursor-not-allowed'
                       : aiPromptText.trim().length < 8
-                        ? 'bg-white/[0.05] text-white/40'
+                        ? 'bg-white/[0.05] text-white'
                         : 'bg-elec-yellow text-black hover:bg-elec-yellow/90'
                   )}
                 >
@@ -330,7 +346,7 @@ export function MyOtjSubmitCard() {
           {/* Recent submissions */}
           {rows.length > 0 && (
             <div className="mt-5 -mx-1">
-              <div className="px-1 text-[10.5px] font-medium uppercase tracking-[0.16em] text-white/95">
+              <div className="px-1 text-[10.5px] font-medium uppercase tracking-[0.16em] text-white">
                 Recent
               </div>
               <ul className="mt-2 divide-y divide-white/[0.05]">
@@ -342,7 +358,7 @@ export function MyOtjSubmitCard() {
                 <button
                   type="button"
                   onClick={() => setExpanded((x) => !x)}
-                  className="mt-2 px-1 text-[11.5px] font-medium text-white/85 hover:text-white/85 transition-colors touch-manipulation"
+                  className="mt-2 px-1 text-[11.5px] font-medium text-white hover:text-white transition-colors touch-manipulation"
                 >
                   {expanded ? 'Show less' : `Show ${rows.length - 4} more`}
                 </button>
@@ -378,7 +394,7 @@ function Stat({ value, label, tone }: { value: string; label: string; tone: stri
       >
         {value}
       </div>
-      <div className="mt-1 text-[10.5px] uppercase tracking-[0.14em] text-white/95">{label}</div>
+      <div className="mt-1 text-[10.5px] uppercase tracking-[0.14em] text-white">{label}</div>
     </div>
   );
 }
@@ -392,7 +408,7 @@ function RowItem({ row }: { row: OtjRow }) {
           <div className="truncate text-[13px] font-medium text-white leading-snug">
             {row.title}
           </div>
-          <div className="mt-0.5 flex flex-wrap items-baseline gap-x-2 gap-y-0.5 text-[10.5px] text-white/85">
+          <div className="mt-0.5 flex flex-wrap items-baseline gap-x-2 gap-y-0.5 text-[10.5px] text-white">
             <span>{ACTIVITY_LABEL[row.activity_type] ?? row.activity_type}</span>
             <span aria-hidden>·</span>
             <span className="tabular-nums">{fmtHours(row.duration_minutes)}</span>
@@ -408,7 +424,7 @@ function RowItem({ row }: { row: OtjRow }) {
             )}
           </div>
           {row.verification_status === 'rejected' && row.verification_rationale && (
-            <div className="mt-1.5 border-l-2 border-white/[0.06] pl-2 text-[11px] text-rose-200/85 leading-snug">
+            <div className="mt-1.5 border-l-2 border-white/[0.06] pl-2 text-[11px] text-red-300 leading-snug">
               {row.verification_rationale}
             </div>
           )}
@@ -428,7 +444,7 @@ function RowItem({ row }: { row: OtjRow }) {
 
 function Skeleton() {
   return (
-    <section className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_10%)] overflow-hidden">
+    <section className={cn('rounded-2xl border border-white/[0.06] overflow-hidden', CARD_SURFACE)}>
       <div className="px-4 sm:px-5 py-4 sm:py-5 space-y-4">
         <div className="h-3 w-32 rounded-full bg-white/[0.05]" />
         <div className="grid grid-cols-3 gap-3">

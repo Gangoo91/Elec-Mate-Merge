@@ -202,17 +202,12 @@ const InstrumentationModule5Section2 = () => {
 
         <TLDR
           points={[
-            'Module 1 Section 3 named the parts of a loop. This section is about what you actually see and set.',
             'PV, setpoint and output are three numbers on a faceplate — and read together they localise a fault before you touch anything.',
             'PV at setpoint with the output at a limit is a different problem from PV off setpoint with the output mid-range.',
             '🔴 Direction of action: direct means output rises as PV rises; reverse means output falls as PV rises.',
             '🔴 Derive it with a thought experiment — imagine the PV rising, and work out which way the output must move to bring it back.',
-            'The action depends on the whole path from output to process, not on the measurement. The same tank needs opposite actions for a steam valve and a coolant valve.',
             '🔴 A valve’s fail action changes it too. Swap an air-to-open valve for an air-to-close one and the controller must be reversed.',
             '🔴 Wrong action is not poor control. It is positive feedback — every correction enlarges the error, and the output saturates.',
-            'Bumpless transfer means switching between auto and manual does not step the output and disturb a settled process.',
-            'Output limits constrain the controller, not the process. They are not a protective device.',
-            'A setpoint can come from an operator, from a remote source, or from another controller — which is cascade, and Section 6 returns to it.',
           ]}
         />
 
@@ -422,11 +417,11 @@ const InstrumentationModule5Section2 = () => {
           question="A pressure loop vents to atmosphere through a valve that opens on increasing signal. Pressure rises above setpoint. What action does the controller need?"
           options={[
             'Reverse — a rising PV needs a falling output',
-            'Direct — a rising PV needs the vent valve to open further, which needs a rising output',
             'Either, provided the tuning is correct',
+            'Direct — a rising PV needs the vent valve to open further, which needs a rising output',
             'It depends on the fail action only',
           ]}
-          correctIndex={1}
+          correctIndex={2}
           explanation="Run the experiment: pressure too high → need to vent more → open the valve further → the valve opens on an increasing signal → output must increase. A rising process variable requiring a rising output is direct action. Note this is the opposite of the heating example, because venting relieves the process rather than driving it."
         />
 
@@ -556,12 +551,12 @@ const InstrumentationModule5Section2 = () => {
           id="ins-5-2-bumpless"
           question="An operator switches a settled loop from automatic to manual and the process visibly steps. What does that indicate?"
           options={[
-            'The loop was badly tuned in automatic',
             'Bumpless transfer is not working — the manual setting did not match the output at the moment of the switch',
+            'The loop was badly tuned in automatic',
             'The transmitter has drifted',
             'The setpoint was changed at the same time',
           ]}
-          correctIndex={1}
+          correctIndex={0}
           explanation="The process was settled, so nothing about it changed. What changed was the output, at the instant of the switch, because the manual station was sitting at a different value from the controller. Changing mode should be a decision about who is in charge, not an event the process experiences."
         />
 
@@ -798,7 +793,7 @@ const InstrumentationModule5Section2 = () => {
               <ChevronLeft className="h-3 w-3" /> Previous section
             </span>
             <span className="mt-1 truncate text-[14px] font-semibold text-white">
-              Open and closed loop
+              Open loop and closed loop
             </span>
           </button>
           <button

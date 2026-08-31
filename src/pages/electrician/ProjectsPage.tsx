@@ -1457,7 +1457,7 @@ const ProjectsPage = () => {
               <Button
                 onClick={handleCreate}
                 disabled={!newTitle.trim() || creating}
-                className="w-full h-12 bg-elec-yellow text-black font-bold text-base rounded-xl touch-manipulation active:scale-[0.98] disabled:opacity-40"
+                className="w-full h-12 bg-elec-yellow text-black font-bold text-base rounded-xl touch-manipulation active:scale-[0.98] disabled:bg-white/[0.08] disabled:text-white/70"
               >
                 {creating ? <Loader2 className="h-5 w-5 animate-spin" /> : 'Create Project'}
               </Button>

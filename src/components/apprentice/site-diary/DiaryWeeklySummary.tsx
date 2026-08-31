@@ -12,16 +12,13 @@ import type { SiteDiaryEntry } from '@/hooks/site-diary/useSiteDiaryEntries';
 import { toLocalISODate } from '@/lib/localDate';
 import { useDiaryStreak } from '@/hooks/site-diary/useDiaryStreak';
 import { storageGetSync, storageSetSync } from '@/utils/storage';
+import { moodFill } from '@/lib/site-diary/mood';
 
 const COLLAPSE_KEY = 'elec-mate-diary-weekly-collapsed';
 
 /** Returns colour class for mood dot */
-function moodDotColour(mood: number | null | undefined): string {
-  if (!mood) return 'bg-white/15';
-  if (mood >= 4) return 'bg-green-400';
-  if (mood === 3) return 'bg-amber-400';
-  return 'bg-red-400';
-}
+/** Single definition — see `@/lib/site-diary/mood`. */
+const moodDotColour = moodFill;
 
 interface DiaryWeeklySummaryProps {
   entries: SiteDiaryEntry[];
@@ -57,8 +54,26 @@ export function DiaryWeeklySummary({
     const thisWeekStr = toLocalISODate(startOfThisWeek);
     const lastWeekStr = toLocalISODate(startOfLastWeek);
 
-    const thisWeekEntries = entries.filter((e) => e.date >= thisWeekStr);
+    /*
+     * This week is bounded at BOTH ends.
+     *
+     * It used to be `e.date >= thisWeekStr` with no upper bound, so anything
+     * dated after today — and the form has a free date picker — landed in "this
+     * week". Last week was already bounded on both sides, so the week-on-week
+     * comparison was measuring two different shapes of range.
+     */
+    const endOfThisWeek = new Date(startOfThisWeek);
+    endOfThisWeek.setDate(endOfThisWeek.getDate() + 7);
+    const endOfThisWeekStr = toLocalISODate(endOfThisWeek);
+
+    const thisWeekEntries = entries.filter(
+      (e) => e.date >= thisWeekStr && e.date < endOfThisWeekStr
+    );
     const lastWeekEntries = entries.filter((e) => e.date >= lastWeekStr && e.date < thisWeekStr);
+
+    /* Days, not entries. There is no unique index on (user_id, date), so two
+       entries on one day counted as two days under the old `.length`. */
+    const countDays = (list: SiteDiaryEntry[]) => new Set(list.map((e) => e.date)).size;
 
     const allTasks = thisWeekEntries.flatMap((e) => e.tasks_completed);
     const allSkills = Array.from(new Set(thisWeekEntries.flatMap((e) => e.skills_practised)));
@@ -76,14 +91,14 @@ export function DiaryWeeklySummary({
 
     return {
       thisWeek: {
-        daysLogged: thisWeekEntries.length,
+        daysLogged: countDays(thisWeekEntries),
         totalTasks: allTasks.length,
         skills: allSkills,
         sites,
         moodTrend,
       },
       lastWeek: {
-        daysLogged: lastWeekEntries.length,
+        daysLogged: countDays(lastWeekEntries),
       },
     };
   }, [entries]);
@@ -95,14 +110,14 @@ export function DiaryWeeklySummary({
   const entryDiff = thisWeek.daysLogged - lastWeek.daysLogged;
 
   return (
-    <div className="rounded-xl overflow-hidden bg-white/[0.02] border border-white/[0.06]">
+    <div className="rounded-xl overflow-hidden bg-white/[0.06] border border-white/[0.10]">
       {/* Header - always visible, toggles collapse */}
       <button
         onClick={toggleCollapsed}
         className="w-full flex items-center justify-between px-4 py-3 touch-manipulation min-h-[44px]"
       >
         <div className="flex items-center gap-3">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
             This week
           </span>
           {collapsed && (
@@ -146,27 +161,27 @@ export function DiaryWeeklySummary({
       {!collapsed && (
         <div className="px-4 pb-4 space-y-3">
           <div className="grid grid-cols-4 gap-2 sm:gap-3">
-            <div className="text-center py-2 rounded-lg border border-white/[0.06] bg-white/[0.02]">
+            <div className="text-center py-2 rounded-lg border border-white/[0.10] bg-white/[0.06]">
               <div className="text-[16px] font-mono text-white">{thisWeek.daysLogged}</div>
-              <div className="text-[10px] uppercase tracking-[0.18em] text-white/55 mt-0.5">
+              <div className="text-[10px] uppercase tracking-[0.18em] text-white/70 mt-0.5">
                 Days
               </div>
             </div>
-            <div className="text-center py-2 rounded-lg border border-white/[0.06] bg-white/[0.02]">
+            <div className="text-center py-2 rounded-lg border border-white/[0.10] bg-white/[0.06]">
               <div className="text-[16px] font-mono text-white">{thisWeek.totalTasks}</div>
-              <div className="text-[10px] uppercase tracking-[0.18em] text-white/55 mt-0.5">
+              <div className="text-[10px] uppercase tracking-[0.18em] text-white/70 mt-0.5">
                 Tasks
               </div>
             </div>
-            <div className="text-center py-2 rounded-lg border border-white/[0.06] bg-white/[0.02]">
+            <div className="text-center py-2 rounded-lg border border-white/[0.10] bg-white/[0.06]">
               <div className="text-[16px] font-mono text-white">{thisWeek.skills.length}</div>
-              <div className="text-[10px] uppercase tracking-[0.18em] text-white/55 mt-0.5">
+              <div className="text-[10px] uppercase tracking-[0.18em] text-white/70 mt-0.5">
                 Skills
               </div>
             </div>
-            <div className="text-center py-2 rounded-lg border border-white/[0.06] bg-white/[0.02]">
+            <div className="text-center py-2 rounded-lg border border-white/[0.10] bg-white/[0.06]">
               <div className="text-[16px] font-mono text-white">{thisWeek.sites.length}</div>
-              <div className="text-[10px] uppercase tracking-[0.18em] text-white/55 mt-0.5">
+              <div className="text-[10px] uppercase tracking-[0.18em] text-white/70 mt-0.5">
                 Sites
               </div>
             </div>
@@ -195,7 +210,7 @@ export function DiaryWeeklySummary({
               {thisWeek.skills.slice(0, 5).map((skill) => (
                 <span
                   key={skill}
-                  className="px-2 py-0.5 rounded text-[10px] font-medium bg-purple-500/10 border border-purple-500/20 text-purple-400"
+                  className="px-2 py-0.5 rounded text-[10px] font-medium bg-white/[0.06] border border-purple-500/20 text-purple-400"
                 >
                   {skill}
                 </span>
@@ -217,8 +232,8 @@ export function DiaryWeeklySummary({
                   key={m.days}
                   className={`px-2 py-1 rounded-lg text-[10px] font-medium border ${
                     m.reached
-                      ? 'bg-orange-500/15 border-orange-500/30 text-orange-400'
-                      : 'bg-white/[0.03] border-white/[0.06] text-white'
+                      ? 'bg-white/[0.06] border-orange-500/30 text-orange-400'
+                      : 'bg-white/[0.07] border-white/[0.10] text-white'
                   }`}
                 >
                   {m.icon} {m.label}
@@ -252,7 +267,7 @@ export function DiaryWeeklySummary({
 
           {/* AI weekly summary */}
           {aiSummary && (
-            <div className="pt-1 border-t border-white/[0.06]">
+            <div className="pt-1 border-t border-white/[0.10]">
               <p className="text-[11px] text-white leading-relaxed">{aiSummary}</p>
             </div>
           )}

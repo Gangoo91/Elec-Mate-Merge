@@ -89,7 +89,7 @@ export const RoomSelector = ({ existingRooms, onAddRoom, propertyType }: RoomSel
             type="button"
             onClick={handleAddCustom}
             disabled={!customName.trim()}
-            className="h-11 rounded-xl bg-elec-yellow px-4 text-sm font-semibold text-black transition-transform touch-manipulation hover:bg-elec-yellow/90 active:scale-[0.97] disabled:opacity-40"
+            className="h-11 rounded-xl bg-elec-yellow px-4 text-sm font-semibold text-black transition-transform touch-manipulation hover:bg-elec-yellow/90 active:scale-[0.97] disabled:bg-white/[0.08] disabled:text-white/70"
           >
             Add
           </button>

@@ -207,12 +207,8 @@ const InstrumentationModule6Section1 = () => {
             '🔴 Without applying a real stimulus, whatever you did was not a calibration — there was nothing to compare against.',
             'Ranging sets the lower and upper range values. It changes what the signal means, and proves nothing about accuracy.',
             'Trimming aligns the instrument’s internal conversion. Sensor trim and output trim are two separate operations.',
-            'Analogue instruments blended calibration and ranging into one set of adjustments, so re-ranging meant re-calibrating.',
-            'Digital instruments separate them, so it no longer does — but the habit of using the words interchangeably survived.',
-            'A sensor trim asks whether the instrument perceives the input correctly. An output trim asks whether it transmits what it intends.',
             '🔴 Calibration cannot fix hysteresis, a wrong sensor, an installation error or a range mismatch.',
             'A certificate certifies the instrument, not the measurement — so a perfect certificate and a wrong reading are entirely compatible.',
-            'Module 1 Section 4 covers standards, traceability and certificates. This section is about the operation itself.',
           ]}
         />
 

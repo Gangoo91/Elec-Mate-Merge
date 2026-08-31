@@ -90,11 +90,11 @@ export function PortfolioAttentionPanel({ entries, onNavigate }: Props) {
             <span className="text-[10px] font-medium uppercase tracking-[0.16em] text-orange-200/85">
               {pending.length === 1 ? 'Verification pending' : `Verifications pending · ${pending.length}`}
             </span>
-            <span className="text-[11px] font-mono tabular-nums text-white/60">
+            <span className="text-[11px] font-mono tabular-nums text-white">
               oldest {oldestPendingDays}d
             </span>
           </div>
-          <p className="text-[12.5px] text-white/85 leading-relaxed">
+          <p className="text-[12.5px] text-white leading-relaxed">
             {pending.length === 1
               ? `Your supervisor hasn't signed this off yet${oldestPendingDays >= STALE_VERIFY_DAYS ? ` — it's been ${oldestPendingDays} days` : ''}.`
               : `${pending.length} pieces are waiting on a supervisor signature${oldestPendingDays >= STALE_VERIFY_DAYS ? `, the oldest ${oldestPendingDays} days` : ''}.`}
@@ -121,7 +121,7 @@ export function PortfolioAttentionPanel({ entries, onNavigate }: Props) {
           <span className="text-[10px] font-medium uppercase tracking-[0.16em] text-amber-200/85">
             Evidence currency
           </span>
-          <p className="text-[12.5px] text-white/85 leading-relaxed">
+          <p className="text-[12.5px] text-white leading-relaxed">
             {currency.expired > 0
               ? `${currency.expired} item${currency.expired === 1 ? '' : 's'} ${currency.expired === 1 ? 'is' : 'are'} older than 12 months — refresh ${currency.expired === 1 ? 'it' : 'them'} before your gateway.`
               : `${currency.expiring} item${currency.expiring === 1 ? '' : 's'} will pass the 12-month window within 90 days.`}

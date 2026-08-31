@@ -24,8 +24,11 @@ const renderContent = (card: ReferenceCard) => {
       return (
         <div className="px-4 pb-4 pt-2 space-y-2">
           {content.steps.map((step, idx) => (
-            <div key={idx} className="flex items-start gap-2 text-[14px] text-white/85 leading-relaxed">
-              <span className="text-[12px] font-mono text-white/55 min-w-[20px] mt-0.5">
+            <div
+              key={idx}
+              className="flex items-start gap-2 text-[14px] text-white/85 leading-relaxed"
+            >
+              <span className="text-[12px] font-mono text-white/70 min-w-[20px] mt-0.5">
                 {idx + 1}.
               </span>
               <span>{step}</span>
@@ -38,10 +41,13 @@ const renderContent = (card: ReferenceCard) => {
       return (
         <div className="px-4 pb-4 pt-2 space-y-2">
           {content.source && (
-            <p className="text-[11px] text-white/55 font-mono mb-2">{content.source}</p>
+            <p className="text-[11px] text-white/70 font-mono mb-2">{content.source}</p>
           )}
           {content.points.map((point, idx) => (
-            <div key={idx} className="flex items-start gap-2 text-[14px] text-white/85 leading-relaxed">
+            <div
+              key={idx}
+              className="flex items-start gap-2 text-[14px] text-white/85 leading-relaxed"
+            >
               <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
               <span>{point}</span>
             </div>
@@ -68,9 +74,11 @@ const renderContent = (card: ReferenceCard) => {
             <div key={idx} className="flex items-start justify-between gap-3">
               <div className="min-w-0">
                 <div className="text-[14px] text-white">{test.test}</div>
-                <div className="text-[12px] text-white/55 mt-0.5 leading-relaxed">{test.reason}</div>
+                <div className="text-[12px] text-white/70 mt-0.5 leading-relaxed">
+                  {test.reason}
+                </div>
               </div>
-              <span className="flex-shrink-0 text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+              <span className="flex-shrink-0 text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.07]">
                 {test.priority}
               </span>
             </div>
@@ -94,21 +102,21 @@ const QuickReferenceCards = () => {
             <CollapsibleTrigger
               className={`w-full flex items-center justify-between p-4 rounded-xl border touch-manipulation h-auto min-h-[44px] ${
                 isEmergency
-                  ? 'border-red-500/30 bg-red-500/[0.04]'
-                  : 'border-white/[0.06] bg-white/[0.02]'
+                  ? 'border-red-500/30 bg-white/[0.06]'
+                  : 'border-white/[0.10] bg-white/[0.06]'
               }`}
             >
               <div className="flex flex-col items-start gap-1">
                 <span
                   className={`text-[10px] font-medium uppercase tracking-[0.18em] ${
-                    isEmergency ? 'text-red-300' : 'text-white/55'
+                    isEmergency ? 'text-red-300' : 'text-white/70'
                   }`}
                 >
                   {isEmergency ? 'Emergency' : 'Reference'}
                 </span>
                 <span className="text-[14px] font-medium text-white text-left">{card.title}</span>
               </div>
-              <ChevronDown className="h-4 w-4 text-white/55 transition-transform [[data-state=open]>&]:rotate-180" />
+              <ChevronDown className="h-4 w-4 text-white/70 transition-transform [[data-state=open]>&]:rotate-180" />
             </CollapsibleTrigger>
             <CollapsibleContent>{renderContent(card)}</CollapsibleContent>
           </Collapsible>

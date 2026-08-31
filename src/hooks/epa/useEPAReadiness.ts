@@ -12,6 +12,7 @@
 
 import { useState, useCallback, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import type { Json } from '@/integrations/supabase/types';
 import { useAuth } from '@/contexts/AuthContext';
 
 export type ReadinessStatus = 'ready' | 'nearly_ready' | 'needs_work' | 'not_ready';
@@ -111,7 +112,7 @@ export function useEPAReadiness(qualificationCode?: string, qualificationId?: st
             id: string;
             assessment_criteria_met: string[] | null;
             evidence_count: number | null;
-            storage_urls: any[] | null;
+            storage_urls: Json | null;
             is_supervisor_verified: boolean | null;
           }) => {
             const acs = item.assessment_criteria_met || [];
@@ -296,7 +297,14 @@ export function useEPAReadiness(qualificationCode?: string, qualificationId?: st
             : "You're getting close — review which ACs are missing and target those with your next evidence uploads";
         gaps.push({
           area: 'Portfolio Coverage',
-          description: `${portfolioDetail} — your portfolio needs to evidence at least 70% of assessment criteria to pass the gateway`,
+          /*
+           * Was "…needs to evidence at least 70% of assessment criteria to pass
+           * the gateway". No published rule says that: 70 % is this model's own
+           * target, and the gateway is your employer's and provider's call. The
+           * portfolio's actual job is to evidence the performance outcomes
+           * inside the qualification, which the centre assesses.
+           */
+          description: `${portfolioDetail} — your portfolio is what evidences the performance outcomes in your qualification, so the wider the criteria coverage the stronger it is`,
           priority: portfolioScore < 40 ? 'high' : 'medium',
           action: needed,
         });
@@ -324,7 +332,7 @@ export function useEPAReadiness(qualificationCode?: string, qualificationId?: st
       }
       if (discussionScore < 60 && discussionScore > 0) {
         const subscoreAdvice = weakestSubscore
-          ? ` — focus on improving your ${weakestSubscore} as that\'s your weakest area`
+          ? ` — focus on improving your ${weakestSubscore} as that's your weakest area`
           : '';
         gaps.push({
           area: 'Professional Discussion',

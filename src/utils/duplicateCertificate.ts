@@ -29,6 +29,7 @@ export type DuplicableReportType =
   | 'testing-only'
   | 'solar-pv'
   | 'bess'
+  | 'plug-in-solar'
   | 'smoke-co-alarm'
   | 'lightning-protection'
   | 'g98-commissioning'
@@ -38,7 +39,7 @@ const DUPLICABLE_TYPES: readonly string[] = [
   'eicr', 'eic', 'minor-works',
   'fire-alarm', 'fire-alarm-design', 'fire-alarm-commissioning',
   'fire-alarm-inspection', 'fire-alarm-modification',
-  'ev-charging', 'emergency-lighting', 'testing-only', 'solar-pv', 'bess',
+  'ev-charging', 'emergency-lighting', 'testing-only', 'solar-pv', 'bess', 'plug-in-solar',
   'smoke-co-alarm', 'lightning-protection', 'g98-commissioning', 'g99-commissioning',
 ];
 

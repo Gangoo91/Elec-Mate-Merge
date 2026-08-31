@@ -3,23 +3,29 @@ import { Check, Minus, ChevronDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 // ─── Tiers ─────────────────────────────────────────────────────────────────
-type Tier = 'apprentice' | 'electrician' | 'mate' | 'employer' | 'college';
+/*
+ * Mate (business_ai) was removed from this table on 31 Aug 2026 — the WhatsApp
+ * product is retired, and Subscriptions.tsx already hides its plan card via
+ * HIDDEN_PLAN_IDS, so the column was selling something nobody could buy.
+ * Three of its rows described features that still exist off WhatsApp and were
+ * re-homed to Electrician (morning brief, quote open-tracking, payment
+ * reminders). The rest were WhatsApp-only, or duplicated an existing row.
+ */
+type Tier = 'apprentice' | 'electrician' | 'employer' | 'college';
 
 const TIERS: { key: Tier; name: string; price: string; earlyAccess?: boolean; popular?: boolean }[] =
   [
     { key: 'apprentice', name: 'Apprentice', price: '£6.99/mo' },
     { key: 'electrician', name: 'Electrician', price: '£19.99/mo', popular: true },
-    { key: 'mate', name: 'Mate', price: '£29.99/mo', earlyAccess: true },
     { key: 'employer', name: 'Employer', price: '£49.99/mo', earlyAccess: true },
     { key: 'college', name: 'College', price: 'On request', earlyAccess: true },
   ];
 
 // Expand "minTier" into the list of plans that include the feature, respecting inheritance:
-//   apprentice → electrician → mate → employer   (college is a separate track)
+//   apprentice → electrician → employer   (college is a separate track)
 function expand(minTier: Tier): Tier[] {
-  if (minTier === 'apprentice') return ['apprentice', 'electrician', 'mate', 'employer'];
-  if (minTier === 'electrician') return ['electrician', 'mate', 'employer'];
-  if (minTier === 'mate') return ['mate', 'employer'];
+  if (minTier === 'apprentice') return ['apprentice', 'electrician', 'employer'];
+  if (minTier === 'electrician') return ['electrician', 'employer'];
   if (minTier === 'employer') return ['employer'];
   return ['college'];
 }
@@ -44,13 +50,14 @@ const SECTIONS: MatrixSection[] = [
     heading: 'Learning & qualifications',
     rows: [
       row('Level 2, Level 3, AM2, HNC, MOET & Functional Skills', 'apprentice'),
-      row('500+ practice questions & 8 mock exams', 'apprentice'),
-      row('29 flashcard sets with spaced repetition', 'apprentice'),
-      row('75 curated training videos', 'apprentice'),
+      row('15,000+ practice questions & 8 mock exams', 'apprentice'),
+      row('30 flashcard sets with spaced repetition', 'apprentice'),
+      row('400+ curated training videos from approved UK creators', 'apprentice'),
+      row('12 guided video learning paths', 'apprentice'),
       row('BS 7671 A4:2026 study guide with interactive diagrams', 'apprentice'),
       row('28-guide toolbox — safety cases, craft skills, site jargon', 'apprentice'),
-      row('Full study centre — 24 courses (CSCS, IPAF, PASMA, soft skills)', 'apprentice'),
-      row('13 in-depth upskilling courses (BS 7671, I&T, PAT, Fire Alarm, Solar, EV)', 'electrician'),
+      row('Full study centre — 45 courses (CSCS, IPAF, PASMA, soft skills)', 'apprentice'),
+      row('14 in-depth upskilling courses (BS 7671, I&T, PAT, Fire Alarm, Solar, EV)', 'electrician'),
       row('11 quick-reference testing guides', 'electrician'),
       row('Training log', 'electrician'),
     ],
@@ -90,13 +97,15 @@ const SECTIONS: MatrixSection[] = [
     ],
   },
   {
-    heading: 'Certificates (15 types)',
+    heading: 'Certificates (24 types)',
     rows: [
       row('EICR, EIC, Minor Works', 'electrician'),
-      row('PAT, Isolation, Testing-Only, Smoke/CO', 'electrician'),
-      row('Solar PV, EV Charging, BESS, Emergency Lighting, Lightning Protection', 'electrician'),
+      row('PAT, Testing-Only, Smoke/CO, Disconnection', 'electrician'),
+      row('Visual Condition, Routine Inspection, Pre-Purchase Survey', 'electrician'),
+      row('Solar PV, EV Charging, BESS, Heat Pump, Emergency Lighting, Lightning Protection', 'electrician'),
       row('Commissioning G98 / G99', 'electrician'),
-      row('Fire Alarm — Install, Commissioning, Inspection, Design, Modification', 'electrician'),
+      row('Fire Alarm — Install, Commissioning, Inspection, Design, Modification, Log Book', 'electrician'),
+      row('Import a paper or PDF certificate — read, checked, yours to confirm', 'electrician'),
       row('Apple & Google Wallet passes for certificates', 'electrician'),
     ],
   },
@@ -116,11 +125,14 @@ const SECTIONS: MatrixSection[] = [
       row('Quote builder + Smart AI quote + variation orders', 'electrician'),
       row('Invoice builder with Stripe links & partial payments', 'electrician'),
       row('Site visits, photo docs with before/after', 'electrician'),
-      row('Time tracker → auto-invoice', 'electrician'),
+      row('Time tracker', 'electrician'),
       row('Snagging', 'electrician'),
       row('Inventory / van stock', 'electrician'),
       row('Expenses with OCR receipts & HMRC mileage', 'electrician'),
       row('Price book, rate card', 'electrician'),
+      row('Quote open & click tracking with follow-ups', 'electrician'),
+      row('Overdue payment reminders — gentle, firm, final', 'electrician'),
+      row('Daily morning brief — schedule, overdue money, what needs you', 'electrician'),
     ],
   },
   {
@@ -135,7 +147,12 @@ const SECTIONS: MatrixSection[] = [
     heading: 'Health & safety',
     rows: [
       row('RAMS generator + AI RAMS', 'electrician'),
-      row('1,000+ hazard database & COSHH builder', 'electrician'),
+      /*
+       * 🔴 Was "1,000+". `enhancedRiskDatabase` — the array HazardDatabaseV2
+       * actually renders — holds 105 hazards (plus 31 in hazards.ts). The old
+       * figure overstated it by roughly ten times. Re-count before raising it.
+       */
+      row('100+ hazard database & COSHH builder', 'electrician'),
       row('Permits to work, fire watch, near-miss reporting', 'electrician'),
       row('Toolbox talks & pre-use checks', 'electrician'),
     ],
@@ -145,27 +162,6 @@ const SECTIONS: MatrixSection[] = [
     rows: [
       row('Xero / QuickBooks sync', 'electrician'),
       row('Stripe Connect', 'electrician'),
-    ],
-  },
-  {
-    heading: 'Mate — WhatsApp AI',
-    rows: [
-      row('Mate on WhatsApp (chat, voice, photos)', 'mate'),
-      row('Two-way voice conversations — speak to Mate, it speaks back', 'mate'),
-      row('Photo → quote pipeline (consumer unit, site install, receipt)', 'mate'),
-      row('Forward customer email → Mate drafts the reply', 'mate'),
-      row('Voice notes → tasks, quotes, expenses, RAMS', 'mate'),
-      row('BS 7671 A4:2026 answers — AFDDs, PNB, Zs, cable ratings', 'mate'),
-      row('Live UK wholesaler pricing lookup with options', 'mate'),
-      row('"Plan my day" — TSP route optimisation + weather', 'mate'),
-      row('Daily morning brief (schedule, overdue, urgent)', 'mate'),
-      row('Quote drafting + auto-follow-up + open/click tracking', 'mate'),
-      row('Invoice chasing workflows with Stripe links', 'mate'),
-      row('Revenue forecast, cash-flow, at-risk alerts', 'mate'),
-      row('RAMS + method statements generated in chat', 'mate'),
-      row('Client portal tokens generated on demand', 'mate'),
-      row('Expenses + HMRC mileage synced to Xero / QuickBooks', 'mate'),
-      row('Google Solar API roof analysis', 'mate'),
     ],
   },
   {
@@ -287,7 +283,7 @@ const SECTIONS: MatrixSection[] = [
 // ─── Cell renderer ─────────────────────────────────────────────────────────
 const Cell = ({ included, tier }: { included: boolean; tier: Tier }) => {
   if (!included) return <Minus className="h-4 w-4 text-white/20" aria-label="Not included" />;
-  const earlyAccess = tier === 'mate' || tier === 'employer' || tier === 'college';
+  const earlyAccess = tier === 'employer' || tier === 'college';
   return (
     <Check
       className={cn(

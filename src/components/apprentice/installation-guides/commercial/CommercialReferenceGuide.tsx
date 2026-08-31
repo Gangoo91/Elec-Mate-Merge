@@ -131,8 +131,8 @@ const CommercialReferenceGuide = () => {
   return (
     <div className="space-y-6">
       {/* Search Bar */}
-      <Card className="border-elec-yellow/30 bg-white/5">
-        <CardContent className="p-4">
+      <Card variant="plain">
+        <CardContent className="p-4 p-0">
           <div className="relative">
             {!searchTerm && (
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white h-4 w-4 pointer-events-none" />
@@ -169,14 +169,14 @@ const CommercialReferenceGuide = () => {
 
         {/* Commercial Cables Tab */}
         <TabsContent value="cables" className="space-y-4">
-          <Card className="border-elec-yellow/30 bg-white/5">
-            <CardHeader>
-              <CardTitle className="text-elec-yellow flex items-center gap-2">
+          <Card variant="plain">
+            <CardHeader className="p-0 pb-3">
+              <CardTitle className="text-[15px] font-semibold tracking-tight text-white flex items-center gap-2">
                 <Cable className="h-6 w-6" />
                 Commercial Cable Specifications
               </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-4 p-0">
               {filteredCables.map((cable, index) => (
                 <div
                   key={index}
@@ -219,18 +219,18 @@ const CommercialReferenceGuide = () => {
 
         {/* Emergency Lighting Tab */}
         <TabsContent value="emergency" className="space-y-4">
-          <Card className="border-white/[0.06] bg-white/5">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
+          <Card variant="plain">
+            <CardHeader className="p-0 pb-3">
+              <CardTitle className="text-[15px] font-semibold tracking-tight text-white flex items-center gap-2">
                 <Lightbulb className="h-6 w-6" />
                 Emergency Lighting Systems
               </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-4 p-0">
               {emergencyLighting.map((light, index) => (
                 <div
                   key={index}
-                  className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]"
+                  className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]"
                 >
                   <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 mb-3">
                     <h4 className="font-medium text-white">{light.type}</h4>
@@ -238,7 +238,7 @@ const CommercialReferenceGuide = () => {
                       <Badge variant="outline" className="border-white/10 text-white text-xs">
                         {light.duration}
                       </Badge>
-                      <Badge variant="outline" className="border-white/10 text-white/55 text-xs">
+                      <Badge variant="outline" className="border-white/10 text-white/70 text-xs">
                         {light.standard}
                       </Badge>
                     </div>
@@ -259,16 +259,16 @@ const CommercialReferenceGuide = () => {
 
         {/* Fire Alarm Tab */}
         <TabsContent value="fire-alarm" className="space-y-4">
-          <Card className="border-red-500/30 bg-white/5">
-            <CardHeader>
-              <CardTitle className="text-red-300 flex items-center gap-2">
+          <Card variant="plain">
+            <CardHeader className="p-0 pb-3">
+              <CardTitle className="text-[15px] font-semibold tracking-tight text-white flex items-center gap-2">
                 <AlertCircle className="h-6 w-6" />
                 Fire Alarm Zone Configuration
               </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-4 p-0">
               {fireAlarmZones.map((zone, index) => (
-                <div key={index} className="bg-red-500/10 p-4 rounded-lg border border-red-500/20">
+                <div key={index} className="p-4 rounded-lg border border-white/[0.12] border-l-[3px] border-l-red-500 bg-white/[0.06]">
                   <h4 className="font-medium text-white mb-3">{zone.zone}</h4>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
                     <div>
@@ -299,14 +299,14 @@ const CommercialReferenceGuide = () => {
 
         {/* Standards Tab */}
         <TabsContent value="standards" className="space-y-4">
-          <Card className="border-white/[0.06] bg-white/5">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
+          <Card variant="plain">
+            <CardHeader className="p-0 pb-3">
+              <CardTitle className="text-[15px] font-semibold tracking-tight text-white flex items-center gap-2">
                 <BookOpen className="h-6 w-6" />
                 Commercial Standards & Regulations
               </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-3">
+            <CardContent className="space-y-3 p-0">
               {[
                 {
                   standard: 'BS 7671:2018+A4:2026',
@@ -342,9 +342,9 @@ const CommercialReferenceGuide = () => {
               ].map((item, index) => (
                 <div
                   key={index}
-                  className="flex items-start gap-3 bg-white/[0.02] p-3 rounded-lg border border-white/[0.06]"
+                  className="flex items-start gap-3 bg-white/[0.06] p-3 rounded-lg border border-white/[0.10]"
                 >
-                  <BookOpen className="h-5 w-5 text-white/55 mt-0.5 flex-shrink-0" />
+                  <BookOpen className="h-5 w-5 text-white/70 mt-0.5 flex-shrink-0" />
                   <div>
                     <h4 className="font-medium text-white/85">{item.standard}</h4>
                     <p className="text-sm text-white">{item.description}</p>

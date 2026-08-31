@@ -1,33 +1,26 @@
-import { Button } from '@/components/ui/button';
-
+import { PANEL } from '@/components/ui/panel-recipe';
+import { cn } from '@/lib/utils';
+/**
+ * Source note for the testing procedures.
+ *
+ * This card used to carry two buttons — "Download full testing guide" and
+ * "Print checklist PDF" — with no onClick on either. Neither guide nor PDF
+ * exists, so both were decoration that looked like function. Removed rather
+ * than wired: a print action would also need print styles, since every page in
+ * the app is white text on a dark background and browsers drop backgrounds when
+ * printing, which would send a sheet of white-on-white to the printer.
+ */
 const TestingResources = () => {
   return (
-    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-      <div className="space-y-1">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-          Testing resources
-        </span>
-        <p className="text-[14px] text-white/85 leading-relaxed">
-          These testing procedures are derived from the 18th Edition Wiring Regulations (BS 7671)
-          and the Guidance Note 3: Inspection and Testing. Always refer to the latest regulations
-          for definitive guidance.
-        </p>
-      </div>
-
-      <div className="flex flex-col sm:flex-row gap-2">
-        <Button
-          variant="outline"
-          className="h-11 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
-        >
-          Download full testing guide
-        </Button>
-        <Button
-          variant="outline"
-          className="h-11 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
-        >
-          Print checklist PDF
-        </Button>
-      </div>
+    <div className={cn(PANEL, "space-y-1")}>
+      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+        Source
+      </span>
+      <p className="text-[14px] text-white/85 leading-relaxed">
+        These procedures follow BS 7671:2018+A4:2026 and Guidance Note 3: Inspection and Testing.
+        They are here to help you understand and prepare for each test — the standards themselves
+        remain the definitive guidance, and nothing here replaces training or supervision.
+      </p>
     </div>
   );
 };

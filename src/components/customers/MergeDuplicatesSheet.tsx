@@ -140,7 +140,7 @@ export const MergeDuplicatesSheet = ({
                     <button
                       onClick={() => handleMergeGroup(group)}
                       disabled={!keepId || merging}
-                      className="w-full h-11 rounded-xl bg-elec-yellow text-black text-sm font-semibold touch-manipulation disabled:opacity-40 flex items-center justify-center gap-2"
+                      className="w-full h-11 rounded-xl bg-elec-yellow text-black text-sm font-semibold touch-manipulation disabled:bg-white/[0.08] disabled:text-white/70 flex items-center justify-center gap-2"
                     >
                       {merging ? (
                         <Loader2 className="h-4 w-4 animate-spin" />

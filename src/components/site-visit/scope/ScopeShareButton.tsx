@@ -174,7 +174,7 @@ export const ScopeShareButton = ({ visit, assumptions }: ScopeShareButtonProps) 
           <Button
             onClick={handleCreateShare}
             disabled={isCreating}
-            className="h-11 shrink-0 rounded-full bg-elec-yellow px-5 text-[13px] font-semibold text-black hover:bg-elec-yellow/90 disabled:opacity-50 touch-manipulation"
+            className="h-11 shrink-0 rounded-full bg-elec-yellow px-5 text-[13px] font-semibold text-black hover:bg-elec-yellow/90 disabled:bg-white/[0.08] disabled:text-white/70 touch-manipulation"
           >
             {isCreating ? (
               <>

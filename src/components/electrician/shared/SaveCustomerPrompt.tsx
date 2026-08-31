@@ -92,7 +92,7 @@ export const SaveCustomerPrompt = ({ client, onSaved, onDismiss }: SaveCustomerP
         // "Save" alone sits inches from the wizard's own Save button in the
         // footer, which saves the quote rather than the customer. Naming the
         // object removes the ambiguity.
-        className="h-11 shrink-0 rounded-lg bg-elec-yellow px-4 text-[13px] font-semibold text-black transition-[filter,transform] touch-manipulation active:scale-[0.97] active:brightness-110 disabled:opacity-50"
+        className="h-11 shrink-0 rounded-lg bg-elec-yellow px-4 text-[13px] font-semibold text-black transition-[filter,transform] touch-manipulation active:scale-[0.97] active:brightness-110 disabled:bg-white/[0.08] disabled:text-white/70"
       >
         {isSaving ? 'Saving…' : 'Save customer'}
       </button>

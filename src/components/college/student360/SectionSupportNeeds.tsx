@@ -200,7 +200,7 @@ export function SectionSupportNeeds({
                 type="button"
                 onClick={save}
                 disabled={saving}
-                className="h-10 px-4 rounded-lg text-[13px] font-semibold text-black bg-elec-yellow hover:bg-elec-yellow/90 transition-colors disabled:opacity-50"
+                className="h-10 px-4 rounded-lg text-[13px] font-semibold text-black bg-elec-yellow hover:bg-elec-yellow/90 transition-colors disabled:bg-white/[0.08] disabled:text-white/70"
               >
                 {saving ? 'Saving…' : 'Save'}
               </button>

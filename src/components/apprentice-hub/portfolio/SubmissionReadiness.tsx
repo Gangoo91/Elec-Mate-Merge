@@ -18,6 +18,7 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import { Eyebrow, SectionHeader } from './PortfolioPrimitives';
@@ -254,7 +255,7 @@ export function SubmissionReadiness({
           'rounded-xl border p-4 sm:p-5 flex items-center gap-4',
           allGreen
             ? 'border-elec-yellow/50 bg-elec-yellow/[0.10]'
-            : 'border-white/[0.10] bg-[hsl(0_0%_10%)]'
+            : 'border-white/[0.10] bg-gradient-to-br from-white/[0.19] via-white/[0.105] to-white/[0.065]'
         )}
       >
         <div className="flex-1 min-w-0 space-y-2">
@@ -265,7 +266,7 @@ export function SubmissionReadiness({
             <span
               className={cn(
                 'text-[13px] font-mono font-semibold tabular-nums',
-                allGreen ? 'text-elec-yellow' : 'text-white/90'
+                allGreen ? 'text-elec-yellow' : 'text-white'
               )}
             >
               {headPct}%
@@ -285,28 +286,49 @@ export function SubmissionReadiness({
 
       <ul className="space-y-2.5">
         {gates.map((g) => {
+          /*
+           * Degree of accent, not a traffic light.
+           *
+           * "Action" used to render red — a red fill, a red border and a red
+           * left rule. But an unmet gate is not an error, it is the ordinary
+           * state of a portfolio that is not finished, and this section says
+           * so itself: "close them in order". A learner on day one, with
+           * nothing evidenced yet, opened their portfolio to a wall of red
+           * cards telling them they had failed five things they had not
+           * started. Red belongs on work a tutor has REFERRED BACK.
+           *
+           * So: everything is the same card, and the accent says how close it
+           * is. Passed carries the solid volt pill; the gate you are on
+           * carries the brighter volt edge; gates waiting on somebody else sit
+           * quiet. The translucent fills are gone too — `bg-elec-yellow/[0.07]`
+           * across a card face is the muddy-brown case card-recipe warns about.
+           */
           const tone =
             g.verdict === 'green'
               ? {
-                  card: 'border-elec-yellow/40 bg-elec-yellow/[0.07] border-l-elec-yellow',
-                  pill: 'text-black bg-elec-yellow',
+                  card: 'border-elec-yellow/35 border-l-elec-yellow',
+                  pill: 'bg-elec-yellow text-black',
                   label: 'Pass',
                 }
               : g.verdict === 'amber'
                 ? {
-                    card: 'border-orange-400/45 bg-orange-400/[0.10] border-l-orange-400',
-                    pill: 'text-orange-200 bg-orange-400/[0.18] border border-orange-400/40',
+                    card: 'border-white/[0.14] border-l-white/[0.30]',
+                    pill: 'border border-white/[0.18] bg-white/[0.06] text-white',
                     label: 'Soon',
                   }
                 : {
-                    card: 'border-red-500/50 bg-red-500/[0.12] border-l-red-500',
-                    pill: 'text-red-200 bg-red-500/[0.20] border border-red-400/50',
-                    label: 'Action',
+                    card: 'border-elec-yellow/70 border-l-elec-yellow',
+                    pill: 'border border-elec-yellow/50 bg-transparent text-elec-yellow',
+                    label: 'Next',
                   };
           return (
             <li
               key={g.key}
-              className={cn('rounded-xl border border-l-[3px] p-4 sm:p-5 space-y-1.5', tone.card)}
+              className={cn(
+                'space-y-1.5 rounded-2xl border border-l-[3px] p-4 sm:p-5',
+                CARD_SURFACE,
+                tone.card
+              )}
             >
               <div className="flex items-center justify-between gap-3">
                 <span className="text-[14.5px] font-semibold text-white leading-tight">
@@ -321,9 +343,9 @@ export function SubmissionReadiness({
                   {tone.label}
                 </span>
               </div>
-              <p className="text-[12.5px] text-white/80 leading-relaxed">{g.detail}</p>
+              <p className="text-[12.5px] text-white leading-relaxed">{g.detail}</p>
               {g.metric && (
-                <span className="inline-block text-[11px] font-mono text-white/90 tabular-nums bg-white/[0.05] border border-white/[0.08] rounded-md px-2 py-0.5 mt-0.5">
+                <span className="inline-block text-[11px] font-mono text-white tabular-nums bg-white/[0.05] border border-white/[0.08] rounded-md px-2 py-0.5 mt-0.5">
                   {g.metric}
                 </span>
               )}

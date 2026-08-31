@@ -219,17 +219,12 @@ const InstrumentationModule5Section3 = () => {
         <TLDR
           points={[
             'P asks how big the error is now. I asks how long it has been there. D asks how fast it is changing.',
-            'Proportional acts immediately and in proportion: output change = gain × input change. A gain of 2 turns a 5 per cent step into a 10 per cent step.',
-            'Proportional band is the reciprocal of gain as a percentage. Gain 4 is a 25 per cent band. Narrow band means high gain.',
             '🔴 Proportional output is bias plus gain times error — so at zero error the output IS the bias, and nothing else.',
             '🔴 That is why P alone leaves an offset: producing any output other than the bias requires a permanent error to exist.',
-            'Raising the gain shrinks the offset proportionally — gain 2 gives 5 per cent, gain 4 gives 2.5 per cent — but pushes the loop towards instability.',
             'Integral ramps the output while any error remains, then holds what it accumulated. That is an output at zero error, which is exactly what removes offset.',
-            'Integral is a rate: 3 repeats per minute on a 5 per cent error moves the output at 15 per cent per minute.',
             'Derivative responds to speed rather than size, so it can push back against an overshoot before it happens.',
             '🔴 Derivative dramatically amplifies noise, which is why it is so often left at zero on real loops.',
             '🔴 Self-regulating processes require integral. Integrating processes work best with proportional alone. Runaway processes require derivative.',
-            'Integral windup: a controller held at an output limit keeps accumulating an error it cannot correct, and then overshoots badly on release.',
           ]}
         />
 
@@ -347,12 +342,12 @@ const InstrumentationModule5Section3 = () => {
           id="ins-5-3-band"
           question="A loop is hunting and a colleague says to widen the proportional band from 25 per cent to 50 per cent. What have they asked for?"
           options={[
-            'A more aggressive loop — the gain rises from 4 to 2',
             'A gentler loop — the gain falls from 4 to 2',
+            'A more aggressive loop — the gain rises from 4 to 2',
             'No change in aggressiveness, only in units',
             'A gain of 50',
           ]}
-          correctIndex={1}
+          correctIndex={0}
           explanation="Band and gain are reciprocals: 100 ÷ 25 = 4, and 100 ÷ 50 = 2. Widening the band halves the gain, so the loop responds half as hard to the same error — which is the right direction for hunting. Reading it as 'bigger number, more action' gets it backwards."
         />
 
@@ -689,11 +684,11 @@ const InstrumentationModule5Section3 = () => {
           question="A flow loop with a visibly noisy process variable has derivative action added to reduce overshoot. What is the likely result?"
           options={[
             'The integral action stops working',
-            'Reduced overshoot with no side effects',
             'The output becomes erratic, because derivative amplifies the noise far more than it damps the overshoot',
+            'Reduced overshoot with no side effects',
             'The loop becomes slower but more stable',
           ]}
-          correctIndex={2}
+          correctIndex={1}
           explanation="Flow signals are noisy, and noise is exactly what derivative responds to most strongly. The derivative contribution from the noise will typically swamp the contribution from the genuine process movement, so the output chatters and the valve is worked constantly. Overshoot on a flow loop is addressed through gain and integral, not derivative."
         />
 

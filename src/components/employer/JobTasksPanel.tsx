@@ -165,7 +165,7 @@ function TaskCommentsSheet({
               type="button"
               onClick={send}
               disabled={!text.trim() || addComment.isPending}
-              className="h-11 w-11 shrink-0 rounded-xl bg-elec-yellow text-black flex items-center justify-center touch-manipulation disabled:opacity-40"
+              className="h-11 w-11 shrink-0 rounded-xl bg-elec-yellow text-black flex items-center justify-center touch-manipulation disabled:bg-white/[0.08] disabled:text-white/70"
               aria-label="Send"
             >
               {addComment.isPending ? (
@@ -487,7 +487,7 @@ export function JobTasksPanel({ jobId }: Props) {
               type="button"
               onClick={handleAdd}
               disabled={createTask.isPending}
-              className="h-10 px-4 rounded-lg bg-elec-yellow text-black text-[12.5px] font-semibold touch-manipulation disabled:opacity-50"
+              className="h-10 px-4 rounded-lg bg-elec-yellow text-black text-[12.5px] font-semibold touch-manipulation disabled:bg-white/[0.08] disabled:text-white/70"
             >
               {createTask.isPending ? (
                 <Loader2 className="h-4 w-4 animate-spin" />
@@ -568,7 +568,7 @@ export function JobTasksPanel({ jobId }: Props) {
                 type="button"
                 onClick={handleAiPropose}
                 disabled={aiLoading || aiDescription.trim().length < 10}
-                className="h-11 w-full rounded-xl bg-elec-yellow text-black text-[13px] font-semibold touch-manipulation disabled:opacity-50 flex items-center justify-center gap-2"
+                className="h-11 w-full rounded-xl bg-elec-yellow text-black text-[13px] font-semibold touch-manipulation disabled:bg-white/[0.08] disabled:text-white/70 flex items-center justify-center gap-2"
               >
                 {aiLoading ? (
                   <Loader2 className="h-4 w-4 animate-spin" />
@@ -652,7 +652,7 @@ export function JobTasksPanel({ jobId }: Props) {
                   type="button"
                   onClick={handleAiCreate}
                   disabled={aiCreating || proposals.filter((p) => p.include).length === 0}
-                  className="h-12 w-full rounded-xl bg-elec-yellow text-black text-[13.5px] font-semibold touch-manipulation disabled:opacity-50 flex items-center justify-center gap-2"
+                  className="h-12 w-full rounded-xl bg-elec-yellow text-black text-[13.5px] font-semibold touch-manipulation disabled:bg-white/[0.08] disabled:text-white/70 flex items-center justify-center gap-2"
                 >
                   {aiCreating ? (
                     <Loader2 className="h-4 w-4 animate-spin" />

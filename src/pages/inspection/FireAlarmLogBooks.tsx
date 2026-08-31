@@ -221,7 +221,7 @@ const BuildingRow = ({
               e.stopPropagation();
               onQuickPass();
             }}
-            className="h-11 px-4 rounded-xl bg-elec-yellow text-black text-[13px] font-semibold hover:bg-yellow-400 touch-manipulation disabled:opacity-60 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
+            className="h-11 px-4 rounded-xl bg-elec-yellow text-black text-[13px] font-semibold hover:bg-yellow-400 touch-manipulation disabled:bg-white/[0.08] disabled:text-white/70 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
           >
             {quickPassBusy ? 'Logging…' : `Record pass — CP ${nextCp!.number}`}
           </button>

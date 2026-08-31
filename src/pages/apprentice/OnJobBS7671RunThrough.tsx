@@ -1,21 +1,22 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Zap, FileText, BookOpen, CheckCircle } from 'lucide-react';
+import { Zap, FileText, BookOpen, CheckCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { PageFrame, PageHero, itemVariants } from '@/components/college/primitives';
+import { itemVariants } from '@/components/college/primitives';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { useBS7671Progress } from '@/components/apprentice/bs7671/hooks/useBS7671Progress';
 import { allBS7671Tests } from '@/data/bs7671-testing/allBS7671Tests';
 import TestingProceduresPanel from '@/components/apprentice/bs7671/TestingProceduresPanel';
 import CertificateGuidePanel from '@/components/apprentice/bs7671/CertificateGuidePanel';
 import BS7671QuickReferencePanel from '@/components/apprentice/bs7671/BS7671QuickReferencePanel';
+import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 
 type ActiveTool = 'testing' | 'certificates' | 'reference' | null;
 
 const TOTAL_TESTS = allBS7671Tests.length;
 
 const OnJobBS7671RunThrough = () => {
-  const navigate = useNavigate();
   const [activeTool, setActiveTool] = useState<ActiveTool>(null);
   const progress = useBS7671Progress();
 
@@ -62,29 +63,21 @@ const OnJobBS7671RunThrough = () => {
   ];
 
   return (
-    <PageFrame className="px-4 sm:px-6 lg:px-8">
-      <motion.div variants={itemVariants}>
-        <Button
-          variant="ghost"
-          onClick={() => navigate('/apprentice/on-job-tools')}
-          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
-        >
-          <ArrowLeft className="mr-2 h-5 w-5" />
-          Back
-        </Button>
-      </motion.div>
+    <HubPage>
+      <HubMasthead
+        section="Apprentice · BS 7671"
+        title="Inspection & testing"
+        backTo="/apprentice/on-job-tools"
+      />
 
-      <motion.div variants={itemVariants}>
-        <PageHero
-          eyebrow="Apprentice · BS 7671"
-          title="Inspection & testing"
-          description="Reflects BS 7671:2018+A4:2026. Walk through the testing procedures, certificate types, and quick-reference for AM2E and on-site work."
-          tone="yellow"
-        />
-      </motion.div>
+      <HubBody>
+        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
+          Reflects BS 7671:2018+A4:2026. Walk through the testing procedures, certificate types and
+          quick reference for AM2E and on-site work.
+        </p>
 
       {/* Progress Strip */}
-      <div className="flex items-center gap-4 p-3.5 rounded-2xl bg-[hsl(0_0%_10%)] border border-white/[0.08]">
+      <div className={cn('flex items-center gap-4 p-3.5 rounded-2xl border border-elec-yellow/25', CARD_SURFACE)}>
         <div className="flex items-center gap-2">
           {progress.completedTestCount === TOTAL_TESTS && TOTAL_TESTS > 0 ? (
             <CheckCircle className="h-4 w-4 text-elec-yellow flex-shrink-0" />
@@ -104,7 +97,7 @@ const OnJobBS7671RunThrough = () => {
         <div className="flex-1" />
         <div className="h-1.5 w-16 bg-white/[0.08] rounded-full overflow-hidden hidden sm:block">
           <div
-            className="h-full rounded-full bg-elec-yellow/70 transition-all duration-500"
+            className="h-full rounded-full bg-elec-yellow transition-all duration-500"
             style={{
               width: `${TOTAL_TESTS > 0 ? (progress.completedTestCount / TOTAL_TESTS) * 100 : 0}%`,
             }}
@@ -124,7 +117,7 @@ const OnJobBS7671RunThrough = () => {
                   p-4 rounded-2xl border text-left transition-colors touch-manipulation active:scale-[0.98]
                   ${
                     isActive
-                      ? 'bg-elec-yellow/[0.08] border-elec-yellow/30'
+                      ? 'border-elec-yellow/70'
                       : 'bg-[hsl(0_0%_10%)] border-white/[0.08] hover:border-white/[0.18]'
                   }
                 `}
@@ -148,7 +141,7 @@ const OnJobBS7671RunThrough = () => {
       {activeTool === 'reference' && <BS7671QuickReferencePanel />}
 
       {/* Compliance note — editorial, matches the hub's flat note style */}
-      <div className="rounded-2xl border border-elec-yellow/20 bg-elec-yellow/[0.04] p-4">
+      <div className={cn('rounded-2xl border border-elec-yellow/35 p-4', CARD_SURFACE)}>
         <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80">
           Compliance
         </span>
@@ -158,7 +151,8 @@ const OnJobBS7671RunThrough = () => {
           keep to safe isolation procedures at all times.
         </p>
       </div>
-    </PageFrame>
+      </HubBody>
+    </HubPage>
   );
 };
 

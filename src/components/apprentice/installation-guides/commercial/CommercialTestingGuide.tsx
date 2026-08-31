@@ -812,16 +812,15 @@ const CommercialTestingGuide = () => {
   return (
     <div className="space-y-6">
       {/* Test Sequence Order */}
-      <Card className="border-white/[0.06] bg-white/5">
-        <CardHeader>
+      <Card variant="plain">
+        <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <ListOrdered className="h-6 w-6 text-white/55" />
-            <CardTitle className="text-white">{testSequenceOrder.title}</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">{testSequenceOrder.title}</CardTitle>
           </div>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <Alert className="border-white/[0.06] bg-white/[0.02]">
-            <Info className="h-4 w-4 text-white/55" />
+        <CardContent className="space-y-4 p-0">
+          <Alert className="border-white/[0.10] bg-white/[0.06]">
+            <Info className="h-4 w-4 text-white/70" />
             <AlertDescription className="text-white/85 text-sm">
               <strong>Important:</strong> {testSequenceOrder.note}
             </AlertDescription>
@@ -829,7 +828,7 @@ const CommercialTestingGuide = () => {
 
           <p className="text-sm text-white">{testSequenceOrder.description}</p>
 
-          <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+          <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
             <div className="space-y-3">
               {testSequenceOrder.sequence.map((item) => (
                 <div key={item.order} className="flex items-start gap-3">
@@ -851,18 +850,17 @@ const CommercialTestingGuide = () => {
       </Card>
 
       {/* Continuity Testing in Large Installations */}
-      <Card className="border-white/[0.06] bg-white/5">
-        <CardHeader>
+      <Card variant="plain">
+        <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <TestTube className="h-6 w-6 text-white/55" />
-            <CardTitle className="text-white">{continuityTesting.title}</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">{continuityTesting.title}</CardTitle>
           </div>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 p-0">
           <p className="text-sm text-white">{continuityTesting.description}</p>
 
           {continuityTesting.challenges.map((challenge, index) => (
-            <div key={index} className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+            <div key={index} className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
               <h4 className="font-medium text-white mb-2">{challenge.challenge}</h4>
               <p className="text-sm text-white/85 mb-3">
                 <strong>Issue:</strong> {challenge.issue}
@@ -872,7 +870,7 @@ const CommercialTestingGuide = () => {
                 <ul className="mt-1 space-y-1">
                   {challenge.solutions.map((solution, idx) => (
                     <li key={idx} className="text-xs text-white/85 flex items-start gap-2">
-                      <CheckCircle className="h-3 w-3 text-white/55 mt-0.5 flex-shrink-0" />
+                      <CheckCircle className="h-3 w-3 text-white/70 mt-0.5 flex-shrink-0" />
                       {solution}
                     </li>
                   ))}
@@ -881,7 +879,7 @@ const CommercialTestingGuide = () => {
             </div>
           ))}
 
-          <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+          <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
             <h4 className="font-medium text-white mb-3">Practical Tips</h4>
             <ul className="space-y-2">
               {continuityTesting.practicalTips.map((tip, idx) => (
@@ -896,23 +894,22 @@ const CommercialTestingGuide = () => {
       </Card>
 
       {/* Insulation Resistance for Three-Phase */}
-      <Card className="border-white/[0.06] bg-white/5">
-        <CardHeader>
+      <Card variant="plain">
+        <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <Shield className="h-6 w-6 text-white/55" />
-            <CardTitle className="text-white">{insulationResistance.title}</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">{insulationResistance.title}</CardTitle>
           </div>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 p-0">
           <p className="text-sm text-white">{insulationResistance.description}</p>
 
           {/* Test Voltages */}
-          <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+          <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
             <h4 className="font-medium text-white mb-3">Test Voltages and Minimum Values</h4>
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-white/[0.06]">
+                  <tr className="border-b border-white/[0.10]">
                     <th className="text-left py-2 text-white/85">Circuit Type</th>
                     <th className="text-left py-2 text-white/85">Test Voltage</th>
                     <th className="text-left py-2 text-white/85">Minimum IR</th>
@@ -920,7 +917,7 @@ const CommercialTestingGuide = () => {
                 </thead>
                 <tbody>
                   {insulationResistance.testVoltages.map((row, idx) => (
-                    <tr key={idx} className="border-b border-white/[0.06]">
+                    <tr key={idx} className="border-b border-white/[0.10]">
                       <td className="py-2 text-white text-xs">{row.circuit}</td>
                       <td className="py-2 text-white text-xs">{row.voltage}</td>
                       <td className="py-2 text-white text-xs">{row.minimum}</td>
@@ -932,11 +929,11 @@ const CommercialTestingGuide = () => {
           </div>
 
           {/* Three-Phase Method */}
-          <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+          <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
             <h4 className="font-medium text-white mb-3">Three-Phase Testing Method</h4>
             <div className="space-y-3">
               {insulationResistance.threePhaseMethod.steps.map((step, idx) => (
-                <div key={idx} className="bg-white/[0.02] p-3 rounded border border-white/[0.06]">
+                <div key={idx} className="bg-white/[0.06] p-3 rounded border border-white/[0.10]">
                   <div className="flex items-center gap-2 mb-1">
                     <Badge variant="outline" className="border-white/10 text-white text-xs">
                       Step {step.step}
@@ -950,7 +947,7 @@ const CommercialTestingGuide = () => {
           </div>
 
           {/* Expected Values */}
-          <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+          <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
             <h4 className="font-medium text-white mb-3">Typical Expected Values</h4>
             <div className="space-y-2">
               {insulationResistance.threePhaseMethod.expectedValues.map((val, idx) => (
@@ -966,7 +963,7 @@ const CommercialTestingGuide = () => {
           <div className="space-y-3">
             <h4 className="font-medium text-white">Troubleshooting Low Readings</h4>
             {insulationResistance.troubleshooting.map((issue, index) => (
-              <div key={index} className="bg-red-500/10 p-4 rounded-lg border border-red-500/20">
+              <div key={index} className="p-4 rounded-lg border border-white/[0.12] border-l-[3px] border-l-red-500 bg-white/[0.06]">
                 <h5 className="font-medium text-red-200 mb-2">{issue.symptom}</h5>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                   <div>
@@ -997,19 +994,18 @@ const CommercialTestingGuide = () => {
       </Card>
 
       {/* Loop Impedance for Long Cable Runs */}
-      <Card className="border-white/[0.06] bg-white/5">
-        <CardHeader>
+      <Card variant="plain">
+        <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <Activity className="h-6 w-6 text-white/55" />
-            <CardTitle className="text-white">{loopImpedance.title}</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">{loopImpedance.title}</CardTitle>
           </div>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 p-0">
           <p className="text-sm text-white">{loopImpedance.description}</p>
 
           {/* Considerations */}
           {loopImpedance.considerations.map((item, index) => (
-            <div key={index} className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+            <div key={index} className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
               <h4 className="font-medium text-white mb-2">{item.factor}</h4>
               <p className="text-sm text-white/85 mb-2">{item.explanation}</p>
               <p className="text-xs text-white">
@@ -1022,10 +1018,10 @@ const CommercialTestingGuide = () => {
           ))}
 
           {/* Max Zs Values Table */}
-          <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+          <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
             <h4 className="font-medium text-white mb-2">{loopImpedance.maxZsValues.title}</h4>
-            <Alert className="border-white/[0.06] bg-white/[0.02] mb-3">
-              <AlertTriangle className="h-4 w-4 text-white/55" />
+            <Alert className="border-white/[0.10] bg-white/[0.06] mb-3">
+              <AlertTriangle className="h-4 w-4 text-white/70" />
               <AlertDescription className="text-white/85 text-xs">
                 {loopImpedance.maxZsValues.note}
               </AlertDescription>
@@ -1033,7 +1029,7 @@ const CommercialTestingGuide = () => {
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-white/[0.06]">
+                  <tr className="border-b border-white/[0.10]">
                     <th className="text-left py-2 text-white/85">Device</th>
                     <th className="text-left py-2 text-white/85">Max Zs (20C)</th>
                     <th className="text-left py-2 text-white/85">Corrected (0.8)</th>
@@ -1042,7 +1038,7 @@ const CommercialTestingGuide = () => {
                 </thead>
                 <tbody>
                   {loopImpedance.maxZsValues.values.map((row, idx) => (
-                    <tr key={idx} className="border-b border-white/[0.06]">
+                    <tr key={idx} className="border-b border-white/[0.10]">
                       <td className="py-2 text-white text-xs">{row.device}</td>
                       <td className="py-2 text-white text-xs">{row.maxZs}</td>
                       <td className="py-2 text-white text-xs">{row.corrected}</td>
@@ -1055,12 +1051,12 @@ const CommercialTestingGuide = () => {
           </div>
 
           {/* Solutions for Long Runs */}
-          <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+          <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
             <h4 className="font-medium text-white mb-3">Solutions for Excessive Zs on Long Runs</h4>
             <ul className="space-y-2">
               {loopImpedance.longRunsSolutions.map((solution, idx) => (
                 <li key={idx} className="text-sm text-white/85 flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-white/55 mt-0.5 flex-shrink-0" />
+                  <CheckCircle className="h-4 w-4 text-white/70 mt-0.5 flex-shrink-0" />
                   {solution}
                 </li>
               ))}
@@ -1070,14 +1066,13 @@ const CommercialTestingGuide = () => {
       </Card>
 
       {/* RCD Testing Requirements */}
-      <Card className="border-white/[0.06] bg-white/5">
-        <CardHeader>
+      <Card variant="plain">
+        <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <Zap className="h-6 w-6 text-white/55" />
-            <CardTitle className="text-white">{rcdTesting.title}</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">{rcdTesting.title}</CardTitle>
           </div>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 p-0">
           <p className="text-sm text-white">{rcdTesting.description}</p>
 
           {/* RCD Types */}
@@ -1085,7 +1080,7 @@ const CommercialTestingGuide = () => {
             {rcdTesting.rcdTypes.map((rcd, index) => (
               <div
                 key={index}
-                className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]"
+                className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]"
               >
                 <div className="flex items-center gap-2 mb-2">
                   <h4 className="font-medium text-white text-sm">{rcd.type}</h4>
@@ -1108,12 +1103,12 @@ const CommercialTestingGuide = () => {
           </div>
 
           {/* Test Results Table */}
-          <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+          <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
             <h4 className="font-medium text-white mb-3">{rcdTesting.testResults.title}</h4>
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-white/[0.06]">
+                  <tr className="border-b border-white/[0.10]">
                     <th className="text-left py-2 text-white/85">Test</th>
                     <th className="text-left py-2 text-white/85">Requirement</th>
                     <th className="text-left py-2 text-white/85">Notes</th>
@@ -1121,7 +1116,7 @@ const CommercialTestingGuide = () => {
                 </thead>
                 <tbody>
                   {rcdTesting.testResults.tests.map((test, idx) => (
-                    <tr key={idx} className="border-b border-white/[0.06]">
+                    <tr key={idx} className="border-b border-white/[0.10]">
                       <td className="py-2 text-white text-xs">{test.test}</td>
                       <td className="py-2 text-white text-xs">{test.requirement}</td>
                       <td className="py-2 text-white text-xs">{test.notes}</td>
@@ -1133,7 +1128,7 @@ const CommercialTestingGuide = () => {
           </div>
 
           {/* Commercial Considerations */}
-          <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+          <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
             <h4 className="font-medium text-white mb-3">Commercial RCD Considerations</h4>
             <ul className="space-y-2">
               {rcdTesting.commercialConsiderations.map((item, idx) => (
@@ -1148,17 +1143,16 @@ const CommercialTestingGuide = () => {
       </Card>
 
       {/* Phase Sequence Testing */}
-      <Card className="border-white/[0.06] bg-white/5">
-        <CardHeader>
+      <Card variant="plain">
+        <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <Activity className="h-6 w-6 text-white/55" />
-            <CardTitle className="text-white">{phaseSequenceTesting.title}</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">{phaseSequenceTesting.title}</CardTitle>
           </div>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 p-0">
           <p className="text-sm text-white">{phaseSequenceTesting.description}</p>
 
-          <Alert className="border-red-500/50 bg-red-500/10">
+          <Alert className="border-white/[0.12] border-l-[3px] border-l-red-500 bg-white/[0.06]">
             <AlertTriangle className="h-4 w-4 text-red-400" />
             <AlertDescription className="text-red-200 text-sm">
               <strong>Why Phase Sequence Matters:</strong>
@@ -1173,7 +1167,7 @@ const CommercialTestingGuide = () => {
           </Alert>
 
           {/* Test Method */}
-          <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+          <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
             <h4 className="font-medium text-white mb-3">Test Procedure</h4>
             <div className="space-y-2">
               {phaseSequenceTesting.testMethod.steps.map((step, idx) => (
@@ -1185,7 +1179,7 @@ const CommercialTestingGuide = () => {
                 </div>
               ))}
             </div>
-            <div className="mt-3 pt-3 border-t border-white/[0.06]">
+            <div className="mt-3 pt-3 border-t border-white/[0.10]">
               <h5 className="text-sm font-medium text-white/85 mb-2">Important Notes:</h5>
               <ul className="space-y-1">
                 {phaseSequenceTesting.testMethod.notes.map((note, idx) => (
@@ -1200,7 +1194,7 @@ const CommercialTestingGuide = () => {
 
           {/* Phase Colours */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+            <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
               <h4 className="font-medium text-white mb-3">Current Colour Code (2004+)</h4>
               <div className="space-y-2">
                 {phaseSequenceTesting.phaseColours.current.map((item, idx) => (
@@ -1212,7 +1206,7 @@ const CommercialTestingGuide = () => {
               </div>
             </div>
 
-            <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+            <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
               <h4 className="font-medium text-white mb-3">Historic Colour Code (Pre-2004)</h4>
               <div className="space-y-2">
                 {phaseSequenceTesting.phaseColours.historic.map((item, idx) => (
@@ -1229,14 +1223,13 @@ const CommercialTestingGuide = () => {
       </Card>
 
       {/* Emergency Lighting Testing */}
-      <Card className="border-yellow-500/30 bg-white/5">
-        <CardHeader>
+      <Card variant="plain">
+        <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <Lightbulb className="h-6 w-6 text-yellow-400" />
-            <CardTitle className="text-yellow-300">{emergencyLightingTesting.title}</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">{emergencyLightingTesting.title}</CardTitle>
           </div>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 p-0">
           <p className="text-sm text-white">{emergencyLightingTesting.description}</p>
 
           {/* Test Types */}
@@ -1244,16 +1237,16 @@ const CommercialTestingGuide = () => {
             {emergencyLightingTesting.testTypes.map((test, index) => (
               <div
                 key={index}
-                className="bg-yellow-500/10 p-4 rounded-lg border border-yellow-500/20"
+                className="bg-white/[0.06] p-4 rounded-lg border border-elec-yellow/20"
               >
                 <div className="flex items-center gap-2 mb-2">
-                  <Clock className="h-4 w-4 text-yellow-400" />
+                  <Clock className="h-4 w-4 text-elec-yellow" />
                   <h4 className="font-medium text-white">{test.type}</h4>
-                  <Badge variant="outline" className="border-yellow-400 text-yellow-300 text-xs">
+                  <Badge variant="outline" className="border-elec-yellow text-elec-yellow text-xs">
                     {test.frequency}
                   </Badge>
                 </div>
-                <p className="text-sm text-yellow-200 mb-2">
+                <p className="text-sm text-elec-yellow mb-2">
                   <strong>Duration:</strong> {test.duration}
                 </p>
                 <p className="text-sm text-white mb-2">
@@ -1267,24 +1260,24 @@ const CommercialTestingGuide = () => {
           </div>
 
           {/* Central Battery System */}
-          <div className="bg-yellow-500/10 p-4 rounded-lg border border-yellow-500/20">
+          <div className="bg-white/[0.06] p-4 rounded-lg border border-elec-yellow/20">
             <h4 className="font-medium text-white mb-3">
               {emergencyLightingTesting.centralBatterySystem.title}
             </h4>
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-yellow-500/30">
-                    <th className="text-left py-2 text-yellow-200">Test</th>
-                    <th className="text-left py-2 text-yellow-200">Expected</th>
-                    <th className="text-left py-2 text-yellow-200">Tolerance</th>
+                  <tr className="border-b border-elec-yellow/30">
+                    <th className="text-left py-2 text-elec-yellow">Test</th>
+                    <th className="text-left py-2 text-elec-yellow">Expected</th>
+                    <th className="text-left py-2 text-elec-yellow">Tolerance</th>
                   </tr>
                 </thead>
                 <tbody>
                   {emergencyLightingTesting.centralBatterySystem.tests.map((test, idx) => (
-                    <tr key={idx} className="border-b border-yellow-500/20">
+                    <tr key={idx} className="border-b border-elec-yellow/20">
                       <td className="py-2 text-white text-xs">{test.test}</td>
-                      <td className="py-2 text-yellow-300 text-xs">{test.expected}</td>
+                      <td className="py-2 text-elec-yellow text-xs">{test.expected}</td>
                       <td className="py-2 text-white text-xs">{test.tolerance}</td>
                     </tr>
                   ))}
@@ -1292,13 +1285,13 @@ const CommercialTestingGuide = () => {
               </table>
             </div>
 
-            <div className="mt-3 pt-3 border-t border-yellow-500/20">
-              <h5 className="text-sm font-medium text-yellow-200 mb-2">Additional Checks:</h5>
+            <div className="mt-3 pt-3 border-t border-elec-yellow/20">
+              <h5 className="text-sm font-medium text-elec-yellow mb-2">Additional Checks:</h5>
               <ul className="space-y-1">
                 {emergencyLightingTesting.centralBatterySystem.additionalChecks.map(
                   (check, idx) => (
-                    <li key={idx} className="text-xs text-yellow-100 flex items-start gap-2">
-                      <CheckCircle className="h-3 w-3 text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <li key={idx} className="text-xs text-elec-yellow flex items-start gap-2">
+                      <CheckCircle className="h-3 w-3 text-elec-yellow mt-0.5 flex-shrink-0" />
                       {check}
                     </li>
                   )
@@ -1308,12 +1301,12 @@ const CommercialTestingGuide = () => {
           </div>
 
           {/* Documentation */}
-          <div className="bg-yellow-500/10 p-4 rounded-lg border border-yellow-500/20">
+          <div className="bg-white/[0.06] p-4 rounded-lg border border-elec-yellow/20">
             <h4 className="font-medium text-white mb-3">Documentation Required</h4>
             <ul className="space-y-2">
               {emergencyLightingTesting.documentationRequired.map((item, idx) => (
-                <li key={idx} className="text-sm text-yellow-100 flex items-start gap-2">
-                  <FileCheck className="h-4 w-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                <li key={idx} className="text-sm text-elec-yellow flex items-start gap-2">
+                  <FileCheck className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                   {item}
                 </li>
               ))}
@@ -1323,18 +1316,17 @@ const CommercialTestingGuide = () => {
       </Card>
 
       {/* Fire Alarm Testing Coordination */}
-      <Card className="border-red-500/30 bg-white/5">
-        <CardHeader>
+      <Card variant="plain">
+        <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <Flame className="h-6 w-6 text-red-400" />
-            <CardTitle className="text-red-300">{fireAlarmTesting.title}</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">{fireAlarmTesting.title}</CardTitle>
           </div>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 p-0">
           <p className="text-sm text-white">{fireAlarmTesting.description}</p>
 
           {/* Electrical Responsibilities */}
-          <div className="bg-red-500/10 p-4 rounded-lg border border-red-500/20">
+          <div className="p-4 rounded-lg border border-white/[0.12] border-l-[3px] border-l-red-500 bg-white/[0.06]">
             <h4 className="font-medium text-white mb-3">Electrician's Responsibilities</h4>
             <ul className="space-y-2">
               {fireAlarmTesting.electricalResponsibilities.map((item, idx) => (
@@ -1347,13 +1339,13 @@ const CommercialTestingGuide = () => {
           </div>
 
           {/* Test Coordination */}
-          <div className="bg-red-500/10 p-4 rounded-lg border border-red-500/20">
+          <div className="p-4 rounded-lg border border-white/[0.12] border-l-[3px] border-l-red-500 bg-white/[0.06]">
             <h4 className="font-medium text-white mb-3">
               {fireAlarmTesting.testCoordination.title}
             </h4>
             <div className="space-y-3">
               {fireAlarmTesting.testCoordination.requirements.map((req, index) => (
-                <div key={index} className="bg-red-600/10 p-3 rounded border border-red-500/30">
+                <div key={index} className="bg-white/[0.06] p-3 rounded border border-red-500/30">
                   <h5 className="font-medium text-red-200 text-sm mb-2">{req.item}</h5>
                   <ul className="space-y-1">
                     {req.actions.map((action, idx) => (
@@ -1369,7 +1361,7 @@ const CommercialTestingGuide = () => {
           </div>
 
           {/* Cable Separation */}
-          <Alert className="border-red-500/50 bg-red-500/10">
+          <Alert className="border-white/[0.12] border-l-[3px] border-l-red-500 bg-white/[0.06]">
             <AlertTriangle className="h-4 w-4 text-red-400" />
             <AlertDescription className="text-red-200 text-sm">
               <strong>{fireAlarmTesting.cableSeparation.title}:</strong>
@@ -1386,16 +1378,15 @@ const CommercialTestingGuide = () => {
       </Card>
 
       {/* Documentation Requirements */}
-      <Card className="border-white/[0.06] bg-white/5">
-        <CardHeader>
+      <Card variant="plain">
+        <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <FileCheck className="h-6 w-6 text-white/55" />
-            <CardTitle className="text-white">{documentationRequirements.title}</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">{documentationRequirements.title}</CardTitle>
           </div>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 p-0">
           {documentationRequirements.certificates.map((cert, index) => (
-            <div key={index} className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+            <div key={index} className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
               <h4 className="font-medium text-white mb-2">{cert.name}</h4>
               <p className="text-sm text-white/85 mb-3">
                 <strong>When:</strong> {cert.when}
@@ -1457,7 +1448,7 @@ const CommercialTestingGuide = () => {
                               : classification.code === 'C2'
                                 ? 'border-white/10 text-white'
                                 : classification.code === 'C3'
-                                  ? 'border-yellow-400 text-yellow-300'
+                                  ? 'border-elec-yellow text-elec-yellow'
                                   : 'border-white/10 text-white'
                           }`}
                         >
@@ -1477,7 +1468,7 @@ const CommercialTestingGuide = () => {
                     {cert.frequencyGuide.map((item, idx) => (
                       <div
                         key={idx}
-                        className="bg-white/[0.02] p-2 rounded border border-white/[0.06]"
+                        className="bg-white/[0.06] p-2 rounded border border-white/[0.10]"
                       >
                         <div className="text-xs text-white">{item.premises}</div>
                         <div className="text-sm text-white font-medium">{item.frequency}</div>
@@ -1498,29 +1489,28 @@ const CommercialTestingGuide = () => {
       </Card>
 
       {/* EICR Requirements */}
-      <Card className="border-white/[0.06] bg-white/5">
-        <CardHeader>
+      <Card variant="plain">
+        <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <ClipboardList className="h-6 w-6 text-white/55" />
-            <CardTitle className="text-white">{eicrRequirements.title}</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">{eicrRequirements.title}</CardTitle>
           </div>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 p-0">
           <p className="text-sm text-white">{eicrRequirements.description}</p>
 
           {/* Inspection Scope */}
-          <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+          <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
             <h4 className="font-medium text-white mb-3">
               {eicrRequirements.inspectionScope.title}
             </h4>
             <div className="space-y-3">
               {eicrRequirements.inspectionScope.areas.map((area, index) => (
-                <div key={index} className="bg-white/[0.02] p-3 rounded border border-white/[0.06]">
+                <div key={index} className="bg-white/[0.06] p-3 rounded border border-white/[0.10]">
                   <h5 className="font-medium text-white/85 text-sm mb-2">{area.area}</h5>
                   <ul className="grid grid-cols-1 md:grid-cols-2 gap-1">
                     {area.checks.map((check, idx) => (
                       <li key={idx} className="text-xs text-white/85 flex items-start gap-2">
-                        <CheckCircle className="h-3 w-3 text-white/55 mt-0.5 flex-shrink-0" />
+                        <CheckCircle className="h-3 w-3 text-white/70 mt-0.5 flex-shrink-0" />
                         {check}
                       </li>
                     ))}
@@ -1531,7 +1521,7 @@ const CommercialTestingGuide = () => {
           </div>
 
           {/* Sampling */}
-          <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+          <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
             <h4 className="font-medium text-white mb-2">{eicrRequirements.sampleTesting.title}</h4>
             <p className="text-xs text-white mb-3">{eicrRequirements.sampleTesting.description}</p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -1561,21 +1551,21 @@ const CommercialTestingGuide = () => {
           </div>
 
           {/* Common Defects */}
-          <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+          <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
             <h4 className="font-medium text-white mb-3">
               Common Defects and Typical Classifications
             </h4>
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-white/[0.06]">
+                  <tr className="border-b border-white/[0.10]">
                     <th className="text-left py-2 text-white/85">Defect</th>
                     <th className="text-left py-2 text-white/85">Typical Code</th>
                   </tr>
                 </thead>
                 <tbody>
                   {eicrRequirements.reportingDefects.commonDefects.map((defect, idx) => (
-                    <tr key={idx} className="border-b border-white/[0.06]">
+                    <tr key={idx} className="border-b border-white/[0.10]">
                       <td className="py-2 text-white text-xs">{defect.defect}</td>
                       <td className="py-2">
                         <Badge
@@ -1585,7 +1575,7 @@ const CommercialTestingGuide = () => {
                               ? 'border-red-400 text-red-300'
                               : defect.typical.includes('C2')
                                 ? 'border-white/10 text-white'
-                                : 'border-yellow-400 text-yellow-300'
+                                : 'border-elec-yellow text-elec-yellow'
                           }`}
                         >
                           {defect.typical}
@@ -1601,19 +1591,18 @@ const CommercialTestingGuide = () => {
       </Card>
 
       {/* Test Equipment */}
-      <Card className="border-white/[0.06] bg-white/5">
-        <CardHeader>
+      <Card variant="plain">
+        <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <Wrench className="h-6 w-6 text-white/55" />
-            <CardTitle className="text-white">{testEquipment.title}</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">{testEquipment.title}</CardTitle>
           </div>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 p-0">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {testEquipment.equipment.map((equip, index) => (
               <div
                 key={index}
-                className="bg-white/[0.02] p-3 rounded-lg border border-white/[0.06]"
+                className="bg-white/[0.06] p-3 rounded-lg border border-white/[0.10]"
               >
                 <h4 className="font-medium text-white/85 text-sm mb-2">{equip.instrument}</h4>
                 <p className="text-xs text-white mb-1">
@@ -1632,12 +1621,12 @@ const CommercialTestingGuide = () => {
             ))}
           </div>
 
-          <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+          <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
             <h4 className="font-medium text-white mb-3">Before Testing Checklist</h4>
             <ul className="space-y-2">
               {testEquipment.beforeTesting.map((item, idx) => (
                 <li key={idx} className="text-sm text-white/85 flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-white/55 mt-0.5 flex-shrink-0" />
+                  <CheckCircle className="h-4 w-4 text-white/70 mt-0.5 flex-shrink-0" />
                   {item}
                 </li>
               ))}

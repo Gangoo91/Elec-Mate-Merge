@@ -110,7 +110,7 @@ const RiskAssessmentTab = () => {
   return (
     <div className="space-y-5 animate-fade-in">
       <div className="space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
           Risk assessment tools
         </span>
         <h2 className="text-[20px] sm:text-[24px] font-semibold tracking-tight text-white leading-tight">
@@ -125,7 +125,7 @@ const RiskAssessmentTab = () => {
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
         <div className="overflow-x-auto scrollbar-hide -mx-4 px-4 sm:mx-0 sm:px-0">
-          <TabsList className="w-full min-w-max bg-white/[0.02] border border-white/[0.06] p-1 rounded-xl">
+          <TabsList className="w-full min-w-max bg-white/[0.06] border border-white/[0.10] p-1 rounded-xl">
             <TabsTrigger
               value="process"
               className="flex-1 data-[state=active]:bg-elec-yellow data-[state=active]:text-black rounded-lg transition-all"
@@ -154,15 +154,15 @@ const RiskAssessmentTab = () => {
         </div>
 
         <TabsContent value="process" className="space-y-4 mt-5">
-          <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
               Risk assessment process
             </span>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
               {processSteps.map((step) => (
                 <div
                   key={step.step}
-                  className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-4 space-y-2"
+                  className="rounded-lg border border-white/[0.10] bg-white/[0.06] p-4 space-y-2"
                 >
                   <div className="flex items-center gap-2">
                     <span className="w-6 h-6 rounded-md bg-elec-yellow text-black font-semibold text-[12px] flex items-center justify-center font-mono">
@@ -177,8 +177,8 @@ const RiskAssessmentTab = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-2">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
                 Legal requirements
               </span>
               <ul className="space-y-1.5">
@@ -194,8 +194,8 @@ const RiskAssessmentTab = () => {
               </ul>
             </div>
 
-            <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-2">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
                 Best practices
               </span>
               <ul className="space-y-1.5">
@@ -217,7 +217,7 @@ const RiskAssessmentTab = () => {
           <HazardIdentificationMatrix onHazardSelected={handleHazardSelected} />
 
           {selectedHazard && (
-            <div className="rounded-xl border border-elec-yellow/20 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-2">
+            <div className="rounded-xl border border-elec-yellow/20 bg-white/[0.06] p-4 sm:p-5 space-y-2">
               <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
                 Selected hazard
               </span>
@@ -239,7 +239,7 @@ const RiskAssessmentTab = () => {
               riskScore={currentAssessment.riskScore}
             />
           ) : (
-            <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-8 text-center space-y-2">
+            <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-8 text-center space-y-2">
               <p className="text-[16px] font-medium text-white">No assessment data</p>
               <p className="text-[14px] text-white/70 leading-relaxed">
                 Complete a risk assessment in the Assessment tab to view guidance

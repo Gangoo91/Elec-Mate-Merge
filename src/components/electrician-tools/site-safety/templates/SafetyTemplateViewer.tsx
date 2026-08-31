@@ -356,7 +356,7 @@ export function SafetyTemplateViewer({ template, onBack, isAdopted }: SafetyTemp
               type="button"
               onClick={handleAdopt}
               disabled={adoptMutation.isPending}
-              className="flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-elec-yellow text-sm font-semibold text-black transition-all touch-manipulation [-webkit-tap-highlight-color:transparent] active:scale-[0.97] active:brightness-110 disabled:opacity-50"
+              className="flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-elec-yellow text-sm font-semibold text-black transition-all touch-manipulation [-webkit-tap-highlight-color:transparent] active:scale-[0.97] active:brightness-110 disabled:bg-white/[0.08] disabled:text-white/70"
             >
               {adoptMutation.isPending ? (
                 <>

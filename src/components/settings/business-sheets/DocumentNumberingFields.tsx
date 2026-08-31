@@ -167,7 +167,7 @@ export function DocumentNumberingFields({ docType }: { docType: NumberingDocType
         type="button"
         onClick={save}
         disabled={saving}
-        className="h-11 w-full touch-manipulation rounded-xl bg-elec-yellow text-[14px] font-semibold text-black transition-[filter] active:brightness-110 disabled:opacity-50"
+        className="h-11 w-full touch-manipulation rounded-xl bg-elec-yellow text-[14px] font-semibold text-black transition-[filter] active:brightness-110 disabled:bg-white/[0.08] disabled:text-white/70"
       >
         {saving ? 'Saving…' : 'Save numbering'}
       </button>

@@ -183,12 +183,10 @@ const InstrumentationModule1Section4 = () => {
         <TLDR
           points={[
             'A calibration standard is simply the thing you compare an instrument against. Any calibration can only ever be as good as that standard.',
-            'Standards come in two kinds: those that produce an accurate quantity, and those that measure an arbitrary quantity accurately. Both are legitimate; they are used differently.',
             'At the very top sit intrinsic standards, based on fundamental constants of nature — inherently fixed and reproducible anywhere in the world.',
             'Between your bench and those constants runs a chain of comparisons. Shop standards are periodically sent away to be re-standardised against higher-tier standards, which are themselves checked against higher ones again. That chain is what traceability means.',
             'Uncertainty grows at every step down the chain. Intrinsic standards carry the least, field instruments the most.',
             'Your test instrument must be significantly less uncertain than the instrument you are calibrating — a rule of thumb of at least 4:1, and better at 10:1. Below that, calibration stops proving anything.',
-            'UKAS is the UK’s national accreditation body; ISO/IEC 17025 is the international standard for the competence of testing and calibration laboratories. A certificate from an accredited laboratory is what makes a measurement defensible to somebody who was not there.',
           ]}
         />
 
@@ -203,17 +201,17 @@ const InstrumentationModule1Section4 = () => {
           onSite="Before you touch an adjustment screw, ask one question: what am I comparing this against, and how do I know that thing is right? If you cannot answer it, stop."
         >
           <p>
-            Calibration is the checking and adjustment of an instrument so that its output
-            faithfully corresponds to its input across a specified range. That definition contains a
-            hidden requirement, and it is the whole of this section: to do it at all, you must have
-            some means of knowing the input or output quantities associated with the instrument
-            under test.
+            To calibrate something is to check what it reports against what it is actually being
+            given, and correct it where the two disagree, right across the range it is used over.
+            Buried in that is a requirement people skip past, and it is the whole of this section:
+            you cannot do any of it unless you already have a trustworthy way of knowing what went
+            in or what came out.
           </p>
           <p>
-            A substance or device used as a reference to compare against an instrument&rsquo;s
-            response is a <strong>calibration standard</strong>. Not a document, not a procedure,
-            not a tolerance — a physical thing. The boiling water in a pan, the block of known
-            resistance, the reference meter on the bench.
+            Whatever you hold the instrument up against is the <strong>calibration standard</strong>{' '}
+            &mdash; and it is a physical thing rather than a document, a procedure or a tolerance.
+            The boiling water in a pan, the block of known resistance, the reference meter on the
+            bench.
           </p>
           <p>
             From which follows the single most important sentence in this section:{' '}
@@ -272,11 +270,11 @@ const InstrumentationModule1Section4 = () => {
           question="You drive a handheld meter and a high-accuracy reference meter from the same cheap variable supply, and compare their readings. Which item is the calibration standard?"
           options={[
             'The variable voltage supply',
-            'The high-accuracy reference meter',
             'The handheld meter under test',
             'The terminal block joining them',
+            'The high-accuracy reference meter',
           ]}
-          correctIndex={1}
+          correctIndex={3}
           explanation="The reference meter is the standard, because it is the thing supplying the trusted value. The supply only has to be adjustable and stable — its own accuracy is irrelevant, because you never rely on its dial setting for anything."
         />
 
@@ -422,12 +420,12 @@ const InstrumentationModule1Section4 = () => {
           id="ins-1-4-chain"
           question="A shop pressure reference is sent away for re-standardisation. What is that process actually doing?"
           options={[
-            'Repairing wear inside the reference so it performs like new',
             'Comparing it against a higher-level standard and recording the result',
+            'Repairing wear inside the reference so it performs like new',
             'Extending its warranty with the manufacturer',
             'Converting it into an intrinsic standard',
           ]}
-          correctIndex={1}
+          correctIndex={0}
           explanation="Re-standardisation is a comparison against a higher-tier standard, documented. It re-proves one link of the chain. Adjustment may follow if the comparison shows it is needed, but the comparison — and the record of it — is the point."
         />
 
@@ -491,11 +489,11 @@ const InstrumentationModule1Section4 = () => {
           question="You must prove an instrument to ± 0.4 % of span. Applying a 4:1 test uncertainty ratio as a minimum, roughly how good does your reference need to be?"
           options={[
             'About ± 1.6 % of span',
-            'About ± 0.4 % of span',
             'About ± 0.1 % of span',
+            'About ± 0.4 % of span',
             'Uncertainty of the reference does not affect the ratio',
           ]}
-          correctIndex={2}
+          correctIndex={1}
           explanation="A 4:1 ratio means the reference must be four times less uncertain than the tolerance being chased: 0.4 % divided by 4 is 0.1 % of span. At 10:1 you would be looking for around 0.04 %. Getting this the wrong way round — picking a reference four times worse — is exactly the trap in the scenario above."
         />
 
@@ -514,12 +512,12 @@ const InstrumentationModule1Section4 = () => {
             nicest box in the shop.
           </p>
           <p>
-            In years past, instrument shops often maintained their own{' '}
-            <strong>standard cells</strong>, frequently called Weston cells, as a primary voltage
-            reference. These special-purpose batteries produced 1.0183 V DC at room temperature with
-            low uncertainty and low drift. They were also sensitive to vibration and non-trivial to
-            actually use — a chemical cell that had to be kept still and kept at temperature, in a
-            working industrial environment.
+            Instrument shops used to keep their own <strong>standard cells</strong> &mdash; Weston
+            cells &mdash; as the voltage reference everything else was held against. They were
+            purpose-built chemical cells sitting at 1.0183 V DC at room temperature, with very
+            little uncertainty and very little drift. They were also sensitive to vibration and
+            non-trivial to actually use — a chemical cell that had to be kept still and kept at
+            temperature, in a working industrial environment.
           </p>
           <p>
             Electronic voltage references have all but displaced standard cells in calibration shops
@@ -558,11 +556,11 @@ const InstrumentationModule1Section4 = () => {
           onSite="A temperature loop can be proved on a bench in a warm room. What is being simulated is the sensor&rsquo;s electrical output, not the process."
         >
           <p>
-            The most common technologies for industrial temperature measurement are electrical in
-            nature: <strong>RTDs</strong> and <strong>thermocouples</strong>. Module 2 covers how
-            each works. The consequence for this section is neat — the standards used to calibrate
-            those devices are the same standards used to calibrate electrical instruments such as
-            digital multimeters.
+            Industrial temperature measurement is dominated by two electrical devices:{' '}
+            <strong>RTDs</strong> and <strong>thermocouples</strong>. Module 2 covers how each
+            works. The consequence for this section is neat — the standards used to calibrate those
+            devices are the same standards used to calibrate electrical instruments such as digital
+            multimeters.
           </p>
           <ul>
             <li>

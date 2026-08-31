@@ -267,10 +267,10 @@ const SafetyKnowledgeTab = () => {
     const isCompleted = completedTopics.includes(module.id);
 
     return (
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
+      <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-4">
         <div className="space-y-2">
           <div className="flex items-baseline justify-between gap-3">
-            <div className="flex items-baseline gap-3 text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <div className="flex items-baseline gap-3 text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
               <span>{module.difficulty}</span>
               <span className="text-white/25">·</span>
               <span className="flex items-center gap-1">
@@ -290,7 +290,7 @@ const SafetyKnowledgeTab = () => {
           {module.topics.map((topic, idx) => (
             <span
               key={idx}
-              className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]"
+              className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.07]"
             >
               {topic}
             </span>
@@ -299,7 +299,7 @@ const SafetyKnowledgeTab = () => {
 
         <div className="space-y-2">
           <div className="flex items-baseline justify-between">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
               Progress
             </span>
             <span className="text-[12px] text-white/85 font-mono">{module.progress}%</span>
@@ -339,7 +339,7 @@ const SafetyKnowledgeTab = () => {
     <div className={`space-y-6 animate-fade-in text-left ${isMobile ? 'px-2' : ''}`}>
       {/* Header */}
       <div className="space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
           Safety knowledge hub
         </span>
         <h2 className="text-[24px] sm:text-[28px] font-bold tracking-tight text-white leading-tight">
@@ -352,21 +352,21 @@ const SafetyKnowledgeTab = () => {
       </div>
 
       {/* Stats strip */}
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 grid grid-cols-2 sm:grid-cols-4 gap-4">
+      <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 grid grid-cols-2 sm:grid-cols-4 gap-4">
         <div className="space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
             Modules
           </span>
           <p className="text-[20px] font-semibold text-white font-mono">{safetyModules.length}</p>
         </div>
         <div className="space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
             Completed
           </span>
           <p className="text-[20px] font-semibold text-white font-mono">{completedTopics.length}</p>
         </div>
         <div className="space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
             Avg progress
           </span>
           <p className="text-[20px] font-semibold text-white font-mono">
@@ -377,7 +377,7 @@ const SafetyKnowledgeTab = () => {
           </p>
         </div>
         <div className="space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
             Total mins
           </span>
           <p className="text-[20px] font-semibold text-white font-mono">110</p>
@@ -385,7 +385,7 @@ const SafetyKnowledgeTab = () => {
       </div>
 
       <Tabs defaultValue="modules" className="w-full">
-        <TabsList className="grid w-full grid-cols-3 bg-white/[0.02] border border-white/[0.06] h-auto">
+        <TabsList className="grid w-full grid-cols-3 bg-white/[0.06] border border-white/[0.10] h-auto">
           <TabsTrigger value="modules" className="flex items-center gap-2 text-[12px] py-2">
             <BookOpen className="h-4 w-4" />
             Modules
@@ -410,7 +410,7 @@ const SafetyKnowledgeTab = () => {
 
         <TabsContent value="quick-reference" className="mt-6 space-y-4">
           {/* Emergency Numbers */}
-          <div className="rounded-xl border border-red-500/30 bg-red-500/[0.04] p-4 sm:p-5 space-y-2">
+          <div className="rounded-xl border border-white/[0.12] border-l-[3px] border-l-red-500 bg-white/[0.06] p-4 sm:p-5 space-y-2">
             <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">
               Emergency numbers
             </span>
@@ -439,8 +439,8 @@ const SafetyKnowledgeTab = () => {
           </div>
 
           <div className="grid gap-4 grid-cols-1 sm:grid-cols-2">
-            <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-2">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
                 Voltage classifications
               </span>
               <div className="space-y-1.5 text-[14px] text-white/85">
@@ -467,8 +467,8 @@ const SafetyKnowledgeTab = () => {
               </div>
             </div>
 
-            <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-2">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
                 Safe isolation steps
               </span>
               <ol className="space-y-1.5 text-[14px] text-white/85 list-decimal list-inside">
@@ -482,8 +482,8 @@ const SafetyKnowledgeTab = () => {
               </ol>
             </div>
 
-            <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-2">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
                 RCD trip times
               </span>
               <div className="space-y-1.5 text-[14px] text-white/85">
@@ -506,8 +506,8 @@ const SafetyKnowledgeTab = () => {
               </div>
             </div>
 
-            <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-2">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
                 MCB disconnection times
               </span>
               <div className="space-y-1.5 text-[14px] text-white/85">
@@ -530,7 +530,7 @@ const SafetyKnowledgeTab = () => {
               </div>
             </div>
 
-            <div className="rounded-xl border border-red-500/30 bg-red-500/[0.04] p-4 sm:p-5 space-y-2">
+            <div className="rounded-xl border border-white/[0.12] border-l-[3px] border-l-red-500 bg-white/[0.06] p-4 sm:p-5 space-y-2">
               <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">
                 Electric shock effects
               </span>
@@ -558,68 +558,70 @@ const SafetyKnowledgeTab = () => {
               </div>
             </div>
 
-            <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
                 Key UK regulations
               </span>
               <div className="space-y-2 text-[14px]">
                 <div>
                   <p className="text-white font-medium">EAWR 1989</p>
-                  <p className="text-[12px] text-white/55">
+                  <p className="text-[12px] text-white/70">
                     Electricity at Work Regulations — criminal law for electrical safety
                   </p>
                 </div>
                 <div>
                   <p className="text-white font-medium">BS 7671:2018 +A2:2022</p>
-                  <p className="text-[12px] text-white/55">
+                  <p className="text-[12px] text-white/70">
                     18th Edition IET Wiring Regulations — technical standard
                   </p>
                 </div>
                 <div>
                   <p className="text-white font-medium">HASAWA 1974</p>
-                  <p className="text-[12px] text-white/55">
+                  <p className="text-[12px] text-white/70">
                     Health & Safety at Work Act — general duties
                   </p>
                 </div>
                 <div>
                   <p className="text-white font-medium">CDM 2015</p>
-                  <p className="text-[12px] text-white/55">
+                  <p className="text-[12px] text-white/70">
                     Construction Design & Management Regulations
                   </p>
                 </div>
                 <div>
                   <p className="text-white font-medium">Building Regs Part P</p>
-                  <p className="text-[12px] text-white/55">
+                  <p className="text-[12px] text-white/70">
                     Electrical safety in dwellings — England & Wales
                   </p>
                 </div>
               </div>
             </div>
 
-            <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
                 PPE voltage ratings
               </span>
               <div className="space-y-2 text-[14px]">
                 <div>
                   <p className="text-white font-medium">Class 00 Gloves</p>
-                  <p className="text-[12px] text-white/55">Max 500V AC / 750V DC — beige</p>
+                  <p className="text-[12px] text-white/70">Max 500V AC / 750V DC — beige</p>
                 </div>
                 <div>
                   <p className="text-white font-medium">Class 0 Gloves</p>
-                  <p className="text-[12px] text-white/55">Max 1000V AC / 1500V DC — red</p>
+                  <p className="text-[12px] text-white/70">Max 1000V AC / 1500V DC — red</p>
                 </div>
                 <div>
                   <p className="text-white font-medium">Class 1 Gloves</p>
-                  <p className="text-[12px] text-white/55">Max 7500V AC / 11250V DC — white</p>
+                  <p className="text-[12px] text-white/70">Max 7500V AC / 11250V DC — white</p>
                 </div>
                 <div>
                   <p className="text-white font-medium">GS38 Test Leads</p>
-                  <p className="text-[12px] text-white/55">Fused, shrouded, max 4mm exposed tip</p>
+                  <p className="text-[12px] text-white/70">Fused, shrouded, max 4mm exposed tip</p>
                 </div>
                 <div>
                   <p className="text-white font-medium">Arc Flash PPE</p>
-                  <p className="text-[12px] text-white/55">Rated in cal/cm² — match incident energy</p>
+                  <p className="text-[12px] text-white/70">
+                    Rated in cal/cm² — match incident energy
+                  </p>
                 </div>
               </div>
             </div>
@@ -628,8 +630,8 @@ const SafetyKnowledgeTab = () => {
 
         <TabsContent value="resources" className="mt-6">
           <div className="grid gap-4 grid-cols-1 sm:grid-cols-2">
-            <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
                 Safety documentation
               </span>
               <div className="space-y-2">
@@ -654,8 +656,8 @@ const SafetyKnowledgeTab = () => {
               </div>
             </div>
 
-            <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
                 Training videos
               </span>
               <div className="space-y-2">

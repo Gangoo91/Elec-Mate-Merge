@@ -1,15 +1,21 @@
+import { CALLOUT, PANEL } from '@/components/ui/panel-recipe';
+import { cn } from '@/lib/utils';
+import CommonIssuesCard from '../../CommonIssuesCard';
+import { zsIssues } from '../../commonIssues';
+import { ZsLoopDiagram } from '../../diagrams/TestDiagrams';
+
 const ZsTestingTab = () => {
   const items = [
-    'Connect test equipment correctly between line and earth at the furthest socket outlet',
-    'Perform a "no-trip" test if RCDs/RCBOs are installed',
-    'Compare measured Zs value with maximum Zs value in BS7671 Table 41.3',
-    "Ensure value doesn't exceed maximum for the specific protective device",
-    'Consider temperature factors when comparing to tabulated maximum values',
+    'Measure Ze at the origin first, with the installation isolated and the main earthing conductor disconnected',
+    'Test between line and earth at the furthest point of each circuit — that is where Zs is highest',
+    'Use the no-trip setting where an RCD or RCBO protects the circuit, or it will trip on the test current',
+    'Compare the measured value against the maximum Zs for that device in BS 7671 Table 41.3',
+    'Allow for temperature: the tabulated maxima assume the conductor at operating temperature, and you are measuring a cold circuit',
   ];
 
   return (
     <div className="space-y-6">
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
+      <div className={cn(PANEL, "space-y-4")}>
         <div className="space-y-1">
           <h2 className="text-[20px] sm:text-[22px] font-semibold text-white leading-tight">
             Earth fault loop impedance (Zs) testing
@@ -32,18 +38,37 @@ const ZsTestingTab = () => {
           ))}
         </ul>
 
-        <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4">
-          <img
-            loading="lazy"
-            src="/placeholder.svg"
-            alt="Zs Testing Setup"
-            className="mx-auto max-h-64"
-          />
-          <p className="text-[12px] text-center mt-2 text-white/55">
-            Earth fault loop impedance test connection diagram
-          </p>
-        </div>
+        <ZsLoopDiagram />
       </div>
+
+      <div className={cn(PANEL, "space-y-2")}>
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+          Measured or calculated
+        </span>
+        <p className="text-[14px] text-white/85 leading-relaxed">
+          You do not always have to measure Zs directly. Where you have measured Ze at the origin and
+          R₁ + R₂ for the circuit during the continuity test, you can establish Zs by adding them —{' '}
+          <span className="text-white">Zs = Ze + (R₁ + R₂)</span>. That is useful on circuits where a
+          live test at the far point is impractical, and it is a sound cross-check on a value you did
+          measure.
+        </p>
+        <p className="text-[14px] text-white/85 leading-relaxed">
+          Whichever route you take, the comparison is the same: the circuit's Zs must not exceed the
+          maximum for its protective device, so the disconnection time in Chapter 41 is met.
+        </p>
+      </div>
+
+      <div className={cn(CALLOUT, "space-y-1")}>
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
+          Live test
+        </span>
+        <p className="text-[14px] text-white/85 leading-relaxed">
+          Unlike continuity, insulation resistance and polarity, this one is carried out on a live
+          installation. Treat it as live working: GS38 leads, the right PPE, and no test until the
+          dead tests have passed and it is safe to energise.
+        </p>
+      </div>
+      <CommonIssuesCard issues={zsIssues} />
     </div>
   );
 };

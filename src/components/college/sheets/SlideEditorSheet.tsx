@@ -172,7 +172,7 @@ export function SlideEditorSheet({
                   type="button"
                   onClick={handleTweak}
                   disabled={!tweak.trim() || busy || regenerating}
-                  className="mt-2 h-9 px-4 rounded-lg bg-elec-yellow text-black text-[12px] font-semibold hover:bg-elec-yellow/90 disabled:opacity-40 transition-colors touch-manipulation"
+                  className="mt-2 h-9 px-4 rounded-lg bg-elec-yellow text-black text-[12px] font-semibold hover:bg-elec-yellow/90 disabled:bg-white/[0.08] disabled:text-white/70 transition-colors touch-manipulation"
                 >
                   {busy || regenerating ? 'Regenerating…' : 'Regenerate slide →'}
                 </button>
@@ -587,7 +587,7 @@ export function SlideEditorSheet({
               type="button"
               onClick={handleSave}
               disabled={busy}
-              className="h-10 px-5 rounded-lg bg-elec-yellow text-black text-[12.5px] font-semibold hover:bg-elec-yellow/90 disabled:opacity-40 transition-colors touch-manipulation"
+              className="h-10 px-5 rounded-lg bg-elec-yellow text-black text-[12.5px] font-semibold hover:bg-elec-yellow/90 disabled:bg-white/[0.08] disabled:text-white/70 transition-colors touch-manipulation"
             >
               {busy ? 'Saving…' : 'Save changes'}
             </button>

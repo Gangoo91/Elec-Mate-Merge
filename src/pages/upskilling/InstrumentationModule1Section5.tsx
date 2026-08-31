@@ -286,12 +286,12 @@ const InstrumentationModule1Section5 = () => {
           id="ins-1-5-substance"
           question="A food production line generates fine flour dust in the packing hall. Is that within DSEAR's scope?"
           options={[
-            'No — DSEAR covers only liquids and gases',
             'Yes — dusts from foodstuffs are expressly named as dangerous substances',
+            'No — DSEAR covers only liquids and gases',
             'Only if the dust is visibly airborne at all times',
             'Only in premises over a certain size',
           ]}
-          correctIndex={1}
+          correctIndex={0}
           explanation="Dusts from foodstuffs are expressly named among dangerous substances, alongside dusts from machining and sanding. Combustible dust is one of the most commonly underestimated hazards, and it has its own zone classifications — 20, 21 and 22."
         />
 
@@ -343,8 +343,8 @@ const InstrumentationModule1Section5 = () => {
         <InlineCheck
           id="ins-1-5-zones"
           question="Which zone represents the HIGHEST likelihood of an explosive atmosphere being present?"
-          options={['Zone 2', 'Zone 1', 'Zone 0', 'Zone 22']}
-          correctIndex={2}
+          options={['Zone 2', 'Zone 0', 'Zone 1', 'Zone 22']}
+          correctIndex={1}
           explanation="Zone 0 — continuously present, present for long periods, or frequently. The numbering is counter-intuitive: lower number, higher risk. Zone 22 is the dust equivalent of Zone 2, so it is the least severe of the dust zones."
         />
 
@@ -466,10 +466,10 @@ const InstrumentationModule1Section5 = () => {
           options={[
             'Hot surfaces',
             'Smoking materials',
-            'Equipment that is unsuitable for the area',
             'Any equipment operating below 50 V',
+            'Equipment that is unsuitable for the area',
           ]}
-          correctIndex={3}
+          correctIndex={2}
           explanation="Operating voltage is not the test. A low-voltage circuit can still produce a spark with enough energy to ignite an atmosphere — which is exactly why intrinsic safety is about energy, not about whether a voltage is dangerous to a person. Sparks, hot surfaces, smoking materials, naked flames and unsuitable equipment are all named."
         />
 
@@ -620,11 +620,11 @@ const InstrumentationModule1Section5 = () => {
           question="You are working from a P&ID that shows the isolation points for a job. What does HSE guidance identify as a recognised failure mode here?"
           options={[
             'Using a P&ID at all, rather than a loop diagram',
-            'Failing to check the drawing against the plant and equipment as actually installed',
             'Isolating more points than strictly necessary',
             'Recording the isolation on the drawing',
+            'Failing to check the drawing against the plant and equipment as actually installed',
           ]}
-          correctIndex={1}
+          correctIndex={3}
           explanation="Failure to check P&IDs and schematics against the actual installed plant is named among the human failures behind isolation incidents. Plant gets modified and drawings lag behind, so the document is the plan rather than the truth — verifying it against reality is part of the isolation."
         />
 
@@ -766,7 +766,7 @@ const InstrumentationModule1Section5 = () => {
               <ChevronLeft className="h-3 w-3" /> Previous
             </span>
             <span className="mt-1 truncate text-[14px] font-semibold text-white">
-              Standards and traceability
+              Standards, traceability and why they matter
             </span>
           </button>
           <button

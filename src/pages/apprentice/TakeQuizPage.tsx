@@ -1702,7 +1702,7 @@ function ReviewState({
         type="button"
         onClick={onSubmit}
         disabled={submitting}
-        className="w-full h-12 rounded-full bg-elec-yellow text-black text-[14px] font-semibold hover:bg-elec-yellow/90 active:scale-[0.98] disabled:opacity-50 transition-all touch-manipulation"
+        className="w-full h-12 rounded-full bg-elec-yellow text-black text-[14px] font-semibold hover:bg-elec-yellow/90 active:scale-[0.98] disabled:bg-white/[0.08] disabled:text-white/70 transition-all touch-manipulation"
       >
         {submitting ? 'Submitting…' : `Submit quiz`}
       </button>

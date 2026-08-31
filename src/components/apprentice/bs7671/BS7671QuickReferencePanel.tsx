@@ -11,7 +11,7 @@ const renderContent = (card: BS7671ReferenceCard) => {
   switch (content.type) {
     case 'steps':
       return (
-        <div className="px-4 pb-4 pt-3 mt-1 space-y-2 text-[14px] rounded-b-xl bg-white/[0.02]">
+        <div className="px-4 pb-4 pt-3 mt-1 space-y-2 text-[14px] rounded-b-xl bg-white/[0.06]">
           {content.steps.map((step, idx) => (
             <div key={idx} className="flex items-start gap-2.5">
               <span className="bg-white/5 text-white/85 px-2 py-0.5 rounded text-[11px] font-mono min-w-[24px] text-center flex-shrink-0">
@@ -25,9 +25,9 @@ const renderContent = (card: BS7671ReferenceCard) => {
 
     case 'key-points':
       return (
-        <div className="px-4 pb-4 pt-3 mt-1 space-y-2 text-[14px] rounded-b-xl bg-white/[0.02]">
+        <div className="px-4 pb-4 pt-3 mt-1 space-y-2 text-[14px] rounded-b-xl bg-white/[0.06]">
           {content.source && (
-            <p className="text-[11px] text-white/55 font-mono mb-2">{content.source}</p>
+            <p className="text-[11px] text-white/70 font-mono mb-2">{content.source}</p>
           )}
           {content.points.map((point, idx) => (
             <div key={idx} className="flex items-start gap-2">
@@ -40,7 +40,7 @@ const renderContent = (card: BS7671ReferenceCard) => {
 
     case 'table':
       return (
-        <div className="px-4 pb-4 pt-3 mt-1 space-y-1 text-[13px] rounded-b-xl bg-white/[0.02]">
+        <div className="px-4 pb-4 pt-3 mt-1 space-y-1 text-[13px] rounded-b-xl bg-white/[0.06]">
           {content.rows.map((row, idx) => (
             <div
               key={idx}
@@ -55,10 +55,10 @@ const renderContent = (card: BS7671ReferenceCard) => {
 
     case 'grouped-table':
       return (
-        <div className="px-4 pb-4 pt-3 mt-1 space-y-4 text-[13px] rounded-b-xl bg-white/[0.02]">
+        <div className="px-4 pb-4 pt-3 mt-1 space-y-4 text-[13px] rounded-b-xl bg-white/[0.06]">
           {content.groups.map((group, gIdx) => (
             <div key={gIdx} className="space-y-1.5">
-              <h4 className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <h4 className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
                 {group.heading}
               </h4>
               <div className="space-y-1">
@@ -79,10 +79,10 @@ const renderContent = (card: BS7671ReferenceCard) => {
 
     case 'colour-codes':
       return (
-        <div className="px-4 pb-4 pt-3 mt-1 space-y-4 text-[13px] rounded-b-xl bg-white/[0.02]">
+        <div className="px-4 pb-4 pt-3 mt-1 space-y-4 text-[13px] rounded-b-xl bg-white/[0.06]">
           {content.sections.map((section, sIdx) => (
             <div key={sIdx} className="space-y-2">
-              <h4 className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <h4 className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
                 {section.heading}
               </h4>
               <div className="space-y-1.5">
@@ -93,7 +93,7 @@ const renderContent = (card: BS7671ReferenceCard) => {
                     />
                     <div className="min-w-0">
                       <span className="text-white">{code.colour}</span>
-                      <span className="text-white/55"> — {code.function}</span>
+                      <span className="text-white/70"> — {code.function}</span>
                     </div>
                   </div>
                 ))}
@@ -113,9 +113,9 @@ const BS7671QuickReferencePanel = () => {
     <div className="space-y-2 text-left">
       {bs7671ReferenceCards.map((card) => (
         <Collapsible key={card.id}>
-          <CollapsibleTrigger className="w-full flex items-center justify-between p-4 rounded-xl bg-white/[0.02] border border-white/[0.06] hover:bg-white/[0.04] touch-manipulation h-auto min-h-[44px] transition-colors">
+          <CollapsibleTrigger className="w-full flex items-center justify-between p-4 rounded-xl bg-white/[0.06] border border-white/[0.10] hover:bg-white/[0.04] touch-manipulation h-auto min-h-[44px] transition-colors">
             <span className="text-[14px] font-medium text-white text-left">{card.title}</span>
-            <ChevronDown className="h-4 w-4 text-white/55 transition-transform [[data-state=open]>&]:rotate-180 flex-shrink-0" />
+            <ChevronDown className="h-4 w-4 text-white/70 transition-transform [[data-state=open]>&]:rotate-180 flex-shrink-0" />
           </CollapsibleTrigger>
           <CollapsibleContent>{renderContent(card)}</CollapsibleContent>
         </Collapsible>

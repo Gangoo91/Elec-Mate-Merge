@@ -110,7 +110,7 @@ export const advancedInspection: FlashcardData[] = [
     id: 'ai13',
     question: 'What is the purpose of testing phase sequence on a three-phase system?',
     answer:
-      'Phase sequence (also called phase rotation) testing confirms that the three phases (L1, L2, L3) are connected in the correct order — typically a clockwise rotation. Per BS 7671:2018+A4:2026 Regulation 643.9, incorrect phase sequence can cause three-phase motors to run in reverse, damage equipment, and create safety hazards. A phase rotation meter is connected to the three phases to verify the direction. This test is essential at the origin and at any three-phase distribution equipment or motor connection point.',
+      'Phase sequence (also called phase rotation) testing confirms that the three phases (L1, L2, L3) are connected in the correct order — typically a clockwise rotation. Per BS 7671:2018+A4:2026 the check of phase sequence sits at Reg 643.11 (with verification that sequence is maintained also required by 643.7.3.201). Incorrect phase sequence can cause three-phase motors to run in reverse, damage equipment, and create safety hazards. A phase rotation meter is connected to the three phases to verify the direction. This test is essential at the origin and at any three-phase distribution equipment or motor connection point.',
     category: 'Live Tests',
     difficulty: 'easy',
   },

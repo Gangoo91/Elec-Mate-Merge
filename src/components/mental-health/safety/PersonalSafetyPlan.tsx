@@ -412,7 +412,7 @@ Review and update it regularly, especially when you're feeling well.
                   onClick={() => addItem(activeSection)}
                   disabled={!newItem.trim()}
                   aria-label="Add item"
-                  className="h-11 w-11 rounded-full bg-elec-yellow text-black flex items-center justify-center hover:bg-elec-yellow/90 active:scale-[0.98] disabled:opacity-40 transition-all touch-manipulation"
+                  className="h-11 w-11 rounded-full bg-elec-yellow text-black flex items-center justify-center hover:bg-elec-yellow/90 active:scale-[0.98] disabled:bg-white/[0.08] disabled:text-white/70 transition-all touch-manipulation"
                 >
                   <Plus className="h-5 w-5" />
                 </button>

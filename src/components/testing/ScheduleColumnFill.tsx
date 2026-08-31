@@ -127,7 +127,7 @@ const ScheduleColumnFill: React.FC<ScheduleColumnFillProps> = ({
             variant="ghost"
             size="sm"
             disabled={!custom.trim()}
-            className="mt-1 h-8 w-full justify-start text-xs font-medium text-white hover:bg-elec-yellow hover:text-black disabled:opacity-40"
+            className="mt-1 h-8 w-full justify-start text-xs font-medium text-white hover:bg-elec-yellow hover:text-black disabled:bg-white/[0.08] disabled:text-white/70"
             onClick={() => apply(custom, 'blank')}
           >
             Fill {blankCount} empty {blankCount === 1 ? 'cell' : 'cells'}

@@ -204,18 +204,12 @@ const InstrumentationModule6Section5 = () => {
 
         <TLDR
           points={[
-            'Module 1 Section 4 owns traceability, UKAS, ISO/IEC 17025 and certificates. This section owns intervals.',
             '🔴 An interval balances how fast an instrument drifts against what it costs to be wrong.',
-            'Both halves are needed — a stable instrument on a critical duty may still warrant frequent checking.',
             '🔴 The evidence comes from the as-found history: how far it had moved at each successive calibration.',
             'As-left records reveal nothing about drift, because they only show where it was set each time.',
-            'Consistently small as-found errors justify extending an interval — a documented decision, not a relaxation.',
             '🔴 Growing as-found errors justify shortening one, and accelerating growth demands it.',
             'Every individual result can pass while the sequence is the finding.',
             'An interval unchanged for a decade suggests the data is collected and never used.',
-            '🔴 Repair, replacement, or a change of duty or location resets the history — it describes an instrument in a situation, not a tag number.',
-            'A due date says when the next comparison is scheduled. It says nothing about the instrument’s condition today.',
-            'Intervals should be reviewed as a population, not one instrument at a time.',
           ]}
         />
 

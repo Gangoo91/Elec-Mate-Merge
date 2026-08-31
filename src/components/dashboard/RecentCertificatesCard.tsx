@@ -72,6 +72,8 @@ const getTypeLabel = (type: string, data?: Record<string, unknown>) => {
       return 'DISCONN';
     case 'bess':
       return 'BESS';
+    case 'plug-in-solar':
+      return 'PLUG-IN';
     case 'lightning-protection':
       return 'LPS';
     case 'g98-commissioning':

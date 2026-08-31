@@ -2195,7 +2195,7 @@ function useSectionRefine({
               <button
                 onClick={() => submit(instruction)}
                 disabled={refine.loading || !instruction.trim()}
-                className="h-9 px-4 rounded-full bg-elec-yellow hover:bg-elec-yellow/90 text-black text-[12.5px] font-medium disabled:opacity-40 transition-colors"
+                className="h-9 px-4 rounded-full bg-elec-yellow hover:bg-elec-yellow/90 text-black text-[12.5px] font-medium disabled:bg-white/[0.08] disabled:text-white/70 transition-colors"
               >
                 {refine.loading ? 'Refining…' : 'Refine'}
               </button>
@@ -2228,7 +2228,7 @@ function useSectionRefine({
             <button
               onClick={accept}
               disabled={saving}
-              className="h-8 px-4 rounded-full text-[12px] font-medium bg-elec-yellow hover:bg-elec-yellow/90 text-black transition-colors disabled:opacity-40"
+              className="h-8 px-4 rounded-full text-[12px] font-medium bg-elec-yellow hover:bg-elec-yellow/90 text-black transition-colors disabled:bg-white/[0.08] disabled:text-white/70"
             >
               {saving ? 'Saving…' : 'Accept draft'}
             </button>

@@ -359,14 +359,13 @@ const DomesticCircuitGuide = () => {
   return (
     <div className="space-y-6">
       {/* Circuit Types */}
-      <Card className="border-elec-yellow/30 bg-white/5">
-        <CardHeader>
+      <Card variant="plain">
+        <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <Zap className="h-6 w-6 text-elec-yellow" />
-            <CardTitle className="text-elec-yellow">Circuit Design Guide</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">Circuit Design Guide</CardTitle>
           </div>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 p-0">
           {circuitTypes.map((circuit, index) => (
             <div key={index} className="bg-white/10 p-4 rounded-lg border border-elec-yellow/20">
               <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-3 mb-3">
@@ -378,11 +377,11 @@ const DomesticCircuitGuide = () => {
                   <Badge variant="outline" className="border-elec-yellow text-elec-yellow text-xs">
                     {circuit.cable}
                   </Badge>
-                  <Badge variant="outline" className="border-white/10 text-white/55 text-xs">
+                  <Badge variant="outline" className="border-white/10 text-white/70 text-xs">
                     {circuit.protection}
                   </Badge>
                   {circuit.maxFloorArea !== 'N/A' && circuit.maxFloorArea !== 'Unlimited' && (
-                    <Badge variant="outline" className="border-white/10 text-white/55 text-xs">
+                    <Badge variant="outline" className="border-white/10 text-white/70 text-xs">
                       Max {circuit.maxFloorArea}
                     </Badge>
                   )}
@@ -419,20 +418,19 @@ const DomesticCircuitGuide = () => {
       </Card>
 
       {/* Circuit Diagrams */}
-      <Card className="border-white/[0.06] bg-white/5">
-        <CardHeader>
+      <Card variant="plain">
+        <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <Cable className="h-6 w-6 text-white/55" />
-            <CardTitle className="text-white">{circuitDiagrams.title}</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">{circuitDiagrams.title}</CardTitle>
           </div>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 p-0">
           {circuitDiagrams.diagrams.map((diagram, index) => (
-            <div key={index} className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+            <div key={index} className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
               <h4 className="font-medium text-white mb-2">{diagram.name}</h4>
               <p className="text-sm text-white/85 mb-3">{diagram.description}</p>
 
-              <div className="bg-white/[0.02] p-3 rounded font-mono text-xs text-white/85 mb-3 overflow-x-auto">
+              <div className="bg-white/[0.06] p-3 rounded font-mono text-xs text-white/85 mb-3 overflow-x-auto">
                 {diagram.layout.map((line, idx) => (
                   <div key={idx} className="whitespace-pre">
                     {line}
@@ -457,29 +455,28 @@ const DomesticCircuitGuide = () => {
       </Card>
 
       {/* Cable Sizing Reference */}
-      <Card className="border-white/[0.06] bg-white/5">
-        <CardHeader>
+      <Card variant="plain">
+        <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <Gauge className="h-6 w-6 text-white/55" />
-            <CardTitle className="text-white">{cableSizingTable.title}</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">{cableSizingTable.title}</CardTitle>
           </div>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <Alert className="border-white/[0.06] bg-white/[0.02]">
-            <Info className="h-4 w-4 text-white/55" />
+        <CardContent className="space-y-4 p-0">
+          <Alert className="border-white/[0.10] bg-white/[0.06]">
+            <Info className="h-4 w-4 text-white/70" />
             <AlertDescription className="text-white/85 text-sm">
               {cableSizingTable.description}
             </AlertDescription>
           </Alert>
 
-          <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+          <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
             <h4 className="font-medium text-white mb-3">
               Current-Carrying Capacity (Twin & Earth)
             </h4>
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-white/[0.06]">
+                  <tr className="border-b border-white/[0.10]">
                     <th className="text-left py-2 text-white/85">Cable Size</th>
                     <th className="text-left py-2 text-white/85">Method C</th>
                     <th className="text-left py-2 text-white/85">Method A</th>
@@ -489,7 +486,7 @@ const DomesticCircuitGuide = () => {
                 </thead>
                 <tbody>
                   {cableSizingTable.cables.map((cable, idx) => (
-                    <tr key={idx} className="border-b border-white/[0.06]">
+                    <tr key={idx} className="border-b border-white/[0.10]">
                       <td className="py-2 text-white font-medium">{cable.size}</td>
                       <td className="py-2 text-white">{cable.method_c}</td>
                       <td className="py-2 text-white">{cable.method_a}</td>
@@ -502,7 +499,7 @@ const DomesticCircuitGuide = () => {
             </div>
           </div>
 
-          <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+          <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
             <h4 className="font-medium text-white mb-3">Installation Methods</h4>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
               {cableSizingTable.installationMethods.map((method, idx) => (
@@ -522,26 +519,25 @@ const DomesticCircuitGuide = () => {
       </Card>
 
       {/* Maximum Cable Lengths */}
-      <Card className="border-white/[0.06] bg-white/5">
-        <CardHeader>
+      <Card variant="plain">
+        <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <Ruler className="h-6 w-6 text-white/55" />
-            <CardTitle className="text-white">{maxCableLengths.title}</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">{maxCableLengths.title}</CardTitle>
           </div>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <Alert className="border-white/[0.06] bg-white/[0.02]">
-            <Info className="h-4 w-4 text-white/55" />
+        <CardContent className="space-y-4 p-0">
+          <Alert className="border-white/[0.10] bg-white/[0.06]">
+            <Info className="h-4 w-4 text-white/70" />
             <AlertDescription className="text-white/85 text-sm">
               {maxCableLengths.description}
             </AlertDescription>
           </Alert>
 
-          <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+          <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-white/[0.06]">
+                  <tr className="border-b border-white/[0.10]">
                     <th className="text-left py-2 text-white/85">Circuit Type</th>
                     <th className="text-left py-2 text-white/85">Lighting (3%)</th>
                     <th className="text-left py-2 text-white/85">Power (5%)</th>
@@ -550,7 +546,7 @@ const DomesticCircuitGuide = () => {
                 </thead>
                 <tbody>
                   {maxCableLengths.limits.map((limit, idx) => (
-                    <tr key={idx} className="border-b border-white/[0.06]">
+                    <tr key={idx} className="border-b border-white/[0.10]">
                       <td className="py-2 text-white">{limit.circuit}</td>
                       <td className="py-2 text-white">{limit.lighting}</td>
                       <td className="py-2 text-white">{limit.power}</td>
@@ -562,7 +558,7 @@ const DomesticCircuitGuide = () => {
             </div>
           </div>
 
-          <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+          <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
             <h4 className="font-medium text-white mb-2">Calculation Formula</h4>
             <p className="text-white font-mono text-sm mb-3">{maxCableLengths.formula}</p>
             <ul className="space-y-1">
@@ -578,15 +574,14 @@ const DomesticCircuitGuide = () => {
       </Card>
 
       {/* Voltage Drop Calculations */}
-      <Card className="border-white/[0.06] bg-white/5">
-        <CardHeader>
+      <Card variant="plain">
+        <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <Calculator className="h-6 w-6 text-white/55" />
-            <CardTitle className="text-white">{voltageDrop.title}</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">{voltageDrop.title}</CardTitle>
           </div>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+        <CardContent className="space-y-4 p-0">
+          <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
             <h4 className="font-medium text-white mb-2">Formula</h4>
             <p className="text-white font-mono text-lg mb-3">{voltageDrop.formula}</p>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
@@ -600,7 +595,7 @@ const DomesticCircuitGuide = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+            <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
               <h4 className="font-medium text-white mb-3">Permitted Limits</h4>
               {voltageDrop.limits.map((limit, idx) => (
                 <div key={idx} className="flex justify-between text-sm mb-2">
@@ -612,7 +607,7 @@ const DomesticCircuitGuide = () => {
               ))}
             </div>
 
-            <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+            <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
               <h4 className="font-medium text-white mb-3">Worked Examples</h4>
               {voltageDrop.examples.map((example, idx) => (
                 <div key={idx} className="mb-3 last:mb-0">
@@ -627,26 +622,25 @@ const DomesticCircuitGuide = () => {
       </Card>
 
       {/* Diversity Calculations */}
-      <Card className="border-white/[0.06] bg-white/5">
-        <CardHeader>
+      <Card variant="plain">
+        <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <Calculator className="h-6 w-6 text-white/55" />
-            <CardTitle className="text-white">{diversityCalculations.title}</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">{diversityCalculations.title}</CardTitle>
           </div>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <Alert className="border-white/[0.06] bg-white/[0.02]">
-            <Info className="h-4 w-4 text-white/55" />
+        <CardContent className="space-y-4 p-0">
+          <Alert className="border-white/[0.10] bg-white/[0.06]">
+            <Info className="h-4 w-4 text-white/70" />
             <AlertDescription className="text-white/85 text-sm">
               {diversityCalculations.description}
             </AlertDescription>
           </Alert>
 
-          <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+          <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
             <h4 className="font-medium text-white mb-3">Diversity Factors by Load Type</h4>
             <div className="space-y-3">
               {diversityCalculations.currentDemand.map((item, idx) => (
-                <div key={idx} className="bg-white/[0.02] p-3 rounded border border-white/[0.06]">
+                <div key={idx} className="bg-white/[0.06] p-3 rounded border border-white/[0.10]">
                   <div className="flex items-start justify-between gap-2 mb-1">
                     <h5 className="font-medium text-white/85 text-sm">{item.load}</h5>
                   </div>
@@ -662,14 +656,14 @@ const DomesticCircuitGuide = () => {
             </div>
           </div>
 
-          <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+          <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
             <h4 className="font-medium text-white mb-3">
               {diversityCalculations.exampleCalculation.title}
             </h4>
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-white/[0.06]">
+                  <tr className="border-b border-white/[0.10]">
                     <th className="text-left py-2 text-white/85">Load Item</th>
                     <th className="text-left py-2 text-white/85">Calculation</th>
                     <th className="text-left py-2 text-white/85">Result</th>
@@ -677,7 +671,7 @@ const DomesticCircuitGuide = () => {
                 </thead>
                 <tbody>
                   {diversityCalculations.exampleCalculation.loads.map((load, idx) => (
-                    <tr key={idx} className="border-b border-white/[0.06]">
+                    <tr key={idx} className="border-b border-white/[0.10]">
                       <td className="py-2 text-white">{load.item}</td>
                       <td className="py-2 text-white font-mono text-xs">{load.calculation}</td>
                       <td className="py-2 text-white">{load.result}</td>
@@ -685,7 +679,7 @@ const DomesticCircuitGuide = () => {
                   ))}
                 </tbody>
                 <tfoot>
-                  <tr className="border-t-2 border-white/[0.06]">
+                  <tr className="border-t-2 border-white/[0.10]">
                     <td colSpan={2} className="py-2 text-white font-medium">
                       Total Maximum Demand
                     </td>
@@ -696,7 +690,7 @@ const DomesticCircuitGuide = () => {
                 </tfoot>
               </table>
             </div>
-            <Alert className="border-red-500/50 bg-red-500/10 mt-3">
+            <Alert className="border-white/[0.12] border-l-[3px] border-l-red-500 bg-white/[0.06] mt-3">
               <AlertTriangle className="h-4 w-4 text-red-400" />
               <AlertDescription className="text-red-200 text-sm">
                 {diversityCalculations.exampleCalculation.conclusion}
@@ -707,27 +701,26 @@ const DomesticCircuitGuide = () => {
       </Card>
 
       {/* Earthing & CPC */}
-      <Card className="border-white/[0.06] bg-white/5">
-        <CardHeader>
+      <Card variant="plain">
+        <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <Shield className="h-6 w-6 text-white/55" />
-            <CardTitle className="text-white">{earthingConsiderations.title}</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">{earthingConsiderations.title}</CardTitle>
           </div>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <Alert className="border-white/[0.06] bg-white/[0.02]">
-            <Info className="h-4 w-4 text-white/55" />
+        <CardContent className="space-y-4 p-0">
+          <Alert className="border-white/[0.10] bg-white/[0.06]">
+            <Info className="h-4 w-4 text-white/70" />
             <AlertDescription className="text-white/85 text-sm">
               {earthingConsiderations.description}
             </AlertDescription>
           </Alert>
 
-          <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+          <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
             <h4 className="font-medium text-white mb-3">Minimum CPC Sizes</h4>
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-white/[0.06]">
+                  <tr className="border-b border-white/[0.10]">
                     <th className="text-left py-2 text-white/85">Line Conductor</th>
                     <th className="text-left py-2 text-white/85">Min CPC (Table 54.7)</th>
                     <th className="text-left py-2 text-white/85">In T&E Cable</th>
@@ -735,7 +728,7 @@ const DomesticCircuitGuide = () => {
                 </thead>
                 <tbody>
                   {earthingConsiderations.cpcSizes.map((size, idx) => (
-                    <tr key={idx} className="border-b border-white/[0.06]">
+                    <tr key={idx} className="border-b border-white/[0.10]">
                       <td className="py-2 text-white">{size.lineSize}</td>
                       <td className="py-2 text-white">{size.cpcMin}</td>
                       <td className="py-2 text-white">{size.twinAndEarth}</td>
@@ -746,7 +739,7 @@ const DomesticCircuitGuide = () => {
             </div>
           </div>
 
-          <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+          <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
             <h4 className="font-medium text-white mb-2">Adiabatic Equation</h4>
             <p className="text-white font-mono text-lg mb-2">
               {earthingConsiderations.adiabatic.formula}
@@ -767,18 +760,17 @@ const DomesticCircuitGuide = () => {
       </Card>
 
       {/* Design Considerations Summary */}
-      <Card className="border-white/[0.06] bg-white/5">
-        <CardHeader>
+      <Card variant="plain">
+        <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <Calculator className="h-6 w-6 text-white/55" />
-            <CardTitle className="text-white">Design Considerations Summary</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">Design Considerations Summary</CardTitle>
           </div>
         </CardHeader>
-        <CardContent>
+        <CardContent className="p-0">
           <ul className="space-y-2">
             {designConsiderations.map((consideration, index) => (
               <li key={index} className="text-sm text-white flex items-start gap-2">
-                <Shield className="h-4 w-4 text-white/55 mt-0.5 flex-shrink-0" />
+                <Shield className="h-4 w-4 text-white/70 mt-0.5 flex-shrink-0" />
                 {consideration}
               </li>
             ))}

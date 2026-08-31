@@ -374,7 +374,7 @@ export const SiteVisitWizard = ({ initialVisit, onComplete }: SiteVisitWizardPro
               <Button
                 onClick={sv.nextStep}
                 disabled={!canProceed()}
-                className="h-12 flex-[2] rounded-xl bg-elec-yellow font-semibold text-black transition-transform hover:bg-elec-yellow/90 disabled:opacity-50 touch-manipulation active:scale-[0.98]"
+                className="h-12 flex-[2] rounded-xl bg-elec-yellow font-semibold text-black transition-transform hover:bg-elec-yellow/90 disabled:bg-white/[0.08] disabled:text-white/70 touch-manipulation active:scale-[0.98]"
               >
                 Continue
                 <ArrowRight className="ml-2 h-4 w-4" />

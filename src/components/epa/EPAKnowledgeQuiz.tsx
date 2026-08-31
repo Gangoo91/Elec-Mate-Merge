@@ -15,6 +15,7 @@ import { useEPAKnowledgeQuiz } from '@/hooks/epa/useEPAKnowledgeQuiz';
 import { useQuizSession } from '@/hooks/useQuizSession';
 import { supabase } from '@/integrations/supabase/client';
 import type { QuizQuestion } from '@/types/quiz';
+import { gradeForScore } from '@/lib/epa/grading';
 
 interface EPAKnowledgeQuizProps {
   qualificationCode: string;
@@ -23,6 +24,8 @@ interface EPAKnowledgeQuizProps {
   targetAC?: { acRef: string; acText: string; unitCode?: string } | null;
   onClearTargetAC?: () => void;
   onSessionComplete?: () => void;
+  /** Fires when a session starts or ends, so the page can guard navigation. */
+  onActiveChange?: (active: boolean) => void;
 }
 
 const Eyebrow = ({
@@ -34,7 +37,7 @@ const Eyebrow = ({
 }) => (
   <span
     className={cn(
-      'text-[10px] font-medium uppercase tracking-[0.18em] text-white/55',
+      'text-[10px] font-medium uppercase tracking-[0.18em] text-white/70',
       className
     )}
   >
@@ -48,6 +51,7 @@ export function EPAKnowledgeQuiz({
   targetAC,
   onClearTargetAC,
   onSessionComplete,
+  onActiveChange,
 }: EPAKnowledgeQuizProps) {
   const { generateQuizStream, isGenerating, error: genError } = useEPAKnowledgeQuiz();
   const quiz = useQuizSession();
@@ -176,7 +180,7 @@ export function EPAKnowledgeQuiz({
         quiz_answers: (quiz.currentSession?.answers || []) as unknown as Record<string, unknown>,
         overall_score: result.percentage,
         predicted_grade:
-          result.percentage >= 80 ? 'distinction' : result.percentage >= 60 ? 'pass' : 'fail',
+          gradeForScore(result.percentage),
         component_scores: result.categoryBreakdown as unknown as Record<string, unknown>,
         ai_feedback: `${result.correctAnswers}/${result.totalQuestions} correct (${result.percentage}%)`,
         improvement_suggestions: [] as unknown as Record<string, unknown>,
@@ -198,6 +202,14 @@ export function EPAKnowledgeQuiz({
   };
 
   /* ─── SETUP STATE ──────────────────────────────────────────── */
+  /* A live quiz is one that exists and is not finished. Switching tabs unmounts
+     this component, so the page needs to know before it lets that happen. */
+  const quizActive = !!quiz.currentSession && !quiz.currentSession.isCompleted;
+  useEffect(() => {
+    onActiveChange?.(quizActive);
+    return () => onActiveChange?.(false);
+  }, [quizActive, onActiveChange]);
+
   if (!quiz.currentSession) {
     return (
       <div className="px-4 sm:px-6 py-6 space-y-6">
@@ -214,14 +226,14 @@ export function EPAKnowledgeQuiz({
 
         {/* Target AC badge — when drilling a specific AC */}
         {targetAC && (
-          <div className="rounded-xl border border-elec-yellow/30 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-2">
+          <div className="rounded-xl border border-elec-yellow/30 bg-white/[0.06] p-4 sm:p-5 space-y-2">
             <div className="flex items-baseline justify-between gap-3">
               <Eyebrow className="text-elec-yellow">Targeted drill</Eyebrow>
               {onClearTargetAC && (
                 <button
                   type="button"
                   onClick={onClearTargetAC}
-                  className="text-[11px] text-white/55 hover:text-white/85 transition-colors h-7 px-2"
+                  className="text-[11px] text-white/70 hover:text-white/85 transition-colors h-7 px-2"
                 >
                   Clear
                 </button>
@@ -230,7 +242,7 @@ export function EPAKnowledgeQuiz({
             <div className="flex items-baseline gap-2 flex-wrap">
               <span className="text-[12px] font-mono text-elec-yellow">{targetAC.acRef}</span>
               {targetAC.unitCode && (
-                <span className="text-[10px] uppercase tracking-[0.14em] text-white/55">
+                <span className="text-[10px] uppercase tracking-[0.14em] text-white/70">
                   Unit {targetAC.unitCode}
                 </span>
               )}
@@ -251,10 +263,10 @@ export function EPAKnowledgeQuiz({
                     key={d}
                     onClick={() => setDifficulty(d)}
                     className={cn(
-                      'h-9 px-3.5 rounded-full text-[12px] font-medium border transition-colors touch-manipulation',
+                      'h-11 px-3.5 rounded-full text-[12px] font-medium border transition-colors touch-manipulation',
                       active
                         ? 'bg-elec-yellow text-black border-elec-yellow'
-                        : 'bg-white/[0.02] text-white/85 border-white/[0.08] hover:bg-white/[0.04]'
+                        : 'bg-white/[0.06] text-white/85 border-white/[0.08] hover:bg-white/[0.04]'
                     )}
                   >
                     {d.charAt(0).toUpperCase() + d.slice(1)}
@@ -274,10 +286,10 @@ export function EPAKnowledgeQuiz({
                     key={n}
                     onClick={() => setQuestionCount(n)}
                     className={cn(
-                      'h-9 px-3.5 rounded-full text-[12px] font-medium border transition-colors touch-manipulation',
+                      'h-11 px-3.5 rounded-full text-[12px] font-medium border transition-colors touch-manipulation',
                       active
                         ? 'bg-elec-yellow text-black border-elec-yellow'
-                        : 'bg-white/[0.02] text-white/85 border-white/[0.08] hover:bg-white/[0.04]'
+                        : 'bg-white/[0.06] text-white/85 border-white/[0.08] hover:bg-white/[0.04]'
                     )}
                   >
                     {n} Qs
@@ -289,15 +301,15 @@ export function EPAKnowledgeQuiz({
         </div>
 
         {genError && (
-          <div className="rounded-xl border border-red-500/30 bg-red-500/[0.04] p-4 space-y-1.5">
-            <Eyebrow className="text-red-300">Error</Eyebrow>
+          <div className="rounded-xl border border-red-500/30 bg-white/[0.06] p-4 space-y-1.5">
+            <Eyebrow className="text-red-400">Error</Eyebrow>
             <p className="text-[13px] text-white/85 leading-relaxed">{genError}</p>
           </div>
         )}
 
         {/* Live progress — appears while streaming */}
         {isGenerating && streamTotal > 0 && (
-          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3">
+          <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3">
             <div className="flex items-baseline justify-between gap-3">
               <Eyebrow>Generating · BS 7671 grounded</Eyebrow>
               <span className="text-[12px] font-mono text-white/85 tabular-nums">
@@ -312,13 +324,13 @@ export function EPAKnowledgeQuiz({
             </div>
             {streamRegs.length > 0 && (
               <div className="flex flex-wrap gap-1.5">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
                   Reg sources
                 </span>
                 {streamRegs.map((r) => (
                   <span
                     key={r}
-                    className="text-[10px] font-mono text-elec-yellow/85 px-1.5 py-0 rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04]"
+                    className="text-[10px] font-mono text-elec-yellow/85 px-1.5 py-0 rounded-md border border-elec-yellow/20 bg-white/[0.06]"
                   >
                     {r}
                   </span>
@@ -326,7 +338,7 @@ export function EPAKnowledgeQuiz({
               </div>
             )}
             {streamErrors.length > 0 && (
-              <p className="text-[11px] text-red-300/85">
+              <p className="text-[11px] text-red-400/85">
                 {streamErrors.length} call{streamErrors.length === 1 ? '' : 's'} failed — continuing
                 with the rest.
               </p>
@@ -345,7 +357,7 @@ export function EPAKnowledgeQuiz({
             </button>
             <button
               disabled
-              className="h-12 px-4 rounded-xl border border-white/[0.08] bg-white/[0.02] text-white/55 text-[13px] font-medium inline-flex items-center justify-center gap-2"
+              className="h-12 px-4 rounded-xl border border-white/[0.08] bg-white/[0.06] text-white/70 text-[13px] font-medium inline-flex items-center justify-center gap-2"
             >
               <Loader2 className="h-4 w-4 animate-spin" />
               Generating rest…
@@ -391,7 +403,7 @@ export function EPAKnowledgeQuiz({
             <span className="text-[64px] sm:text-[72px] font-mono font-semibold text-white leading-none tabular-nums">
               {pct}
             </span>
-            <span className="text-[18px] text-white/40 font-mono">%</span>
+            <span className="text-[18px] text-white/70 font-mono">%</span>
           </div>
           <p className="text-[14px] text-white/70 leading-relaxed">
             {correct} of {total} correct.
@@ -424,7 +436,7 @@ export function EPAKnowledgeQuiz({
                 return (
                   <div
                     key={cat}
-                    className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-3.5 space-y-2"
+                    className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-3.5 space-y-2"
                   >
                     <div className="flex items-baseline justify-between gap-3">
                       <span className="text-[13px] font-medium text-white truncate">{cat}</span>
@@ -455,10 +467,10 @@ export function EPAKnowledgeQuiz({
               return (
                 <li
                   key={q.id}
-                  className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 space-y-2"
+                  className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 space-y-2"
                 >
                   <div className="flex items-baseline gap-3">
-                    <span className="text-[11px] font-mono text-white/40 flex-shrink-0">
+                    <span className="text-[11px] font-mono text-white/70 flex-shrink-0">
                       {String(i + 1).padStart(2, '0')}
                     </span>
                     <div className="flex-1 min-w-0 space-y-2">
@@ -468,7 +480,7 @@ export function EPAKnowledgeQuiz({
                             {q.regulation}
                           </span>
                         )}
-                        <span className="text-[10px] uppercase tracking-[0.14em] text-white/45">
+                        <span className="text-[10px] uppercase tracking-[0.14em] text-white/70">
                           {q.category}
                         </span>
                         {isCorrect ? (
@@ -477,7 +489,7 @@ export function EPAKnowledgeQuiz({
                             Correct
                           </span>
                         ) : (
-                          <span className="text-[10px] uppercase tracking-[0.14em] text-red-300 inline-flex items-center gap-1">
+                          <span className="text-[10px] uppercase tracking-[0.14em] text-red-400 inline-flex items-center gap-1">
                             <XCircle className="h-3 w-3" />
                             Wrong
                           </span>
@@ -485,13 +497,13 @@ export function EPAKnowledgeQuiz({
                       </div>
                       <p className="text-[14px] text-white leading-relaxed">{q.question}</p>
                       {!isCorrect && answer && (
-                        <p className="text-[13px] text-red-300/85 leading-relaxed">
-                          <span className="text-white/55">Your answer: </span>
+                        <p className="text-[13px] text-red-400/85 leading-relaxed">
+                          <span className="text-white/70">Your answer: </span>
                           {q.options[answer.selectedAnswer]}
                         </p>
                       )}
                       <p className="text-[13px] text-white/85 leading-relaxed">
-                        <span className="text-white/55">Correct: </span>
+                        <span className="text-white/70">Correct: </span>
                         {q.options[q.correctAnswer as number]}
                       </p>
                       <p className="text-[12px] text-white/70 leading-relaxed pt-1 border-t border-white/[0.04]">
@@ -507,7 +519,7 @@ export function EPAKnowledgeQuiz({
 
         <button
           onClick={handleReset}
-          className="w-full h-12 rounded-xl border border-white/[0.08] bg-white/[0.02] text-white text-[14px] font-semibold hover:bg-white/[0.04] transition-colors touch-manipulation inline-flex items-center justify-center gap-2"
+          className="w-full h-12 rounded-xl border border-white/[0.08] bg-white/[0.06] text-white text-[14px] font-semibold hover:bg-white/[0.04] transition-colors touch-manipulation inline-flex items-center justify-center gap-2"
         >
           <RotateCcw className="h-4 w-4" />
           Take another test
@@ -531,7 +543,7 @@ export function EPAKnowledgeQuiz({
           <Eyebrow>
             Question {progress.current} / {progress.total}
           </Eyebrow>
-          <span className="text-[10px] font-mono text-white/40 uppercase tracking-[0.18em]">
+          <span className="text-[10px] font-mono text-white/70 uppercase tracking-[0.18em]">
             {progress.answered} answered
           </span>
         </div>
@@ -552,12 +564,12 @@ export function EPAKnowledgeQuiz({
             </span>
           )}
           {currentQ.category && (
-            <span className="text-[10px] uppercase tracking-[0.14em] text-white/45">
+            <span className="text-[10px] uppercase tracking-[0.14em] text-white/70">
               {currentQ.category}
             </span>
           )}
           {currentQ.difficulty && (
-            <span className="text-[10px] uppercase tracking-[0.14em] text-white/45">
+            <span className="text-[10px] uppercase tracking-[0.14em] text-white/70">
               {currentQ.difficulty}
             </span>
           )}
@@ -580,12 +592,12 @@ export function EPAKnowledgeQuiz({
                 className={cn(
                   'w-full flex items-baseline gap-3 p-3.5 rounded-xl border text-left touch-manipulation transition-colors min-h-[44px]',
                   showResult && isCorrect
-                    ? 'border-elec-yellow/40 bg-elec-yellow/[0.06]'
+                    ? 'border-elec-yellow bg-white/[0.06]'
                     : showResult && isSelected && !isCorrect
-                      ? 'border-red-500/30 bg-red-500/[0.04]'
+                      ? 'border-red-500 bg-white/[0.06]'
                       : isSelected
-                        ? 'border-elec-yellow/40 bg-elec-yellow/[0.04]'
-                        : 'border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.04]'
+                        ? 'border-elec-yellow/60 bg-white/[0.06]'
+                        : 'border-white/[0.14] bg-white/[0.06] hover:border-white/[0.28]'
                 )}
               >
                 <span
@@ -594,8 +606,8 @@ export function EPAKnowledgeQuiz({
                     showResult && isCorrect
                       ? 'text-elec-yellow'
                       : showResult && isSelected && !isCorrect
-                        ? 'text-red-300'
-                        : 'text-white/55'
+                        ? 'text-red-400'
+                        : 'text-white/70'
                   )}
                 >
                   {String.fromCharCode(65 + i)}
@@ -605,7 +617,7 @@ export function EPAKnowledgeQuiz({
                   <CheckCircle2 className="h-4 w-4 text-elec-yellow shrink-0" />
                 )}
                 {showResult && isSelected && !isCorrect && (
-                  <XCircle className="h-4 w-4 text-red-300 shrink-0" />
+                  <XCircle className="h-4 w-4 text-red-400 shrink-0" />
                 )}
               </button>
             );
@@ -613,7 +625,7 @@ export function EPAKnowledgeQuiz({
         </div>
 
         {currentAnswer && (
-          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 space-y-1.5">
+          <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 space-y-1.5">
             <Eyebrow>Explanation</Eyebrow>
             <p className="text-[13px] text-white/85 leading-relaxed">{currentQ.explanation}</p>
           </div>
@@ -621,11 +633,11 @@ export function EPAKnowledgeQuiz({
       </div>
 
       {/* Navigation */}
-      <div className="px-4 sm:px-6 py-3 border-t border-white/[0.06] flex items-center justify-between gap-3">
+      <div className="px-4 sm:px-6 py-3 border-t border-white/[0.10] flex items-center justify-between gap-3">
         <button
           onClick={() => quiz.previousQuestion()}
           disabled={quiz.currentQuestionIndex === 0}
-          className="h-11 px-4 rounded-lg border border-white/[0.08] bg-white/[0.02] text-white text-[13px] font-medium hover:bg-white/[0.04] transition-colors touch-manipulation disabled:opacity-30"
+          className="h-11 px-4 rounded-lg border border-white/[0.08] bg-white/[0.06] text-white text-[13px] font-medium hover:bg-white/[0.04] transition-colors touch-manipulation disabled:opacity-30"
         >
           ← Previous
         </button>
@@ -633,7 +645,7 @@ export function EPAKnowledgeQuiz({
         {quiz.currentQuestionIndex < progress.total - 1 ? (
           <button
             onClick={() => quiz.nextQuestion()}
-            className="h-11 px-4 rounded-lg border border-white/[0.08] bg-white/[0.02] text-white text-[13px] font-medium hover:bg-white/[0.04] transition-colors touch-manipulation"
+            className="h-11 px-4 rounded-lg border border-white/[0.08] bg-white/[0.06] text-white text-[13px] font-medium hover:bg-white/[0.04] transition-colors touch-manipulation"
           >
             Next →
           </button>

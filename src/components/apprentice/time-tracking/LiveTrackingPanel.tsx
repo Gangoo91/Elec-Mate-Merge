@@ -230,7 +230,7 @@ const LiveTrackingPanel = () => {
                   <Button
                     onClick={handleStartSession}
                     disabled={!activityType.trim()}
-                    className="flex-1 h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation disabled:opacity-40"
+                    className="flex-1 h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation disabled:bg-white/[0.08] disabled:text-white/70"
                   >
                     Start session
                   </Button>

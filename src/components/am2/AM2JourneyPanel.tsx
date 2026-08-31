@@ -264,7 +264,7 @@ export function AM2JourneyPanel() {
                 type="button"
                 onClick={saveTarget}
                 disabled={!draftTarget}
-                className="h-11 px-5 rounded-lg bg-elec-yellow text-black font-bold text-[13px] hover:bg-elec-yellow/90 disabled:opacity-40 transition-colors touch-manipulation"
+                className="h-11 px-5 rounded-lg bg-elec-yellow text-black font-bold text-[13px] hover:bg-elec-yellow/90 disabled:bg-white/[0.08] disabled:text-white/70 transition-colors touch-manipulation"
               >
                 Save
               </button>

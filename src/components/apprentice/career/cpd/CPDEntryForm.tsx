@@ -270,7 +270,7 @@ const CPDEntryForm = ({ onSuccess }: CPDEntryFormProps = {}) => {
               !formData.category ||
               !formData.type
             }
-            className="w-full h-11 bg-elec-yellow text-black hover:bg-elec-yellow/90 disabled:opacity-50 touch-manipulation font-medium"
+            className="w-full h-11 bg-elec-yellow text-black hover:bg-elec-yellow/90 disabled:bg-white/[0.08] disabled:text-white/70 touch-manipulation font-medium"
           >
             <Save className="mr-2 h-4 w-4" />
             {isSubmitting ? 'Saving...' : 'Save CPD entry'}

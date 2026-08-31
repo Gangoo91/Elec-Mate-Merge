@@ -1735,7 +1735,7 @@ export default function PriceBook() {
             <button
               onClick={handleAddItem}
               disabled={!newName.trim() || (newMode === 'cost' ? !newCostPrice : !newSellPrice)}
-              className="h-12 w-full rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-colors hover:bg-elec-yellow/90 disabled:opacity-40 touch-manipulation active:scale-[0.99]"
+              className="h-12 w-full rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-colors hover:bg-elec-yellow/90 disabled:bg-white/[0.08] disabled:text-white/70 touch-manipulation active:scale-[0.99]"
             >
               Add item
             </button>
@@ -1880,7 +1880,7 @@ export default function PriceBook() {
               <button
                 onClick={handleCreateBundle}
                 disabled={!bundleName.trim() || bundleItems.length === 0}
-                className="h-12 w-full rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-colors hover:bg-elec-yellow/90 disabled:opacity-40 touch-manipulation active:scale-[0.99]"
+                className="h-12 w-full rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-colors hover:bg-elec-yellow/90 disabled:bg-white/[0.08] disabled:text-white/70 touch-manipulation active:scale-[0.99]"
               >
                 Save bundle
               </button>
@@ -2075,7 +2075,7 @@ export default function PriceBook() {
             <button
               onClick={handleImport}
               disabled={importSplit.valid === 0 || importing}
-              className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-colors hover:bg-elec-yellow/90 disabled:opacity-40 touch-manipulation active:scale-[0.99]"
+              className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-colors hover:bg-elec-yellow/90 disabled:bg-white/[0.08] disabled:text-white/70 touch-manipulation active:scale-[0.99]"
             >
               {importing ? (
                 <>

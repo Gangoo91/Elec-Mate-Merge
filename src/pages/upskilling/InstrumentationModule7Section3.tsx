@@ -191,16 +191,11 @@ const InstrumentationModule7Section3 = () => {
           points={[
             'The budget is one inequality: supply voltage ≥ transmitter minimum + (current × total loop resistance).',
             'Maximum total loop resistance = (supply − transmitter minimum) ÷ 0.020, because full scale is the worst case.',
-            'A 24 V supply and a transmitter needing 12 V allows 600 Ω in total, for everything.',
             '🔴 Cable resistance is almost always a minor term. 500 m of 1.5 mm² drops about 0.23 V at 20 mA.',
             '🔴 One added receiver with its own 250 Ω resistor drops 5 V — more than a kilometre of cable.',
             'So “how long can the cable be?” is usually the wrong question. Devices fill a loop budget, not distance.',
-            'Two 250 Ω resistors in series make 500 Ω, dropping 10 V at full scale.',
             '🔴 Voltage dropped is proportional to current, so a loop can work at 4 mA and saturate at 20 mA.',
-            'That failure is visible rather than quiet — the signal stops rising instead of reading low.',
             'HART needs total loop resistance between 250 Ω and 1100 Ω — a window, not a maximum.',
-            '🔴 A bench setup with no resistor breaks HART while leaving the 4–20 mA signal working.',
-            'The transmitter’s minimum terminal voltage is a data-sheet figure and varies by model.',
           ]}
         />
 
@@ -528,11 +523,11 @@ const InstrumentationModule7Section3 = () => {
           question="A HART communicator will not connect to a transmitter on a working loop that reads correctly. What is worth checking before suspecting the transmitter?"
           options={[
             'The supply voltage',
-            'Whether total loop resistance is inside the 250–1100 Ω window',
             'The cable length',
+            'Whether total loop resistance is inside the 250–1100 Ω window',
             'The transmitter calibration',
           ]}
-          correctIndex={1}
+          correctIndex={2}
           explanation="The 4–20 mA reading being correct tells you the current regulation and the wiring are sound, which rules out most of what people check first. HART needs a resistance window the analogue signal does not, so a loop with too little — or occasionally too much — resistance carries the measurement perfectly and refuses to communicate."
         />
 

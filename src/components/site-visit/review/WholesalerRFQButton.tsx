@@ -258,7 +258,7 @@ export const WholesalerRFQButton = ({ visit, materials }: WholesalerRFQButtonPro
             <Button
               onClick={handleEmailSelected}
               disabled={selectedEmails.length === 0}
-              className="h-12 w-full touch-manipulation rounded-xl bg-elec-yellow text-[14px] font-semibold text-black hover:bg-elec-yellow/90 active:scale-[0.98] disabled:opacity-40"
+              className="h-12 w-full touch-manipulation rounded-xl bg-elec-yellow text-[14px] font-semibold text-black hover:bg-elec-yellow/90 active:scale-[0.98] disabled:bg-white/[0.08] disabled:text-white/70"
             >
               <Send className="mr-2 h-4 w-4" />
               {selectedEmails.length > 0

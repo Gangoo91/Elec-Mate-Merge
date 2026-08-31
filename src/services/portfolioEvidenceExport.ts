@@ -178,15 +178,70 @@ function deriveAcState(cov: CovRow | undefined, sig: SigRow | undefined, evidenc
 }
 
 /** Full coverage map across the learner's qualification framework. */
-async function buildCoverage(userId: string, coveredKeys: Set<string>): Promise<PortfolioCoverage | null> {
-  try {
-    const { data: sel } = await supabase
+
+/**
+ * 🔴 Which qualification is this pack scored against?
+ *
+ * The export used to read `user_qualification_selections` — the learner's OWN
+ * choice. Everywhere else in the app, `useStudentQualification` treats the
+ * COLLEGE's enrolment as authoritative and falls back to the selection only
+ * when there is no college. The two disagree for real learners: one is being
+ * marked against 5357 in the app while their own selection still says 2357,
+ * so the pack an assessor received was scored against a different course from
+ * the one the app showed them — and reported coverage the college would not
+ * recognise.
+ *
+ * Same precedence as the app, including the requirement-code mapping for
+ * qualifications that carry no direct rows.
+ */
+async function resolveQualification(
+  userId: string
+): Promise<{ code: string; title: string | null } | null> {
+  const [{ data: sel }, { data: cs }] = await Promise.all([
+    supabase
       .from('user_qualification_selections')
       .select('qualification:qualifications(code, title)')
       .eq('user_id', userId)
       .eq('is_active', true)
+      .maybeSingle(),
+    supabase.from('college_students').select('course_id').eq('user_id', userId).maybeSingle(),
+  ]);
+
+  const selQual = (sel?.qualification ?? null) as { code: string; title: string } | null;
+
+  let code: string | null = null;
+  let title: string | null = selQual?.title ?? null;
+
+  const courseId = (cs as { course_id?: string | null } | null)?.course_id ?? null;
+  if (courseId) {
+    const { data: course } = await supabase
+      .from('college_courses')
+      .select('code, name')
+      .eq('id', courseId)
       .maybeSingle();
-    const qual = (sel?.qualification ?? null) as { code: string; title: string } | null;
+    const c = course as { code?: string | null; name?: string | null } | null;
+    if (c?.code) {
+      code = c.code;
+      title = c.name ?? title;
+    }
+  }
+  if (!code) code = selQual?.code ?? null;
+  if (!code) return null;
+
+  // Some codes carry no requirement rows and map to a shared canonical code.
+  const { data: mapping } = await supabase
+    .from('qualification_requirement_mappings')
+    .select('requirement_code')
+    .eq('qualification_code', code)
+    .eq('is_primary', true)
+    .maybeSingle();
+
+  return { code: (mapping?.requirement_code as string | null) ?? code, title };
+}
+
+async function buildCoverage(userId: string, rawCriteria: string[]): Promise<PortfolioCoverage | null> {
+  try {
+    const qual = await resolveQualification(userId);
     if (!qual?.code) return null;
 
     const { data: reqs } = await supabase
@@ -197,6 +252,34 @@ async function buildCoverage(userId: string, coveredKeys: Set<string>): Promise<
       .order('ac_code', { ascending: true });
     const reqRows = (reqs ?? []) as Array<{ unit_code: string; unit_title: string; ac_code: string }>;
     if (!reqRows.length) return null;
+
+    /*
+     * 🔴 Covered criteria used to be keyed off a regex that required a
+     * THREE-DIGIT unit code: /(\d{3})\D*?AC\s*([0-9.]+)/.
+     *
+     * Six of 5357's fifteen units are "101/001", "103/003", "105/505" and
+     * friends, and every unit in 601/7345/2 looks like "NETK3-01" — so the
+     * regex either grabbed the wrong fragment ("001" out of "101/001") or
+     * matched nothing. The key never equalled the real unit_code, so the
+     * pack an assessor reads reported those criteria as UNCOVERED however
+     * much evidence the learner had attached. Four active learners sit on
+     * affected qualifications.
+     *
+     * Match against the unit codes the qualification actually has, longest
+     * first so "101/001" wins over a bare "101".
+     */
+    const unitCodes = [...new Set(reqRows.map((r) => r.unit_code))].sort(
+      (a, b) => b.length - a.length
+    );
+    const coveredKeys = new Set<string>();
+    for (const s of rawCriteria) {
+      const head = s.indexOf(':') >= 0 ? s.slice(0, s.indexOf(':')) : s;
+      const acMatch = head.match(/\bAC\s*([0-9]+(?:\.[0-9]+)*)/i);
+      const ac = acMatch?.[1] ?? parseAc(s).ac;
+      if (!ac) continue;
+      const unit = unitCodes.find((u) => head.includes(u));
+      if (unit) coveredKeys.add(`${unit}:${ac}`);
+    }
 
     const { data: cs } = await supabase.from('college_students').select('id').eq('user_id', userId).maybeSingle();
     const studentId = (cs as { id: string } | null)?.id ?? null;
@@ -316,13 +399,27 @@ export async function buildPortfolioPackData(userId: string): Promise<PortfolioP
       if (p.unit) units.add(p.unit);
     }
   }
+  /*
+   * ⚠️ This lookup had NO qualification filter — it matched on unit_code
+   * alone. Unit "301" exists in 2365-03, 2366-03 and 8202; "201" in 2365-02
+   * and 2365-03. So the criterion TEXT printed next to a learner's evidence,
+   * in the pack an assessor reads, could be lifted from a qualification they
+   * are not on — whichever row PostgREST returned first.
+   *
+   * Scope it to the learner's actual qualification. If we can't resolve one,
+   * fall back to the old behaviour rather than dropping the text entirely:
+   * an unscoped guess is still better than a blank criterion.
+   */
+  const packQual = await resolveQualification(userId);
   const acMap = new Map<string, string>();
   if (units.size) {
     try {
-      const { data: reqs } = await supabase
+      let q = supabase
         .from('qualification_requirements')
         .select('unit_code, ac_code, ac_text')
         .in('unit_code', [...units]);
+      if (packQual?.code) q = q.eq('qualification_code', packQual.code);
+      const { data: reqs } = await q;
       for (const r of (reqs ?? []) as Array<{ unit_code: string; ac_code: string; ac_text: string }>) {
         const key = `${r.unit_code}|${r.ac_code}`;
         if (!acMap.has(key)) acMap.set(key, r.ac_text);
@@ -421,30 +518,40 @@ export async function buildPortfolioPackData(userId: string): Promise<PortfolioP
     startDate = (cs?.start_date as string | null) ?? null;
     endDate = (cs?.expected_end_date as string | null) ?? null;
     if (cs?.employer_id) {
+      /*
+       * ⚠️ This queried `employers`, which is not a table in this database —
+       * so the employer line on the evidence pack an assessor reads was
+       * always blank, and silently: PostgREST returns an error object rather
+       * than throwing, so `emp` was simply null and the catch never fired.
+       * `college_students.employer_id` points at `college_employers`, whose
+       * name column is `company_name`.
+       */
       const { data: emp } = await supabase
-        .from('employers')
-        .select('name')
+        .from('college_employers')
+        .select('company_name')
         .eq('id', cs.employer_id)
         .maybeSingle();
-      employer = (emp?.name as string | null) ?? null;
+      employer = (emp?.company_name as string | null) ?? null;
     }
   } catch {
     /* fall back to defaults */
   }
 
   const critSet = new Set<string>();
-  const coveredKeys = new Set<string>();
+  /*
+   * Raw criterion strings, matched against the qualification's real unit
+   * codes inside buildCoverage. See the note there — a regex cannot know
+   * that "101/001" and "NETK3-01" are unit codes.
+   */
+  const rawCriteria: string[] = [];
   for (const r of raw) {
-    for (const s of r.assessment_criteria_met ?? []) {
-      const p = parseAc(s);
-      if (p.unit && p.ac) coveredKeys.add(`${p.unit}:${p.ac}`);
-    }
+    for (const s of r.assessment_criteria_met ?? []) rawCriteria.push(s);
   }
   for (const it of items) for (const c of it.criteria) if (c.code) critSet.add(c.code);
   const hoursEvidenced =
     Math.round((items.reduce((a, it) => a + it.timeSpentMins, 0) / 60) * 10) / 10;
 
-  const coverage = await buildCoverage(userId, coveredKeys);
+  const coverage = await buildCoverage(userId, rawCriteria);
 
   return {
     learner: { name, standard, level, uln, provider, employer, startDate, endDate, statement },

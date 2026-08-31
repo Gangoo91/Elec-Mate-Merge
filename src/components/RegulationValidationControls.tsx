@@ -216,7 +216,7 @@ const RegulationValidationControls: React.FC<RegulationValidationControlsProps> 
               type="button"
               onClick={analyseAllCircuits}
               disabled={testResults.length === 0}
-              className="h-11 rounded-xl bg-elec-yellow px-5 text-[13px] font-semibold text-black transition-colors hover:bg-elec-yellow/90 disabled:opacity-40 touch-manipulation"
+              className="h-11 rounded-xl bg-elec-yellow px-5 text-[13px] font-semibold text-black transition-colors hover:bg-elec-yellow/90 disabled:bg-white/[0.08] disabled:text-white/70 touch-manipulation"
             >
               Validate all circuits
             </button>

@@ -53,13 +53,13 @@ const APPRENTICE_GROUPS: FeatureGroup[] = [
     items: [
       'Level 2, Level 3, AM2, HNC, MOET & Functional Skills',
       '35+ mock exam papers, 20,000+ practice questions',
-      '75 curated training videos',
+      '400+ curated training videos from approved UK creators',
     ],
   },
   {
     heading: 'Study centre access',
     items: [
-      'Full study centre — 40+ in-depth courses',
+      'Full study centre — 45 in-depth courses',
       'Safety: CSCS, IPAF, PASMA, MEWP, working at height',
       'Soft skills: leadership, communication, resilience',
     ],
@@ -67,8 +67,8 @@ const APPRENTICE_GROUPS: FeatureGroup[] = [
   {
     heading: 'Study tools',
     items: [
-      '60+ electrical calculators',
-      '28 flashcard sets with spaced repetition',
+      '75 electrical calculators',
+      '30 flashcard sets with spaced repetition',
       'BS 7671 study guide with interactive diagrams',
       '28-guide toolbox: safety cases, craft skills, site jargon',
     ],
@@ -104,7 +104,7 @@ const ELECTRICIAN_GROUPS: FeatureGroup[] = [
     ],
   },
   {
-    heading: 'Certificates (15 types)',
+    heading: 'Certificates (24 types)',
     items: [
       'EICR, EIC, Minor Works, PAT, Isolation, Testing-Only',
       'Solar PV, EV Charging, BESS, Emergency Lighting',
@@ -129,7 +129,7 @@ const ELECTRICIAN_GROUPS: FeatureGroup[] = [
       'Quote builder, Smart AI quote, variation orders',
       'Invoice builder with Stripe links and partial payments',
       'Site visits, photo docs with before/after',
-      'Time tracker → auto-invoice, snagging, inventory',
+      'Time tracker, snagging, inventory',
       'Expenses with OCR receipts and HMRC mileage',
     ],
   },
@@ -152,14 +152,14 @@ const ELECTRICIAN_GROUPS: FeatureGroup[] = [
     heading: 'Health & safety',
     items: [
       'RAMS generator and AI RAMS',
-      '1,000+ hazard database, COSHH, permits to work',
+      '100+ hazard database, COSHH, permits to work',
       'Fire watch, near-miss reporting, toolbox talks',
     ],
   },
   {
     heading: 'Learning & upskilling',
     items: [
-      '13 in-depth upskilling courses — BS 7671, I&T, PAT, Fire Alarm, Solar, EV',
+      '14 in-depth upskilling courses — BS 7671, I&T, PAT, Fire Alarm, Solar, EV',
       '11 quick-reference testing guides',
       'Training log to track what you have completed',
     ],
@@ -302,7 +302,7 @@ const EMPLOYER_GROUPS: FeatureGroup[] = [
     items: [
       'RAMS generator + AI RAMS (3-minute pipeline)',
       'Incident reporting, near-miss log, witness testimonies',
-      '1,000+ hazard database, COSHH builder, permits to work',
+      '100+ hazard database, COSHH builder, permits to work',
       'Training records with CPD log and certification expiry alerts',
       'Toolbox briefings with QR sign-off and photo distribution',
     ],

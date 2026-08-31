@@ -201,17 +201,10 @@ const InstrumentationModule5Section5 = () => {
           points={[
             '🔴 Robust control has four attributes — stable under load, fast to a setpoint change, minimal oscillation, minimal offset — and they conflict.',
             '🔴 Different processes value them completely differently, so “good control” is a process question, not a control question.',
-            'A boiler level loop may accept a permanent 5 per cent error and not tolerate a slow response to load.',
-            'An evaporator stage may need steady flow through the valve more than steady level — so aggressive tuning actively harms the product.',
             'Operations personnel are the people who can tell you which attribute matters. Ask before adjusting.',
             '🔴 Then settle the safety question: what limits must the process variable stay inside while you test, and how fast may it move?',
-            'Loops interact through the process, so a tuning test disturbs more than the loop being tuned.',
-            'Tuning tests can trip alarms and shutdowns. Establish what will operate before provoking it.',
             'Ultimate gain method: disable I and D, raise gain until oscillation is self-sustaining. That gain is Ku, its period is Pu.',
-            'Kp = 0.5 Ku gives quarter-wave damping — each peak about a quarter of the one before. A compromise, not an ideal.',
             '🔴 If the oscillation is clipped by a valve or transmitter at its limit, the test measures the equipment and not the process, and the result is worthless.',
-            'Most tuning in practice is heuristic: characterise the process first, then choose which actions suit it.',
-            'Integral uniquely ignores noise. Derivative amplifies it. Proportional passes it through scaled by gain.',
           ]}
         />
 
@@ -417,12 +410,12 @@ const InstrumentationModule5Section5 = () => {
           id="ins-5-5-saturation"
           question="During a tuning test the PV trend shows even, rounded oscillation but the output trend has flat tops at 100 per cent. Is the test valid?"
           options={[
-            'No — the valve is saturating, so the loop is not oscillating freely and any Ku taken from it is wrong',
             'Yes, provided the period is measured between PV peaks',
             'Only if the transmitter is also saturating',
+            'No — the valve is saturating, so the loop is not oscillating freely and any Ku taken from it is wrong',
             'Yes — the PV oscillation is what matters',
           ]}
-          correctIndex={0}
+          correctIndex={2}
           explanation="The output reaching its limit means the controller is no longer able to deliver the correction its gain is calling for. The loop is being constrained by the valve rather than finding its own natural limit, so the gain at which this occurred is not the ultimate gain of the process. Reduce the disturbance and repeat."
         />
 
@@ -431,11 +424,11 @@ const InstrumentationModule5Section5 = () => {
           question="You are asked to tune a level loop on a surge vessel that feeds a downstream process. Which objective is most likely correct?"
           options={[
             'Hold level tightly on setpoint at all times',
-            'Keep the outflow steady, allowing the level to drift within a band — that is what a surge vessel is for',
             'Minimise the offset between level and setpoint',
             'Respond as fast as possible to setpoint changes',
+            'Keep the outflow steady, allowing the level to drift within a band — that is what a surge vessel is for',
           ]}
-          correctIndex={1}
+          correctIndex={3}
           explanation="A surge vessel exists to absorb variation so downstream equipment sees a steady flow. Tightly controlling its level would pass every disturbance straight through as flow — achieving the opposite of the vessel's purpose. The right objective comes from what the equipment is for, which is why it is a question for operations."
         />
 

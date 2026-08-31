@@ -9,7 +9,8 @@ export default function InstrumentationModule9() {
   const navigate = useNavigate();
   useSEO({
     title: 'Instrumentation Mock Exam | Module 9 | Elec-Mate',
-    description: 'Timed mock examination covering every module of the instrumentation upskilling course.',
+    description:
+      'Timed mock examination covering every module of the instrumentation upskilling course.',
   });
 
   return (

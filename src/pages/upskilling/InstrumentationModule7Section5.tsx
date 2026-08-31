@@ -291,21 +291,12 @@ const InstrumentationModule7Section5 = () => {
 
         <TLDR
           points={[
-            'Module 1 Section 5 owns hazardous area classification and zones. This section owns intrinsic safety and barriers.',
             'Four strategies exist, each removing one leg of the fire triangle: contain, shield or purge, encapsulate, or limit the energy.',
-            'Any one of them, correctly applied, is sufficient — which is why two are rarely combined.',
             '🔴 Intrinsic safety is the fourth. The energy limitation IS the protection, so the components need no special enclosure.',
-            'That is why IS dominates instrument work — a 4–20 mA loop is already close to being intrinsically safe.',
-            'To qualify, the voltage and current must stay limited even under fault conditions, not just in normal operation.',
             '🔴 The safety depends on the BARRIER — not on the field device or the receiving device. Remove it and the loop is not IS.',
-            'A zener barrier does that with two components: series resistance limits fault current, a zener shunts excess voltage.',
             '🔴 The zener shunts to EARTH — so the earth connection is the mechanism, not a formality.',
             '🔴 A barrier with a missing or high-resistance earth is not degraded. It is not a barrier.',
-            'Real barriers use redundant zeners so that one failing open does not remove the protection.',
-            'Isolating barriers pass the signal through transformers instead, so fault current has no path — and no earth is needed.',
             '🔴 A barrier limits energy sent OUT from the safe area. It does nothing about a sensor that generates its own.',
-            'Thermocouples, pH electrodes and photovoltaic detectors all generate their own energy — so a barrier alone is not the whole answer.',
-            'An explosion-proof enclosure works by cooling escaping gases through narrow gaps — which needs every bolt.',
             '🔴 Leaving bolts out because refitting is slow negates the protection entirely.',
           ]}
         />
@@ -538,12 +529,12 @@ const InstrumentationModule7Section5 = () => {
           id="ins-7-5-mechanism"
           question="A short circuit develops in field wiring inside a hazardous area, on a loop protected by a zener barrier. What limits the energy released?"
           options={[
-            'The barrier’s series resistance caps the current the safe-area side can push into the fault',
             'The transmitter’s internal current regulation',
             'The loop power supply shuts down',
+            'The barrier’s series resistance caps the current the safe-area side can push into the fault',
             'The zener diode conducts and absorbs it',
           ]}
-          correctIndex={0}
+          correctIndex={2}
           explanation="A short in the field is exactly the overcurrent case the series resistance exists for — it caps the fault current regardless of what the field wiring does. The transmitter cannot help, because it is on the far side of the short and no longer regulating anything."
         />
 
@@ -740,11 +731,11 @@ const InstrumentationModule7Section5 = () => {
           question="A thermocouple is installed in a hazardous area on a loop fitted with a certified barrier. What does the barrier do about the voltage the thermocouple itself generates?"
           options={[
             'It limits it in the same way as any other fault voltage',
-            'Nothing — a barrier limits energy sent from the safe area, not energy the sensor generates',
             'It shunts it to earth',
             'It converts it to a 4–20 mA signal first',
+            'Nothing — a barrier limits energy sent from the safe area, not energy the sensor generates',
           ]}
-          correctIndex={1}
+          correctIndex={3}
           explanation="The barrier stands between the safe-area supply and the field device, so it governs what can be pushed outwards. A thermocouple is a source in its own right, on the field side of the barrier — so its own generating ability has to fall below the limits set by the applicable standard, which is a separate question from whether a barrier is fitted."
         />
 
@@ -820,12 +811,12 @@ const InstrumentationModule7Section5 = () => {
           id="ins-7-5-earth"
           question="During maintenance the earth conductor to a zener barrier is disconnected and not refitted. What is the immediate effect on the loop?"
           options={[
+            'The loop works normally and the protection is absent — nothing indicates it',
             'The barrier fuse blows',
             'The loop stops working, making the fault obvious',
-            'The loop works normally and the protection is absent — nothing indicates it',
             'The measurement drifts',
           ]}
-          correctIndex={2}
+          correctIndex={0}
           explanation="The earth carries protective fault current, not signal current, so removing it changes nothing about normal operation. That is what makes it dangerous: the loop reads correctly, nothing alarms, and the protective mechanism will not be discovered missing until the fault it exists for occurs."
         />
 

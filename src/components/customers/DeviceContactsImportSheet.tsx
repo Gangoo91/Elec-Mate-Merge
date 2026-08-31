@@ -403,7 +403,7 @@ const DeviceContactsImportSheet: React.FC<DeviceContactsImportSheetProps> = ({
               type="button"
               onClick={handleImport}
               disabled={selected.size === 0 || isImporting || loadState !== 'ready'}
-              className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-elec-yellow text-sm font-semibold text-black transition-transform touch-manipulation active:scale-[0.98] disabled:opacity-50"
+              className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-elec-yellow text-sm font-semibold text-black transition-transform touch-manipulation active:scale-[0.98] disabled:bg-white/[0.08] disabled:text-white/70"
             >
               {isImporting ? (
                 <>

@@ -168,7 +168,7 @@ export function DocumentNumberSheet({
               type="button"
               onClick={save}
               disabled={saving}
-              className="h-12 flex-1 touch-manipulation rounded-xl bg-elec-yellow text-[14px] font-semibold text-black transition-[filter,transform] active:scale-[0.98] active:brightness-110 disabled:opacity-50"
+              className="h-12 flex-1 touch-manipulation rounded-xl bg-elec-yellow text-[14px] font-semibold text-black transition-[filter,transform] active:scale-[0.98] active:brightness-110 disabled:bg-white/[0.08] disabled:text-white/70"
             >
               {saving ? 'Saving…' : 'Save number'}
             </button>

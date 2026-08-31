@@ -164,7 +164,7 @@ export default function DesignSuite() {
           <Button
             onClick={designForMe}
             disabled={description.trim().length < 10 || thinking}
-            className="mt-3 w-full sm:w-auto h-12 px-6 rounded-xl bg-elec-yellow text-black font-bold text-[15px] hover:bg-elec-yellow/90 active:scale-[0.99] touch-manipulation gap-2 disabled:opacity-40"
+            className="mt-3 w-full sm:w-auto h-12 px-6 rounded-xl bg-elec-yellow text-black font-bold text-[15px] hover:bg-elec-yellow/90 active:scale-[0.99] touch-manipulation gap-2 disabled:bg-white/[0.08] disabled:text-white/70"
           >
             {thinking ? (
               <>

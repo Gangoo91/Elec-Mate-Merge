@@ -13,10 +13,17 @@ import { storageGetJSONSync, storageSetJSONSync, storageRemoveSync } from '@/uti
 const CACHE_KEY = 'elec-mate-diary-coach';
 const CACHE_TTL_MS = 24 * 60 * 60 * 1000; // 24 hours
 
-/** Sorted entry IDs joined — detects added, removed, or replaced entries */
+/**
+ * Fingerprint of the entries the advice was generated from.
+ *
+ * This used to hash IDs alone, which detects added and removed entries but NOT
+ * edits — change what you learned on Tuesday and the coach would keep serving
+ * advice written against the old text for up to 24 hours. `updated_at` moves on
+ * every edit, so pairing it with the id catches both.
+ */
 function computeEntryHash(entries: SiteDiaryEntry[]): string {
   return entries
-    .map((e) => e.id)
+    .map((e) => `${e.id}:${e.updated_at ?? ''}`)
     .sort()
     .join(',');
 }
@@ -53,16 +60,23 @@ export function useDiaryCoach(entries: SiteDiaryEntry[], qualificationCode?: str
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Load from cache on mount
+  /*
+   * Restore cached advice, but only if it was written about THESE entries.
+   *
+   * This ran once on mount and checked the age alone — `fetchInsight` checked
+   * the hash, this did not. So a page load would happily show advice generated
+   * before you added or edited entries, with nothing to say it was stale. It
+   * now waits for the entries to arrive and compares the fingerprint.
+   */
   useEffect(() => {
+    if (entries.length === 0) return;
     const parsed = storageGetJSONSync<CachedInsight | null>(CACHE_KEY, null);
-    if (parsed) {
-      const age = Date.now() - new Date(parsed.generatedAt).getTime();
-      if (age < CACHE_TTL_MS) {
-        setInsight(parsed.insight);
-      }
-    }
-  }, []);
+    if (!parsed) return;
+    const age = Date.now() - new Date(parsed.generatedAt).getTime();
+    if (age >= CACHE_TTL_MS) return;
+    if (parsed.entryHash !== computeEntryHash(entries)) return;
+    setInsight(parsed.insight);
+  }, [entries]);
 
   const fetchInsight = useCallback(
     async (force = false) => {

@@ -78,6 +78,13 @@ export interface GuideTemplateProps {
   /** Extra schemas beyond Article + FAQ + Breadcrumb */
   extraSchemas?: Array<Record<string, unknown>>;
   /**
+   * Override the mid-article lead magnet. Defaults to the BS 7671 A4:2026
+   * cheatsheet, which suits most pages — pass a configured
+   * <SEOInlineLeadMagnet> where the page has a topic-specific offer, so the
+   * reader is not offered an unrelated download at peak intent.
+   */
+  leadMagnet?: React.ReactNode;
+  /**
    * Optional embedded tool / calculator rendered directly under the hero.
    * Guides that explain a calculation should ship the actual calc — users
    * search for "voltage drop calculator", they should land on a working tool,
@@ -182,6 +189,7 @@ export default function GuideTemplate({
   embeddedTool,
   noindex = false,
   localArea,
+  leadMagnet,
 }: GuideTemplateProps) {
   const pageUrl = breadcrumbs.length > 0 ? breadcrumbs[breadcrumbs.length - 1].href : '/';
 
@@ -348,7 +356,7 @@ export default function GuideTemplate({
           {/* Lead magnet email capture — after the first section, only on
               longer guides (5+ sections) where readers are committed enough
               to give an email. */}
-          {index === 0 && sections.length >= 5 && <SEOInlineLeadMagnet />}
+          {index === 0 && sections.length >= 5 && (leadMagnet ?? <SEOInlineLeadMagnet />)}
 
           {/* Single mid-article CTA, intent-matched to the page type. One
               well-placed pitch converts better than the same generic pitch

@@ -246,7 +246,7 @@ export const CustomerImportDialog = ({
               <button
                 onClick={handleImport}
                 disabled={!selectedFile || isImporting}
-                className="h-11 w-full rounded-xl bg-elec-yellow text-[14px] font-semibold text-black transition-all hover:bg-elec-yellow/90 active:scale-[0.98] disabled:opacity-50 touch-manipulation sm:w-auto sm:px-6"
+                className="h-11 w-full rounded-xl bg-elec-yellow text-[14px] font-semibold text-black transition-all hover:bg-elec-yellow/90 active:scale-[0.98] disabled:bg-white/[0.08] disabled:text-white/70 touch-manipulation sm:w-auto sm:px-6"
               >
                 {isImporting ? 'Importing…' : 'Import customers'}
               </button>

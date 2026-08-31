@@ -271,20 +271,13 @@ const InstrumentationModule8Section5 = () => {
 
         <TLDR
           points={[
-            'Sections 1 to 4 taught suspicion of readings, and that is the right default.',
             '🔴 This is the opposite skill: recognising when the instrument is telling the truth.',
             '🔴 The failure mode is blaming the instrument for being right — dismissing a real process signal as a fault.',
             'That costs more than wasted time: the process condition carries on, with attention pointed away from it.',
             '🔴 “No fault found” is not a diagnosis. It collapses four different situations into one label.',
-            'One: the fault is intermittent and was absent while you were there (Section 3).',
-            'Two: you cleared it inadvertently by disturbing something (Section 3).',
-            'Three: the reading was correct and the process genuinely changed.',
             '🔴 Four: the EXPECTATION was wrong, not the reading — and nothing at all is faulty.',
-            'A correct reading can still answer a different question from the one being asked (Module 1 Section 2).',
             'What justifies trusting a surprising reading is corroboration, not calibration.',
             '🔴 Knowing when to stop is a real decision — but stopping on a protective function is not the same as stopping on an indication.',
-            'Record what you established, not what you failed to find.',
-            '🔴 Dismissing reports as operator error removes the only mechanism that catches plausible faults.',
           ]}
         />
 
@@ -507,12 +500,12 @@ const InstrumentationModule8Section5 = () => {
           id="ins-8-5-question"
           question="A vessel temperature loop tests perfect end to end, but operators insist the reading does not reflect the vessel. What is the next question?"
           options={[
-            'Whether the sensor is positioned where it genuinely represents the vessel temperature',
             'Whether the controller is in the correct mode',
+            'Whether the sensor is positioned where it genuinely represents the vessel temperature',
             'When the transmitter was last calibrated',
             'Which instrument should be replaced first',
           ]}
-          correctIndex={0}
+          correctIndex={1}
           explanation="Every electrical test has passed, so further electrical testing will keep passing. A sensor reports its own immediate surroundings, so a correct reading from a poorly located sensor is exactly this situation — and the check is a physical one rather than an electrical one."
         />
 
@@ -783,11 +776,11 @@ const InstrumentationModule8Section5 = () => {
           question="An investigation into an unexplained fault on a high-level trip has stalled. Is stopping reasonable?"
           options={[
             'Yes — diminishing returns applies to all faults equally',
-            'Not on the same reasoning: an unproven protective function may already be a hazard rather than an open question',
             'Yes, provided it is recorded',
+            'Not on the same reasoning: an unproven protective function may already be a hazard rather than an open question',
             'No — no fault may ever be left unresolved',
           ]}
-          correctIndex={1}
+          correctIndex={2}
           explanation="Diminishing returns is an argument about whether more effort yields more information, and it is often sound. It says nothing about consequence — and on a protective function the consequence of being wrong is something that does not act when it is needed, which is why this decision escalates rather than closes."
         />
 

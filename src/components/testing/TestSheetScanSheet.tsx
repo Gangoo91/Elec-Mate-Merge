@@ -287,7 +287,7 @@ export default function TestSheetScanSheet({
                     type="button"
                     disabled={busy || !testable.length}
                     onClick={() => take('camera')}
-                    className="flex h-12 items-center justify-center gap-2 rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-colors hover:bg-elec-yellow/90 touch-manipulation active:scale-[0.98] disabled:opacity-50"
+                    className="flex h-12 items-center justify-center gap-2 rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-colors hover:bg-elec-yellow/90 touch-manipulation active:scale-[0.98] disabled:bg-white/[0.08] disabled:text-white/70"
                   >
                     {busy ? (
                       <>
@@ -456,7 +456,7 @@ export default function TestSheetScanSheet({
                   type="button"
                   onClick={commit}
                   disabled={!accepted.length}
-                  className="h-12 flex-[2] rounded-xl bg-elec-yellow text-[15px] font-semibold text-black touch-manipulation active:scale-[0.98] disabled:opacity-40"
+                  className="h-12 flex-[2] rounded-xl bg-elec-yellow text-[15px] font-semibold text-black touch-manipulation active:scale-[0.98] disabled:bg-white/[0.08] disabled:text-white/70"
                 >
                   Add {cellsWritten} value{cellsWritten === 1 ? '' : 's'}
                 </button>

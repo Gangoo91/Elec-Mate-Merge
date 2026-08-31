@@ -134,7 +134,7 @@ const EducationalResourcesTab = () => {
   return (
     <div className="space-y-5 animate-fade-in">
       <div className="space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
           Educational resources
         </span>
         <h2 className="text-[20px] sm:text-[24px] font-semibold tracking-tight text-white leading-tight">
@@ -148,7 +148,7 @@ const EducationalResourcesTab = () => {
 
       <Tabs defaultValue="regulations" className="w-full">
         <div className="overflow-x-auto scrollbar-hide -mx-4 px-4 sm:mx-0 sm:px-0">
-          <TabsList className="w-full min-w-max bg-white/[0.02] border border-white/[0.06] p-1 rounded-xl">
+          <TabsList className="w-full min-w-max bg-white/[0.06] border border-white/[0.10] p-1 rounded-xl">
             <TabsTrigger
               value="regulations"
               className="flex-1 data-[state=active]:bg-elec-yellow data-[state=active]:text-black rounded-lg transition-all"
@@ -175,10 +175,10 @@ const EducationalResourcesTab = () => {
             {regulations.map((regulation) => (
               <div
                 key={regulation.id}
-                className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4"
+                className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-4"
               >
                 <div className="space-y-1">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
                     {regulation.category}
                   </span>
                   <h3 className="text-[16px] sm:text-[18px] font-medium text-white">
@@ -187,7 +187,7 @@ const EducationalResourcesTab = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
                     Key areas
                   </span>
                   <ul className="space-y-1.5">
@@ -204,7 +204,7 @@ const EducationalResourcesTab = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
                     What this means
                   </span>
                   <p className="text-[14px] text-white/85 leading-relaxed">
@@ -213,7 +213,7 @@ const EducationalResourcesTab = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
                     Where to find more
                   </span>
                   <p className="text-[14px] text-white/85 leading-relaxed">
@@ -230,7 +230,7 @@ const EducationalResourcesTab = () => {
             {practicalGuidance.map((guide, index) => (
               <div
                 key={index}
-                className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3"
+                className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3"
               >
                 <div className="space-y-1">
                   <h3 className="text-[16px] sm:text-[18px] font-medium text-white">
@@ -256,8 +256,8 @@ const EducationalResourcesTab = () => {
 
         <TabsContent value="resources" className="space-y-4 mt-5">
           <div className="grid gap-3 md:grid-cols-2">
-            <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
                 Official publications
               </span>
               <div className="space-y-3">
@@ -270,7 +270,7 @@ const EducationalResourcesTab = () => {
               </div>
             </div>
 
-            <div className="rounded-xl border border-red-500/30 bg-red-500/[0.04] p-4 sm:p-5 space-y-3">
+            <div className="rounded-xl border border-white/[0.12] border-l-[3px] border-l-red-500 bg-white/[0.06] p-4 sm:p-5 space-y-3">
               <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">
                 Emergency procedures
               </span>
@@ -285,8 +285,8 @@ const EducationalResourcesTab = () => {
             </div>
           </div>
 
-          <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-2">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
               Pro tip
             </span>
             <p className="text-[14px] text-white/85 leading-relaxed">

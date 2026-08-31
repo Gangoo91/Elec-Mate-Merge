@@ -12,13 +12,15 @@ import { Plus, Loader2, Target, Trash2, Minus, Check } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useOJTGoals, type OJTGoal } from '@/hooks/time-tracking/useOJTGoals';
 import AddGoalDialog from '@/components/apprentice/ojt/AddGoalDialog';
-import { Eyebrow, SectionHeader } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
+import { Eyebrow } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
+import { OjtSectionHeader as SectionHeader } from './ojtSection';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 
 const STATUS_TONE: Record<OJTGoal['status'], string> = {
   completed: 'border-elec-yellow/30 bg-elec-yellow/[0.06] text-elec-yellow',
-  in_progress: 'border-white/[0.10] bg-white/[0.04] text-white/85',
-  pending: 'border-white/[0.10] bg-white/[0.04] text-white/70',
-  cancelled: 'border-white/[0.08] bg-white/[0.02] text-white/45',
+  in_progress: 'border-white/[0.10] bg-white/[0.04] text-white',
+  pending: 'border-white/[0.10] bg-white/[0.04] text-white',
+  cancelled: 'border-white/[0.08] bg-white/[0.02] text-white',
 };
 
 const STATUS_LABEL: Record<OJTGoal['status'], string> = {
@@ -97,19 +99,19 @@ export function OjtGoalsSection() {
 
       {isLoading ? (
         <div className="flex items-center gap-3 py-6">
-          <Loader2 className="h-4 w-4 animate-spin text-white/55" />
+          <Loader2 className="h-4 w-4 animate-spin text-white" />
           <Eyebrow>Loading…</Eyebrow>
         </div>
       ) : activeGoals.length === 0 ? (
-        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-6 text-center space-y-2">
-          <Target className="h-7 w-7 text-white/25 mx-auto" />
-          <p className="text-[13px] text-white/85 leading-relaxed">
+        <div className={cn('rounded-2xl border border-elec-yellow/35 p-6 text-center space-y-2', CARD_SURFACE)}>
+          <Target className="h-7 w-7 text-white mx-auto" />
+          <p className="text-[13px] text-white leading-relaxed">
             No goals yet. Set a target — e.g. "20 portfolio entries this term" — and track it here
             alongside your hours.
           </p>
         </div>
       ) : (
-        <ul className="space-y-2">
+        <ul className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
           {activeGoals.map((goal) => {
             const target = goal.target_value || 0;
             const current = goal.current_value ?? 0;
@@ -118,7 +120,7 @@ export function OjtGoalsSection() {
             return (
               <li
                 key={goal.id}
-                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3"
+                className={cn('rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-3', CARD_SURFACE)}
               >
                 <div className="flex items-start justify-between gap-3">
                   <div className="min-w-0 space-y-1">
@@ -139,7 +141,7 @@ export function OjtGoalsSection() {
                         {STATUS_LABEL[goal.status]}
                       </span>
                       {goal.category && (
-                        <span className="text-[10px] uppercase tracking-[0.14em] text-white/45">
+                        <span className="text-[10px] uppercase tracking-[0.14em] text-white">
                           {goal.category}
                         </span>
                       )}
@@ -148,7 +150,7 @@ export function OjtGoalsSection() {
                       {goal.title}
                     </p>
                     {goal.description && (
-                      <p className="text-[12px] text-white/55 leading-snug break-words">
+                      <p className="text-[12px] text-white leading-snug break-words">
                         {goal.description}
                       </p>
                     )}
@@ -157,7 +159,7 @@ export function OjtGoalsSection() {
                     type="button"
                     onClick={() => void deleteGoal(goal.id)}
                     aria-label="Delete goal"
-                    className="flex-shrink-0 h-8 w-8 inline-flex items-center justify-center rounded-md text-white/30 hover:text-red-300 hover:bg-red-500/[0.06] transition-colors touch-manipulation"
+                    className="flex-shrink-0 h-8 w-8 inline-flex items-center justify-center rounded-md text-white hover:text-red-300 hover:bg-red-500/[0.06] transition-colors touch-manipulation"
                   >
                     <Trash2 className="h-3.5 w-3.5" />
                   </button>
@@ -166,13 +168,13 @@ export function OjtGoalsSection() {
                 {/* Progress */}
                 <div className="space-y-1.5">
                   <div className="flex items-baseline justify-between gap-2">
-                    <span className="text-[11.5px] text-white/70 tabular-nums">
+                    <span className="text-[11.5px] text-white tabular-nums">
                       {current} / {target} {goal.unit}
                     </span>
                     <span
                       className={cn(
                         'text-[11.5px] tabular-nums',
-                        done ? 'text-elec-yellow' : 'text-white/70'
+                        done ? 'text-elec-yellow' : 'text-white'
                       )}
                     >
                       {pct}%
@@ -197,7 +199,7 @@ export function OjtGoalsSection() {
                       onClick={() => void updateProgress(goal.id, Math.max(0, current - 1))}
                       disabled={current <= 0}
                       aria-label="Decrease progress"
-                      className="h-8 w-8 inline-flex items-center justify-center rounded-md border border-white/[0.08] bg-white/[0.02] text-white/85 hover:bg-white/[0.04] disabled:opacity-30 transition-colors touch-manipulation"
+                      className="h-8 w-8 inline-flex items-center justify-center rounded-md border border-white/[0.08] bg-white/[0.02] text-white hover:bg-white/[0.04] disabled:opacity-30 transition-colors touch-manipulation"
                     >
                       <Minus className="h-3.5 w-3.5" />
                     </button>
@@ -205,7 +207,7 @@ export function OjtGoalsSection() {
                       type="button"
                       onClick={() => void updateProgress(goal.id, current + 1)}
                       aria-label="Increase progress"
-                      className="h-8 w-8 inline-flex items-center justify-center rounded-md border border-white/[0.08] bg-white/[0.02] text-white/85 hover:bg-white/[0.04] transition-colors touch-manipulation"
+                      className="h-8 w-8 inline-flex items-center justify-center rounded-md border border-white/[0.08] bg-white/[0.02] text-white hover:bg-white/[0.04] transition-colors touch-manipulation"
                     >
                       <Plus className="h-3.5 w-3.5" />
                     </button>
@@ -221,7 +223,7 @@ export function OjtGoalsSection() {
                     )}
                   </div>
                   {goal.deadline && (
-                    <span className="text-[11px] text-white/45 whitespace-nowrap">
+                    <span className="text-[11px] text-white whitespace-nowrap">
                       Due {fmtDate(goal.deadline)}
                     </span>
                   )}

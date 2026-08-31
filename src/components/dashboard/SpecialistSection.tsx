@@ -113,6 +113,14 @@ const specialistCerts: CertDef[] = [
     category: 'renewables',
   },
   {
+    id: 'plug-in-solar',
+    title: 'Plug-in Solar',
+    description: 'Suitability assessment & commissioning',
+    standard: 'SI 2026/848',
+    accentColor: 'from-amber-500 via-yellow-400 to-amber-300',
+    category: 'renewables',
+  },
+  {
     id: 'bess',
     title: 'Battery Storage',
     description: 'BESS commissioning',

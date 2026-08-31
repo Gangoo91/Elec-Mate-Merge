@@ -310,7 +310,7 @@ const JargonStudyPage = () => {
           <button
             onClick={startFlashcards}
             disabled={filteredTerms.length === 0}
-            className="w-full inline-flex items-center justify-center gap-2 h-12 rounded-xl bg-elec-yellow text-black text-[14px] font-semibold hover:bg-elec-yellow/90 active:scale-[0.98] transition-all touch-manipulation disabled:opacity-50"
+            className="w-full inline-flex items-center justify-center gap-2 h-12 rounded-xl bg-elec-yellow text-black text-[14px] font-semibold hover:bg-elec-yellow/90 active:scale-[0.98] transition-all touch-manipulation disabled:bg-white/[0.08] disabled:text-white/70"
           >
             <BookOpen className="h-4 w-4" />
             Start flashcards ({filteredTerms.length} terms)

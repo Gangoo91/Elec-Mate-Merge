@@ -219,7 +219,7 @@ const IntelligentPortfolioTab = () => {
             <Button
               onClick={handleSendMessage}
               disabled={!currentMessage.trim() || isLoading}
-              className="px-6 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation disabled:opacity-40"
+              className="px-6 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation disabled:bg-white/[0.08] disabled:text-white/70"
             >
               <Send className="h-4 w-4" />
             </Button>

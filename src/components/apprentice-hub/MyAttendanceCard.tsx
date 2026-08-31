@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { supabase } from '@/integrations/supabase/client';
 import { realtimeChannelName } from '@/lib/realtimeChannel';
 
@@ -34,14 +35,22 @@ interface AttendanceRow {
 }
 
 const STATUS_PILL: Record<string, string> = {
-  Present: 'text-emerald-300/90 bg-emerald-500/10 border-emerald-500/20',
-  Late: 'text-amber-300/90 bg-amber-500/10 border-amber-500/20',
-  Authorised: 'text-sky-300/90 bg-sky-500/10 border-sky-500/20',
-  Absent: 'text-rose-300/90 bg-rose-500/10 border-rose-500/20',
+  /*
+   * Was a four-hue scheme — emerald / amber / sky / rose — none of which the
+   * app uses anywhere else. Attendance genuinely IS red-amber-green data, so
+   * this keeps the encoding but says it in the product's own palette:
+   * turning up is the expected state and stays quiet, being late is worth
+   * noticing so it takes volt, and an unexplained absence is the one thing
+   * here that is actually a problem, so it keeps red.
+   */
+  Present: 'text-white bg-white/[0.06] border-white/[0.12]',
+  Late: 'text-elec-yellow bg-elec-yellow/[0.06] border-elec-yellow/25',
+  Authorised: 'text-white bg-white/[0.04] border-white/[0.10]',
+  Absent: 'text-red-300 bg-red-500/[0.08] border-red-500/25',
 };
 
 function pillClass(status: string): string {
-  return STATUS_PILL[status] ?? 'text-white/80 bg-white/[0.05] border-white/[0.1]';
+  return STATUS_PILL[status] ?? 'text-white bg-white/[0.05] border-white/[0.1]';
 }
 
 export function MyAttendanceCard() {
@@ -134,12 +143,12 @@ export function MyAttendanceCard() {
   // Linked but no register marked yet — quiet panel so the learner knows it's coming.
   if (!calc) {
     return (
-      <section className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_10%)] overflow-hidden">
+      <section className={cn('rounded-2xl border border-white/[0.06] overflow-hidden', CARD_SURFACE)}>
         <div className="px-4 sm:px-5 py-4 sm:py-5">
-          <div className="text-[11px] sm:text-[11.5px] font-medium uppercase tracking-[0.18em] text-white/85">
+          <div className="text-[11px] sm:text-[11.5px] font-medium uppercase tracking-[0.18em] text-white">
             Attendance
           </div>
-          <p className="mt-3 text-[12.5px] text-white/90 leading-snug">
+          <p className="mt-3 text-[12.5px] text-white leading-snug">
             No attendance has been recorded yet. Once your tutor marks the register, your record
             shows here.
           </p>
@@ -149,13 +158,13 @@ export function MyAttendanceCard() {
   }
 
   return (
-    <section className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_10%)] overflow-hidden">
+    <section className={cn('rounded-2xl border border-white/[0.06] overflow-hidden', CARD_SURFACE)}>
       <div className="px-4 sm:px-5 py-4 sm:py-5">
         <div className="flex items-baseline justify-between gap-3 flex-wrap">
-          <div className="text-[11px] sm:text-[11.5px] font-medium uppercase tracking-[0.18em] text-white/85">
+          <div className="text-[11px] sm:text-[11.5px] font-medium uppercase tracking-[0.18em] text-white">
             Attendance · {VERDICT_LABEL[calc.verdict]}
           </div>
-          <span className="text-[10.5px] tabular-nums text-white/85">
+          <span className="text-[10.5px] tabular-nums text-white">
             {calc.total} session{calc.total === 1 ? '' : 's'} recorded
           </span>
         </div>
@@ -165,18 +174,18 @@ export function MyAttendanceCard() {
             className={cn(
               'text-[34px] sm:text-[40px] font-semibold tabular-nums leading-none',
               calc.verdict === 'green'
-                ? 'text-emerald-300'
+                ? 'text-white'
                 : calc.verdict === 'amber'
-                  ? 'text-amber-300'
-                  : 'text-rose-300'
+                  ? 'text-elec-yellow'
+                  : 'text-red-300'
             )}
           >
             {calc.rate}%
           </div>
-          <div className="pb-1 text-[11px] text-white/70 leading-snug">
+          <div className="pb-1 text-[11px] text-white leading-snug">
             attended
             <br />
-            <span className="text-white/50">{calc.attended} of {calc.total}</span>
+            <span className="text-white">{calc.attended} of {calc.total}</span>
           </div>
         </div>
 
@@ -208,10 +217,10 @@ export function MyAttendanceCard() {
           className={cn(
             'mt-3 text-[12px] leading-snug',
             calc.verdict === 'green'
-              ? 'text-emerald-200/85'
+              ? 'text-white'
               : calc.verdict === 'amber'
-                ? 'text-amber-200/85'
-                : 'text-rose-200/85'
+                ? 'text-elec-yellow'
+                : 'text-red-300'
           )}
         >
           {calc.verdict === 'green' &&
@@ -223,7 +232,7 @@ export function MyAttendanceCard() {
           {calc.absent > 0 && calc.verdict !== 'red' && (
             <>
               {' '}
-              <span className="text-white/70">
+              <span className="text-white">
                 {calc.absent} unauthorised absence{calc.absent === 1 ? '' : 's'} on record.
               </span>
             </>
@@ -232,10 +241,10 @@ export function MyAttendanceCard() {
 
         {/* Recent register */}
         <div className="mt-4 border-t border-white/[0.06] pt-3 space-y-1.5">
-          <div className="text-[10px] uppercase tracking-[0.16em] text-white/45">Recent</div>
+          <div className="text-[10px] uppercase tracking-[0.16em] text-white">Recent</div>
           {rows!.slice(0, 6).map((r, i) => (
             <div key={`${r.date}-${i}`} className="flex items-center justify-between gap-3 py-0.5">
-              <span className="text-[12px] text-white/80 tabular-nums">
+              <span className="text-[12px] text-white tabular-nums">
                 {new Date(r.date).toLocaleDateString('en-GB', {
                   weekday: 'short',
                   day: 'numeric',
@@ -260,7 +269,7 @@ export function MyAttendanceCard() {
 
 function Skeleton() {
   return (
-    <section className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_10%)] overflow-hidden">
+    <section className={cn('rounded-2xl border border-white/[0.06] overflow-hidden', CARD_SURFACE)}>
       <div className="px-4 sm:px-5 py-4 sm:py-5 space-y-4">
         <div className="h-3 w-32 rounded-full bg-white/[0.05]" />
         <div className="h-9 w-24 rounded-md bg-white/[0.05]" />

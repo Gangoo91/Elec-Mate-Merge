@@ -109,7 +109,7 @@ const ElectricalTheorySection: React.FC<ElectricalTheorySectionProps> = ({
         <Button
           onClick={markAsComplete}
           disabled={isCompleted}
-          className="h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation active:scale-[0.98] disabled:opacity-40"
+          className="h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation active:scale-[0.98] disabled:bg-white/[0.08] disabled:text-white/70"
         >
           {isCompleted ? 'Section completed' : 'Mark section as complete'}
           {isCompleted && <CheckCircle className="ml-2 h-4 w-4" />}

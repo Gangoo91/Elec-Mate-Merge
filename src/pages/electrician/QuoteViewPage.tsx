@@ -1088,7 +1088,7 @@ const QuoteViewPage = () => {
             <button
               onClick={handleConvertToInvoice}
               disabled={isConverting}
-              className="flex-1 h-12 rounded-xl bg-elec-yellow text-black text-[14px] font-semibold touch-manipulation active:scale-[0.97] transition-all disabled:opacity-50"
+              className="flex-1 h-12 rounded-xl bg-elec-yellow text-black text-[14px] font-semibold touch-manipulation active:scale-[0.97] transition-all disabled:bg-white/[0.08] disabled:text-white/70"
             >
               Convert to Invoice
               <span className="sm:hidden font-bold tabular-nums"> · {formatCurrency(quote.total)}</span>

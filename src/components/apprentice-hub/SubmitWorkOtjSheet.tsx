@@ -6,6 +6,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useSpeechToText } from '@/hooks/useSpeechToText';
 import { parseOtjSpeech } from '@/lib/parseOtjSpeech';
 import { cn } from '@/lib/utils';
+import { inputCn, textareaCn } from '@/components/forms/fieldStyles';
 
 /* ==========================================================================
    SubmitWorkOtjSheet — apprentice-side. Submit a work-based off-the-job
@@ -336,18 +337,18 @@ export function SubmitWorkOtjSheet({ open, onOpenChange, onSubmitted, prefill }:
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent
         side="bottom"
-        className="h-[92vh] sm:max-w-2xl sm:mx-auto p-0 rounded-t-2xl overflow-hidden border-white/10 bg-[hsl(0_0%_8%)]"
+        className="h-[85vh] sm:mx-auto sm:max-w-2xl overflow-hidden rounded-t-2xl border-white/10 bg-[hsl(0_0%_8%)] p-0"
       >
         <SheetTitle className="sr-only">Submit work-based off-the-job training</SheetTitle>
         <div className="flex h-full flex-col">
           <header className="px-4 sm:px-5 pt-5 pb-4 border-b border-white/[0.06]">
-            <div className="text-[11px] font-medium uppercase tracking-[0.18em] text-emerald-300/85">
+            <div className="text-[11px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
               {noCollege ? 'Log activity' : 'Submit to tutor'}
             </div>
             <h2 className="mt-1 text-[18px] sm:text-[20px] font-semibold text-white leading-tight">
               Off-the-job work activity
             </h2>
-            <p className="mt-1 text-[12.5px] text-white/85 leading-snug">
+            <p className="mt-1 text-[12.5px] leading-snug text-white">
               {noCollege ? (
                 <>
                   No college linked yet — log it here, then get your supervisor to confirm the
@@ -401,11 +402,11 @@ export function SubmitWorkOtjSheet({ open, onOpenChange, onSubmitted, prefill }:
                   )}
                 </button>
                 {(speech.isListening || speech.interimTranscript || speech.transcript) && (
-                  <p className="text-[12.5px] text-white/70 leading-snug min-h-[18px]">
+                  <p className="text-[12.5px] text-white leading-snug min-h-[18px]">
                     {speech.transcript}
-                    <span className="text-white/40">{speech.interimTranscript}</span>
+                    <span className="text-white">{speech.interimTranscript}</span>
                     {speech.isListening && !speech.transcript && !speech.interimTranscript && (
-                      <span className="text-white/40">
+                      <span className="text-white">
                         Listening… e.g. &ldquo;Two hours second fix wiring at the Hartlepool job
                         yesterday&rdquo;
                       </span>
@@ -425,32 +426,44 @@ export function SubmitWorkOtjSheet({ open, onOpenChange, onSubmitted, prefill }:
               />
             </Field>
 
+            {/*
+              Chips, not ten stacked cards.
+              Two problems here. The selected state was INVISIBLE — selected
+              carried `border-white/[0.06]` against unselected's
+              `border-white/[0.07]` on an identical background, so the chosen
+              option was fainter than the rest and you could not tell what you
+              had picked. And ten two-line cards filled the whole sheet, which
+              is what pushed "Headline" off the bottom of the scroll area.
+              The hint now shows once, for the current choice, instead of ten
+              times for choices you have not made.
+            */}
             <Field label="Activity type">
-              <div className="grid grid-cols-2 gap-1.5">
-                {ACTIVITY_TYPES.map((a) => (
-                  <button
-                    key={a.value}
-                    type="button"
-                    onClick={() => setForm((f) => ({ ...f, activity_type: a.value }))}
-                    className={cn(
-                      'h-auto py-2 px-3 rounded-lg border text-left transition-colors touch-manipulation',
-                      form.activity_type === a.value
-                        ? 'border-white/[0.06] bg-white/[0.02] text-white'
-                        : 'border-white/[0.07] bg-white/[0.02] text-white/95 hover:text-white hover:border-white/[0.18]'
-                    )}
-                  >
-                    <div className="text-[12.5px] font-medium leading-tight">{a.label}</div>
-                    <div
+              <div className="flex flex-wrap gap-2">
+                {ACTIVITY_TYPES.map((a) => {
+                  const on = form.activity_type === a.value;
+                  return (
+                    <button
+                      key={a.value}
+                      type="button"
+                      aria-pressed={on}
+                      onClick={() => setForm((f) => ({ ...f, activity_type: a.value }))}
                       className={cn(
-                        'mt-0.5 text-[10.5px] leading-snug',
-                        form.activity_type === a.value ? 'text-emerald-100/75' : 'text-white/95'
+                        'inline-flex h-11 items-center rounded-full border px-3.5 text-[12.5px] transition-colors touch-manipulation active:scale-[0.98]',
+                        on
+                          ? 'border-elec-yellow bg-elec-yellow font-semibold text-black'
+                          : 'border-white/[0.12] bg-white/[0.06] font-medium text-white hover:border-white/[0.25]'
                       )}
                     >
-                      {a.hint}
-                    </div>
-                  </button>
-                ))}
+                      {a.label}
+                    </button>
+                  );
+                })}
               </div>
+              {ACTIVITY_TYPES.find((a) => a.value === form.activity_type)?.hint && (
+                <p className="mt-2 text-[12px] leading-snug text-white">
+                  {ACTIVITY_TYPES.find((a) => a.value === form.activity_type)?.hint}
+                </p>
+              )}
             </Field>
 
             <Field label="Headline">
@@ -482,7 +495,7 @@ export function SubmitWorkOtjSheet({ open, onOpenChange, onSubmitted, prefill }:
                       key={p}
                       type="button"
                       onClick={() => setForm((f) => ({ ...f, duration_minutes: String(p) }))}
-                      className="h-8 px-2.5 rounded-full border border-white/[0.1] bg-white/[0.03] text-[11px] font-medium text-white/95 hover:text-white hover:border-white/[0.22] transition-colors touch-manipulation tabular-nums"
+                      className="h-8 px-2.5 rounded-full border border-white/[0.1] bg-white/[0.03] text-[11px] font-medium text-white hover:text-white hover:border-white/[0.22] transition-colors touch-manipulation tabular-nums"
                     >
                       {p < 60 ? `${p}m` : `${p / 60}h`}
                     </button>
@@ -502,7 +515,7 @@ export function SubmitWorkOtjSheet({ open, onOpenChange, onSubmitted, prefill }:
                 placeholder="The job, the people you worked with, the kit, what was different from anything you'd done before, where you got stuck and how you solved it."
                 className={textareaClass}
               />
-              <div className="mt-1 text-right text-[10.5px] text-white/95 tabular-nums">
+              <div className="mt-1 text-right text-[10.5px] text-white tabular-nums">
                 {form.description.trim().length} chars
               </div>
             </Field>
@@ -534,7 +547,7 @@ export function SubmitWorkOtjSheet({ open, onOpenChange, onSubmitted, prefill }:
                   type="button"
                   onClick={() => fileRef.current?.click()}
                   disabled={photos.length >= 4}
-                  className="w-full h-11 rounded-lg border border-white/[0.10] bg-white/[0.02] text-[12.5px] font-medium text-white/95 hover:text-white hover:border-white/[0.22] transition-colors disabled:opacity-50 touch-manipulation"
+                  className="w-full h-11 rounded-lg border border-white/[0.10] bg-white/[0.02] text-[12.5px] font-medium text-white hover:text-white hover:border-white/[0.22] transition-colors disabled:opacity-50 touch-manipulation"
                 >
                   {photos.length === 0 ? 'Add photos' : `Add more (${photos.length}/4)`}
                 </button>
@@ -545,11 +558,11 @@ export function SubmitWorkOtjSheet({ open, onOpenChange, onSubmitted, prefill }:
                         key={i}
                         className="flex items-center justify-between gap-3 px-3 py-2 rounded-md border border-white/[0.06] bg-white/[0.02]"
                       >
-                        <span className="truncate text-[12px] text-white/80">{p.name}</span>
+                        <span className="truncate text-[12px] text-white">{p.name}</span>
                         <button
                           type="button"
                           onClick={() => setPhotos(photos.filter((_, j) => j !== i))}
-                          className="text-[11px] text-white/85 hover:text-white tabular-nums"
+                          className="text-[11px] text-white hover:text-white tabular-nums"
                         >
                           remove
                         </button>
@@ -566,7 +579,7 @@ export function SubmitWorkOtjSheet({ open, onOpenChange, onSubmitted, prefill }:
               type="button"
               onClick={() => onOpenChange(false)}
               disabled={saving}
-              className="flex-1 h-11 rounded-lg border border-white/[0.10] bg-white/[0.02] text-[13px] font-medium text-white/80 hover:text-white hover:border-white/[0.22] transition-colors touch-manipulation disabled:opacity-50"
+              className="flex-1 h-11 rounded-lg border border-white/[0.10] bg-white/[0.02] text-[13px] font-medium text-white hover:text-white hover:border-white/[0.22] transition-colors touch-manipulation disabled:opacity-50"
             >
               Cancel
             </button>
@@ -578,7 +591,7 @@ export function SubmitWorkOtjSheet({ open, onOpenChange, onSubmitted, prefill }:
                 'flex-1 h-11 rounded-lg text-[13px] font-semibold transition-colors touch-manipulation',
                 valid && !saving
                   ? 'bg-elec-yellow text-black hover:bg-elec-yellow/90'
-                  : 'bg-white/[0.05] text-white/40'
+                  : 'bg-white/[0.05] text-white'
               )}
             >
               {savedTick
@@ -596,11 +609,16 @@ export function SubmitWorkOtjSheet({ open, onOpenChange, onSubmitted, prefill }:
   );
 }
 
-const inputClass =
-  'w-full h-11 px-3 rounded-lg bg-white/[0.03] border border-white/[0.08] text-[13.5px] text-white placeholder:text-white/50 focus:outline-none focus:border-white/[0.06] focus:ring-1 focus:ring-white/10 touch-manipulation';
-
-const textareaClass =
-  'w-full px-3 py-2.5 rounded-lg bg-white/[0.03] border border-white/[0.08] text-[13px] text-white placeholder:text-white/50 leading-relaxed focus:outline-none focus:border-white/[0.06] focus:ring-1 focus:ring-white/10 touch-manipulation resize-none';
+/*
+ * The house field language (`components/forms/fieldStyles`), not a local copy.
+ *
+ * The copies these replace had focus render FAINTER than rest —
+ * `border-white/[0.08]` resting against `focus:border-white/[0.06]` — so
+ * tabbing into a field made it recede. Same defect the activity-type buttons
+ * had, where the selected chip was fainter than the unselected ones.
+ */
+const inputClass = inputCn;
+const textareaClass = cn(textareaCn, 'w-full resize-none');
 
 function Field({
   label,
@@ -614,10 +632,10 @@ function Field({
   return (
     <div>
       <div className="flex items-baseline justify-between gap-3">
-        <label className="text-[10.5px] font-medium uppercase tracking-[0.16em] text-white/85">
+        <label className="text-[10.5px] font-medium uppercase tracking-[0.16em] text-white">
           {label}
         </label>
-        {hint && <span className="text-[10.5px] text-white/40 leading-snug">{hint}</span>}
+        {hint && <span className="text-[10.5px] text-white leading-snug">{hint}</span>}
       </div>
       <div className="mt-1.5">{children}</div>
     </div>

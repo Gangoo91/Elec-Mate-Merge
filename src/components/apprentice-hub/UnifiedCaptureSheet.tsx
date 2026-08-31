@@ -44,6 +44,9 @@ import {
   FileCheck,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useEvidenceTypes } from '@/hooks/portfolio/useEvidenceTypes';
+import type { EvidenceTypeCode } from '@/types/evidence';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { Checkbox } from '@/components/ui/checkbox';
 import { supabase } from '@/integrations/supabase/client';
 import { usePortfolioData } from '@/hooks/portfolio/usePortfolioData';
@@ -103,6 +106,14 @@ interface UploadedFile {
   error?: string;
   /** AI analysis failure — file is safely stored; never re-upload for this. */
   analysisError?: string;
+  /**
+   * What KIND of evidence this is — `evidence_types.code`.
+   *
+   * Inferred on selection, correctable by the learner. Without it an assessor
+   * cannot tell a witness statement from a photo of a consumer unit, and
+   * `requires_witness` can never be enforced.
+   */
+  evidenceType?: EvidenceTypeCode;
 }
 
 const GRADE_TONE: Record<'A' | 'B' | 'C' | 'D', string> = {
@@ -276,6 +287,8 @@ export function UnifiedCaptureSheet({
   seed,
 }: UnifiedCaptureSheetProps) {
   const { toast } = useToast();
+  // Per-type MIME allowlist, per-type size caps, and the type guesser.
+  const { types: evidenceTypes, acceptAttr, maxBytesFor, inferCode } = useEvidenceTypes();
   const { user } = useAuth();
   const haptic = useHaptic();
   const { addEntry } = usePortfolioData();
@@ -680,15 +693,24 @@ export function UnifiedCaptureSheet({
     const selected = Array.from(e.target.files || []);
     if (!selected.length) return;
 
-    // Drop only the oversize files, keep the rest — and say which were dropped.
-    const oversize = selected.filter((f) => f.size > 10 * 1024 * 1024);
-    const valid = selected.filter((f) => f.size <= 10 * 1024 * 1024);
+    /*
+     * Size is checked PER EVIDENCE TYPE, not against one hard-coded 10MB.
+     *
+     * `evidence_types` allows video 50MB and documents 10MB. This code capped
+     * everything at 10MB, so video — a defined, assessable evidence type —
+     * could not be uploaded at all: a 30-second clip of a termination is
+     * 15–40MB. The cap now comes from the largest type that would accept the
+     * file, so an mp4 gets 50MB and a PDF gets 10MB.
+     */
+    const oversize = selected.filter((f) => f.size > maxBytesFor(f));
+    const valid = selected.filter((f) => f.size <= maxBytesFor(f));
     if (oversize.length) {
+      const limits = oversize
+        .map((f) => `${f.name} (max ${Math.round(maxBytesFor(f) / 1024 / 1024)}MB)`)
+        .join(', ');
       toast({
         title: oversize.length === 1 ? 'File too large' : `${oversize.length} files too large`,
-        description: `Maximum file size is 10MB. Not added: ${oversize
-          .map((f) => f.name)
-          .join(', ')}`,
+        description: `Not added: ${limits}`,
         variant: 'destructive',
       });
     }
@@ -702,6 +724,9 @@ export function UnifiedCaptureSheet({
       file: f,
       previewUrl: f.type.startsWith('image/') ? URL.createObjectURL(f) : '',
       uploading: true,
+      // Guessed from MIME and filename, corrected by the learner on the tile.
+      // An assessor needs to know a witness statement from a snapshot.
+      evidenceType: inferCode(f),
     }));
 
     setFiles((prev) => [...prev, ...newFiles]);
@@ -993,9 +1018,22 @@ export function UnifiedCaptureSheet({
       files: files
         .filter((f) => f.storageUrl)
         .map((f) => ({
+          // PortfolioFile requires id/size/uploadDate and only three of the
+          // six fields were being sent — a type error that predates this
+          // change and had been sitting unnoticed because it is invisible to
+          // esbuild. Filling them in properly rather than casting past it.
+          id: f.id,
           name: f.file.name,
           type: f.file.type,
+          size: f.file.size,
           url: f.storageUrl!,
+          uploadDate: new Date().toISOString(),
+          // The evidence CLASS, alongside the MIME type. `type` says
+          // "application/pdf"; this says whether that PDF is a certificate, a
+          // witness statement or a work log — the distinction an assessor
+          // actually reads, and the one only 4 of 19 existing portfolio items
+          // currently record.
+          evidenceType: f.evidenceType ?? 'photo',
         })),
       reflectionText,
       workDate,
@@ -1042,7 +1080,20 @@ export function UnifiedCaptureSheet({
         evidenceFiles,
         assessmentCriteria: snap.selectedACs,
         status: 'draft',
-        dateCreated: new Date().toISOString(),
+        /*
+         * Required by PortfolioEntry and never supplied — the third and
+         * deepest of the pre-existing type errors in this call, each one
+         * masked by the one above it. Empty defaults match what the entry
+         * ended up with at runtime; they are now stated rather than implied.
+         */
+        tags: [],
+        learningOutcomes: [],
+        selfAssessment: 0, // 1–5 rating; 0 = not self-rated at capture
+        timeSpent: 0,
+        awardingBodyStandards: [],
+        // `dateCreated` is Omit'ed from addEntry's payload — the store stamps
+        // it. Passing it was a pre-existing type error, hidden until the
+        // PortfolioFile mismatch above it was fixed.
         metadata: {
           workDate: snap.workDate || undefined,
           siteRef: snap.siteRef.trim() || undefined,
@@ -1121,22 +1172,36 @@ export function UnifiedCaptureSheet({
         onOpenChange(v);
       }}
     >
+      {/*
+        h-[85vh] is the house standard (CLAUDE.md), and overflow-hidden so the
+        rounded top actually clips the scroll area.
+      */}
       <SheetContent
         side="bottom"
-        className="h-[92vh] sm:h-[88vh] rounded-t-3xl p-0 bg-[hsl(0_0%_8%)] border-white/[0.06]"
+        className="h-[85vh] overflow-hidden rounded-t-2xl border-white/[0.06] bg-[hsl(0_0%_8%)] p-0"
       >
-        <div className="w-12 h-1 bg-white/15 rounded-full mx-auto mt-3 mb-2" />
-        <div className="flex flex-col h-full">
-          <SheetHeader className="px-4 sm:px-6 pb-4">
+        {/*
+          ONE column, and the grab handle is INSIDE it.
+          It used to sit above a sibling `h-full` div, so the column measured
+          100% of the sheet PLUS the handle and its margins — and the footer,
+          being the last child, was pushed clean off the bottom edge. That is
+          why Cancel / Save were cut off. `pb-20` on the footer compounded it.
+          Same defect the programme sheet had.
+        */}
+        <div className="flex h-full flex-col">
+          <div className="mx-auto mt-3 h-1 w-12 shrink-0 rounded-full bg-white/15" />
+          {/* Header shares the body's max-width, or the title hangs left of
+              content that is centred — the sheet reads as two columns. */}
+          <SheetHeader className="mx-auto w-full max-w-3xl shrink-0 px-4 pb-4 sm:px-6">
             {/* SheetTitle already renders an <h2> — inner heading must not
                 nest another one (validateDOMNesting). */}
             <SheetTitle className="text-left">
               <Eyebrow>Capture · Evidence</Eyebrow>
               <span className="block text-[22px] sm:text-[26px] font-semibold tracking-tight text-white mt-1 leading-none">
-                {step === 'capture' ? 'Capture on site' : 'Review &amp; tag'}
+                {step === 'capture' ? 'Capture on site' : 'Review & tag'}
               </span>
             </SheetTitle>
-            <SheetDescription className="text-left text-[13px] text-white/70 leading-snug">
+            <SheetDescription className="text-left text-[13px] leading-snug text-white">
               {step === 'capture'
                 ? 'Snap photos, speak a quick description, AI will suggest the ACs and draft a STAR reflection in seconds.'
                 : meta
@@ -1145,7 +1210,8 @@ export function UnifiedCaptureSheet({
             </SheetDescription>
           </SheetHeader>
 
-          <div className="flex-1 overflow-y-auto px-4 sm:px-6 pb-32">
+          <div className="flex-1 overflow-y-auto px-4 pb-6 sm:px-6">
+            <div className="mx-auto w-full max-w-3xl">
             {/* Unfinished-entry banner — restoring is always explicit */}
             {pendingDraft && step === 'capture' && (
               <div className="mt-2 rounded-xl border border-elec-yellow/30 bg-elec-yellow/[0.05] p-4 space-y-3">
@@ -1221,14 +1287,15 @@ export function UnifiedCaptureSheet({
                 <input
                   ref={fileInputRef}
                   type="file"
-                  accept="image/*,video/*,.pdf,.doc,.docx"
+                  accept={acceptAttr}
                   multiple
                   onChange={handleFileSelect}
                   className="hidden"
                 />
 
                 <p className="text-[11px] text-white/55 text-center">
-                  Up to 10MB per file · images, video, PDFs, documents
+                  Photos and documents up to 10MB · video up to 50MB · we work out
+                  what kind of evidence each file is
                 </p>
               </div>
             )}
@@ -1293,32 +1360,84 @@ export function UnifiedCaptureSheet({
                 {files.length > 0 && (
                   <div className="space-y-2">
                     <Eyebrow>Files · {files.length}</Eyebrow>
-                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                    {/*
+                      Fixed-height previews, not aspect-square.
+                      A square tile in a 3-column grid is ~620px tall on a
+                      full-width desktop sheet — so a PDF, which has no
+                      thumbnail to show, rendered as 620px of black with one
+                      small icon floating in the middle of it. A preview only
+                      needs to be big enough to recognise.
+                    */}
+                    <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-4">
                       {files.map((f) => (
                         <div
                           key={f.id}
-                          className="relative rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] overflow-hidden"
+                          className={cn(
+                            'relative overflow-hidden rounded-xl border border-elec-yellow/35',
+                            CARD_SURFACE
+                          )}
                         >
                           {f.previewUrl ? (
-                            <div className="aspect-square">
+                            <div className="h-28 sm:h-32">
                               <img
                                 src={f.previewUrl}
                                 alt=""
-                                className="w-full h-full object-cover"
+                                className="h-full w-full object-cover"
                               />
                             </div>
                           ) : (
-                            <div className="aspect-square flex items-center justify-center bg-white/[0.04]">
-                              <FileCheck className="h-8 w-8 text-white/55" />
+                            <div className="flex h-28 flex-col items-center justify-center gap-1.5 bg-white/[0.03] sm:h-32">
+                              <FileCheck className="h-7 w-7 text-white" />
+                              {/* Say what it is — the icon alone doesn't. */}
+                              <span className="text-[10px] font-medium uppercase tracking-[0.14em] text-white">
+                                {(f.file.name.split('.').pop() || 'file').slice(0, 4)}
+                              </span>
                             </div>
                           )}
                           <button
                             onClick={() => removeFile(f.id)}
                             aria-label={`Remove ${f.file.name}`}
-                            className="absolute top-1.5 right-1.5 p-1 rounded-full bg-black/60 text-white touch-manipulation"
+                            className="absolute right-1.5 top-1.5 grid h-8 w-8 place-items-center rounded-full bg-black/70 text-white transition-colors touch-manipulation hover:bg-black/85"
                           >
                             <X className="h-3 w-3" />
                           </button>
+                          {/*
+                            What KIND of evidence this is.
+                            Guessed from the MIME type and the filename, but the
+                            learner has the last word — an assessor reading the
+                            portfolio needs to know a witness statement from a
+                            photo of a board, and `requires_witness` cannot be
+                            enforced on an untyped file.
+                          */}
+                          <div className="border-t border-white/[0.10] px-2 py-1.5">
+                            <label className="sr-only" htmlFor={`evtype-${f.id}`}>
+                              Evidence type for {f.file.name}
+                            </label>
+                            <select
+                              id={`evtype-${f.id}`}
+                              value={f.evidenceType ?? 'photo'}
+                              onChange={(e) =>
+                                setFiles((prev) =>
+                                  prev.map((x) =>
+                                    x.id === f.id
+                                      ? { ...x, evidenceType: e.target.value as EvidenceTypeCode }
+                                      : x
+                                  )
+                                )
+                              }
+                              className="h-9 w-full rounded-md border border-white/[0.14] bg-white/[0.05] px-2 text-[11.5px] font-medium text-white [color-scheme:dark] touch-manipulation focus:border-elec-yellow focus:outline-none"
+                            >
+                              {(evidenceTypes.length > 0
+                                ? evidenceTypes
+                                : [{ code: 'photo', name: 'Photograph' }]
+                              ).map((t) => (
+                                <option key={t.code} value={t.code}>
+                                  {t.name}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+
                           <div className="px-2 py-1.5 space-y-0.5">
                             <p className="text-[11px] text-white truncate" title={f.file.name}>
                               {f.file.name}
@@ -1816,11 +1935,15 @@ export function UnifiedCaptureSheet({
                 {/* Link to */}
               </div>
             )}
+            </div>
           </div>
 
           {/* Footer actions */}
           {step === 'details' && (
-            <div className="px-4 sm:px-6 py-3 border-t border-white/[0.06] bg-[hsl(0_0%_8%)] pb-20 sm:pb-3">
+            <div
+              className="shrink-0 border-t border-white/[0.08] bg-[hsl(0_0%_8%)] px-4 py-3 sm:px-6"
+              style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom))' }}
+            >
               <div className="grid grid-cols-2 gap-2">
                 <SecondaryAction
                   label="Cancel"

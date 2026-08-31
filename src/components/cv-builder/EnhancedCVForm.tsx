@@ -224,7 +224,7 @@ export const EnhancedCVForm: React.FC<EnhancedCVFormProps> = ({ cvData, onChange
         <button
           onClick={() => goToTab('next')}
           disabled={!canGoForward}
-          className="flex-1 sm:flex-none px-6 py-3 min-h-[48px] rounded-lg bg-elec-yellow text-black font-medium touch-manipulation active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="flex-1 sm:flex-none px-6 py-3 min-h-[48px] rounded-lg bg-elec-yellow text-black font-medium touch-manipulation active:scale-95 disabled:bg-white/[0.08] disabled:text-white/70 disabled:cursor-not-allowed"
         >
           Next →
         </button>

@@ -397,7 +397,7 @@ export const BookJobSheet = ({
               type="button"
               onClick={handleBook}
               disabled={!date || saving}
-              className="w-full h-12 rounded-xl bg-elec-yellow text-black text-base font-semibold touch-manipulation active:scale-[0.98] disabled:opacity-40"
+              className="w-full h-12 rounded-xl bg-elec-yellow text-black text-base font-semibold touch-manipulation active:scale-[0.98] disabled:bg-white/[0.08] disabled:text-white/70"
             >
               {saving ? 'Booking…' : 'Book the job'}
             </button>

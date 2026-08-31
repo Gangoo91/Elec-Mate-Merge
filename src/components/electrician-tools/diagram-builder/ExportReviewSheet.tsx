@@ -569,7 +569,7 @@ export const ExportReviewSheet = ({
             <Button
               onClick={handleGenerate}
               disabled={isGenerating || includedRooms.length === 0}
-              className="w-full h-11 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold touch-manipulation disabled:opacity-60"
+              className="w-full h-11 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold touch-manipulation disabled:bg-white/[0.08] disabled:text-white/70"
             >
               {isGenerating ? (
                 <>

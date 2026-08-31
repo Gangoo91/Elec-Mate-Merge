@@ -498,7 +498,7 @@ export default function InspectorProfileForm() {
             type="button"
             onClick={handleSave}
             disabled={!formData.name.trim()}
-            className="flex-1 h-12 rounded-xl bg-elec-yellow text-black text-[14px] font-semibold hover:bg-elec-yellow/90 transition-colors touch-manipulation disabled:opacity-50 disabled:cursor-not-allowed"
+            className="flex-1 h-12 rounded-xl bg-elec-yellow text-black text-[14px] font-semibold hover:bg-elec-yellow/90 transition-colors touch-manipulation disabled:bg-white/[0.08] disabled:text-white/70 disabled:cursor-not-allowed"
           >
             {currentProfile ? 'Update profile' : 'Create profile'}
           </button>
@@ -519,7 +519,7 @@ export default function InspectorProfileForm() {
             type="button"
             onClick={handleSave}
             disabled={!formData.name.trim()}
-            className="ml-auto h-12 px-8 rounded-xl bg-elec-yellow text-black text-[14px] font-semibold hover:bg-elec-yellow/90 transition-colors touch-manipulation disabled:opacity-50 disabled:cursor-not-allowed"
+            className="ml-auto h-12 px-8 rounded-xl bg-elec-yellow text-black text-[14px] font-semibold hover:bg-elec-yellow/90 transition-colors touch-manipulation disabled:bg-white/[0.08] disabled:text-white/70 disabled:cursor-not-allowed"
           >
             {currentProfile ? 'Update profile' : 'Create profile'}
           </button>

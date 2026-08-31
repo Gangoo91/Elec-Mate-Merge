@@ -27,6 +27,9 @@ export interface CustomerSummary {
   totalInvoiced: number;
   totalPaid: number;
   outstanding: number;
+  /** Keep-in-touch emails actually delivered to this customer (status='sent'). */
+  emailCount: number;
+  lastEmailedAt: string | null;
 }
 
 interface SummaryRow {
@@ -40,11 +43,25 @@ interface SummaryRow {
   total_invoiced: number | string | null;
   total_paid: number | string | null;
   outstanding: number | string | null;
+  email_count: number | string | null;
+  last_emailed_at: string | null;
 }
 
 // Postgres returns bigint and numeric as strings over PostgREST — Number() them
 // once here rather than letting "1200.00" reach a formatter as a string.
 const num = (v: number | string | null | undefined): number => Number(v ?? 0) || 0;
+
+/**
+ * `get_customer_summaries` is not in the generated `types.ts`, so the typed
+ * `supabase.rpc` overload rejects the name and then mis-infers the row shape.
+ * Same single documented cast `usePublicLeadPage` uses for the lead-page RPCs —
+ * regenerating the 15k-line types file on a shared working tree is the thing
+ * we do not do.
+ */
+const rpc = supabase.rpc.bind(supabase) as unknown as (
+  fn: string,
+  args?: Record<string, unknown>
+) => Promise<{ data: unknown; error: { message: string } | null }>;
 
 export function useCustomerSummaries(customerIds: string[]) {
   const [summaries, setSummaries] = useState<Map<string, CustomerSummary>>(new Map());
@@ -64,9 +81,9 @@ export function useCustomerSummaries(customerIds: string[]) {
 
     const load = async () => {
       setIsLoading(true);
-      const { data, error } = await supabase.rpc('get_customer_summaries', {
+      const { data, error } = await rpc('get_customer_summaries', {
         p_customer_ids: key.split(','),
-      } as never);
+      });
 
       if (cancelled) return;
       if (error) {
@@ -90,6 +107,8 @@ export function useCustomerSummaries(customerIds: string[]) {
           totalInvoiced: num(r.total_invoiced),
           totalPaid: num(r.total_paid),
           outstanding: num(r.outstanding),
+          emailCount: num(r.email_count),
+          lastEmailedAt: r.last_emailed_at,
         });
       }
       setSummaries(next);

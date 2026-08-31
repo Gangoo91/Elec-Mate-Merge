@@ -11,6 +11,7 @@
  */
 import * as React from 'react';
 import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 
 // The sub-components are already neutral (padding + white text) — reuse them.
 export {
@@ -32,9 +33,31 @@ const Card = React.forwardRef<HTMLDivElement, GuideCardProps>(
       ref={ref}
       className={cn(
         'rounded-2xl border overflow-hidden transition-colors',
-        variant === 'highlight'
-          ? 'border-elec-yellow/25 bg-elec-yellow/[0.05]'
-          : 'border-white/[0.08] bg-[hsl(0_0%_10%)]',
+        /*
+         * The surface was `bg-[hsl(0_0%_10%)]` — one point darker than the
+         * 11%-lightness page behind it, so a panel read as a slightly different
+         * shade of black rather than as a panel. That is the "page back is very
+         * dark" complaint. It now uses the same lit ramp as every card in the
+         * app (`card-recipe.ts`): a diagonal white-alpha gradient with an inset
+         * top highlight, so a panel looks lit from the top-left.
+         *
+         * `highlight` keeps the volt EDGE and takes the same neutral surface —
+         * a translucent volt FILL goes muddy brown on this ground.
+         */
+        /*
+         * `plain` is the section wrapper: no surface, no border, no padding —
+         * just a grouping element. Panels use it for the outer block that holds
+         * a heading and a grid, so the grid items are the only boxes on screen
+         * instead of boxes inside a box. Note it cannot be done from the call
+         * site with `bg-transparent`: the surface is a background-IMAGE
+         * gradient, and a background-COLOR utility does not override it.
+         */
+        variant === 'plain'
+          ? 'border-0 bg-none shadow-none'
+          : cn(
+              CARD_SURFACE,
+              variant === 'highlight' ? 'border-elec-yellow/50' : 'border-white/[0.12]'
+            ),
         interactive &&
           'cursor-pointer touch-manipulation hover:border-white/[0.18] active:scale-[0.99]',
         className

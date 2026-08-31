@@ -253,7 +253,7 @@ const EVChargingTabNavigation: React.FC<EVChargingTabNavigationProps> = ({
               <Button
                 onClick={handleNavigateNext}
                 disabled={!canNavigateNext}
-                className="h-12 flex-[2] rounded-xl bg-elec-yellow text-[15px] font-semibold text-black hover:bg-elec-yellow/90 disabled:opacity-50 touch-manipulation active:scale-[0.99] lg:flex-none lg:px-10"
+                className="h-12 flex-[2] rounded-xl bg-elec-yellow text-[15px] font-semibold text-black hover:bg-elec-yellow/90 disabled:bg-white/[0.08] disabled:text-white/70 touch-manipulation active:scale-[0.99] lg:flex-none lg:px-10"
               >
                 {NEXT_LABELS[currentTabIndex] || 'Continue'}
               </Button>

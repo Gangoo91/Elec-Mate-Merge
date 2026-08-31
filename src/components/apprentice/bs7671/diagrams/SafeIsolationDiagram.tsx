@@ -4,7 +4,7 @@ interface SafeIsolationDiagramProps {
 
 const SafeIsolationDiagram = ({ systemType }: SafeIsolationDiagramProps) => {
   const Pill = ({ children }: { children: React.ReactNode }) => (
-    <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] text-center">
+    <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.07] text-center">
       {children}
     </span>
   );
@@ -34,7 +34,7 @@ const SafeIsolationDiagram = ({ systemType }: SafeIsolationDiagramProps) => {
         Safe isolation procedure for {systemType || 'electrical'} systems.
       </p>
 
-      <div className="rounded-xl border border-red-500/30 bg-red-500/[0.04] p-4 sm:p-5 space-y-3">
+      <div className="rounded-xl border border-white/[0.12] border-l-[3px] border-l-red-500 bg-white/[0.06] p-4 sm:p-5 space-y-3">
         <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">
           Critical safety practice
         </span>
@@ -63,13 +63,13 @@ const SafeIsolationDiagram = ({ systemType }: SafeIsolationDiagramProps) => {
         {sequenceSteps.map((step, index) => (
           <div
             key={index}
-            className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2"
+            className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-2"
           >
             <div className="flex items-baseline gap-3">
-              <span className="text-[12px] font-mono text-white/55 flex-shrink-0">
+              <span className="text-[12px] font-mono text-white/70 flex-shrink-0">
                 {String(index + 1).padStart(2, '0')}
               </span>
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
                 {step.title}
               </span>
             </div>
@@ -78,14 +78,14 @@ const SafeIsolationDiagram = ({ systemType }: SafeIsolationDiagramProps) => {
         ))}
       </div>
 
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+      <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
           Detailed proving dead procedure
         </span>
 
         <div className="space-y-3">
           <div className="space-y-1.5">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
               1. Prove test equipment on known live source
             </span>
             <ul className="space-y-1.5">
@@ -106,10 +106,10 @@ const SafeIsolationDiagram = ({ systemType }: SafeIsolationDiagramProps) => {
           </div>
 
           <div className="space-y-2">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
               2. Test the isolated installation
             </span>
-            <div className="rounded-lg border border-red-500/30 bg-red-500/[0.04] p-3">
+            <div className="rounded-lg border border-red-500/30 bg-white/[0.06] p-3">
               <p className="text-[14px] text-white font-medium leading-relaxed">
                 Connect EARTH lead FIRST, remove LAST.
               </p>
@@ -123,7 +123,7 @@ const SafeIsolationDiagram = ({ systemType }: SafeIsolationDiagramProps) => {
                 'Remove earth lead LAST',
               ].map((item, i) => (
                 <li key={i} className="flex items-start gap-3">
-                  <span className="text-[12px] font-mono text-white/55 flex-shrink-0 w-5 mt-0.5">
+                  <span className="text-[12px] font-mono text-white/70 flex-shrink-0 w-5 mt-0.5">
                     {i + 1}.
                   </span>
                   <span className="text-[14px] text-white/85 leading-relaxed">{item}</span>
@@ -133,7 +133,7 @@ const SafeIsolationDiagram = ({ systemType }: SafeIsolationDiagramProps) => {
           </div>
 
           <div className="space-y-1.5">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
               3. Re-prove test equipment
             </span>
             <ul className="space-y-1.5">
@@ -155,8 +155,8 @@ const SafeIsolationDiagram = ({ systemType }: SafeIsolationDiagramProps) => {
         </div>
       </div>
 
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+      <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
           Proving dead test sequence ({systemType === 'three-phase' ? '3-phase' : 'single phase'})
         </span>
         <p className="text-[14px] text-white/85 leading-relaxed">
@@ -186,13 +186,13 @@ const SafeIsolationDiagram = ({ systemType }: SafeIsolationDiagramProps) => {
         </div>
       </div>
 
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+      <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
           GS38 compliance requirements
         </span>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-1.5">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
               Test equipment
             </span>
             <ul className="space-y-1.5">
@@ -213,7 +213,7 @@ const SafeIsolationDiagram = ({ systemType }: SafeIsolationDiagramProps) => {
             </ul>
           </div>
           <div className="space-y-1.5">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
               Test lead safety
             </span>
             <ul className="space-y-1.5">

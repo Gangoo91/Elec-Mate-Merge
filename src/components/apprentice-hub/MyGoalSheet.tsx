@@ -3,6 +3,7 @@ import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { useToast } from '@/hooks/use-toast';
 import { Check, MessageCircle, Calendar, Tag } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { Button } from '@/components/ui/button';
 import type { IlpGoal, GoalCategory, GoalStatus } from '@/hooks/useStudentIlp';
 
@@ -150,38 +151,38 @@ export function MyGoalSheet({
 
           {/* Header */}
           <div className="flex-shrink-0 border-b border-white/[0.06] px-5 pb-4">
-            <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-purple-300/85">
+            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
               College plan goal
             </div>
             <h2
               className={cn('mt-1.5 text-[20px] font-semibold leading-tight',
-                isComplete ? 'text-white/85 line-through' : 'text-white'
+                isComplete ? 'text-white line-through' : 'text-white'
               )}
             >
               {goal.title}
             </h2>
-            <div className="mt-2 flex items-center flex-wrap gap-x-2 gap-y-0.5 text-[11px] text-white/85 tabular-nums">
+            <div className="mt-2 flex items-center flex-wrap gap-x-2 gap-y-0.5 text-[11px] text-white tabular-nums">
               <span className="inline-flex items-center gap-1">
                 <Tag className="h-3 w-3" />
                 {CATEGORY_LABEL[goal.category]}
               </span>
-              <span className="text-white/25">·</span>
+              <span className="text-white">·</span>
               <span
                 className={cn(
                   isComplete
-                    ? 'text-emerald-300/85'
+                    ? 'text-elec-yellow'
                     : goal.status === 'overdue'
                       ? 'text-red-300'
                       : goal.status === 'blocked'
-                        ? 'text-white/85'
-                        : 'text-white/90'
+                        ? 'text-white'
+                        : 'text-white'
                 )}
               >
                 {STATUS_LABEL[goal.status]}
               </span>
               {goal.target_date && (
                 <>
-                  <span className="text-white/25">·</span>
+                  <span className="text-white">·</span>
                   <span className="inline-flex items-center gap-1">
                     <Calendar className="h-3 w-3" />
                     Due {formatDate(goal.target_date)}
@@ -194,22 +195,22 @@ export function MyGoalSheet({
           {/* Body */}
           <div className="flex-1 overflow-y-auto overscroll-contain p-5 space-y-4">
             {goal.description && (
-              <div className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] px-4 py-3">
-                <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/85 mb-1.5">
+              <div className={cn('rounded-2xl border border-white/[0.06] px-4 py-3', CARD_SURFACE)}>
+                <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white mb-1.5">
                   What success looks like
                 </div>
-                <p className="text-[13px] text-white/85 leading-relaxed whitespace-pre-line">
+                <p className="text-[13px] text-white leading-relaxed whitespace-pre-line">
                   {goal.description}
                 </p>
               </div>
             )}
 
             {goal.acceptance_criteria && (
-              <div className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] px-4 py-3">
-                <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/85 mb-1.5">
+              <div className={cn('rounded-2xl border border-white/[0.06] px-4 py-3', CARD_SURFACE)}>
+                <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white mb-1.5">
                   How we'll know it's done
                 </div>
-                <p className="text-[13px] text-white/85 leading-relaxed whitespace-pre-line">
+                <p className="text-[13px] text-white leading-relaxed whitespace-pre-line">
                   {goal.acceptance_criteria}
                 </p>
               </div>
@@ -225,16 +226,16 @@ export function MyGoalSheet({
                 )}
               >
                 <div className="flex items-baseline justify-between gap-2 mb-1.5">
-                  <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-blue-300/85">
+                  <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
                     From your tutor
                   </div>
                   {goal.tutor_comment_at && (
-                    <div className="text-[10.5px] text-white/95 tabular-nums">
+                    <div className="text-[10.5px] text-white tabular-nums">
                       {formatRelative(goal.tutor_comment_at)}
                     </div>
                   )}
                 </div>
-                <p className="text-[13px] text-white/90 leading-relaxed whitespace-pre-line">
+                <p className="text-[13px] text-white leading-relaxed whitespace-pre-line">
                   {goal.tutor_comment}
                 </p>
               </div>
@@ -242,18 +243,18 @@ export function MyGoalSheet({
 
             {/* Existing student comment */}
             {goal.student_comment && goal.student_comment !== reply && (
-              <div className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] px-4 py-3">
+              <div className={cn('rounded-2xl border border-white/[0.06] px-4 py-3', CARD_SURFACE)}>
                 <div className="flex items-baseline justify-between gap-2 mb-1.5">
-                  <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-emerald-300/85">
+                  <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
                     Your last reply
                   </div>
                   {goal.student_comment_at && (
-                    <div className="text-[10.5px] text-white/95 tabular-nums">
+                    <div className="text-[10.5px] text-white tabular-nums">
                       {formatRelative(goal.student_comment_at)}
                     </div>
                   )}
                 </div>
-                <p className="text-[13px] text-white/85 leading-relaxed whitespace-pre-line">
+                <p className="text-[13px] text-white leading-relaxed whitespace-pre-line">
                   {goal.student_comment}
                 </p>
               </div>
@@ -261,7 +262,7 @@ export function MyGoalSheet({
 
             {/* Reply box */}
             <div>
-              <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/85 mb-1.5 flex items-center gap-1.5">
+              <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white mb-1.5 flex items-center gap-1.5">
                 <MessageCircle className="h-3 w-3" />
                 Reply to your tutor
               </div>
@@ -278,7 +279,7 @@ export function MyGoalSheet({
                 rows={4}
                 className="w-full px-3 py-2.5 text-[13px] text-white bg-white/[0.04] border border-white/[0.1] rounded-xl resize-none touch-manipulation focus:border-white/[0.06] focus:outline-none focus:ring-1 focus:ring-white/10"
               />
-              <div className="mt-1 text-[10.5px] text-white/40">⌘ + Enter to send</div>
+              <div className="mt-1 text-[10.5px] text-white">⌘ + Enter to send</div>
             </div>
           </div>
 
@@ -291,8 +292,8 @@ export function MyGoalSheet({
               variant="outline"
               className={cn('flex-1 h-11 rounded-full border touch-manipulation transition-colors',
                 isComplete
-                  ? 'border-white/[0.15] text-white/95 hover:bg-white/[0.06]'
-                  : 'border-white/[0.06] bg-white/[0.02] text-white/85 hover:bg-white/[0.02]'
+                  ? 'border-white/[0.15] text-white hover:bg-white/[0.06]'
+                  : 'border-white/[0.06] bg-white/[0.02] text-white hover:bg-white/[0.02]'
               )}
             >
               <Check className="h-4 w-4 mr-1.5" strokeWidth={3} />

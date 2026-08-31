@@ -97,9 +97,9 @@ export function CourseRequirementsList({
       />
 
       {/* Search + filters */}
-      <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-3 sm:p-4 space-y-3">
+      <div className="rounded-xl border border-elec-yellow/35 bg-gradient-to-br from-white/[0.19] via-white/[0.105] to-white/[0.065] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.16),0_2px_10px_-4px_rgba(0,0,0,0.65)] p-3 sm:p-4 space-y-3">
         <div className="relative">
-          <Search className="h-4 w-4 text-white/40 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+          <Search className="h-4 w-4 text-white absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
           <input
             type="text"
             value={search}
@@ -119,7 +119,7 @@ export function CourseRequirementsList({
                   'h-8 px-3 rounded-full text-[11.5px] font-medium border transition-colors touch-manipulation',
                   isActive
                     ? 'bg-elec-yellow text-black border-elec-yellow'
-                    : 'bg-white/[0.02] text-white/85 border-white/[0.08] hover:bg-white/[0.04]'
+                    : 'bg-white/[0.02] text-white border-white/[0.08] hover:bg-white/[0.04]'
                 )}
               >
                 {FILTER_LABELS[f]}
@@ -174,7 +174,7 @@ export function CourseRequirementsList({
                 <button
                   className={cn(
                     'w-full text-left p-4 rounded-xl border transition-colors touch-manipulation',
-                    'border-white/[0.06] bg-[hsl(0_0%_10%)] hover:bg-white/[0.03]',
+                    'border-elec-yellow/35 bg-gradient-to-br from-white/[0.19] via-white/[0.105] to-white/[0.065] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.16),0_2px_10px_-4px_rgba(0,0,0,0.65)] hover:bg-white/[0.03]',
                     isOpen && 'border-white/[0.12]'
                   )}
                 >
@@ -183,15 +183,15 @@ export function CourseRequirementsList({
                       {isOpen ? (
                         <ChevronDown className="h-4 w-4 text-elec-yellow" />
                       ) : (
-                        <ChevronRight className="h-4 w-4 text-white/55" />
+                        <ChevronRight className="h-4 w-4 text-white" />
                       )}
                     </div>
                     <div className="flex-1 min-w-0 space-y-1">
                       <div className="flex items-baseline gap-2">
-                        <span className="text-[10px] font-mono uppercase tracking-[0.14em] text-white/55 flex-shrink-0">
+                        <span className="text-[10px] font-mono uppercase tracking-[0.14em] text-white flex-shrink-0">
                           {unit.unitCode}
                         </span>
-                        <span className="text-[10px] uppercase tracking-[0.14em] text-white/40">
+                        <span className="text-[10px] uppercase tracking-[0.14em] text-white">
                           {unit.learningOutcomes.length} LOs · {totalUnitACs} ACs
                         </span>
                       </div>
@@ -226,7 +226,7 @@ export function CourseRequirementsList({
                         <span className="text-[10px] font-bold uppercase tracking-[0.10em] text-elec-yellow bg-elec-yellow/[0.10] border border-elec-yellow/25 rounded-md px-2 py-0.5 shrink-0">
                           LO{lo.loNumber}
                         </span>
-                        <p className="text-[12.5px] font-medium text-white/90 leading-snug">
+                        <p className="text-[12.5px] font-medium text-white leading-snug">
                           {lo.loText}
                         </p>
                       </div>
@@ -264,12 +264,12 @@ export function CourseRequirementsList({
                                     ? 'text-black bg-elec-yellow'
                                     : isClaimed
                                       ? 'text-elec-yellow bg-elec-yellow/[0.10] border border-elec-yellow/30'
-                                      : 'text-white/70 bg-white/[0.05] border border-white/[0.08]'
+                                      : 'text-white bg-white/[0.05] border border-white/[0.08]'
                                 )}
                               >
                                 {ac.acRef}
                               </span>
-                              <span className="flex-1 text-[12.5px] text-white/85 leading-snug">
+                              <span className="flex-1 text-[12.5px] text-white leading-snug">
                                 {ac.acText.replace(`${ac.acRef} `, '')}
                               </span>
                               {evidenceCount > 0 && (

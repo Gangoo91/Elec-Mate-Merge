@@ -6,7 +6,7 @@ import useSEO from '@/hooks/useSEO';
 const sections = [
   {
     id: 1,
-    title: 'Difference between sensors and transducers',
+    title: 'Sensor, transducer and transmitter',
     icon: Gauge,
     description: 'The distinction and relationship between sensors and transducers.',
   },
@@ -30,7 +30,7 @@ const sections = [
   },
   {
     id: 5,
-    title: 'Digital vs analogue sensor output',
+    title: 'Analogue and digital sensor output',
     icon: Gauge,
     description: 'Output types and their implications for signal processing.',
   },

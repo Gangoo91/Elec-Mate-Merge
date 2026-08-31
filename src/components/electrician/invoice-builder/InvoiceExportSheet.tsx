@@ -236,7 +236,7 @@ const InvoiceExportSheet: React.FC<InvoiceExportSheetProps> = ({ open, onOpenCha
             type="button"
             onClick={handleExport}
             disabled={isExporting || loading || loadError || !range}
-            className="h-12 w-full touch-manipulation bg-elec-yellow text-black font-semibold text-sm rounded-xl active:scale-[0.98] transition-transform disabled:opacity-50 flex items-center justify-center gap-2"
+            className="h-12 w-full touch-manipulation bg-elec-yellow text-black font-semibold text-sm rounded-xl active:scale-[0.98] transition-transform disabled:bg-white/[0.08] disabled:text-white/70 flex items-center justify-center gap-2"
           >
             {isExporting ? (
               <>

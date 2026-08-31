@@ -154,7 +154,7 @@ export function PreviousCertPreFillSheet({
             <Button
               onClick={handleConfirm}
               disabled={selectedSections.length === 0}
-              className="flex-1 h-11 touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/90 disabled:opacity-50"
+              className="flex-1 h-11 touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/90 disabled:bg-white/[0.08] disabled:text-white/70"
             >
               Pre-Fill Selected
             </Button>

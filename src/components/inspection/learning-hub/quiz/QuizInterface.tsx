@@ -191,7 +191,7 @@ const QuizInterface = ({ assessment, questions, onComplete, onExit }: QuizInterf
                 <Button
                   onClick={handleNext}
                   disabled={selectedAnswer === null}
-                  className="bg-elec-yellow text-black hover:bg-elec-yellow/90 disabled:opacity-50 min-w-[100px]"
+                  className="bg-elec-yellow text-black hover:bg-elec-yellow/90 disabled:bg-white/[0.08] disabled:text-white/70 min-w-[100px]"
                 >
                   {progress.current === progress.total ? 'Finish Quiz' : 'Next'}
                   <ChevronRight className="h-4 w-4 ml-2" />

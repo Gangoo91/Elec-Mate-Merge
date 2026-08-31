@@ -76,7 +76,40 @@ export function PortfolioGrid({ onCapture }: PortfolioGridProps) {
   // under a generic category, so the AC codes are the real unit link). Without
   // one, chips fall back to category names.
   const dynamicCategories = useMemo<{ key: string; label: string }[]>(() => {
-    if (tree.units.length === 0) {
+    /*
+     * 🔴 Chips used to come straight from `tree.units` — every unit on the
+     * course, whether or not the learner had tagged anything to it.
+     *
+     * When the college's enrolment and the learner's tagging history point at
+     * different qualifications (see UnifiedDashboard's stranded-evidence
+     * note), the tree is 5357 and the tags are 2357, so EVERY chip returned
+     * an empty grid. Even with them aligned, most chips are dead early on:
+     * fifteen units, two of which you have evidence for.
+     *
+     * Build them from the units the evidence actually references, titled from
+     * the tree where it knows them. Every chip then returns something by
+     * construction, and the list shrinks to what the learner has done.
+     */
+    const titleFor = new Map(tree.units.map((u) => [u.unitCode, u.unitTitle]));
+    const knownCodes = [...titleFor.keys()].sort((a, b) => b.length - a.length);
+
+    const referenced = new Set<string>();
+    for (const e of entries || []) {
+      for (const ac of e.assessmentCriteria || []) {
+        const head = ac.includes(':') ? ac.slice(0, ac.indexOf(':')) : ac;
+        // Prefer a real course unit code (longest first, so "101/001" wins
+        // over a bare "101"); otherwise take a leading numeric token.
+        const known = knownCodes.find((c) => head.includes(c));
+        if (known) {
+          referenced.add(known);
+          continue;
+        }
+        const bare = head.match(/(?:^|\()\s*(\d{3})\b/);
+        if (bare) referenced.add(bare[1]);
+      }
+    }
+
+    if (referenced.size === 0) {
       return [
         { key: 'all', label: 'All' },
         { key: 'cat:Practical Skills', label: 'Practical Skills' },
@@ -86,14 +119,17 @@ export function PortfolioGrid({ onCapture }: PortfolioGridProps) {
         { key: 'cat:Workplace Practice', label: 'Workplace Practice' },
       ];
     }
+
     return [
       { key: 'all', label: 'All' },
-      ...tree.units.map((u) => ({
-        key: `unit:${u.unitCode}`,
-        label: `Unit ${u.unitCode}: ${u.unitTitle}`,
-      })),
+      ...[...referenced]
+        .sort((a, b) => a.localeCompare(b, undefined, { numeric: true }))
+        .map((code) => ({
+          key: `unit:${code}`,
+          label: titleFor.has(code) ? `Unit ${code}: ${titleFor.get(code)}` : `Unit ${code}`,
+        })),
     ];
-  }, [tree.units]);
+  }, [tree.units, entries]);
 
   // View and filter state
   const [viewMode, setViewMode] = useState<ViewMode>('grid');
@@ -116,11 +152,17 @@ export function PortfolioGrid({ onCapture }: PortfolioGridProps) {
     // Search filter
     if (searchQuery) {
       const query = searchQuery.toLowerCase();
+      // Criterion text and the reflection are where the words a learner
+      // actually searches for live — "isolation" is in
+      // "399 AC 3.2: Follow correct procedures for the isolation of…",
+      // not in the title "Consumer unit replacement".
       filtered = filtered.filter(
         (e) =>
           e.title?.toLowerCase().includes(query) ||
           e.description?.toLowerCase().includes(query) ||
-          e.skills?.some((s: string) => s.toLowerCase().includes(query))
+          e.reflection?.toLowerCase().includes(query) ||
+          e.skills?.some((s: string) => s.toLowerCase().includes(query)) ||
+          e.assessmentCriteria?.some((ac: string) => ac.toLowerCase().includes(query))
       );
     }
 
@@ -221,7 +263,7 @@ export function PortfolioGrid({ onCapture }: PortfolioGridProps) {
         {/* Search Bar — icon stays clear of the text at every breakpoint
             (md:pl-10 beats the Input base's md:px-3). */}
         <div className="relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/50 pointer-events-none z-10" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none z-10" />
           <Input
             placeholder="Search evidence..."
             value={searchQuery}
@@ -246,8 +288,15 @@ export function PortfolioGrid({ onCapture }: PortfolioGridProps) {
             <button
               onClick={() => setViewMode('grid')}
               aria-label="Grid view"
-              className={cn('h-11 w-11 flex items-center justify-center rounded touch-manipulation active:scale-95',
-                viewMode === 'grid' ? 'bg-elec-yellow/10 text-elec-yellow' : 'text-white/70'
+              className={cn(
+                'h-11 w-11 flex items-center justify-center rounded touch-manipulation active:scale-95 transition-colors',
+                // Selected used to be a 10% volt wash with volt text, which is
+                // both muddy over the near-black card and QUIETER than the
+                // unselected white icon beside it — the active view read as the
+                // inactive one. Volt fills are only ever solid.
+                viewMode === 'grid'
+                  ? 'bg-elec-yellow text-black'
+                  : 'text-white hover:bg-white/[0.06]'
               )}
             >
               <Grid3X3 className="h-4 w-4" />
@@ -255,8 +304,15 @@ export function PortfolioGrid({ onCapture }: PortfolioGridProps) {
             <button
               onClick={() => setViewMode('list')}
               aria-label="List view"
-              className={cn('h-11 w-11 flex items-center justify-center rounded touch-manipulation active:scale-95',
-                viewMode === 'list' ? 'bg-elec-yellow/10 text-elec-yellow' : 'text-white/70'
+              className={cn(
+                'h-11 w-11 flex items-center justify-center rounded touch-manipulation active:scale-95 transition-colors',
+                // Selected used to be a 10% volt wash with volt text, which is
+                // both muddy over the near-black card and QUIETER than the
+                // unselected white icon beside it — the active view read as the
+                // inactive one. Volt fills are only ever solid.
+                viewMode === 'list'
+                  ? 'bg-elec-yellow text-black'
+                  : 'text-white hover:bg-white/[0.06]'
               )}
             >
               <List className="h-4 w-4" />
@@ -439,15 +495,25 @@ function SummaryStat({ n, label, accent }: { n: number; label: string; accent?: 
       >
         {n}
       </span>
-      <span className="text-white/45">{label}</span>
+      <span className="text-white">{label}</span>
     </span>
   );
 }
 
+/*
+ * Degree of volt, not a colour per status.
+ *
+ * This was grey / blue / emerald / volt — two colours the design system does
+ * not use, on a page where volt is the only accent. Status now reads through
+ * WEIGHT: unfinished work is white and quiet, work the learner considers done
+ * goes volt. The "Verified" chip on the thumbnail already carries the
+ * tutor-confirmed distinction, so the pill does not need a fifth colour to
+ * repeat it.
+ */
 const STATUS_META: Record<string, { label: string; cls: string; dot: string }> = {
-  draft: { label: 'Draft', cls: 'text-white/55', dot: 'bg-white/30' },
-  'in-progress': { label: 'In progress', cls: 'text-blue-300', dot: 'bg-blue-400' },
-  completed: { label: 'Completed', cls: 'text-emerald-300', dot: 'bg-emerald-400' },
+  draft: { label: 'Draft', cls: 'text-white', dot: 'bg-white/30' },
+  'in-progress': { label: 'In progress', cls: 'text-white', dot: 'bg-white/60' },
+  completed: { label: 'Completed', cls: 'text-elec-yellow', dot: 'bg-elec-yellow' },
   reviewed: { label: 'Verified', cls: 'text-elec-yellow', dot: 'bg-elec-yellow' },
 };
 
@@ -508,7 +574,7 @@ function GridCard({
           />
         ) : (
           <div className="absolute inset-0 flex items-center justify-center">
-            <FileIcon className="h-9 w-9 text-white/40" />
+            <FileIcon className="h-9 w-9 text-white" />
           </div>
         )}
 
@@ -520,7 +586,17 @@ function GridCard({
           </span>
         )}
 
-        {/* Verified — top-right */}
+        {/*
+         * "Verified" now means a supervisor actually countersigned it.
+         *
+         * `entry.isVerified` used to come straight off
+         * `portfolio_items.is_supervisor_verified` — a loose boolean with no
+         * trigger tying it to the real `supervisor_verifications` record, and
+         * one the learner can set on their own row (blanket own-row UPDATE in
+         * RLS; assessors get SELECT only). The two already disagree in
+         * production. usePortfolioData now derives this from a countersigned
+         * `supervisor_verifications` row instead, so the badge is earned.
+         */}
         {entry.isVerified && (
           <span className="absolute top-2 right-2 inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-elec-yellow text-black text-[10px] font-semibold">
             <ShieldCheck className="h-3 w-3" />
@@ -538,14 +614,14 @@ function GridCard({
         <div className="flex items-center justify-between gap-2">
           <StatusPill status={status} />
           {dateLabel && (
-            <span className="text-[11px] text-white/45 font-mono tabular-nums shrink-0">
+            <span className="text-[11px] text-white font-mono tabular-nums shrink-0">
               {dateLabel}
             </span>
           )}
         </div>
 
         {(acCount > 0 || photoCount > 0 || commentCount > 0 || assessorReady) && (
-          <div className="flex items-center gap-3 text-[10.5px] text-white/55 font-mono">
+          <div className="flex items-center gap-3 text-[10.5px] text-white font-mono">
             {assessorReady && (
               <span className="inline-flex items-center gap-1 text-elec-yellow" title="Assessor-ready (VACSR complete)">
                 <CheckCircle2 className="h-3 w-3" />
@@ -587,12 +663,6 @@ function ListItem({
   onClick: () => void;
   commentCount: number;
 }) {
-  const statusColors: Record<string, string> = {
-    draft: 'bg-muted text-white',
-    'in-progress': 'bg-white/[0.02] text-white/85',
-    completed: 'bg-white/[0.02] text-white/85',
-    reviewed: 'bg-elec-yellow/10 text-elec-yellow',
-  };
 
   return (
     <button
@@ -615,7 +685,15 @@ function ListItem({
           {typeof entry.category === 'object' ? entry.category?.name : entry.category || 'N/A'}
         </p>
         <div className="flex items-center gap-1.5 mt-1">
-          <Badge className={cn('text-[10px]', statusColors[entry.status] || statusColors.draft)}>
+          {/* Same source of truth as the grid view's pill — this used to be a
+              separate map where "in progress" and "completed" were 2% white,
+              so the two views disagreed about the same entry. */}
+          <Badge
+            className={cn(
+              'text-[10px] border-white/[0.12] bg-white/[0.06]',
+              (STATUS_META[entry.status] || STATUS_META.draft).cls
+            )}
+          >
             {entry.status || 'draft'}
           </Badge>
           {entry.skills?.slice(0, 2).map((skill: string, i: number) => (
@@ -642,13 +720,13 @@ function ListItem({
         )}
         {(entry.category?.id === 'site-diary-evidence' ||
           entry.category === 'site-diary-evidence') && (
-          <div className="flex items-center gap-0.5 text-white/85">
+          <div className="flex items-center gap-0.5 text-white">
             <NotebookPen className="h-3 w-3" />
             <span className="text-[10px] font-medium">Diary</span>
           </div>
         )}
         {entry.isVerified && (
-          <div className="flex items-center gap-0.5 text-white/85">
+          <div className="flex items-center gap-0.5 text-white">
             <ShieldCheck className="h-3 w-3" />
             <span className="text-[10px] font-medium">Verified</span>
           </div>

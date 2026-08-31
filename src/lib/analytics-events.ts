@@ -10,6 +10,38 @@
 
 import { posthog } from '@/components/analytics/PostHogProvider';
 import { track as vercelTrack } from '@vercel/analytics';
+import { getStoredAttribution } from '@/lib/attribution';
+
+/**
+ * The campaign this visitor arrived on, for slicing funnel steps by source.
+ *
+ * `attribution.ts` has stored first-touch UTMs on landing since long before
+ * this, but no funnel event ever read them — so every step was a single
+ * undifferentiated number and a campaign's drop-off could not be isolated.
+ * That is why a 554-recipient send in August 2026 could not be told apart
+ * from organic traffic anywhere below the click.
+ *
+ * Returns null rather than 'none' so Vercel doesn't burn a dimension value on
+ * the common case. Wrapped because storage access throws in some privacy modes.
+ */
+function campaignOf(): string | null {
+  try {
+    // Live URL first. `captureAttribution()` runs from an App-level effect, and
+    // React fires CHILD effects before parent ones — so on a link that goes
+    // straight to /auth/signup (which is what marketing emails do), a page-view
+    // event reads storage before anything has been written to it. Reading the
+    // query string directly is immune to that ordering.
+    if (typeof window !== 'undefined' && window.location?.search) {
+      const p = new URLSearchParams(window.location.search);
+      const live = p.get('utm_campaign') || p.get('utm_source');
+      if (live) return live;
+    }
+    const a = getStoredAttribution();
+    return a?.utm_campaign || a?.utm_source || null;
+  } catch {
+    return null;
+  }
+}
 
 function send(name: string, props?: Record<string, unknown>): void {
   try {
@@ -190,16 +222,35 @@ export function trackLandingSectionViewed(props: { section: string }): void {
 }
 
 // ─── Signup funnel ─────────────────────────────────────────────────
+
+/**
+ * Fired when the signup page renders — the rung the funnel was missing.
+ *
+ * `signup_started` only fires on first field focus, so anyone who landed and
+ * left without touching the form was invisible. That is precisely the gap that
+ * made an email campaign unreadable: 80 reported clicks, and no way to tell
+ * whether they were people who bounced off the page or scanners that never
+ * rendered it at all.
+ */
+export function trackSignupPageViewed(props?: { referrer?: string }): void {
+  const campaign = campaignOf();
+  send('signup_page_viewed', { ...props, campaign });
+  sendVercel('signup_page_viewed', { campaign });
+}
+
 export function trackSignupCompleted(props?: { method?: string }): void {
-  send('signup_completed', props);
-  sendVercel('signup_completed', { method: props?.method ?? null });
+  const campaign = campaignOf();
+  send('signup_completed', { ...props, campaign });
+  sendVercel('signup_completed', { method: props?.method ?? null, campaign });
 }
 
 export function trackCheckoutStarted(props?: { tier?: string; billing?: string }): void {
-  send('checkout_started', props);
+  const campaign = campaignOf();
+  send('checkout_started', { ...props, campaign });
   sendVercel('checkout_started', {
     tier: props?.tier ?? null,
     billing: props?.billing ?? null,
+    campaign,
   });
 }
 
@@ -212,8 +263,13 @@ export function trackPostSignupStepViewed(props: { step: string; tier?: string }
 
 /** Fired on the payment-success page — the client-side end of the funnel. */
 export function trackCheckoutCompleted(props: { plan?: string; trial?: boolean }): void {
-  send('checkout_completed', props);
-  sendVercel('checkout_completed', { plan: props.plan ?? null, trial: props.trial ?? null });
+  const campaign = campaignOf();
+  send('checkout_completed', { ...props, campaign });
+  sendVercel('checkout_completed', {
+    plan: props.plan ?? null,
+    trial: props.trial ?? null,
+    campaign,
+  });
 }
 
 /** Fired when a plan card CTA is tapped on the subscriptions page. */
@@ -232,8 +288,9 @@ export function trackSeoCtaClicked(props: { page: string; cta?: string }): void 
 /** Fired once when someone starts typing in the signup form — separates
     "form scared them off" from "never engaged with the form at all". */
 export function trackSignupStarted(props?: { method?: string }): void {
-  send('signup_started', props);
-  sendVercel('signup_started', { method: props?.method ?? null });
+  const campaign = campaignOf();
+  send('signup_started', { ...props, campaign });
+  sendVercel('signup_started', { method: props?.method ?? null, campaign });
 }
 
 /** Fired when an App Store / Play Store badge is clicked — the invisible half

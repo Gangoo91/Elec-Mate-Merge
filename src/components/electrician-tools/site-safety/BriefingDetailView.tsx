@@ -473,7 +473,7 @@ export function BriefingDetailView({
                   setSignOffDataUrl('');
                 }}
                 disabled={!signOffDataUrl || signOffMutation.isPending}
-                className="h-12 w-full touch-manipulation rounded-xl bg-elec-yellow font-bold text-black active:scale-[0.98] disabled:opacity-50"
+                className="h-12 w-full touch-manipulation rounded-xl bg-elec-yellow font-bold text-black active:scale-[0.98] disabled:bg-white/[0.08] disabled:text-white/70"
               >
                 {signOffMutation.isPending ? 'Saving…' : 'Confirm sign-off'}
               </Button>

@@ -405,7 +405,7 @@ export function CollegeChatView({
             onClick={handleSend}
             disabled={!message.trim() || isSending}
             aria-label="Send message"
-            className="h-11 w-11 shrink-0 inline-flex items-center justify-center font-semibold rounded-full bg-elec-yellow text-black hover:bg-elec-yellow/90 active:scale-[0.98] disabled:opacity-40 disabled:active:scale-100 transition-all touch-manipulation"
+            className="h-11 w-11 shrink-0 inline-flex items-center justify-center font-semibold rounded-full bg-elec-yellow text-black hover:bg-elec-yellow/90 active:scale-[0.98] disabled:bg-white/[0.08] disabled:text-white/70 disabled:active:scale-100 transition-all touch-manipulation"
           >
             <span className="text-[16px] font-semibold">→</span>
           </button>

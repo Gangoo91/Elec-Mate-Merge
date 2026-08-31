@@ -192,17 +192,12 @@ const InstrumentationModule4Section3 = () => {
         <TLDR
           points={[
             'Accuracy, precision and resolution are three different properties. An instrument can have any one without the others.',
-            'Accuracy is closeness to the truth. Precision is repeatability. Resolution is the smallest change the instrument can show.',
             'A linear instrument is described by y = mx + b, so its errors are the ways that equation can be wrong.',
             'Zero shift — b is wrong. Every point is off by the same amount.',
             'Span shift — m is wrong. The error grows across the range: small at the bottom, largest at the top.',
-            'Linearity error — the response is not a straight line at all. Ends can be perfect while the middle is wrong.',
             '🔴 Hysteresis — the instrument responds differently going up and going down. Invisible unless you test both ways.',
             '🔴 Hysteresis is mechanical — friction, a loose coupling, a cracked flexure — so no calibration adjustment will fix it.',
             '🔴 The SHAPE of the error names the fault. Same amount everywhere, growing, worst in the middle, or different up versus down.',
-            'Zero errors accompany almost every other error, which is why zero is checked first.',
-            'Real instruments usually show a combination, not one clean error type.',
-            'Error is normally expressed as a percentage of span, not of reading — the same deviation gives different numbers under each convention.',
           ]}
         />
 
@@ -467,12 +462,12 @@ const InstrumentationModule4Section3 = () => {
           id="ins-4-3-hysteresis"
           question="A transmitter shows a maximum error of 0.38 per cent of span on an up-test, comfortably inside its 0.5 per cent specification. Should it be signed off?"
           options={[
-            'Not yet — an up-test cannot reveal hysteresis, and the down-test on this instrument shows up to 0.88 per cent',
             'No — 0.38 per cent is too close to the limit',
             'Yes, provided the zero is adjusted first',
             'Yes — the measured error is within specification',
+            'Not yet — an up-test cannot reveal hysteresis, and the down-test on this instrument shows up to 0.88 per cent',
           ]}
-          correctIndex={0}
+          correctIndex={3}
           explanation="The up-test is not wrong, it is incomplete. Every point it measured was genuinely inside specification; the error it could not see took the instrument to 0.88 per cent on the way down. This is exactly why up-down testing exists, and why a passing single-direction result is weaker evidence than it looks."
         />
 
@@ -584,8 +579,8 @@ const InstrumentationModule4Section3 = () => {
         <InlineCheck
           id="ins-4-3-span"
           question="A 0–200 °C transmitter with a 4–20 mA output reads 11.84 mA where it should read 12.00 mA. What is the error as a percentage of span?"
-          options={['−0.8 per cent', '−1.0 per cent', '−1.33 per cent', '−0.16 per cent']}
-          correctIndex={1}
+          options={['−1.0 per cent', '−0.8 per cent', '−1.33 per cent', '−0.16 per cent']}
+          correctIndex={0}
           explanation="Deviation is 11.84 − 12.00 = −0.16 mA, and the span is 16 mA. −0.16 ÷ 16 = −1.0 per cent of span. Note the sign: negative because the instrument reads below what it should, which is worth recording as well as the magnitude."
         />
 

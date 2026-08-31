@@ -1,7 +1,17 @@
 /**
  * OJTHub — Apprentice Off-the-Job Training workspace
  *
- * Single-page editorial layout. No sidebar.
+ * Built on the shared hub primitives (`components/hub/HubPrimitives`), the same
+ * shell as the Apprentice Hub, the Business Hub and Inspection & Testing:
+ *
+ *   masthead → (alert, only if something is wrong) → quick start → KPIs →
+ *   needs-you → the detail sections
+ *
+ * It previously had its own dialect — a bespoke sticky header, a 300px
+ * editorial hero (greeting, the apprentice's first name, and a paragraph
+ * restating the figures directly beneath it) and a private `KpiCell`. That is
+ * exactly the drift HubPrimitives exists to stop, and the hero pushed the first
+ * actionable thing on the page below the fold on a phone.
  *
  * What apprentices struggle with: PROOF. ESFA only counts hours that have
  * a source + a verifier + (ideally) an evidence link. This page makes the
@@ -19,18 +29,25 @@
  * total is actually defensible vs still pending verification.
  *
  * Sections (top → bottom):
- *   1. Editorial header + Log time CTA
- *   2. KPI strip — week / year / verification rate / on-pace status
- *   3. Source mix — stacked bar by source_kind
- *   4. Compliance forecast — projection vs gateway
- *   5. Verification panel — pending + rejected with one-tap actions
- *   6. Recent entries timeline — every entry shows source + verification chip
+ *   1. Masthead + alert line (only when something is actually wrong)
+ *   2. Quick start — log time, evidence pack, programme
+ *   3. KPIs — week / gateway / verified / NOT COUNTING YET
+ *   4. Needs you — referred-back, unverified, awaiting tutor
+ *   5. Source mix — stacked bar by source_kind
+ *   6. Compliance forecast — projection vs gateway
+ *   7. Verification panel — pending + rejected with one-tap actions
+ *   8. Recent entries timeline — every entry shows source + verification chip
+ *
+ * The fourth KPI is the point of the page. It used to be "Pending sign-off",
+ * counting entries formally submitted to a tutor — so an apprentice with 24.5h
+ * of self-logged site diary and nothing submitted read "0 · Nothing waiting"
+ * while the card two along said "25h pending". It named the queue rather than
+ * the risk. It now reports every hour that will not count at gateway, and says
+ * whose move it is.
  */
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { ArrowLeft, Plus, Loader2, Clock, RefreshCw, Share2, Download } from 'lucide-react';
+import { Loader2, RefreshCw, Share2, Download } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
@@ -43,7 +60,19 @@ import {
   type VerificationStatus,
 } from '@/hooks/useStudentOtjVerification';
 import { cn } from '@/lib/utils';
-import { Eyebrow, SectionHeader } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
+import { Eyebrow } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
+import {
+  HubPage,
+  HubBody,
+  HubMasthead,
+  HubAlertLine,
+  HubQuickStart,
+  HubKpi,
+  HubKpiRow,
+  HubWorkList,
+  type HubWorkItem,
+} from '@/components/hub/HubPrimitives';
 import { SubmitWorkOtjSheet } from '@/components/apprentice-hub/SubmitWorkOtjSheet';
 import { OTJ_STANDARDS } from '@/data/otjStandards';
 import {
@@ -56,6 +85,8 @@ import {
 import { OjtGoalsSection } from './OjtGoalsSection';
 import { OjtAssessmentsSection } from './OjtAssessmentsSection';
 import { ProgrammeSetupSheet } from './ProgrammeSetupSheet';
+import { KpiDetailSheet, type KpiDetail } from './KpiDetailSheet';
+import { OjtSectionHeader as SectionHeader } from './ojtSection';
 
 // Weekly target, gateway target and weeks-remaining are no longer hardcoded —
 // they come from useOtjProgramme (college dates → self-set → estimate). See
@@ -68,19 +99,6 @@ const SOURCE_LABEL: Record<SourceKind, string> = {
   employer_attested: 'Employer',
 };
 
-const SOURCE_TONE: Record<SourceKind, string> = {
-  in_app: 'bg-elec-yellow/85',
-  apprentice_submitted: 'bg-white/55',
-  tutor_recorded: 'bg-elec-yellow',
-  employer_attested: 'bg-elec-yellow/70',
-};
-
-const STATUS_CHIP_TONE: Record<VerificationStatus, string> = {
-  verified: 'border-elec-yellow/30 bg-elec-yellow/[0.06] text-elec-yellow',
-  verified_by_employer: 'border-elec-yellow/30 bg-elec-yellow/[0.06] text-elec-yellow',
-  pending: 'border-white/[0.10] bg-white/[0.04] text-white/85',
-  rejected: 'border-red-500/30 bg-red-500/[0.04] text-red-300',
-};
 
 const STATUS_LABEL: Record<VerificationStatus, string> = {
   verified: 'Verified',
@@ -90,6 +108,9 @@ const STATUS_LABEL: Record<VerificationStatus, string> = {
 };
 
 const fmtHours = (hours: number) => {
+  // A bad divide anywhere upstream would otherwise print "NaNh" next to an
+  // ESFA hours figure. Falls back to zero rather than showing nonsense.
+  if (!Number.isFinite(hours) || hours < 0) return '0';
   if (hours >= 10) return Math.round(hours).toString();
   return hours.toFixed(1).replace(/\.0$/, '');
 };
@@ -107,9 +128,12 @@ const fmtDate = (iso: string | null | undefined) => {
 };
 
 export default function OJTHub() {
-  const navigate = useNavigate();
   const { user, profile } = useAuth();
   const { toast } = useToast();
+
+  // Still needed by the evidence pack's learner block. The greeting and the
+  // first-name heading that used to sit beside it went with the hero.
+  const fullName = profile?.full_name || user?.email?.split('@')[0] || 'Apprentice';
 
   // Real programme envelope — drives weekly/gateway targets + weeks remaining.
   const programme = useOtjProgramme();
@@ -220,6 +244,28 @@ export default function OJTHub() {
   // see what's still in the pipeline without it counting prematurely.
   const yearHours = totalDefensibleMin / 60;
   const yearPendingHours = totalPendingMin / 60;
+
+  /*
+   * What is NOT counting, split by whose move it is.
+   *
+   * The fourth KPI used to be "Pending sign-off: {pending_apprentice.length}",
+   * which counts only entries formally submitted to a tutor. An apprentice with
+   * 24.5h of self-logged site diary and nothing submitted therefore read
+   * "0 — Nothing waiting" while the card beside it said "25h pending", and the
+   * 24.5h will not count at gateway. The one number on this page that should
+   * drive action was telling them there was none.
+   *
+   * `unverifiedHours` is theirs to fix (log it properly so it can be signed
+   * off). `awaitingOthersHours` is already with a tutor or supervisor and is
+   * nobody's fault — worth showing, but not worth nagging about.
+   */
+  const unverifiedHours = sourceBreakdown.manualUnverifiedMin / 60;
+  const awaitingOthersHours = yearPendingHours - unverifiedHours;
+  const rejectedHours =
+    (sourceBreakdown.byKind.apprentice_submitted.rejectedMin +
+      sourceBreakdown.byKind.tutor_recorded.rejectedMin +
+      sourceBreakdown.byKind.employer_attested.rejectedMin) /
+    60;
   const yearPct = Math.round((yearHours / yearTargetHours) * 100);
   // OTJ is a total to complete (not a perpetual weekly quota): once banked,
   // the apprentice can stop logging.
@@ -273,18 +319,10 @@ export default function OJTHub() {
   const requiredWeekly =
     projectedShortfall > 0 ? projectedShortfall / weeksRemaining + last30Avg : last30Avg;
 
-  const greeting = useMemo(() => {
-    const hour = new Date().getHours();
-    if (hour < 12) return 'Good morning';
-    if (hour < 18) return 'Good afternoon';
-    return 'Good evening';
-  }, []);
-  const fullName = profile?.full_name || user?.email?.split('@')[0] || 'Apprentice';
-  const firstName =
-    fullName.split(' ')[0].charAt(0).toUpperCase() + fullName.split(' ')[0].slice(1).toLowerCase();
-
   /* ─── Employer attestation link ─────────────────────────────────── */
-  const handleEmployerLink = async (row: OtjEntryRow) => {
+  // useCallback because the "Needs you" list memoises on it; without a stable
+  // identity that list rebuilds on every render.
+  const handleEmployerLink = useCallback(async (row: OtjEntryRow) => {
     const url = `${window.location.origin}/attest-ojt/${row.id}`;
     try {
       // Prefer native share on mobile when available
@@ -313,10 +351,10 @@ export default function OJTHub() {
       });
       void err;
     }
-  };
+  }, [toast]);
 
   /* ─── Verification actions ─────────────────────────────────────── */
-  const editAndResubmit = async (row: OtjEntryRow) => {
+  const editAndResubmit = useCallback(async (row: OtjEntryRow) => {
     if (!user?.id) return;
     try {
       const { error } = await supabase
@@ -336,7 +374,7 @@ export default function OJTHub() {
         variant: 'destructive',
       });
     }
-  };
+  }, [user?.id, toast, refreshVerify]);
 
   /* ─── Export evidence pack ──────────────────────────────────────── */
   const buildExportData = useCallback(async (): Promise<OtjExportData> => {
@@ -441,12 +479,37 @@ export default function OJTHub() {
         provider = (prof?.apprentice_college as string | null) ?? null;
         uln = (cs?.uln as string | null) ?? null;
         if (cs?.employer_id) {
-          const { data: emp } = await supabase
+          /*
+           * Cast through an untyped builder.
+           *
+           * `.from('employers')` against the generated types blew the checker
+           * out — TS2589 "type instantiation is excessively deep", which then
+           * cascaded into three more errors on the same four lines, because
+           * once the row type collapses to `never` the column name and the
+           * result property both fail too. Four errors from one query, all of
+           * them noise, sitting permanently in the file. Known noise is worse
+           * than no check: it is where a real error hides.
+           *
+           * Same single documented escape hatch `usePublicLeadPage` uses.
+           * Behaviour is unchanged — this is a shape assertion, not a change
+           * of query.
+           */
+          const db = supabase as unknown as {
+            from: (t: string) => {
+              select: (c: string) => {
+                eq: (
+                  col: string,
+                  val: string
+                ) => { maybeSingle: () => Promise<{ data: { name: string | null } | null }> };
+              };
+            };
+          };
+          const { data: emp } = await db
             .from('employers')
             .select('name')
-            .eq('id', cs.employer_id)
+            .eq('id', cs.employer_id as string)
             .maybeSingle();
-          employer = (emp?.name as string | null) ?? null;
+          employer = emp?.name ?? null;
         }
       }
     } catch {
@@ -517,99 +580,395 @@ export default function OJTHub() {
 
   const canExport = verificationRows.length > 0 || yearHours > 0 || yearPendingHours > 0;
 
+  /*
+   * What sits behind each KPI, and the one thing to do about it.
+   *
+   * Every `advice` line is computed from this apprentice's actual position —
+   * "log 4.4h a week to catch up" rather than "keep going". A dashboard that
+   * reports a number and offers nothing is judging them without helping, and
+   * off-the-job hours are the thing most apprentices are behind on.
+   */
+  const [kpiDetail, setKpiDetail] = useState<KpiDetail | null>(null);
+
+  const weekDetail = useCallback((): KpiDetail => {
+    const shortfallThisWeek = Math.max(0, weeklyTargetHours - weekHours);
+    return {
+      label: 'This week',
+      value: `${fmtHours(weekHours)}h`,
+      verdict: onPace ? 'On pace' : 'Behind pace',
+      rows: [
+        {
+          label: 'Logged this week',
+          value: `${fmtHours(weekHours)}h`,
+          share: weeklyTargetHours > 0 ? weekHours / weeklyTargetHours : 0,
+          tone: onPace ? 'volt' : 'warn',
+        },
+        { label: 'Weekly pace to stay on track', value: `${fmtHours(weeklyTargetHours)}h` },
+        { label: 'Your average over 30 days', value: `${fmtHours(last30Avg)}h/wk` },
+      ],
+      advice: onPace
+        ? `You're ahead of the ${fmtHours(weeklyTargetHours)}h pace — bank the extra now while you have the run.`
+        : `Log ${fmtHours(shortfallThisWeek)}h more this week to hit pace.`,
+      adviceDetail: otjComplete
+        ? 'Your hours are already banked — anything you log now is a bonus.'
+        : projectedShortfall > 0 && last30Avg < weeklyTargetHours
+          ? `At your 30-day average of ${fmtHours(last30Avg)}h/wk you'd finish ${fmtHours(projectedShortfall)}h short. Sustained, ${fmtHours(requiredWeekly)}h/wk closes it.`
+          : 'A single logged activity a week is usually enough to hold pace.',
+      action: { label: 'Log time', onClick: () => setShowLogSheet(true) },
+    };
+  }, [
+    weekHours,
+    weeklyTargetHours,
+    onPace,
+    last30Avg,
+    otjComplete,
+    projectedShortfall,
+    requiredWeekly,
+  ]);
+
+  const gatewayDetail = useCallback((): KpiDetail => {
+    const total = totalAllMin || 1;
+    return {
+      label: 'Counts to gateway',
+      value: `${fmtHours(yearHours)}h`,
+      verdict: otjComplete ? 'Complete' : `${yearPct}% of ${yearTargetHours}h`,
+      rows: [
+        {
+          label: 'In-app, auto-tracked',
+          value: `${fmtHours(sourceBreakdown.autoTrackedMin / 60)}h`,
+          share: sourceBreakdown.autoTrackedMin / total,
+          tone: 'volt',
+        },
+        {
+          label: 'Verified by a tutor or employer',
+          value: `${fmtHours((totalDefensibleMin - sourceBreakdown.autoTrackedMin) / 60)}h`,
+          share: (totalDefensibleMin - sourceBreakdown.autoTrackedMin) / total,
+          tone: 'volt',
+        },
+        {
+          label: 'Logged but not yet counting',
+          value: `${fmtHours(yearPendingHours)}h`,
+          share: totalPendingMin / total,
+          tone: 'warn',
+        },
+        { label: 'Still to find', value: `${fmtHours(Math.max(0, yearTargetHours - yearHours))}h` },
+      ],
+      advice: otjComplete
+        ? `All ${yearTargetHours}h are banked and defensible — you can stop logging.`
+        : yearPendingHours >= 1
+          ? `Getting your ${fmtHours(yearPendingHours)}h of pending time signed off is the fastest way to move this number.`
+          : `${fmtHours(Math.max(0, yearTargetHours - yearHours))}h to go, over about ${weeksRemaining} weeks.`,
+      adviceDetail:
+        'Only hours with a named verifier count at gateway. In-app study and video time is system-attested, so it counts automatically.',
+      action: { label: 'Log time', onClick: () => setShowLogSheet(true) },
+    };
+  }, [
+    yearHours,
+    yearTargetHours,
+    yearPct,
+    otjComplete,
+    yearPendingHours,
+    totalAllMin,
+    totalDefensibleMin,
+    totalPendingMin,
+    sourceBreakdown.autoTrackedMin,
+    weeksRemaining,
+  ]);
+
+  const verifiedDetail = useCallback((): KpiDetail => {
+    const total = totalAllMin || 1;
+    return {
+      label: 'Verified',
+      value: `${verificationRate}%`,
+      verdict:
+        totalAllMin === 0
+          ? 'Nothing logged yet'
+          : verificationRate >= 90
+            ? 'Strongly defensible'
+            : verificationRate >= 60
+              ? 'Mostly verified'
+              : 'Lots still pending',
+      rows: [
+        {
+          label: 'Verified — counts at gateway',
+          value: `${fmtHours(totalDefensibleMin / 60)}h`,
+          share: totalDefensibleMin / total,
+          tone: 'volt',
+        },
+        {
+          label: 'Self-logged, no verifier',
+          value: `${fmtHours(unverifiedHours)}h`,
+          share: (unverifiedHours * 60) / total,
+          tone: 'warn',
+        },
+        {
+          label: 'Submitted, waiting on someone',
+          value: `${fmtHours(awaitingOthersHours)}h`,
+          share: (awaitingOthersHours * 60) / total,
+          tone: 'plain',
+        },
+        ...(rejectedHours > 0
+          ? [
+              {
+                label: 'Referred back',
+                value: `${fmtHours(rejectedHours)}h`,
+                tone: 'warn' as const,
+              },
+            ]
+          : []),
+      ],
+      advice:
+        unverifiedHours >= 0.5
+          ? `${fmtHours(unverifiedHours)}h has no verifier. Re-log it as an activity so a tutor or your supervisor can sign it.`
+          : awaitingOthersHours >= 0.5
+            ? `Nothing for you to do — ${fmtHours(awaitingOthersHours)}h is with your tutor.`
+            : 'Every hour you have logged has a named verifier. That is exactly what gateway wants to see.',
+      adviceDetail:
+        'A gateway assessor checks that each hour has a source and someone who signed it. Unverified time is the first thing they discount.',
+      action: { label: 'Log time', onClick: () => setShowLogSheet(true) },
+    };
+  }, [
+    verificationRate,
+    totalAllMin,
+    totalDefensibleMin,
+    unverifiedHours,
+    awaitingOthersHours,
+    rejectedHours,
+  ]);
+
+  const notCountingDetail = useCallback((): KpiDetail => {
+    const total = totalPendingMin || 1;
+    return {
+      label: 'Not counting yet',
+      value: `${fmtHours(yearPendingHours)}h`,
+      verdict: yearPendingHours === 0 ? 'Every hour counts' : 'At risk',
+      rows: [
+        {
+          label: 'Self-logged with no verifier — your move',
+          value: `${fmtHours(unverifiedHours)}h`,
+          share: (unverifiedHours * 60) / total,
+          tone: 'warn',
+        },
+        {
+          label: 'With your tutor — their move',
+          value: `${fmtHours(awaitingOthersHours)}h`,
+          share: (awaitingOthersHours * 60) / total,
+          tone: 'plain',
+        },
+        {
+          label: 'Worth, once signed off',
+          value: `${Math.round((yearPendingHours / Math.max(1, yearTargetHours)) * 100)}% of gateway`,
+        },
+      ],
+      advice:
+        yearPendingHours === 0
+          ? 'Nothing you have logged is going to waste.'
+          : unverifiedHours >= 0.5
+            ? `Re-log your ${fmtHours(unverifiedHours)}h of site diary time as an activity — that is what sends it for sign-off.`
+            : `${fmtHours(awaitingOthersHours)}h is already submitted. Give your tutor a nudge if it has been sitting a while.`,
+      adviceDetail:
+        'Site diary hours are self-reported, so they never count on their own. The same work logged as an activity, with a verifier, does.',
+      action: { label: 'Log time', onClick: () => setShowLogSheet(true) },
+    };
+  }, [
+    yearPendingHours,
+    unverifiedHours,
+    awaitingOthersHours,
+    totalPendingMin,
+    yearTargetHours,
+  ]);
+
+  /*
+   * "Needs you" — ranked by what actually costs the apprentice their gateway.
+   *
+   * Referred-back entries first: those are hours already worked that a tutor
+   * has refused, so they are the closest to being lost. Then self-logged hours
+   * with no verifier, which count for nothing until someone signs them. Hours
+   * already sitting with a tutor come last — they are somebody else's move and
+   * belong on the list only so the apprentice knows they are not forgotten.
+   */
+  const needsYou: HubWorkItem[] = useMemo(() => {
+    const items: HubWorkItem[] = [];
+
+    if (rejected_apprentice.length > 0) {
+      items.push({
+        id: 'rejected',
+        title: `${rejected_apprentice.length} ${rejected_apprentice.length === 1 ? 'entry' : 'entries'} referred back`,
+        reason: 'Your tutor wants these changed before they count',
+        trailing: `${fmtHours(rejectedHours)}h`,
+        urgent: true,
+        onClick: () => editAndResubmit(rejected_apprentice[0]),
+      });
+    }
+
+    if (unverifiedHours >= 0.5) {
+      items.push({
+        id: 'unverified',
+        title: `${fmtHours(unverifiedHours)}h logged with no verifier`,
+        reason: 'Site diary hours only count once someone signs them off',
+        trailing: `${fmtHours(unverifiedHours)}h`,
+        urgent: true,
+        onClick: () => setShowLogSheet(true),
+      });
+    }
+
+    if (pending_apprentice.length > 0) {
+      items.push({
+        id: 'pending',
+        title: `${pending_apprentice.length} awaiting your tutor`,
+        reason: 'Submitted — nothing for you to do yet',
+        trailing: `${fmtHours(awaitingOthersHours)}h`,
+        onClick: () => handleEmployerLink(pending_apprentice[0]),
+      });
+    }
+
+    if (!programme.loading && programme.source !== 'college' && programme.source !== 'self') {
+      items.push({
+        id: 'programme',
+        title: 'Set your programme dates',
+        reason: 'Targets and the forecast are estimates until you do',
+        onClick: () => setShowProgrammeSetup(true),
+      });
+    }
+
+    return items;
+  }, [
+    rejected_apprentice,
+    pending_apprentice,
+    unverifiedHours,
+    awaitingOthersHours,
+    rejectedHours,
+    programme.loading,
+    programme.source,
+    editAndResubmit,
+    handleEmployerLink,
+  ]);
+
   /* ─── Render ──────────────────────────────────────────────────── */
   return (
-    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
-      {/* Editorial header — sticky */}
-      <header className="sticky top-0 z-40 bg-[hsl(0_0%_8%)]/92 backdrop-blur-md border-b border-white/[0.06]">
-        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-14 flex items-center gap-2 sm:gap-3">
-          <button
-            onClick={() => navigate('/apprentice')}
-            className="inline-flex items-center justify-center gap-2 text-[11px] sm:text-[12px] uppercase tracking-[0.18em] text-white/55 hover:text-white/85 transition-colors h-11 px-2 -ml-1 touch-manipulation flex-shrink-0"
-            aria-label="Back to apprentice hub"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            <span className="hidden md:inline">Apprentice hub</span>
-          </button>
-          <div className="hidden md:block h-5 w-px bg-white/10 flex-shrink-0" />
-          <div className="flex-1 min-w-0">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55 truncate inline-block max-w-full">
-              <span className="hidden sm:inline">Off-the-job training</span>
-              <span className="sm:hidden">Off-the-job training</span>
-            </span>
-          </div>
-          <button
+    <HubPage>
+      <HubMasthead section="Apprentice" title="Off-the-job training" backTo="/apprentice" />
+
+      <HubBody>
+        {/*
+          One line, only when something is genuinely wrong, ranked the same way
+          as the work list below it. The old page led with a 300px editorial
+          hero — a greeting, the apprentice's name and a paragraph restating the
+          numbers underneath it — before anything actionable. What was
+          load-bearing in it was this.
+        */}
+        {rejected_apprentice.length > 0 ? (
+          <HubAlertLine
+            text={`${rejected_apprentice.length} ${rejected_apprentice.length === 1 ? 'entry has' : 'entries have'} been referred back`}
+            action="Fix"
+            onClick={() => editAndResubmit(rejected_apprentice[0])}
+          />
+        ) : unverifiedHours >= 0.5 ? (
+          <HubAlertLine
+            text={`${fmtHours(unverifiedHours)}h logged with no verifier — these won't count at gateway`}
+            action="Fix"
             onClick={() => setShowLogSheet(true)}
-            className="inline-flex items-center justify-center gap-1.5 h-10 px-3 sm:px-4 rounded-md bg-elec-yellow text-black text-[12.5px] font-semibold hover:bg-elec-yellow/90 active:scale-[0.97] transition-all touch-manipulation flex-shrink-0"
-          >
-            <Plus className="h-4 w-4" strokeWidth={2.5} />
-            <span className="hidden sm:inline">Log time</span>
-          </button>
-        </div>
-      </header>
+          />
+        ) : !otjComplete && projectedShortfall > 0 && weeksRemaining > 0 ? (
+          <HubAlertLine
+            text={`On this pace you finish ${fmtHours(projectedShortfall)}h short — ${fmtHours(requiredWeekly)}h/wk gets you there`}
+            action="Log"
+            onClick={() => setShowLogSheet(true)}
+          />
+        ) : null}
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 sm:py-7 lg:py-9 space-y-6 sm:space-y-7 lg:space-y-10">
-        {/* Hero */}
-        <motion.div
-          initial={{ opacity: 0, y: 4 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.18 }}
-          className="space-y-2"
-        >
-          <Eyebrow>{greeting}</Eyebrow>
-          <h1 className="text-[24px] sm:text-[28px] lg:text-[32px] font-semibold tracking-tight text-white leading-[1.05]">
-            {firstName}'s off-the-job hours
-          </h1>
-          <p className="text-[13.5px] sm:text-[14px] text-white/70 leading-relaxed max-w-2xl">
-            Every hour with a clear source &amp; verifier — the proof chain checked at gateway. Log
-            it here and your tutor or supervisor signs it off.
-          </p>
-        </motion.div>
+        <HubQuickStart
+          label="Start something"
+          items={[
+            {
+              title: 'Log time',
+              description: 'Photos and notes, signed off by your tutor',
+              primary: true,
+              onClick: () => setShowLogSheet(true),
+            },
+            {
+              title: 'Evidence pack',
+              description: canExport ? 'PDF for your tutor or gateway' : 'Log an hour first',
+              onClick: () => (canExport ? handleExportPdf() : setShowLogSheet(true)),
+            },
+            {
+              title: 'My programme',
+              description:
+                programme.source === 'college'
+                  ? 'Dates set by your college'
+                  : 'Set your dates and target',
+              onClick: () => setShowProgrammeSetup(true),
+            },
+          ]}
+        />
 
-        {/* KPI strip */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3">
-          <KpiCell
+        <HubKpiRow>
+          <HubKpi
+            accent
+            onClick={() => setKpiDetail(weekDetail())}
             label="This week"
             value={`${fmtHours(weekHours)}h`}
-            sub={`${weekPct}% of ${fmtHours(weeklyTargetHours)}h/wk suggested pace`}
-            highlight={onPace}
-            bar={Math.min(weekPct, 100)}
+            verdict={onPace ? 'On pace' : 'Behind pace'}
+            direction={onPace ? 'up' : 'down'}
+            sentiment={onPace ? 'good' : 'bad'}
+            context={`${weekPct}% of the ${fmtHours(weeklyTargetHours)}h/wk that keeps you on track`}
           />
-          <KpiCell
+          <HubKpi
+            onClick={() => setKpiDetail(gatewayDetail())}
             label="Counts to gateway"
             value={`${fmtHours(yearHours)}h`}
-            sub={
+            verdict={otjComplete ? 'Complete' : `${yearPct}% of ${yearTargetHours}h`}
+            context={
               otjComplete
-                ? `Complete · all ${yearTargetHours}h banked`
-                : yearPendingHours > 0
-                  ? `${yearPct}% of ${yearTargetHours}h · ${fmtHours(yearPendingHours)}h pending`
-                  : `${yearPct}% of ${yearTargetHours}h total`
+                ? `All ${yearTargetHours}h banked and defensible`
+                : `Verified hours only — pending time is not counted here`
             }
-            highlight={yearPct >= 50}
-            bar={Math.min(yearPct, 100)}
           />
-          <KpiCell
-            label="Verification"
+          <HubKpi
+            onClick={() => setKpiDetail(verifiedDetail())}
+            label="Verified"
             value={`${verificationRate}%`}
-            sub={
+            verdict={
               totalAllMin === 0
-                ? 'No college-recorded hours yet'
+                ? 'Nothing logged yet'
                 : verificationRate >= 90
                   ? 'Strongly defensible'
                   : verificationRate >= 60
                     ? 'Mostly verified'
                     : 'Lots still pending'
             }
-            highlight={verificationRate >= 90}
-            bar={verificationRate}
+            context="Share of your logged hours with a named verifier"
           />
-          <KpiCell
-            label="Pending sign-off"
-            value={pending_apprentice.length}
-            sub={pending_apprentice.length === 0 ? 'Nothing waiting' : 'With your tutor'}
-            warn={pending_apprentice.length > 5}
+          {/*
+            Was "Pending sign-off", counting only entries formally submitted to
+            a tutor — so an apprentice with 24.5h of unverified site diary and
+            nothing submitted read "0 · Nothing waiting" while the card two
+            along said "25h pending". It named the queue instead of the risk.
+          */}
+          <HubKpi
+            label="Not counting yet"
+            value={`${fmtHours(yearPendingHours)}h`}
+            verdict={
+              yearPendingHours === 0
+                ? 'Every hour counts'
+                : unverifiedHours >= 0.5
+                  ? 'Needs a verifier'
+                  : 'With your tutor'
+            }
+            sentiment={unverifiedHours >= 0.5 ? 'bad' : 'neutral'}
+            direction={unverifiedHours >= 0.5 ? 'down' : 'flat'}
+            context={
+              yearPendingHours === 0
+                ? 'Nothing logged is going to waste'
+                : unverifiedHours >= 0.5
+                  ? `${fmtHours(unverifiedHours)}h self-logged with no verifier${awaitingOthersHours >= 0.1 ? `, ${fmtHours(awaitingOthersHours)}h with your tutor` : ''}`
+                  : `${fmtHours(awaitingOthersHours)}h submitted and waiting`
+            }
+            onClick={() => setKpiDetail(notCountingDetail())}
           />
-        </div>
+        </HubKpiRow>
+
+        <HubWorkList items={needsYou} unit="thing" />
 
         {/* Source mix bar */}
         <SourceMixBar
@@ -658,15 +1017,26 @@ export default function OJTHub() {
           onExportCsv={handleExportCsv}
         />
 
-        {/* Goals — personal OTJ targets (migrated from legacy /apprentice/ojt) */}
-        <OjtGoalsSection />
-
-        {/* Assessments — deadline tracking (migrated from legacy /apprentice/ojt) */}
-        <OjtAssessmentsSection />
-      </main>
+        {/*
+          Goals and assessments are peers, and both are usually near-empty —
+          stacked full-width they were two enormous bands of empty state at the
+          bottom of the page. Side by side from lg:, each with its own items
+          two-up, gives the 2x2 block they should have been.
+        */}
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-6">
+          {/* Personal OTJ targets (migrated from legacy /apprentice/ojt) */}
+          <OjtGoalsSection />
+          {/* Deadline tracking (migrated from legacy /apprentice/ojt) */}
+          <OjtAssessmentsSection />
+        </div>
+      </HubBody>
 
       {/* Unified log sheet — photos + AI proposal, writes college_otj_entries.
           Same component the portfolio hub uses, so there's one log path. */}
+      {/* Tapping any KPI opens what is behind the figure, plus one computed
+          next step. `null` closes it — one piece of state, not two. */}
+      <KpiDetailSheet detail={kpiDetail} onOpenChange={(o) => !o && setKpiDetail(null)} />
+
       <SubmitWorkOtjSheet
         open={showLogSheet}
         onOpenChange={setShowLogSheet}
@@ -689,56 +1059,25 @@ export default function OJTHub() {
             : null
         }
         onSave={programme.setSelfProgramme}
+        /* College dates outrank anything set in the sheet (see useOtjProgramme's
+           source priority), so a linked student is shown what their provider
+           holds instead of a form whose input would be discarded. */
+        college={
+          programme.source === 'college'
+            ? {
+                startDate: programme.startDate,
+                endDate: programme.endDate,
+                totalHours: programme.totalTargetHours,
+              }
+            : null
+        }
       />
-    </div>
+    </HubPage>
   );
 }
 
 /* ────────────────────────── Sub-components ────────────────────────── */
 
-function KpiCell({
-  label,
-  value,
-  sub,
-  highlight,
-  warn,
-  bar,
-}: {
-  label: string;
-  value: string | number;
-  sub?: string;
-  highlight?: boolean;
-  warn?: boolean;
-  bar?: number;
-}) {
-  return (
-    <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-3.5 sm:p-5 space-y-1.5 sm:space-y-2">
-      <Eyebrow className="text-[9.5px] sm:text-[10px]">{label}</Eyebrow>
-      <div
-        className={cn(
-          'text-[22px] sm:text-[26px] lg:text-[28px] font-semibold tracking-tight tabular-nums leading-none',
-          highlight ? 'text-elec-yellow' : warn ? 'text-red-300' : 'text-white'
-        )}
-      >
-        {value}
-      </div>
-      {bar !== undefined && (
-        <div className="h-1 w-full bg-white/[0.04] rounded-full overflow-hidden">
-          <div
-            className={cn(
-              'h-full rounded-full transition-all duration-700',
-              highlight ? 'bg-elec-yellow' : warn ? 'bg-red-400/70' : 'bg-white/55'
-            )}
-            style={{ width: `${Math.min(bar, 100)}%` }}
-          />
-        </div>
-      )}
-      {sub && (
-        <span className="text-[10.5px] sm:text-[11px] text-white/55 block leading-snug">{sub}</span>
-      )}
-    </div>
-  );
-}
 
 function SourceMixBar({
   autoTrackedMin,
@@ -804,9 +1143,9 @@ function SourceMixBar({
         title="Where your hours come from"
         meta="Defensibility at a glance — yellow = verified & counts, grey = pending"
       />
-      <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3">
+      <div className={cn('rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-3', CARD_SURFACE)}>
         {total === 0 ? (
-          <p className="text-[13px] text-white/55 leading-relaxed">
+          <p className="text-[13px] text-white leading-relaxed">
             No hours logged yet. Tap "Log time" to send your first entry to your tutor.
           </p>
         ) : (
@@ -828,10 +1167,10 @@ function SourceMixBar({
               {segments
                 .filter((s) => s.minutes > 0)
                 .map((s) => (
-                  <li key={s.label} className="flex items-center gap-2 text-[12px] text-white/85">
+                  <li key={s.label} className="flex items-center gap-2 text-[12px] text-white">
                     <span className={cn('h-2 w-2 rounded-sm flex-shrink-0', s.tone)} />
                     <span className="flex-1 truncate">{s.label}</span>
-                    <span className="text-white/85 tabular-nums">
+                    <span className="text-white tabular-nums">
                       {(s.minutes / 60).toFixed(1)}h
                     </span>
                   </li>
@@ -885,9 +1224,9 @@ function ComplianceForecast({
             <span className="text-[26px] sm:text-[30px] lg:text-[32px] font-semibold text-elec-yellow tracking-tight tabular-nums leading-none">
               {fmtHours(yearHours)}h
             </span>
-            <span className="text-[12px] sm:text-[13px] text-white/40">/ {yearTarget}h ✓</span>
+            <span className="text-[12px] sm:text-[13px] text-white">/ {yearTarget}h ✓</span>
           </div>
-          <p className="text-[13px] text-white/85 leading-relaxed">
+          <p className="text-[13px] text-white leading-relaxed">
             You've banked your full off-the-job requirement. You don't need to keep logging hours —
             front-loading like this is fine. Your apprenticeship still runs to gateway and end-point
             assessment; keep the evidence safe for your records.
@@ -919,10 +1258,10 @@ function ComplianceForecast({
               type="button"
               onClick={onPersonalise}
               className={cn(
-                'inline-flex items-center gap-1.5 h-9 px-3 rounded-md text-[12px] font-semibold transition-colors touch-manipulation',
+                'inline-flex h-11 items-center gap-1.5 rounded-lg px-4 text-[13px] font-semibold transition-colors touch-manipulation active:scale-[0.98]',
                 isEstimate
                   ? 'bg-elec-yellow text-black hover:bg-elec-yellow/90'
-                  : 'border border-white/[0.08] bg-white/[0.02] text-white/85 hover:bg-white/[0.04]'
+                  : 'border border-white/[0.08] bg-white/[0.02] text-white hover:bg-white/[0.04]'
               )}
             >
               {isEstimate ? 'Set your dates' : 'Edit dates'}
@@ -930,12 +1269,20 @@ function ComplianceForecast({
           )
         }
       />
+      {/*
+        Volt, not red. Red is the app's destructive/error colour — it is what a
+        tutor REJECTING your hours looks like. Being
+        behind pace is not an error, it is the thing this page exists to tell
+        you, and dressing it as one made the whole card read as a failure
+        notice. Degree of accent carries it instead: a brighter volt edge when
+        you are short, the same quiet one when you are not — the same rule
+        HubKpi and HubToolGrid use for outstanding work.
+      */}
       <div
         className={cn(
-          'rounded-xl border p-4 sm:p-5 space-y-3.5',
-          onTrack
-            ? 'border-elec-yellow/25 bg-elec-yellow/[0.04]'
-            : 'border-red-500/25 bg-red-500/[0.04]'
+          'space-y-3.5 rounded-2xl border p-4 sm:p-5',
+          CARD_SURFACE,
+          onTrack ? 'border-elec-yellow/35' : 'border-elec-yellow/70'
         )}
       >
         <div className="flex items-end justify-between gap-3">
@@ -944,13 +1291,13 @@ function ComplianceForecast({
             <div className="flex items-baseline gap-1.5 flex-wrap">
               <span
                 className={cn(
-                  'text-[26px] sm:text-[30px] lg:text-[32px] font-semibold tracking-tight tabular-nums leading-none',
-                  onTrack ? 'text-elec-yellow' : 'text-red-300'
+                  'text-[26px] font-semibold leading-none tabular-nums tracking-tight sm:text-[30px] lg:text-[32px]',
+                  'text-elec-yellow'
                 )}
               >
                 {fmtHours(projectedHours)}h
               </span>
-              <span className="text-[12px] sm:text-[13px] text-white/40">/ {yearTarget}h</span>
+              <span className="text-[12px] sm:text-[13px] text-white">/ {yearTarget}h</span>
             </div>
           </div>
           <div className="text-right space-y-1 flex-shrink-0">
@@ -960,7 +1307,7 @@ function ComplianceForecast({
             </span>
           </div>
         </div>
-        <p className="text-[13px] text-white/85 leading-relaxed">
+        <p className="text-[13px] text-white leading-relaxed">
           {onTrack ? (
             <>
               Keep your current rate and you'll have{' '}
@@ -997,98 +1344,110 @@ function VerificationPanel({
   onResubmit: (row: OtjEntryRow) => void;
   onEmployerLink: (row: OtjEntryRow) => void;
 }) {
+  const pendingHours = pending.reduce((sum, r) => sum + r.duration_minutes, 0) / 60;
+
   return (
     <section className="space-y-3">
       <SectionHeader
-        eyebrow="Verification"
         title={
           rejected.length > 0
-            ? `${rejected.length} entr${rejected.length === 1 ? 'y' : 'ies'} need editing`
-            : `${pending.length} pending tutor sign-off`
+            ? `${rejected.length} ${rejected.length === 1 ? 'entry needs' : 'entries need'} editing`
+            : `${fmtHours(pendingHours)}h waiting on sign-off`
         }
         meta="Hours land in your tutor's college inbox the moment you submit"
       />
+
+      {/* Referred back first — hours already worked that a tutor has refused
+          are the closest thing on this page to being lost. Red is correct
+          here: this IS the app's error state, unlike the forecast card. */}
       {rejected.length > 0 && (
-        <ul className="space-y-2">
+        <ul
+          className={cn(
+            '-mx-4 divide-y divide-white/[0.10] overflow-hidden border-y border-red-500/40 sm:mx-0 sm:rounded-2xl sm:border-x',
+            CARD_SURFACE
+          )}
+        >
           {rejected.map((row) => (
-            <li
-              key={row.id}
-              className="rounded-xl border border-red-500/30 bg-red-500/[0.04] p-4 sm:p-5 space-y-2"
-            >
-              <div className="flex items-baseline justify-between gap-3 flex-wrap">
-                <div className="min-w-0 space-y-1">
-                  <div className="flex items-baseline gap-2 flex-wrap">
-                    <Eyebrow className="text-red-300">Refer back</Eyebrow>
-                    <span className="text-[11px] text-white/55">{fmtDate(row.activity_date)}</span>
-                    <span className="text-[11px] text-white/55">
-                      · {(row.duration_minutes / 60).toFixed(1)}h
-                    </span>
-                  </div>
-                  <p className="text-[14px] font-medium text-white leading-snug">{row.title}</p>
+            <li key={row.id} className="px-4 py-3.5 sm:px-5">
+              <div className="flex items-start gap-3">
+                <span aria-hidden className="mt-0.5 h-9 w-[3px] shrink-0 rounded-full bg-red-400" />
+                <div className="min-w-0 flex-1">
+                  <p className="text-[14px] font-semibold leading-tight text-white">{row.title}</p>
+                  <p className="mt-0.5 text-[12px] leading-tight text-white">
+                    Referred back · {fmtDate(row.activity_date)} ·{' '}
+                    {(row.duration_minutes / 60).toFixed(1)}h
+                  </p>
+                  {row.verification_rationale && (
+                    <p className="mt-1.5 border-l-2 border-red-400/50 pl-2.5 text-[12.5px] italic leading-snug text-white">
+                      {row.verification_rationale}
+                    </p>
+                  )}
                 </div>
-                <button
-                  onClick={() => onResubmit(row)}
-                  className="inline-flex items-center gap-1.5 h-8 px-3 rounded-md bg-elec-yellow text-black text-[11.5px] font-semibold hover:bg-elec-yellow/90 transition-colors touch-manipulation"
-                >
-                  <RefreshCw className="h-3 w-3" />
-                  Resubmit
-                </button>
               </div>
-              {row.verification_rationale && (
-                <p className="text-[12px] text-white/70 leading-relaxed italic pl-1 border-l-2 border-red-500/40 ml-1">
-                  {row.verification_rationale}
-                </p>
-              )}
+              {/* h-11, not h-8. Every interactive element clears 44px — these
+                  were 32px, which is under the minimum on the one screen an
+                  apprentice uses one-handed on site. */}
+              <button
+                type="button"
+                onClick={() => onResubmit(row)}
+                className="mt-2.5 inline-flex h-11 items-center gap-1.5 rounded-lg bg-elec-yellow px-4 text-[13px] font-semibold text-black transition-colors touch-manipulation hover:bg-elec-yellow/90 active:scale-[0.98]"
+              >
+                <RefreshCw className="h-3.5 w-3.5" />
+                Fix and resubmit
+              </button>
             </li>
           ))}
         </ul>
       )}
+
       {pending.length > 0 && (
-        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-2">
-          <div className="flex items-baseline justify-between gap-3">
-            <Eyebrow>Pending</Eyebrow>
-            <span className="text-[11px] text-white/55 tabular-nums whitespace-nowrap">
-              {(pending.reduce((s, r) => s + r.duration_minutes, 0) / 60).toFixed(1)}h waiting
-            </span>
-          </div>
-          <ul className="divide-y divide-white/[0.04]">
-            {pending.slice(0, 5).map((row) => (
-              <li key={row.id} className="py-2.5 space-y-2">
-                <div className="flex items-start justify-between gap-3">
-                  <div className="min-w-0 flex-1 flex items-start gap-2">
-                    <Clock className="h-3.5 w-3.5 text-white/40 flex-shrink-0 mt-0.5" />
-                    <div className="min-w-0 flex-1 space-y-0.5">
-                      <span className="text-[10.5px] text-white/55 block">
-                        {fmtDate(row.activity_date)}
-                      </span>
-                      <span className="text-[13px] text-white block leading-snug break-words">
-                        {row.title}
-                      </span>
-                    </div>
-                  </div>
-                  <span className="text-[12px] text-white/85 tabular-nums flex-shrink-0 whitespace-nowrap pt-0.5">
-                    {(row.duration_minutes / 60).toFixed(1)}h
-                  </span>
-                </div>
-                <div className="pl-5">
-                  <button
-                    type="button"
-                    onClick={() => onEmployerLink(row)}
-                    className="inline-flex items-center gap-1.5 h-8 px-2.5 rounded-md border border-white/[0.10] bg-white/[0.02] text-white/85 text-[11px] font-medium hover:bg-white/[0.04] transition-colors touch-manipulation"
-                    title="Get a link your supervisor can use to attest these hours"
-                  >
-                    <Share2 className="h-3 w-3" />
-                    <span className="hidden sm:inline">Get supervisor attestation link</span>
-                    <span className="sm:hidden">Send to supervisor</span>
-                  </button>
-                </div>
-              </li>
-            ))}
-          </ul>
-          {pending.length > 5 && (
-            <p className="text-[11px] text-white/40">+ {pending.length - 5} more</p>
+        <ul
+          className={cn(
+            '-mx-4 divide-y divide-white/[0.10] overflow-hidden border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x',
+            CARD_SURFACE
           )}
-        </div>
+        >
+          {pending.slice(0, 5).map((row) => (
+            <li key={row.id} className="px-4 py-3.5 sm:px-5">
+              <div className="flex items-start gap-3">
+                <span
+                  aria-hidden
+                  className="mt-0.5 h-9 w-[3px] shrink-0 rounded-full bg-white/[0.30]"
+                />
+                <div className="min-w-0 flex-1">
+                  <p className="truncate text-[14px] font-semibold leading-tight text-white">
+                    {row.title}
+                  </p>
+                  <p className="mt-0.5 text-[12px] leading-tight text-white">
+                    With your tutor · {fmtDate(row.activity_date)}
+                  </p>
+                </div>
+                <span className="shrink-0 text-[15px] font-semibold leading-tight tabular-nums text-white">
+                  {(row.duration_minutes / 60).toFixed(1)}
+                  <span className="ml-0.5 text-[10px] font-medium text-white">h</span>
+                </span>
+              </div>
+              {/*
+                The second route to a signature, and the one most apprentices
+                need: no college link means no tutor inbox, so the supervisor
+                who watched them do the work signs it instead.
+              */}
+              <button
+                type="button"
+                onClick={() => onEmployerLink(row)}
+                className="mt-2.5 inline-flex h-11 items-center gap-1.5 rounded-lg border border-white/[0.14] bg-white/[0.05] px-4 text-[13px] font-medium text-white transition-colors touch-manipulation hover:bg-white/[0.09] active:scale-[0.98]"
+              >
+                <Share2 className="h-3.5 w-3.5" />
+                Ask my supervisor to sign it
+              </button>
+            </li>
+          ))}
+          {pending.length > 5 && (
+            <li className="px-4 py-3 text-[12.5px] font-medium text-white sm:px-5">
+              + {pending.length - 5} more waiting
+            </li>
+          )}
+        </ul>
       )}
     </section>
   );
@@ -1129,7 +1488,7 @@ function RecentEntries({
               <button
                 type="button"
                 onClick={onExportPdf}
-                className="inline-flex items-center gap-1.5 h-9 px-3 rounded-md bg-elec-yellow text-black text-[12px] font-semibold hover:bg-elec-yellow/90 active:scale-[0.97] transition-all touch-manipulation"
+                className="inline-flex h-11 items-center gap-1.5 rounded-lg bg-elec-yellow px-4 text-[13px] font-semibold text-black transition-all touch-manipulation hover:bg-elec-yellow/90 active:scale-[0.98]"
               >
                 <Download className="h-3.5 w-3.5" strokeWidth={2.5} />
                 Evidence pack
@@ -1137,7 +1496,7 @@ function RecentEntries({
               <button
                 type="button"
                 onClick={onExportCsv}
-                className="inline-flex items-center gap-1.5 h-9 px-3 rounded-md border border-white/[0.08] bg-white/[0.02] text-white/85 text-[12px] font-semibold hover:bg-white/[0.04] transition-colors touch-manipulation"
+                className="inline-flex h-11 items-center gap-1.5 rounded-lg border border-white/[0.14] bg-white/[0.05] px-4 text-[13px] font-semibold text-white transition-colors touch-manipulation hover:bg-white/[0.09] active:scale-[0.98]"
               >
                 CSV
               </button>
@@ -1147,72 +1506,86 @@ function RecentEntries({
       />
       {loading ? (
         <div className="flex items-center gap-3 py-6">
-          <Loader2 className="h-4 w-4 animate-spin text-white/55" />
+          <Loader2 className="h-4 w-4 animate-spin text-white" />
           <Eyebrow>Loading…</Eyebrow>
         </div>
       ) : recent.length === 0 ? (
-        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-6 text-center space-y-2">
+        <div className={cn('rounded-2xl border border-elec-yellow/35 p-6 text-center space-y-2', CARD_SURFACE)}>
           <Eyebrow>No college-recorded entries yet</Eyebrow>
-          <p className="text-[13px] text-white/85 leading-relaxed">
+          <p className="text-[13px] text-white leading-relaxed">
             In-app activity (videos, study sessions) auto-counts but tutor-verified hours start when
             you tap "Log time".
           </p>
         </div>
       ) : (
-        <ul className="space-y-2">
-          {recent.map((row) => (
-            <li
-              key={row.id}
-              className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] px-3.5 py-3 sm:px-5 sm:py-4"
-            >
-              {/* Mobile: stacked layout. Desktop (sm+): inline columns. */}
-              <div className="flex items-start justify-between gap-3">
-                <div className="flex-1 min-w-0 space-y-1.5">
-                  <div className="flex items-center gap-2 flex-wrap">
-                    <span
-                      className={cn(
-                        'text-[9.5px] font-medium uppercase tracking-[0.14em] px-1.5 py-[1px] rounded-md border whitespace-nowrap',
-                        STATUS_CHIP_TONE[row.verification_status]
-                      )}
-                    >
-                      {STATUS_LABEL[row.verification_status]}
-                    </span>
-                    <span className="text-[9.5px] uppercase tracking-[0.14em] text-white/55 whitespace-nowrap">
-                      {SOURCE_LABEL[row.source_kind]}
-                    </span>
-                    <span className="text-[10px] text-white/40 whitespace-nowrap">
-                      {fmtDate(row.activity_date)}
-                    </span>
-                    {row.recorded_by_name_snapshot && (
-                      <span className="text-[10px] text-white/40 truncate max-w-[110px] sm:max-w-none">
-                        · {row.recorded_by_name_snapshot}
-                      </span>
-                    )}
-                  </div>
-                  <p className="text-[13px] font-medium text-white leading-snug break-words">
+        /*
+          One divided list, not N floating cards.
+          These were separate full-width cards with a status chip, a source
+          word, a date and a name strung across the top and the hours pinned to
+          the far right edge — on a monitor that put ~1,400px of nothing
+          between the title and its own figure, and six entries filled the
+          screen. A single container with hairline dividers is the same pattern
+          HubWorkList uses, and it reads as a ledger, which is what it is.
+        */
+        <ul
+          className={cn(
+            '-mx-4 divide-y divide-white/[0.10] overflow-hidden border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x',
+            CARD_SURFACE
+          )}
+        >
+          {recent.map((row) => {
+            const rejected = row.verification_status === 'rejected';
+            const counts =
+              row.verification_status === 'verified' ||
+              row.verification_status === 'verified_by_employer';
+            return (
+              <li key={row.id} className="flex items-start gap-3 px-4 py-3 sm:px-5">
+                {/* A rule, not a chip. Volt = banked, white = still pending,
+                    red = referred back. The status is legible at a glance
+                    without spending a whole line of type on a pill. */}
+                <span
+                  aria-hidden
+                  className={cn(
+                    'mt-0.5 h-9 w-[3px] shrink-0 rounded-full',
+                    rejected ? 'bg-red-400' : counts ? 'bg-elec-yellow' : 'bg-white/[0.30]'
+                  )}
+                />
+
+                <div className="min-w-0 flex-1">
+                  <p className="truncate text-[14px] font-semibold leading-tight text-white">
                     {row.title}
                   </p>
-                  {row.verification_rationale && row.verification_status === 'rejected' && (
-                    <p className="text-[12px] text-red-300/85 italic leading-snug">
+                  {/* One meta line, in reading order: what happened, when, who
+                      signed it. Four separate spans became one sentence. */}
+                  <p className="mt-0.5 truncate text-[12px] leading-tight text-white">
+                    {STATUS_LABEL[row.verification_status]} · {SOURCE_LABEL[row.source_kind]}
+                    {row.activity_date ? ` · ${fmtDate(row.activity_date)}` : ''}
+                    {row.recorded_by_name_snapshot ? ` · ${row.recorded_by_name_snapshot}` : ''}
+                  </p>
+                  {row.verification_rationale && rejected && (
+                    <p className="mt-1 text-[12px] italic leading-snug text-red-300">
                       {row.verification_rationale}
                     </p>
                   )}
                 </div>
-                <div className="text-right flex-shrink-0">
-                  <span className="text-[15px] sm:text-[16px] font-semibold text-white tabular-nums leading-none">
-                    {(row.duration_minutes / 60).toFixed(1)}
-                  </span>
-                  <span className="text-[10px] text-white/40 ml-0.5">h</span>
-                </div>
-              </div>
-            </li>
-          ))}
+
+                {/* Sits with the row, not at the far edge of the window. Volt
+                    only when the hours actually count towards gateway. */}
+                <span
+                  className={cn(
+                    'shrink-0 text-[15px] font-semibold tabular-nums leading-tight',
+                    counts ? 'text-elec-yellow' : 'text-white'
+                  )}
+                >
+                  {(row.duration_minutes / 60).toFixed(1)}
+                  <span className="ml-0.5 text-[10px] font-medium text-white">h</span>
+                </span>
+              </li>
+            );
+          })}
         </ul>
       )}
     </section>
   );
 }
 
-// SOURCE_TONE is retained for parity with the source-kind palette though not
-// currently rendered.
-void SOURCE_TONE;

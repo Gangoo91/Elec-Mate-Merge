@@ -89,7 +89,7 @@ function ErrorFallback({
                   onClick={handleSendFeedback}
                   disabled={!feedbackText.trim()}
                   size="sm"
-                  className="flex-1 h-9 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold text-xs touch-manipulation disabled:opacity-40"
+                  className="flex-1 h-9 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold text-xs touch-manipulation disabled:bg-white/[0.08] disabled:text-white/70"
                 >
                   Send Feedback
                 </Button>

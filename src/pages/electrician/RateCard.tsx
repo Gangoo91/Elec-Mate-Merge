@@ -504,7 +504,7 @@ export default function RateCard() {
             <button
               onClick={handleSave}
               disabled={!fieldName.trim() || !fieldPrice || saving}
-              className="h-12 w-full rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-colors hover:bg-elec-yellow/90 disabled:opacity-40 touch-manipulation active:scale-[0.99]"
+              className="h-12 w-full rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-colors hover:bg-elec-yellow/90 disabled:bg-white/[0.08] disabled:text-white/70 touch-manipulation active:scale-[0.99]"
             >
               {saving ? 'Saving…' : sheetMode === 'add' ? 'Add rate' : 'Save changes'}
             </button>

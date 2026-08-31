@@ -32,12 +32,20 @@ interface InteractiveAssessmentToolProps {
   isCompleted: boolean;
 }
 
-const InteractiveAssessmentTool = ({
-  tool,
-  onComplete,
-}: InteractiveAssessmentToolProps) => {
+const InteractiveAssessmentTool = ({ tool, onComplete }: InteractiveAssessmentToolProps) => {
   const [currentStep, setCurrentStep] = useState(0);
-  const [responses, setResponses] = useState<Record<string, { status?: string; details?: string } | string>>({});
+  /*
+   * One shape, not `{...} | string`.
+   *
+   * The status buttons used to store a bare string ('compliant') while the
+   * details field stored an object, and the details `onChange` spread whatever
+   * was already there. Spreading a string into an object literal yields its
+   * characters by index — `{0:'c', 1:'o', …, details:'…'}` — so typing a note
+   * silently destroyed the status and the selected button cleared itself.
+   */
+  const [responses, setResponses] = useState<Record<string, { status: string; details?: string }>>(
+    {}
+  );
   const [notes, setNotes] = useState('');
   const [assessmentComplete, setAssessmentComplete] = useState(false);
 
@@ -97,11 +105,18 @@ const InteractiveAssessmentTool = ({
   const currentItem = assessmentItems[currentStep];
   const progress = ((currentStep + 1) / assessmentItems.length) * 100;
 
-  const handleResponse = (response: { status?: string; details?: string } | string) => {
-    setResponses({
-      ...responses,
-      [currentItem.id]: response,
-    });
+  const setStatus = (status: string) => {
+    setResponses((prev) => ({
+      ...prev,
+      [currentItem.id]: { ...prev[currentItem.id], status },
+    }));
+  };
+
+  const setDetails = (details: string) => {
+    setResponses((prev) => ({
+      ...prev,
+      [currentItem.id]: { ...prev[currentItem.id], status: prev[currentItem.id]?.status, details },
+    }));
   };
 
   const nextStep = () => {
@@ -126,7 +141,7 @@ const InteractiveAssessmentTool = ({
     return (
       <div className="space-y-5 animate-fade-in">
         <div className="space-y-2">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
             Complete
           </span>
           <h2 className="text-[20px] sm:text-[24px] font-semibold tracking-tight text-white leading-tight">
@@ -138,33 +153,33 @@ const InteractiveAssessmentTool = ({
         </div>
 
         <div className="grid grid-cols-2 gap-3">
-          <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-4 text-center space-y-1">
+          <div className="rounded-lg border border-white/[0.10] bg-white/[0.06] p-4 text-center space-y-1">
             <div className="text-[24px] font-semibold text-white font-mono">{completedItems}</div>
-            <div className="text-[10px] uppercase tracking-[0.18em] text-white/55">
+            <div className="text-[10px] uppercase tracking-[0.18em] text-white/70">
               Items assessed
             </div>
           </div>
-          <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-4 text-center space-y-1">
+          <div className="rounded-lg border border-white/[0.10] bg-white/[0.06] p-4 text-center space-y-1">
             <div className="text-[24px] font-semibold text-white font-mono">
               {successRate.toFixed(0)}%
             </div>
-            <div className="text-[10px] uppercase tracking-[0.18em] text-white/55">
+            <div className="text-[10px] uppercase tracking-[0.18em] text-white/70">
               Completion rate
             </div>
           </div>
         </div>
 
         {notes && (
-          <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-2">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
               Your notes
             </span>
             <p className="text-[14px] text-white/85 leading-relaxed">{notes}</p>
           </div>
         )}
 
-        <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
             Key points summary
           </span>
           <div className="space-y-2">
@@ -188,7 +203,7 @@ const InteractiveAssessmentTool = ({
   return (
     <div className="space-y-5">
       <div className="space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
           {tool.title}
         </span>
         <div className="flex items-baseline justify-between">
@@ -207,8 +222,8 @@ const InteractiveAssessmentTool = ({
 
       <div className="space-y-4">
         <div className="space-y-2">
-          <div className="flex flex-wrap items-baseline gap-3 text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-            <span className={isHighRisk ? 'text-red-300' : 'text-white/55'}>
+          <div className="flex flex-wrap items-baseline gap-3 text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+            <span className={isHighRisk ? 'text-red-300' : 'text-white/70'}>
               {currentItem.riskLevel} risk
             </span>
             <span className="text-white/25">·</span>
@@ -220,8 +235,8 @@ const InteractiveAssessmentTool = ({
         </div>
 
         {currentItem.guidance && (
-          <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-2">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
               Guidance
             </span>
             <p className="text-[14px] text-white/85 leading-relaxed">{currentItem.guidance}</p>
@@ -229,19 +244,19 @@ const InteractiveAssessmentTool = ({
         )}
 
         <div className="space-y-3">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
             Assessment status
           </span>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
             <button
-              onClick={() => handleResponse('compliant')}
+              onClick={() => setStatus('compliant')}
               className={`
                 flex items-center justify-center gap-2 p-3 rounded-lg border transition-all
                 touch-manipulation active:scale-[0.98] min-h-[44px] text-[14px]
                 ${
-                  responses[currentItem.id] === 'compliant'
-                    ? 'bg-elec-yellow/[0.08] border-elec-yellow/30 text-elec-yellow'
-                    : 'bg-white/[0.02] border-white/[0.06] hover:border-white/10 text-white/85'
+                  responses[currentItem.id]?.status === 'compliant'
+                    ? 'bg-white/[0.06] border-elec-yellow/30 text-elec-yellow'
+                    : 'bg-white/[0.06] border-white/[0.10] hover:border-white/10 text-white/85'
                 }
               `}
             >
@@ -249,14 +264,14 @@ const InteractiveAssessmentTool = ({
               Compliant
             </button>
             <button
-              onClick={() => handleResponse('non-compliant')}
+              onClick={() => setStatus('non-compliant')}
               className={`
                 flex items-center justify-center gap-2 p-3 rounded-lg border transition-all
                 touch-manipulation active:scale-[0.98] min-h-[44px] text-[14px]
                 ${
-                  responses[currentItem.id] === 'non-compliant'
-                    ? 'bg-red-500/[0.08] border-red-500/30 text-red-300'
-                    : 'bg-white/[0.02] border-white/[0.06] hover:border-white/10 text-white/85'
+                  responses[currentItem.id]?.status === 'non-compliant'
+                    ? 'bg-white/[0.06] border-red-500/30 text-red-300'
+                    : 'bg-white/[0.06] border-white/[0.10] hover:border-white/10 text-white/85'
                 }
               `}
             >
@@ -264,14 +279,14 @@ const InteractiveAssessmentTool = ({
               Non-compliant
             </button>
             <button
-              onClick={() => handleResponse('not-applicable')}
+              onClick={() => setStatus('not-applicable')}
               className={`
                 flex items-center justify-center gap-2 p-3 rounded-lg border transition-all
                 touch-manipulation active:scale-[0.98] min-h-[44px] text-[14px]
                 ${
-                  responses[currentItem.id] === 'not-applicable'
+                  responses[currentItem.id]?.status === 'not-applicable'
                     ? 'bg-white/[0.04] border-white/15 text-white'
-                    : 'bg-white/[0.02] border-white/[0.06] hover:border-white/10 text-white/85'
+                    : 'bg-white/[0.06] border-white/[0.10] hover:border-white/10 text-white/85'
                 }
               `}
             >
@@ -287,12 +302,9 @@ const InteractiveAssessmentTool = ({
               label="Additional details (optional)"
               placeholder="Enter specific observations, measurements, or notes..."
               value={responses[currentItem.id]?.details || ''}
-              onChange={(e) =>
-                handleResponse({
-                  ...responses[currentItem.id],
-                  details: e.target.value,
-                })
-              }
+              onChange={(e) => setDetails(e.target.value)}
+              multiline
+              rows={3}
             />
 
             <Button
@@ -331,8 +343,8 @@ const InteractiveAssessmentTool = ({
         </div>
       </div>
 
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+      <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-2">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
           Assessment notes
         </span>
         <MobileInput

@@ -189,7 +189,7 @@ export const MobileSelectPicker = ({
                   setOpen(false);
                 }
               }}
-              className="h-11 px-4 rounded-lg font-semibold text-xs bg-elec-yellow border border-elec-yellow text-black touch-manipulation active:scale-[0.98] disabled:opacity-30"
+              className="h-11 px-4 rounded-lg font-semibold text-xs bg-elec-yellow border border-elec-yellow text-black touch-manipulation active:scale-[0.98] disabled:bg-white/[0.08] disabled:text-white/70"
             >
               Use
             </button>

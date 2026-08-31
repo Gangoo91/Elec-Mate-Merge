@@ -282,17 +282,10 @@ const InstrumentationModule8Section4 = () => {
 
         <TLDR
           points={[
-            'Preventive maintenance means replacing or repairing something before it fails, rather than after.',
-            'It is an economic exchange: a smaller cost now against a larger cost later.',
             '🔴 Running to failure is perfectly rational — until the consequence of failure becomes unacceptable.',
-            'That is the decision, and it turns maintenance from ritual into something with a stated reason.',
             '🔴 Proof testing helps in two separate ways: early detection, AND the benefit of regular exercise.',
             '🔴 Inactivity itself causes failures — valves stick, bearings seize, batteries deteriorate through non-use.',
-            'So cycling a component is maintenance, not merely measurement.',
             '🔴 A dormant trip is the hardest fault in this module: a failed one looks exactly like a working one.',
-            'Only a deliberate test separates them, and the demand it would fail is by definition an emergency.',
-            'Proof testing means exercising across the full range — and for a valve, stroking it and proving the effect.',
-            'The difficulty is doing that without disturbing the process. Testing some devices beats testing none.',
             '🔴 Spares must be held AND pre-configured, or a test that finds a fault changes nothing.',
             '🔴🔴 Maintenance causes faults. Every intervention disturbs a system that was working.',
             'Evidence-based maintenance produces data somebody looks at. Ritual produces data nobody uses.',

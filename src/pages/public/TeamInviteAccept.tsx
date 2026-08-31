@@ -358,7 +358,7 @@ export default function TeamInviteAccept() {
                     <button
                       onClick={handleJoinAsCurrent}
                       disabled={submitting}
-                      className="w-full h-12 rounded-xl bg-elec-yellow text-black font-semibold text-[14px] flex items-center justify-center gap-2 active:scale-[0.99] disabled:opacity-50 touch-manipulation"
+                      className="w-full h-12 rounded-xl bg-elec-yellow text-black font-semibold text-[14px] flex items-center justify-center gap-2 active:scale-[0.99] disabled:bg-white/[0.08] disabled:text-white/70 touch-manipulation"
                     >
                       {submitting ? (
                         <Loader2 className="h-4 w-4 animate-spin" />
@@ -394,7 +394,7 @@ export default function TeamInviteAccept() {
                     <button
                       onClick={handleSwitchAccount}
                       disabled={submitting}
-                      className="w-full h-12 rounded-xl bg-elec-yellow text-black font-semibold text-[14px] flex items-center justify-center gap-2 active:scale-[0.99] disabled:opacity-50 touch-manipulation"
+                      className="w-full h-12 rounded-xl bg-elec-yellow text-black font-semibold text-[14px] flex items-center justify-center gap-2 active:scale-[0.99] disabled:bg-white/[0.08] disabled:text-white/70 touch-manipulation"
                     >
                       {submitting ? (
                         <Loader2 className="h-4 w-4 animate-spin" />
@@ -482,7 +482,7 @@ export default function TeamInviteAccept() {
                     <button
                       onClick={submit}
                       disabled={submitting}
-                      className="w-full h-12 rounded-xl bg-elec-yellow text-black font-semibold text-[14px] flex items-center justify-center gap-2 active:scale-[0.99] disabled:opacity-50 touch-manipulation"
+                      className="w-full h-12 rounded-xl bg-elec-yellow text-black font-semibold text-[14px] flex items-center justify-center gap-2 active:scale-[0.99] disabled:bg-white/[0.08] disabled:text-white/70 touch-manipulation"
                     >
                       {submitting ? (
                         <Loader2 className="h-4 w-4 animate-spin" />

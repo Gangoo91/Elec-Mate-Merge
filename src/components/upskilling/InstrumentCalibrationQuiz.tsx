@@ -247,7 +247,7 @@ const InstrumentCalibrationQuiz = () => {
           <Button
             onClick={handleNext}
             disabled={selectedAnswer === null}
-            className="bg-elec-yellow text-black hover:bg-yellow-400 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="bg-elec-yellow text-black hover:bg-yellow-400 disabled:bg-white/[0.08] disabled:text-white/70 disabled:cursor-not-allowed"
           >
             {currentQuestion === questions.length - 1 ? 'Finish Quiz' : 'Next'}
           </Button>

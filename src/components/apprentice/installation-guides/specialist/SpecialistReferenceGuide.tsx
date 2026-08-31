@@ -742,16 +742,15 @@ const SpecialistReferenceGuide = () => {
   return (
     <div className="space-y-6">
       {/* BS 7671 Part 7 Quick Reference */}
-      <Card className="border-white/[0.06] bg-white/5">
-        <CardHeader>
+      <Card variant="plain">
+        <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <Book className="h-6 w-6 text-white/55" />
-            <CardTitle className="text-white">BS 7671 Part 7 Quick Reference</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">BS 7671 Part 7 Quick Reference</CardTitle>
           </div>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <Alert className="border-white/[0.06] bg-white/[0.02]">
-            <Info className="h-4 w-4 text-white/55" />
+        <CardContent className="space-y-4 p-0">
+          <Alert className="border-white/[0.10] bg-white/[0.06]">
+            <Info className="h-4 w-4 text-white/70" />
             <AlertDescription className="text-white/85 text-sm">
               Part 7 supplements the general requirements of Parts 1-6. Where there is any conflict,
               Part 7 requirements take precedence for the specific installation type.
@@ -761,7 +760,7 @@ const SpecialistReferenceGuide = () => {
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-white/[0.06]">
+                <tr className="border-b border-white/[0.10]">
                   <th className="text-left py-2 text-white/85">Section</th>
                   <th className="text-left py-2 text-white/85">Title</th>
                   <th className="text-left py-2 text-white/85">Applicability</th>
@@ -770,7 +769,7 @@ const SpecialistReferenceGuide = () => {
               </thead>
               <tbody>
                 {bs7671Part7Sections.map((section, idx) => (
-                  <tr key={idx} className="border-b border-white/[0.06] hover:bg-white/[0.02]">
+                  <tr key={idx} className="border-b border-white/[0.10] hover:bg-white/[0.06]">
                     <td className="py-2">
                       <Badge variant="outline" className="border-white/10 text-white">
                         {section.section}
@@ -788,15 +787,14 @@ const SpecialistReferenceGuide = () => {
       </Card>
 
       {/* IET Guidance Note 7 Overview */}
-      <Card className="border-white/[0.06] bg-white/5">
-        <CardHeader>
+      <Card variant="plain">
+        <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <BookOpen className="h-6 w-6 text-white/55" />
-            <CardTitle className="text-white">{gn7Contents.title}</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">{gn7Contents.title}</CardTitle>
           </div>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+        <CardContent className="space-y-4 p-0">
+          <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
             <div className="flex items-center justify-between mb-3">
               <span className="text-white/85 font-medium">{gn7Contents.edition}</span>
               <Badge variant="outline" className="border-white/10 text-white">
@@ -808,7 +806,7 @@ const SpecialistReferenceGuide = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
             {gn7Contents.chapters.map((chapter, idx) => (
-              <div key={idx} className="bg-white/[0.02] p-3 rounded border border-white/[0.06]">
+              <div key={idx} className="bg-white/[0.06] p-3 rounded border border-white/[0.10]">
                 <div className="flex items-center gap-2 mb-1">
                   <Badge variant="outline" className="border-white/10 text-white text-xs">
                     Ch.{chapter.chapter}
@@ -823,25 +821,24 @@ const SpecialistReferenceGuide = () => {
       </Card>
 
       {/* Certification Requirements */}
-      <Card className="border-white/[0.06] bg-white/5">
-        <CardHeader>
+      <Card variant="plain">
+        <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <ClipboardList className="h-6 w-6 text-white/55" />
-            <CardTitle className="text-white">
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">
               Certification Requirements by Installation Type
             </CardTitle>
           </div>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 p-0">
           {certificationRequirements.map((cert, idx) => (
-            <div key={idx} className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+            <div key={idx} className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
               <h4 className="font-medium text-white/85 mb-3">{cert.installationType}</h4>
 
               <div className="space-y-2 mb-3">
                 {cert.certificates.map((doc, docIdx) => (
                   <div key={docIdx} className="flex items-center justify-between text-sm">
                     <div className="flex items-center gap-2">
-                      <FileText className="h-4 w-4 text-white/55" />
+                      <FileText className="h-4 w-4 text-white/70" />
                       <span className="text-white">{doc.type}</span>
                       <span className="text-white">- {doc.description}</span>
                     </div>
@@ -864,17 +861,16 @@ const SpecialistReferenceGuide = () => {
       </Card>
 
       {/* Industry Bodies and Schemes */}
-      <Card className="border-white/[0.06] bg-white/5">
-        <CardHeader>
+      <Card variant="plain">
+        <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <Building className="h-6 w-6 text-white/55" />
-            <CardTitle className="text-white">Industry Bodies & Certification Schemes</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">Industry Bodies & Certification Schemes</CardTitle>
           </div>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 p-0">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             {industrySchemes.map((scheme, idx) => (
-              <div key={idx} className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+              <div key={idx} className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
                 <div className="flex items-center justify-between mb-2">
                   <h4 className="font-bold text-white/85">{scheme.name}</h4>
                   <Badge variant="outline" className="border-white/10 text-white text-xs">
@@ -889,7 +885,7 @@ const SpecialistReferenceGuide = () => {
                   {scheme.applicableTo.map((app, appIdx) => (
                     <span
                       key={appIdx}
-                      className="text-xs bg-white/[0.02] text-white/85 px-2 py-0.5 rounded"
+                      className="text-xs bg-white/[0.06] text-white/85 px-2 py-0.5 rounded"
                     >
                       {app}
                     </span>
@@ -901,7 +897,7 @@ const SpecialistReferenceGuide = () => {
                   <ul className="space-y-0.5 text-white">
                     {scheme.benefits.slice(0, 3).map((benefit, bIdx) => (
                       <li key={bIdx} className="flex items-start gap-1">
-                        <CheckCircle className="h-3 w-3 text-white/55 mt-0.5 flex-shrink-0" />
+                        <CheckCircle className="h-3 w-3 text-white/70 mt-0.5 flex-shrink-0" />
                         {benefit}
                       </li>
                     ))}
@@ -914,31 +910,30 @@ const SpecialistReferenceGuide = () => {
       </Card>
 
       {/* Further Training and Qualifications */}
-      <Card className="border-white/[0.06] bg-white/5">
-        <CardHeader>
+      <Card variant="plain">
+        <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <GraduationCap className="h-6 w-6 text-white/55" />
-            <CardTitle className="text-white">Further Training & Qualifications</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">Further Training & Qualifications</CardTitle>
           </div>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 p-0">
           {qualificationsPathways.map((pathway, idx) => (
-            <div key={idx} className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+            <div key={idx} className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
               <div className="flex items-center gap-2 mb-3">
                 {pathway.area === 'Solar PV Installation' && (
-                  <Sun className="h-5 w-5 text-white/55" />
+                  <Sun className="h-5 w-5 text-white/70" />
                 )}
                 {pathway.area === 'EV Charging Installation' && (
-                  <Car className="h-5 w-5 text-white/55" />
+                  <Car className="h-5 w-5 text-white/70" />
                 )}
                 {pathway.area === 'Inspection and Testing' && (
-                  <Zap className="h-5 w-5 text-white/55" />
+                  <Zap className="h-5 w-5 text-white/70" />
                 )}
                 {pathway.area === 'Design and Verification' && (
-                  <Target className="h-5 w-5 text-white/55" />
+                  <Target className="h-5 w-5 text-white/70" />
                 )}
                 {pathway.area === 'Building Regulations' && (
-                  <Building className="h-5 w-5 text-white/55" />
+                  <Building className="h-5 w-5 text-white/70" />
                 )}
                 {pathway.area === '18th Edition BS 7671' && (
                   <Book className="h-5 w-5 text-red-400" />
@@ -950,7 +945,7 @@ const SpecialistReferenceGuide = () => {
                 {pathway.qualifications.map((qual, qIdx) => (
                   <div
                     key={qIdx}
-                    className="flex items-center justify-between bg-white/[0.02] p-2 rounded"
+                    className="flex items-center justify-between bg-white/[0.06] p-2 rounded"
                   >
                     <div>
                       <span className="text-white text-sm font-medium">{qual.name}</span>
@@ -977,16 +972,15 @@ const SpecialistReferenceGuide = () => {
       </Card>
 
       {/* IP Ratings Quick Reference */}
-      <Card className="border-white/[0.06] bg-white/5">
-        <CardHeader>
+      <Card variant="plain">
+        <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <Shield className="h-6 w-6 text-white/55" />
-            <CardTitle className="text-white">IP Ratings Quick Reference</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">IP Ratings Quick Reference</CardTitle>
           </div>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <Alert className="border-white/[0.06] bg-white/[0.02]">
-            <Info className="h-4 w-4 text-white/55" />
+        <CardContent className="space-y-4 p-0">
+          <Alert className="border-white/[0.10] bg-white/[0.06]">
+            <Info className="h-4 w-4 text-white/70" />
             <AlertDescription className="text-white/85 text-sm">
               IP = Ingress Protection. First digit (0-6) = solid object protection. Second digit
               (0-9) = water protection. X = not specified.
@@ -996,7 +990,7 @@ const SpecialistReferenceGuide = () => {
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-white/[0.06]">
+                <tr className="border-b border-white/[0.10]">
                   <th className="text-left py-2 text-white/85">IP Rating</th>
                   <th className="text-left py-2 text-white/85">Solid Protection</th>
                   <th className="text-left py-2 text-white/85">Water Protection</th>
@@ -1005,7 +999,7 @@ const SpecialistReferenceGuide = () => {
               </thead>
               <tbody>
                 {ipRatingsTable.map((ip, idx) => (
-                  <tr key={idx} className="border-b border-white/[0.06]">
+                  <tr key={idx} className="border-b border-white/[0.10]">
                     <td className="py-2">
                       <Badge variant="outline" className="border-white/10 text-white">
                         {ip.rating}
@@ -1023,18 +1017,17 @@ const SpecialistReferenceGuide = () => {
       </Card>
 
       {/* RCD Types Reference */}
-      <Card className="border-white/[0.06] bg-white/5">
-        <CardHeader>
+      <Card variant="plain">
+        <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <Zap className="h-6 w-6 text-white/55" />
-            <CardTitle className="text-white">RCD Types Quick Reference</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">RCD Types Quick Reference</CardTitle>
           </div>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 p-0">
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-white/[0.06]">
+                <tr className="border-b border-white/[0.10]">
                   <th className="text-left py-2 text-white/85">RCD Type</th>
                   <th className="text-left py-2 text-white/85">Detects</th>
                   <th className="text-left py-2 text-white/85">Applications</th>
@@ -1043,7 +1036,7 @@ const SpecialistReferenceGuide = () => {
               </thead>
               <tbody>
                 {rcdTypesTable.map((rcd, idx) => (
-                  <tr key={idx} className="border-b border-white/[0.06]">
+                  <tr key={idx} className="border-b border-white/[0.10]">
                     <td className="py-2">
                       <Badge variant="outline" className="border-white/10 text-white">
                         {rcd.type}
@@ -1061,21 +1054,20 @@ const SpecialistReferenceGuide = () => {
       </Card>
 
       {/* Useful Resources */}
-      <Card className="border-white/[0.06] bg-white/5">
-        <CardHeader>
+      <Card variant="plain">
+        <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <ExternalLink className="h-6 w-6 text-white/55" />
-            <CardTitle className="text-white">Useful Resources & Links</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">Useful Resources & Links</CardTitle>
           </div>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 p-0">
           {usefulResources.map((category, idx) => (
-            <div key={idx} className="bg-white/[0.02] p-4 rounded-lg border border-white/[0.06]">
+            <div key={idx} className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
               <h4 className="font-medium text-white/85 mb-3">{category.category}</h4>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                 {category.resources.map((resource, rIdx) => (
                   <div key={rIdx} className="flex items-start gap-2 text-sm">
-                    <Lightbulb className="h-4 w-4 text-white/55 mt-0.5 flex-shrink-0" />
+                    <Lightbulb className="h-4 w-4 text-white/70 mt-0.5 flex-shrink-0" />
                     <div>
                       <span className="text-white/85 font-medium">{resource.name}</span>
                       <p className="text-xs text-white">{resource.description}</p>
@@ -1090,40 +1082,39 @@ const SpecialistReferenceGuide = () => {
       </Card>
 
       {/* Career Progression */}
-      <Card className="border-elec-yellow/30 bg-white/5">
-        <CardHeader>
+      <Card variant="plain">
+        <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <Award className="h-6 w-6 text-elec-yellow" />
-            <CardTitle className="text-elec-yellow">
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">
               Specialist Installer Career Progression
             </CardTitle>
           </div>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 p-0">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <div className="bg-elec-yellow/10 p-4 rounded-lg border border-elec-yellow/20 text-center">
+            <div className="p-4 rounded-lg border border-elec-yellow/50 bg-white/[0.06] text-center">
               <div className="text-2xl font-bold text-elec-yellow mb-2">1</div>
               <h4 className="font-medium text-white mb-2">Qualified Electrician</h4>
               <p className="text-xs text-white">NVQ L3 + AM2 + 18th Edition + 2391</p>
             </div>
-            <div className="bg-elec-yellow/10 p-4 rounded-lg border border-elec-yellow/20 text-center">
+            <div className="p-4 rounded-lg border border-elec-yellow/50 bg-white/[0.06] text-center">
               <div className="text-2xl font-bold text-elec-yellow mb-2">2</div>
               <h4 className="font-medium text-white mb-2">Specialist Training</h4>
               <p className="text-xs text-white">Solar PV / EV / Medical locations courses</p>
             </div>
-            <div className="bg-elec-yellow/10 p-4 rounded-lg border border-elec-yellow/20 text-center">
+            <div className="p-4 rounded-lg border border-elec-yellow/50 bg-white/[0.06] text-center">
               <div className="text-2xl font-bold text-elec-yellow mb-2">3</div>
               <h4 className="font-medium text-white mb-2">Scheme Registration</h4>
               <p className="text-xs text-white">MCS / OZEV / Competent Person scheme</p>
             </div>
-            <div className="bg-elec-yellow/10 p-4 rounded-lg border border-elec-yellow/20 text-center">
+            <div className="p-4 rounded-lg border border-elec-yellow/50 bg-white/[0.06] text-center">
               <div className="text-2xl font-bold text-elec-yellow mb-2">4</div>
               <h4 className="font-medium text-white mb-2">Specialist Installer</h4>
               <p className="text-xs text-white">Certified specialist with scheme membership</p>
             </div>
           </div>
 
-          <Alert className="border-elec-yellow/50 bg-elec-yellow/10">
+          <Alert className="border-elec-yellow/60 bg-white/[0.06]">
             <Lightbulb className="h-4 w-4 text-elec-yellow" />
             <AlertDescription className="text-elec-yellow/90 text-sm">
               Specialist areas like Solar PV and EV charging offer excellent career progression
@@ -1135,14 +1126,14 @@ const SpecialistReferenceGuide = () => {
       </Card>
 
       {/* Contact Information */}
-      <Card className="border-white/50/30 bg-white/5">
-        <CardHeader>
+      <Card className="border-elec-yellow/30 bg-white/5">
+        <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
             <Users className="h-6 w-6 text-white" />
-            <CardTitle className="text-white">Key Industry Contacts</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">Key Industry Contacts</CardTitle>
           </div>
         </CardHeader>
-        <CardContent>
+        <CardContent className="p-0">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
             <div className="bg-white/5 p-4 rounded-lg border border-white/20">
               <h4 className="font-medium text-white mb-2">IET</h4>

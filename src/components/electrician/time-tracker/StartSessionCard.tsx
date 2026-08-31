@@ -95,7 +95,7 @@ const StartSessionCard = ({
         type="button"
         onClick={onStart}
         disabled={isStarting}
-        className="flex h-11 shrink-0 items-center gap-2 rounded-xl bg-elec-yellow px-5 text-[15px] font-semibold text-black transition-colors touch-manipulation active:scale-[0.98] disabled:opacity-70"
+        className="flex h-11 shrink-0 items-center gap-2 rounded-xl bg-elec-yellow px-5 text-[15px] font-semibold text-black transition-colors touch-manipulation active:scale-[0.98] disabled:bg-white/[0.08] disabled:text-white/70"
       >
         {isStarting ? (
           <Loader2 className="h-4 w-4 animate-spin" />

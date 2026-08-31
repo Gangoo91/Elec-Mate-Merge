@@ -68,7 +68,7 @@ export const pageSectionHeadingCn = 'text-[15px] font-semibold tracking-tight te
 
 /** Primary action. The document the page exists to produce. */
 export const pagePrimaryBtnCn =
-  'h-12 w-full rounded-xl bg-elec-yellow text-[15px] font-semibold text-black hover:bg-elec-yellow/90 touch-manipulation active:scale-[0.99] disabled:opacity-60';
+  'h-12 w-full rounded-xl bg-elec-yellow text-[15px] font-semibold text-black hover:bg-elec-yellow/90 touch-manipulation active:scale-[0.99] disabled:bg-white/[0.08] disabled:text-white/70';
 
 /** Secondary action. */
 export const pageSecondaryBtnCn =

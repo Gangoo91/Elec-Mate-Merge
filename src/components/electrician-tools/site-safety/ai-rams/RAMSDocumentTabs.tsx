@@ -324,7 +324,7 @@ export const RAMSDocumentTabs: React.FC<RAMSDocumentTabsProps> = ({
                 type="button"
                 onClick={onExportCombined}
                 disabled={isExporting}
-                className="inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-elec-yellow px-5 text-[13.5px] font-semibold text-black transition-colors hover:bg-elec-yellow/90 disabled:opacity-50 touch-manipulation sm:col-span-2"
+                className="inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-elec-yellow px-5 text-[13.5px] font-semibold text-black transition-colors hover:bg-elec-yellow/90 disabled:bg-white/[0.08] disabled:text-white/70 touch-manipulation sm:col-span-2"
               >
                 {isExporting ? (
                   <Loader2 className="h-4 w-4 animate-spin" />
@@ -400,7 +400,7 @@ export const RAMSDocumentTabs: React.FC<RAMSDocumentTabsProps> = ({
               type="button"
               onClick={onExportCombined}
               disabled={isExporting}
-              className="inline-flex h-12 flex-1 items-center justify-center gap-2 rounded-xl bg-elec-yellow px-5 text-[13.5px] font-semibold text-black transition-colors hover:bg-elec-yellow/90 disabled:opacity-50 touch-manipulation"
+              className="inline-flex h-12 flex-1 items-center justify-center gap-2 rounded-xl bg-elec-yellow px-5 text-[13.5px] font-semibold text-black transition-colors hover:bg-elec-yellow/90 disabled:bg-white/[0.08] disabled:text-white/70 touch-manipulation"
             >
               {isExporting ? (
                 <Loader2 className="h-4 w-4 animate-spin" />

@@ -276,13 +276,40 @@ export function PortfolioDetailSheet({
   const handleAddComment = async () => {
     if (!newComment.trim()) return;
 
-    await addComment({
-      contextType: 'evidence',
-      contextId: entry.id,
-      content: newComment,
-    });
-
-    setNewComment('');
+    /*
+     * author_name and author_role are NOT NULL on portfolio_comments, and
+     * this call used to pass neither — so the insert was rejected before it
+     * reached the table. The reply then appeared in the UI anyway (the hook
+     * added it optimistically and swallowed the error), so the apprentice
+     * believed their tutor had received it.
+     */
+    const name = user?.user_metadata?.full_name || user?.user_metadata?.name || 'Apprentice';
+    try {
+      await addComment({
+        contextType: 'evidence',
+        contextId: entry.id,
+        authorId: user?.id,
+        authorName: name,
+        authorRole: 'student',
+        authorInitials: name
+          .split(' ')
+          .map((part: string) => part[0])
+          .join('')
+          .toUpperCase()
+          .slice(0, 2),
+        content: newComment,
+        mentions: [],
+        requiresAction: false,
+        isResolved: false,
+      });
+      setNewComment('');
+    } catch {
+      toast({
+        title: 'Comment not sent',
+        description: 'We could not save your reply. Check your connection and try again.',
+        variant: 'destructive',
+      });
+    }
   };
 
   const handleShare = async () => {
@@ -610,7 +637,10 @@ export function PortfolioDetailSheet({
                       })}
                     </p>
                   </div>
-                  {entry.timeSpent && (
+                  {/* `{0 && …}` renders a literal 0 in JSX — that stray "0"
+                      was sitting next to the Created date on every entry with
+                      no time logged. Compare, don't coerce. */}
+                  {entry.timeSpent > 0 && (
                     <div className="space-y-1">
                       <span className="text-xs text-white flex items-center gap-1">
                         <Clock className="h-3 w-3" />

@@ -77,7 +77,7 @@ export const cableColours: FlashcardData[] = [
     question:
       'Under BS 7671, what must be done if old and new cable colours exist in the same installation?',
     answer:
-      'A warning label must be fixed at or near the appropriate distribution board stating that the installation contains wiring with two different colour codes. This is required by Regulation 514.14 to prevent confusion and potential danger.',
+      'Unambiguous marking must be provided at the interface where the two systems meet, so the difference cannot cause confusion. ⚠️ This used to be Reg 514.14, which has been DELETED — in BS 7671:2018+A4:2026 the requirement lives at Reg 514.1.3.',
     category: 'Harmonisation',
     difficulty: 'hard',
   },
@@ -206,7 +206,7 @@ export const cableColours: FlashcardData[] = [
     question:
       'You open a consumer unit and find red and black wires feeding the circuits, but the new main switch has been wired with brown and blue tails. Is this acceptable and what action must you take?',
     answer:
-      'This is acceptable provided a warning notice is fitted at the consumer unit stating that wiring with two different colour codes exists. Under BS 7671 Regulation 514.14 the label must be present wherever both old and new colours co-exist. No rewire is required for the existing red/black circuits.',
+      'Acceptable, provided unambiguous marking is provided at the interface between the old and new identification systems, per Reg 514.1.3 in A4:2026 (the former Reg 514.14 has been deleted). No rewire of the existing red/black circuits is required.',
     category: 'Harmonisation',
     difficulty: 'hard',
   },

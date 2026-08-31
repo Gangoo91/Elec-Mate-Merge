@@ -257,7 +257,7 @@ const QuickCVSheet = ({ isOpen, onClose }: QuickCVSheetProps) => {
                         type="button"
                         onClick={handleDownload}
                         disabled={isDownloading}
-                        className="flex-1 text-[12px] font-semibold uppercase tracking-[0.14em] text-black bg-elec-yellow hover:bg-elec-yellow/90 active:bg-elec-yellow/85 rounded-full px-4 py-2.5 min-h-[40px] inline-flex items-center justify-center gap-2 touch-manipulation transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="flex-1 text-[12px] font-semibold uppercase tracking-[0.14em] text-black bg-elec-yellow hover:bg-elec-yellow/90 active:bg-elec-yellow/85 rounded-full px-4 py-2.5 min-h-[40px] inline-flex items-center justify-center gap-2 touch-manipulation transition-colors disabled:bg-white/[0.08] disabled:text-white/70 disabled:cursor-not-allowed"
                       >
                         {isDownloading ? (
                           <Loader2 className="h-4 w-4 animate-spin" />

@@ -92,7 +92,7 @@ const quizQuestions = [
     ],
     correctIndex: 1,
     explanation:
-      'Conductivity is a very non-specific form of analytical measurement. It is a gross indication of ionic content and says nothing about the type of ions. That makes it meaningful only where you already know which species are present, or where the goal is to eliminate all ions — as in ultra-pure water treatment, where the ideal is zero conductivity.',
+      'Conductivity is about as unselective as analytical measurement gets. It reports roughly how much ionic material is present and nothing whatever about what that material is. That makes it meaningful only where you already know which species are present, or where the goal is to eliminate all ions — as in ultra-pure water treatment, where the ideal is zero conductivity.',
   },
   {
     id: 3,
@@ -118,7 +118,7 @@ const quizQuestions = [
     ],
     correctIndex: 1,
     explanation:
-      'Colour change is common for manual laboratory analysis but is not well suited to continuous process measurement. By far the most common method is electrochemical: pH-sensitive electrodes inserted into the solution generate a voltage that depends on its pH.',
+      'Dyes and papers work well enough on a bench sample but there is no way to run them continuously on a live process. Nearly all process pH is measured electrochemically instead: an electrode sitting in the liquid produces a small voltage that varies with acidity.',
   },
   {
     id: 5,
@@ -279,9 +279,9 @@ const InstrumentationModule2Section7 = () => {
           <p>This is the single most important limitation, and it is worth being blunt about:</p>
           <p>
             <strong>
-              Conductivity measurement is a very non-specific form of analytical measurement. The
-              conductivity of a liquid solution is a gross indication of its ionic content, but it
-              tells us nothing specific about the type or types of ions present.
+              Conductivity is about as unselective as analytical measurement gets. It gives you a
+              rough total for how much ionic material is dissolved in a liquid, and tells you
+              nothing at all about which ions those are.
             </strong>
           </p>
           <p>
@@ -319,11 +319,11 @@ const InstrumentationModule2Section7 = () => {
           question="A conductivity alarm trips on a cooling water return. What does that reading actually establish?"
           options={[
             'That a specific contaminant has entered the system',
-            'That the ionic content has risen — something conductive is present, but not what',
             'That the water temperature has risen',
             'That the pH has fallen',
+            'That the ionic content has risen — something conductive is present, but not what',
           ]}
-          correctIndex={1}
+          correctIndex={3}
           explanation="Conductivity is a gross indication of ionic content. A rise tells you dissolved ionic material has increased — a leak, a dosing fault, an ingress — but the instrument cannot distinguish between them. Identifying the contaminant requires a different measurement or a laboratory sample."
         />
 
@@ -343,17 +343,17 @@ const InstrumentationModule2Section7 = () => {
           <p>
             The difficulty is that{' '}
             <strong>
-              the derived conductance value does not tell us much about the liquid itself, because
-              that measurement depends just as much on the geometry of the plates — their area and
-              their separation distance — as it does on the ionic activity of the solution
+              the conductance you calculate says surprisingly little about the liquid, because the
+              plates themselves are half the answer — how big they are and how far apart they sit
+              weigh just as heavily as anything happening in the solution
             </strong>
             .
           </p>
           <p>
-            Kuphaldt draws the exact parallel that makes this click for anyone with an electrical
+            There is a parallel here that lands immediately for anyone with an electrical
             background. Measure the resistance of a piece of wire and you learn the resistance{' '}
-            <em>of that specimen</em> — a result depending on its length and cross-section as much
-            as on the metal. To say something about the metal itself you need{' '}
+            <em>of that specimen</em> &mdash; a result depending on its length and cross-section as
+            much as on the metal. To say something about the metal itself you need{' '}
             <strong>resistivity</strong>, which accounts for the dimensions.
           </p>
           <p>
@@ -419,22 +419,22 @@ const InstrumentationModule2Section7 = () => {
           onSite="Because it generates a tiny voltage from a very high-impedance source, pH wiring is fussy in a way almost nothing else in this module is."
         >
           <p>
-            Colour change — indicator dyes and papers — is a common pH test for manual laboratory
-            analysis, but it is not well suited to continuous process measurement.
+            Dyes and papers that change colour are fine for a sample on a bench, and there is no
+            practical way to run them continuously on a live process.
           </p>
           <p>
             <strong>
-              By far the most common pH measurement method in use is electrochemical: special
-              pH-sensitive electrodes inserted into an aqueous solution will generate a voltage
-              dependent upon the pH value of that solution.
+              So process pH is measured electrochemically almost without exception: an electrode
+              designed to respond to acidity sits in the liquid and produces a small voltage, and
+              that voltage varies with the pH around it.
             </strong>
           </p>
           <p>
-            Like other potentiometric analytical measurements, it rests on the{' '}
-            <strong>Nernst equation</strong>, which describes the electrical potential created by
-            ions migrating through a permeable membrane. The textbook illustration is a
-            concentration cell: two halves of an electrochemical cell filled with solutions of
-            different ion concentration, generating a potential between them.
+            Like the other voltage-producing analytical measurements, it rests on the{' '}
+            <strong>Nernst equation</strong> &mdash; the relationship that predicts what potential
+            appears when ions move across a membrane that only partly lets them through. The
+            standard illustration is a concentration cell: one cell, two halves, a different ion
+            concentration in each, and a voltage between them as a result.
           </p>
           <p>
             Compare that with everything else in this module and note where it sits. A thermocouple
@@ -456,12 +456,12 @@ const InstrumentationModule2Section7 = () => {
           id="ins-2-7-ph"
           question="What does a pH electrode physically produce?"
           options={[
-            'A resistance that varies with acidity',
             'A voltage generated by ions migrating through a permeable membrane',
+            'A resistance that varies with acidity',
             'A current proportional to hydrogen concentration',
             'A frequency that varies with pH',
           ]}
-          correctIndex={1}
+          correctIndex={0}
           explanation="pH measurement is potentiometric — voltage-based. The electrode generates a potential described by the Nernst equation, arising from ions migrating through a permeable membrane. That makes it a primary sensing element in exactly the sense Section 2.1 defined, and one with a very high source impedance."
         />
 

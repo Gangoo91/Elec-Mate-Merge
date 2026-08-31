@@ -224,7 +224,7 @@ const InstrumentationQuiz: React.FC<InstrumentationQuizProps> = ({
                 <Button
                   onClick={handleSubmitAnswer}
                   disabled={selectedAnswer === null}
-                  className="bg-elec-yellow text-elec-dark hover:bg-yellow-600 disabled:opacity-50"
+                  className="bg-elec-yellow text-elec-dark hover:bg-yellow-600 disabled:bg-white/[0.08] disabled:text-white/70"
                 >
                   Submit Answer
                 </Button>

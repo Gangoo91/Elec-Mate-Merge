@@ -53,7 +53,16 @@ const FlashcardSetCard = ({ set, onStart }: FlashcardSetCardProps) => {
       className={cn(
         CARD_BASE,
         CARD_NEUTRAL,
-        'w-full !flex-row items-center gap-3.5 p-4 min-h-[76px]'
+        'min-h-[76px] w-full gap-2.5 p-3.5',
+        /*
+          Stacked on a small phone, side-by-side from 430px.
+          These sit two-up, so on a 375px screen each cell is ~166px — after a
+          40px icon the title has about 110px, which clamps "Cable Colours &
+          Identification" to a truncated two lines. Stacking gives the title
+          the full cell width.
+        */
+        'flex-col items-start',
+        'min-[430px]:!flex-row min-[430px]:items-center min-[430px]:gap-3.5 min-[430px]:p-4'
       )}
     >
       {Icon && (
@@ -64,30 +73,36 @@ const FlashcardSetCard = ({ set, onStart }: FlashcardSetCardProps) => {
 
       <div className="min-w-0 flex-1 space-y-1.5">
         <div className="flex items-center gap-2">
-          <h3 className="truncate text-[14.5px] font-semibold tracking-tight text-white">
+          <h3 className="line-clamp-2 text-[14.5px] font-semibold leading-tight tracking-tight text-white">
             {set.title}
           </h3>
           {set.completed && <CheckCircle className="h-4 w-4 shrink-0 text-elec-yellow" />}
         </div>
-        <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1 text-[10px] font-medium uppercase tracking-[0.16em] text-white">
-          <span>{set.difficulty}</span>
-          {levelLabel && (
-            <>
-              <span className="text-elec-yellow">·</span>
-              <span>{levelLabel}</span>
-            </>
-          )}
-          <span className="text-elec-yellow">·</span>
-          <span>{set.count} cards</span>
-          <span className="text-elec-yellow">·</span>
-          <span className="normal-case tracking-normal">{set.estimatedTime}</span>
-        </div>
+        {/*
+          One text node, not a flex row of spans.
+          The separators used to be their own elements, so on a phone — where
+          these sit two-up and each cell is ~170px — the row wrapped and left a
+          dangling "·" at the end of a line, or a leading one at the start of
+          the next. Joined into a single string it wraps like prose and can
+          never orphan a separator.
+        */}
+        <p className="text-[10px] font-medium uppercase leading-relaxed tracking-[0.12em] text-white">
+          {[set.difficulty, levelLabel, `${set.count} cards`].filter(Boolean).join(' · ')}
+          <span className="normal-case tracking-normal"> · {set.estimatedTime}</span>
+        </p>
         {set.lastStudied && <p className="text-[12px] text-white">{set.lastStudied}</p>}
       </div>
 
-      <div className="shrink-0">
-        <MiniProgressRing score={progress} size={38} strokeWidth={3} />
-      </div>
+      {/*
+        Only once there is progress to report.
+        An empty ring with a "0" in it on every un-started set is 26 pieces of
+        noise saying nothing — the absence of a ring already says "not started".
+      */}
+      {progress > 0 && (
+        <div className="shrink-0">
+          <MiniProgressRing score={progress} size={38} strokeWidth={3} />
+        </div>
+      )}
     </button>
   );
 };

@@ -277,18 +277,12 @@ const InstrumentationModule8Section1 = () => {
         <TLDR
           points={[
             '🔴 Every instrument takes something in and puts something out, and what emerges should match what entered, by design.',
-            'If it does not, that instrument is faulty — and you established it without understanding the whole system.',
-            'A loop chains those boxes: one device’s output is the next device’s input.',
             '🔴 So a measurement taken between two devices tests both at once. That is why interception locates faults.',
             'The cycle is: observe, hypothesise, design a test, perform it, validate or invalidate, repeat.',
             '🔴 The hard part is designing a test that could prove you WRONG, not one that agrees with you.',
             '🔴 Two questions build one: if this is true what else should I see — and if false, what should I not see?',
-            'A test that answers both gives positive and negative evidence at once.',
-            'The anti-method is “Easter-egging”: checking everything you can think of, in no particular order, for no particular reason.',
             '🔴 Occam’s Razor: assume ONE fault until the data says otherwise. Two faults mask each other and make every test ambiguous.',
-            'Four mistakes cost the most: no data, no documentation, fixating on the first idea, and not testing in stages.',
             '🔴 Do the thinking on the drawing. Go to the plant to execute a test, not to work out what to test.',
-            'Gathering data includes your senses and stimulating the system — not only meter readings.',
           ]}
         />
 
@@ -361,12 +355,12 @@ const InstrumentationModule8Section1 = () => {
           id="ins-8-1-intercept"
           question="A loop runs transmitter → barrier → controller input. You measure the current between the barrier and the controller and find it correct for the process condition. What has that single measurement established?"
           options={[
-            'That the transmitter and barrier are both behaving — so the fault lies downstream',
             'That the loop has no fault',
+            'That the transmitter and barrier are both behaving — so the fault lies downstream',
             'Nothing until you measure at the transmitter as well',
             'That the controller is faulty',
           ]}
-          correctIndex={0}
+          correctIndex={1}
           explanation="The signal at that point is the barrier's output and the controller's input at the same time. A correct value there means everything that produced it has worked, and that what follows is being fed properly — so one measurement has cleared two devices and the cable between them."
         />
 
@@ -494,11 +488,11 @@ const InstrumentationModule8Section1 = () => {
           question="You suspect a screen has been earthed at both ends, causing noise. Which is the better test?"
           options={[
             'Look at the screen termination at the panel and confirm it is earthed there',
-            'Check for continuity between the screen and earth at the end that should be free — a result either way is conclusive',
             'Replace the cable and see whether the noise stops',
+            'Check for continuity between the screen and earth at the end that should be free — a result either way is conclusive',
             'Measure the noise amplitude and record it',
           ]}
-          correctIndex={1}
+          correctIndex={2}
           explanation="Confirming the intended earth exists tells you nothing, because it would be there whether the hypothesis is right or wrong. Testing the end that is supposed to be isolated is the measurement whose two possible outcomes point in opposite directions — which is exactly what makes it a test."
         />
 
@@ -779,10 +773,10 @@ const InstrumentationModule8Section1 = () => {
           options={[
             'The symptoms were reported wrongly',
             'The test was performed incorrectly and should be repeated identically',
-            'The single-fault assumption may be false — two faults can produce results that fit nothing',
             'The instrument is out of calibration',
+            'The single-fault assumption may be false — two faults can produce results that fit nothing',
           ]}
-          correctIndex={2}
+          correctIndex={3}
           explanation="A result that fits no hypothesis is information in its own right. Two faults interacting can produce exactly that, because each distorts the evidence for the other — and recognising it early is far cheaper than continuing to test as though one explanation must account for everything."
         />
 

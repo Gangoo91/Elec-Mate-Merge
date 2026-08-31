@@ -120,7 +120,7 @@ export function SignatureGenerator({ onSave, initialValue }: SignatureGeneratorP
         type="button"
         onClick={handleSave}
         disabled={!text}
-        className="w-full h-12 rounded-xl bg-elec-yellow text-black font-semibold text-[14px] hover:bg-elec-yellow/90 transition-colors touch-manipulation disabled:opacity-50 disabled:cursor-not-allowed"
+        className="w-full h-12 rounded-xl bg-elec-yellow text-black font-semibold text-[14px] hover:bg-elec-yellow/90 transition-colors touch-manipulation disabled:bg-white/[0.08] disabled:text-white/70 disabled:cursor-not-allowed"
       >
         Save signature
       </button>

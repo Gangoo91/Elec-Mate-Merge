@@ -662,7 +662,7 @@ export default function PublicElecIdView() {
                   <button
                     onClick={downloadVerificationPdf}
                     disabled={pdfBusy}
-                    className="flex-1 flex items-center justify-center h-11 rounded-xl bg-elec-yellow text-black text-sm font-semibold hover:bg-yellow-400 transition-all touch-manipulation disabled:opacity-60"
+                    className="flex-1 flex items-center justify-center h-11 rounded-xl bg-elec-yellow text-black text-sm font-semibold hover:bg-yellow-400 transition-all touch-manipulation disabled:bg-white/[0.08] disabled:text-white/70"
                   >
                     {pdfBusy ? 'Preparing…' : 'Verification PDF'}
                   </button>

@@ -91,39 +91,39 @@ const DocumentationTab = () => {
   const getStatusConfig = (status: string) => {
     switch (status) {
       case 'required':
-        return { bg: 'bg-red-500/10', text: 'text-red-400', border: 'border-red-500/30' };
+        return { bg: 'bg-white/[0.06]', text: 'text-red-400', border: 'border-red-500/30' };
       case 'conditional':
         return {
-          bg: 'bg-elec-yellow/10',
+          bg: 'bg-white/[0.06]',
           text: 'text-elec-yellow',
           border: 'border-elec-yellow/30',
         };
       case 'optional':
-        return { bg: 'bg-green-500/10', text: 'text-green-400', border: 'border-green-500/30' };
+        return { bg: 'bg-white/[0.06]', text: 'text-green-400', border: 'border-green-500/30' };
       default:
-        return { bg: 'bg-blue-500/10', text: 'text-blue-400', border: 'border-blue-500/30' };
+        return { bg: 'bg-white/[0.06]', text: 'text-blue-400', border: 'border-blue-500/30' };
     }
   };
 
   const getCategoryConfig = (category: string) => {
     const configs: Record<string, { bg: string; text: string; border: string }> = {
-      'New Work': { bg: 'bg-blue-500/10', text: 'text-blue-400', border: 'border-blue-500/30' },
+      'New Work': { bg: 'bg-white/[0.06]', text: 'text-blue-400', border: 'border-blue-500/30' },
       'Existing Work': {
-        bg: 'bg-purple-500/10',
+        bg: 'bg-white/[0.06]',
         text: 'text-purple-400',
         border: 'border-purple-500/30',
       },
       'Minor Work': {
-        bg: 'bg-green-500/10',
+        bg: 'bg-white/[0.06]',
         text: 'text-green-400',
         border: 'border-green-500/30',
       },
       Inspection: {
-        bg: 'bg-orange-500/10',
+        bg: 'bg-white/[0.06]',
         text: 'text-orange-400',
         border: 'border-orange-500/30',
       },
-      Testing: { bg: 'bg-cyan-500/10', text: 'text-cyan-400', border: 'border-cyan-500/30' },
+      Testing: { bg: 'bg-white/[0.06]', text: 'text-cyan-400', border: 'border-cyan-500/30' },
     };
     return (
       configs[category] || { bg: 'bg-white/10', text: 'text-white', border: 'border-white/20' }
@@ -134,7 +134,7 @@ const DocumentationTab = () => {
     <div className="space-y-6 animate-fade-in">
       {/* Documentation Overview */}
       <Card className="bg-gradient-to-br from-white/5 to-elec-card border-white/10 overflow-hidden relative">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+        <div className="absolute top-0 right-0 w-64 h-64 bg-white/[0.06] rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
         <CardHeader className="relative">
           <CardTitle className="text-white flex items-center gap-3">
             <div className="p-2.5 rounded-xl bg-gradient-to-br from-blue-500/20 to-blue-500/5 border border-blue-500/30">
@@ -150,7 +150,7 @@ const DocumentationTab = () => {
           </p>
           <div className="grid grid-cols-3 gap-3">
             <div className="p-4 rounded-xl bg-white/10 border border-white/10 text-center">
-              <div className="p-2 rounded-lg bg-red-500/20 inline-block mb-2">
+              <div className="p-2 rounded-lg bg-white/[0.06] inline-block mb-2">
                 <FileText className="h-5 w-5 text-red-400" />
               </div>
               <div className="text-2xl font-bold text-red-400">
@@ -159,7 +159,7 @@ const DocumentationTab = () => {
               <div className="text-xs text-white">Required</div>
             </div>
             <div className="p-4 rounded-xl bg-white/10 border border-white/10 text-center">
-              <div className="p-2 rounded-lg bg-elec-yellow/20 inline-block mb-2">
+              <div className="p-2 rounded-lg bg-white/[0.06] inline-block mb-2">
                 <ClipboardList className="h-5 w-5 text-elec-yellow" />
               </div>
               <div className="text-2xl font-bold text-elec-yellow">
@@ -168,7 +168,7 @@ const DocumentationTab = () => {
               <div className="text-xs text-white">Conditional</div>
             </div>
             <div className="p-4 rounded-xl bg-white/10 border border-white/10 text-center">
-              <div className="p-2 rounded-lg bg-blue-500/20 inline-block mb-2">
+              <div className="p-2 rounded-lg bg-white/[0.06] inline-block mb-2">
                 <Scale className="h-5 w-5 text-blue-400" />
               </div>
               <div className="text-2xl font-bold text-blue-400">BS 7671</div>
@@ -180,7 +180,7 @@ const DocumentationTab = () => {
 
       {/* Document Templates */}
       <Card className="bg-gradient-to-br from-white/5 to-elec-card border-white/10 overflow-hidden relative">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-elec-yellow/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+        <div className="absolute top-0 right-0 w-64 h-64 bg-white/[0.06] rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
         <CardHeader className="relative">
           <CardTitle className="text-white flex items-center gap-3">
             <div className="p-2.5 rounded-xl bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 border border-elec-yellow/30">
@@ -216,7 +216,7 @@ const DocumentationTab = () => {
                         </Badge>
                       </div>
                     </div>
-                    <div className="p-2 rounded-lg bg-elec-yellow/20 flex-shrink-0">
+                    <div className="p-2 rounded-lg bg-white/[0.06] flex-shrink-0">
                       <FileText className="h-5 w-5 text-elec-yellow" />
                     </div>
                   </div>
@@ -236,7 +236,7 @@ const DocumentationTab = () => {
 
       {/* Completion Checklist */}
       <Card className="bg-gradient-to-br from-white/5 to-elec-card border-green-500/20 overflow-hidden relative">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-green-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+        <div className="absolute top-0 right-0 w-64 h-64 bg-white/[0.06] rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
         <CardHeader className="relative">
           <CardTitle className="text-white flex items-center gap-3">
             <div className="p-2.5 rounded-xl bg-gradient-to-br from-green-500/20 to-green-500/5 border border-green-500/30">
@@ -255,7 +255,7 @@ const DocumentationTab = () => {
                 className={`w-10 h-10 rounded-xl flex items-center justify-center font-bold ${
                   step.completed
                     ? 'bg-green-500 text-black'
-                    : 'bg-green-500/10 text-green-400 border border-green-500/30'
+                    : 'bg-white/[0.06] text-green-400 border border-green-500/30'
                 }`}
               >
                 {step.completed ? <CheckCircle className="h-5 w-5" /> : step.step}
@@ -281,7 +281,7 @@ const DocumentationTab = () => {
 
       {/* Legal Requirements */}
       <Card className="bg-gradient-to-br from-white/5 to-elec-card border-orange-500/20 overflow-hidden relative">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-orange-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+        <div className="absolute top-0 right-0 w-64 h-64 bg-white/[0.06] rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
         <CardHeader className="relative">
           <CardTitle className="text-white flex items-center gap-3">
             <div className="p-2.5 rounded-xl bg-gradient-to-br from-orange-500/20 to-orange-500/5 border border-orange-500/30">
@@ -294,7 +294,7 @@ const DocumentationTab = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="p-4 rounded-xl bg-white/10 border border-white/10">
               <div className="flex items-center gap-3 mb-3">
-                <div className="p-2 rounded-lg bg-orange-500/20">
+                <div className="p-2 rounded-lg bg-white/[0.06]">
                   <Scale className="h-4 w-4 text-orange-400" />
                 </div>
                 <h4 className="font-semibold text-white">Building Regulations</h4>
@@ -315,7 +315,7 @@ const DocumentationTab = () => {
             </div>
             <div className="p-4 rounded-xl bg-white/10 border border-white/10">
               <div className="flex items-center gap-3 mb-3">
-                <div className="p-2 rounded-lg bg-blue-500/20">
+                <div className="p-2 rounded-lg bg-white/[0.06]">
                   <Calendar className="h-4 w-4 text-blue-400" />
                 </div>
                 <h4 className="font-semibold text-white">Record Keeping</h4>

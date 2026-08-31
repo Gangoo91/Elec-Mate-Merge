@@ -308,7 +308,7 @@ export const SoftwareCalculationQuiz = () => {
           <Button
             onClick={handleNext}
             disabled={!selectedAnswers[currentQuestion]}
-            className="bg-elec-yellow text-elec-dark hover:bg-yellow-600 disabled:opacity-50"
+            className="bg-elec-yellow text-elec-dark hover:bg-yellow-600 disabled:bg-white/[0.08] disabled:text-white/70"
           >
             {currentQuestion === questions.length - 1 ? 'Finish Quiz' : 'Next Question'}
           </Button>

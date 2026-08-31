@@ -25,7 +25,11 @@ import { normaliseReferralSource } from '@/lib/referralSource';
 import { isPasswordBreached } from '@/utils/passwordCheck';
 import { useCookieConsent } from '@/components/CookieConsent';
 import { trackLead, trackCompleteRegistration } from '@/lib/marketing-pixels';
-import { trackSignupCompleted, trackSignupStarted } from '@/lib/analytics-events';
+import {
+  trackSignupCompleted,
+  trackSignupPageViewed,
+  trackSignupStarted,
+} from '@/lib/analytics-events';
 import {
   persistAttributionToProfile,
   fireServerCapi,
@@ -260,6 +264,22 @@ const SignUp = () => {
   const passwordsMatch = password === confirmPassword && confirmPassword.length > 0;
   const allRequiredAccepted =
     consent.termsAccepted && consent.privacyAccepted && consent.dataProcessingAccepted;
+
+  /*
+    Count the page render itself, once per mount.
+
+    `trackSignupStarted` only fires on first field focus, so anyone who arrived
+    and left without touching the form registered nowhere — which made email
+    campaigns impossible to read below the click. With this, the funnel finally
+    has its first rung: page viewed → started → completed → paid, each carrying
+    the campaign from stored attribution.
+  */
+  const pageViewTrackedRef = useRef(false);
+  useEffect(() => {
+    if (pageViewTrackedRef.current) return;
+    pageViewTrackedRef.current = true;
+    trackSignupPageViewed({ referrer: document.referrer || undefined });
+  }, []);
 
   // If a logged-in subscribed user lands here, send them straight to the app.
   useEffect(() => {

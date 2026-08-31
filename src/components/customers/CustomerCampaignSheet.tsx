@@ -16,18 +16,16 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Sheet, SheetContent } from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetTitle } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
 import { supabase } from '@/integrations/supabase/client';
-import { inputCn, labelCn, textareaCn } from '@/components/forms/fieldStyles';
+import { inputCn, labelCn } from '@/components/forms/fieldStyles';
 import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
 import { useHaptic } from '@/hooks/useHaptic';
 import {
   useCustomerCampaign,
-  MERGE_FIELDS,
   DEFAULT_TEMPLATE,
   type CampaignResult,
   type CampaignPreview,
@@ -37,10 +35,17 @@ import {
 const DEDUPE_DAYS = 30;
 const DAILY_CAP = 10;
 
-type Step = 'message' | 'recipients' | 'review';
+/*
+ * Two steps, not three. The "Message" step let the electrician rewrite the
+ * subject and body with merge tokens — but WE write this email. Composing it
+ * was never the job: picking who gets it is. The copy is DEFAULT_TEMPLATE and
+ * is no longer editable here, which also retires the token-insert chips that
+ * could append `{{customer_name}}` at the wrong caret position and produce
+ * "{{customer_name}}{{customer_full_name}}Hi {{customer_name}},".
+ */
+type Step = 'recipients' | 'review';
 
 const STEPS: { key: Step; label: string }[] = [
-  { key: 'message', label: 'Message' },
   { key: 'recipients', label: 'Who' },
   { key: 'review', label: 'Send' },
 ];
@@ -110,9 +115,11 @@ export const CustomerCampaignSheet = ({
   const { toast } = useToast();
   const { selection } = useHaptic();
 
-  const [step, setStep] = useState<Step>('message');
-  const [subject, setSubject] = useState(DEFAULT_TEMPLATE.subject);
-  const [body, setBody] = useState(DEFAULT_TEMPLATE.body);
+  const [step, setStep] = useState<Step>('recipients');
+  // Fixed copy — see the note on Step. Kept as plain consts so everything
+  // downstream (preview, send payload) is unchanged.
+  const subject = DEFAULT_TEMPLATE.subject;
+  const body = DEFAULT_TEMPLATE.body;
   const [templateId, setTemplateId] = useState<string | undefined>();
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [search, setSearch] = useState('');
@@ -132,7 +139,6 @@ export const CustomerCampaignSheet = ({
   // alone would re-seed whenever that array changed identity — and it changes
   // on every save, which happens at send time. A user who edited the message
   // would have watched it revert to the stored copy under them.
-  const bodyRef = useRef<HTMLTextAreaElement>(null);
   const seededForOpen = useRef(false);
   useEffect(() => {
     if (!open) {
@@ -143,21 +149,19 @@ export const CustomerCampaignSheet = ({
     seededForOpen.current = true;
 
     // Arriving from the bulk bar with people already ticked: keep them and
-    // still open on the message step, because the message is the part that
-    // needs writing. Skipping to recipients would hide the one screen they
-    // actually have to fill in.
+    // opens on the recipients step — choosing who is now the only decision
+    // this sheet asks for. The copy is fixed (see the note on Step).
     const seeded = preselectedIds ?? [];
     setSelected(new Set(seeded));
 
-    setStep('message');
+    setStep('recipients');
     setResult(null);
     setSearch('');
+    // The saved template is still tracked so repeat sends reuse one row
+    // rather than minting a new one each time — but its subject/body are no
+    // longer restored into the editor, because there is no editor.
     const latest = templates[0];
-    if (latest) {
-      setSubject(latest.subject);
-      setBody(latest.body);
-      setTemplateId(latest.id);
-    }
+    if (latest) setTemplateId(latest.id);
     // `preselectedIds` is deliberately not a dependency — this effect is
     // guarded to run once per open, and a new array identity from the parent
     // on every render would defeat that guard and stamp over live edits.
@@ -321,25 +325,6 @@ export const CustomerCampaignSheet = ({
    * back up by hand every time. Falls back to appending only if the textarea
    * has never been focused (no selection to read).
    */
-  const insertMergeField = (token: string) => {
-    selection();
-    const el = bodyRef.current;
-    if (!el) {
-      setBody((prev) => (prev ? `${prev} ${token}` : token));
-      return;
-    }
-    const start = el.selectionStart ?? el.value.length;
-    const end = el.selectionEnd ?? start;
-    const next = `${el.value.slice(0, start)}${token}${el.value.slice(end)}`;
-    setBody(next);
-    // Restore the caret after React re-renders, sitting just past what was
-    // inserted so you can keep typing.
-    requestAnimationFrame(() => {
-      el.focus();
-      const caret = start + token.length;
-      el.setSelectionRange(caret, caret);
-    });
-  };
 
   const handleSend = async () => {
     if (selectedCount === 0) return;
@@ -374,12 +359,18 @@ export const CustomerCampaignSheet = ({
     }
   };
 
-  const messageValid = subject.trim().length > 0 && body.trim().length > 0;
-  const canAdvance = step === 'message' ? messageValid : step === 'recipients' ? selectedCount > 0 : true;
+  const canAdvance = step === 'recipients' ? selectedCount > 0 : true;
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent side="bottom" className="h-[85vh] overflow-hidden rounded-t-2xl p-0">
+        {/*
+         * Radix needs a DialogTitle inside every DialogContent or a screen
+         * reader announces the sheet as an unlabelled dialog — it was logging
+         * that warning on every open. The visible heading below is styled, so
+         * this is the same words, announced only.
+         */}
+        <SheetTitle className="sr-only">Keep in touch</SheetTitle>
         <div className="flex h-full flex-col bg-background">
           {/* Header + step rail */}
           <div className="shrink-0 border-b border-white/[0.08] px-4 pb-3 pt-5">
@@ -423,59 +414,6 @@ export const CustomerCampaignSheet = ({
           <div className="min-h-0 flex-1 overflow-y-auto px-4 py-5">
             {result ? (
               <ResultView result={result} />
-            ) : step === 'message' ? (
-              <div className="space-y-5">
-                <div>
-                  <label htmlFor="campaign-subject" className={labelCn}>
-                    Subject
-                  </label>
-                  <Input
-                    id="campaign-subject"
-                    value={subject}
-                    onChange={(e) => setSubject(e.target.value.slice(0, 200))}
-                    className={inputCn}
-                    placeholder="Anything I can help with?"
-                  />
-                </div>
-
-                <div>
-                  <label htmlFor="campaign-body" className={labelCn}>
-                    Message
-                  </label>
-                  <Textarea
-                    id="campaign-body"
-                    ref={bodyRef}
-                    value={body}
-                    onChange={(e) => setBody(e.target.value.slice(0, 8000))}
-                    className={cn(textareaCn, 'min-h-[220px]')}
-                    placeholder="Hi {{customer_name}}…"
-                  />
-                  <p className="mt-1.5 text-[11.5px] text-white">
-                    Leave a blank line between paragraphs. An unsubscribe link is added
-                    automatically — it has to be there by law.
-                  </p>
-                </div>
-
-                <div>
-                  <span className={labelCn}>Insert a detail</span>
-                  <div className="flex flex-wrap gap-2">
-                    {MERGE_FIELDS.map((f) => (
-                      <button
-                        key={f.token}
-                        type="button"
-                        onClick={() => insertMergeField(f.token)}
-                        className="h-11 rounded-xl border border-white/[0.12] bg-white/[0.06] px-3.5 text-[13px] font-medium text-white transition-colors hover:bg-white/[0.1] touch-manipulation"
-                      >
-                        {f.label}
-                      </button>
-                    ))}
-                  </div>
-                  <p className="mt-2 text-[11.5px] text-white">
-                    These are swapped for the real thing when each email goes out — e.g.
-                    “{MERGE_FIELDS[0].token}” becomes “{MERGE_FIELDS[0].example}”.
-                  </p>
-                </div>
-              </div>
             ) : step === 'recipients' ? (
               <div className="space-y-4">
                 <Input
@@ -611,12 +549,10 @@ export const CustomerCampaignSheet = ({
               </Button>
             ) : (
               <div className="flex gap-2.5">
-                {step !== 'message' && (
+                {step === 'review' && (
                   <Button
                     variant="outline"
-                    onClick={() =>
-                      setStep(step === 'review' ? 'recipients' : 'message')
-                    }
+                    onClick={() => setStep('recipients')}
                     className="h-11 flex-1 touch-manipulation"
                   >
                     Back
@@ -634,7 +570,7 @@ export const CustomerCampaignSheet = ({
                   </Button>
                 ) : (
                   <Button
-                    onClick={() => setStep(step === 'message' ? 'recipients' : 'review')}
+                    onClick={() => setStep('review')}
                     disabled={!canAdvance}
                     className="h-11 flex-1 bg-elec-yellow font-semibold text-black touch-manipulation hover:bg-elec-yellow/90"
                   >

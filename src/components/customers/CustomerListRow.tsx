@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CARD_BASE, CARD_NEUTRAL, CARD_SURFACE } from '@/components/ui/card-recipe';
-import { Navigation } from 'lucide-react';
+import { ChevronRight, Mail, Navigation, Phone } from 'lucide-react';
 import { Customer } from '@/hooks/inspection/useCustomers';
 import { navigateToAddress, canNavigateTo } from '@/utils/navigate-to-address';
 import { cn } from '@/lib/utils';
@@ -42,9 +42,21 @@ interface CustomerListRowProps {
 
 type ActivityTone = 'green' | 'amber' | 'red';
 
+/*
+ * Call / Email / Navigate as 44px icon circles rather than three text pills.
+ * The pills were the heaviest thing on the card and ate the width that the
+ * activity text needed. A phone, an envelope and a direction arrow are about
+ * as unambiguous as icons get; each keeps its aria-label and title so the
+ * meaning is still available to a screen reader and on hover.
+ */
+const actionBtn =
+  'flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/[0.1] ' +
+  'bg-white/[0.04] text-white transition-colors hover:border-white/[0.25] hover:bg-white/[0.09] ' +
+  'touch-manipulation active:scale-[0.94]';
+
 const chipBase =
   'inline-flex h-6 items-center rounded-full border px-2.5 text-[11px] font-semibold whitespace-nowrap';
-const chipNeutral = 'border-white/[0.1] bg-white/[0.06] text-white/70';
+const chipNeutral = 'border-white/[0.1] bg-white/[0.06] text-white';
 
 /**
  * ELE-1555 — the reliability chip now comes from resolveCustomerRisk, which
@@ -53,6 +65,28 @@ const chipNeutral = 'border-white/[0.1] bg-white/[0.06] text-white/70';
  * the electrician had marked red still showed "Reliable" if their invoices
  * happened to be clean.
  */
+
+/*
+ * A wall of identical grey avatars is unscannable — every card looks the same
+ * until you read it. Tinting by a hash of the name gives each customer a
+ * stable colour, so you start recognising regulars by shape before you read
+ * a word. Six low-saturation tints, chosen to sit under white initials and
+ * never compete with the yellow accent or the red/amber alert badges.
+ */
+const AVATAR_TINTS = [
+  'from-sky-500/25 to-sky-500/[0.08] border-sky-400/25',
+  'from-violet-500/25 to-violet-500/[0.08] border-violet-400/25',
+  'from-emerald-500/25 to-emerald-500/[0.08] border-emerald-400/25',
+  'from-rose-500/25 to-rose-500/[0.08] border-rose-400/25',
+  'from-cyan-500/25 to-cyan-500/[0.08] border-cyan-400/25',
+  'from-orange-500/25 to-orange-500/[0.08] border-orange-400/25',
+];
+
+const tintFor = (name: string): string => {
+  let h = 0;
+  for (let i = 0; i < name.length; i++) h = (h * 31 + name.charCodeAt(i)) >>> 0;
+  return AVATAR_TINTS[h % AVATAR_TINTS.length];
+};
 
 const getInitials = (name: string): string =>
   name
@@ -152,6 +186,40 @@ export const CustomerListRow = ({
   const stopPropagation = (e: React.MouseEvent) => e.stopPropagation();
 
   const certCount = customer.certificateCount || 0;
+  /*
+   * Keep-in-touch sends. Comes off the summary rollup, so it is absent until
+   * that RPC resolves — `summary?.emailCount` rather than a default of 0, so a
+   * customer who HAS been emailed never flashes "not emailed" on first paint.
+   */
+  const outstanding = summary?.outstanding ?? 0;
+  const wonValue = summary?.approvedValue ?? 0;
+  const emailCount = summary?.emailCount ?? 0;
+  const lastEmailedAt = summary?.lastEmailedAt ?? null;
+  /*
+   * The quiet second tier. Built as data so the middot separators can be
+   * interleaved without a run of `{x && '·'}` conditionals that go wrong the
+   * moment one fact is missing.
+   */
+  const facts: { key: string; label: string; className?: string; title?: string }[] = [];
+  if (customer.status === 'lead') facts.push({ key: 'lead', label: 'Lead', className: 'font-semibold' });
+  if (customer.status === 'inactive')
+    facts.push({ key: 'inactive', label: 'Inactive', className: 'font-semibold' });
+  if (certCount > 0)
+    facts.push({
+      key: 'certs',
+      label: `${certCount} cert${certCount !== 1 ? 's' : ''}`,
+      className: 'tabular-nums',
+    });
+  if (emailCount > 0)
+    facts.push({
+      key: 'emails',
+      label: `Emailed ${emailCount}×`,
+      className: 'tabular-nums text-sky-300',
+      title: lastEmailedAt
+        ? `Last keep-in-touch email ${formatLastActivity(lastEmailedAt)}`
+        : undefined,
+    });
+
   const risk = resolveCustomerRisk({
     riskRating: customer.riskRating,
     riskReason: customer.riskReason,
@@ -212,8 +280,13 @@ export const CustomerListRow = ({
         )}
         {/* Avatar with status dot */}
         <div className="relative shrink-0">
-          <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-white/[0.1] bg-white/[0.06]">
-            <span className="text-[13px] font-semibold text-white">{initials}</span>
+          <div
+            className={cn(
+              'flex h-11 w-11 items-center justify-center rounded-xl border bg-gradient-to-br',
+              tintFor(customer.name)
+            )}
+          >
+            <span className="text-[13px] font-bold tracking-wide text-white">{initials}</span>
           </div>
           <span
             aria-label={`Last activity: ${formatLastActivity(customer.lastActivityAt)}`}
@@ -234,9 +307,32 @@ export const CustomerListRow = ({
           wrapping row below — they're secondary to knowing who this is.
         */}
         <div className="min-w-0 flex-1">
-          <h3 className="truncate text-[16px] font-semibold leading-tight tracking-tight text-white sm:text-[17px]">
-            {customer.name}
-          </h3>
+          {/*
+            Money sits on the NAME row, hard right, at the size it deserves.
+            It is the one number that changes what you do next, and the top
+            right of a card is where the eye lands after the name — it was
+            previously either buried in the footer (where it collided with the
+            buttons) or reduced to another badge among five.
+          */}
+          <div className="flex items-baseline gap-3">
+            <h3 className="min-w-0 flex-1 truncate text-[16px] font-semibold leading-tight tracking-tight text-white sm:text-[17px]">
+              {customer.name}
+            </h3>
+            {/* The qualifier is small but not optional — a bare "£5,610" on a
+                customer card reads just as easily as job value as money owed,
+                and those two mean opposite things. */}
+            {outstanding > 0 ? (
+              <span className="shrink-0 whitespace-nowrap text-[15px] font-bold tabular-nums leading-tight text-amber-300">
+                {formatGBP(outstanding)}
+                <span className="ml-1 text-[11px] font-semibold">due</span>
+              </span>
+            ) : wonValue > 0 ? (
+              <span className="shrink-0 whitespace-nowrap text-[13px] font-semibold tabular-nums leading-tight text-emerald-300">
+                {formatGBP(wonValue)}
+                <span className="ml-1 text-[11px] font-medium">won</span>
+              </span>
+            ) : null}
+          </div>
           <p className="mt-0.5 truncate text-[12.5px] text-white">
             {[customer.companyName, customer.phone || customer.email || customer.address]
               .filter(Boolean)
@@ -245,34 +341,28 @@ export const CustomerListRow = ({
         </div>
       </div>
 
-      {/* Status chips — one wrapping row across the full card width. */}
-      {(hasOverdue ||
-        customer.status === 'lead' ||
-        customer.status === 'inactive' ||
-        isDuplicate ||
-        certCount > 0 ||
-        risk.rating !== null ||
-        (customer.tags && customer.tags.length > 0)) && (
+      {/*
+        Badges in TWO tiers, because they were not all the same kind of thing.
+        Everything used to be an identical pill in one wrapping row — "Overdue
+        invoice" sat at the same weight as "from-certificate", so nothing stood
+        out and a card with five chips read as noise.
+
+        Tier 1 — ATTENTION. Only renders when something wants doing: money owed,
+        a risk flag, a suspected duplicate. Coloured, bordered, impossible to
+        miss, and usually absent.
+
+        Tier 2 — FACTS. Certs, keep-in-touch sends, status, tags. These are
+        context you read *after* you have decided the card matters, so they are
+        one quiet line of text with middots, not a row of competing pills.
+      */}
+      {(hasOverdue || isDuplicate || risk.rating !== null) && (
         <div className="mt-2.5 flex flex-wrap items-center gap-1.5">
           {hasOverdue && (
             <span className={cn(chipBase, 'border-red-500/30 bg-red-500/[0.14] text-red-300')}>
               Overdue invoice
             </span>
           )}
-          {customer.status === 'lead' && <span className={cn(chipBase, chipNeutral)}>Lead</span>}
-          {customer.status === 'inactive' && (
-            <span className={cn(chipBase, chipNeutral)}>Inactive</span>
-          )}
-          {isDuplicate && (
-            <span className={cn(chipBase, 'border-amber-500/30 bg-amber-500/[0.12] text-amber-300')}>
-              Possible duplicate
-            </span>
-          )}
-          {certCount > 0 && (
-            <span className={cn(chipBase, chipNeutral, 'tabular-nums')}>
-              {certCount} cert{certCount !== 1 ? 's' : ''}
-            </span>
-          )}
+
           {risk.rating && (
             <span
               className={cn(chipBase, risk.chipClass, 'max-w-full')}
@@ -283,9 +373,7 @@ export const CustomerListRow = ({
               title={risk.reason || undefined}
             >
               {risk.source === 'manual' && (
-                <span
-                  className={cn('mr-1.5 h-1.5 w-1.5 shrink-0 rounded-full', risk.dotClass)}
-                />
+                <span className={cn('mr-1.5 h-1.5 w-1.5 shrink-0 rounded-full', risk.dotClass)} />
               )}
               {/* min-w-0 is load-bearing: a flex child defaults to
                   min-width:auto and will not shrink below its content, so
@@ -297,6 +385,30 @@ export const CustomerListRow = ({
               </span>
             </span>
           )}
+          {isDuplicate && (
+            <span className={cn(chipBase, 'border-amber-500/30 bg-amber-500/[0.12] text-amber-300')}>
+              Possible duplicate
+            </span>
+          )}
+        </div>
+      )}
+
+      {(facts.length > 0 || (customer.tags && customer.tags.length > 0)) && (
+        <div className="mt-2 flex min-w-0 flex-wrap items-center gap-x-1.5 gap-y-1 text-[12px] text-white">
+          {/* Interleaved with middots so the facts read as one sentence rather
+              than three words that happen to sit near each other. */}
+          {facts.map((fact, i) => (
+            <span key={fact.key} className="flex items-center gap-1.5">
+              {i > 0 && (
+                <span aria-hidden className="text-white/30">
+                  ·
+                </span>
+              )}
+              <span className={fact.className} title={fact.title}>
+                {fact.label}
+              </span>
+            </span>
+          ))}
           {customer.tags?.slice(0, 2).map((tag) =>
             onTagClick ? (
               <button
@@ -305,66 +417,70 @@ export const CustomerListRow = ({
                   e.stopPropagation();
                   onTagClick(tag);
                 }}
-                className={cn(chipBase, chipNeutral, 'touch-manipulation hover:border-white/[0.3]')}
+                className="max-w-[10rem] truncate rounded-md bg-white/[0.06] px-1.5 py-0.5 text-white transition-colors hover:bg-white/[0.12] touch-manipulation"
               >
                 {tag}
               </button>
             ) : (
-              <span key={tag} className={cn(chipBase, chipNeutral)}>
+              <span
+                key={tag}
+                className="max-w-[10rem] truncate rounded-md bg-white/[0.06] px-1.5 py-0.5"
+              >
                 {tag}
               </span>
             )
           )}
           {customer.tags && customer.tags.length > 2 && (
-            <span className="text-[10.5px] font-medium text-white">
-              +{customer.tags.length - 2}
-            </span>
+            <span className="text-white">+{customer.tags.length - 2}</span>
           )}
         </div>
       )}
 
       {/* Footer row: last activity + quick actions — pinned to the card base */}
-      <div className="mt-auto flex items-center justify-between gap-3 border-t border-white/[0.06] pt-3">
-        <span className="flex min-w-0 items-center gap-2 text-[12px] text-white">
-          <span className="truncate">{formatLastActivity(customer.lastActivityAt)}</span>
-          {/* Money, when there is any. Outstanding wins over won work: an unpaid
-              invoice is the one number that should change what you do next.
-              Silent when both are zero, so a customer with no financial history
-              does not carry a meaningless "£0". */}
-          {summary && (summary.outstanding > 0 || summary.approvedValue > 0) && (
-            <>
-              <span aria-hidden className="text-white/30">·</span>
-              {summary.outstanding > 0 ? (
-                <span className="whitespace-nowrap font-semibold text-amber-300">
-                  {formatGBP(summary.outstanding)} due
-                </span>
-              ) : (
-                <span className="whitespace-nowrap font-semibold text-emerald-300">
-                  {formatGBP(summary.approvedValue)} won
-                </span>
-              )}
-            </>
-          )}
+      <div className="mt-auto flex items-center justify-between gap-3 pt-3.5">
+        {/*
+          🔴 The money used to live HERE, and it collided with the buttons.
+          `shrink-0` on the action group was not enough: the money is
+          `whitespace-nowrap`, so "Today · £5,610 due" had a hard minimum width
+          that no amount of truncation could reduce, and once it plus the
+          buttons exceeded the card the money rendered UNDER them ("£5,610 d"
+          with Call on top). Truncating it was not an option either — cutting a
+          figure is worse than not showing one.
+
+          It now sits with the attention badges above, where it belongs: money
+          owed is a reason to act, not a footnote. The footer is activity plus
+          actions, which always fits.
+        */}
+        <span className="min-w-0 flex-1 truncate text-[12px] text-white">
+          {formatLastActivity(customer.lastActivityAt)}
         </span>
-        <div className="flex items-center gap-1.5">
+        {/*
+          🔴 shrink-0. Without it this group is a flex child that is allowed to
+          shrink, but its children are fixed-width buttons that cannot — so the
+          group overflowed its track and the Call button rendered ON TOP of the
+          money, giving "£244 du" with Call sat over the top. The left side truncates instead.
+        */}
+        <div className="flex shrink-0 items-center gap-1.5">
           {customer.phone && (
             <a
               href={`tel:${customer.phone}`}
               onClick={stopPropagation}
-              className="flex h-9 items-center rounded-full border border-white/[0.1] bg-white/[0.04] px-3.5 text-[12.5px] font-medium text-white transition-colors hover:border-white/[0.25] hover:bg-white/[0.07] touch-manipulation"
+              className={actionBtn}
               aria-label={`Call ${customer.name}`}
+              title={`Call ${customer.name}`}
             >
-              Call
+              <Phone className="h-[17px] w-[17px]" />
             </a>
           )}
           {customer.email && (
             <a
               href={`mailto:${customer.email}`}
               onClick={stopPropagation}
-              className="flex h-9 items-center rounded-full border border-white/[0.1] bg-white/[0.04] px-3.5 text-[12.5px] font-medium text-white transition-colors hover:border-white/[0.25] hover:bg-white/[0.07] touch-manipulation"
+              className={actionBtn}
               aria-label={`Email ${customer.name}`}
+              title={`Email ${customer.name}`}
             >
-              Email
+              <Mail className="h-[17px] w-[17px]" />
             </a>
           )}
           {/* ELE-1520 — the whole card is role="button" and opens the customer,
@@ -381,15 +497,27 @@ export const CustomerListRow = ({
                   longitude: customer.longitude,
                 });
               }}
-              className="flex h-9 items-center gap-1.5 rounded-full border border-white/[0.1] bg-white/[0.04] px-3.5 text-[12.5px] font-medium text-white transition-colors hover:border-white/[0.25] hover:bg-white/[0.07] touch-manipulation"
+              className={actionBtn}
               aria-label={`Navigate to ${customer.name}`}
+              title={`Navigate to ${customer.name}`}
             >
-              <Navigation className="h-3.5 w-3.5 text-elec-yellow" />
-              Navigate
+              <Navigation className="h-[17px] w-[17px] text-elec-yellow" />
             </button>
           )}
-          <span className="ml-1 flex h-9 items-center text-[12.5px] font-semibold text-elec-yellow">
-            Open
+          {/*
+            A hint, not a control — the whole card is role="button" and opens
+            the customer, so this must not look like a separate target sat
+            beside three real ones. The chevron alone says "this goes
+            somewhere"; the word "Open" next to it was saying the same thing
+            twice and its width pushed the activity text into truncating to
+            "T…". aria-hidden because the card already has its own accessible
+            name and role.
+          */}
+          <span
+            aria-hidden
+            className="ml-0.5 flex h-11 w-5 shrink-0 items-center justify-center text-elec-yellow"
+          >
+            <ChevronRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" />
           </span>
         </div>
       </div>

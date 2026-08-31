@@ -200,17 +200,11 @@ const InstrumentationModule6Section6 = () => {
         <TLDR
           points={[
             'A device calibration asks whether each part is right. A loop calibration asks whether the final number is right.',
-            'They answer different questions, and neither substitutes for the other.',
             '🔴 Individual device tolerances do not add up to the loop tolerance.',
-            'Four devices each within ±0.5 per cent does not give a loop within ±0.5 per cent — the errors accumulate.',
             'The worst case is the arithmetic sum: every error at its limit, all pointing the same way.',
-            '🔴 That is a genuine bound and an unlikely one, because nothing coordinates independent errors.',
             'Independent errors partly cancel, so a realistic figure is the root of the sum of the squares.',
-            'Three independent ±1 per cent errors combine to about ±1.7 per cent, not ±3 per cent.',
             '🔴 Errors sharing a common cause — temperature, supply, a wrong reference — do add, because they move together.',
             'A loop can pass end to end with a device out of tolerance, if another device’s error offsets it.',
-            'That is a loop delivering the right answer for the wrong reason, with no margin left.',
-            'An end-to-end test proves the chain and cannot localise a fault. Section 2’s substitutions do that.',
           ]}
         />
 
@@ -367,12 +361,12 @@ const InstrumentationModule6Section6 = () => {
           id="ins-6-6-combine"
           question="A chain has errors of ±2.0, ±0.3 and ±0.2 per cent. Roughly what is the realistic combined figure, and where should effort go?"
           options={[
-            'About ±2.03 per cent; only the 2.0 per cent element is worth addressing',
             '±0.83 per cent; the errors average out',
+            'About ±2.03 per cent; only the 2.0 per cent element is worth addressing',
             'About ±1.5 per cent; improve the two small ones',
             '±2.5 per cent; improve all three',
           ]}
-          correctIndex={0}
+          correctIndex={1}
           explanation="Squares are 4.0, 0.09 and 0.04, summing to 4.13, whose root is about 2.03. The two small contributions add barely 0.03 per cent between them. In a squared sum the largest term dominates completely, so effort spent on the small elements is effort wasted."
         />
 
@@ -475,11 +469,11 @@ const InstrumentationModule6Section6 = () => {
           question="A loop has passed end to end for years. A device in it is found 1.5 per cent out and corrected — and the loop now reads 1.5 per cent wrong. What happened?"
           options={[
             'The correction was performed incorrectly',
-            'A second error was offsetting the first, and correcting one exposed the other',
             'The loop needs recalibrating end to end',
+            'A second error was offsetting the first, and correcting one exposed the other',
             'The device tolerance was set too tight',
           ]}
-          correctIndex={1}
+          correctIndex={2}
           explanation="Two faults were cancelling. The loop was right for the wrong reason, which is exactly why every end-to-end check passed. The correction was right and it revealed a second error that was always present — reinstating the first to mask it would leave the loop right today and wrong the moment anything else changed."
         />
 
@@ -578,11 +572,11 @@ const InstrumentationModule6Section6 = () => {
           question="A loop must hold ±1 per cent. Its four devices are each specified to ±0.5 per cent. Can it meet the requirement?"
           options={[
             'Yes, comfortably — each device is well inside the loop tolerance',
-            'Realistically yes at about ±1.0 per cent, but with no margin, and not at all on a worst-case basis',
             'No, because 4 × 0.5 is 2.0 per cent',
             'Yes, because the errors average to 0.5 per cent',
+            'Realistically yes at about ±1.0 per cent, but with no margin, and not at all on a worst-case basis',
           ]}
-          correctIndex={1}
+          correctIndex={3}
           explanation="Combining independently gives exactly ±1.0 per cent — meeting the requirement with nothing to spare, so any drift in any device puts the loop outside. On a worst-case basis it is ±2.0 per cent and fails. Whether that is acceptable depends on how the tolerance must be guaranteed, and it is a question to answer before commissioning rather than after a dispute."
         />
 

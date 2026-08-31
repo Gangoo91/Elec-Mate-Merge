@@ -1,160 +1,44 @@
+/**
+ * On-the-job tools.
+ *
+ * Rebuilt on the shared hub shell (`@/components/hub/HubPrimitives`), the same
+ * one the Business Hub uses, so the two halves of the app look like one product.
+ *
+ * What changed beyond the shell:
+ *
+ * - Three tools appeared TWICE. Site assessment was card 03 and card 05,
+ *   Flashcards were 02 and 10, Calculators were 01 and 11 — and the number 10
+ *   was printed on two different cards. Thirteen card slots held ten tools, so
+ *   a third of the page was the same links again under a different heading.
+ *   Each tool now appears once, in the group where someone would look for it.
+ *
+ * - The counts were footnotes. "20+ tools" sat at 11px along the bottom edge
+ *   while the card led with a sentence explaining what a calculator is. The
+ *   count IS the card, so it now uses `value`/`valueLabel` like every other
+ *   hub — the same reasoning as the Business Hub's "£6,027 overdue".
+ *
+ * - Groups are named for what you are doing, not what the tool is filed under:
+ *   "On site", "Look it up", "Practise & people" rather than "Safety &
+ *   Compliance", "Guides & Reference", "Practice & Quick Reference". Split
+ *   4/3/3 rather than 4/4/2 — the grid is auto-fit, so a two-card group
+ *   stretches its cards to twice the width of every other row on a monitor.
+ */
+
 import { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { itemVariants } from '@/components/college/primitives';
+import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import {
-  SectionHeader,
-  HubGrid,
-  HubCard,
-  itemVariants,
-  type Tone,
-} from '@/components/college/primitives';
-import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
-
-interface ToolDef {
-  number: string;
-  eyebrow: string;
-  title: string;
-  description: string;
-  meta: string;
-  link: string;
-  tone: Tone;
-}
-
-const QUICK_ACCESS: ToolDef[] = [
-  {
-    number: '01',
-    eyebrow: 'Calculations',
-    title: 'On-site calculators',
-    description: 'Cable sizing, voltage drop, max demand and protective device selection.',
-    meta: '20+ tools',
-    link: '/apprentice/on-job-tools/calculations',
-    tone: 'emerald',
-  },
-  {
-    number: '02',
-    eyebrow: 'Revision',
-    title: 'Flashcards',
-    description: 'Cable colours, BS 7671 regs, EICR codes, safe isolation and fault finding.',
-    meta: '100+ cards',
-    link: '/apprentice/on-job-tools/flashcards',
-    tone: 'amber',
-  },
-  {
-    number: '03',
-    eyebrow: 'Pre-job',
-    title: 'Site assessment',
-    description: 'Pre-job safety checklists, site condition assessments and risk analysis.',
-    meta: '15+ checklists',
-    link: '/apprentice/on-job-tools/assessment',
-    tone: 'blue',
-  },
-];
-
-const SAFETY: ToolDef[] = [
-  {
-    number: '04',
-    eyebrow: 'Interactive',
-    title: 'Safety case studies',
-    description:
-      'Learn from real electrical incidents — make decisions in realistic scenarios and see consequences.',
-    meta: 'Interactive',
-    link: '/apprentice/on-job-tools/safety-cases',
-    tone: 'red',
-  },
-  {
-    number: '05',
-    eyebrow: 'Pre-job',
-    title: 'Site assessment',
-    description: 'Pre-job safety checklists, condition assessments, risk analysis templates.',
-    meta: '15+ checklists',
-    link: '/apprentice/on-job-tools/assessment',
-    tone: 'emerald',
-  },
-  {
-    number: '06',
-    eyebrow: 'BS 7671',
-    title: 'Inspection & testing run-through',
-    description:
-      'Complete A4:2026 inspection & testing procedures with step-by-step documentation.',
-    meta: 'Full guide',
-    link: '/apprentice/on-job-tools/bs7671-runthrough',
-    tone: 'yellow',
-  },
-];
-
-const GUIDES: ToolDef[] = [
-  {
-    number: '07',
-    eyebrow: 'Reference',
-    title: 'Tools & materials guide',
-    description:
-      'Professional electrician tools — hand tools to test equipment, with UK supplier picks.',
-    meta: 'Essential',
-    link: '/apprentice/on-job-tools/tools-guide',
-    tone: 'yellow',
-  },
-  {
-    number: '08',
-    eyebrow: 'Step-by-step',
-    title: 'Installation guides',
-    description:
-      'Domestic, commercial, industrial and outdoor installations with BS 7671 compliance.',
-    meta: '4 sectors',
-    link: '/apprentice/on-job-tools/electrical-installation-guides',
-    tone: 'blue',
-  },
-  {
-    number: '09',
-    eyebrow: 'FAQ',
-    title: 'Ask a supervisor',
-    description:
-      'Knowledge bank of common site questions, when to ask for help, and professional comms tips.',
-    meta: 'Question bank',
-    link: '/apprentice/on-job-tools/supervisor-knowledge',
-    tone: 'purple',
-  },
-  {
-    number: '10',
-    eyebrow: 'Reference',
-    title: 'Electrical symbols chart',
-    description:
-      'IEC 60617 circuit and installation symbols — the full chart for drawings and coursework.',
-    meta: 'IEC 60617',
-    link: '/guides/electrical-symbols-chart',
-    tone: 'emerald',
-  },
-];
-
-const PRACTICE: ToolDef[] = [
-  {
-    number: '10',
-    eyebrow: 'Quick recall',
-    title: 'Flashcards',
-    description: 'Cable colours, BS 7671 regs, EICR codes, safe isolation and fault finding.',
-    meta: '100+ cards',
-    link: '/apprentice/on-job-tools/flashcards',
-    tone: 'amber',
-  },
-  {
-    number: '11',
-    eyebrow: 'On-site',
-    title: 'Calculators',
-    description: 'Cable sizing, voltage drop, max demand and protective device selection.',
-    meta: '20+ tools',
-    link: '/apprentice/on-job-tools/calculations',
-    tone: 'emerald',
-  },
-  {
-    number: '12',
-    eyebrow: 'People skills',
-    title: 'Workplace culture',
-    description:
-      'Site comms, UK trade culture, regional terminology and professional relationships.',
-    meta: '6 modules',
-    link: '/apprentice/on-job-tools/workplace-culture',
-    tone: 'cyan',
-  },
-];
+  HubPage,
+  HubBody,
+  HubMasthead,
+  HubQuickStart,
+  HubToolGrid,
+  type HubTool,
+  type HubQuickAction,
+} from '@/components/hub/HubPrimitives';
 
 const DAILY_TIPS = [
   {
@@ -189,12 +73,137 @@ const DAILY_TIPS = [
 
 export default function OnJobTools() {
   const navigate = useNavigate();
+
   const todaysTip = useMemo(() => {
     const dayOfYear = Math.floor(
       (Date.now() - new Date(new Date().getFullYear(), 0, 0).getTime()) / 86400000
     );
     return DAILY_TIPS[dayOfYear % DAILY_TIPS.length];
   }, []);
+
+  // The three things someone opens this page on a van seat to actually start.
+  const quickStart: HubQuickAction[] = [
+    {
+      title: 'Work a calculation',
+      description: 'Cable size, volt drop, max demand',
+      primary: true,
+      onClick: () => navigate('/apprentice/on-job-tools/calculations'),
+    },
+    {
+      title: 'Check the site first',
+      description: 'Pre-job safety and condition checks',
+      onClick: () => navigate('/apprentice/on-job-tools/assessment'),
+    },
+    {
+      title: 'Test yourself',
+      description: 'Flashcards for regs, colours and codes',
+      onClick: () => navigate('/apprentice/on-job-tools/flashcards'),
+    },
+  ];
+
+  const onSite: HubTool[] = [
+    {
+      id: 'calculations',
+      title: 'On-site calculators',
+      value: '20+',
+      valueLabel: 'calculators',
+      meta: 'Cable sizing, volt drop, max demand, device selection',
+      to: '/apprentice/on-job-tools/calculations',
+    },
+    {
+      id: 'assessment',
+      eyebrow: 'Before you start',
+      title: 'Site assessment',
+      value: '15+',
+      valueLabel: 'checklists',
+      meta: 'Safety checks, site condition, risk analysis',
+      to: '/apprentice/on-job-tools/assessment',
+    },
+    {
+      id: 'safety-cases',
+      title: 'Safety case studies',
+      description: 'Real incidents — make the call, then see what happened.',
+      meta: 'Interactive',
+      to: '/apprentice/on-job-tools/safety-cases',
+    },
+    {
+      id: 'bs7671-runthrough',
+      eyebrow: 'BS 7671',
+      title: 'Inspection & testing run-through',
+      description: 'The full A4:2026 procedure, step by step, with the paperwork.',
+      meta: 'Full guide',
+      to: '/apprentice/on-job-tools/bs7671-runthrough',
+    },
+    {
+      /*
+       * This route existed but nothing on this hub linked to it — the four
+       * core dead tests were reachable only by a winding path through the
+       * inspection-testing pages, which is the last place someone stood at a
+       * board would look.
+       */
+      id: 'testing-procedures',
+      eyebrow: 'Step by step',
+      title: 'Testing procedures',
+      value: '4',
+      valueLabel: 'core tests',
+      // Not "dead tests" — Zs is measured live, and the page itself says so.
+      meta: 'R₁+R₂, insulation resistance, Zs and polarity',
+      to: '/apprentice/on-job-tools/testing-procedures',
+    },
+  ];
+
+  const lookItUp: HubTool[] = [
+    {
+      id: 'symbols',
+      title: 'Electrical symbols chart',
+      description: 'Every circuit and installation symbol, for drawings and coursework.',
+      meta: 'IEC 60617',
+      to: '/guides/electrical-symbols-chart',
+    },
+    {
+      id: 'installation-guides',
+      title: 'Installation guides',
+      value: '4',
+      valueLabel: 'sectors',
+      meta: 'Domestic, commercial, industrial and outdoor',
+      to: '/apprentice/on-job-tools/electrical-installation-guides',
+    },
+    {
+      id: 'tools-guide',
+      title: 'Tools & materials guide',
+      description: 'Hand tools through to test equipment, with UK supplier picks.',
+      meta: 'Essential kit',
+      to: '/apprentice/on-job-tools/tools-guide',
+    },
+  ];
+
+  const practise: HubTool[] = [
+    {
+      id: 'flashcards',
+      title: 'Flashcards',
+      value: '100+',
+      valueLabel: 'cards',
+      meta: 'Cable colours, regs, EICR codes, safe isolation, fault finding',
+      to: '/apprentice/on-job-tools/flashcards',
+    },
+    {
+      id: 'workplace-culture',
+      eyebrow: 'People skills',
+      title: 'Workplace culture',
+      value: '6',
+      valueLabel: 'modules',
+      meta: 'Site comms, trade culture, regional terms, relationships',
+      to: '/apprentice/on-job-tools/workplace-culture',
+    },
+    {
+      id: 'supervisor-knowledge',
+      eyebrow: 'Ask a supervisor',
+      title: 'The questions you’d rather not ask',
+      description: 'Common site questions, when to get help, and how to ask well.',
+      meta: 'Question bank',
+      to: '/apprentice/on-job-tools/supervisor-knowledge',
+    },
+  ];
 
   return (
     <HubPage>
@@ -203,127 +212,61 @@ export default function OnJobTools() {
         title="Everything you need on site"
         backTo="/apprentice"
       />
-      <HubBody>
-        <p className="max-w-3xl text-[13px] leading-relaxed text-white">
-          {
-            'Safety checklists, quick-reference guides and on-site calculators. Built by electricians, for apprentices.'
-          }
-        </p>
 
-        {/* TIP OF THE DAY — editorial alert card, no icon */}
+      <HubBody>
+        <HubQuickStart label="Start something" items={quickStart} />
+
+        {/* Tip of the day — the one editorial note on the page, in the same
+            volt accent the hubs use for a live figure. */}
         <motion.div
           variants={itemVariants}
-          className="rounded-2xl border border-elec-yellow/20 bg-gradient-to-br from-elec-yellow/[0.06] via-amber-500/[0.02] to-transparent px-5 py-4 sm:px-6 sm:py-5"
+          /* Was a volt-tinted gradient wash. Per card-recipe.ts a translucent
+             volt fill goes muddy brown on this ground — the neutral lit
+             surface with a gold hairline is the house answer. */
+          className={cn(
+            'rounded-2xl border border-elec-yellow/35 px-5 py-4 sm:px-6 sm:py-5',
+            CARD_SURFACE
+          )}
         >
-          <div className="flex items-baseline gap-2 mb-2">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">
+          <div className="mb-2 flex items-baseline gap-2">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
               Tip
             </span>
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
               · {todaysTip.category}
             </span>
           </div>
-          <p className="text-[13px] leading-relaxed text-white/80 max-w-3xl">{todaysTip.tip}</p>
+          <p className="max-w-3xl text-[13px] leading-relaxed text-white">{todaysTip.tip}</p>
         </motion.div>
 
-        {/* QUICK ACCESS */}
-        <motion.section variants={itemVariants} className="space-y-5 sm:space-y-6">
-          <SectionHeader eyebrow="Quick Access" title="Most-used tools" />
-          <HubGrid columns={3}>
-            {QUICK_ACCESS.map((t) => (
-              <HubCard
-                key={t.link + t.number}
-                size="sm"
-                number={t.number}
-                eyebrow={t.eyebrow}
-                title={t.title}
-                description={t.description}
-                meta={t.meta}
-                tone={t.tone}
-                onClick={() => navigate(t.link)}
-              />
-            ))}
-          </HubGrid>
-        </motion.section>
+        <HubToolGrid label="On site" cards={onSite} columns="four" />
 
-        {/* SAFETY BANNER — calmer editorial note */}
+        <HubToolGrid label="Look it up" cards={lookItUp} columns="four" />
+
+        <HubToolGrid label="Practise & people" cards={practise} columns="four" />
+
+        {/* The one thing worth saying twice, kept to the end so it is the last
+            thing read rather than a wall between the tools. */}
         <motion.div
           variants={itemVariants}
-          className="rounded-2xl border border-amber-500/20 bg-amber-500/[0.04] px-5 py-4 sm:px-6 sm:py-5"
+          className={cn(
+            'rounded-2xl border border-elec-yellow/35 px-5 py-4 sm:px-6 sm:py-5',
+            CARD_SURFACE
+          )}
         >
-          <div className="flex items-baseline gap-2 mb-2">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-amber-300/85 tabular-nums">
+          <div className="mb-2 flex items-baseline gap-2">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
               Safety
             </span>
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
               · Stop and ask
             </span>
           </div>
-          <p className="text-[13px] leading-relaxed text-white/80 max-w-3xl">
-            These tools help you prepare properly — they don't replace training or supervision. When
+          <p className="max-w-3xl text-[13px] leading-relaxed text-white">
+            These tools help you prepare properly — they don’t replace training or supervision. When
             in doubt, stop and ask. No one ever got sacked for checking.
           </p>
         </motion.div>
-
-        {/* SAFETY & COMPLIANCE */}
-        <motion.section variants={itemVariants} className="space-y-5 sm:space-y-6">
-          <SectionHeader eyebrow="Safety & Compliance" title="Stay safe, stay legal" />
-          <HubGrid columns={3}>
-            {SAFETY.map((t) => (
-              <HubCard
-                key={t.link + t.number}
-                size="sm"
-                number={t.number}
-                eyebrow={t.eyebrow}
-                title={t.title}
-                description={t.description}
-                meta={t.meta}
-                tone={t.tone}
-                onClick={() => navigate(t.link)}
-              />
-            ))}
-          </HubGrid>
-        </motion.section>
-
-        {/* GUIDES & REFERENCE */}
-        <motion.section variants={itemVariants} className="space-y-5 sm:space-y-6">
-          <SectionHeader eyebrow="Guides & Reference" title="Look it up" />
-          <HubGrid columns={3}>
-            {GUIDES.map((t) => (
-              <HubCard
-                key={t.link + t.number}
-                size="sm"
-                number={t.number}
-                eyebrow={t.eyebrow}
-                title={t.title}
-                description={t.description}
-                meta={t.meta}
-                tone={t.tone}
-                onClick={() => navigate(t.link)}
-              />
-            ))}
-          </HubGrid>
-        </motion.section>
-
-        {/* PRACTICE & QUICK REF */}
-        <motion.section variants={itemVariants} className="space-y-5 sm:space-y-6">
-          <SectionHeader eyebrow="Practice & Quick Reference" title="Sharpen the basics" />
-          <HubGrid columns={3}>
-            {PRACTICE.map((t) => (
-              <HubCard
-                key={t.link + t.number}
-                size="sm"
-                number={t.number}
-                eyebrow={t.eyebrow}
-                title={t.title}
-                description={t.description}
-                meta={t.meta}
-                tone={t.tone}
-                onClick={() => navigate(t.link)}
-              />
-            ))}
-          </HubGrid>
-        </motion.section>
       </HubBody>
     </HubPage>
   );

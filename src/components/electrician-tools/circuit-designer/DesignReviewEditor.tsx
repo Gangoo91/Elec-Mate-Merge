@@ -3368,7 +3368,7 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
             type="button"
             onClick={handleExportPDF}
             disabled={isExporting}
-            className="w-full sm:flex-1 h-11 px-5 rounded-xl bg-elec-yellow text-black text-[13px] font-semibold hover:bg-elec-yellow/90 disabled:opacity-60 transition-colors touch-manipulation"
+            className="w-full sm:flex-1 h-11 px-5 rounded-xl bg-elec-yellow text-black text-[13px] font-semibold hover:bg-elec-yellow/90 disabled:bg-white/[0.08] disabled:text-white/70 transition-colors touch-manipulation"
           >
             {isExporting ? 'Generating…' : 'Download PDF'}
           </button>

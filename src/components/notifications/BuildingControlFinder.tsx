@@ -126,7 +126,7 @@ export const BuildingControlFinder = ({
               <button
                 onClick={() => runSearch(searchQuery)}
                 disabled={isLoading}
-                className="h-11 px-4 rounded-xl bg-elec-yellow text-black text-[14px] font-semibold touch-manipulation active:scale-[0.98] disabled:opacity-50 inline-flex items-center gap-1.5"
+                className="h-11 px-4 rounded-xl bg-elec-yellow text-black text-[14px] font-semibold touch-manipulation active:scale-[0.98] disabled:bg-white/[0.08] disabled:text-white/70 inline-flex items-center gap-1.5"
               >
                 {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Search'}
               </button>
