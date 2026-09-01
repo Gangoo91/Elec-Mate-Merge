@@ -105,6 +105,15 @@ Deno.serve(async (req) => {
               'employer',
             ],
             is_dismissible: announcement.is_dismissible ?? true,
+            /*
+             * 🔴 `starts_at` was never written on create, so a scheduled
+             * announcement fell through to the column default of `now()` and
+             * went live immediately. The client computes and sends it, and the
+             * UI reports "Scheduled" off the same value — so the admin was
+             * told it was queued while every user saw it at once.
+             * Undefined/empty still falls back to the default (publish now).
+             */
+            ...(announcement.starts_at ? { starts_at: announcement.starts_at } : {}),
             ends_at: announcement.ends_at || null,
             channel: announcement.channel || 'in_app',
             link_url: announcement.link_url || null,
@@ -132,6 +141,8 @@ Deno.serve(async (req) => {
         if (announcement.is_dismissible !== undefined)
           updateData.is_dismissible = announcement.is_dismissible;
         if (announcement.is_active !== undefined) updateData.is_active = announcement.is_active;
+        // Same omission on update — a schedule could be neither set nor moved.
+        if (announcement.starts_at !== undefined) updateData.starts_at = announcement.starts_at;
         if (announcement.ends_at !== undefined) updateData.ends_at = announcement.ends_at;
         if (announcement.link_url !== undefined) updateData.link_url = announcement.link_url;
         if (announcement.channel !== undefined) updateData.channel = announcement.channel;

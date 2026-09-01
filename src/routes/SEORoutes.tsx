@@ -459,6 +459,11 @@ const Year2ApprenticeGuidePage = lazyWithRetry(() => import('@/pages/seo/Year2Ap
 const ZeValuesUKPage = lazyWithRetry(() => import('@/pages/seo/ZeValuesUKPage'));
 const PlugInSolarUKPage = lazyWithRetry(() => import('@/pages/seo/PlugInSolarUKPage'));
 const PlugInSolarRCDPage = lazyWithRetry(() => import('@/pages/seo/PlugInSolarRCDPage'));
+const PlugInSolarWhatYoureToldPage = lazyWithRetry(() => import('@/pages/seo/PlugInSolarWhatYoureToldPage'));
+const PlugInSolarLandlordsPage = lazyWithRetry(() => import('@/pages/seo/PlugInSolarLandlordsPage'));
+const PlugInSolarDNOPage = lazyWithRetry(() => import('@/pages/seo/PlugInSolarDNOPage'));
+const PlugInSolarBalconiesPage = lazyWithRetry(() => import('@/pages/seo/PlugInSolarBalconiesPage'));
+const PlugInSolarVsRooftopPage = lazyWithRetry(() => import('@/pages/seo/PlugInSolarVsRooftopPage'));
 const AIClientExplainerPage = lazyWithRetry(() => import('@/pages/seo/AIClientExplainerPage'));
 const AICommissioningSpecialistPage = lazyWithRetry(
   () => import('@/pages/seo/AICommissioningSpecialistPage')
@@ -4786,6 +4791,46 @@ export function getSEORoutes() {
         element={
           <LazyRoute>
             <PlugInSolarRCDPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/what-plug-in-solar-must-tell-you"
+        element={
+          <LazyRoute>
+            <PlugInSolarWhatYoureToldPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/plug-in-solar-landlords-managing-agents"
+        element={
+          <LazyRoute>
+            <PlugInSolarLandlordsPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/plug-in-solar-dno-notification"
+        element={
+          <LazyRoute>
+            <PlugInSolarDNOPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/plug-in-solar-flats-balconies"
+        element={
+          <LazyRoute>
+            <PlugInSolarBalconiesPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/plug-in-solar-vs-rooftop-solar"
+        element={
+          <LazyRoute>
+            <PlugInSolarVsRooftopPage />
           </LazyRoute>
         }
       />

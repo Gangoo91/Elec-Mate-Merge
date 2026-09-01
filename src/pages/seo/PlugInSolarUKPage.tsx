@@ -19,7 +19,17 @@ import { SEOInlineLeadMagnet } from '@/components/seo/SEOInlineLeadMagnet';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import type { RelatedPage } from '@/components/seo/SEORelatedPages';
 import { PLUG_IN_SOLAR_FACTS as F } from '@/lib/plugInSolarAssessment';
-import { Sun, ShieldCheck, Zap, FileCheck2, ClipboardCheck } from 'lucide-react';
+import {
+  Sun,
+  ShieldCheck,
+  Zap,
+  FileCheck2,
+  PackageOpen,
+  Building2,
+  Network,
+  Building,
+  GitCompareArrows,
+} from 'lucide-react';
 
 const breadcrumbs = [
   { label: 'Guides', href: '/guides/electrical-testing-guide' },
@@ -98,6 +108,41 @@ const relatedPages: RelatedPage[] = [
       'Type AC, A, B and F — and why bidirectional capability is a separate question from the type marking.',
     href: '/plug-in-solar-rcd-requirements',
     icon: ShieldCheck,
+    category: 'Plug-in Solar',
+  },
+  {
+    title: 'What a Plug-in Solar Kit Must Tell You',
+    description: 'The mandated markings and documentation — and why none of it is on the shop listing.',
+    href: '/what-plug-in-solar-must-tell-you',
+    icon: PackageOpen,
+    category: 'Plug-in Solar',
+  },
+  {
+    title: 'Plug-in Solar for Landlords and Managing Agents',
+    description: 'What the building decides, and how to answer a tenant request in writing.',
+    href: '/plug-in-solar-landlords-managing-agents',
+    icon: Building2,
+    category: 'Plug-in Solar',
+  },
+  {
+    title: 'Plug-in Solar and Your DNO',
+    description: 'Connect and notify, the 28-day G98 clock, and the disconnection duty.',
+    href: '/plug-in-solar-dno-notification',
+    icon: Network,
+    category: 'Plug-in Solar',
+  },
+  {
+    title: 'Plug-in Solar on a Balcony',
+    description: 'The surfaces you cannot mount on, wind loading, height limits and fixings.',
+    href: '/plug-in-solar-flats-balconies',
+    icon: Building,
+    category: 'Plug-in Solar',
+  },
+  {
+    title: 'Plug-in Solar or Rooftop Solar?',
+    description: '800 VA versus a designed system — an honest comparison of what each is for.',
+    href: '/plug-in-solar-vs-rooftop-solar',
+    icon: GitCompareArrows,
     category: 'Plug-in Solar',
   },
   {

@@ -65,6 +65,30 @@ type StatusKey = 'all' | 'live' | 'scheduled' | 'draft' | 'expired';
 
 type Channel = 'in_app' | 'push' | 'both';
 
+/**
+ * Pull the real reason out of a failed `functions.invoke`.
+ *
+ * 🔴 `supabase.functions.invoke` rejects a non-2xx with a `FunctionsHttpError`
+ * whose message is the generic "Edge Function returned a non-2xx status code".
+ * The body — where admin-manage-announcements puts `{ error: "Title and
+ * message are required" }` — is on `err.context`, a Response nobody was
+ * reading. So every failure in this screen surfaced as an unexplained toast
+ * while the actual cause sat in the response body and the edge logs.
+ */
+async function invokeErrorMessage(err: unknown, fallback: string): Promise<string> {
+  const ctx = (err as { context?: Response })?.context;
+  if (ctx && typeof ctx.json === 'function') {
+    try {
+      const body = await ctx.clone().json();
+      if (body?.error) return String(body.error);
+    } catch {
+      /* not JSON — fall through */
+    }
+  }
+  const msg = (err as Error)?.message;
+  return msg && !msg.includes('non-2xx') ? msg : fallback;
+}
+
 const defaultAnnouncement = {
   title: '',
   message: '',
@@ -187,7 +211,7 @@ export default function AdminAnnouncements() {
       const { data, error } = await supabase.functions.invoke('admin-manage-announcements', {
         body: { action: 'create', announcement: payload },
       });
-      if (error) throw error;
+      if (error) throw new Error(await invokeErrorMessage(error, 'Could not create the announcement.'));
       if (data?.error) throw new Error(data.error);
       return data?.announcement as Announcement | undefined;
     },
@@ -1053,6 +1077,15 @@ export default function AdminAnnouncements() {
                 )}
               </div>
               <SheetFooter className="p-5 border-t border-white/[0.06]">
+                {/*
+                 * 🔴 There was no validation here — the button was disabled
+                 * only while a request was in flight, so pressing Create with
+                 * an empty title or message sent it anyway. The edge function
+                 * rejected it with "Title and message are required" and the
+                 * client showed a bare "non-2xx" toast, giving no clue which
+                 * field was missing. Both are required and NOT NULL on
+                 * admin_announcements, so this is never a valid request.
+                 */}
                 <Button
                   className="w-full h-12 touch-manipulation rounded-full bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold text-base"
                   onClick={() => {
@@ -1065,7 +1098,13 @@ export default function AdminAnnouncements() {
                       createMutation.mutate(formData);
                     }
                   }}
-                  disabled={createMutation.isPending || updateMutation.isPending}
+                  disabled={
+                    createMutation.isPending ||
+                    updateMutation.isPending ||
+                    (editAnnouncement
+                      ? !editAnnouncement.title?.trim() || !editAnnouncement.message?.trim()
+                      : !formData.title.trim() || !formData.message.trim())
+                  }
                 >
                   {createMutation.isPending || updateMutation.isPending ? (
                     <>
