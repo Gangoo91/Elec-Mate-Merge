@@ -178,10 +178,17 @@ export function trackLeadMagnetDownloaded(props: { magnet: string; email_domain?
 }
 
 /**
- * Keep this union in step with the `Source` type in
- * `supabase/functions/newsletter-subscribe/index.ts`, which is the widest of the
- * three (the landing form's own union omits `calculator_result`, which is sent
- * by `components/seo/CalculatorResultEmail.tsx` instead).
+ * Keep this union in step with the `Source` type in `EmailCaptureForm.tsx` and
+ * the one in `supabase/functions/newsletter-subscribe/index.ts`.
+ *
+ * ⚠️ All three have drifted from each other (found 31 Aug 2026 while adding
+ * `lead_magnet_plug_in_solar`): the landing form's union omits
+ * `calculator_result`, which is sent by `components/seo/CalculatorResultEmail.tsx`;
+ * the edge function's omits `lead_magnet_symbols_chart` and
+ * `lead_magnet_zs_ze_reference` even though its OTHER_MAGNETS registry serves
+ * both — it works only because the handler matches on the registry key rather
+ * than the type. Adding a magnet means touching all three, and the compiler will
+ * only catch two of them.
  */
 export function trackEmailCaptured(props: {
   source:
@@ -190,6 +197,7 @@ export function trackEmailCaptured(props: {
     | 'lead_magnet_cheatsheet'
     | 'lead_magnet_symbols_chart'
     | 'lead_magnet_zs_ze_reference'
+    | 'lead_magnet_plug_in_solar'
     | 'mock_exam_result'
     | 'calculator_result'
     | 'footer'
